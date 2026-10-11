@@ -11,6 +11,7 @@ import {
 import {
   CATEGORIES,
   LANG_NAMES,
+  activeTargets,
   type Category,
   type Lang,
   type RelatedWord,
@@ -185,7 +186,7 @@ export function AddWord({ settings }: Props) {
         }}>
         <h2>Add a word</h2>
         <p className="muted small">
-          One entry becomes {settings.targetLangs.length} languages, with genders
+          One entry becomes {activeTargets(settings).length} languages, with genders
           and verb forms. Check shows you the result; nothing is saved until you
           press Add.
         </p>

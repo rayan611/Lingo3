@@ -443,6 +443,26 @@ export const DEFAULT_SETTINGS: Settings = {
   updatedAt: 0,
 }
 
+/**
+ * The target languages currently being studied, in priority order.
+ *
+ * This is the list every *display* path uses. A paused language keeps its
+ * cards and still receives entries for words added while it is paused — so
+ * that resuming never leaves a hole in the vocabulary — but it is not a
+ * language you are studying today, and putting it on a word card, a preview
+ * or a review screen is noise about something you deliberately set aside.
+ *
+ * The writing paths (`applyExpansion` and card creation) stay on
+ * `targetLangs` on purpose: pause means "stop asking me", not "stop
+ * collecting".
+ */
+export function activeTargets(settings: {
+  targetLangs: Lang[]
+  activeLangs: Lang[]
+}): Lang[] {
+  return settings.targetLangs.filter((l) => settings.activeLangs.includes(l))
+}
+
 // ---------------------------------------------------------------------------
 // AI expansion payload
 //

@@ -14,6 +14,7 @@ import 'fake-indexeddb/auto'
 import { db, openForUser, ensureSettings, compositeId, newId } from '../src/db/db'
 import { makeCard } from '../src/fsrs/scheduler'
 import { buildQueue, queueCounts } from '../src/fsrs/queue'
+import { activeTargets } from '../src/db/types'
 import type { Concept, Entry, Lang, ReviewLogRow } from '../src/db/types'
 import { detectLang } from '../src/lib/detectLang'
 
@@ -767,6 +768,67 @@ async function main() {
     if (detectLang('Entschuldigung')?.confidence !== 'likely') {
       throw new Error('a Latin-script guess should never claim certainty')
     }
+  })
+
+  // A paused language is collected but not displayed. The two halves of that
+  // sentence are enforced in different places — `activeTargets` on every
+  // display path, `targetLangs` in `applyExpansion` — so both are asserted,
+  // or a future tidy-up that unified them would pass silently.
+  console.log('\nPausing a language hides it without stopping collection')
+  await check('a paused target is not in the display order', async () => {
+    const got = activeTargets({
+      targetLangs: ['sv', 'de', 'en'],
+      activeLangs: ['sv', 'en'],
+    })
+    if (got.join(',') !== 'sv,en') throw new Error(`got ${got.join(',')}`)
+  })
+  await check('the display order keeps target priority, not active order', async () => {
+    const got = activeTargets({
+      targetLangs: ['sv', 'de', 'en'],
+      activeLangs: ['en', 'de'],
+    })
+    if (got.join(',') !== 'de,en') throw new Error(`got ${got.join(',')}`)
+  })
+  await check('a word added while a language is paused still gets its entry and card', async () => {
+    const { applyExpansion } = await import('../src/ai/expand')
+    const settings = await ensureSettings()
+    const paused = {
+      ...settings,
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv'] as Lang[],
+    }
+    const id = newId()
+    await db.concepts.add({
+      id,
+      lemma: 'paus-test',
+      pos: 'noun',
+      category: 'daily',
+      tags: [],
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    })
+    await applyExpansion(
+      id,
+      {
+        pos: 'noun',
+        tags: [],
+        entries: (['en', 'sv', 'de'] as Lang[]).map((lang) => ({
+          lang,
+          headword: `paus-${lang}`,
+          meaning: 'a test',
+          example: 'an example',
+        })),
+      } as never,
+      paused,
+    )
+    const de = await db.entries.get(compositeId(id, 'de'))
+    if (!de) throw new Error('the paused language got no entry')
+    const card = await db.cards.get(compositeId(id, 'de'))
+    if (!card) throw new Error('the paused language got no card')
+    // …and the same settings hide it from the word card.
+    const order = ['en', ...activeTargets(paused)]
+    if (order.includes('de')) throw new Error('a paused language was displayed')
   })
 
   console.log(

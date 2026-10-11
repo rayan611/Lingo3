@@ -1,5 +1,6 @@
 import { State } from 'ts-fsrs'
 import { db } from '../db/db'
+import { activeTargets } from '../db/types'
 import type { Card, Concept, Entry, Lang, Settings } from '../db/types'
 
 export interface QueueItem {
@@ -66,9 +67,7 @@ export async function buildQueue(
   limit = 60,
   topic: string | null = null,
 ): Promise<QueueItem[]> {
-  const active = settings.targetLangs.filter((l) =>
-    settings.activeLangs.includes(l),
-  )
+  const active = activeTargets(settings)
   if (active.length === 0) return []
 
   const now = Date.now()
@@ -177,9 +176,7 @@ export async function queueCounts(
   settings: Settings,
   topic: string | null = null,
 ): Promise<QueueCounts> {
-  const active = settings.targetLangs.filter((l) =>
-    settings.activeLangs.includes(l),
-  )
+  const active = activeTargets(settings)
   const now = Date.now()
   const cards =
     active.length === 0

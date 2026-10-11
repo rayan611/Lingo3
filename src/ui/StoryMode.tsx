@@ -17,6 +17,7 @@ import {
   LANG_BCP47,
   LANG_NAMES,
   STORY_GENRES,
+  activeTargets,
   type Lang,
   type Settings,
   type Story,
@@ -34,9 +35,7 @@ import {
  * constrained word list however firmly it is asked not to.
  */
 export function StoryMode({ settings }: { settings: Settings }) {
-  const active = settings.targetLangs.filter((l) =>
-    settings.activeLangs.includes(l),
-  )
+  const active = activeTargets(settings)
   const [lang, setLang] = useState<Lang>(active[0] ?? settings.targetLangs[0])
   const [genre, setGenre] = useState<string>('fun')
   const [length, setLength] = useState<'short' | 'long'>('short')

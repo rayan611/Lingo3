@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { adoptLocalData, db, ensureSettings, openForUser, readSettings } from './db/db'
 import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
-import { LANG_NAMES, type Settings } from './db/types'
+import { LANG_NAMES, activeTargets, type Settings } from './db/types'
 import { authConfigured } from './auth/supabase'
 import { useSession } from './auth/useSession'
 import { SignIn } from './auth/SignIn'
@@ -326,9 +326,7 @@ function Workspace({
  * names wrap badly, so below a narrow width it is the codes instead.
  */
 function learningLine(settings: Settings): string {
-  const active = settings.targetLangs.filter((l) =>
-    settings.activeLangs.includes(l),
-  )
+  const active = activeTargets(settings)
   if (active.length === 0) return 'no active language'
   const narrow =
     typeof window !== 'undefined' && window.innerWidth < 420 && active.length > 2

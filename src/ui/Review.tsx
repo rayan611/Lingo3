@@ -17,6 +17,7 @@ import {
   LANG_BCP47,
   LANG_NAMES,
   RTL_LANGS,
+  activeTargets,
   type Card,
   type Lang,
   type Settings,
@@ -353,7 +354,7 @@ function LanguageAnswer({
   )
   const lines = entry ? morphLines(card.lang, entry.morphology) : []
   const gender = entry ? genderBadge(card.lang, entry.morphology) : null
-  const priority = settings.targetLangs.indexOf(card.lang as Lang) + 1
+  const priority = activeTargets(settings).indexOf(card.lang as Lang) + 1
 
   return (
     <div className={`answer ${grade !== undefined ? 'rated' : ''}`}>
@@ -461,7 +462,7 @@ function UpcomingAnswer({
 }) {
   const entry = item.entries.find((e) => e.lang === card.lang)
   const gender = entry ? genderBadge(card.lang, entry.morphology) : null
-  const priority = settings.targetLangs.indexOf(card.lang as Lang) + 1
+  const priority = activeTargets(settings).indexOf(card.lang as Lang) + 1
 
   return (
     <div className="answer upcoming">

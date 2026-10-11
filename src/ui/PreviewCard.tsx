@@ -2,6 +2,7 @@ import {
   LANG_BCP47,
   LANG_NAMES,
   RTL_LANGS,
+  activeTargets,
   parseMorphology,
   type Settings,
   type WordPreviewEntryView,
@@ -35,7 +36,10 @@ export function PreviewCard({
   onTagsChange: (next: string[]) => void
   tagSuggestions: string[]
 }) {
-  const order = [settings.nativeLang, ...settings.targetLangs]
+  // The preview shows what you will see after adding, not everything the
+  // model was asked for: a paused language is still generated and still
+  // saved, but it is not part of what you are checking.
+  const order = [settings.nativeLang, ...activeTargets(settings)]
   const rows: WordPreviewEntryView[] = preview.expansion.entries
     .filter((e) => order.includes(e.lang))
     .sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang))

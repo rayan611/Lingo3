@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { computeStats, DAY, type Stats } from '../lib/stats'
-import { LANG_NAMES, type Settings } from '../db/types'
+import { LANG_NAMES, activeTargets, type Settings } from '../db/types'
 
 /**
  * Who you are and how it is going.
@@ -20,9 +20,7 @@ export function Profile({
 
   if (!stats) return <div className="panel muted">Counting…</div>
 
-  const active = settings.targetLangs.filter((l) =>
-    settings.activeLangs.includes(l),
-  )
+  const active = activeTargets(settings)
 
   return (
     <div className="stack">

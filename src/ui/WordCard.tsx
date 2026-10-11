@@ -4,6 +4,7 @@ import {
   LANG_BCP47,
   LANG_NAMES,
   RTL_LANGS,
+  activeTargets,
   type Settings,
 } from '../db/types'
 import { genderBadge, morphLines } from '../lib/morphology'
@@ -56,7 +57,8 @@ export function WordCard({
     if (!current) return
     await db.concepts.put({ ...current, ...fields, updatedAt: Date.now() })
   }
-  const order = [settings.nativeLang, ...settings.targetLangs]
+  // Paused languages are collected but not shown — see `activeTargets`.
+  const order = [settings.nativeLang, ...activeTargets(settings)]
   const sorted = entries
     .filter((e) => order.includes(e.lang))
     .sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang))
@@ -101,19 +103,16 @@ export function WordCard({
           const gender = genderBadge(entry.lang, entry.morphology)
           const lines = morphLines(entry.lang, entry.morphology)
           const isNative = entry.lang === settings.nativeLang
-          const inactive =
-            !isNative && !settings.activeLangs.includes(entry.lang)
           return (
             <div
               key={entry.lang}
-              className={`lang-row ${isNative ? 'native' : ''} ${inactive ? 'inactive' : ''}`}
+              className={`lang-row ${isNative ? 'native' : ''}`}
             >
               <div className="lang-row-head">
                 <span className="lang-chip">{LANG_NAMES[entry.lang]}</span>
                 {gender && (
                   <span className={`gender gender-${gender}`}>{gender}</span>
                 )}
-                {inactive && <span className="badge subtle">paused</span>}
               </div>
               <div className="answer-word-row">
                 <div

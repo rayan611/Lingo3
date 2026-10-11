@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { reExpand } from '../ai/expand'
 import { isIncomplete } from '../lib/morphology'
-import { type Settings } from '../db/types'
+import { activeTargets, type Settings } from '../db/types'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
 
@@ -23,16 +23,23 @@ export function Browse({ settings }: Props) {
    */
   const flagged = useLiveQuery(async () => {
     const entries = await db.entries.toArray()
+    const studied = new Set(activeTargets(settings))
     const seen = new Set<string>()
     const bad = new Set<string>()
     for (const e of entries) {
       seen.add(e.conceptId)
-      if (settings.targetLangs.includes(e.lang) && isIncomplete(e)) {
+      // Only flag a missing gender in a language you are actually studying.
+      // The row is hidden while the language is paused, so a warning about it
+      // would point at something you cannot see or fix from here.
+      if (studied.has(e.lang) && isIncomplete(e)) {
         bad.add(e.conceptId)
       }
     }
     return { bad, seen }
-  }, [settings.targetLangs], { bad: new Set<string>(), seen: new Set<string>() })
+  }, [settings.targetLangs, settings.activeLangs], {
+    bad: new Set<string>(),
+    seen: new Set<string>(),
+  })
 
   /**
    * Words you keep forgetting. FSRS reschedules a lapse but has no opinion
