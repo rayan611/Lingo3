@@ -321,6 +321,23 @@ export function SettingsPanel({
             language only, so a session stays short.
           </span>
         </label>
+
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={settings.autoAdvance ?? false}
+            onChange={(e) => void saveSettings({ autoAdvance: e.target.checked })}
+          />
+          <span>
+            Go to the next word automatically
+            <span className="muted small">
+              Once every language due on a card is graded, move on without
+              waiting for Next. Quicker on a phone. Off, the card stays up
+              until you tap — which is when you read the interval you just
+              earned and notice a gender you got wrong.
+            </span>
+          </span>
+        </label>
       </div>
 
       <div className="panel">

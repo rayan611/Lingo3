@@ -38,6 +38,17 @@
   --grade-good: #2f6f5e;
   --grade-easy: #3a6ea5;
 
+  /* One hue per tab. Mid-chroma on purpose: these sit behind a 15px glyph in
+     a small chip, where a saturated colour reads as a warning light. Each is
+     redefined for the dark palettes below — the same hue, lifted, because a
+     colour chosen against paper goes muddy on slate. */
+  --tab-add: #2f7a52;
+  --tab-training: #9a6514;
+  --tab-read: #2f6090;
+  --tab-review: #6a4a9c;
+  --tab-browse: #a3466a;
+  --tab-settings: #566270;
+
   /* The mark. Fixed across every theme and matching the installed icon: a
      logo that changes colour with the palette is not a logo. Mirrored in
      scripts/make-icons.py — change both together. */
@@ -70,6 +81,13 @@
     --grade-hard: #d9a85d;
     --grade-good: #6cb79e;
     --grade-easy: #85aedb;
+
+    --tab-add: #73c195;
+    --tab-training: #dcb063;
+    --tab-read: #85aedb;
+    --tab-review: #b79ae0;
+    --tab-browse: #e295b2;
+    --tab-settings: #9fb0c0;
   }
 }
 
@@ -177,13 +195,32 @@ p { margin: 0.4rem 0; }
   height: 24px;
   flex: none;
   border-radius: 50%;
-  background: var(--bg-tint);
-  color: var(--ink-faint);
+  /* The hue is set per tab below; this is the fallback for anything without
+     one. The chip keeps its size whatever is inside it, so the bar does not
+     move when the icons change. */
+  --tab-hue: var(--ink-faint);
+  background: color-mix(in srgb, var(--tab-hue) 15%, transparent);
+  color: var(--tab-hue);
   font-size: 0.82rem;
   line-height: 1;
   transition: background-color 0.15s, color 0.15s;
 }
-.tab.active .tab-icon { background: var(--accent); color: #fff; }
+.tab-add .tab-icon { --tab-hue: var(--tab-add); }
+.tab-training .tab-icon { --tab-hue: var(--tab-training); }
+.tab-read .tab-icon { --tab-hue: var(--tab-read); }
+.tab-review .tab-icon { --tab-hue: var(--tab-review); }
+.tab-browse .tab-icon { --tab-hue: var(--tab-browse); }
+.tab-settings .tab-icon { --tab-hue: var(--tab-settings); }
+/* Selected: the chip fills with its own colour rather than the one accent, so
+   the active tab is still identifiable at a glance in a screenshot. */
+.tab.active .tab-icon { background: var(--tab-hue); color: #fff; }
+/* A dark theme's hues are light ones, so white ink on them would be unreadable.
+   The chip keeps dark ink there instead. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .tab.active .tab-icon { color: #16202a; }
+}
+:root[data-theme='dark'] .tab.active .tab-icon,
+:root[data-theme='dark-blue'] .tab.active .tab-icon { color: #16202a; }
 .tab:hover { color: var(--ink); }
 .tab.active {
   color: var(--ink);
@@ -851,6 +888,13 @@ kbd {
   --grade-hard: #d9a85d;
   --grade-good: #6cb79e;
   --grade-easy: #85aedb;
+
+  --tab-add: #73c195;
+  --tab-training: #dcb063;
+  --tab-read: #85aedb;
+  --tab-review: #b79ae0;
+  --tab-browse: #e295b2;
+  --tab-settings: #9fb0c0;
 }
 
 /* Dark blue: the same structure in cooler slate, with a blue accent in place
@@ -880,6 +924,13 @@ kbd {
   --grade-hard: #d9a85d;
   --grade-good: #6fa8dc;
   --grade-easy: #8fcfb8;
+
+  --tab-add: #73c195;
+  --tab-training: #dcb063;
+  --tab-read: #85aedb;
+  --tab-review: #b79ae0;
+  --tab-browse: #e295b2;
+  --tab-settings: #9fb0c0;
 }
 
 /* --- Header: name, languages, install -------------------------------------- */
@@ -1176,6 +1227,13 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   margin: 10px 0 8px;
 }
 .row.space-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+/* A checkbox with its explanation under the label, rather than a .field —
+   .field's span is the small uppercase caption style, which is wrong for a
+   sentence you are meant to read. */
+.check { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; cursor: pointer; }
+.check input { margin-top: 3px; flex: none; width: 17px; height: 17px; accent-color: var(--accent); }
+.check > span { display: flex; flex-direction: column; gap: 3px; }
 .error-text { color: var(--danger); }
 
 /* Totals from admin_stats(). A plain grid rather than cards: these are eight

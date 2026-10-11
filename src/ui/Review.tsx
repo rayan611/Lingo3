@@ -146,6 +146,26 @@ export function Review({ settings, onExit }: Props) {
     [item, graded, extra],
   )
 
+  /**
+   * Auto-advance, when it is switched on.
+   *
+   * The delay is not politeness: grading writes the card, and the buttons
+   * redraw with the new intervals. Leaving with no pause at all means the
+   * answer you just gave is never seen, and a mis-tap is gone before you can
+   * notice it. Three quarters of a second is long enough to read a number and
+   * short enough that it never feels like waiting.
+   *
+   * The timer is cleared whenever the word, the grades or the setting change,
+   * so grading a second language on the same card restarts it rather than
+   * firing an advance meant for the state before.
+   */
+  const autoAdvance = settings.autoAdvance ?? false
+  useEffect(() => {
+    if (!autoAdvance || !allGraded || !item) return
+    const t = setTimeout(advance, 750)
+    return () => clearTimeout(t)
+  }, [autoAdvance, allGraded, item, advance])
+
   if (queue === null) {
     return <div className="panel muted">Building your queue…</div>
   }

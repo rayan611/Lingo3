@@ -22,6 +22,14 @@ import { Browse } from './ui/Browse'
 import { Training } from './ui/Training'
 import { StoryMode } from './ui/StoryMode'
 import { SettingsPanel } from './ui/SettingsPanel'
+import {
+  IconAdd,
+  IconReading,
+  IconReview,
+  IconSettings,
+  IconTraining,
+  IconWords,
+} from './ui/icons'
 import { InstallButton } from './ui/InstallButton'
 import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
@@ -247,22 +255,22 @@ function Workspace({
           storage layer to match a label is how a sync bug gets shipped for
           nothing. */}
       <nav className="tabs">
-        <TabButton id="add" tab={tab} set={setTab} icon="+">
+        <TabButton id="add" tab={tab} set={setTab} icon={<IconAdd />}>
           Add
         </TabButton>
-        <TabButton id="training" tab={tab} set={setTab} icon="◎">
+        <TabButton id="training" tab={tab} set={setTab} icon={<IconTraining />}>
           Training
         </TabButton>
-        <TabButton id="read" tab={tab} set={setTab} icon="▤">
+        <TabButton id="read" tab={tab} set={setTab} icon={<IconReading />}>
           Reading
         </TabButton>
-        <TabButton id="review" tab={tab} set={setTab} badge={due} icon="✓">
+        <TabButton id="review" tab={tab} set={setTab} badge={due} icon={<IconReview />}>
           Review
         </TabButton>
-        <TabButton id="browse" tab={tab} set={setTab} icon="☰">
+        <TabButton id="browse" tab={tab} set={setTab} icon={<IconWords />}>
           Words
         </TabButton>
-        <TabButton id="settings" tab={tab} set={setTab} icon="⚙">
+        <TabButton id="settings" tab={tab} set={setTab} icon={<IconSettings />}>
           Settings
         </TabButton>
       </nav>
@@ -364,12 +372,15 @@ function TabButton({
   tab: Tab
   set: (t: Tab) => void
   badge?: number
-  icon: string
+  icon: React.ReactNode
   children: React.ReactNode
 }) {
   return (
     <button
-      className={`tab ${tab === id ? 'active' : ''}`}
+      /* tab-<id> carries nothing but the hue. Six tabs in one accent colour
+         read as one undifferentiated strip; a colour per tab is the cheapest
+         way to make the one you want findable without moving anything. */
+      className={`tab tab-${id} ${tab === id ? 'active' : ''}`}
       onClick={() => set(id)}
       aria-current={tab === id ? 'page' : undefined}
     >

@@ -403,6 +403,20 @@ export interface Settings {
    * not worth a schema change on the server to carry it between devices.
    */
   typedLang?: Lang
+  /**
+   * Go to the next word by itself once every due language on the card has
+   * been graded, instead of waiting for Next.
+   *
+   * Off by default, and that is the honest default rather than a timid one:
+   * the pause after grading is where you read the interval you just earned
+   * and notice the gender you got wrong. Auto-advance trades that for speed,
+   * which is the right trade on a phone with thirty cards due and the wrong
+   * one while you are still learning what the grades do.
+   *
+   * Device-local, like typedLang and the theme: it is how you like to drive
+   * the app on this device, not something about your account.
+   */
+  autoAdvance?: boolean
   updatedAt: number
 }
 
