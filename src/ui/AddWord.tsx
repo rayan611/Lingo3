@@ -21,6 +21,7 @@ import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
 import { detectLang } from '../lib/detectLang'
 import { RelatedWords } from './RelatedWords'
+import { SuggestionBox } from './Suggestions'
 
 interface Props {
   settings: Settings
@@ -300,6 +301,13 @@ export function AddWord({ settings }: Props) {
         />
       )}
 
+      <BulkAdd settings={settings} />
+
+      {lastId && <WordCard conceptId={lastId} settings={settings} />}
+
+      {/* After the card, not before it. These are suggestions about a word you
+          have just added; put them above it and they compete with the thing
+          you came here to see. */}
       {related.length > 0 && (
         <RelatedWords
           related={related}
@@ -307,10 +315,6 @@ export function AddWord({ settings }: Props) {
           category={category}
         />
       )}
-
-      <BulkAdd settings={settings} />
-
-      {lastId && <WordCard conceptId={lastId} settings={settings} />}
 
       {recent.length > 0 && (
         <div className="panel">
@@ -326,6 +330,10 @@ export function AddWord({ settings }: Props) {
           </ul>
         </div>
       )}
+
+      {/* The foot of the Add screen. A word that came back wrong is reported
+          from where it was added, and the context field records that. */}
+      <SuggestionBox context="add" compact />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import type { Grade } from 'ts-fsrs'
 import { db } from '../db/db'
 import { buildQueue, queueCounts, type QueueItem } from '../fsrs/queue'
+import { SuggestionBox } from './Suggestions'
 import {
   GRADES,
   GRADE_HINTS,
@@ -169,6 +170,11 @@ export function Review({ settings, onExit }: Props) {
           Back
         </button>
       </div>
+      {/* At the end of the session, not during it: a word the model got wrong
+          is freshest right after you have just been tested on it, and this is
+          the first moment in the screen where nothing else is being asked of
+          you. */}
+      <SuggestionBox context="review" compact />
       </div>
     )
   }

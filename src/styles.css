@@ -157,7 +157,9 @@ p { margin: 0.4rem 0; }
   border-radius: 999px;
   padding: 8px 15px;
   font: inherit;
-  font-size: 0.9rem;
+  /* One step up from 0.9rem. The labels are the only thing naming what each
+     tab does, so they are read, not glanced at. */
+  font-size: 1rem;
   color: var(--ink-soft);
   cursor: pointer;
   white-space: nowrap;
@@ -203,7 +205,7 @@ p { margin: 0.4rem 0; }
     justify-content: center;
     padding: 8px 4px;
     gap: 4px;
-    font-size: 0.78rem;
+    font-size: 0.86rem;
   }
   .tab-icon { width: 26px; height: 26px; font-size: 0.9rem; }
   .tab-label { line-height: 1.1; }
@@ -220,7 +222,7 @@ p { margin: 0.4rem 0; }
   }
 }
 @media (max-width: 340px) {
-  .tab { font-size: 0.72rem; }
+  .tab { font-size: 0.8rem; }
   .tab-icon { width: 22px; height: 22px; font-size: 0.8rem; }
 }
 
@@ -1128,6 +1130,38 @@ kbd {
   margin-top: 4px;
   font-size: 0.78rem;
 }
+
+/* --- collapsed panels ------------------------------------------------------
+   A shut <details> inside a panel: the bulk-add box and the feedback box at
+   the foot of a screen. The summary carries the panel's own heading, so the
+   marker is replaced with one that sits where the eye already is. */
+details.bulk > summary,
+details.feedback > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  /* The whole row is the target, not just the words. */
+  margin: -4px 0;
+  padding: 4px 0;
+}
+details.bulk > summary::-webkit-details-marker,
+details.feedback > summary::-webkit-details-marker { display: none; }
+details.bulk > summary h3,
+details.feedback > summary h3 { margin: 0; }
+details.bulk > summary::after,
+details.feedback > summary::after {
+  content: '＋';
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+}
+details.bulk[open] > summary::after,
+details.feedback[open] > summary::after { content: '−'; }
+details.bulk > summary:hover h3,
+details.feedback > summary:hover h3 { color: var(--accent); }
 
 /* --- suggestions and admin ------------------------------------------------ */
 .suggestion-input {

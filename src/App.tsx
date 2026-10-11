@@ -240,9 +240,12 @@ function Workspace({
       {authConfigured && !settings.displayName && <NamePrompt />}
 
       {/* Ordered the way a session actually goes: add words, train them,
-          read them, then test. The tab is called Test; the id, the route and
-          review_log keep their names. Renaming the storage layer to match a
-          label is how a sync bug gets shipped for nothing. */}
+          read them, then review. The tab was called Test and is called Review
+          now — "test" names what the screen does to you, "review" names what
+          you are doing, and it is the word the rest of the app, the id, the
+          route and review_log already use. Only the label moved; renaming the
+          storage layer to match a label is how a sync bug gets shipped for
+          nothing. */}
       <nav className="tabs">
         <TabButton id="add" tab={tab} set={setTab} icon="+">
           Add
@@ -254,7 +257,7 @@ function Workspace({
           Reading
         </TabButton>
         <TabButton id="review" tab={tab} set={setTab} badge={due} icon="✓">
-          Test
+          Review
         </TabButton>
         <TabButton id="browse" tab={tab} set={setTab} icon="☰">
           Words

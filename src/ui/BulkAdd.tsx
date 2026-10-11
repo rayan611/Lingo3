@@ -67,97 +67,106 @@ export function BulkAdd({ settings }: { settings: Settings }) {
 
   return (
     <div className="panel">
-      <h3>Add a list</h3>
-      <p className="muted small">
-        One word per line. Anything after a comma on the same line is treated as
-        the sense, for when a word is ambiguous.
-      </p>
+      {/* Shut unless you came for it. Adding one word is the common case and
+          this box was taking up the screen underneath it every time. Native
+          <details> rather than state of our own: it keeps the keyboard and
+          screen-reader behaviour for free, and it cannot get stuck open. */}
+      <details className="bulk">
+        <summary>
+          <h3>Add a list</h3>
+        </summary>
 
-      <textarea
-        className="bulk-input"
-        rows={7}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={'hund\nspringa, to run\nbank, the river kind'}
-        disabled={busy}
-        spellCheck={false}
-      />
+        <p className="muted small">
+          A comma or a new line starts the next word. If a word is ambiguous,
+          put the sense after an equals sign — <code>bank = the river kind</code>.
+        </p>
 
-      <div className="row">
-        <label className="field">
-          <span>I typed them in</span>
-          <select
-            value={sourceLang}
-            onChange={(e) => setSourceLang(e.target.value as Lang)}
-            disabled={busy}
-          >
-            {[settings.nativeLang, ...settings.targetLangs].map((l) => (
-              <option key={l} value={l}>
-                {LANG_NAMES[l]}
-              </option>
-            ))}
-          </select>
-        </label>
+        <textarea
+          className="bulk-input"
+          rows={7}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={'hund, katt, springa\nbank = the river kind'}
+          disabled={busy}
+          spellCheck={false}
+        />
 
-        <label className="field">
-          <span>Topic for the whole list</span>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value as Category)}
-            disabled={busy}
-          >
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+        <div className="row">
+          <label className="field">
+            <span>I typed them in</span>
+            <select
+              value={sourceLang}
+              onChange={(e) => setSourceLang(e.target.value as Lang)}
+              disabled={busy}
+            >
+              {[settings.nativeLang, ...settings.targetLangs].map((l) => (
+                <option key={l} value={l}>
+                  {LANG_NAMES[l]}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <button
-        className="primary"
-        onClick={() => void run()}
-        disabled={busy || lines.length === 0}
-      >
-        {busy
-          ? progress
-            ? `Expanding ${progress.done} of ${progress.total}…`
-            : 'Saving…'
-          : `Add ${lines.length || ''} word${lines.length === 1 ? '' : 's'}`}
-      </button>
-
-      {progress && progress.total > 0 && (
-        <div className="progress">
-          <div
-            className="progress-bar"
-            style={{ width: `${Math.round((progress.done / progress.total) * 100)}%` }}
-          />
+          <label className="field">
+            <span>Topic for the whole list</span>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as Category)}
+              disabled={busy}
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-      )}
 
-      {result && (
-        <div className={`status ${result.duplicates.length ? 'warn' : 'ok'}`}>
-          Queued {result.queued} word{result.queued === 1 ? '' : 's'}.
-          {result.duplicates.length > 0 && (
-            <>
-              {' '}
-              Skipped {result.duplicates.length} already in your list:{' '}
-              {result.duplicates
-                .slice(0, 8)
-                .map((d) =>
-                  d.lemma.toLocaleLowerCase() === d.existing.toLocaleLowerCase()
-                    ? d.lemma
-                    : `${d.lemma} (have "${d.existing}")`,
-                )
-                .join(', ')}
-              {result.duplicates.length > 8 ? '…' : ''}
-            </>
-          )}
-        </div>
-      )}
+        <button
+          className="primary"
+          onClick={() => void run()}
+          disabled={busy || lines.length === 0}
+        >
+          {busy
+            ? progress
+              ? `Expanding ${progress.done} of ${progress.total}…`
+              : 'Saving…'
+            : `Add ${lines.length || ''} word${lines.length === 1 ? '' : 's'}`}
+        </button>
 
-      {summary && <div className="status ok">{summary}</div>}
+        {progress && progress.total > 0 && (
+          <div className="progress">
+            <div
+              className="progress-bar"
+              style={{ width: `${Math.round((progress.done / progress.total) * 100)}%` }}
+            />
+          </div>
+        )}
+
+        {result && (
+          <div className={`status ${result.duplicates.length ? 'warn' : 'ok'}`}>
+            Queued {result.queued} word{result.queued === 1 ? '' : 's'}.
+            {result.duplicates.length > 0 && (
+              <>
+                {' '}
+                Skipped {result.duplicates.length} already in your list:{' '}
+                {result.duplicates
+                  .slice(0, 8)
+                  .map((d) =>
+                    d.lemma.toLocaleLowerCase() === d.existing.toLocaleLowerCase()
+                      ? d.lemma
+                      : `${d.lemma} (have "${d.existing}")`,
+                  )
+                  .join(', ')}
+                {result.duplicates.length > 8 ? '…' : ''}
+              </>
+            )}
+          </div>
+        )}
+
+        {summary && <div className="status ok">{summary}</div>}
+      </details>
     </div>
   )
 }

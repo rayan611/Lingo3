@@ -123,6 +123,24 @@ check(
   'morphologyJson survived',
 )
 
+// The same guard as the story reader: a cut-off expansion must say it ran out
+// of room rather than hand up a JSON position.
+let expandTruncated = ''
+try {
+  readGemini({
+    candidates: [
+      { finishReason: 'MAX_TOKENS', content: { parts: [{ text: '{"pos":"noun","entr' }] } },
+    ],
+  })
+} catch (err) {
+  expandTruncated = err instanceof Error ? err.message : String(err)
+}
+check(
+  'gemini: a truncated expansion reports the budget, not a JSON position',
+  expandTruncated.length > 0 && !/JSON|position/i.test(expandTruncated),
+  expandTruncated || 'no error thrown',
+)
+
 const anthropic = readAnthropic({
   content: [{ type: 'tool_use', name: 'record_word', input: { pos: 'noun', entries: [] } }],
 }) as { pos?: string }

@@ -174,13 +174,31 @@ async function main() {
   console.log('\n8. Bulk add')
   await check('a pasted list parses into lemma + hint', async () => {
     const { parseBulkInput } = await import('../src/ai/expand')
-    const lines = parseBulkInput('hund\n\nspringa, to run\n  bank - the river kind  \nhund\n')
+    const lines = parseBulkInput('hund\n\nspringa = to run\n  bank - the river kind  \nhund\n')
     if (lines.length !== 3) throw new Error(`expected 3 lines, got ${lines.length}`)
     if (lines[1].lemma !== 'springa' || lines[1].hint !== 'to run') {
       throw new Error(`bad split: ${JSON.stringify(lines[1])}`)
     }
     if (lines[2].hint !== 'the river kind') {
       throw new Error(`dash hint not read: ${JSON.stringify(lines[2])}`)
+    }
+  })
+  // A comma ends a word now. This is the case the old parser got wrong: a row
+  // copied off a whiteboard arrived as one long concept.
+  await check('a comma ends a word, like a new line', async () => {
+    const { parseBulkInput } = await import('../src/ai/expand')
+    const lines = parseBulkInput('hund, katt,  häst , hund\nfågel')
+    const lemmas = lines.map((l) => l.lemma)
+    if (lemmas.join('|') !== 'hund|katt|häst|fågel') {
+      throw new Error(`bad split: ${JSON.stringify(lemmas)}`)
+    }
+  })
+  await check('a sense still rides along after =', async () => {
+    const { parseBulkInput } = await import('../src/ai/expand')
+    const lines = parseBulkInput('bank = the river kind, hund')
+    if (lines.length !== 2) throw new Error(`expected 2, got ${lines.length}`)
+    if (lines[0].lemma !== 'bank' || lines[0].hint !== 'the river kind') {
+      throw new Error(`sense lost: ${JSON.stringify(lines[0])}`)
     }
   })
   await check('bulk add queues concepts without expanding them', async () => {

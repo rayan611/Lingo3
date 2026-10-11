@@ -455,10 +455,18 @@ export interface BulkAddResult {
 export function parseBulkInput(text: string): BulkLine[] {
   const out: BulkLine[] = []
   const seen = new Set<string>()
-  for (const raw of text.split(/\r?\n/)) {
+  // A comma ends a word, exactly like a new line. That is how a list gets
+  // written when it is copied off a board or typed in a hurry, and expecting
+  // one word per line was losing most of a pasted row.
+  //
+  // The sense used to live after the comma, which is why it has moved to `=`:
+  // a separator cannot also be a field divider. A phrase that genuinely
+  // contains a comma has to go on its own line now — rarer than a pasted list,
+  // which was the trade worth making.
+  for (const raw of text.split(/[\n\r,;\t]+/)) {
     const line = raw.trim()
     if (!line) continue
-    const m = line.match(/^(.*?)\s*(?:,|;|\t|\s[-–—]\s)\s*(.+)$/)
+    const m = line.match(/^(.*?)\s*(?:=|\s[-–—]\s)\s*(.+)$/)
     const lemma = (m ? m[1] : line).trim()
     const hint = m ? m[2].trim() : undefined
     if (!lemma) continue

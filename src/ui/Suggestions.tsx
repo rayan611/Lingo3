@@ -25,7 +25,22 @@ export interface SuggestionRow {
 
 const MAX = 2000
 
-export function SuggestionBox({ context }: { context?: string }) {
+/**
+ * `context` records which screen it was sent from, so a report about a word
+ * card is not read as a report about the reader.
+ *
+ * `compact` is the same box, shut, for the foot of a screen you came to do
+ * something else on. Open it has to be in Settings, where sending feedback is
+ * one of the things Settings is for; at the end of a review session an open
+ * textarea asking for your thoughts is in the way of the next word.
+ */
+export function SuggestionBox({
+  context,
+  compact = false,
+}: {
+  context?: string
+  compact?: boolean
+}) {
   const [body, setBody] = useState('')
   const [busy, setBusy] = useState(false)
   const [sent, setSent] = useState(false)
@@ -61,13 +76,8 @@ export function SuggestionBox({ context }: { context?: string }) {
 
   if (!authConfigured) return null
 
-  return (
-    <div className="panel">
-      <h2>Suggest something</h2>
-      <p className="muted small">
-        A bug, a word the model got wrong, anything missing. It reaches Rayan
-        directly.
-      </p>
+  const form = (
+    <>
       <textarea
         className="suggestion-input"
         value={body}
@@ -89,6 +99,34 @@ export function SuggestionBox({ context }: { context?: string }) {
       </div>
       {sent && <p className="muted small">Sent — thank you.</p>}
       {error && <p className="error-text small">{error}</p>}
+    </>
+  )
+
+  if (compact) {
+    return (
+      <div className="panel">
+        <details className="feedback">
+          <summary>
+            <h3>Something to report?</h3>
+          </summary>
+          <p className="muted small">
+            A bug, a word the model got wrong, anything missing. It reaches
+            Rayan directly.
+          </p>
+          {form}
+        </details>
+      </div>
+    )
+  }
+
+  return (
+    <div className="panel">
+      <h2>Suggest something</h2>
+      <p className="muted small">
+        A bug, a word the model got wrong, anything missing. It reaches Rayan
+        directly.
+      </p>
+      {form}
     </div>
   )
 }

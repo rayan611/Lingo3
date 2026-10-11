@@ -536,10 +536,10 @@ async function respond(req: Request): Promise<Response> {
         ? readGemini(await upstream.json())
         : readAnthropic(await upstream.json())
   } catch (err) {
-    return json(
-      { error: `Could not read the model's answer: ${String(err)}` },
-      502,
-    )
+    // The message, not the error object: readGemini turns the reasons a model
+    // stops into sentences, and those are what the queue stores and shows.
+    const why = err instanceof Error ? err.message : String(err)
+    return json({ error: why }, 502)
   }
 
   if (!expansion) {
@@ -667,7 +667,11 @@ function callGemini(prompt: string, key: string, signal: AbortSignal) {
       contents: [{ role: 'user', parts: [{ text: adapted }] }],
       generationConfig: {
         temperature: 0,
-        maxOutputTokens: 4096,
+        // Everything the model generates counts here, thinking included. Three
+        // languages of morphology is already a long answer; /api/story was
+        // silently truncated by exactly this and reported it as a JSON parse
+        // error. Headroom is cheap, a half-written entry is not.
+        maxOutputTokens: 8192,
         responseMimeType: 'application/json',
         responseSchema: GEMINI_SCHEMA,
       },
@@ -675,12 +679,38 @@ function callGemini(prompt: string, key: string, signal: AbortSignal) {
   })
 }
 
+/** Everything other than a clean stop, in the words the client should show. */
+const STOP_REASONS: Record<string, string> = {
+  MAX_TOKENS: 'The model ran out of room before finishing this word.',
+  SAFETY: 'The model declined to expand this word.',
+  RECITATION: 'The model stopped itself to avoid quoting a source.',
+  PROHIBITED_CONTENT: 'The model declined to expand this word.',
+}
+
 export function readGemini(data: unknown): unknown {
-  const text = (
+  const candidate = (
     data as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+      candidates?: Array<{
+        finishReason?: string
+        content?: { parts?: Array<{ text?: string; thought?: boolean }> }
+      }>
     }
-  ).candidates?.[0]?.content?.parts?.[0]?.text
+  ).candidates?.[0]
+
+  // Before parsing, deliberately: a cut-off answer is still a string, so
+  // JSON.parse reports where it broke and never why. The reason is in the
+  // response and is the only part worth putting in front of anyone.
+  const reason = candidate?.finishReason
+  if (reason && reason !== 'STOP') {
+    throw new Error(STOP_REASONS[reason] ?? `The model stopped early (${reason}).`)
+  }
+
+  // A thinking model can return its reasoning as parts of its own. Those carry
+  // thought: true and are not JSON; the answer is what is left.
+  const text = (candidate?.content?.parts ?? [])
+    .filter((p) => !p.thought && typeof p.text === 'string')
+    .map((p) => p.text)
+    .join('')
 
   if (!text) return null
   const parsed = JSON.parse(text) as {

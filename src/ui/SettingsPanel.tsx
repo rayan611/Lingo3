@@ -88,6 +88,52 @@ export function SettingsPanel({
 
   return (
     <div className="stack">
+      {/* Account first. Who you are signed in as and whether your words have
+          reached the server are the things you open Settings in a hurry to
+          check; everything below is a preference you set once. */}
+      {authConfigured && (
+        <div className="panel">
+          <h2>Account</h2>
+          <p className="muted small">Signed in as {email ?? 'unknown'}.</p>
+
+          <h3>Sync</h3>
+          <p className="muted small">
+            Your words are stored on this device and copied to your account
+            automatically — a few seconds after you change something, and again
+            whenever the app goes to the background. Reviewing never waits for
+            the network, and the button below is only here for when you want to
+            be certain.
+          </p>
+          <p className="muted small">
+            {syncing
+              ? 'Syncing now…'
+              : syncState
+                ? syncState.error
+                  ? `Last attempt failed: ${syncState.error}`
+                  : `Last synced ${new Date(syncState.at).toLocaleTimeString()} — ${syncState.pushed} up, ${syncState.pulled} down.`
+                : 'Not synced yet this session.'}
+          </p>
+          <div className="row">
+            <button onClick={() => void onSync()} disabled={syncing}>
+              Sync now
+            </button>
+            <button
+              onClick={async () => {
+                await resetSyncCursors()
+                await onSync()
+              }}
+              disabled={syncing}
+              title="Re-read everything from the server, in case something was missed"
+            >
+              Full resync
+            </button>
+            <button className="link danger" onClick={() => void signOut()}>
+              Sign out
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="panel">
         <div className="panel-head">
           <h2>Your progress</h2>
@@ -322,49 +368,6 @@ export function SettingsPanel({
           </span>
         </label>
       </div>
-
-      {authConfigured && (
-        <div className="panel">
-          <h2>Account</h2>
-          <p className="muted small">Signed in as {email ?? 'unknown'}.</p>
-
-          <h3>Sync</h3>
-          <p className="muted small">
-            Your words are stored on this device and copied to your account
-            automatically — a few seconds after you change something, and again
-            whenever the app goes to the background. Reviewing never waits for
-            the network, and the button below is only here for when you want to
-            be certain.
-          </p>
-          <p className="muted small">
-            {syncing
-              ? 'Syncing now…'
-              : syncState
-                ? syncState.error
-                  ? `Last attempt failed: ${syncState.error}`
-                  : `Last synced ${new Date(syncState.at).toLocaleTimeString()} — ${syncState.pushed} up, ${syncState.pulled} down.`
-                : 'Not synced yet this session.'}
-          </p>
-          <div className="row">
-            <button onClick={() => void onSync()} disabled={syncing}>
-              Sync now
-            </button>
-            <button
-              onClick={async () => {
-                await resetSyncCursors()
-                await onSync()
-              }}
-              disabled={syncing}
-              title="Re-read everything from the server, in case something was missed"
-            >
-              Full resync
-            </button>
-            <button className="link danger" onClick={() => void signOut()}>
-              Sign out
-            </button>
-          </div>
-        </div>
-      )}
 
       <ImportExport settings={settings} />
 
