@@ -164,6 +164,12 @@ const TOOL = {
         description:
           'The input cleaned up: typo fixed, article stripped, verb put in the infinitive. Omit if the input was already clean.',
       },
+      detectedLang: {
+        type: 'string',
+        enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'],
+        description:
+          'Which of the requested languages the learner actually typed the input in. Always fill this in, even when it seems obvious. If the word is spelled identically in several of them, pick the one the learner is most likely to have meant given which languages they are studying.',
+      },
       related: {
         type: 'array',
         description:
@@ -228,13 +234,13 @@ const TOOL = {
         },
       },
     },
-    required: ['pos', 'entries'],
+    required: ['pos', 'entries', 'detectedLang'],
   },
 }
 
 function buildPrompt(opts: {
   lemma: string
-  sourceLang: string
+  sourceLang?: string
   nativeLang: string
   langs: string[]
   hint?: string
@@ -245,7 +251,14 @@ function buildPrompt(opts: {
   return `You are building a vocabulary entry for a language learner.
 
 The learner's native language is ${LANG_NAMES[nativeLang] ?? nativeLang} (${nativeLang}).
-They entered this word in ${LANG_NAMES[sourceLang] ?? sourceLang} (${sourceLang}):
+${
+  sourceLang
+    ? `They entered this word in ${LANG_NAMES[sourceLang] ?? sourceLang} (${sourceLang}):`
+    : `They entered this word without saying which language it is in. Work out which \
+of the languages below they typed it in and report that in detectedLang. A word \
+spelled the same in several of them is normal — pick the most likely one for \
+someone studying these languages, and build the entry around that reading:`
+}
 
   ${lemma}
 ${hint ? `\nThey added this hint about which sense they mean: ${hint}\n` : ''}
@@ -487,7 +500,9 @@ async function respond(req: Request): Promise<Response> {
   }
 
   const lemma = (body.lemma ?? '').trim()
-  const sourceLang = body.sourceLang ?? 'en'
+  // Absent means "you work it out" — the Add box no longer asks. A bulk paste
+  // still says, because a list from one class really is all one language.
+  const sourceLang = body.sourceLang?.trim() || undefined
   const nativeLang = body.nativeLang ?? 'fa'
   const langs = Array.isArray(body.langs) ? body.langs : []
 
@@ -607,6 +622,7 @@ const GEMINI_SCHEMA = {
       enum: ['noun', 'verb', 'adjective', 'adverb', 'preposition', 'phrase', 'other'],
     },
     normalisedLemma: { type: 'STRING' },
+    detectedLang: { type: 'STRING', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
     tags: { type: 'ARRAY', items: { type: 'STRING' } },
     related: {
       type: 'ARRAY',
@@ -643,7 +659,7 @@ const GEMINI_SCHEMA = {
       },
     },
   },
-  required: ['pos', 'entries'],
+  required: ['pos', 'entries', 'detectedLang'],
 }
 
 function callGemini(prompt: string, key: string, signal: AbortSignal) {

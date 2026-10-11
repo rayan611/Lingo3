@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import {
@@ -10,17 +10,14 @@ import {
 } from '../ai/expand'
 import {
   CATEGORIES,
-  LANG_NAMES,
   activeTargets,
   type Category,
-  type Lang,
   type RelatedWord,
   type Settings,
 } from '../db/types'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
-import { detectLang } from '../lib/detectLang'
 import { RelatedWords } from './RelatedWords'
 import { SuggestionBox } from './Suggestions'
 
@@ -30,20 +27,6 @@ interface Props {
 
 export function AddWord({ settings }: Props) {
   const [lemma, setLemma] = useState('')
-  const [hint, setHint] = useState('')
-  const [sourceLang, setSourceLang] = useState<Lang>(settings.nativeLang)
-  /**
-   * The language the typed text looks like. Offered, never applied: a silent
-   * wrong guess files a German noun as Swedish and you find out weeks later
-   * when the genders make no sense. One tap accepts it.
-   */
-  const guess = useMemo(() => {
-    const g = detectLang(lemma)
-    if (!g || g.lang === sourceLang) return null
-    // Only languages this user actually has configured.
-    const known = [settings.nativeLang, ...settings.targetLangs]
-    return known.includes(g.lang) ? g : null
-  }, [lemma, sourceLang, settings.nativeLang, settings.targetLangs])
   const [category, setCategory] = useState<Category>('daily')
   const [busy, setBusy] = useState(false)
   const [status, setStatus] = useState<{ kind: string; text: string } | null>(null)
@@ -110,12 +93,10 @@ export function AddWord({ settings }: Props) {
     try {
       // Always expand first and look at it. The only difference quick mode
       // makes is that it does not stop to ask.
-      const result = await previewWord({
-        lemma,
-        sourceLang,
-        hint: hint.trim() || undefined,
-        settings,
-      })
+      // No source language and no sense hint: the model reads both off the
+      // word itself, and what it decided is on the preview card before
+      // anything is saved.
+      const result = await previewWord({ lemma, settings })
 
       if (result.status === 'duplicate') {
         setLastId(result.conceptId)
@@ -158,7 +139,6 @@ export function AddWord({ settings }: Props) {
       } else {
         setStatus({ kind: 'ok', text: `Added "${toSave.lemma}".` })
         setLemma('')
-        setHint('')
       }
       setPreview(null)
     } catch (err) {
@@ -186,8 +166,10 @@ export function AddWord({ settings }: Props) {
         }}>
         <h2>Add a word</h2>
         <p className="muted small">
-          One entry becomes {activeTargets(settings).length} languages, with genders
-          and verb forms. Check shows you the result; nothing is saved until you
+          Type the word in any of your languages — it is worked out from the
+          word itself. One entry becomes {activeTargets(settings).length}{' '}
+          languages, with genders and verb forms. Check shows you the result,
+          including which language it was read as; nothing is saved until you
           press Add.
         </p>
 
@@ -202,30 +184,6 @@ export function AddWord({ settings }: Props) {
 
         <div className="row">
           <label className="field">
-            <span>I typed it in</span>
-            <select
-              value={sourceLang}
-              onChange={(e) => setSourceLang(e.target.value as Lang)}
-            >
-              {[settings.nativeLang, ...settings.targetLangs].map((l) => (
-                <option key={l} value={l}>
-                  {LANG_NAMES[l]}
-                </option>
-              ))}
-            </select>
-            {guess && (
-              <button
-                type="button"
-                className="link lang-guess"
-                onClick={() => setSourceLang(guess.lang)}
-              >
-                {guess.confidence === 'certain' ? 'That is' : 'Looks like'}{' '}
-                {LANG_NAMES[guess.lang]} — switch
-              </button>
-            )}
-          </label>
-
-          <label className="field">
             <span>Category</span>
             <select
               value={category}
@@ -239,18 +197,6 @@ export function AddWord({ settings }: Props) {
             </select>
           </label>
         </div>
-
-        <label className="field">
-          <span className="optional">
-            Which sense? <em>optional — only when the word is ambiguous</em>
-          </span>
-          <input
-            value={hint}
-            onChange={(e) => setHint(e.target.value)}
-            placeholder='e.g. "bank" as in river bank'
-            disabled={busy}
-          />
-        </label>
 
         {/* Check is the form's own button, so Enter runs the careful one.
             Add is deliberately the second tap: it writes the word with the

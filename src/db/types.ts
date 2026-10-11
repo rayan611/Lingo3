@@ -501,6 +501,16 @@ export const ExpansionSchema = z.object({
   tags: z.array(z.string().min(1).max(24)).max(4).optional(),
   /** The model may correct a typo or strip an article; we show this to the user. */
   normalisedLemma: z.string().optional(),
+  /**
+   * Which language the model read the input as. The Add box no longer asks,
+   * so this is how the concept learns its own `sourceLang` — and it is shown
+   * on the preview, because a word read as the wrong language is the one
+   * mistake that is cheap to catch here and expensive to catch in a month.
+   *
+   * Optional in the schema, required in both tool schemas: a model that
+   * omits it should cost us the label, not the whole expansion.
+   */
+  detectedLang: z.enum(LANGS as [Lang, ...Lang[]]).optional(),
   entries: z.array(ExpansionEntrySchema).min(1),
   related: z.array(RelatedWordSchema).max(6).optional(),
 })

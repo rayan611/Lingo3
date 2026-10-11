@@ -770,6 +770,81 @@ async function main() {
     }
   })
 
+  // The Add box no longer asks which language you typed in. Two things have
+  // to hold for that to be safe: a duplicate must still be found without
+  // being told, and the concept must end up labelled with whatever the model
+  // read it as rather than the provisional guess written before the call.
+  console.log('\nAdding a word without naming its language')
+  await check('a duplicate is found without being told the language', async () => {
+    const { previewWord, cachedPreviewCount, clearPreviewCache } = await import(
+      '../src/ai/expand'
+    )
+    clearPreviewCache()
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'fa' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv', 'de'] as Lang[],
+    }
+    const res = await previewWord({ lemma: 'word-0', settings })
+    if (res.status !== 'duplicate') throw new Error(`got ${res.status}`)
+    if (cachedPreviewCount() !== 0) throw new Error('a duplicate must cost nothing')
+  })
+  await check('a word filed under a language no longer studied is still a duplicate', async () => {
+    const { previewWord, clearPreviewCache } = await import('../src/ai/expand')
+    clearPreviewCache()
+    const id = newId()
+    await db.concepts.add({
+      id,
+      lemma: 'orphan-word',
+      sourceLang: 'ru',
+      pos: 'noun',
+      category: 'daily',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    })
+    // Russian is in neither list — the word predates the change.
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv'] as Lang[],
+      activeLangs: ['sv'] as Lang[],
+    }
+    const res = await previewWord({ lemma: 'orphan-word', settings })
+    if (res.status !== 'duplicate') throw new Error(`got ${res.status}`)
+    await db.concepts.delete(id)
+  })
+  await check('the concept is labelled with the language the model read', async () => {
+    const { commitPreview } = await import('../src/ai/expand')
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv', 'de'] as Lang[],
+    }
+    const result = await commitPreview({
+      preview: {
+        lemma: 'kaffe-test',
+        // No sourceLang: nobody said. detectedLang is the answer.
+        expansion: {
+          pos: 'noun',
+          detectedLang: 'sv',
+          entries: [
+            { lang: 'en', headword: 'coffee', meaning: 'coffee' },
+            { lang: 'sv', headword: 'ett kaffe-test', meaning: 'coffee' },
+            { lang: 'de', headword: 'der Kaffee-test', meaning: 'coffee' },
+          ],
+        },
+      },
+      category: 'daily',
+      settings,
+    })
+    const concept = await db.concepts.get(result.conceptId)
+    if (concept?.sourceLang !== 'sv') {
+      throw new Error(`got ${concept?.sourceLang}`)
+    }
+  })
+
   // A paused language is collected but not displayed. The two halves of that
   // sentence are enforced in different places — `activeTargets` on every
   // display path, `targetLangs` in `applyExpansion` — so both are asserted,

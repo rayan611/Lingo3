@@ -61,6 +61,17 @@ export function PreviewCard({
           </p>
         )}
 
+      {/* The Add box does not ask which language you typed in, so this line
+          is the only place a misreading shows before it reaches your cards —
+          and a word read as the wrong language is wrong in every field below
+          it, not just this one. */}
+      {preview.expansion.detectedLang && (
+        <p className="muted small">
+          Read as {LANG_NAMES[preview.expansion.detectedLang]}. If that is
+          wrong, add a word of context and check again.
+        </p>
+      )}
+
       {/* Suggested by the model, changed here if it guessed wrong, and
           editable again later from the word card. */}
       <TagEditor

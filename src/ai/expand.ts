@@ -1,4 +1,5 @@
 import { db, compositeId, lemmaKey, newId } from '../db/db'
+import { detectLang } from '../lib/detectLang'
 import { authConfigured, supabase } from '../auth/supabase'
 import { makeCard } from '../fsrs/scheduler'
 import {
@@ -41,7 +42,7 @@ export class ExpansionError extends Error {
 /** Calls the serverless endpoint and validates the result before it is trusted. */
 export async function fetchExpansion(opts: {
   lemma: string
-  sourceLang: Lang
+  sourceLang?: Lang
   nativeLang: Lang
   langs: Lang[]
   hint?: string
@@ -151,6 +152,10 @@ export async function applyExpansion(
             ? concept.tags
             : normaliseTags(expansion.tags),
         lemma: expansion.normalisedLemma?.trim() || concept.lemma,
+        // The Add box no longer asks which language you typed in, so until
+        // now this row has carried a provisional guess. This is the moment it
+        // becomes a fact.
+        sourceLang: expansion.detectedLang ?? concept.sourceLang,
         updatedAt: now,
       })
     }
@@ -183,33 +188,69 @@ export async function applyExpansion(
  * and the reading generator counts known words, so two concepts for one word
  * would quietly inflate the count and split its review history in half.
  */
-async function findExisting(lemma: string, sourceLang: Lang) {
-  const key = lemmaKey(lemma, sourceLang)
+async function findExisting(lemma: string, langs: readonly Lang[]) {
+  // The Add box no longer asks which language you typed in, so a duplicate is
+  // looked for under every language you have configured. That is strictly
+  // more than the old single-language search found, and it still runs before
+  // any model call: a word you already have costs nothing.
+  const keys = new Set(langs.map((l) => lemmaKey(lemma, l)))
 
   const byLemma = await db.concepts
-    .where('sourceLang')
-    .equals(sourceLang)
-    .filter((c) => !c.deletedAt && lemmaKey(c.lemma, c.sourceLang) === key)
+    .filter((c) => !c.deletedAt && keys.has(lemmaKey(c.lemma, c.sourceLang)))
     .first()
   if (byLemma) return byLemma
 
-  // Compare against the headwords already generated in that language. The
-  // article is stripped first, because entries store "en hund" / "der Hund"
-  // while you would type "hund".
-  const stripped = stripArticle(lemma, sourceLang)
+  // Compare against the headwords already generated. The article is stripped
+  // first, because entries store "en hund" / "der Hund" while you would type
+  // "hund".
+  const strippedKeys = new Set(
+    langs.map((l) => lemmaKey(stripArticle(lemma, l), l)),
+  )
   const match = await db.entries
     .where('lang')
-    .equals(sourceLang)
-    .filter(
-      (e) =>
-        lemmaKey(stripArticle(e.headword, e.lang), e.lang) ===
-        lemmaKey(stripped, sourceLang),
+    .anyOf(langs as string[])
+    .filter((e) =>
+      strippedKeys.has(lemmaKey(stripArticle(e.headword, e.lang), e.lang)),
     )
     .first()
   if (!match) return undefined
 
   const concept = await db.concepts.get(match.conceptId)
   return concept && !concept.deletedAt ? concept : undefined
+}
+
+/**
+ * Every language a typed word could plausibly be in.
+ *
+ * The configured ones, plus every language already filed under in this
+ * store. The second half matters after a language is removed: the Persian
+ * words added before the switch are still there, and typing one again should
+ * still find it rather than quietly making a second concept for the same
+ * idea.
+ *
+ * The cost of not being told the language is that `gift` typed in English
+ * can match `gift` filed in Swedish — different words, one spelling. The
+ * duplicate message names the word it matched, so that is visible rather
+ * than silent.
+ */
+async function candidateLangs(settings: Settings): Promise<Lang[]> {
+  const filed = (await db.concepts.orderBy('sourceLang').uniqueKeys()) as Lang[]
+  return [...new Set<Lang>([settings.nativeLang, ...settings.targetLangs, ...filed])]
+}
+
+/**
+ * What to write in `sourceLang` before the model has said anything.
+ *
+ * The concept row is written first so an offline add is never lost, but the
+ * column is indexed and not nullable. The offline heuristic fills it when it
+ * is willing to guess, the native language when it is not, and
+ * `applyExpansion` corrects it from `detectedLang` as soon as the expansion
+ * lands. Nothing reads it in between.
+ */
+function provisionalLang(lemma: string, settings: Settings): Lang {
+  const guess = detectLang(lemma)?.lang
+  const configured = [settings.nativeLang, ...settings.targetLangs]
+  return guess && configured.includes(guess) ? guess : settings.nativeLang
 }
 
 const ARTICLES: Partial<Record<Lang, string[]>> = {
@@ -239,7 +280,7 @@ export interface AddWordResult {
  */
 export async function addWord(opts: {
   lemma: string
-  sourceLang: Lang
+  sourceLang?: Lang
   category: Category
   hint?: string
   settings: Settings
@@ -249,7 +290,7 @@ export async function addWord(opts: {
   if (!lemma) throw new Error('Enter a word first.')
 
   // Dedupe before spending anything on the API.
-  const existing = await findExisting(lemma, opts.sourceLang)
+  const existing = await findExisting(lemma, await candidateLangs(settings))
   if (existing) {
     return {
       conceptId: existing.id,
@@ -262,7 +303,7 @@ export async function addWord(opts: {
   const concept: Concept = {
     id: newId(),
     lemma,
-    sourceLang: opts.sourceLang,
+    sourceLang: opts.sourceLang ?? provisionalLang(lemma, settings),
     pos: 'other',
     category: opts.category,
     notes: opts.hint,
@@ -310,7 +351,7 @@ export async function addWord(opts: {
 
 export interface WordPreview {
   lemma: string
-  sourceLang: Lang
+  sourceLang?: Lang
   hint?: string
   expansion: Expansion
 }
@@ -331,8 +372,8 @@ export type PreviewResult =
 const previewCache = new Map<string, Expansion>()
 const PREVIEW_CACHE_MAX = 50
 
-function previewKey(lemma: string, sourceLang: Lang, hint?: string): string {
-  return `${lemmaKey(lemma, sourceLang)}|${(hint ?? '').trim().toLocaleLowerCase()}`
+function previewKey(lemma: string, sourceLang: Lang | undefined, hint?: string): string {
+  return `${lemmaKey(lemma, sourceLang ?? 'auto')}|${(hint ?? '').trim().toLocaleLowerCase()}`
 }
 
 /** For tests and for the "expand again" button — forces the next call to be real. */
@@ -353,7 +394,7 @@ export function cachedPreviewCount(): number {
  */
 export async function previewWord(opts: {
   lemma: string
-  sourceLang: Lang
+  sourceLang?: Lang
   hint?: string
   settings: Settings
   force?: boolean
@@ -361,7 +402,7 @@ export async function previewWord(opts: {
   const lemma = opts.lemma.trim()
   if (!lemma) throw new Error('Enter a word first.')
 
-  const existing = await findExisting(lemma, opts.sourceLang)
+  const existing = await findExisting(lemma, await candidateLangs(opts.settings))
   if (existing) {
     return { status: 'duplicate', conceptId: existing.id, lemma: existing.lemma }
   }
@@ -401,11 +442,11 @@ export async function commitPreview(opts: {
   tags?: string[]
   settings: Settings
 }): Promise<AddWordResult> {
-  const { preview } = opts
+  const { preview, settings } = opts
 
   // Re-check: the word may have arrived from another device between the
   // preview and the confirmation.
-  const existing = await findExisting(preview.lemma, preview.sourceLang)
+  const existing = await findExisting(preview.lemma, await candidateLangs(settings))
   if (existing) {
     return {
       conceptId: existing.id,
@@ -418,7 +459,12 @@ export async function commitPreview(opts: {
   const concept: Concept = {
     id: newId(),
     lemma: preview.lemma,
-    sourceLang: preview.sourceLang,
+    // What the model read it as beats what we assumed, and if neither is
+    // available the heuristic fills in so the indexed column is never empty.
+    sourceLang:
+      preview.expansion.detectedLang ??
+      preview.sourceLang ??
+      provisionalLang(preview.lemma, settings),
     pos: preview.expansion.pos as PartOfSpeech,
     category: opts.category,
     tags: opts.tags?.length
@@ -513,7 +559,9 @@ export async function addWordsBulk(opts: {
     // Dedupe per line, and against words added earlier in this same paste —
     // findExisting reads the database, which the previous iteration has
     // already written to.
-    const existing = await findExisting(lemma, opts.sourceLang)
+    // A paste is one language by construction — the list came from one class
+    // — so the bulk path still says which, and looks only there.
+    const existing = await findExisting(lemma, [opts.sourceLang])
     if (existing) {
       duplicates.push({ lemma, existing: existing.lemma })
       continue
@@ -626,15 +674,16 @@ export const RELATED_STAGGER_DAYS = 3
  */
 export async function addRelatedWord(opts: {
   lemma: string
-  sourceLang: Lang
+  sourceLang?: Lang
   category: Category
   tags?: string[]
   settings: Settings
 }): Promise<AddWordResult> {
+  const { settings } = opts
   const lemma = opts.lemma.trim()
   if (!lemma) throw new Error('Nothing to add.')
 
-  const existing = await findExisting(lemma, opts.sourceLang)
+  const existing = await findExisting(lemma, await candidateLangs(settings))
   if (existing) {
     return {
       conceptId: existing.id,
@@ -647,7 +696,7 @@ export async function addRelatedWord(opts: {
   const concept: Concept = {
     id: newId(),
     lemma,
-    sourceLang: opts.sourceLang,
+    sourceLang: opts.sourceLang ?? provisionalLang(lemma, settings),
     pos: 'other',
     category: opts.category,
     tags: opts.tags?.length ? normaliseTags(opts.tags) : undefined,
