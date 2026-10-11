@@ -398,7 +398,10 @@ async function respond(req: Request): Promise<Response> {
         ? readGemini(await upstream.json())
         : readAnthropic(await upstream.json())
   } catch (err) {
-    return json({ error: `Could not read the answer: ${String(err)}` }, 502)
+    // The message, not the error object: readGemini turns the reasons a model
+    // stops into sentences meant for the person waiting for a text.
+    const why = err instanceof Error ? err.message : String(err)
+    return json({ error: why }, 502)
   }
 
   if (!story) return json({ error: 'Model did not return a usable text.' }, 502)
@@ -435,29 +438,97 @@ export function readAnthropic(data: unknown): unknown {
   return block?.input ?? null
 }
 
-function callGemini(prompt: string, key: string, signal: AbortSignal) {
-  return fetch(`${GEMINI_URL(MODEL)}?key=${encodeURIComponent(key)}`, {
-    method: 'POST',
-    signal,
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.8,
-        maxOutputTokens: 2048,
-        responseMimeType: 'application/json',
-        responseSchema: GEMINI_SCHEMA,
-      },
-    }),
+/**
+ * `maxOutputTokens` is the ceiling on everything the model generates, and on a
+ * thinking model that includes the thinking. At 2048 a story was reliably cut
+ * off mid-sentence: the reasoning spent the budget, generation stopped partway
+ * through the JSON, and the client reported `Unterminated string in JSON`
+ * — a parse error standing in for "the model ran out of room".
+ *
+ * Two changes, both needed. A bigger ceiling, and `thinkingLevel: 'low'`:
+ * Google's own advice is to lower the thinking level rather than squeeze the
+ * token ceiling, because the ceiling is a hard cut and does not make the model
+ * reason more briefly. A few sentences built from a given word list is not a
+ * task that wants deep reasoning anyway.
+ */
+const MAX_OUTPUT_TOKENS = 8192
+const THINKING_LEVEL = 'low'
+
+function geminiBody(prompt: string, withThinking: boolean) {
+  return JSON.stringify({
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.8,
+      maxOutputTokens: MAX_OUTPUT_TOKENS,
+      responseMimeType: 'application/json',
+      responseSchema: GEMINI_SCHEMA,
+      ...(withThinking ? { thinkingLevel: THINKING_LEVEL } : {}),
+    },
   })
 }
 
+async function callGemini(prompt: string, key: string, signal: AbortSignal) {
+  const url = `${GEMINI_URL(MODEL)}?key=${encodeURIComponent(key)}`
+  const send = (withThinking: boolean) =>
+    fetch(url, {
+      method: 'POST',
+      signal,
+      headers: { 'content-type': 'application/json' },
+      body: geminiBody(prompt, withThinking),
+    })
+
+  const res = await send(true)
+  if (res.status !== 400) return res
+
+  // `thinkingLevel` is model-specific: the levels differ between families and
+  // older models do not take the field at all. LINGUA_STORY_MODEL can point at
+  // any of them, so a 400 that names the field is answered by sending the same
+  // request without it rather than by leaving the feature dead.
+  const detail = await res.text()
+  if (!/thinking/i.test(detail)) {
+    return new Response(detail, { status: 400, headers: res.headers })
+  }
+  return send(false)
+}
+
+/** Everything other than a clean stop, in the words the client should show. */
+const STOP_REASONS: Record<string, string> = {
+  MAX_TOKENS:
+    'The model ran out of room before finishing the text. Try the shorter length.',
+  SAFETY: 'The model declined to write this text.',
+  RECITATION: 'The model stopped itself to avoid quoting a source.',
+  PROHIBITED_CONTENT: 'The model declined to write this text.',
+}
+
 export function readGemini(data: unknown): unknown {
-  const text = (
+  const candidate = (
     data as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+      candidates?: Array<{
+        finishReason?: string
+        content?: { parts?: Array<{ text?: string; thought?: boolean }> }
+      }>
     }
-  ).candidates?.[0]?.content?.parts?.[0]?.text
+  ).candidates?.[0]
+
+  // Checked before parsing, and deliberately: a truncated answer is still a
+  // string, so JSON.parse reports where it broke rather than why. The reason
+  // is right here in the response and is the only part worth showing.
+  const reason = candidate?.finishReason
+  if (reason && reason !== 'STOP') {
+    throw new Error(STOP_REASONS[reason] ?? `The model stopped early (${reason}).`)
+  }
+
+  // A thinking model can return its reasoning as parts of its own. Those carry
+  // thought: true and are not JSON; the answer is what is left.
+  const text = (candidate?.content?.parts ?? [])
+    .filter((p) => !p.thought && typeof p.text === 'string')
+    .map((p) => p.text)
+    .join('')
+
   if (!text) return null
-  return JSON.parse(text)
+  try {
+    return JSON.parse(text)
+  } catch {
+    throw new Error('The model returned something that was not a complete text.')
+  }
 }

@@ -199,6 +199,68 @@ for (const [name, call] of [
   )
 }
 
+// ---------------------------------------------------------------------------
+// A cut-off answer must say it was cut off
+//
+// A story that stops partway is still a string, so JSON.parse reports where it
+// broke and never why. The reason was in the response the whole time, in
+// finishReason, and nothing read it — the user saw
+// "Unterminated string in JSON at position 203" and no way to act on it. Same
+// lesson as the four-layer expansion failure: the answer was in hand and
+// displayed nowhere.
+// ---------------------------------------------------------------------------
+
+const { readGemini: readStoryGemini } = await import('../api/story')
+
+console.log('\nThe story reader explains why a model stopped')
+
+const whole = readStoryGemini({
+  candidates: [
+    {
+      finishReason: 'STOP',
+      content: {
+        parts: [{ text: JSON.stringify({ title: 'En vanlig morgon', body: 'Hunden springer.', glossary: [] }) }],
+      },
+    },
+  ],
+}) as { title?: string }
+check('story: a complete answer is parsed', whole?.title === 'En vanlig morgon', JSON.stringify(whole))
+
+let truncatedError = ''
+try {
+  readStoryGemini({
+    candidates: [
+      {
+        finishReason: 'MAX_TOKENS',
+        content: { parts: [{ text: '{\n "title": "En dag",\n "body": "Hunden spring' }] },
+      },
+    ],
+  })
+} catch (err) {
+  truncatedError = err instanceof Error ? err.message : String(err)
+}
+check(
+  'story: a truncated answer reports the budget, not a JSON position',
+  truncatedError.length > 0 && !/JSON|position/i.test(truncatedError),
+  truncatedError || 'no error thrown',
+)
+
+// A thinking model can return its reasoning as parts of its own; those are not
+// JSON and must not be concatenated into the answer or read in its place.
+const withThought = readStoryGemini({
+  candidates: [
+    {
+      finishReason: 'STOP',
+      content: {
+        parts: [
+          { thought: true, text: 'The reader knows hund and springa, so...' },
+          { text: JSON.stringify({ title: 'Hunden', body: 'Hunden springer.', glossary: [] }) },
+        ],
+      },
+    },
+  ],
+}) as { title?: string }
+check('story: a thought part is skipped, not parsed', withThought?.title === 'Hunden', JSON.stringify(withThought))
 
 // ---------------------------------------------------------------------------
 // No relative imports inside api/
