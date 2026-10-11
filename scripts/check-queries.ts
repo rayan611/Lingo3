@@ -699,7 +699,15 @@ async function main() {
   })
   await check('committing a preview writes entries and cards, not a second call', async () => {
     const { commitPreview } = await import('../src/ai/expand')
-    const settings = await ensureSettings()
+    // Spelled out rather than taken from the defaults: what this case is
+    // about is one entry per language and one card per target, and it should
+    // not start failing the day the new-account defaults change.
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'fa' as Lang,
+      targetLangs: ['sv', 'de', 'en'] as Lang[],
+      activeLangs: ['sv', 'de', 'en'] as Lang[],
+    }
     const result = await commitPreview({
       preview: {
         lemma: 'previewed',

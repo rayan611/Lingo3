@@ -4,6 +4,7 @@ import type { Grade } from 'ts-fsrs'
 import { db } from '../db/db'
 import { buildQueue, queueCounts, type QueueItem } from '../fsrs/queue'
 import { SuggestionBox } from './Suggestions'
+import { SpeakButton } from './SpeakButton'
 import {
   GRADES,
   GRADE_HINTS,
@@ -364,8 +365,17 @@ function LanguageAnswer({
         {gender && <span className={`gender gender-${gender}`}>{gender}</span>}
       </div>
 
-      <div className="answer-word" lang={LANG_BCP47[card.lang]}>
-        {entry?.headword ?? '—'}
+      {/* Only after the answer is showing, which it always is here — the
+          whole card is the answer. Hearing the word is part of knowing it,
+          and the pronunciation is exactly what a written headword cannot
+          give you. */}
+      <div className="answer-word-row">
+        <div className="answer-word" lang={LANG_BCP47[card.lang]}>
+          {entry?.headword ?? '—'}
+        </div>
+        {entry?.headword && (
+          <SpeakButton text={entry.headword} lang={card.lang as Lang} />
+        )}
       </div>
 
       {/*
@@ -395,8 +405,16 @@ function LanguageAnswer({
         where reading it is the point.
       */}
       {entry?.example && (
-        <div className="example" lang={LANG_BCP47[card.lang]}>
-          {entry.example}
+        <div className="example-row">
+          <div className="example" lang={LANG_BCP47[card.lang]}>
+            {entry.example}
+          </div>
+          <SpeakButton
+            text={entry.example}
+            lang={card.lang as Lang}
+            size="sm"
+            label="Listen to the example"
+          />
         </div>
       )}
       {entry?.notes && <div className="note">{entry.notes}</div>}
@@ -458,8 +476,13 @@ function UpcomingAnswer({
         </span>
       </div>
 
-      <div className="answer-word" lang={LANG_BCP47[card.lang]}>
-        {entry?.headword ?? '—'}
+      <div className="answer-word-row">
+        <div className="answer-word" lang={LANG_BCP47[card.lang]}>
+          {entry?.headword ?? '—'}
+        </div>
+        {entry?.headword && (
+          <SpeakButton text={entry.headword} lang={card.lang as Lang} size="sm" />
+        )}
       </div>
       {entry?.example && (
         <div className="example" lang={LANG_BCP47[card.lang]}>

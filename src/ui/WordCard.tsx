@@ -9,6 +9,7 @@ import {
 import { genderBadge, morphLines } from '../lib/morphology'
 import { normaliseTags } from '../ai/expand'
 import { TagEditor } from './TagEditor'
+import { SpeakButton } from './SpeakButton'
 import { PARTS_OF_SPEECH, type PartOfSpeech } from '../db/types'
 
 /**
@@ -114,11 +115,14 @@ export function WordCard({
                 )}
                 {inactive && <span className="badge subtle">paused</span>}
               </div>
-              <div
-                className={`answer-word ${RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}
-                lang={LANG_BCP47[entry.lang]}
-              >
-                {entry.headword}
+              <div className="answer-word-row">
+                <div
+                  className={`answer-word ${RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}
+                  lang={LANG_BCP47[entry.lang]}
+                >
+                  {entry.headword}
+                </div>
+                <SpeakButton text={entry.headword} lang={entry.lang} />
               </div>
               <div className="answer-meaning">{entry.meaning}</div>
 
@@ -135,6 +139,12 @@ export function WordCard({
 
               {entry.example && (
                 <div className="example" lang={LANG_BCP47[entry.lang]}>
+                  <SpeakButton
+                    text={entry.example}
+                    lang={entry.lang}
+                    size="sm"
+                    label="Listen to the example"
+                  />{' '}
                   {entry.example}
                   {entry.exampleGloss && !isNative && (
                     <div

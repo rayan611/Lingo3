@@ -420,11 +420,23 @@ export interface Settings {
   updatedAt: number
 }
 
+/**
+ * What a brand-new account starts with.
+ *
+ * English as the native language and Swedish as the one target: this is what
+ * someone who has just found the app gets, and they are far more likely to
+ * read English than Persian. Both are changed in Settings in two taps, and
+ * nothing here touches an account that already exists — these values are only
+ * read when a settings row is first created.
+ *
+ * One target rather than three, deliberately. Three languages on day one is
+ * three cards due for every word before you know whether you like the app.
+ */
 export const DEFAULT_SETTINGS: Settings = {
   id: 'singleton',
-  nativeLang: 'fa',
-  targetLangs: ['sv', 'de', 'en'],
-  activeLangs: ['sv', 'de', 'en'],
+  nativeLang: 'en',
+  targetLangs: ['sv'],
+  activeLangs: ['sv'],
   dailyNewLimit: 15,
   dailyReviewLimit: 150,
   requestRetention: 0.9,

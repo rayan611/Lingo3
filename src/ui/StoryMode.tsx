@@ -11,6 +11,7 @@ import {
   type GeneratedStory,
   type StoryRequest,
 } from '../ai/story'
+import { SpeakButton } from './SpeakButton'
 import { addRelatedWord } from '../ai/expand'
 import {
   LANG_BCP47,
@@ -351,6 +352,10 @@ function StoryView({
     <div className="panel story">
       <div className="word-card-head">
         <h3 lang={LANG_BCP47[lang]}>{title}</h3>
+        {/* The whole text, read aloud. A text you can hear is worth more than
+            one you can only read — and hearing where the words break is most
+            of what a beginner cannot get off the page. */}
+        <SpeakButton text={`${title}. ${body}`} lang={lang} label="Read this text aloud" />
         <span
           className={`badge ${pct >= 95 ? '' : 'flag'}`}
           title="Words in this text that are already in your list. Comprehension holds up around 95% and above."
@@ -366,6 +371,7 @@ function StoryView({
       {picked && (
         <div className="story-lookup">
           <strong lang={LANG_BCP47[lang]}>{picked.word}</strong>
+          <SpeakButton text={picked.word} lang={lang} size="sm" />
           {picked.meaning ? (
             <>
               <span> — {picked.meaning}</span>

@@ -9,6 +9,7 @@ import {
 import type { WordPreview } from '../ai/expand'
 import { genderBadge, morphLines } from '../lib/morphology'
 import { TagEditor } from './TagEditor'
+import { SpeakButton } from './SpeakButton'
 
 /**
  * What a word would look like if you saved it.
@@ -81,11 +82,14 @@ export function PreviewCard({
                   <span className={`gender gender-${gender}`}>{gender}</span>
                 )}
               </div>
-              <div
-                className={`answer-word ${RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}
-                lang={LANG_BCP47[entry.lang]}
-              >
-                {entry.headword}
+              <div className="answer-word-row">
+                <div
+                  className={`answer-word ${RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}
+                  lang={LANG_BCP47[entry.lang]}
+                >
+                  {entry.headword}
+                </div>
+                <SpeakButton text={entry.headword} lang={entry.lang} />
               </div>
               <div className="answer-meaning">{entry.meaning}</div>
 
@@ -102,6 +106,12 @@ export function PreviewCard({
 
               {entry.example && (
                 <div className="example" lang={LANG_BCP47[entry.lang]}>
+                  <SpeakButton
+                    text={entry.example}
+                    lang={entry.lang}
+                    size="sm"
+                    label="Listen to the example"
+                  />{' '}
                   {entry.example}
                   {entry.exampleGloss && !isNative && (
                     <div

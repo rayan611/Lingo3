@@ -49,11 +49,15 @@ export function AddWord({ settings }: Props) {
   const [lastId, setLastId] = useState<string | null>(null)
   const [preview, setPreview] = useState<WordPreview | null>(null)
   /**
-   * Skip the confirmation step. The flow underneath is identical either way —
-   * expand, then write — so this is one branch at the end, not a second path
-   * through the code.
+   * Which button was pressed, while it is working.
+   *
+   * Check and Add are two buttons rather than one button and a checkbox: a
+   * checkbox that silently changes what the button next to it does is a mode
+   * you have to remember being in. Two buttons say what will happen before
+   * you press either. The flow underneath is identical — expand, then write —
+   * so this is one branch at the end, not a second path through the code.
    */
-  const [quick, setQuick] = useState(false)
+  const [mode, setMode] = useState<'check' | 'add' | null>(null)
   /** The tags that will be saved — seeded by the model, edited here. */
   const [draftTags, setDraftTags] = useState<string[]>([])
   /**
@@ -95,9 +99,9 @@ export function AddWord({ settings }: Props) {
     [],
   )
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
+  async function run(which: 'check' | 'add') {
     if (!lemma.trim() || busy) return
+    setMode(which)
     setBusy(true)
     setStatus(null)
     setPreview(null)
@@ -123,7 +127,7 @@ export function AddWord({ settings }: Props) {
 
       setRelated(result.preview.expansion.related ?? [])
       const suggested = normaliseTags(result.preview.expansion.tags)
-      if (quick) {
+      if (which === 'add') {
         await save(result.preview, suggested)
       } else {
         setDraftTags(suggested)
@@ -133,6 +137,7 @@ export function AddWord({ settings }: Props) {
       setStatus({ kind: 'error', text: err instanceof Error ? err.message : String(err) })
     } finally {
       setBusy(false)
+      setMode(null)
     }
   }
 
@@ -174,7 +179,10 @@ export function AddWord({ settings }: Props) {
 
   return (
     <div className="stack">
-      <form className="panel" onSubmit={submit}>
+      <form className="panel" onSubmit={(e) => {
+          e.preventDefault()
+          void run('check')
+        }}>
         <h2>Add a word</h2>
         <p className="muted small">
           One entry becomes {settings.targetLangs.length} languages, with genders
@@ -243,21 +251,26 @@ export function AddWord({ settings }: Props) {
           />
         </label>
 
-        <button className="primary" type="submit" disabled={busy || !lemma.trim()}>
-          {busy ? 'Expanding…' : quick ? 'Add' : 'Check'}
-        </button>
-
-        <label className="checkline">
-          <input
-            type="checkbox"
-            checked={quick}
-            onChange={(e) => setQuick(e.target.checked)}
-          />
-          <span>
-            Quick add — save straight away with the suggested topics, without
-            showing it first
-          </span>
-        </label>
+        {/* Check is the form's own button, so Enter runs the careful one.
+            Add is deliberately the second tap: it writes the word with the
+            model's suggested topics and no look at what came back. */}
+        <div className="add-actions">
+          <button type="submit" disabled={busy || !lemma.trim()}>
+            {busy && mode === 'check' ? 'Checking…' : 'Check'}
+          </button>
+          <button
+            type="button"
+            className="primary"
+            disabled={busy || !lemma.trim()}
+            onClick={() => void run('add')}
+          >
+            {busy && mode === 'add' ? 'Adding…' : 'Add'}
+          </button>
+        </div>
+        <p className="muted small">
+          Check shows you what the model made of it, with an Add button under
+          it. Add saves it straight away.
+        </p>
 
         {status && <div className={`status ${status.kind}`}>{status.text}</div>}
       </form>

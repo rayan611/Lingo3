@@ -49,6 +49,14 @@ async function seed(lemma: string, langs: Lang[]) {
 }
 
 async function main() {
+  // The three target languages this whole file is about are set here rather
+  // than inherited from the new-account defaults, which are one language and
+  // deliberately so. A product default is not a fixture.
+  await saveSettings({
+    nativeLang: 'fa',
+    targetLangs: ['sv', 'de', 'en'],
+    activeLangs: ['sv', 'de', 'en'],
+  })
   const settings = await getSettings()
   console.log('\n1. Independent scheduling per language')
   const id = await seed('sag', ['sv', 'de', 'en'])

@@ -1182,6 +1182,40 @@ kbd {
   font-size: 0.78rem;
 }
 
+/* Check beside Add, equal width on a phone so neither is the accidental tap. */
+.add-actions { display: flex; gap: 10px; margin-top: 18px; }
+.add-actions button { flex: 1; padding: 12px; font-size: 0.95rem; }
+
+/* The headword and its speaker on one line, with the button pushed to the
+   right so a long word never shoves it off the card. */
+.answer-word-row { display: flex; align-items: center; gap: 10px; }
+.answer-word-row .answer-word { flex: 1; min-width: 0; }
+.example-row { display: flex; align-items: flex-start; gap: 8px; }
+.example-row .example { flex: 1; min-width: 0; }
+
+/* --- speak ----------------------------------------------------------------
+   A quiet circle, the same shape as the tab chips so the app has one kind of
+   icon button. It only ever appears when the device has a voice for that
+   language, so it never sits there dead. */
+.speak {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-tint);
+  color: var(--ink-soft);
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background-color 0.15s, color 0.15s;
+}
+.speak-sm { width: 23px; height: 23px; }
+.speak:hover { color: var(--accent); }
+.speak.speaking { background: var(--accent-soft); color: var(--accent-ink); }
+
 /* --- collapsed panels ------------------------------------------------------
    A shut <details> inside a panel: the bulk-add box and the feedback box at
    the foot of a screen. The summary carries the panel's own heading, so the
