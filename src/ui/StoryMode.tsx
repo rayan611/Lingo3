@@ -79,6 +79,26 @@ export function StoryMode({ settings }: { settings: Settings }) {
     0,
   )
 
+  /**
+   * How many words in this language come up for review within the week.
+   *
+   * The generator puts these at the front of the vocabulary it sends, so a
+   * morning text doubles as a review pass. Saying the number here is what
+   * makes that visible — otherwise it is a silent change in what the text is
+   * built from.
+   */
+  const dueThisWeek = useLiveQuery(
+    async () => {
+      const horizon = Date.now() + 7 * 24 * 60 * 60 * 1000
+      const cards = await db.cards.where('lang').equals(lang).toArray()
+      return new Set(
+        cards.filter((c) => !c.suspended && c.due <= horizon).map((c) => c.conceptId),
+      ).size
+    },
+    [lang],
+    0,
+  )
+
   async function run() {
     setBusy(true)
     setError(null)
@@ -112,6 +132,13 @@ export function StoryMode({ settings }: { settings: Settings }) {
           {wordCount < 150 && ' — expect it to lean on simple words until there are a few hundred'}
           .
         </p>
+        {dueThisWeek > 0 && (
+          <p className="muted small">
+            {dueThisWeek} of them come up for review this week, and the text
+            will favour those — reading it is a pass over them before they are
+            due.
+          </p>
+        )}
 
         <div className="row">
           <label className="field">
@@ -354,7 +381,12 @@ function StoryView({
         {/* The whole text, read aloud. A text you can hear is worth more than
             one you can only read — and hearing where the words break is most
             of what a beginner cannot get off the page. */}
-        <SpeakButton text={`${title}. ${body}`} lang={lang} label="Read this text aloud" />
+        <SpeakButton
+          text={`${title}. ${body}`}
+          lang={lang}
+          label="Read this text aloud"
+          rate={settings.speechRate}
+        />
         <span
           className={`badge ${pct >= 95 ? '' : 'flag'}`}
           title="Words in this text that are already in your list. Comprehension holds up around 95% and above."
@@ -370,7 +402,12 @@ function StoryView({
       {picked && (
         <div className="story-lookup">
           <strong lang={LANG_BCP47[lang]}>{picked.word}</strong>
-          <SpeakButton text={picked.word} lang={lang} size="sm" />
+          <SpeakButton
+            text={picked.word}
+            lang={lang}
+            size="sm"
+            rate={settings.speechRate}
+          />
           {picked.meaning ? (
             <>
               <span> — {picked.meaning}</span>

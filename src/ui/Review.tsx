@@ -23,6 +23,7 @@ import {
   type Settings,
 } from '../db/types'
 import { genderBadge, morphLines } from '../lib/morphology'
+import { speak, stopSpeaking } from '../lib/speak'
 
 interface Props {
   settings: Settings
@@ -83,6 +84,29 @@ export function Review({ settings, onExit }: Props) {
     setIndex((i) => i + 1)
     setSessionCount((c) => c + 1)
   }, [])
+
+  /**
+   * Speak the answer once, as soon as it is revealed.
+   *
+   * Only the first due language: three in a row is a queue you would have to
+   * sit through before grading anything. It runs on `revealed` rather than in
+   * the reveal handler so that it fires however the answer was revealed —
+   * space, the button, or submitting a typed answer — and the index is in the
+   * dependency list so moving to the next word cannot replay the last one.
+   */
+  const speakOnReveal = settings.speakOnReveal ?? true
+  const firstDue = item?.dueCards[0]
+  const firstHeadword = firstDue
+    ? item?.entries.find((e) => e.lang === firstDue.lang)?.headword
+    : undefined
+  useEffect(() => {
+    if (!revealed || !speakOnReveal || !firstDue || !firstHeadword) return
+    speak(firstHeadword, firstDue.lang as Lang, { rate: settings.speechRate })
+  }, [revealed, speakOnReveal, firstDue, firstHeadword, settings.speechRate, index])
+
+  // Anything mid-sentence stops when the screen goes away, rather than
+  // carrying on over whatever comes next.
+  useEffect(() => () => stopSpeaking(), [])
 
   // The language you have chosen to produce rather than merely recognise.
   const typedLang =
@@ -375,7 +399,11 @@ function LanguageAnswer({
           {entry?.headword ?? '—'}
         </div>
         {entry?.headword && (
-          <SpeakButton text={entry.headword} lang={card.lang as Lang} />
+          <SpeakButton
+            text={entry.headword}
+            lang={card.lang as Lang}
+            rate={settings.speechRate}
+          />
         )}
       </div>
 
@@ -415,6 +443,7 @@ function LanguageAnswer({
             lang={card.lang as Lang}
             size="sm"
             label="Listen to the example"
+            rate={settings.speechRate}
           />
         </div>
       )}

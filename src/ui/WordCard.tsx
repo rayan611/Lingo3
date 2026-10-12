@@ -121,7 +121,11 @@ export function WordCard({
                 >
                   {entry.headword}
                 </div>
-                <SpeakButton text={entry.headword} lang={entry.lang} />
+                <SpeakButton
+                  text={entry.headword}
+                  lang={entry.lang}
+                  rate={settings.speechRate}
+                />
               </div>
               <div className="answer-meaning">{entry.meaning}</div>
 
@@ -143,6 +147,7 @@ export function WordCard({
                     lang={entry.lang}
                     size="sm"
                     label="Listen to the example"
+                    rate={settings.speechRate}
                   />{' '}
                   {entry.example}
                   {entry.exampleGloss && !isNative && (

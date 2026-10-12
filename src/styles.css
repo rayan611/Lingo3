@@ -127,7 +127,7 @@ p { margin: 0.4rem 0; }
 
 .topbar {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 12px;
   padding: 22px 0 14px;
@@ -138,10 +138,14 @@ p { margin: 0.4rem 0; }
   letter-spacing: -0.015em;
 }
 .logo { display: block; flex: none; }
-.topbar-greeting {
-  text-align: center;
+/* Set off from the app name by a thin rule rather than a gap, so the two
+   read as one line with two parts instead of two competing titles. */
+.brand-greeting {
   color: var(--ink-soft);
   font-size: 0.95rem;
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid var(--line);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -267,8 +271,8 @@ p { margin: 0.4rem 0; }
    app this is and the language line is live state, but you know your own
    name. */
 @media (max-width: 560px) {
-  .topbar { grid-template-columns: auto 1fr; padding: 16px 0 12px; }
-  .topbar-greeting { display: none; }
+  .topbar { padding: 16px 0 12px; }
+  .brand-greeting { display: none; }
 }
 .tab-badge {
   background: var(--accent);
@@ -1183,8 +1187,32 @@ kbd {
 }
 
 /* Check beside Add, equal width on a phone so neither is the accidental tap. */
-.add-actions { display: flex; gap: 10px; margin-top: 18px; }
-.add-actions button { flex: 1; padding: 12px; font-size: 0.95rem; }
+/* Each button carries its own one-line description, so the two are columns
+   rather than a row of buttons with one shared paragraph underneath — a
+   shared paragraph cannot say which button it is describing. */
+.add-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  align-items: stretch;
+}
+.add-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.add-action button { width: 100%; padding: 12px; font-size: 0.95rem; }
+.add-action .small { text-align: center; line-height: 1.35; }
+@media (max-width: 460px) {
+  .add-actions { flex-direction: column; }
+}
+
+/* The collision block is a status, not a dialog: it does not cover the form,
+   because the answer to "is this the same word?" is often in the word you
+   can still see in the box above it. */
+.collision p { margin: 0 0 8px; }
+.collision .row { margin-top: 10px; flex-wrap: wrap; }
 
 /* The headword and its speaker on one line, with the button pushed to the
    right so a long word never shoves it off the card. */

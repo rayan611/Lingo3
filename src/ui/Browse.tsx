@@ -3,13 +3,22 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { reExpand } from '../ai/expand'
 import { isIncomplete } from '../lib/morphology'
-import { activeTargets, type Settings } from '../db/types'
+import { PARTS_OF_SPEECH, activeTargets, type Settings } from '../db/types'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
 
 export function Browse({ settings }: Props) {
   const [query, setQuery] = useState('')
   const [topic, setTopic] = useState<string>('all')
+  /**
+   * Filter by part of speech.
+   *
+   * `pos` has been on every concept since v1 and was shown as a badge and
+   * nothing else — there was no way to ask for all your prepositions, which
+   * is exactly how prepositions and adverbs are best drilled. The data was
+   * already there; only the control was missing.
+   */
+  const [pos, setPos] = useState<string>('all')
   const [troubleOnly, setTroubleOnly] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -75,11 +84,12 @@ export function Browse({ settings }: Props) {
     return all.filter((c) => {
       if (c.deletedAt) return false
       if (!matchesTopic(c, topic)) return false
+      if (pos !== 'all' && c.pos !== pos) return false
       if (troubleOnly && !leeches.has(c.id)) return false
       if (!q) return true
       return c.lemma.toLocaleLowerCase().includes(q)
     })
-  }, [query, topic, troubleOnly, leeches], [])
+  }, [query, topic, pos, troubleOnly, leeches], [])
 
   /** Every topic in use, from tags and from the old single category field. */
   const topics = useLiveQuery(
@@ -161,6 +171,18 @@ export function Browse({ settings }: Props) {
             {topics.map((t) => (
               <option key={t} value={t}>
                 {t}
+              </option>
+            ))}
+          </select>
+          <select
+            value={pos}
+            onChange={(e) => setPos(e.target.value)}
+            aria-label="Part of speech"
+          >
+            <option value="all">Any kind</option>
+            {PARTS_OF_SPEECH.map((p) => (
+              <option key={p} value={p}>
+                {p}
               </option>
             ))}
           </select>

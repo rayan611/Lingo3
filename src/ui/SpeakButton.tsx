@@ -17,11 +17,14 @@ export function SpeakButton({
   lang,
   size = 'md',
   label,
+  rate,
 }: {
   text: string
   lang: Lang
   size?: 'sm' | 'md'
   label?: string
+  /** The speaking rate from Settings; the module's own default when absent. */
+  rate?: number
 }) {
   const [speaking, setSpeaking] = useState(false)
 
@@ -37,7 +40,7 @@ export function SpeakButton({
       setSpeaking(false)
       return
     }
-    speak(text, lang)
+    speak(text, lang, { rate })
     setSpeaking(true)
     // speechSynthesis fires `end` on the utterance, but not reliably when it
     // is cancelled mid-sentence on some browsers, so the button also clears

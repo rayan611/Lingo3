@@ -417,6 +417,29 @@ export interface Settings {
    * the app on this device, not something about your account.
    */
   autoAdvance?: boolean
+  /**
+   * Speak the answer as soon as it is revealed, rather than waiting for the
+   * speaker to be tapped.
+   *
+   * On by default, which is the opposite of autoAdvance above and for a
+   * reason: an extra tap is exactly the friction that stops you ever hearing
+   * the word, and in Swedish the spelling does not tell you how it sounds.
+   * Only the first due language speaks — three languages in a row would be a
+   * queue you have to sit through before you can grade anything.
+   *
+   * Device-local, like typedLang and the theme, and more so than either:
+   * which voices are installed is a property of the device, so a preference
+   * about speaking does not travel sensibly to another one.
+   */
+  speakOnReveal?: boolean
+  /**
+   * How fast the voices speak, as the Web Speech API's rate multiplier.
+   *
+   * Slower than natural by default. The point of hearing a word in a review
+   * is to catch where it breaks and which vowel is long, not to practise
+   * listening at conversational pace — that is what Reading is for.
+   */
+  speechRate?: number
   updatedAt: number
 }
 

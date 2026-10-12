@@ -222,17 +222,17 @@ function Workspace({
 
   return (
     <div className="app">
-      {/* Three zones: who the app is, who you are, what you are studying.
-          On a phone the greeting drops out before the other two, because the
-          mark identifies the app and the language line is the one piece of
-          state worth seeing on every screen. */}
+      {/* Two zones: who you are in this app, and what you are studying.
+          The greeting sits with the mark rather than in a column of its own —
+          centred, it read as a third unrelated thing and was the first to be
+          squeezed out on a phone. Beside the name it is one phrase. */}
       <header className="topbar">
         <div className="brand-block">
           <Logo />
           <span className="brand">Lingu3</span>
-        </div>
-        <div className="topbar-greeting">
-          {settings.displayName && <span>Hej {settings.displayName}</span>}
+          {settings.displayName && (
+            <span className="brand-greeting">Hej {settings.displayName}</span>
+          )}
         </div>
         <div className="topbar-meta">
           <span className="brand-sub">{learningLine(settings)}</span>

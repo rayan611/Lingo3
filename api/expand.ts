@@ -157,7 +157,7 @@ const TOOL = {
         type: 'array',
         items: { type: 'string' },
         description:
-          'One to three lowercase topic tags for where this word is used: everyday, food, restaurant, shopping, travel, work, home, health, school, nature, feelings, time, numbers. Invent one only when none of those fit. These are topics, not grammar — the part of speech is the field above.',
+          'One to three lowercase topic tags. Where the word is used: everyday, food, restaurant, shopping, travel, work, home, health, school, nature, feelings, numbers. Or what it does, for words drilled as a grammatical set: prepositions, time, place, adverbs, word order, tenses, adjectives — "time" and "place" by what the word expresses, not its part of speech. Invent one only when none fit. This is not the part of speech, which is the field above.',
       },
       normalisedLemma: {
         type: 'string',
@@ -282,11 +282,21 @@ you. Same for du/ni, jobba/arbeta. Label each with a one-or-two-word register
 and a short note on when to reach for it. Return fewer, or none, rather than
 padding the list with words that are merely adjacent.
 
-TOPICS — also return one to three lowercase topic tags saying where the word
-is used: everyday, food, restaurant, shopping, travel, work, home, health,
-school, nature, feelings, time, numbers. Invent a tag only when none of those
-fit. A word is routinely more than one thing, so more than one tag is normal.
-These are topics, not grammar — the part of speech is its own field.
+TOPICS — also return one to three lowercase topic tags for this word. Two
+kinds are useful, and a word often wants one of each.
+
+Where it is used: everyday, food, restaurant, shopping, travel, work, home,
+health, school, nature, feelings, numbers.
+
+What it does grammatically, when the word is one a learner drills as a set
+rather than as vocabulary: prepositions, time, place, adverbs, word order,
+tenses, adjectives. Tag "time" and "place" by what the word expresses, not by
+its part of speech — "igår", "snart" and "i morse" are all time; "hemma",
+"utomlands" and "bredvid" are all place. Only reach for these when the word
+really belongs to such a set; most nouns do not.
+
+Invent a tag only when none of those fit. More than one tag is normal. These
+are not the part of speech, which is its own field.
 
 SENSE — pick ONE sense, the most common everyday one, and use that sense
 consistently in every language. A word with several unrelated senses should

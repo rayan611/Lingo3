@@ -845,6 +845,174 @@ async function main() {
     }
   })
 
+  // Saying which language you meant is the way past a spelling that two
+  // languages share — `gift` is Swedish for married and English for present.
+  // It has to narrow the lookup rather than switch it off, so a real
+  // duplicate in the named language is still caught.
+  console.log('\nNaming a language gets past a shared spelling')
+  await check('a collision in another language is described, not just refused', async () => {
+    const { previewWord, clearPreviewCache } = await import('../src/ai/expand')
+    clearPreviewCache()
+    const id = newId()
+    await db.concepts.add({
+      id,
+      lemma: 'collide-word',
+      sourceLang: 'sv',
+      pos: 'adjective',
+      category: 'daily',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    })
+    await db.entries.put({
+      id: compositeId(id, 'en'),
+      conceptId: id,
+      lang: 'en',
+      headword: 'married',
+      meaning: 'married',
+      updatedAt: Date.now(),
+    })
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv', 'de'] as Lang[],
+    }
+    const res = await previewWord({ lemma: 'collide-word', settings })
+    if (res.status !== 'duplicate') throw new Error(`got ${res.status}`)
+    // The language and the meaning are what make the dialog answerable.
+    if (res.lang !== 'sv') throw new Error(`lang was ${res.lang}`)
+    if (res.meaning !== 'married') throw new Error(`meaning was ${res.meaning}`)
+  })
+  await check('naming a different language gets past that collision', async () => {
+    const { previewWord, clearPreviewCache } = await import('../src/ai/expand')
+    clearPreviewCache()
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv', 'de'] as Lang[],
+    }
+    // German was never filed, so the word is new there. It will fail at the
+    // network, which is the point: it got past the duplicate check.
+    const res = await previewWord({
+      lemma: 'collide-word',
+      sourceLang: 'de',
+      settings,
+    }).catch((err) => err as Error)
+    if (!(res instanceof Error) && res.status === 'duplicate') {
+      throw new Error('naming a language did not get past the collision')
+    }
+  })
+  await check('naming the language it is already in still finds it', async () => {
+    const { previewWord, clearPreviewCache } = await import('../src/ai/expand')
+    clearPreviewCache()
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'en' as Lang,
+      targetLangs: ['sv', 'de'] as Lang[],
+      activeLangs: ['sv', 'de'] as Lang[],
+    }
+    const res = await previewWord({
+      lemma: 'collide-word',
+      sourceLang: 'sv',
+      settings,
+    })
+    if (res.status !== 'duplicate') throw new Error(`got ${res.status}`)
+  })
+
+  // Reading sends the words whose review is nearest first, because the
+  // endpoint keeps only the first 400 and the model leans on what comes
+  // early. Older words must still be in the list, or a text would be a
+  // vocabulary drill in sentence form.
+  console.log('\nReading favours words due this week')
+  await check('words due soonest come first, and the rest are still there', async () => {
+    const { collectVocabulary } = await import('../src/ai/story')
+    const { makeCard } = await import('../src/fsrs/scheduler')
+    const now = Date.now()
+    const day = 24 * 60 * 60 * 1000
+    const plan: [string, string, number][] = [
+      ['read-far', 'read-far-sv', now + 60 * day],
+      ['read-soon', 'read-soon-sv', now + 2 * day],
+      ['read-today', 'read-today-sv', now],
+    ]
+    for (const [id, headword, due] of plan) {
+      await db.concepts.put({
+        id,
+        lemma: headword,
+        sourceLang: 'sv',
+        pos: 'noun',
+        category: 'daily',
+        createdAt: now,
+        updatedAt: now,
+      })
+      await db.entries.put({
+        id: compositeId(id, 'sv'),
+        conceptId: id,
+        lang: 'sv',
+        headword,
+        meaning: 'x',
+        updatedAt: now,
+      })
+      await db.cards.put({ ...makeCard(id, 'sv'), due, updatedAt: now })
+    }
+    const vocab = await collectVocabulary('sv', [])
+    const order = vocab.headwords.filter((w) => w.startsWith('read-'))
+    if (order[0] !== 'read-today-sv' || order[1] !== 'read-soon-sv') {
+      throw new Error(`order was ${order.join(',')}`)
+    }
+    if (!order.includes('read-far-sv')) {
+      throw new Error('a word due later must still be sent')
+    }
+    if (vocab.dueSoon < 2) throw new Error(`dueSoon was ${vocab.dueSoon}`)
+    for (const [id] of plan) {
+      await db.concepts.delete(id)
+      await db.entries.delete(compositeId(id, 'sv'))
+      await db.cards.delete(compositeId(id, 'sv'))
+    }
+  })
+  await check('a suspended card does not make its word due', async () => {
+    const { collectVocabulary } = await import('../src/ai/story')
+    const { makeCard } = await import('../src/fsrs/scheduler')
+    const now = Date.now()
+    await db.concepts.put({
+      id: 'read-paused',
+      lemma: 'read-paused-sv',
+      sourceLang: 'sv',
+      pos: 'noun',
+      category: 'daily',
+      createdAt: now,
+      updatedAt: now,
+    })
+    await db.entries.put({
+      id: compositeId('read-paused', 'sv'),
+      conceptId: 'read-paused',
+      lang: 'sv',
+      headword: 'read-paused-sv',
+      meaning: 'x',
+      updatedAt: now,
+    })
+    await db.cards.put({
+      ...makeCard('read-paused', 'sv'),
+      due: now,
+      suspended: true,
+      updatedAt: now,
+    })
+    const before = (await collectVocabulary('sv', [])).dueSoon
+    await db.cards.put({
+      ...makeCard('read-paused', 'sv'),
+      due: now,
+      suspended: false,
+      updatedAt: now,
+    })
+    const after = (await collectVocabulary('sv', [])).dueSoon
+    if (after !== before + 1) {
+      throw new Error(`suspending changed nothing: ${before} then ${after}`)
+    }
+    await db.concepts.delete('read-paused')
+    await db.entries.delete(compositeId('read-paused', 'sv'))
+    await db.cards.delete(compositeId('read-paused', 'sv'))
+  })
+
   // A paused language is collected but not displayed. The two halves of that
   // sentence are enforced in different places — `activeTargets` on every
   // display path, `targetLangs` in `applyExpansion` — so both are asserted,

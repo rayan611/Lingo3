@@ -6,6 +6,7 @@ import { authConfigured } from '../auth/supabase'
 import { signOut } from '../auth/useSession'
 import { resetSyncCursors, type SyncResult } from '../sync/sync'
 import { THEMES, THEME_LABELS, readTheme, saveTheme, type Theme } from '../lib/theme'
+import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { ImportExport } from './ImportExport'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
@@ -16,6 +17,22 @@ interface SettingsPanelProps {
   syncState: SyncResult | null
   syncing: boolean
   onSync: () => void | Promise<void>
+}
+
+/**
+ * One short phrase per language for the sample button.
+ *
+ * A real greeting rather than the language's name, because what you are
+ * judging is whether the voice sounds like the language — and a single word
+ * said in isolation is exactly where a bad voice sounds fine.
+ */
+const SPEECH_SAMPLES: Partial<Record<Lang, string>> = {
+  sv: 'Hej, vad kostar en kaffe?',
+  de: 'Guten Tag, wie geht es Ihnen?',
+  en: 'Hello, how much is a coffee?',
+  fa: 'سلام، حال شما چطور است؟',
+  es: 'Hola, ¿cuánto cuesta un café?',
+  ru: 'Здравствуйте, как дела?',
 }
 
 export function SettingsPanel({
@@ -33,6 +50,10 @@ export function SettingsPanel({
    * charts above the controls makes you scroll past it every time.
    */
   const [showProfile, setShowProfile] = useState(false)
+  /** Which language the Audio sample speaks — the first one you study. */
+  const [previewLang, setPreviewLang] = useState<Lang>(
+    settings.targetLangs[0] ?? settings.nativeLang,
+  )
 
   const cardCounts =
     useLiveQuery(async () => {
@@ -339,6 +360,94 @@ export function SettingsPanel({
           </span>
         </label>
       </div>
+
+      {/* Audio sits in its own panel rather than under Recall, because what
+          it depends on is the device: the voices are the operating system's,
+          and a phone with a good Swedish voice and a laptop without one are
+          the same account. Everything here is device-local for that reason. */}
+      {speechSupported() && (
+        <div className="panel">
+          <h2>Audio</h2>
+          <p className="muted small">
+            Voices come from this device, not from us — nothing is downloaded
+            and nothing is sent anywhere. Quality is the operating system's:
+            Swedish and German are good on Android, Windows and macOS. On
+            iOS the better voice is a download in Settings → Accessibility →
+            Spoken Content; until then you get the basic one.
+          </p>
+
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={settings.speakOnReveal ?? true}
+              onChange={(e) =>
+                void saveSettings({ speakOnReveal: e.target.checked })
+              }
+            />
+            <span>
+              Say the word when the answer appears
+              <span className="muted small">
+                The first language due on the card speaks by itself, so you
+                hear it without reaching for the speaker. The speakers stay
+                either way — this only decides whether one plays unprompted.
+              </span>
+            </span>
+          </label>
+
+          <label className="field">
+            <span>Speaking speed</span>
+            <input
+              type="range"
+              min={0.5}
+              max={1.2}
+              step={0.05}
+              value={settings.speechRate ?? 0.95}
+              onChange={(e) =>
+                void saveSettings({ speechRate: Number(e.target.value) })
+              }
+            />
+            <span className="muted small">
+              {(settings.speechRate ?? 0.95).toFixed(2)}× — slower than natural
+              on purpose. Hearing where a word breaks and which vowel is long
+              is the point here; listening at conversational pace is what
+              Reading is for.
+            </span>
+          </label>
+
+          <div className="row">
+            <button
+              type="button"
+              onClick={() =>
+                speak(
+                  SPEECH_SAMPLES[previewLang] ?? 'Hej',
+                  previewLang,
+                  { rate: settings.speechRate },
+                )
+              }
+            >
+              Hear a sample
+            </button>
+            <select
+              value={previewLang}
+              onChange={(e) => setPreviewLang(e.target.value as Lang)}
+              aria-label="Sample language"
+            >
+              {[settings.nativeLang, ...settings.targetLangs].map((l) => (
+                <option key={l} value={l}>
+                  {LANG_NAMES[l]}
+                </option>
+              ))}
+            </select>
+            {!hasVoiceFor(previewLang) && (
+              <span className="muted small">
+                No {LANG_NAMES[previewLang]} voice on this device — the
+                speakers are hidden for that language rather than doing
+                nothing when tapped.
+              </span>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="panel">
         <h2>Scheduling</h2>

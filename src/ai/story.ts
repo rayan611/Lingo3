@@ -56,10 +56,20 @@ function stripArticle(word: string, lang: Lang): string {
 }
 
 export interface Vocabulary {
-  /** Dictionary forms, to send to the model. */
+  /**
+   * Dictionary forms, to send to the model, most worth practising first.
+   *
+   * The order is not cosmetic: the endpoint keeps the first 400, and the
+   * model leans on what it is given early. Words whose review falls in the
+   * next week come first, so the morning text is also a review pass; the
+   * rest follow, newest first, because a text built only from due words
+   * would be a vocabulary list in sentence form.
+   */
   headwords: string[]
   /** Every form that should count as known when checking coverage. */
   known: Set<string>
+  /** How many of the headwords are due within the next week. */
+  dueSoon: number
 }
 
 /**
@@ -79,7 +89,22 @@ export async function collectVocabulary(
   const concepts = await db.concepts.bulkGet(conceptIds)
   const byId = new Map(concepts.filter(Boolean).map((c) => [c!.id, c!]))
 
-  const headwords: string[] = []
+  // When each word next comes up for review in this language. A suspended
+  // card is left out of the weighting entirely — it is not being reviewed,
+  // so nothing about it is due.
+  const cards = await db.cards.where('lang').equals(lang).toArray()
+  const dueByConcept = new Map<string, number>()
+  for (const card of cards) {
+    if (card.suspended) continue
+    const current = dueByConcept.get(card.conceptId)
+    if (current === undefined || card.due < current) {
+      dueByConcept.set(card.conceptId, card.due)
+    }
+  }
+
+  const horizon = Date.now() + WEEK_MS
+  const soon: { word: string; due: number }[] = []
+  const rest: string[] = []
   const known = new Set<string>()
 
   for (const entry of entries) {
@@ -93,7 +118,10 @@ export async function collectVocabulary(
     }
 
     const bare = stripArticle(entry.headword, lang)
-    headwords.push(bare)
+    const due = dueByConcept.get(entry.conceptId)
+    if (due !== undefined && due <= horizon) soon.push({ word: bare, due })
+    else rest.push(bare)
+
     for (const token of tokenise(bare)) known.add(normaliseToken(token))
 
     for (const line of morphLines(lang, entry.morphology)) {
@@ -101,8 +129,15 @@ export async function collectVocabulary(
     }
   }
 
-  return { headwords, known }
+  // Soonest first within the due group; newest first among the others, which
+  // is what the list used to be overall.
+  soon.sort((a, b) => a.due - b.due)
+  const headwords = [...soon.map((s) => s.word), ...rest.reverse()]
+
+  return { headwords, known, dueSoon: soon.length }
 }
+
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000
 
 export interface Coverage {
   total: number
@@ -171,9 +206,10 @@ export async function generateStory(
       body: JSON.stringify({
         lang: req.lang,
         nativeLang: settings.nativeLang,
-        // Newest first: the words you just added are the ones worth seeing in
-        // a sentence, and the prompt is capped server-side anyway.
-        words: vocabulary.headwords.slice().reverse(),
+        // Already ordered by `collectVocabulary`: due this week first, then
+        // the rest newest-first. The endpoint keeps the first 400, so this
+        // order decides what a long vocabulary actually sends.
+        words: vocabulary.headwords,
         genre: req.genre,
         length: req.length,
         unknownShare: req.unknownShare,

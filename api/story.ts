@@ -70,8 +70,11 @@ function buildPrompt(opts: {
   return `Write a short text in ${target} for a language learner, using the
 vocabulary they already know.
 
-THE VOCABULARY — these are the words they have studied. Build the text out of
-these:
+THE VOCABULARY — these are the words they have studied, in the order they
+would most benefit from seeing again: the earlier a word appears in this
+list, the sooner it is due for review. Build the text out of these, and
+favour the ones near the front where the text allows it. Do not force them
+in — a sentence bent around a word teaches the bend, not the word.
 
 ${words.join(', ')}
 

@@ -356,9 +356,45 @@ export interface WordPreview {
   expansion: Expansion
 }
 
+/**
+ * The word a new entry collided with, described well enough to tell whether
+ * it is really the same word.
+ *
+ * Without the language and the meaning this is just "you already have gift",
+ * which is no help at all when the one you have is Swedish for *married* and
+ * the one you are typing is English for *present*. Those are the collisions
+ * that matter now that the Add box works the language out for itself.
+ */
+export interface DuplicateInfo {
+  conceptId: string
+  lemma: string
+  lang: Lang
+  /** The meaning in the learner's own language, when there is an entry. */
+  meaning?: string
+}
+
 export type PreviewResult =
-  | { status: 'duplicate'; conceptId: string; lemma: string }
+  | ({ status: 'duplicate' } & DuplicateInfo)
   | { status: 'preview'; preview: WordPreview }
+
+/** Fills in the language and meaning for the word a lookup landed on. */
+async function describeDuplicate(
+  concept: Concept,
+  settings: Settings,
+): Promise<DuplicateInfo> {
+  const entries = await db.entries.where('conceptId').equals(concept.id).toArray()
+  // The learner's own language first — that is the one that says which word
+  // this actually is. Falling back to the entry in the concept's own language.
+  const gloss =
+    entries.find((e) => e.lang === settings.nativeLang) ??
+    entries.find((e) => e.lang === concept.sourceLang)
+  return {
+    conceptId: concept.id,
+    lemma: concept.lemma,
+    lang: concept.sourceLang,
+    meaning: gloss?.meaning,
+  }
+}
 
 /**
  * Previewed expansions, so Check → Add costs one model call rather than two.
@@ -402,9 +438,15 @@ export async function previewWord(opts: {
   const lemma = opts.lemma.trim()
   if (!lemma) throw new Error('Enter a word first.')
 
-  const existing = await findExisting(lemma, await candidateLangs(opts.settings))
+  // When the caller names a language, look only there: that is the answer to
+  // "no, mine is the English one", and it must be able to get past a match
+  // found in another language without switching duplicate detection off.
+  const existing = await findExisting(
+    lemma,
+    opts.sourceLang ? [opts.sourceLang] : await candidateLangs(opts.settings),
+  )
   if (existing) {
-    return { status: 'duplicate', conceptId: existing.id, lemma: existing.lemma }
+    return { status: 'duplicate', ...(await describeDuplicate(existing, opts.settings)) }
   }
 
   const key = previewKey(lemma, opts.sourceLang, opts.hint)
