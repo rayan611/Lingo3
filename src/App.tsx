@@ -41,6 +41,7 @@ import { InstallButton } from './ui/InstallButton'
 import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
 import { Landing, shouldShowLanding } from './ui/Landing'
+import { Privacy } from './ui/Privacy'
 import { applyTheme, cacheTheme, readTheme } from './lib/theme'
 
 /**
@@ -52,6 +53,22 @@ type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'settings'
 
 export function App() {
   const { session, userId, email } = useSession()
+
+  /**
+   * The privacy policy, at /privacy.
+   *
+   * A branch rather than a route: the service worker sends every path to
+   * index.html, so this is how a second page exists at all here. It is checked
+   * before the session is, because both app stores need a URL that shows the
+   * policy to anyone who opens it, signed in or not — and because a policy
+   * behind a login is not a policy anyone can read.
+   */
+  const [path, setPath] = useState(() => window.location.pathname)
+  useEffect(() => {
+    const onPop = () => setPath(window.location.pathname)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   /**
    * Before first paint, so a dark-theme user does not get a white flash.
@@ -101,6 +118,17 @@ export function App() {
       cancelled = true
     }
   }, [session, userId])
+
+  if (path.replace(/\/+$/, '') === '/privacy') {
+    return (
+      <Privacy
+        onBack={() => {
+          window.history.pushState({}, '', '/')
+          setPath('/')
+        }}
+      />
+    )
+  }
 
   if (session === undefined) {
     return <div className="boot">Checking your session…</div>
@@ -344,6 +372,7 @@ function Workspace({
         {tab === 'settings' && (
           <SettingsPanel
             settings={settings}
+            userId={userId}
             email={email}
             syncState={syncState}
             syncing={syncing}

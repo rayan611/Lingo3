@@ -170,6 +170,9 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
         <button className="primary big" onClick={open}>
           Open app
         </button>
+        <p className="muted small legal-line">
+          <a href="/privacy">Privacy</a>
+        </p>
       </footer>
     </div>
   )

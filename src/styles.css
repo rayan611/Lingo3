@@ -1373,3 +1373,37 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 }
 .device-scope .check { margin-top: 0; align-items: center; }
 .device-scope .check input { width: 14px; height: 14px; margin-top: 0; }
+
+/* --- legal pages and the account section ---------------------------------
+   The privacy page reuses the landing layout; it only needs list styling and
+   a slightly narrower measure, because a policy is read, not skimmed. */
+.legal { max-width: 36rem; }
+.legal-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.legal-list li { margin-bottom: 10px; }
+.legal-line { margin-top: 18px; }
+
+/* Closed by default, and the summary says "Account" rather than anything
+   alarming: the point is that it is out of the way, not that it is scary. */
+.account-danger > summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: revert;
+}
+.account-danger p { margin: 10px 0; }
+.account-danger button.danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+.account-danger button.link.danger {
+  background: none;
+  color: var(--danger);
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+}

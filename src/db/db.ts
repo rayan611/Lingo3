@@ -101,7 +101,7 @@ export class Lingo3DB extends Dexie {
  * installation at an empty database and strand everything added offline and
  * not yet synced. Nobody ever sees this string.
  */
-function dbNameFor(userId: string | null): string {
+export function dbNameFor(userId: string | null): string {
   return userId ? `lingua-${userId}` : 'lingua-local'
 }
 

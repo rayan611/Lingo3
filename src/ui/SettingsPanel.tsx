@@ -20,12 +20,14 @@ import { signOut } from '../auth/useSession'
 import { resetSyncCursors, type SyncResult } from '../sync/sync'
 import { THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
+import { DeleteAccount } from './DeleteAccount'
 import { ImportExport } from './ImportExport'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
 
 interface SettingsPanelProps {
   settings: Settings
+  userId: string | null
   email: string | null
   syncState: SyncResult | null
   syncing: boolean
@@ -50,6 +52,7 @@ const SPEECH_SAMPLES: Partial<Record<Lang, string>> = {
 
 export function SettingsPanel({
   settings,
+  userId,
   email,
   syncState,
   syncing,
@@ -587,6 +590,17 @@ export function SettingsPanel({
           settings row is synced, so trusting its is_admin would be client
           state deciding what the server already decides. */}
       <AdminPanel />
+
+      {/* Deleting an account is the only irreversible thing in this app, so it
+          is last, behind a closed section, and nowhere near anything you press
+          often. Signed-in only: there is no account to delete otherwise. */}
+      {userId && email && <DeleteAccount userId={userId} email={email} />}
+
+      <p className="muted small legal-line">
+        <a href="/privacy" target="_blank" rel="noreferrer">
+          Privacy
+        </a>
+      </p>
 
       {/* Which build is actually running. Without this there is no way to tell
           from a phone whether the service worker has picked up a new deploy —
