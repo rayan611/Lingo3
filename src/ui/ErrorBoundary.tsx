@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     this.setState({ info: info.componentStack ?? '' })
-    console.error('Lingua crashed:', error, info)
+    console.error('Lingo3 crashed:', error, info)
   }
 
   async reset() {

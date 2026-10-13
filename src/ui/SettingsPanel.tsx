@@ -592,7 +592,7 @@ export function SettingsPanel({
           from a phone whether the service worker has picked up a new deploy —
           which, after a day lost to a cached login wall, is worth four lines. */}
       <p className="version-line">
-        Lingu3 v{__APP_VERSION__} · built {__BUILD_DATE__}
+        Lingo3 v{__APP_VERSION__} · built {__BUILD_DATE__}
       </p>
     </div>
   )
@@ -644,7 +644,7 @@ async function exportData() {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `lingua-${new Date().toISOString().slice(0, 10)}.json`
+  a.download = `lingo3-${new Date().toISOString().slice(0, 10)}.json`
   a.click()
   URL.revokeObjectURL(url)
 }

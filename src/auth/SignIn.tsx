@@ -38,7 +38,7 @@ export function SignIn() {
     <div className="app">
       <div className="signin">
         <header className="signin-intro">
-          <h1 className="signin-brand">Lingu3</h1>
+          <h1 className="signin-brand">Lingo3</h1>
           <p className="signin-tagline">
             A place to make your own learning material and study up to three
             languages at once.

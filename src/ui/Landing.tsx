@@ -46,7 +46,7 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
       <div className="landing-mark">
         <Logo size={64} />
       </div>
-      <h1>Lingu3</h1>
+      <h1>Lingo3</h1>
       <p className="landing-pitch">
         Learn up to three languages at once from your own words — the ones you
         actually met today, not a stock list.

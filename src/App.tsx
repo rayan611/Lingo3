@@ -263,7 +263,7 @@ function Workspace({
       <header className="topbar">
         <div className="brand-block">
           <Logo />
-          <span className="brand">Lingu3</span>
+          <span className="brand">Lingo3</span>
           {settings.displayName && (
             <span className="brand-greeting">Hej {settings.displayName}</span>
           )}

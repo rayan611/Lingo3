@@ -15,7 +15,7 @@ export function Logo({ size = 30 }: { size?: number }) {
       height={size}
       viewBox="0 0 64 64"
       role="img"
-      aria-label="Lingu3"
+      aria-label="Lingo3"
     >
       <rect width="64" height="64" rx="14" fill="var(--logo-tile)" />
       <text

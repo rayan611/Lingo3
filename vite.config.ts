@@ -17,10 +17,10 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Lingu3 — learn up to 3 languages',
+        name: 'Lingo3 — learn up to 3 languages',
         // What appears under the icon on a home screen, where there is room
         // for about twelve characters and no more.
-        short_name: 'Lingu3',
+        short_name: 'Lingo3',
         description: 'Learn up to 3 languages at once, from your own words',
         // The navy of the L3 tile, so the splash screen and the Android
         // task-switcher bar match the icon instead of the old slate.

@@ -274,5 +274,5 @@ async function exportCsv() {
       ])
     }
   }
-  downloadCsv(`lingu3-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(rows))
+  downloadCsv(`lingo3-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(rows))
 }

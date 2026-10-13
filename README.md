@@ -1,8 +1,8 @@
-# Lingua
+# Lingo3
 
 A personal vocabulary trainer for learning several languages at once. Offline-capable PWA — installs on a phone or PC, reviews work with no connection.
 
-**v1 scope:** add a word → it is expanded into every selected language by Claude → review it with FSRS scheduling. Reading, listening and cloud sync are deliberately not here yet.
+**The loop:** add a word → a model expands it into every language you study (forms, gender, an example) → review it with FSRS scheduling. Reading, audio and cloud sync are all in as of v3.2; the build log in the project docs is the current account of what exists and why.
 
 ## The two design decisions worth knowing
 

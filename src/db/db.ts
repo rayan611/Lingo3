@@ -29,7 +29,7 @@ export interface MetaRow {
  * separate stores rather than a shared one filtered by id — which is both
  * simpler and impossible to get wrong by forgetting a `where` clause.
  */
-export class LinguaDB extends Dexie {
+export class Lingo3DB extends Dexie {
   concepts!: Table<Concept, string>
   entries!: Table<Entry, string>
   cards!: Table<Card, string>
@@ -93,7 +93,14 @@ export class LinguaDB extends Dexie {
   }
 }
 
-/** Database name for a user, or the local-only store when signed out. */
+/**
+ * Database name for a user, or the local-only store when signed out.
+ *
+ * The `lingua-` prefix is deliberately NOT renamed with the app. An IndexedDB
+ * name is an address, not a label: changing it would point every existing
+ * installation at an empty database and strand everything added offline and
+ * not yet synced. Nobody ever sees this string.
+ */
 function dbNameFor(userId: string | null): string {
   return userId ? `lingua-${userId}` : 'lingua-local'
 }
@@ -101,7 +108,7 @@ function dbNameFor(userId: string | null): string {
 // `let` plus a live export binding: modules that `import { db }` always see the
 // current database, so switching user does not require threading a handle
 // through every call site.
-export let db: LinguaDB = new LinguaDB(dbNameFor(null))
+export let db: Lingo3DB = new Lingo3DB(dbNameFor(null))
 let currentDbName = db.name
 
 /**
@@ -117,7 +124,7 @@ export async function openForUser(userId: string | null): Promise<boolean> {
   } catch {
     /* already closed */
   }
-  db = new LinguaDB(next)
+  db = new Lingo3DB(next)
   currentDbName = next
   await db.open()
   return true
@@ -129,7 +136,7 @@ export async function openForUser(userId: string | null): Promise<boolean> {
  * the moment an account is created.
  */
 export async function adoptLocalData(): Promise<number> {
-  const local = new LinguaDB(dbNameFor(null))
+  const local = new Lingo3DB(dbNameFor(null))
   try {
     await local.open()
     const [concepts, entries, cards, reviewLog, pending] = await Promise.all([
