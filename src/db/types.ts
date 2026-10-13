@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { Theme } from '../lib/theme'
 
 // ---------------------------------------------------------------------------
 // Languages
@@ -383,6 +384,16 @@ export interface Settings {
    * which is a property of the device you happen to be holding.
    */
   displayName?: string
+  /**
+   * Which palette the app uses.
+   *
+   * Account data now, like the four preferences below it. It was device-local
+   * until v3.3 on the reasoning that a theme belongs to the screen you are
+   * holding — true of a *particular* screen, but it meant every new device
+   * started wrong, and that cost more than it saved. A device that genuinely
+   * wants its own can still set one: see DEVICE_OVERRIDABLE.
+   */
+  theme?: Theme
   nativeLang: Lang
   /** Ordered by priority — this is the stacking order on the review card. */
   targetLangs: Lang[]
@@ -399,8 +410,7 @@ export interface Settings {
    * Swedish and German shows up in production, and typing all three would turn
    * a two-minute session into a ten-minute one.
    *
-   * Device-local on purpose — it is a study habit, not account data, and it is
-   * not worth a schema change on the server to carry it between devices.
+   * Account data since v3.3, overridable per device.
    */
   typedLang?: Lang
   /**
@@ -413,23 +423,23 @@ export interface Settings {
    * which is the right trade on a phone with thirty cards due and the wrong
    * one while you are still learning what the grades do.
    *
-   * Device-local, like typedLang and the theme: it is how you like to drive
-   * the app on this device, not something about your account.
+   * Account data since v3.3, overridable per device.
    */
   autoAdvance?: boolean
   /**
    * Speak the answer as soon as it is revealed, rather than waiting for the
    * speaker to be tapped.
    *
-   * On by default, which is the opposite of autoAdvance above and for a
-   * reason: an extra tap is exactly the friction that stops you ever hearing
-   * the word, and in Swedish the spelling does not tell you how it sounds.
-   * Only the first due language speaks — three languages in a row would be a
-   * queue you have to sit through before you can grade anything.
+   * Off by default. It shipped on in v3.2, on the argument that an extra tap
+   * is the friction that stops you ever hearing the word — a week of use said
+   * otherwise: a card that talks at you unasked is worse than one you tap. The
+   * speakers stay on every card either way, so what this decides is only
+   * whether one plays unprompted. When it is on, only the first due language
+   * speaks: three in a row is a queue you sit through before you can grade.
    *
-   * Device-local, like typedLang and the theme, and more so than either:
-   * which voices are installed is a property of the device, so a preference
-   * about speaking does not travel sensibly to another one.
+   * Account data since v3.3, overridable per device — and this is the one
+   * where the override earns its keep, because which voices are installed is
+   * a property of the device.
    */
   speakOnReveal?: boolean
   /**
@@ -463,7 +473,71 @@ export const DEFAULT_SETTINGS: Settings = {
   dailyNewLimit: 15,
   dailyReviewLimit: 150,
   requestRetention: 0.9,
+  speakOnReveal: false,
+  speechRate: 0.95,
   updatedAt: 0,
+}
+
+// ---------------------------------------------------------------------------
+// Account settings vs this device
+// ---------------------------------------------------------------------------
+
+/**
+ * The preferences a single device may keep for itself.
+ *
+ * Everything in `Settings` follows the account: set it once and a second
+ * device is already set up, which is the whole point of the change. But some
+ * of it genuinely does depend on the machine — a phone with a good Swedish
+ * voice and a laptop without one are the same account — so each of these five
+ * can be pinned to the device you are holding.
+ *
+ * An override is the exception, not the default. A device holds none until you
+ * ask for one, and clearing it hands the value back to the account.
+ */
+export const DEVICE_OVERRIDABLE = [
+  'theme',
+  'typedLang',
+  'autoAdvance',
+  'speakOnReveal',
+  'speechRate',
+] as const
+
+export type DeviceOverridableKey = (typeof DEVICE_OVERRIDABLE)[number]
+
+/**
+ * What this device has pinned. `null` is a real answer meaning "none here" —
+ * it is how you say "no typed recall on this phone" against an account that
+ * has one. An absent key means the account decides.
+ */
+export type DeviceOverride = {
+  [K in DeviceOverridableKey]?: Settings[K] | null
+}
+
+/**
+ * The values actually in force: the account row, with this device's pins
+ * laid over it.
+ *
+ * This is the single definition of "the setting in force", and it is what
+ * `readSettings` returns — so every screen reads the resolved value without
+ * knowing any of this exists. The one caller that must NOT use it is the sync
+ * push, which sends the account row as it stands; pushing the resolved view
+ * would quietly promote one device's preference to everybody's.
+ */
+export function effectiveSettings(
+  account: Settings,
+  override: DeviceOverride | null | undefined,
+): Settings {
+  if (!override) return account
+  const out: Settings = { ...account }
+  for (const key of DEVICE_OVERRIDABLE) {
+    if (!(key in override)) continue
+    const value = override[key]
+    // `null` means the device has deliberately chosen "none", which in
+    // Settings is spelled `undefined`.
+    ;(out as unknown as Record<string, unknown>)[key] =
+      value === null ? undefined : value
+  }
+  return out
 }
 
 /**

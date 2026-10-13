@@ -373,6 +373,14 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
     const { error } = await sb.from('user_settings').upsert({
       user_id: userId,
       display_name: settings.displayName ?? null,
+      // The preferences that follow the account. `settings` here is the raw
+      // row from Dexie, never the resolved view — a device's own override
+      // must not be promoted to the account by the next sync.
+      theme: settings.theme ?? null,
+      typed_lang: settings.typedLang ?? null,
+      auto_advance: settings.autoAdvance ?? null,
+      speak_on_reveal: settings.speakOnReveal ?? null,
+      speech_rate: settings.speechRate ?? null,
       native_lang: settings.nativeLang,
       target_langs: settings.targetLangs,
       active_langs: settings.activeLangs,
@@ -449,6 +457,14 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
         ...local,
         id: 'singleton',
         displayName: (remoteSettings.display_name as string) ?? undefined,
+        theme: (remoteSettings.theme as Settings['theme']) ?? undefined,
+        typedLang: (remoteSettings.typed_lang as Lang) ?? undefined,
+        autoAdvance: (remoteSettings.auto_advance as boolean) ?? undefined,
+        speakOnReveal: (remoteSettings.speak_on_reveal as boolean) ?? undefined,
+        speechRate:
+          remoteSettings.speech_rate == null
+            ? undefined
+            : Number(remoteSettings.speech_rate),
         nativeLang: remoteSettings.native_lang as Lang,
         targetLangs: remoteSettings.target_langs as Lang[],
         activeLangs: remoteSettings.active_langs as Lang[],

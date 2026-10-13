@@ -94,7 +94,7 @@ export function Review({ settings, onExit }: Props) {
    * space, the button, or submitting a typed answer — and the index is in the
    * dependency list so moving to the next word cannot replay the last one.
    */
-  const speakOnReveal = settings.speakOnReveal ?? true
+  const speakOnReveal = settings.speakOnReveal ?? false
   const firstDue = item?.dueCards[0]
   const firstHeadword = firstDue
     ? item?.entries.find((e) => e.lang === firstDue.lang)?.headword

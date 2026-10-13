@@ -1,7 +1,11 @@
 import Dexie, { type Table } from 'dexie'
 import {
   DEFAULT_SETTINGS,
+  DEVICE_OVERRIDABLE,
+  effectiveSettings,
   type Card,
+  type DeviceOverridableKey,
+  type DeviceOverride,
   type Concept,
   type Entry,
   type PendingExpansion,
@@ -196,10 +200,67 @@ export async function ensureSettings(): Promise<Settings> {
   return fresh
 }
 
-/** Pure read — safe inside a live query. */
-export async function readSettings(): Promise<Settings> {
+/**
+ * The account row as it stands, with no device pins applied.
+ *
+ * This is what the sync push sends and what Settings shows you as "your
+ * account setting". Screens want `readSettings` instead.
+ */
+export async function readAccountSettings(): Promise<Settings> {
   const existing = await db.settings.get('singleton')
   return existing ?? { ...DEFAULT_SETTINGS, updatedAt: 0 }
+}
+
+/**
+ * Pure read — safe inside a live query. Returns the settings *in force*: the
+ * account row with this device's overrides laid over it.
+ *
+ * The overrides live in `meta`, which is per-user, never synced and already a
+ * Dexie table — so changing one re-runs every live query that reads settings,
+ * which localStorage would not have done.
+ */
+export async function readSettings(): Promise<Settings> {
+  const [account, override] = await Promise.all([
+    readAccountSettings(),
+    readDeviceOverride(),
+  ])
+  return effectiveSettings(account, override)
+}
+
+const DEVICE_OVERRIDE_KEY = 'deviceSettings'
+
+export async function readDeviceOverride(): Promise<DeviceOverride> {
+  const raw = await getMeta(DEVICE_OVERRIDE_KEY)
+  if (typeof raw !== 'string' || !raw) return {}
+  try {
+    const parsed = JSON.parse(raw) as unknown
+    if (!parsed || typeof parsed !== 'object') return {}
+    const out: DeviceOverride = {}
+    for (const key of DEVICE_OVERRIDABLE) {
+      if (key in (parsed as Record<string, unknown>)) {
+        ;(out as Record<string, unknown>)[key] = (parsed as Record<string, unknown>)[key]
+      }
+    }
+    return out
+  } catch {
+    // A corrupt blob should cost this device its pins, not its settings.
+    return {}
+  }
+}
+
+/**
+ * Pin one setting to this device, or hand it back to the account with
+ * `undefined`. Pass `null` to pin "none here" — see DeviceOverride.
+ */
+export async function setDeviceOverride(
+  key: DeviceOverridableKey,
+  value: Settings[DeviceOverridableKey] | null | undefined,
+): Promise<void> {
+  const current = await readDeviceOverride()
+  const next: Record<string, unknown> = { ...current }
+  if (value === undefined) delete next[key]
+  else next[key] = value
+  await setMeta(DEVICE_OVERRIDE_KEY, JSON.stringify(next))
 }
 
 /** @deprecated use ensureSettings at boot, readSettings in queries. */

@@ -1,11 +1,24 @@
 import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, saveSettings } from '../db/db'
-import { LANGS, LANG_NAMES, LANG_NATIVE_NAMES, type Lang, type Settings } from '../db/types'
+import {
+  db,
+  readAccountSettings,
+  readDeviceOverride,
+  saveSettings,
+  setDeviceOverride,
+} from '../db/db'
+import {
+  LANGS,
+  LANG_NAMES,
+  LANG_NATIVE_NAMES,
+  type DeviceOverridableKey,
+  type Lang,
+  type Settings,
+} from '../db/types'
 import { authConfigured } from '../auth/supabase'
 import { signOut } from '../auth/useSession'
 import { resetSyncCursors, type SyncResult } from '../sync/sync'
-import { THEMES, THEME_LABELS, readTheme, saveTheme, type Theme } from '../lib/theme'
+import { THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { ImportExport } from './ImportExport'
 import { Profile } from './Profile'
@@ -42,8 +55,47 @@ export function SettingsPanel({
   syncing,
   onSync,
 }: SettingsPanelProps) {
-  const [theme, setTheme] = useState<Theme>(() => readTheme())
   const [name, setName] = useState(settings.displayName ?? '')
+  /**
+   * What this device has pinned for itself, and what the account says
+   * underneath it. `settings` is already the resolved view — these two are
+   * only needed to show which of the two you are editing.
+   */
+  const override = useLiveQuery(() => readDeviceOverride(), []) ?? {}
+  const account = useLiveQuery(() => readAccountSettings(), [])
+  const theme: Theme = settings.theme ?? 'system'
+
+  const pinnedHere = (key: DeviceOverridableKey) => key in override
+
+  /**
+   * Writes a preference where it belongs: to this device if it is pinned
+   * here, to the account otherwise. Every control below goes through this,
+   * so there is one answer to "where did that go" rather than five.
+   */
+  async function savePref<K extends DeviceOverridableKey>(
+    key: K,
+    value: Settings[K] | undefined,
+  ) {
+    if (pinnedHere(key)) {
+      await setDeviceOverride(key, value === undefined ? null : value)
+    } else {
+      await saveSettings({ [key]: value } as Partial<Settings>)
+    }
+  }
+
+  /**
+   * Pinning takes the value you can currently see, so turning it on never
+   * changes what the app does — it only stops the next sync changing it.
+   * Turning it off hands the setting back to the account, which may well
+   * change it, and that is the point.
+   */
+  async function togglePin<K extends DeviceOverridableKey>(
+    key: K,
+    showing: Settings[K] | undefined,
+  ) {
+    if (pinnedHere(key)) await setDeviceOverride(key, undefined)
+    else await setDeviceOverride(key, showing === undefined ? null : showing)
+  }
   /**
    * Profile moved in here when the tab bar was cut to six. It is collapsed by
    * default: Settings is where you come to change something, and a page of
@@ -196,11 +248,7 @@ export function SettingsPanel({
           <span>Theme</span>
           <select
             value={theme}
-            onChange={(e) => {
-              const next = e.target.value as Theme
-              setTheme(next)
-              saveTheme(next)
-            }}
+            onChange={(e) => void savePref('theme', e.target.value as Theme)}
           >
             {THEMES.map((t) => (
               <option key={t} value={t}>
@@ -208,10 +256,13 @@ export function SettingsPanel({
               </option>
             ))}
           </select>
-          <span className="muted small">
-            Kept on this device rather than synced — which theme suits you
-            depends on the screen you are looking at, not on your account.
-          </span>
+          <DeviceScope
+            pinned={pinnedHere('theme')}
+            onToggle={() => void togglePin('theme', theme)}
+            accountValue={
+              account?.theme ? THEME_LABELS[account.theme] : 'Match my device'
+            }
+          />
         </label>
       </div>
 
@@ -324,9 +375,10 @@ export function SettingsPanel({
           <select
             value={settings.typedLang ?? ''}
             onChange={(e) =>
-              void saveSettings({
-                typedLang: e.target.value ? (e.target.value as Lang) : undefined,
-              })
+              void savePref(
+                'typedLang',
+                e.target.value ? (e.target.value as Lang) : undefined,
+              )
             }
           >
             <option value="">No typing — just reveal</option>
@@ -341,13 +393,20 @@ export function SettingsPanel({
             interference between Swedish and German shows up in production. One
             language only, so a session stays short.
           </span>
+          <DeviceScope
+            pinned={pinnedHere('typedLang')}
+            onToggle={() => void togglePin('typedLang', settings.typedLang)}
+            accountValue={
+              account?.typedLang ? LANG_NAMES[account.typedLang] : 'no typing'
+            }
+          />
         </label>
 
         <label className="check">
           <input
             type="checkbox"
             checked={settings.autoAdvance ?? false}
-            onChange={(e) => void saveSettings({ autoAdvance: e.target.checked })}
+            onChange={(e) => void savePref('autoAdvance', e.target.checked)}
           />
           <span>
             Go to the next word automatically
@@ -359,12 +418,20 @@ export function SettingsPanel({
             </span>
           </span>
         </label>
+        <DeviceScope
+          pinned={pinnedHere('autoAdvance')}
+          onToggle={() => void togglePin('autoAdvance', settings.autoAdvance)}
+          accountValue={account?.autoAdvance ? 'on' : 'off'}
+        />
       </div>
 
       {/* Audio sits in its own panel rather than under Recall, because what
           it depends on is the device: the voices are the operating system's,
           and a phone with a good Swedish voice and a laptop without one are
-          the same account. Everything here is device-local for that reason. */}
+          the same account. Which is why this is the panel where "only on this
+          device" earns its keep, rather than the reason to make everything
+          device-local — that was the old rule, and it meant a new phone
+          started wrong. */}
       {speechSupported() && (
         <div className="panel">
           <h2>Audio</h2>
@@ -379,10 +446,8 @@ export function SettingsPanel({
           <label className="check">
             <input
               type="checkbox"
-              checked={settings.speakOnReveal ?? true}
-              onChange={(e) =>
-                void saveSettings({ speakOnReveal: e.target.checked })
-              }
+              checked={settings.speakOnReveal ?? false}
+              onChange={(e) => void savePref('speakOnReveal', e.target.checked)}
             />
             <span>
               Say the word when the answer appears
@@ -393,6 +458,11 @@ export function SettingsPanel({
               </span>
             </span>
           </label>
+          <DeviceScope
+            pinned={pinnedHere('speakOnReveal')}
+            onToggle={() => void togglePin('speakOnReveal', settings.speakOnReveal)}
+            accountValue={account?.speakOnReveal ? 'on' : 'off'}
+          />
 
           <label className="field">
             <span>Speaking speed</span>
@@ -403,7 +473,7 @@ export function SettingsPanel({
               step={0.05}
               value={settings.speechRate ?? 0.95}
               onChange={(e) =>
-                void saveSettings({ speechRate: Number(e.target.value) })
+                void savePref('speechRate', Number(e.target.value))
               }
             />
             <span className="muted small">
@@ -412,6 +482,11 @@ export function SettingsPanel({
               is the point here; listening at conversational pace is what
               Reading is for.
             </span>
+            <DeviceScope
+              pinned={pinnedHere('speechRate')}
+              onToggle={() => void togglePin('speechRate', settings.speechRate)}
+              accountValue={`${(account?.speechRate ?? 0.95).toFixed(2)}×`}
+            />
           </label>
 
           <div className="row">
@@ -520,6 +595,37 @@ export function SettingsPanel({
         Lingu3 v{__APP_VERSION__} · built {__BUILD_DATE__}
       </p>
     </div>
+  )
+}
+
+/**
+ * The "only on this device" switch that sits under an overridable control.
+ *
+ * It states what the account says underneath, because the question you
+ * actually have when you see a pinned setting is "and what does everything
+ * else do?" — and without that line the only way to find out is to unpin it.
+ */
+function DeviceScope({
+  pinned,
+  onToggle,
+  accountValue,
+}: {
+  pinned: boolean
+  onToggle: () => void
+  accountValue: string
+}) {
+  return (
+    <span className="device-scope">
+      <label className="check small">
+        <input type="checkbox" checked={pinned} onChange={onToggle} />
+        <span className="muted small">Only on this device</span>
+      </label>
+      <span className="muted small">
+        {pinned
+          ? `Your other devices use ${accountValue}.`
+          : 'Follows your account — set it once, and a new device is already set up.'}
+      </span>
+    </span>
   )
 }
 

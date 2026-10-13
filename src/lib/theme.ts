@@ -1,12 +1,11 @@
 /**
  * Theme choice.
  *
- * Device-local, not synced — the same reasoning as typed recall. Which theme
- * suits you is a property of the screen you are looking at and the light in
- * the room, not of your account, and carrying it between a phone and a laptop
- * would be a small, steady annoyance rather than a feature.
+ * The choice follows the account since v3.3; this module only applies it and
+ * keeps a copy for the next cold start. A device that wants its own theme
+ * pins it in Settings, which is a separate thing from this cache.
  *
- * Stored in localStorage and applied as `data-theme` on <html>, which the
+ * Cached in localStorage and applied as `data-theme` on <html>, which the
  * stylesheet already keys off: the dark palette is written as
  * `:root:not([data-theme='light'])` under a prefers-color-scheme query, so
  * "system" is simply the absence of an explicit choice.
@@ -53,11 +52,18 @@ export function applyTheme(theme: Theme): void {
   }
 }
 
-export function saveTheme(theme: Theme): void {
+/**
+ * Apply a theme and remember it as this device's boot cache.
+ *
+ * The choice itself lives in the settings row and follows the account; what
+ * localStorage holds is only the last theme this device painted, so the first
+ * frame after a cold start is the right colour. Nothing reads it except boot.
+ */
+export function cacheTheme(theme: Theme): void {
   try {
     localStorage.setItem(KEY, theme)
   } catch {
-    /* the choice just does not survive a reload; the app still works */
+    /* the cache just does not survive a reload; the account still decides */
   }
   applyTheme(theme)
 }

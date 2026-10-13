@@ -1322,3 +1322,15 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 .suggestion-body { margin: 6px 0 8px; white-space: pre-wrap; }
 .suggestion.status-done, .suggestion.status-dismissed { opacity: 0.6; }
 .closed-suggestions { margin-top: 10px; }
+
+/* "Only on this device", under a setting that follows the account otherwise.
+   Deliberately quiet: it is an exception you reach for, not a decision the
+   screen asks you to make about every control it shows. */
+.device-scope {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+}
+.device-scope .check { margin-top: 0; align-items: center; }
+.device-scope .check input { width: 14px; height: 14px; margin-top: 0; }

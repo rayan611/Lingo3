@@ -6,7 +6,19 @@
  * Run with: npx tsx scripts/check-sync.ts
  */
 import 'fake-indexeddb/auto'
-import { adoptLocalData, db, openForUser, getMeta, setMeta, readSettings, ensureSettings } from '../src/db/db'
+import {
+  adoptLocalData,
+  db,
+  openForUser,
+  getMeta,
+  setMeta,
+  readAccountSettings,
+  readDeviceOverride,
+  readSettings,
+  saveSettings,
+  setDeviceOverride,
+  ensureSettings,
+} from '../src/db/db'
 import type { Concept } from '../src/db/types'
 import {
   ExpiringLock,
@@ -153,6 +165,67 @@ async function main() {
   check(
     'and the reset path can still force it back to zero',
     (await getMeta('sync.lastPushedAt')) === 0,
+  )
+
+  console.log('\n9. Settings follow the account, except where a device pins them')
+  // The account row is what syncs; an override is what one device keeps for
+  // itself. The failure this guards against is the quiet one: a pull writing
+  // the account value over a device's own choice, or a push promoting one
+  // device's choice to every device.
+  await openForUser('user-settings')
+  await saveSettings({ speakOnReveal: true, speechRate: 1.1, theme: 'dark' })
+
+  check(
+    'a device with no overrides takes the account values',
+    (await readSettings()).speakOnReveal === true &&
+      (await readSettings()).speechRate === 1.1,
+  )
+
+  await setDeviceOverride('speakOnReveal', false)
+  check(
+    'a pinned setting wins over the account',
+    (await readSettings()).speakOnReveal === false,
+  )
+  check(
+    'and the account row itself is untouched',
+    (await readAccountSettings()).speakOnReveal === true,
+  )
+  check(
+    'an unpinned setting beside it still follows the account',
+    (await readSettings()).speechRate === 1.1,
+  )
+
+  // What a pull does: it writes the account row. The override must survive it,
+  // because that is exactly the moment the old behaviour would have been lost.
+  await saveSettings({ speakOnReveal: true, speechRate: 0.8 })
+  check(
+    'the pin survives a later account change',
+    (await readSettings()).speakOnReveal === false,
+  )
+  check(
+    'while the unpinned one moves with it',
+    (await readSettings()).speechRate === 0.8,
+  )
+
+  await setDeviceOverride('typedLang', null)
+  check(
+    'null pins "none on this device" rather than clearing the pin',
+    (await readSettings()).typedLang === undefined &&
+      'typedLang' in (await readDeviceOverride()),
+  )
+
+  await setDeviceOverride('speakOnReveal', undefined)
+  check(
+    'clearing a pin hands the setting back to the account',
+    (await readSettings()).speakOnReveal === true,
+  )
+
+  // Overrides live in `meta`, which is per-user and never pushed — so a
+  // second account on the same browser does not inherit them.
+  await openForUser('user-settings-2')
+  check(
+    "another user's pins are not visible here",
+    Object.keys(await readDeviceOverride()).length === 0,
   )
 
   console.log(

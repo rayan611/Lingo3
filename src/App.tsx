@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { adoptLocalData, db, ensureSettings, openForUser, readSettings } from './db/db'
+import {
+  adoptLocalData,
+  db,
+  ensureSettings,
+  openForUser,
+  readSettings,
+  saveSettings,
+} from './db/db'
 import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
@@ -34,7 +41,7 @@ import { InstallButton } from './ui/InstallButton'
 import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
 import { Landing, shouldShowLanding } from './ui/Landing'
-import { applyTheme, readTheme } from './lib/theme'
+import { applyTheme, cacheTheme, readTheme } from './lib/theme'
 
 /**
  * Profile is not here: it lives inside Settings now. Seven tabs did not fit a
@@ -46,7 +53,15 @@ type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'settings'
 export function App() {
   const { session, userId, email } = useSession()
 
-  // Before first paint, so a dark-theme user does not get a white flash.
+  /**
+   * Before first paint, so a dark-theme user does not get a white flash.
+   *
+   * The theme follows the account now, and the account lives in Dexie, which
+   * is not open yet at this point. So localStorage keeps the last theme this
+   * device actually used, purely as a boot cache: it is right on every launch
+   * after the first, and corrected a few hundred milliseconds in if the
+   * account disagrees.
+   */
   useEffect(() => {
     applyTheme(readTheme())
   }, [])
@@ -68,7 +83,15 @@ export function App() {
         await adoptLocalData().catch(() => 0)
       }
       // Create the settings row here, once, rather than from a live query.
-      await ensureSettings()
+      const current = await ensureSettings()
+      // One-time lift of the device's existing theme into the account, for
+      // anyone who chose one before themes followed the account. Done once,
+      // only when the account has no theme of its own, so it cannot keep
+      // overwriting a choice made on another device.
+      if (current.theme === undefined) {
+        const cached = readTheme()
+        if (cached !== 'system') await saveSettings({ theme: cached })
+      }
       if (!cancelled) {
         setDbKey(userId ?? 'local')
         setDbReady(true)
@@ -120,6 +143,17 @@ function Workspace({
     [settings],
   )
   useLiveQuery(() => db.cards.count(), [])
+
+  /**
+   * Apply the theme that is actually in force — the account's, or this
+   * device's if it has pinned one — and leave it in the boot cache so the
+   * next launch paints it immediately. Runs on every change, which is also
+   * what makes a theme chosen on the laptop arrive on the phone.
+   */
+  const theme = settings?.theme
+  useEffect(() => {
+    cacheTheme(theme ?? 'system')
+  }, [theme])
 
   /**
    * The most recent local write, used to sync shortly after you change
