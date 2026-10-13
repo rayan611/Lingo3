@@ -13,7 +13,7 @@ const SEEN_KEY = 'lingua.landingSeen'
  * gets an email address and a signed-in user gets the form. One decision, and
  * it is the cheap one.
  */
-const CONTACT = 'mrp611@gmail.com'
+const CONTACT = 'rayan.rahpou@gmail.com'
 
 /**
  * Has this visitor already been past the front door?
