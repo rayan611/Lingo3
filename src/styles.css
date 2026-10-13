@@ -1156,9 +1156,49 @@ kbd {
    out of the fallback, and both are ways to break offline boot for a page
    that is shown once. */
 .landing {
-  max-width: 30rem;
+  max-width: 34rem;
   margin: 0 auto;
-  padding: 18vh 1.25rem 4rem;
+  padding: 10vh 1.25rem 4rem;
+}
+/* The hero stays centred; everything below it is prose and reads better
+   ranged left, which is also what stops the page looking like a pitch deck. */
+.landing-hero { text-align: center; }
+.landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+.landing-section { margin-top: 44px; }
+.landing-section h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.3rem;
+  margin: 0 0 14px;
+}
+.landing-section p {
+  color: var(--ink-soft);
+  line-height: 1.62;
+  margin: 0 0 12px;
+}
+.landing-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+.landing-features h3 {
+  font-size: 0.98rem;
+  margin: 0 0 4px;
+}
+.landing-features p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.landing-foot {
+  margin-top: 44px;
   text-align: center;
 }
 .landing-mark { margin-bottom: 20px; }
@@ -1175,7 +1215,6 @@ kbd {
   line-height: 1.6;
   margin: 0 0 14px;
 }
-.landing .primary.big { margin-top: 14px; }
 .landing-note { margin-top: 18px; }
 
 /* The detected-language nudge under the Add form's dropdown. A link rather

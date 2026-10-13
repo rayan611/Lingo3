@@ -231,14 +231,14 @@ export function AddWord({ settings }: Props) {
           e.preventDefault()
           void run('check')
         }}>
+        {/* No paragraph of explanation above the input. It said three things:
+            that the language is worked out for you, which the preview says
+            anyway when it reports what it read the word as; how many languages
+            one entry becomes, which the preview then shows you; and that
+            nothing is saved until you press Add, which is what the line under
+            each button says. All of it was true on your first visit and in the
+            way every time after. */}
         <h2>Add a word</h2>
-        <p className="muted small">
-          Type the word in any of your languages — it is worked out from the
-          word itself. One entry becomes {activeTargets(settings).length}{' '}
-          languages, with genders and verb forms. Check shows you the result,
-          including which language it was read as; nothing is saved until you
-          press Add.
-        </p>
 
         <input
           className="word-input"

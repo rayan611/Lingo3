@@ -8,6 +8,25 @@
     <title>Lingo3 — learn up to 3 languages</title>
     <meta name="application-name" content="Lingo3" />
     <meta name="apple-mobile-web-app-title" content="Lingo3" />
+
+    <!-- These are here, in the static head, rather than set by React, because
+         the things that read them do not run JavaScript: a WhatsApp or Telegram
+         link preview, a crawler, curl. Without them, the only text such a
+         visitor finds in this file is the boot fallback below — so sending the
+         link to someone previewed the words "Lingo3 didn't start". -->
+    <meta
+      name="description"
+      content="Learn up to three languages at once from your own words. Each language is scheduled separately, and it works offline."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lingo3" />
+    <meta property="og:title" content="Lingo3 — learn up to 3 languages" />
+    <meta
+      property="og:description"
+      content="Learn up to three languages at once from your own words. Each language is scheduled separately, and it works offline."
+    />
+    <meta property="og:image" content="/icon-512.png" />
+    <meta name="twitter:card" content="summary" />
     <style>
       /* Shown only if the app never mounts. React replaces #root's contents on
          boot, so if you are reading this in a browser, the bundle failed to
