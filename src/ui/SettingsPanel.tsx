@@ -59,6 +59,7 @@ export function SettingsPanel({
   onSync,
 }: SettingsPanelProps) {
   const [name, setName] = useState(settings.displayName ?? '')
+  const [saveFeedback, setSaveFeedback] = useState<{ kind: 'saving' | 'saved' | 'error'; text: string } | null>(null)
   /**
    * What this device has pinned for itself, and what the account says
    * underneath it. `settings` is already the resolved view — these two are
@@ -70,6 +71,29 @@ export function SettingsPanel({
 
   const pinnedHere = (key: DeviceOverridableKey) => key in override
 
+  async function persistSettings(patch: Partial<Settings>) {
+    setSaveFeedback({ kind: 'saving', text: 'Saving…' })
+    try {
+      await saveSettings(patch)
+      setSaveFeedback({ kind: 'saved', text: 'Saved on this device' })
+    } catch {
+      setSaveFeedback({ kind: 'error', text: 'Could not save this setting. Please try again.' })
+    }
+  }
+
+  async function persistDeviceOverride(
+    key: DeviceOverridableKey,
+    value: Settings[DeviceOverridableKey] | null | undefined,
+  ) {
+    setSaveFeedback({ kind: 'saving', text: 'Saving…' })
+    try {
+      await setDeviceOverride(key, value)
+      setSaveFeedback({ kind: 'saved', text: 'Saved on this device' })
+    } catch {
+      setSaveFeedback({ kind: 'error', text: 'Could not save this setting. Please try again.' })
+    }
+  }
+
   /**
    * Writes a preference where it belongs: to this device if it is pinned
    * here, to the account otherwise. Every control below goes through this,
@@ -80,9 +104,9 @@ export function SettingsPanel({
     value: Settings[K] | undefined,
   ) {
     if (pinnedHere(key)) {
-      await setDeviceOverride(key, value === undefined ? null : value)
+      await persistDeviceOverride(key, value === undefined ? null : value)
     } else {
-      await saveSettings({ [key]: value } as Partial<Settings>)
+      await persistSettings({ [key]: value } as Partial<Settings>)
     }
   }
 
@@ -96,8 +120,8 @@ export function SettingsPanel({
     key: K,
     showing: Settings[K] | undefined,
   ) {
-    if (pinnedHere(key)) await setDeviceOverride(key, undefined)
-    else await setDeviceOverride(key, showing === undefined ? null : showing)
+    if (pinnedHere(key)) await persistDeviceOverride(key, undefined)
+    else await persistDeviceOverride(key, showing === undefined ? null : showing)
   }
   /**
    * Profile moved in here when the tab bar was cut to six. It is collapsed by
@@ -123,7 +147,7 @@ export function SettingsPanel({
     const next = on
       ? settings.activeLangs.filter((l) => l !== lang)
       : [...settings.activeLangs, lang]
-    await saveSettings({ activeLangs: next })
+    await persistSettings({ activeLangs: next })
   }
 
   async function move(lang: Lang, dir: -1 | 1) {
@@ -132,7 +156,7 @@ export function SettingsPanel({
     const j = i + dir
     if (i < 0 || j < 0 || j >= order.length) return
     ;[order[i], order[j]] = [order[j], order[i]]
-    await saveSettings({ targetLangs: order })
+    await persistSettings({ targetLangs: order })
   }
 
   /**
@@ -148,7 +172,7 @@ export function SettingsPanel({
     const isTarget = settings.targetLangs.includes(lang)
     if (!isTarget && atLimit) return
     if (isTarget) {
-      await saveSettings({
+      await persistSettings({
         targetLangs: settings.targetLangs.filter((l) => l !== lang),
         activeLangs: settings.activeLangs.filter((l) => l !== lang),
       })
@@ -164,6 +188,11 @@ export function SettingsPanel({
 
   return (
     <div className="stack settings-stack">
+      {saveFeedback && (
+        <p className={`save-feedback ${saveFeedback.kind}`} role="status" aria-live="polite">
+          {saveFeedback.text}
+        </p>
+      )}
       {/* Account first. Who you are signed in as and whether your words have
           reached the server are the things you open Settings in a hurry to
           check; everything below is a preference you set once. */}
@@ -238,7 +267,7 @@ export function SettingsPanel({
               placeholder="Your name"
               onChange={(e) => setName(e.target.value)}
               onBlur={() =>
-                void saveSettings({ displayName: name.trim() || undefined })
+                void persistSettings({ displayName: name.trim() || undefined })
               }
             />
           </div>
