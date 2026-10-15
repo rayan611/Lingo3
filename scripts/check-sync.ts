@@ -25,6 +25,7 @@ import {
   advanceCursor,
   withTimeout,
   STALE_LOCK_MS,
+  mergeInto,
 } from '../src/sync/sync'
 
 let failures = 0
@@ -77,17 +78,30 @@ async function main() {
   const newer = 2_000_000
   await db.concepts.put(concept('lww', 'local-newer', newer))
 
-  // Simulate the merge rule used by pull(): remote wins only if strictly newer.
-  const remoteOlder = concept('lww', 'remote-older', older)
-  const local = await db.concepts.get('lww')
-  const remoteWins = !local || remoteOlder.updatedAt > local.updatedAt
-  check('an older remote row does not overwrite a newer local one', !remoteWins)
-
-  const remoteNewer = concept('lww', 'remote-newer', newer + 1)
-  const local2 = await db.concepts.get('lww')
+  const olderMerged = await mergeInto(db.concepts, [concept('lww', 'remote-older', older)])
   check(
-    'a newer remote row does win',
-    !!local2 && remoteNewer.updatedAt > local2.updatedAt,
+    'an older remote row is ignored',
+    olderMerged === 0 && (await db.concepts.get('lww'))?.lemma === 'local-newer',
+  )
+
+  const newerMerged = await mergeInto(db.concepts, [concept('lww', 'remote-newer', newer + 1)])
+  check(
+    'a newer remote row really replaces the local row',
+    newerMerged === 1 && (await db.concepts.get('lww'))?.lemma === 'remote-newer',
+  )
+
+  const equalMerged = await mergeInto(db.concepts, [concept('lww', 'same-time-remote', newer + 1)])
+  check(
+    'equal timestamps do not cause unstable ping-pong',
+    equalMerged === 0 && (await db.concepts.get('lww'))?.lemma === 'remote-newer',
+  )
+
+  const deletion = { ...concept('lww', 'remote-deletion', newer + 2), deletedAt: newer + 2 }
+  const deletionMerged = await mergeInto(db.concepts, [deletion])
+  const deletedLocal = await db.concepts.get('lww')
+  check(
+    'a newer soft deletion propagates as a tombstone',
+    deletionMerged === 1 && deletedLocal?.deletedAt === newer + 2,
   )
 
   console.log('\n4. Reading settings never writes')
