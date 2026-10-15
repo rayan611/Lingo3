@@ -135,7 +135,7 @@ export function Review({ settings, onExit }: Props) {
       if (item) {
         setSessionGrades((current) => ({
           ...current,
-          [\`${item.concept.id}:${card.lang}\`]: { lang: card.lang as Lang, grade },
+          [card.id]: { lang: card.lang as Lang, grade },
         }))
       }
       await gradeCard(card, grade, settings)
