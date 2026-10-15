@@ -251,21 +251,11 @@ function makeHandler(
 }
 
 // ---------------------------------------------------------------------------
-// Who is allowed to call this
-//
-// The site is public, so without a check this endpoint is a free model proxy
-// billed to us. The check is the Supabase access token the app already holds:
-// the caller sends it, we ask Supabase whose it is, and refuse if the answer is
-// nobody. A shared secret would have been easier and worthless — one shipped in
-// a public browser bundle is readable by whoever reads the bundle.
+// Authentication and shared rate limiting live in src/server/aiSecurity.ts.
+// Each request is verified against Supabase Auth; per-account hourly counters
+// are incremented atomically in Supabase so separate Vercel instances share
+// the same limit. No service-role key is used by this endpoint.
 // ---------------------------------------------------------------------------
-
-
-/**
- * A ceiling on how much one account can spend in an hour. Per server instance
- * rather than global, so it is a brake and not a guarantee — the guarantee is a
- * spend cap in the provider's console.
- */
 
 export default makeHandler(respond, '/api/story')
 
