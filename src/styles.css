@@ -2028,3 +2028,63 @@ details.feedback > summary:hover h3 { color: var(--accent); }
    when the password does not work. */
 .signin-forgot { margin-top: 10px; text-align: right; }
 .signin-forgot .link { font-size: 0.82rem; }
+
+
+/* Settings: quiet dividers make each group scannable without turning every
+   preference into a separate card. Device-only status sits beside its title. */
+.settings-stack > .panel {
+  padding-bottom: 20px;
+}
+.settings-stack > .panel + .panel {
+  margin-top: 2px;
+}
+.settings-stack > .panel > h3 {
+  margin-top: 22px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line-soft);
+}
+.settings-stack > .panel > .field + .field,
+.settings-stack > .panel > .check + .field,
+.settings-stack > .panel > .field + .check,
+.settings-stack > .panel > .check + .check {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line-soft);
+}
+.settings-stack > .panel > .panel-head + p {
+  margin-top: 8px;
+}
+.setting-title {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.device-only-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line));
+  border-radius: 999px;
+  padding: 2px 7px;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+/* Example-sentence audio is deliberately lower and farther from the
+   headword speaker, so the two controls read as different actions. */
+.example > .speak {
+  vertical-align: text-bottom;
+  position: relative;
+  top: 2px;
+  margin-right: 5px;
+}
+.example .speak-sm {
+  width: 22px;
+  height: 22px;
+}
