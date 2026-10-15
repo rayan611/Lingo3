@@ -228,12 +228,8 @@ function makeHandler(
     try {
       return await respond(req)
     } catch (err) {
-      return json(
-        {
-          error: `Request crashed: ${err instanceof Error ? err.message : String(err)}`,
-        },
-        500,
-      )
+      console.error('[story.ts] unhandled request error', err instanceof Error ? err.name : 'unknown')
+      return json({ error: 'Unexpected server error. Please try again.' }, 500)
     }
   }
 
@@ -304,17 +300,21 @@ async function respond(req: Request): Promise<Response> {
     if (err instanceof Error && err.name === 'AbortError') {
       return json({ error: 'The model took too long. Try again.' }, 504)
     }
-    return json({ error: `Could not reach the model: ${String(err)}` }, 502)
+    console.error('[story.ts] model request failed', err instanceof Error ? err.name : 'unknown')
+    return json({ error: 'Could not reach the language model. Please try again.' }, 502)
   } finally {
     clearTimeout(timer)
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text()
+    // Do not return raw provider responses to the browser: they can expose
+    // internal diagnostics. Keep the user-facing error actionable and bounded.
+    console.warn('[story.ts] model provider returned status', upstream.status)
     return json(
       {
-        error: `Model request failed (${upstream.status}).`,
-        detail: detail.slice(0, 500),
+        error: upstream.status === 429
+          ? 'The language model is busy. Please try again shortly.'
+          : 'The language model could not complete the request. Please try again.',
       },
       upstream.status === 429 ? 429 : 502,
     )
