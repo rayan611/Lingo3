@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ensureDisplayFonts } from '../lib/theme'
 import { InstallButton } from './InstallButton'
+import { Logo } from './Logo'
 
 const SEEN_KEY = 'lingua.landingSeen'
 
@@ -129,30 +130,45 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
     <div className="lx">
       <div className="lx-sky" aria-hidden="true" />
 
-      <header className="lx-hero">
-        <p className="lx-mark">Lingo3</p>
-        <h1 className="lx-head">
-          Three languages.
-          <br />
-          Your own words.
-        </h1>
-        <p className="lx-sub">
-          Add the word you met today and it comes back in every language you
-          are learning — with the article, the forms, and a sentence you can
-          actually say.
-        </p>
+      {/* Sticky, because the sections it points at are the ones someone goes
+          looking for after they have read the hero and want to know who made
+          this and how to complain about it. */}
+      <nav className="lx-nav" aria-label="Page sections">
+        <a className="lx-nav-mark" href="#top" aria-label="Lingo3, top of page">
+          <Logo size={26} />
+        </a>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#feedback">Feedback</a></li>
+          <li className="lx-nav-install"><InstallButton /></li>
+        </ul>
+      </nav>
 
-        <WordBloom />
+      {/* Everything above the bloom has to fit on the shortest screen anyone
+          will open this on — a 5.5" phone is about 360x600 of usable page —
+          because the button is the point of the page and a button you have to
+          scroll to find is a button most people never find. That is the whole
+          reason the name carries the hero and the strapline is one line under
+          it: a second big headline would push the button past the fold. */}
+      <header className="lx-hero" id="top">
+        <h1 className="lx-mark">Lingo3</h1>
+        <p className="lx-tagline">Three languages. Your own words.</p>
+        <p className="lx-sub">
+          Add a word once. It comes back with the article, the forms and a
+          sentence you can actually say — in every language you are learning.
+        </p>
 
         <div className="lx-cta">
           <button className="lx-open" onClick={open}>
             Open app
           </button>
-          <InstallButton />
         </div>
         <p className="lx-note">
           Free, no adverts. Works offline and installs to your home screen.
         </p>
+
+        <WordBloom />
       </header>
 
       <Deck />
@@ -179,14 +195,32 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
       </section>
 
       <section className="lx-prose" id="contact">
-        <h2>Say something</h2>
+        <h2>Contact</h2>
         <p>
-          Something broken, something missing, or a word that came back with
-          the wrong gender? That is how the list of things to fix gets written.
+          Built and run by one person. The fastest way to reach me is email,
+          and it is read by a human rather than a form.
         </p>
         <p>
           <a className="lx-link" href={`mailto:${CONTACT}?subject=Lingo3`}>
             {CONTACT}
+          </a>
+        </p>
+      </section>
+
+      <section className="lx-prose" id="feedback">
+        <h2>Feedback</h2>
+        <p>
+          Something broken, something missing, or a word that came back with
+          the wrong gender? That is how the list of things to fix gets
+          written — a wrong article is worth reporting, because it is wrong in
+          your vocabulary until someone says so.
+        </p>
+        <p>
+          <a
+            className="lx-link"
+            href={`mailto:${CONTACT}?subject=Lingo3 feedback`}
+          >
+            Send feedback
           </a>
         </p>
         <p className="lx-fine">

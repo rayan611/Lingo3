@@ -1434,7 +1434,11 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   color: var(--lx-ink);
   background: #fff;
   font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  overflow-x: clip;
+  /* No overflow-x here. `clip` on one axis computes the other to `auto`,
+     which makes this element the scroll container — and a sticky child of a
+     scroll container that never scrolls never sticks. The menu was silently
+     scrolling away. The sky is absolutely positioned inside these bounds, so
+     there was nothing to clip in the first place. */
 }
 
 /* The bright background: three soft lights rather than a linear wash, so the
@@ -1450,51 +1454,141 @@ details.feedback > summary:hover h3 { color: var(--accent); }
     radial-gradient(34rem 26rem at 52% 30%, #d6f6f1 0%, rgba(214, 246, 241, 0) 58%);
 }
 
-/* Everything except the sky sits above it. Written as an exception rather
-   than as `.lx > *` on its own: that rule comes after .lx-sky, carries the
-   same specificity, and quietly won — which turned the background into an
-   880px block in the flow and pushed the whole page down a screen. */
-.lx > *:not(.lx-sky) { position: relative; }
+/* Everything except the sky sits above it.
+   TWO exceptions, both learned the hard way, and both the same lesson — this
+   selector out-specifies anything written as a single class, so whatever it
+   names it OWNS:
+     - .lx-sky, or the background stops being absolute, becomes an 880px
+       block in the flow and pushes the whole page down a screen;
+     - .lx-nav, or `position: relative` lands on top of `position: sticky`
+       and the menu silently scrolls away with the page.
+   Both are positioned elements in their own right, so they paint above the
+   sky without any help from here. */
+.lx > *:not(.lx-sky):not(.lx-nav) { position: relative; }
+
+/* --- the top menu -------------------------------------------------------- */
+
+/* The menu jumps rather than snaps. Only where motion is welcome, and it is
+   harmless elsewhere in the app, which has no in-page anchors at all. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.lx) { scroll-behavior: smooth; }
+}
+
+.lx-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 -1.25rem;
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(232, 224, 245, 0.8);
+}
+.lx-nav-mark { display: flex; flex: none; border-radius: 8px; }
+.lx-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+}
+/* Scoped to the list, not to every link in the bar. As `.lx-nav a` this
+   out-specified `.lx-nav-mark`'s own display and quietly took it over — so
+   the mark could not be hidden on a narrow screen however late the rule
+   came. Specificity beats order, every time. */
+.lx-nav ul a,
+.lx-nav ul .install-button {
+  display: block;
+  font: inherit;
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--lx-ink-soft);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.lx-nav ul a:hover,
+.lx-nav ul .install-button:hover { color: var(--lx-violet); background: #f6effe; }
+.lx-nav ul a:focus-visible,
+.lx-nav ul .install-button:focus-visible {
+  outline: 2px solid var(--lx-violet);
+  outline-offset: 2px;
+}
+/* Install is an offer, not a section, so it is weighted as the odd one out. */
+.lx-nav ul .install-button { color: var(--lx-violet); font-weight: 600; }
+/* It renders nothing on a desktop that cannot install; the gap would read as
+   a missing item, so the empty slot collapses. */
+.lx-nav-install:empty { display: none; }
+
+/* On a narrow phone the bar carries four items and the mark is the first
+   thing to go: the name is set five times larger immediately below it, so
+   the tile is the one element here that repeats something already said. */
+@media (max-width: 440px) {
+  .lx-nav { gap: 0; padding-left: 0.9rem; padding-right: 0.9rem; }
+  .lx-nav-mark { display: none; }
+  .lx-nav ul { gap: 0; width: 100%; justify-content: space-between; }
+  .lx-nav ul a, .lx-nav ul .install-button { font-size: 0.82rem; padding: 0.4rem 0.35rem; }
+}
 
 /* --- hero ---------------------------------------------------------------- */
 
 .lx-hero {
   max-width: 34rem;
   margin: 0 auto;
-  padding: 4.5rem 0 1rem;
+  padding: 2.4rem 0 1rem;
   text-align: center;
 }
 
+/* The name IS the headline. It used to be a small violet label above a
+   two-line headline, which looked considered and cost about 120px of the one
+   screen that has to carry the button. */
 .lx-mark {
   font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
-  color: var(--lx-violet);
-  margin: 0 0 2.25rem;
+  font-size: clamp(3rem, 15vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(104deg, #7c3aed 0%, #c026d3 55%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* If background-clip:text is not honoured the text would be invisible, so
+     the fallback colour is set first and only overridden where it works. */
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .lx-mark { color: var(--lx-violet); }
 }
 
-.lx-head {
+.lx-tagline {
   font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
-  font-weight: 600;
-  font-size: clamp(2.3rem, 9vw, 3.4rem);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-  margin: 0 0 1rem;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 4.6vw, 1.45rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.7rem;
+  color: var(--lx-ink);
 }
 
 .lx-sub {
-  font-size: 1.04rem;
-  line-height: 1.62;
+  font-size: 0.98rem;
+  line-height: 1.55;
   color: var(--lx-ink-soft);
-  margin: 0 auto;
-  max-width: 27rem;
+  margin: 0 auto 1.3rem;
+  max-width: 25rem;
 }
 
 /* --- the word bloom ------------------------------------------------------ */
 
 .lx-bloom {
-  margin: 2.5rem auto 2.25rem;
+  margin: 2.4rem auto 0;
   max-width: 21rem;
 }
 
@@ -1644,7 +1738,7 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 }
 
 .lx-note {
-  margin: 1.1rem 0 0;
+  margin: 0.9rem 0 0;
   font-size: 0.84rem;
   color: var(--lx-ink-faint);
 }
@@ -1740,6 +1834,9 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 .lx-prose {
   max-width: 32rem;
   margin: 3.25rem auto 0;
+  /* Clear of the sticky bar, or a menu link lands with its own heading
+     hidden behind the thing that was just clicked. */
+  scroll-margin-top: 4.5rem;
 }
 .lx-prose h2 {
   font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
@@ -1764,9 +1861,15 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 .lx-foot .lx-fine { margin: 1.1rem 0 0; }
 
 @media (min-width: 640px) {
-  .lx-hero { padding-top: 6rem; }
+  .lx-hero { padding-top: 3.5rem; }
   .lx-deck { padding: 1.8rem 1.8rem 1.1rem; }
   .lx-art { width: 124px; }
+}
+
+@media (max-height: 680px) {
+  .lx-hero { padding-top: 1.4rem; }
+  .lx-sub { margin-bottom: 1.1rem; }
+  .lx-bloom { margin-top: 1.8rem; }
 }
 
 @media (max-width: 430px) {
