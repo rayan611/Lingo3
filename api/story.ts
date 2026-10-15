@@ -1,3 +1,5 @@
+import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+
 /**
  * Vercel serverless function: writes a short text out of words the reader
  * already knows.
@@ -28,7 +30,7 @@ export const maxDuration = 60
 const UPSTREAM_TIMEOUT_MS = 50_000
 
 /** Lower than expansion's 80: a story is a much bigger answer. */
-const overLimit = makeLimiter(20)
+
 
 const LANG_NAMES: Record<string, string> = {
   fa: 'Persian (Farsi)',
@@ -258,62 +260,22 @@ function makeHandler(
 // a public browser bundle is readable by whoever reads the bundle.
 // ---------------------------------------------------------------------------
 
-const SUPABASE_URL = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
-const SUPABASE_KEY =
-  process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY
-
-const authConfigured = Boolean(SUPABASE_URL && SUPABASE_KEY)
-
-async function callerId(req: Request): Promise<string | null> {
-  const header = req.headers.get('authorization') ?? ''
-  const token = header.toLowerCase().startsWith('bearer ')
-    ? header.slice(7).trim()
-    : ''
-  if (!token) return null
-  try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      headers: {
-        apikey: SUPABASE_KEY as string,
-        authorization: `Bearer ${token}`,
-      },
-    })
-    if (!res.ok) return null
-    const user = (await res.json()) as { id?: string }
-    return user.id ?? null
-  } catch {
-    return null
-  }
-}
 
 /**
  * A ceiling on how much one account can spend in an hour. Per server instance
  * rather than global, so it is a brake and not a guarantee — the guarantee is a
  * spend cap in the provider's console.
  */
-function makeLimiter(hourlyLimit: number) {
-  const WINDOW_MS = 60 * 60 * 1000
-  const recent = new Map<string, number[]>()
-  return function overLimit(userId: string): boolean {
-    const now = Date.now()
-    const hits = (recent.get(userId) ?? []).filter((t) => now - t < WINDOW_MS)
-    hits.push(now)
-    recent.set(userId, hits)
-    return hits.length > hourlyLimit
-  }
-}
 
 export default makeHandler(respond, '/api/story')
 
 async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
-  if (authConfigured) {
-    const userId = await callerId(req)
-    if (!userId) return json({ error: 'Sign in before writing a text.' }, 401)
-    if (overLimit(userId)) {
-      return json({ error: 'Too many texts in one hour. Try again later.' }, 429)
-    }
-  }
+  const auth = await authenticateAiRequest(req)
+  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  const rate = await enforceAiRateLimit(auth.userId, 'story', 20)
+  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
   if (!apiKey) {
