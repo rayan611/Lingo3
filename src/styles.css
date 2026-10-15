@@ -2084,3 +2084,26 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   top: 2px;
   margin-right: 5px;
 }
+
+
+.session-recap {
+  margin: 18px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+.session-recap > strong {
+  display: block;
+  margin-bottom: 5px;
+}
+.session-recap p {
+  margin: 4px 0 8px;
+}
+.session-recap-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+.session-recap-list li + li { margin-top: 3px; }
