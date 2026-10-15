@@ -442,12 +442,13 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
   if (sErr) throw new Error(`stories: ${sErr.message}`)
   count += await mergeInto(db.stories, (stories ?? []).map(storyIn))
 
-  const { data: remoteSettings } = await sb
+  const { data: remoteSettings, error: settingsErr } = await sb
     .from('user_settings')
     .select('*')
     .eq('user_id', userId)
     .abortSignal(signal)
     .maybeSingle()
+  if (settingsErr) throw new Error(`settings: ${settingsErr.message}`)
   if (remoteSettings) {
     const local = await db.settings.get('singleton')
     const remoteAt = ms(remoteSettings.updated_at as string)
@@ -487,7 +488,7 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
  * whole of last-write-wins: a row the other device changed later wins, a row
  * we changed later is left alone and goes out on the next push.
  */
-async function mergeInto<T extends { id: string; updatedAt: number }>(
+export async function mergeInto<T extends { id: string; updatedAt: number }>(
   table: { bulkGet: (ids: string[]) => Promise<(T | undefined)[]>; bulkPut: (rows: T[]) => Promise<unknown> },
   remote: T[],
 ): Promise<number> {
