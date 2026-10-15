@@ -52,6 +52,11 @@ import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
  */
 type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'settings'
 
+function isTab(value: unknown): value is Tab {
+  return value === 'add' || value === 'training' || value === 'read' ||
+    value === 'review' || value === 'browse' || value === 'settings'
+}
+
 export function App() {
   const { session, userId, email, recovery, endRecovery } = useSession()
 
@@ -173,6 +178,42 @@ function Workspace({
   email: string | null
 }) {
   const [tab, setTab] = useState<Tab>('add')
+  const suppressTabHistory = useRef(false)
+  const tabHistoryInitialized = useRef(false)
+
+  // Keep the six main sections in browser history so Back/Forward works
+  // predictably without changing the URL or disturbing the privacy route.
+  useEffect(() => {
+    const onTabPop = (event: PopStateEvent) => {
+      const previous = event.state?.lingo3Tab
+      if (isTab(previous)) {
+        suppressTabHistory.current = true
+        setTab(previous)
+      }
+    }
+    window.addEventListener('popstate', onTabPop)
+    return () => window.removeEventListener('popstate', onTabPop)
+  }, [])
+
+  useEffect(() => {
+    if (suppressTabHistory.current) {
+      suppressTabHistory.current = false
+      return
+    }
+    if (!tabHistoryInitialized.current) {
+      tabHistoryInitialized.current = true
+      window.history.replaceState(
+        { ...(window.history.state ?? {}), lingo3Tab: tab },
+        '',
+      )
+      return
+    }
+    window.history.pushState(
+      { ...(window.history.state ?? {}), lingo3Tab: tab },
+      '',
+    )
+  }, [tab])
+
   const [online, setOnline] = useState(navigator.onLine)
   const [syncState, setSyncState] = useState<SyncResult | null>(null)
   const [syncing, setSyncing] = useState(false)
