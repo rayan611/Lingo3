@@ -2023,3 +2023,8 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 }
 
 :root[data-theme='bloom'] .tab.active .tab-icon { color: #fff; }
+
+/* The way out of the sign-in form, under the password field where you look
+   when the password does not work. */
+.signin-forgot { margin-top: 10px; text-align: right; }
+.signin-forgot .link { font-size: 0.82rem; }

@@ -13,6 +13,7 @@ import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
 import { authConfigured } from './auth/supabase'
 import { useSession } from './auth/useSession'
+import { ResetPassword } from './auth/ResetPassword'
 import { SignIn } from './auth/SignIn'
 import { sync, type SyncResult } from './sync/sync'
 
@@ -52,7 +53,7 @@ import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
 type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'settings'
 
 export function App() {
-  const { session, userId, email } = useSession()
+  const { session, userId, email, recovery, endRecovery } = useSession()
 
   /**
    * The privacy policy, at /privacy.
@@ -148,6 +149,13 @@ export function App() {
 
   if (authConfigured && !session) {
     return <SignIn />
+  }
+
+  // A reset link signs you in, so this has to stand in front of the app —
+  // otherwise the app just opens and the person never gets to set the
+  // password they came here to set.
+  if (recovery) {
+    return <ResetPassword email={email} onDone={endRecovery} />
   }
 
   if (!dbReady) {

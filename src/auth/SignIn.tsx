@@ -1,12 +1,21 @@
 import { useState } from 'react'
-import { signIn, signUp } from './useSession'
+import {
+  consumeAuthLinkError,
+  requestPasswordReset,
+  signIn,
+  signUp,
+} from './useSession'
+
+type Mode = 'in' | 'up' | 'forgot'
 
 export function SignIn() {
-  const [mode, setMode] = useState<'in' | 'up'>('in')
+  const [mode, setMode] = useState<Mode>('in')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  // Read once, on the first render after landing: if a reset link brought
+  // them here and failed, that is the first thing they need to know.
+  const [error, setError] = useState<string | null>(() => consumeAuthLinkError())
   const [notice, setNotice] = useState<string | null>(null)
 
   async function submit(e: React.FormEvent) {
@@ -16,7 +25,15 @@ export function SignIn() {
     setError(null)
     setNotice(null)
     try {
-      if (mode === 'in') {
+      if (mode === 'forgot') {
+        await requestPasswordReset(email.trim())
+        // Deliberately the same answer whether or not that address has an
+        // account. "No such user" would turn this box into a way of finding
+        // out who has one.
+        setNotice(
+          'If that address has an account, a reset link is on its way. It is good for one hour — check spam if it does not arrive.',
+        )
+      } else if (mode === 'in') {
         await signIn(email.trim(), password)
       } else {
         const { needsConfirmation } = await signUp(email.trim(), password)
@@ -67,7 +84,20 @@ export function SignIn() {
         </header>
 
         <form className="panel" onSubmit={submit}>
-          <h2>{mode === 'in' ? 'Sign in' : 'Create an account'}</h2>
+          <h2>
+            {mode === 'in'
+              ? 'Sign in'
+              : mode === 'up'
+                ? 'Create an account'
+                : 'Reset your password'}
+          </h2>
+
+          {mode === 'forgot' && (
+            <p className="muted small">
+              Give the address you signed up with and we will send a link that
+              lets you set a new password.
+            </p>
+          )}
 
           <label className="field">
             <span>Email</span>
@@ -81,34 +111,75 @@ export function SignIn() {
             />
           </label>
 
-          <label className="field">
-            <span>Password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
-              minLength={6}
-              required
-              disabled={busy}
-            />
-          </label>
+          {/* No password field when resetting: asking for the thing you have
+              just said you cannot remember is the classic version of this
+              form, and it is nonsense. */}
+          {mode !== 'forgot' && (
+            <label className="field">
+              <span>Password</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
+                minLength={6}
+                required
+                disabled={busy}
+              />
+            </label>
+          )}
+
+          {mode === 'in' && (
+            <div className="signin-forgot">
+              <button
+                type="button"
+                className="link"
+                onClick={() => {
+                  setMode('forgot')
+                  setError(null)
+                  setNotice(null)
+                }}
+              >
+                Forgot your password?
+              </button>
+            </div>
+          )}
 
           <button className="primary big" type="submit" disabled={busy}>
-            {busy ? 'Working…' : mode === 'in' ? 'Sign in' : 'Create account'}
+            {busy
+              ? 'Working…'
+              : mode === 'in'
+                ? 'Sign in'
+                : mode === 'up'
+                  ? 'Create account'
+                  : 'Send reset link'}
           </button>
 
           {error && <div className="status error">{error}</div>}
           {notice && <div className="status ok">{notice}</div>}
 
           <div className="signin-switch">
-            {mode === 'in' ? (
+            {mode === 'in' && (
               <button type="button" className="link" onClick={() => setMode('up')}>
                 No account yet? Create one
               </button>
-            ) : (
+            )}
+            {mode === 'up' && (
               <button type="button" className="link" onClick={() => setMode('in')}>
                 Already have an account? Sign in
+              </button>
+            )}
+            {mode === 'forgot' && (
+              <button
+                type="button"
+                className="link"
+                onClick={() => {
+                  setMode('in')
+                  setError(null)
+                  setNotice(null)
+                }}
+              >
+                Back to sign in
               </button>
             )}
           </div>
