@@ -55,7 +55,8 @@ export function SpeakButton({
       className={`speak ${size === 'sm' ? 'speak-sm' : ''} ${speaking ? 'speaking' : ''}`}
       onClick={go}
       title={label ?? 'Listen'}
-      aria-label={label ?? 'Listen'}
+      aria-label={speaking ? 'Stop speaking' : label ?? 'Listen'}
+      aria-pressed={speaking}
     >
       <svg
         viewBox="0 0 24 24"
