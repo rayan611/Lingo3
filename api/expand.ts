@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { parseExpandInput } from '../src/server/aiInput.js'
 
 /**
  * Vercel serverless function: expands one word into every selected language in
@@ -443,31 +444,17 @@ async function respond(req: Request): Promise<Response> {
     )
   }
 
-  let body: {
-    lemma?: string
-    sourceLang?: string
-    nativeLang?: string
-    langs?: string[]
-    hint?: string
-  }
+  let rawBody: unknown
   try {
-    body = (await req.json()) as typeof body
+    rawBody = await req.json()
   } catch {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
+  const parsed = parseExpandInput(rawBody)
+  if (!parsed.ok) return json({ error: parsed.error }, 400)
 
-  const lemma = (body.lemma ?? '').trim()
-  // Absent means "you work it out" — the Add box no longer asks. A bulk paste
-  // still says, because a list from one class really is all one language.
-  const sourceLang = body.sourceLang?.trim() || undefined
-  const nativeLang = body.nativeLang ?? 'fa'
-  const langs = Array.isArray(body.langs) ? body.langs : []
-
-  if (!lemma) return json({ error: 'lemma is required.' }, 400)
-  if (lemma.length > 120) return json({ error: 'lemma is too long.' }, 400)
-  if (langs.length === 0) return json({ error: 'langs is required.' }, 400)
-
-  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint: body.hint })
+  const { lemma, sourceLang, nativeLang, langs, hint } = parsed.value
+  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint })
 
   const abort = new AbortController()
   const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
