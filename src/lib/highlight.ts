@@ -31,7 +31,7 @@ export function formCandidates(
 
   // `raw` is typed as a string but a morphology line can be assembled from
   // fields that were never filled in, so it is checked rather than trusted.
-  const add = (raw: string | undefined | null) => {
+  const add = (raw: string | undefined | null, splitLast: boolean) => {
     if (!raw) return
     for (const part of raw.split(/[,;/|]/)) {
       const value = part.trim().replace(/^[-–—]+|[-–—]+$/g, '').trim()
@@ -39,12 +39,17 @@ export function formCandidates(
       out.add(value)
       const words = value.split(/\s+/)
       const last = words[words.length - 1]
-      if (words.length > 1 && last.length >= 3) out.add(last)
+      if (splitLast && words.length > 1 && last.length >= 3) out.add(last)
     }
   }
 
-  add(headword)
-  for (const line of morphLines(lang, form)) add(line.value)
+  // The headword matches whole or not at all. A morphology value is a display
+  // form this app assembled — `ist gegangen` — and its last word is the real
+  // one. A multi-word HEADWORD is the opposite: `komma i tid` is the unit
+  // being learned, and letting it match on `tid` would mark the wrong word in
+  // a sentence and, worse, build a cloze that asks for `tid`.
+  add(headword, false)
+  for (const line of morphLines(lang, form)) add(line.value, true)
 
   // Longest first, so `hunden` wins over `hund` at the same position.
   return [...out].sort((a, b) => b.length - a.length)

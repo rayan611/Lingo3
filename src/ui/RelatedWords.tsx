@@ -36,7 +36,9 @@ export function RelatedWords({
   category: Category
 }) {
   const [busy, setBusy] = useState<string | null>(null)
-  const [done, setDone] = useState<Record<string, string>>({})
+  const [done, setDone] = useState<
+    Record<string, { text: string; failed?: boolean }>
+  >({})
   const [known, setKnown] = useState<Set<string>>(new Set())
 
   const shown = related.filter(
@@ -80,17 +82,22 @@ export function RelatedWords({
       })
       setDone((d) => ({
         ...d,
-        [id]:
-          result.status === 'duplicate'
-            ? 'already saved'
-            : result.status === 'queued'
-              ? 'saved — will expand later'
-              : `added, first review in ${RELATED_STAGGER_DAYS} days`,
+        [id]: {
+          text:
+            result.status === 'duplicate'
+              ? 'already saved'
+              : result.status === 'queued'
+                ? 'saved — will expand later'
+                : `added, first review in ${RELATED_STAGGER_DAYS} days`,
+        },
       }))
     } catch (err) {
       setDone((d) => ({
         ...d,
-        [id]: err instanceof Error ? err.message : String(err),
+        [id]: {
+          text: err instanceof Error ? err.message : String(err),
+          failed: true,
+        },
       }))
     } finally {
       setBusy(null)
@@ -135,7 +142,11 @@ export function RelatedWords({
               {r.note && <div className="note">{r.note}</div>}
               <div className="related-action">
                 {status ? (
-                  <span className="muted small">{status}</span>
+                  <span
+                    className={`related-result ${status.failed ? 'failed' : ''}`}
+                  >
+                    {status.text}
+                  </span>
                 ) : already ? (
                   <span className="muted small">already in your list</span>
                 ) : (

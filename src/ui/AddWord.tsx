@@ -15,6 +15,7 @@ import {
   activeTargets,
   type Category,
   type Lang,
+  type LaterWord,
   type RelatedWord,
   type Settings,
 } from '../db/types'
@@ -24,6 +25,7 @@ import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
 import { RelatedWords } from './RelatedWords'
 import { SuggestionBox } from './Suggestions'
+import { LaterList, parkWord } from './LaterList'
 
 /**
  * Categories offered before you have any of your own, grouped the way a
@@ -94,6 +96,14 @@ export function AddWord({ settings }: Props) {
    * so this is one branch at the end, not a second path through the code.
    */
   const [mode, setMode] = useState<'check' | 'add' | null>(null)
+  /**
+   * The parked word currently in the box, if the box was filled from the
+   * later list. It is what tells `save` which row to clear, and it survives
+   * Check → look at the preview → Add, because that is the ordinary route
+   * through the list. Typing in the box by hand clears it: at that point the
+   * word being saved is no longer the one that was parked.
+   */
+  const [laterId, setLaterId] = useState<string | null>(null)
   /** The tags that will be saved — seeded by the model, edited here. */
   const [draftTags, setDraftTags] = useState<string[]>([])
   /**
@@ -148,8 +158,12 @@ export function AddWord({ settings }: Props) {
     [],
   )
 
-  async function run(which: 'check' | 'add', sourceLang?: Lang) {
-    if (!lemma.trim() || busy) return
+  async function run(which: 'check' | 'add', sourceLang?: Lang, word?: string) {
+    // The word is passed in when the list filled the box: a `setLemma` in the
+    // same tick has not reached this closure yet, and reading stale state
+    // here would look up whatever was in the box before.
+    const term = (word ?? lemma).trim()
+    if (!term || busy) return
     setMode(which)
     setBusy(true)
     setStatus(null)
@@ -166,7 +180,7 @@ export function AddWord({ settings }: Props) {
       // collision dialog — "no, mine is the English one" — and it both
       // narrows the duplicate lookup and tells the model which reading to
       // build.
-      const result = await previewWord({ lemma, sourceLang, settings })
+      const result = await previewWord({ lemma: term, sourceLang, settings })
 
       if (result.status === 'duplicate') {
         setLastId(result.conceptId)
@@ -207,12 +221,44 @@ export function AddWord({ settings }: Props) {
         setStatus({ kind: 'ok', text: `Added "${toSave.lemma}".` })
         setLemma('')
       }
+      // Off the list either way: a duplicate is already in the word bank, so
+      // leaving it parked would mean working through it again tomorrow to
+      // reach the same answer.
+      if (laterId) {
+        await db.later.delete(laterId)
+        setLaterId(null)
+      }
       setPreview(null)
     } catch (err) {
       setStatus({ kind: 'error', text: err instanceof Error ? err.message : String(err) })
     } finally {
       setBusy(false)
     }
+  }
+
+  /** Puts the typed word on the later list and empties the box. */
+  async function park() {
+    const text = lemma.trim()
+    if (!text) return
+    const parked = await parkWord(text)
+    setStatus(
+      parked
+        ? { kind: 'ok', text: `"${text}" is on the list to add later.` }
+        : { kind: 'warn', text: `"${text}" is already on that list.` },
+    )
+    if (parked) {
+      setLemma('')
+      setLaterId(null)
+      setPreview(null)
+    }
+  }
+
+  /** Fills the box from a parked row and runs the button that was pressed. */
+  function useLater(row: LaterWord, which: 'check' | 'add') {
+    setLemma(row.lemma)
+    setLaterId(row.id)
+    setStatus(null)
+    void run(which, undefined, row.lemma)
   }
 
   async function retryPending() {
@@ -240,14 +286,31 @@ export function AddWord({ settings }: Props) {
             way every time after. */}
         <h2>Add a word</h2>
 
-        <input
-          className="word-input"
-          value={lemma}
-          onChange={(e) => setLemma(e.target.value)}
-          placeholder="Word, verb, or short phrase"
-          autoFocus
-          disabled={busy}
-        />
+        {/* The park button sits with the input rather than with Check and
+            Add, because it is not a third way of adding a word — it is a way
+            of putting the box down. */}
+        <div className="word-input-row">
+          <input
+            className="word-input"
+            value={lemma}
+            onChange={(e) => {
+              setLemma(e.target.value)
+              setLaterId(null)
+            }}
+            placeholder="Word, verb, or short phrase"
+            autoFocus
+            disabled={busy}
+          />
+          <button
+            type="button"
+            className="chip park"
+            disabled={busy || !lemma.trim()}
+            title="Keep this word for later without looking it up"
+            onClick={() => void park()}
+          >
+            Add later
+          </button>
+        </div>
 
         {/* The single-select Category menu that used to sit here could only
             ever be one thing, and a word is routinely several: `beställa` is
@@ -268,7 +331,11 @@ export function AddWord({ settings }: Props) {
             before you press either. */}
         <div className="add-actions">
           <div className="add-action">
-            <button type="submit" disabled={busy || !lemma.trim()}>
+            <button
+              type="submit"
+              className="inspect"
+              disabled={busy || !lemma.trim()}
+            >
               {busy && mode === 'check' ? 'Checking…' : 'Check'}
             </button>
             <span className="muted small">See what the model made of it first</span>
@@ -325,8 +392,9 @@ export function AddWord({ settings }: Props) {
       </form>
 
       {pendingCount > 0 && (
-        <div className="panel warn-panel">
+        <div className="panel pending-panel">
           <strong>
+            <span className="pending-dot" aria-hidden="true" />
             {pendingCount} word{pendingCount === 1 ? '' : 's'} waiting
           </strong>
           <p className="muted small">
@@ -392,6 +460,8 @@ export function AddWord({ settings }: Props) {
           </ul>
         </div>
       )}
+
+      <LaterList busy={busy} onUse={useLater} />
 
       {/* The foot of the Add screen. A word that came back wrong is reported
           from where it was added, and the context field records that. */}

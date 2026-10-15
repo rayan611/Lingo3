@@ -52,7 +52,8 @@
   /* The mark. Fixed across every theme and matching the installed icon: a
      logo that changes colour with the palette is not a logo. Mirrored in
      scripts/make-icons.py — change both together. */
-  --logo-tile: #1b365d;
+  --logo-tile-top: #5BB0F7;
+  --logo-tile: #1A6FCC;
   --logo-ink: #ffffff;
 }
 
@@ -273,13 +274,43 @@ p { margin: 0.4rem 0; }
   .tab-icon { width: 22px; height: 22px; font-size: 0.8rem; }
 }
 
-/* Below this width the greeting is the first thing to go: the mark says which
-   app this is and the language line is live state, but you know your own
-   name. */
+/* The greeting used to be dropped below 560px on the grounds that you know
+   your own name. It is kept now: it is the only thing on the screen that says
+   WHICH account is open, and two people on one laptop is a case this app
+   already builds for. It gets smaller and loses its divider instead. */
 @media (max-width: 560px) {
   .topbar { padding: 16px 0 12px; }
-  .brand-greeting { display: none; }
+  .brand-greeting {
+    font-size: 0.82rem;
+    padding-left: 7px;
+    max-width: 10ch;
+  }
 }
+@media (max-width: 380px) {
+  .brand-greeting {
+    padding-left: 0;
+    border-left: none;
+    max-width: 8ch;
+  }
+}
+
+/* The mark and the name are one target. It carries no button chrome — it has
+   to look like a logo, not a control — so the only affordance is the cursor
+   and the focus ring, which is the convention everywhere else too. */
+.brand-home {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  color: inherit;
+}
+.brand-home:hover:not(:disabled) { border: none; }
+.brand-home:active:not(:disabled) { transform: none; }
 .tab-badge {
   background: var(--accent);
   color: #fff;
@@ -304,6 +335,34 @@ p { margin: 0.4rem 0; }
 .warn-panel {
   border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
   background: var(--warn-soft);
+}
+
+/* Words saved but not expanded. Red rather than amber, and with a pulse: this
+   is not a notice, it is a job that has not finished, and the only thing that
+   clears it is the expansion landing. */
+.pending-panel {
+  border-color: color-mix(in srgb, var(--danger) 50%, var(--line));
+  background: var(--danger-soft);
+}
+.pending-panel > strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--danger);
+}
+.pending-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--danger);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pending-dot { animation: pending-pulse 1.6s ease-in-out infinite; }
+}
+@keyframes pending-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* --- forms --------------------------------------------------------------- */
@@ -408,6 +467,11 @@ kbd {
   padding: 11px 13px;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
+  /* A frame in the status's own colour rather than a left rule alone: "Added
+     …" has to be visible from across the room, because it is the one line
+     that says the word is really in. The border takes its hue from the text,
+     so ok is green, warn amber and error red without three more rules. */
+  border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
   border-left: 3px solid currentColor;
 }
 .status.ok { background: var(--accent-soft); color: var(--accent-ink); }
@@ -614,6 +678,30 @@ kbd {
 .next-bar { position: sticky; bottom: 12px; }
 
 .typed { margin: 4px 0 14px; text-align: left; }
+
+/* The word's own sentence with the word taken out of it. Set in the reading
+   face rather than the interface one: it is a sentence to read, not a label,
+   and the gap has to be the only thing your eye stops on. */
+.cloze {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+  border-left: 2px solid var(--accent);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.cloze-gap {
+  display: inline-block;
+  min-width: 4.5ch;
+  margin: 0 2px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  vertical-align: baseline;
+}
 .typed input {
   font-size: 1.15rem;
   padding: 13px 14px;
@@ -810,6 +898,14 @@ kbd {
   cursor: pointer;
 }
 .checkline input { margin-top: 0.15rem; }
+/* The check result is framed in green: it is a confirmation that the model
+   read the word the way you meant, and the one moment a misreading can still
+   be fixed for free. Nothing is saved yet — the badge inside says so — but
+   the frame is what makes you look. */
+.preview-card {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
+}
 .preview-card {
   border-style: dashed;
 }
@@ -1091,6 +1187,21 @@ kbd {
 .related-word { font-size: 1.05rem; font-weight: 600; }
 .related-meaning { color: var(--ink-soft); font-size: 0.88rem; margin-top: 0.15rem; }
 .related-action { margin-top: 0.45rem; }
+.related-result {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.related-result.failed {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+}
 
 .chip-on {
   background: var(--accent-soft);
@@ -1227,10 +1338,32 @@ kbd {
   flex-direction: column;
   gap: 6px;
 }
+.add-action { flex: 1 1 0; min-width: 0; }
 .add-action button { width: 100%; padding: 12px; font-size: 0.95rem; }
 .add-action .small { text-align: center; line-height: 1.35; }
+
+/* Check is blue, Check and add is green. Both are coloured now: a plain
+   button beside a filled one reads as the lesser of the two, and Check is not
+   lesser — it is the one that costs nothing and catches a misreading before
+   it reaches a card. Blue is the existing --grade-easy, which every palette
+   already redefines, so this needs no new token in five places. */
+button.inspect {
+  background: color-mix(in srgb, var(--grade-easy) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--grade-easy) 45%, var(--line));
+  color: var(--grade-easy);
+  font-weight: 600;
+}
+button.inspect:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--grade-easy) 18%, var(--panel));
+  border-color: var(--grade-easy);
+}
+
+/* One row at every width. Stacking them below 460px put the second button
+   under the fold on a phone, which is where the whole screen is used. */
 @media (max-width: 460px) {
-  .add-actions { flex-direction: column; }
+  .add-actions { gap: 8px; }
+  .add-action button { padding: 12px 6px; font-size: 0.88rem; }
+  .add-action .small { font-size: 0.72rem; }
 }
 
 /* The collision block is a status, not a dialog: it does not cover the form,
@@ -1295,6 +1428,7 @@ kbd {
    the foot of a screen. The summary carries the panel's own heading, so the
    marker is replaced with one that sits where the eye already is. */
 details.bulk > summary,
+details.later > summary,
 details.feedback > summary {
   display: flex;
   align-items: center;
@@ -1306,10 +1440,13 @@ details.feedback > summary {
   padding: 4px 0;
 }
 details.bulk > summary::-webkit-details-marker,
+details.later > summary::-webkit-details-marker,
 details.feedback > summary::-webkit-details-marker { display: none; }
 details.bulk > summary h3,
+details.later > summary h3,
 details.feedback > summary h3 { margin: 0; }
 details.bulk > summary::after,
+details.later > summary::after,
 details.feedback > summary::after {
   content: '＋';
   margin-left: auto;
@@ -1318,9 +1455,66 @@ details.feedback > summary::after {
   line-height: 1;
 }
 details.bulk[open] > summary::after,
+details.later[open] > summary::after,
 details.feedback[open] > summary::after { content: '−'; }
 details.bulk > summary:hover h3,
+details.later > summary:hover h3,
 details.feedback > summary:hover h3 { color: var(--accent); }
+
+/* --- words parked to add later -------------------------------------------
+   One row per word, the word on the left and its three actions on the right.
+   Below 520px the actions drop to their own line rather than squeezing: a
+   Swedish compound and three buttons do not share a phone's width. */
+.word-input-row { display: flex; align-items: center; gap: 8px; }
+.word-input-row .word-input { flex: 1; min-width: 0; }
+.word-input-row .park { flex: none; margin-top: 14px; align-self: stretch; }
+
+.later-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.later-list > li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+}
+.later-word {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.later-actions { display: flex; gap: 6px; flex: none; }
+@media (max-width: 520px) {
+  .later-word { flex: 1 0 100%; }
+  .later-actions { flex: 1 0 100%; }
+  .later-actions .chip { flex: 1; }
+}
+
+/* The three verbs, in the colours they keep everywhere: blue looks, green
+   commits, red discards. `inspect` is shared with the Check button on the
+   form above, which is the point — the same colour means the same thing. */
+button.chip.go {
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: var(--accent-ink);
+}
+button.chip.go:hover:not(:disabled) { border-color: var(--accent); }
+button.chip.drop {
+  background: color-mix(in srgb, var(--danger) 10%, var(--panel));
+  border-color: color-mix(in srgb, var(--danger) 35%, var(--line));
+  color: var(--danger);
+}
+button.chip.drop:hover:not(:disabled) { border-color: var(--danger); }
+button.chip.park {
+  background: var(--bg-tint);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: var(--ink); }
 
 /* --- suggestions and admin ------------------------------------------------ */
 .suggestion-input {
@@ -1574,7 +1768,13 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(3rem, 15vw, 5rem);
-  line-height: 1;
+  /* `line-height: 1` cropped the line box to the cap height, so the tail of
+     the g in Lingo3 hung below it and sat on the strapline — worst at the
+     5rem end, where the overhang is a good ten pixels. The extra is the
+     descender's room, not air: a shade over 1, plus padding that scales with
+     the type rather than a fixed margin that does not. */
+  line-height: 1.06;
+  padding-bottom: 0.06em;
   letter-spacing: -0.035em;
   margin: 0 0 0.5rem;
   background: linear-gradient(104deg, #7c3aed 0%, #c026d3 55%, #ec4899 100%);
@@ -2067,7 +2267,14 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 .settings-stack > .panel > .field + .field,
 .settings-stack > .panel > .check + .field,
 .settings-stack > .panel > .field + .check,
-.settings-stack > .panel > .check + .check {
+.settings-stack > .panel > .check + .check,
+/* A pinned control is followed by its own "only on this device" switch, so
+   the next control's sibling is that switch rather than the control it
+   belongs to — which is why Speaking speed had no rule above it while every
+   other preference did. The switch stays attached to the thing above it; the
+   divider goes before whatever comes next. */
+.settings-stack > .panel > .device-scope + .field,
+.settings-stack > .panel > .device-scope + .check {
   margin-top: 16px;
   padding-top: 13px;
   border-top: 1px solid var(--line-soft);

@@ -368,6 +368,28 @@ export const STORY_GENRES = [
   { id: 'joke', label: 'A joke' },
 ] as const
 
+/**
+ * A word jotted down to deal with later.
+ *
+ * Deliberately NOT a Concept: nothing has been looked up, nothing has been
+ * decided about it, and it has no entries, no cards and no place in the
+ * known-word set the reading generator measures coverage against. It is a
+ * line of text with a date, and it leaves this table only by becoming a real
+ * word or by being thrown away.
+ *
+ * Device-local, like the theme: it is a scratchpad for the twenty minutes
+ * between writing a word down and having time to add it properly. Making it
+ * sync would mean a Postgres table, RLS and a place in push/pull for rows
+ * that are meant to be gone by the evening. If it turns out words get parked
+ * on the phone and added on the laptop, that is the moment to reconsider —
+ * not before.
+ */
+export interface LaterWord {
+  id: string
+  lemma: string
+  createdAt: number
+}
+
 /** A word added while offline, waiting for expansion. */
 export interface PendingExpansion {
   id: string

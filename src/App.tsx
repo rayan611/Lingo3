@@ -304,8 +304,20 @@ function Workspace({
           squeezed out on a phone. Beside the name it is one phrase. */}
       <header className="topbar">
         <div className="brand-block">
-          <Logo />
-          <span className="brand">Lingo3</span>
+          {/* The mark is the way home. Every app with a logo in the corner
+              behaves this way, and Add is home here — it is where a session
+              starts and the tab the app opens on. A button rather than a
+              link: there are no routes, so an href would be a lie. */}
+          <button
+            type="button"
+            className="brand-home"
+            onClick={() => setTab('add')}
+            aria-label="Go to Add a word"
+            title="Add a word"
+          >
+            <Logo />
+            <span className="brand">Lingo3</span>
+          </button>
           {settings.displayName && (
             <span className="brand-greeting">Hej {settings.displayName}</span>
           )}

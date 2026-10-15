@@ -8,6 +8,7 @@ import {
   type DeviceOverride,
   type Concept,
   type Entry,
+  type LaterWord,
   type PendingExpansion,
   type ReviewLogRow,
   type Settings,
@@ -35,6 +36,7 @@ export class Lingo3DB extends Dexie {
   cards!: Table<Card, string>
   reviewLog!: Table<ReviewLogRow, string>
   pending!: Table<PendingExpansion, string>
+  later!: Table<LaterWord, string>
   stories!: Table<Story, string>
   settings!: Table<Settings, string>
   meta!: Table<MetaRow, string>
@@ -90,6 +92,13 @@ export class Lingo3DB extends Dexie {
     this.version(4).stores({
       stories: 'id, lang, createdAt, updatedAt, deletedAt',
     })
+
+    // v5: words parked to add later. A new store, so nothing existing is
+    // touched. `createdAt` is indexed because the list sorts on it — the
+    // third time that index has been the thing that mattered.
+    this.version(5).stores({
+      later: 'id, createdAt',
+    })
   }
 }
 
@@ -139,18 +148,23 @@ export async function adoptLocalData(): Promise<number> {
   const local = new Lingo3DB(dbNameFor(null))
   try {
     await local.open()
-    const [concepts, entries, cards, reviewLog, pending] = await Promise.all([
-      local.concepts.toArray(),
-      local.entries.toArray(),
-      local.cards.toArray(),
-      local.reviewLog.toArray(),
-      local.pending.toArray(),
-    ])
-    if (concepts.length === 0) return 0
+    const [concepts, entries, cards, reviewLog, pending, later] =
+      await Promise.all([
+        local.concepts.toArray(),
+        local.entries.toArray(),
+        local.cards.toArray(),
+        local.reviewLog.toArray(),
+        local.pending.toArray(),
+        local.later.toArray(),
+      ])
+    // Parked words count: signing up with nothing added but a list of words
+    // written down in class should not throw that list away.
+    if (concepts.length === 0 && later.length === 0) return 0
 
     await db.transaction(
       'rw',
-      db.concepts, db.entries, db.cards, db.reviewLog, db.pending,
+      // The array form: Dexie's variadic overload stops at five tables.
+      [db.concepts, db.entries, db.cards, db.reviewLog, db.pending, db.later],
       async () => {
         // bulkPut, not bulkAdd: re-running this must not explode on rows that
         // already made it across.
@@ -159,12 +173,16 @@ export async function adoptLocalData(): Promise<number> {
         await db.cards.bulkPut(cards)
         await db.reviewLog.bulkPut(reviewLog)
         await db.pending.bulkPut(pending)
+        await db.later.bulkPut(later)
       },
     )
 
     await local.transaction(
       'rw',
-      local.concepts, local.entries, local.cards, local.reviewLog, local.pending,
+      [
+        local.concepts, local.entries, local.cards, local.reviewLog,
+        local.pending, local.later,
+      ],
       async () => {
         await Promise.all([
           local.concepts.clear(),
@@ -172,6 +190,7 @@ export async function adoptLocalData(): Promise<number> {
           local.cards.clear(),
           local.reviewLog.clear(),
           local.pending.clear(),
+          local.later.clear(),
         ])
       },
     )

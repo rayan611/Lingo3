@@ -18,6 +18,9 @@ import { activeTargets } from '../src/db/types'
 import type { Concept, Entry, Lang, ReviewLogRow } from '../src/db/types'
 import { detectLang } from '../src/lib/detectLang'
 import { formCandidates, markForms } from '../src/lib/highlight'
+import { parkWord } from '../src/ui/LaterList'
+import { buildCloze } from '../src/lib/cloze'
+import { sameWord } from '../src/lib/answer'
 
 let failures = 0
 async function check(label: string, run: () => Promise<unknown>) {
@@ -837,6 +840,134 @@ async function main() {
     const segments = markForms('En mening utan träffar.', [])
     if (segments.length !== 1 || segments[0].hit) throw new Error('unexpected match')
     return Promise.resolve()
+  })
+
+  // --- cloze prompts ------------------------------------------------------
+  // The same matcher as above, used to take the word OUT of its sentence.
+  // Measured on the live database before shipping: 82% of entries in a target
+  // language produce a cloze, and the 18% that do not fall back to the plain
+  // typed prompt. Nouns are 100%, verbs and set phrases carry the misses —
+  // Swedish adjective agreement (försenad → försenat) and English -ing are
+  // the two biggest, and both are forms the morphology table does not hold.
+
+  await check('the gap wants the form the sentence needs, not the headword', () => {
+    const forms = formCandidates('dricka', 'sv', {
+      kind: 'verb',
+      infinitiv: 'dricka',
+      presens: 'dricker',
+      preteritum: 'drack',
+      supinum: 'druckit',
+    } as never)
+    const cloze = buildCloze('Jag dricker kaffe varje morgon.', forms)
+    if (!cloze) throw new Error('no cloze was built')
+    if (cloze.answer !== 'dricker') throw new Error(`answer was ${cloze.answer}`)
+    if (cloze.before !== 'Jag ') throw new Error(`before was "${cloze.before}"`)
+    if (cloze.after !== ' kaffe varje morgon.') {
+      throw new Error(`after was "${cloze.after}"`)
+    }
+    return Promise.resolve()
+  })
+
+  await check('the answer is never left visible in the sentence', () => {
+    const cloze = buildCloze('Hon pratar och pratar hela dagen.', ['pratar'])
+    if (!cloze) throw new Error('no cloze was built')
+    const shown = `${cloze.before}${cloze.after}`.toLowerCase()
+    if (shown.includes('pratar')) throw new Error('the answer is still on screen')
+    return Promise.resolve()
+  })
+
+  await check('no form in the sentence means no cloze', () => {
+    // The real case this came from: a Swedish adjective agrees (försenad →
+    // försenat) and the morphology table holds neither form.
+    if (buildCloze('Tåget är tjugo minuter försenat.', ['försenad'])) {
+      throw new Error('a cloze was built from a word that is not there')
+    }
+    return Promise.resolve()
+  })
+
+  await check('a sentence with no context left is not a cloze', () => {
+    if (buildCloze('Hunden.', ['hunden'])) throw new Error('built from nothing')
+    return Promise.resolve()
+  })
+
+  await check('no example means no cloze', () => {
+    if (buildCloze(undefined, ['hund'])) throw new Error('built from no sentence')
+    if (buildCloze('   ', ['hund'])) throw new Error('built from blank')
+    return Promise.resolve()
+  })
+
+  await check('a multi-word headword does not match on its last word', () => {
+    // `komma i tid` must not become a cloze asking for `tid`.
+    const forms = formCandidates('komma i tid', 'sv', { kind: 'simple' } as never)
+    if (forms.includes('tid')) throw new Error('the phrase was split')
+    if (buildCloze('Oroa dig inte, jag kommer i tid till mötet.', forms)) {
+      throw new Error('a fragment of the phrase was blanked')
+    }
+    return Promise.resolve()
+  })
+
+  await check('grading accepts a phone keyboard, not a wrong form', () => {
+    if (!sameWord('  Fodd ', 'född')) throw new Error('diacritics should be noise')
+    if (sameWord('dricka', 'dricker')) throw new Error('the wrong form passed')
+    return Promise.resolve()
+  })
+
+  // --- words parked to add later -----------------------------------------
+  // A new store in schema v5. The list sorts on createdAt, which is exactly
+  // the query that has broken a screen once already by not being indexed.
+
+  await check('parked words list oldest first', async () => {
+    await db.later.clear()
+    const now = Date.now()
+    await db.later.bulkPut([
+      { id: 'l2', lemma: 'förälder', createdAt: now },
+      { id: 'l1', lemma: 'delaktighet', createdAt: now - 5000 },
+    ])
+    const rows = await db.later.orderBy('createdAt').toArray()
+    if (rows.map((r) => r.id).join(',') !== 'l1,l2') {
+      throw new Error(`got ${rows.map((r) => r.id).join(',')}`)
+    }
+  })
+
+  await check('the same word is not parked twice', async () => {
+    await db.later.clear()
+    if (!(await parkWord('Delaktighet'))) throw new Error('the first park failed')
+    if (await parkWord('  delaktighet ')) throw new Error('a duplicate was parked')
+    if ((await db.later.count()) !== 1) throw new Error('the list grew anyway')
+  })
+
+  await check('an empty box parks nothing', async () => {
+    await db.later.clear()
+    if (await parkWord('   ')) throw new Error('whitespace was parked')
+    if ((await db.later.count()) !== 0) throw new Error('something was stored')
+  })
+
+  await check('a parked word is removable', async () => {
+    await db.later.clear()
+    await parkWord('wetteifern')
+    const row = await db.later.toCollection().first()
+    if (!row) throw new Error('nothing was parked')
+    await db.later.delete(row.id)
+    if ((await db.later.count()) !== 0) throw new Error('the row survived')
+  })
+
+  await check('parking writes no concept, entry or card', async () => {
+    await db.later.clear()
+    const before = await Promise.all([
+      db.concepts.count(),
+      db.entries.count(),
+      db.cards.count(),
+    ])
+    await parkWord('en helt ny sak')
+    const after = await Promise.all([
+      db.concepts.count(),
+      db.entries.count(),
+      db.cards.count(),
+    ])
+    if (before.join(',') !== after.join(',')) {
+      throw new Error('parking a word touched the word bank')
+    }
+    await db.later.clear()
   })
 
   // The Add box no longer asks which language you typed in. Two things have

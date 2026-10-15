@@ -7,6 +7,8 @@ import { SuggestionBox } from './Suggestions'
 import { SpeakButton } from './SpeakButton'
 import { ExampleSentence } from './ExampleSentence'
 import { formCandidates } from '../lib/highlight'
+import { buildCloze } from '../lib/cloze'
+import { sameWord } from '../lib/answer'
 import {
   GRADES,
   GRADE_HINTS,
@@ -123,11 +125,38 @@ export function Review({ settings, onExit }: Props) {
     ? item?.entries.find((e) => e.lang === typedLang)
     : undefined
 
+  /**
+   * The typed prompt as a gap in the word's own sentence, when there is one.
+   *
+   * Not a new card type and not a setting: it is the same typed-recall
+   * prompt, asking for the same language, grading the same card. What
+   * changes is that the thing you have to produce is the form the sentence
+   * needs rather than the dictionary form — which is the harder half, and
+   * the half you need when speaking.
+   *
+   * `null` whenever the sentence has no form of this word in it, and the
+   * ordinary prompt is what you get instead.
+   */
+  const cloze = useMemo(
+    () =>
+      typedEntry
+        ? buildCloze(
+            typedEntry.example,
+            formCandidates(
+              typedEntry.headword,
+              typedEntry.lang,
+              typedEntry.morphology,
+            ),
+          )
+        : null,
+    [typedEntry],
+  )
+  /** What the typed answer is graded against. */
+  const expected = cloze?.answer ?? typedEntry?.headword
+
   function checkTyped() {
-    if (!typedEntry) return
-    setTypedVerdict(
-      sameWord(typed, typedEntry.headword, typedEntry.lang) ? 'right' : 'wrong',
-    )
+    if (!typedEntry || !expected) return
+    setTypedVerdict(sameWord(typed, expected, typedEntry.lang) ? 'right' : 'wrong')
     setRevealed(true)
   }
 
@@ -304,10 +333,23 @@ export function Review({ settings, onExit }: Props) {
                 checkTyped()
               }}
             >
+              {cloze && (
+                <p className="cloze" lang={LANG_BCP47[typedLang]}>
+                  {cloze.before}
+                  <span className="cloze-gap" aria-label="missing word">
+                    ____
+                  </span>
+                  {cloze.after}
+                </p>
+              )}
               <input
                 value={typed}
                 onChange={(e) => setTyped(e.target.value)}
-                placeholder={`Write it in ${LANG_NAMES[typedLang]}`}
+                placeholder={
+                  cloze
+                    ? `Fill the gap in ${LANG_NAMES[typedLang]}`
+                    : `Write it in ${LANG_NAMES[typedLang]}`
+                }
                 lang={LANG_BCP47[typedLang]}
                 autoFocus
                 autoCapitalize="off"
@@ -315,8 +357,17 @@ export function Review({ settings, onExit }: Props) {
                 spellCheck={false}
               />
               <p className="muted small">
-                The article counts for Swedish and German — write{' '}
-                <em>en hund</em>, not <em>hund</em>.
+                {cloze ? (
+                  <>
+                    The form the sentence needs, not the dictionary form — so{' '}
+                    <em>dricker</em>, not <em>dricka</em>.
+                  </>
+                ) : (
+                  <>
+                    The article counts for Swedish and German — write{' '}
+                    <em>en hund</em>, not <em>hund</em>.
+                  </>
+                )}
               </p>
             </form>
           )}
@@ -333,7 +384,12 @@ export function Review({ settings, onExit }: Props) {
               ) : (
                 <>
                   <strong>You wrote “{typed || '—'}”.</strong> The form to
-                  produce is <em lang={LANG_BCP47[typedEntry.lang]}>{typedEntry.headword}</em>.
+                  produce is{' '}
+                  <em lang={LANG_BCP47[typedEntry.lang]}>{expected}</em>
+                  {cloze && expected !== typedEntry.headword && (
+                    <> — from <em>{typedEntry.headword}</em></>
+                  )}
+                  .
                 </>
               )}
             </div>
@@ -603,19 +659,4 @@ function TopicBar({
   )
 }
 
-/**
- * Is what you typed the same word? Case and surrounding whitespace are noise,
- * and so are the diacritic-free spellings a phone keyboard produces, so "fodd"
- * is accepted for "född". Everything else — including the article, which is
- * half of what you are learning — has to match.
- */
-function sameWord(typed: string, headword: string, _lang: Lang): boolean {
-  const normalise = (s: string) =>
-    s
-      .trim()
-      .toLocaleLowerCase()
-      .replace(/\s+/g, ' ')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-  return normalise(typed) === normalise(headword)
-}
+
