@@ -1,3 +1,5 @@
+import { parseExpandInput, parseStoryInput } from '../src/server/aiInput.js'
+
 /**
  * The expansion endpoint, exercised through both calling conventions.
  *
@@ -61,6 +63,22 @@ function isJson(text: string): boolean {
     return false
   }
 }
+
+console.log('\nAI request payloads are validated before prompt construction')
+const validExpand = parseExpandInput({ lemma: 'hund', sourceLang: 'sv', nativeLang: 'fa', langs: ['fa', 'sv', 'de'] })
+check('expand: accepts supported language selections', validExpand.ok, JSON.stringify(validExpand))
+check('expand: rejects a non-object body', !parseExpandInput(null).ok, 'null accepted')
+check('expand: rejects an unsupported target language', !parseExpandInput({ lemma: 'hund', langs: ['xx'] }).ok, 'unsupported language accepted')
+check('expand: rejects duplicate target languages', !parseExpandInput({ lemma: 'hund', langs: ['sv', 'sv'] }).ok, 'duplicate languages accepted')
+check('expand: caps hint length', !parseExpandInput({ lemma: 'hund', langs: ['sv'], hint: 'x'.repeat(301) }).ok, 'oversized hint accepted')
+
+const validStory = parseStoryInput({ lang: 'sv', nativeLang: 'fa', words: ['hund', 'katt', 'kaffe', 'morgon', 'stad'], genre: 'fun', length: 'short', unknownShare: 0.2 })
+check('story: accepts a valid request', validStory.ok, JSON.stringify(validStory))
+check('story: rejects unsupported language', !parseStoryInput({ lang: 'xx', words: ['a','b','c','d','e'] }).ok, 'unsupported language accepted')
+check('story: rejects non-text vocabulary values', !parseStoryInput({ lang: 'sv', words: ['a','b','c','d',{}] }).ok, 'non-text word accepted')
+check('story: rejects unsupported genre', !parseStoryInput({ lang: 'sv', words: ['a','b','c','d','e'], genre: 'expensive' }).ok, 'unsupported genre accepted')
+check('story: rejects non-finite difficulty', !parseStoryInput({ lang: 'sv', words: ['a','b','c','d','e'], unknownShare: Infinity }).ok, 'infinite difficulty accepted')
+check('story: clamps difficulty to its documented range', parseStoryInput({ lang: 'sv', words: ['a','b','c','d','e'], unknownShare: 9 }).ok && (parseStoryInput({ lang: 'sv', words: ['a','b','c','d','e'], unknownShare: 9 }) as {ok:true;value:{unknownShare:number}}).value.unknownShare === 0.3, 'difficulty not clamped')
 
 console.log('\nThe expansion endpoint answers under both calling conventions')
 
