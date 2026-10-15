@@ -1149,29 +1149,23 @@ kbd {
 }
 .panel-head h2 { margin: 0; }
 
-/* --- landing --------------------------------------------------------------
-   The page a first-time visitor lands on in a browser. Not a separate route:
-   the service worker's navigateFallback sends every path to index.html, so a
-   second HTML file would either be shadowed by the shell or have to be carved
-   out of the fallback, and both are ways to break offline boot for a page
-   that is shown once. */
+/* --- legal pages ------------------------------------------------------------
+   The privacy page. It kept the old landing page's measure and section rhythm
+   after the front door was rebuilt, because a policy wants a quiet column and
+   nothing else. The front door now lives under .lx- and shares nothing with
+   this. */
 .landing {
-  max-width: 34rem;
+  max-width: 36rem;
   margin: 0 auto;
-  padding: 10vh 1.25rem 4rem;
+  padding: 8vh 1.25rem 4rem;
 }
-/* The hero stays centred; everything below it is prose and reads better
-   ranged left, which is also what stops the page looking like a pitch deck. */
-.landing-hero { text-align: center; }
-.landing-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 14px;
+.landing h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.1rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
 }
-.landing-section { margin-top: 44px; }
+.landing-section { margin-top: 36px; }
 .landing-section h2 {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.3rem;
@@ -1182,40 +1176,10 @@ kbd {
   line-height: 1.62;
   margin: 0 0 12px;
 }
-.landing-features {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 20px;
-}
-.landing-features h3 {
-  font-size: 0.98rem;
-  margin: 0 0 4px;
-}
-.landing-features p {
-  margin: 0;
-  font-size: 0.95rem;
-}
 .landing-foot {
   margin-top: 44px;
   text-align: center;
 }
-.landing-mark { margin-bottom: 20px; }
-.landing-mark .logo { margin: 0 auto; }
-.landing h1 {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 2.1rem;
-  letter-spacing: -0.02em;
-  margin: 0 0 14px;
-}
-.landing-pitch {
-  color: var(--ink-soft);
-  font-size: 1.02rem;
-  line-height: 1.6;
-  margin: 0 0 14px;
-}
-.landing-note { margin-top: 18px; }
 
 /* The detected-language nudge under the Add form's dropdown. A link rather
    than a button: it is an offer, and accepting it is one tap. */
@@ -1406,4 +1370,398 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   border: none;
   padding: 0;
   text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   The front door (.lx-)
+   ---------------------------------------------------------------------------
+   A deliberately different world from the app behind it. The app is a quiet
+   workbench — paper background, green accent, serif headings — and it should
+   be: you are in it every morning. This page is seen once, and its job is to
+   make the next tap obvious, so it is bright, rounded and warm where the app
+   is calm.
+
+   It therefore sets its own tokens rather than inheriting the app's, and does
+   NOT follow the dark theme: a front door that changes colour with a
+   preference the visitor has not made yet is a front door with two faces.
+
+   The violet-to-pink gradient appears in exactly two places — the Open app
+   button and the current slide dot. Spread across cards and headings it would
+   be wallpaper; kept to the one thing you are meant to press, it is a signal.
+--------------------------------------------------------------------------- */
+
+.lx {
+  --lx-ink: #2b1b45;
+  --lx-ink-soft: #5d4b7d;
+  --lx-ink-faint: #a99cc4;
+  --lx-line: #e8e0f5;
+  --lx-violet: #7c3aed;
+  --lx-pink: #ec4899;
+  /* One hue per language, because on this page colour means "which language"
+     and nothing else. Each has a soft twin for fills. */
+  --lx-sv: #0e9bb8;
+  --lx-sv-soft: #d8f4f9;
+  --lx-de: #c77700;
+  --lx-de-soft: #fdeed6;
+  --lx-es: #1f9b6b;
+  --lx-es-soft: #d9f5e9;
+
+  position: relative;
+  min-height: 100vh;
+  padding: 0 1.25rem 3rem;
+  color: var(--lx-ink);
+  background: #fff;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+/* The bright background: three soft lights rather than a linear wash, so the
+   colour pools behind the hero and fades out before the reading sections. */
+.lx-sky {
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(880px, 105vh);
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 30rem at 18% -6%, #ffe0f0 0%, rgba(255, 224, 240, 0) 62%),
+    radial-gradient(38rem 28rem at 88% 4%, #e6d8ff 0%, rgba(230, 216, 255, 0) 60%),
+    radial-gradient(34rem 26rem at 52% 30%, #d6f6f1 0%, rgba(214, 246, 241, 0) 58%);
+}
+
+/* Everything except the sky sits above it. Written as an exception rather
+   than as `.lx > *` on its own: that rule comes after .lx-sky, carries the
+   same specificity, and quietly won — which turned the background into an
+   880px block in the flow and pushed the whole page down a screen. */
+.lx > *:not(.lx-sky) { position: relative; }
+
+/* --- hero ---------------------------------------------------------------- */
+
+.lx-hero {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 4.5rem 0 1rem;
+  text-align: center;
+}
+
+.lx-mark {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: var(--lx-violet);
+  margin: 0 0 2.25rem;
+}
+
+.lx-head {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.3rem, 9vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+}
+
+.lx-sub {
+  font-size: 1.04rem;
+  line-height: 1.62;
+  color: var(--lx-ink-soft);
+  margin: 0 auto;
+  max-width: 27rem;
+}
+
+/* --- the word bloom ------------------------------------------------------ */
+
+.lx-bloom {
+  margin: 2.5rem auto 2.25rem;
+  max-width: 21rem;
+}
+
+.lx-seed {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--lx-violet);
+  box-shadow: 0 10px 24px -14px rgba(124, 58, 237, 0.55);
+  font-size: 1.3rem;
+  font-weight: 600;
+  transform: scale(0.82);
+  opacity: 0;
+  transition: transform 0.42s cubic-bezier(0.2, 1.5, 0.4, 1), opacity 0.3s;
+}
+.lx-seed-word { line-height: 1.2; }
+/* The caret says "you typed this" — the one thing a pill of text cannot. It
+   does NOT blink: a cursor blinking forever behind the headline is motion
+   that never resolves and never earns a second look, and the shape alone
+   already reads as a text field. */
+.lx-seed-caret {
+  width: 2px;
+  height: 1.15rem;
+  border-radius: 1px;
+  background: var(--lx-violet);
+  opacity: 0.75;
+}
+
+.lx-wires {
+  display: block;
+  width: 100%;
+  height: 58px;
+}
+.lx-wires path {
+  fill: none;
+  stroke: var(--lx-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  transition: stroke-dashoffset 0.6s ease-out;
+}
+
+.lx-branches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lx-branches li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0.55rem 0.3rem 0.6rem;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--lx-line);
+  box-shadow: 0 8px 20px -16px rgba(43, 27, 69, 0.5);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 1.4, 0.4, 1), opacity 0.3s;
+  transition-delay: calc(0.62s + var(--i) * 0.11s);
+}
+.lx-branch-lang {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--lx-ink-faint);
+}
+.lx-branch-word {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+.lx-branch-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+.lx-branches [data-hue='sv'] { border-color: var(--lx-sv); background: var(--lx-sv-soft); }
+.lx-branches [data-hue='sv'] .lx-branch-tag { color: var(--lx-sv); }
+.lx-branches [data-hue='de'] { border-color: var(--lx-de); background: var(--lx-de-soft); }
+.lx-branches [data-hue='de'] .lx-branch-tag { color: var(--lx-de); }
+.lx-branches [data-hue='es'] { border-color: var(--lx-es); background: var(--lx-es-soft); }
+.lx-branches [data-hue='es'] .lx-branch-tag { color: var(--lx-es); }
+
+/* The bloom, once lit. One sequence, on load, never again. */
+.lx-bloom.is-lit .lx-seed { transform: scale(1); opacity: 1; }
+.lx-bloom.is-lit .lx-wires path { stroke-dashoffset: 0; transition-delay: 0.3s; }
+.lx-bloom.is-lit .lx-branches li { transform: none; opacity: 1; }
+
+/* --- the button the whole page is pointing at ---------------------------- */
+
+.lx-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.lx-open {
+  font: inherit;
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.12rem;
+  color: #fff;
+  padding: 0.95rem 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(118deg, #8b5cf6 0%, #c026d3 48%, #f0529c 100%);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.28) inset,
+    0 14px 30px -12px rgba(192, 38, 211, 0.65);
+  transition: transform 0.16s, box-shadow 0.16s, filter 0.16s;
+}
+.lx-open:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.08);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.28) inset,
+    0 20px 38px -12px rgba(192, 38, 211, 0.7);
+}
+.lx-open:active { transform: translateY(0); }
+.lx-open:focus-visible {
+  outline: 3px solid var(--lx-violet);
+  outline-offset: 3px;
+}
+
+/* The install offer rides along beside the CTA, so it reads as the quieter of
+   two ways in rather than a second headline act. */
+.lx-cta .install-button {
+  font: inherit;
+  font-weight: 500;
+  padding: 0.85rem 1.3rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--lx-violet);
+  border: 1px solid var(--lx-line);
+  cursor: pointer;
+}
+
+.lx-note {
+  margin: 1.1rem 0 0;
+  font-size: 0.84rem;
+  color: var(--lx-ink-faint);
+}
+
+/* --- the benefit deck ---------------------------------------------------- */
+
+.lx-deck {
+  max-width: 34rem;
+  margin: 3.5rem auto 0;
+  padding: 1.4rem 1.4rem 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--lx-line);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 30px 60px -44px rgba(43, 27, 69, 0.45);
+}
+.lx-deck:focus-visible { outline: 3px solid var(--lx-violet); outline-offset: 3px; }
+
+.lx-slide {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  min-height: 8.6rem;
+  animation: lx-in 0.34s ease-out;
+}
+@keyframes lx-in {
+  from { opacity: 0; transform: translateX(10px); }
+}
+.lx-art { flex: none; width: 104px; }
+.lx-art svg { display: block; width: 100%; height: auto; }
+.lx-art svg [stroke] { stroke-width: 2.4; stroke-linecap: round; }
+.lx-slide-text h2 {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+.lx-slide-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  color: var(--lx-ink-soft);
+}
+
+.lx-deck-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.lx-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--lx-line);
+  color: var(--lx-ink-soft);
+  cursor: pointer;
+}
+.lx-arrow:hover { color: var(--lx-violet); border-color: var(--lx-violet); }
+.lx-arrow svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.lx-dots {
+  display: flex;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0.3rem;
+}
+.lx-dots button {
+  display: block;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lx-line);
+  cursor: pointer;
+  transition: width 0.2s, background 0.2s;
+}
+.lx-dots button.is-at {
+  width: 26px;
+  background: linear-gradient(90deg, var(--lx-violet), var(--lx-pink));
+}
+
+/* --- reading sections ---------------------------------------------------- */
+
+.lx-prose {
+  max-width: 32rem;
+  margin: 3.25rem auto 0;
+}
+.lx-prose h2 {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.32rem;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.75rem;
+}
+.lx-prose p {
+  margin: 0 0 0.85rem;
+  line-height: 1.66;
+  color: var(--lx-ink-soft);
+}
+.lx-link { color: var(--lx-violet); font-weight: 500; }
+.lx-fine { font-size: 0.85rem; color: var(--lx-ink-faint); }
+
+.lx-foot {
+  max-width: 32rem;
+  margin: 3.25rem auto 0;
+  text-align: center;
+}
+.lx-foot .lx-fine { margin: 1.1rem 0 0; }
+
+@media (min-width: 640px) {
+  .lx-hero { padding-top: 6rem; }
+  .lx-deck { padding: 1.8rem 1.8rem 1.1rem; }
+  .lx-art { width: 124px; }
+}
+
+@media (max-width: 430px) {
+  /* Stacked, so the slide is tall and its height varies with the sentence.
+     The floor is the tallest of the six: without it the card shrinks under
+     the shortest slide and the whole page below shifts up mid-sentence. */
+  .lx-slide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    min-height: 13rem;
+  }
+  .lx-art { width: 88px; }
+}
+
+/* Nothing on this page moves on its own for someone who asked for that: the
+   bloom is simply already open, and the deck waits to be driven. */
+@media (prefers-reduced-motion: reduce) {
+  .lx-seed, .lx-wires path, .lx-branches li, .lx-slide, .lx-open { transition: none; animation: none; }
 }
