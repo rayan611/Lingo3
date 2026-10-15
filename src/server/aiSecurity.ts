@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 /**
  * Server-only guardrails for the paid AI endpoints.
  *
