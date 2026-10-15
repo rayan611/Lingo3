@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { parseExpandInput } from '../src/server/aiInput.js'
 
 /**
  * Vercel serverless function: expands one word into every selected language in
@@ -390,12 +391,8 @@ function makeHandler(
     try {
       return await respond(req)
     } catch (err) {
-      return json(
-        {
-          error: `Request crashed: ${err instanceof Error ? err.message : String(err)}`,
-        },
-        500,
-      )
+      console.error('[expand.ts] unhandled request error', err instanceof Error ? err.name : 'unknown')
+      return json({ error: 'Unexpected server error. Please try again.' }, 500)
     }
   }
 
@@ -443,31 +440,17 @@ async function respond(req: Request): Promise<Response> {
     )
   }
 
-  let body: {
-    lemma?: string
-    sourceLang?: string
-    nativeLang?: string
-    langs?: string[]
-    hint?: string
-  }
+  let rawBody: unknown
   try {
-    body = (await req.json()) as typeof body
+    rawBody = await req.json()
   } catch {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
+  const parsed = parseExpandInput(rawBody)
+  if (!parsed.ok) return json({ error: parsed.error }, 400)
 
-  const lemma = (body.lemma ?? '').trim()
-  // Absent means "you work it out" — the Add box no longer asks. A bulk paste
-  // still says, because a list from one class really is all one language.
-  const sourceLang = body.sourceLang?.trim() || undefined
-  const nativeLang = body.nativeLang ?? 'fa'
-  const langs = Array.isArray(body.langs) ? body.langs : []
-
-  if (!lemma) return json({ error: 'lemma is required.' }, 400)
-  if (lemma.length > 120) return json({ error: 'lemma is too long.' }, 400)
-  if (langs.length === 0) return json({ error: 'langs is required.' }, 400)
-
-  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint: body.hint })
+  const { lemma, sourceLang, nativeLang, langs, hint } = parsed.value
+  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint })
 
   const abort = new AbortController()
   const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
@@ -485,17 +468,21 @@ async function respond(req: Request): Promise<Response> {
         504,
       )
     }
-    return json({ error: `Could not reach the model: ${String(err)}` }, 502)
+    console.error('[expand.ts] model request failed', err instanceof Error ? err.name : 'unknown')
+    return json({ error: 'Could not reach the language model. Please try again.' }, 502)
   } finally {
     clearTimeout(timer)
   }
 
   if (!upstream.ok) {
-    const detail = await upstream.text()
+    // Do not return raw provider responses to the browser: they can expose
+    // internal diagnostics. Keep the user-facing error actionable and bounded.
+    console.warn('[expand.ts] model provider returned status', upstream.status)
     return json(
       {
-        error: `Model request failed (${upstream.status}).`,
-        detail: detail.slice(0, 500),
+        error: upstream.status === 429
+          ? 'The language model is busy. Please try again shortly.'
+          : 'The language model could not complete the request. Please try again.',
       },
       upstream.status === 429 ? 429 : 502,
     )
