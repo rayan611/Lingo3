@@ -163,7 +163,7 @@ export function SettingsPanel({
   const available = LANGS.filter((l) => l !== settings.nativeLang)
 
   return (
-    <div className="stack">
+    <div className="stack settings-stack">
       {/* Account first. Who you are signed in as and whether your words have
           reached the server are the things you open Settings in a hurry to
           check; everything below is a preference you set once. */}
@@ -248,7 +248,7 @@ export function SettingsPanel({
         </label>
 
         <label className="field">
-          <span>Theme</span>
+          <span className="setting-title">Theme{pinnedHere('theme') && <span className="device-only-badge">(only on this device)</span>}</span>
           <select
             value={theme}
             onChange={(e) => void savePref('theme', e.target.value as Theme)}
@@ -372,7 +372,7 @@ export function SettingsPanel({
       <div className="panel">
         <h2>Recall</h2>
         <label className="field">
-          <span>Type the answer for</span>
+          <span className="setting-title">Type the answer for{pinnedHere('typedLang') && <span className="device-only-badge">(only on this device)</span>}</span>
           <select
             value={settings.typedLang ?? ''}
             onChange={(e) =>
@@ -410,7 +410,7 @@ export function SettingsPanel({
             onChange={(e) => void savePref('autoAdvance', e.target.checked)}
           />
           <span>
-            Go to the next word automatically
+            <span className="setting-title">Go to the next word automatically{pinnedHere('autoAdvance') && <span className="device-only-badge">(only on this device)</span>}</span>
             <span className="muted small">
               Once every language due on a card is graded, move on without
               waiting for Next. Quicker on a phone. Off, the card stays up
@@ -451,7 +451,7 @@ export function SettingsPanel({
               onChange={(e) => void savePref('speakOnReveal', e.target.checked)}
             />
             <span>
-              Say the word when the answer appears
+              <span className="setting-title">Say the word when the answer appears{pinnedHere('speakOnReveal') && <span className="device-only-badge">(only on this device)</span>}</span>
               <span className="muted small">
                 The first language due on the card speaks by itself, so you
                 hear it without reaching for the speaker. The speakers stay
@@ -466,7 +466,7 @@ export function SettingsPanel({
           />
 
           <label className="field">
-            <span>Speaking speed</span>
+            <span className="setting-title">Speaking speed{pinnedHere('speechRate') && <span className="device-only-badge">(only on this device)</span>}</span>
             <input
               type="range"
               min={0.5}
