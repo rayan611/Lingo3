@@ -281,23 +281,18 @@ const withThought = readStoryGemini({
 check('story: a thought part is skipped, not parsed', withThought?.title === 'Hunden', JSON.stringify(withThought))
 
 // ---------------------------------------------------------------------------
-// No relative imports inside api/
+// Relative imports in api/ must have explicit JavaScript extensions.
 //
-// This is the check for a bug that reached production: the shared plumbing was
-// briefly factored into api/_http.ts, and because package.json is
-// "type": "module", Node's ESM resolver requires a file extension on relative
-// specifiers. `./_http` resolved under tsx here and threw ERR_MODULE_NOT_FOUND
-// on Vercel at import time, so the function never ran and the platform served
-// an HTML 500 the app could not read — the same unreadable failure as the
-// calling-convention bug, from a different cause.
-//
-// Every file under api/ stays self-contained. Duplicated plumbing is cheaper
-// than an endpoint that only fails once deployed.
+// A shared helper was once imported as `./_http`, which worked under tsx but
+// failed under Node's ESM resolver in Vercel because package.json is type=module.
+// The security helper is now shared outside api/, and imports must use `.js` so
+// the deployed runtime can resolve them. This check guards against repeating
+// the production-only module-resolution failure.
 // ---------------------------------------------------------------------------
 
 const { readdirSync, readFileSync } = await import('node:fs')
 
-console.log('\nThe api/ files are self-contained')
+console.log('\nThe api/ imports are resolvable by Node ESM')
 
 const apiFiles = readdirSync('api').filter((f) => f.endsWith('.ts'))
 check('there are api files to check', apiFiles.length > 0, 'api/ looks empty')
