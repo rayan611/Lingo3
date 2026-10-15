@@ -1253,8 +1253,8 @@ kbd {
 .speak {
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   flex: none;
   padding: 0;
   border: none;
@@ -1265,7 +1265,7 @@ kbd {
   vertical-align: middle;
   transition: background-color 0.15s, color 0.15s;
 }
-.speak-sm { width: 23px; height: 23px; }
+.speak-sm { width: 40px; height: 40px; }
 .speak:hover { color: var(--accent); }
 .speak.speaking { background: var(--accent-soft); color: var(--accent-ink); }
 
@@ -2121,4 +2121,13 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 .save-feedback.error {
   color: var(--danger, #a83232);
   border-color: color-mix(in srgb, var(--danger, #a83232) 35%, var(--line));
+}
+
+/* Long German compounds and generated example sentences must wrap instead
+   of pushing audio controls or cards beyond a narrow phone viewport. */
+.answer-word,
+.prompt-word,
+.example,
+.word-card h3 {
+  overflow-wrap: anywhere;
 }
