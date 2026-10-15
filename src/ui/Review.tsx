@@ -36,6 +36,7 @@ export function Review({ settings, onExit }: Props) {
   const [revealed, setRevealed] = useState(false)
   const [graded, setGraded] = useState<Record<string, Grade>>({})
   const [sessionCount, setSessionCount] = useState(0)
+  const [sessionGrades, setSessionGrades] = useState<Record<string, { lang: Lang; grade: Grade }>>({})
   const [typed, setTyped] = useState('')
   const [typedVerdict, setTypedVerdict] = useState<'right' | 'wrong' | null>(null)
   const [topic, setTopic] = useState<string>('all')
@@ -45,6 +46,8 @@ export function Review({ settings, onExit }: Props) {
   useEffect(() => {
     setQueue(null)
     setIndex(0)
+    setSessionCount(0)
+    setSessionGrades({})
     buildQueue(settings, 60, topic === 'all' ? null : topic).then(setQueue)
   }, [settings, topic])
 
@@ -129,9 +132,15 @@ export function Review({ settings, onExit }: Props) {
   const rate = useCallback(
     async (card: Card, grade: Grade) => {
       setGraded((g) => ({ ...g, [card.lang]: grade }))
+      if (item) {
+        setSessionGrades((current) => ({
+          ...current,
+          [\`${item.concept.id}:${card.lang}\`]: { lang: card.lang as Lang, grade },
+        }))
+      }
       await gradeCard(card, grade, settings)
     },
-    [settings],
+    [settings, item],
   )
 
   // Space reveals, 1-4 grade the first ungraded language. Reviewing is the
@@ -192,6 +201,15 @@ export function Review({ settings, onExit }: Props) {
     return () => clearTimeout(t)
   }, [autoAdvance, allGraded, item, advance])
 
+  const sessionGradeRows = Object.values(sessionGrades)
+  const recalledCount = sessionGradeRows.filter((entry) => Number(entry.grade) >= 3).length
+  const languageRecap = activeTargets(settings)
+    .map((lang) => {
+      const rows = sessionGradeRows.filter((entry) => entry.lang === lang)
+      return { lang, total: rows.length, recalled: rows.filter((entry) => Number(entry.grade) >= 3).length }
+    })
+    .filter((row) => row.total > 0)
+
   if (queue === null) {
     return <div className="panel muted">Building your queue…</div>
   }
@@ -212,6 +230,21 @@ export function Review({ settings, onExit }: Props) {
             ? `You reviewed ${sessionCount} word${sessionCount === 1 ? '' : 's'}.`
             : 'Add some words, or come back when something is due.'}
         </p>
+        {sessionGradeRows.length > 0 && (
+          <div className="session-recap" aria-live="polite">
+            <strong>Recall snapshot</strong>
+            <p className="muted small">
+              {recalledCount} of {sessionGradeRows.length} language prompts were rated Good or Easy.
+            </p>
+            <ul className="session-recap-list">
+              {languageRecap.map((row) => (
+                <li key={row.lang}>
+                  {LANG_NAMES[row.lang]}: {row.recalled}/{row.total} recalled
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <button className="primary" onClick={onExit}>
           Back
         </button>
