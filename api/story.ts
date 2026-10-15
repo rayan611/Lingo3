@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { parseStoryInput } from '../src/server/aiInput.js'
 
 /**
  * Vercel serverless function: writes a short text out of words the reader
@@ -278,44 +279,17 @@ async function respond(req: Request): Promise<Response> {
     )
   }
 
-  let body: {
-    lang?: string
-    nativeLang?: string
-    words?: string[]
-    genre?: string
-    length?: string
-    unknownShare?: number
-  }
+  let rawBody: unknown
   try {
-    body = (await req.json()) as typeof body
+    rawBody = await req.json()
   } catch {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
+  const parsed = parseStoryInput(rawBody)
+  if (!parsed.ok) return json({ error: parsed.error }, 400)
 
-  const lang = body.lang ?? 'sv'
-  const nativeLang = body.nativeLang ?? 'fa'
-  // Capped: a prompt carrying two thousand words costs more than the text is
-  // worth, and the newest words are the ones worth practising.
-  const words = (Array.isArray(body.words) ? body.words : [])
-    .map((w) => String(w).trim())
-    .filter(Boolean)
-    .slice(0, 400)
-
-  if (words.length < 5) {
-    return json(
-      { error: 'Not enough words yet. Add a few more and try again.' },
-      400,
-    )
-  }
-
-  const prompt = buildPrompt({
-    lang,
-    nativeLang,
-    words,
-    genre: body.genre ?? 'fun',
-    length: body.length ?? 'short',
-    unknownShare: Math.min(0.3, Math.max(0, Number(body.unknownShare) || 0.05)),
-  })
+  const { lang, nativeLang, words, genre, length, unknownShare } = parsed.value
+  const prompt = buildPrompt({ lang, nativeLang, words, genre, length, unknownShare })
 
   const abort = new AbortController()
   const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
