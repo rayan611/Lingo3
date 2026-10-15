@@ -18,7 +18,7 @@ import {
 import { authConfigured } from '../auth/supabase'
 import { signOut } from '../auth/useSession'
 import { resetSyncCursors, type SyncResult } from '../sync/sync'
-import { THEMES, THEME_LABELS, type Theme } from '../lib/theme'
+import { DEFAULT_THEME, THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { DeleteAccount } from './DeleteAccount'
 import { ImportExport } from './ImportExport'
@@ -66,7 +66,7 @@ export function SettingsPanel({
    */
   const override = useLiveQuery(() => readDeviceOverride(), []) ?? {}
   const account = useLiveQuery(() => readAccountSettings(), [])
-  const theme: Theme = settings.theme ?? 'system'
+  const theme: Theme = settings.theme ?? DEFAULT_THEME
 
   const pinnedHere = (key: DeviceOverridableKey) => key in override
 
@@ -262,9 +262,7 @@ export function SettingsPanel({
           <DeviceScope
             pinned={pinnedHere('theme')}
             onToggle={() => void togglePin('theme', theme)}
-            accountValue={
-              account?.theme ? THEME_LABELS[account.theme] : 'Match my device'
-            }
+            accountValue={THEME_LABELS[account?.theme ?? DEFAULT_THEME]}
           />
         </label>
       </div>

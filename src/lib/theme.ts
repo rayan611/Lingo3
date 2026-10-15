@@ -6,18 +6,62 @@
  * pins it in Settings, which is a separate thing from this cache.
  *
  * Cached in localStorage and applied as `data-theme` on <html>, which the
- * stylesheet already keys off: the dark palette is written as
- * `:root:not([data-theme='light'])` under a prefers-color-scheme query, so
- * "system" is simply the absence of an explicit choice.
+ * stylesheet keys off. "Match my device" is the absence of the attribute, and
+ * the automatic dark palette is written as `:root:not([data-theme])` — so a
+ * named theme, bright or dark, is never second-guessed by the device.
  */
-export const THEMES = ['system', 'light', 'dark', 'dark-blue'] as const
+export const THEMES = ['bloom', 'system', 'light', 'dark', 'dark-blue'] as const
 export type Theme = (typeof THEMES)[number]
 
 export const THEME_LABELS: Record<Theme, string> = {
+  bloom: 'Bloom — bright',
   system: 'Match my device',
   light: 'Light',
   dark: 'Dark',
   'dark-blue': 'Dark blue',
+}
+
+/**
+ * What you get having chosen nothing.
+ *
+ * Bloom rather than "match my device", which was the old default and is the
+ * cautious one: it hands the decision to a setting the person made about
+ * their phone, not about this app. The app now has a look of its own, and the
+ * front door is the same look, so opening the app should not feel like
+ * walking into a different building.
+ */
+export const DEFAULT_THEME: Theme = 'bloom'
+
+/** The page colour each theme paints, matched to `--bg` in the stylesheet. */
+const CHROME: Record<Theme, string> = {
+  bloom: '#fdfbff',
+  system: '#f7f5f0',
+  light: '#f7f5f0',
+  dark: '#171c22',
+  'dark-blue': '#121a28',
+}
+
+/**
+ * Fetch the two faces the bloom theme and the landing page share.
+ *
+ * One request for both, and the same URL in both places, so anyone who came
+ * in through the front door already has it cached by the time the app opens.
+ * `display=swap` means nothing ever waits on it: the fallbacks are a rounded
+ * system face and the system sans.
+ */
+export function ensureDisplayFonts(): void {
+  if (typeof document === 'undefined') return
+  if (document.getElementById('lx-fonts')) return
+  const pre = document.createElement('link')
+  pre.rel = 'preconnect'
+  pre.href = 'https://fonts.gstatic.com'
+  pre.crossOrigin = ''
+  const css = document.createElement('link')
+  css.id = 'lx-fonts'
+  css.rel = 'stylesheet'
+  css.href =
+    'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap'
+  document.head.append(pre, css)
 }
 
 const KEY = 'lingua.theme'
@@ -31,24 +75,28 @@ export function readTheme(): Theme {
   } catch {
     /* private mode, or storage blocked — fall through to the default */
   }
-  return 'system'
+  return DEFAULT_THEME
 }
 
 export function applyTheme(theme: Theme): void {
   const root = document.documentElement
+  // The absence of the attribute is what "follow the device" means, and the
+  // stylesheet's automatic dark block is keyed on exactly that.
   if (theme === 'system') root.removeAttribute('data-theme')
   else root.setAttribute('data-theme', theme)
+
+  if (theme === 'bloom') ensureDisplayFonts()
 
   // Keep the browser chrome in step with the page, or a dark app sits under a
   // light status bar on Android.
   const meta = document.querySelector('meta[name="theme-color"]')
   if (meta) {
-    const dark =
-      theme === 'dark' ||
-      theme === 'dark-blue' ||
-      (theme === 'system' &&
-        window.matchMedia?.('(prefers-color-scheme: dark)').matches)
-    meta.setAttribute('content', dark ? '#171c22' : '#f7f5f0')
+    // Every named theme knows its own colour; only "match my device" has to
+    // be asked, and only then can it differ from what CHROME lists.
+    const systemDark =
+      theme === 'system' &&
+      (window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false)
+    meta.setAttribute('content', systemDark ? '#171c22' : CHROME[theme])
   }
 }
 

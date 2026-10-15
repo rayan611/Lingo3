@@ -56,8 +56,14 @@
   --logo-ink: #ffffff;
 }
 
+/* The automatic palette: dark, but ONLY when no theme has been chosen.
+   `applyTheme` removes the attribute for "Match my device", so the absence of
+   data-theme is exactly what "follow the device" means. This used to read
+   `:not([data-theme='light'])`, which was the same thing back when every
+   other theme was dark — and would silently wash a bright named theme in
+   slate the moment a phone was set to dark. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root:not([data-theme]) {
     --bg: #171c22;
     --bg-tint: #1b2128;
     --panel: #212830;
@@ -221,7 +227,7 @@ p { margin: 0.4rem 0; }
 /* A dark theme's hues are light ones, so white ink on them would be unreadable.
    The chip keeps dark ink there instead. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .tab.active .tab-icon { color: #16202a; }
+  :root:not([data-theme]) .tab.active .tab-icon { color: #16202a; }
 }
 :root[data-theme='dark'] .tab.active .tab-icon,
 :root[data-theme='dark-blue'] .tab.active .tab-icon { color: #16202a; }
@@ -304,12 +310,19 @@ p { margin: 0.4rem 0; }
 
 .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
 .field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; margin-top: 14px; }
-.field > span {
+/* The LABEL is small caps. Only the label: this used to be `.field > span`,
+   which caught the help text underneath as well and set whole sentences —
+   "SHOWN AT THE TOP OF THE SCREEN. SYNCED, SO IT FOLLOWS YOUR ACCOUNT." — in
+   uppercase, where they are markedly harder to read and shout at you for
+   information you did not ask for. */
+.field > span:first-of-type {
   font-size: 0.76rem;
   color: var(--ink-faint);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+/* Everything after the label is prose and is set as prose. */
+.field > span:first-of-type ~ span { text-transform: none; letter-spacing: normal; }
 .field .optional { text-transform: none; letter-spacing: 0; font-size: 0.82rem; }
 .field .optional em { font-style: italic; color: var(--ink-faint); }
 .field-grow { flex: 1; min-width: 150px; }
@@ -434,12 +447,21 @@ kbd {
 .gender-ett, .gender-das { color: #8a5a9e; }
 .gender-die { color: #a3372f; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .gender-en,
-  :root:not([data-theme='light']) .gender-der { color: #85aedb; }
-  :root:not([data-theme='light']) .gender-ett,
-  :root:not([data-theme='light']) .gender-das { color: #bb96cd; }
-  :root:not([data-theme='light']) .gender-die { color: #e08a7e; }
+  :root:not([data-theme]) .gender-en,
+  :root:not([data-theme]) .gender-der { color: #85aedb; }
+  :root:not([data-theme]) .gender-ett,
+  :root:not([data-theme]) .gender-das { color: #bb96cd; }
+  :root:not([data-theme]) .gender-die { color: #e08a7e; }
 }
+/* The same lift, for the dark themes that are chosen rather than inferred.
+   These used to ride on the media query above, which no longer matches once
+   a theme is named. */
+:root[data-theme='dark'] .gender-en, :root[data-theme='dark'] .gender-der,
+:root[data-theme='dark-blue'] .gender-en, :root[data-theme='dark-blue'] .gender-der { color: #85aedb; }
+:root[data-theme='dark'] .gender-ett, :root[data-theme='dark'] .gender-das,
+:root[data-theme='dark-blue'] .gender-ett, :root[data-theme='dark-blue'] .gender-das { color: #bb96cd; }
+:root[data-theme='dark'] .gender-die,
+:root[data-theme='dark-blue'] .gender-die { color: #e08a7e; }
 
 .lang-chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1765,3 +1787,136 @@ details.feedback > summary:hover h3 { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .lx-seed, .lx-wires path, .lx-branches li, .lx-slide, .lx-open { transition: none; animation: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   Bloom — the default theme
+   ---------------------------------------------------------------------------
+   The front door's world, carried inside. The app used to open onto paper and
+   a forest green, which is calm and was the right call for a tool you sit in
+   every morning; what it was not is a reason to come back. This is the same
+   workbench in a brighter room.
+
+   It is a palette plus four structural moves, and no more than that:
+     1. violet ink on a faintly violet paper, with the page's own soft light;
+     2. rounder — 20px panels, pill buttons — so nothing has a hard corner;
+     3. ONE gradient, on the primary action, matching the Open app button;
+     4. Fredoka on headings and on the words themselves, Inter on reading
+        text; the same Google Fonts request the landing page makes, so anyone
+        who arrived through the front door already has it cached.
+
+   Everything else is inherited, because the rest of the stylesheet reads
+   tokens rather than colours. Deliberately a light-only theme: it is a bright
+   room by definition, and a dark variant of it would be a different theme
+   wearing its name.
+--------------------------------------------------------------------------- */
+
+:root[data-theme='bloom'] {
+  --bg: #fdfbff;
+  --bg-tint: #f7efff;
+  --panel: #ffffff;
+  --panel-soft: #fbf7ff;
+  --ink: #2b1b45;
+  --ink-soft: #5d4b7d;
+  --ink-faint: #a295bd;
+  --line: #ece3f8;
+  --line-soft: #f5effc;
+  --accent: #7c3aed;
+  --accent-ink: #6926d9;
+  --accent-soft: #f3e9ff;
+  --warn: #b26a00;
+  --warn-soft: #fdf0dc;
+  /* Red rather than pink. Pink is the brand here, and a delete button in the
+     brand colour is a delete button nobody reads twice. */
+  --danger: #cc2f4a;
+  --danger-soft: #fdebee;
+
+  --radius: 20px;
+  --radius-sm: 14px;
+  /* Violet-tinted rather than grey: a neutral shadow on a tinted page reads
+     as dirt. */
+  --shadow: 0 1px 2px rgba(67, 35, 120, 0.05), 0 8px 20px -12px rgba(67, 35, 120, 0.22);
+  --shadow-lift: 0 2px 6px rgba(67, 35, 120, 0.07), 0 18px 36px -18px rgba(67, 35, 120, 0.34);
+
+  --grade-again: #e03a5f;
+  --grade-hard: #d98300;
+  --grade-good: #12a373;
+  --grade-easy: #4f7df3;
+
+  --tab-add: #0d9488;
+  --tab-training: #c2700a;
+  --tab-read: #2563eb;
+  --tab-review: #7c3aed;
+  --tab-browse: #db2777;
+  --tab-settings: #7a6d94;
+}
+
+/* The page's own light. Fixed, so it stays a room you are in rather than a
+   banner that scrolls past; three soft pools rather than a linear wash,
+   which is what keeps it from looking like a gradient header. */
+:root[data-theme='bloom'] body {
+  background-color: #fdfbff;
+  background-image:
+    radial-gradient(38rem 26rem at 8% -4%, #ffe8f5 0%, rgba(255, 232, 245, 0) 60%),
+    radial-gradient(34rem 24rem at 96% 2%, #ece0ff 0%, rgba(236, 224, 255, 0) 58%),
+    radial-gradient(30rem 22rem at 50% 42%, #e2f7f4 0%, rgba(226, 247, 244, 0) 55%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Fredoka where words are the subject: headings, the brand, the word you are
+   adding, the answer on a card. Not on reading text, where a rounded face at
+   small sizes costs legibility for personality nobody asked for. */
+:root[data-theme='bloom'] h1,
+:root[data-theme='bloom'] h2,
+:root[data-theme='bloom'] h3,
+:root[data-theme='bloom'] .brand,
+:root[data-theme='bloom'] .word-input,
+:root[data-theme='bloom'] .prompt-word,
+:root[data-theme='bloom'] .answer-word,
+:root[data-theme='bloom'] .signin-brand {
+  font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* Pills everywhere. The radius token already rounds the panels; buttons are
+   their own shape and have to be asked. */
+:root[data-theme='bloom'] button { border-radius: 999px; }
+
+/* The one gradient, on the one button that commits something — the same
+   violet-to-pink as Open app, so the action that starts a session and the
+   action that saves a word are visibly the same kind of thing. */
+:root[data-theme='bloom'] button.primary {
+  background-image: linear-gradient(118deg, #8b5cf6 0%, #c026d3 52%, #ec4899 100%);
+  border-color: transparent;
+  box-shadow: 0 10px 22px -12px rgba(192, 38, 211, 0.6);
+}
+:root[data-theme='bloom'] button.primary:hover:not(:disabled) {
+  background-image: linear-gradient(118deg, #7c4ef0 0%, #b61ec6 52%, #e23c8d 100%);
+  border-color: transparent;
+  box-shadow: 0 14px 28px -12px rgba(192, 38, 211, 0.7);
+}
+/* A disabled gradient is the one place this palette fails: white text on a
+   washed violet at 45% opacity, over a white page, is barely text. Disabled
+   means flat and quiet here, and the label stays readable — which matters,
+   because on the review card that label is the instruction telling you what
+   is still missing. */
+:root[data-theme='bloom'] button.primary:disabled {
+  background-image: none;
+  background-color: var(--accent-soft);
+  color: var(--ink-soft);
+  box-shadow: none;
+  opacity: 1;
+}
+
+/* Grade buttons keep their own four colours — those mean something — but
+   pick up the same soft lift so the review card does not look like a form. */
+:root[data-theme='bloom'] .grade { border-radius: var(--radius-sm); }
+
+:root[data-theme='bloom'] .word-input {
+  border-color: var(--accent);
+  box-shadow: 0 8px 22px -16px rgba(124, 58, 237, 0.7);
+}
+
+:root[data-theme='bloom'] .tab.active .tab-icon { color: #fff; }

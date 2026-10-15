@@ -42,7 +42,7 @@ import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
 import { Landing, shouldShowLanding } from './ui/Landing'
 import { Privacy } from './ui/Privacy'
-import { applyTheme, cacheTheme, readTheme } from './lib/theme'
+import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
 
 /**
  * Profile is not here: it lives inside Settings now. Seven tabs did not fit a
@@ -105,9 +105,15 @@ export function App() {
       // anyone who chose one before themes followed the account. Done once,
       // only when the account has no theme of its own, so it cannot keep
       // overwriting a choice made on another device.
+      //
+      // A cached 'system' is not lifted: it is indistinguishable from never
+      // having chosen, and lifting it would pin the old default onto accounts
+      // that should simply get the new one.
       if (current.theme === undefined) {
         const cached = readTheme()
-        if (cached !== 'system') await saveSettings({ theme: cached })
+        if (cached !== 'system' && cached !== DEFAULT_THEME) {
+          await saveSettings({ theme: cached })
+        }
       }
       if (!cancelled) {
         setDbKey(userId ?? 'local')
@@ -180,7 +186,7 @@ function Workspace({
    */
   const theme = settings?.theme
   useEffect(() => {
-    cacheTheme(theme ?? 'system')
+    cacheTheme(theme ?? DEFAULT_THEME)
   }, [theme])
 
   /**

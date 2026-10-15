@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { ensureDisplayFonts } from '../lib/theme'
 import { InstallButton } from './InstallButton'
 
 const SEEN_KEY = 'lingua.landingSeen'
@@ -48,31 +49,6 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 }
 
-/**
- * Fetch this page's two typefaces, and only for this page.
- *
- * They were in index.html first, which meant every app launch paid a DNS
- * lookup, a TLS handshake and a stylesheet for faces that appear on a screen
- * most people see once. Injected here, the cost lands on the one visit that
- * uses them. `display=swap` means nothing ever waits on the font: the
- * fallbacks below are a rounded system face and the system sans, so the page
- * is right either way and the swap is invisible at these sizes.
- */
-function useFrontDoorFonts() {
-  useEffect(() => {
-    if (document.getElementById('lx-fonts')) return
-    const pre = document.createElement('link')
-    pre.rel = 'preconnect'
-    pre.href = 'https://fonts.gstatic.com'
-    pre.crossOrigin = ''
-    const css = document.createElement('link')
-    css.id = 'lx-fonts'
-    css.rel = 'stylesheet'
-    css.href =
-      'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap'
-    document.head.append(pre, css)
-  }, [])
-}
 
 /**
  * The word the hero blooms.
@@ -136,7 +112,9 @@ const SLIDES: {
 ]
 
 export function Landing({ onOpen }: { onOpen: () => void }) {
-  useFrontDoorFonts()
+  // Shared with the bloom theme: the same request, so one of them warms the
+  // cache for the other.
+  useEffect(ensureDisplayFonts, [])
 
   function open() {
     try {

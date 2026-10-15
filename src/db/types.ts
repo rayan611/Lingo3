@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { Theme } from '../lib/theme'
+import { DEFAULT_THEME, type Theme } from '../lib/theme'
 
 // ---------------------------------------------------------------------------
 // Languages
@@ -392,6 +392,9 @@ export interface Settings {
    * holding — true of a *particular* screen, but it meant every new device
    * started wrong, and that cost more than it saved. A device that genuinely
    * wants its own can still set one: see DEVICE_OVERRIDABLE.
+   *
+   * Undefined means never chosen, and resolves to DEFAULT_THEME rather than
+   * to the device's light/dark setting.
    */
   theme?: Theme
   nativeLang: Lang
@@ -473,6 +476,7 @@ export const DEFAULT_SETTINGS: Settings = {
   dailyNewLimit: 15,
   dailyReviewLimit: 150,
   requestRetention: 0.9,
+  theme: DEFAULT_THEME,
   speakOnReveal: false,
   speechRate: 0.95,
   updatedAt: 0,
