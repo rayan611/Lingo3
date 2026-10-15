@@ -274,7 +274,7 @@ async function respond(req: Request): Promise<Response> {
 
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
-  const rate = await enforceAiRateLimit(auth.userId, 'story', 20)
+  const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
   if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
