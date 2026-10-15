@@ -177,7 +177,7 @@ export function SettingsPanel({
         activeLangs: settings.activeLangs.filter((l) => l !== lang),
       })
     } else {
-      await saveSettings({
+      await persistSettings({
         targetLangs: [...settings.targetLangs, lang],
         activeLangs: [...settings.activeLangs, lang],
       })
@@ -311,7 +311,7 @@ export function SettingsPanel({
               // is what used to happen, silently.
               const targets = settings.targetLangs.filter((l) => l !== next)
               const actives = settings.activeLangs.filter((l) => l !== next)
-              void saveSettings({
+              void persistSettings({
                 nativeLang: next,
                 targetLangs: targets.includes(previous)
                   ? targets
@@ -564,7 +564,7 @@ export function SettingsPanel({
             max={200}
             value={settings.dailyNewLimit}
             onChange={(e) =>
-              void saveSettings({ dailyNewLimit: Number(e.target.value) })
+              void persistSettings({ dailyNewLimit: Number(e.target.value) })
             }
           />
         </label>
@@ -576,7 +576,7 @@ export function SettingsPanel({
             max={1000}
             value={settings.dailyReviewLimit}
             onChange={(e) =>
-              void saveSettings({ dailyReviewLimit: Number(e.target.value) })
+              void persistSettings({ dailyReviewLimit: Number(e.target.value) })
             }
           />
         </label>
@@ -590,7 +590,7 @@ export function SettingsPanel({
             max={97}
             value={Math.round(settings.requestRetention * 100)}
             onChange={(e) =>
-              void saveSettings({ requestRetention: Number(e.target.value) / 100 })
+              void persistSettings({ requestRetention: Number(e.target.value) / 100 })
             }
           />
           <span className="muted small">
