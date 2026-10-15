@@ -315,6 +315,30 @@ for (const file of apiFiles) {
 }
 
 
+console.log('\nAI rate limiting uses the shared Supabase counter')
+const { enforceAiRateLimit } = await import('../src/server/aiSecurity')
+const originalFetch = globalThis.fetch
+try {
+  globalThis.fetch = (async () => new Response('true', { status: 200 })) as typeof fetch
+  const request = new Request('https://x/api/expand', {
+    method: 'POST',
+    headers: { authorization: 'Bearer test-session' },
+  })
+  const allowed = await enforceAiRateLimit(request, 'test-user-allowed', 'expand', 80)
+  check('a shared counter response of true allows the request', allowed.allowed, JSON.stringify(allowed))
+
+  globalThis.fetch = (async () => new Response('false', { status: 200 })) as typeof fetch
+  const denied = await enforceAiRateLimit(request, 'test-user-denied', 'story', 20)
+  check(
+    'a shared counter response of false returns 429',
+    !denied.allowed && denied.status === 429,
+    JSON.stringify(denied),
+  )
+} finally {
+  globalThis.fetch = originalFetch
+}
+
+
 if (failures > 0) {
   console.log(`\n${failures} check(s) failed.`)
   process.exit(1)
