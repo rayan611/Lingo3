@@ -60,8 +60,8 @@ export function SpeakButton({
     >
       <svg
         viewBox="0 0 24 24"
-        width={size === 'sm' ? 13 : 15}
-        height={size === 'sm' ? 13 : 15}
+        width={size === 'sm' ? 12 : 15}
+        height={size === 'sm' ? 12 : 15}
         fill="none"
         stroke="currentColor"
         strokeWidth={1.9}

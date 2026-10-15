@@ -17,6 +17,7 @@ import { buildQueue, queueCounts } from '../src/fsrs/queue'
 import { activeTargets } from '../src/db/types'
 import type { Concept, Entry, Lang, ReviewLogRow } from '../src/db/types'
 import { detectLang } from '../src/lib/detectLang'
+import { formCandidates, markForms } from '../src/lib/highlight'
 
 let failures = 0
 async function check(label: string, run: () => Promise<unknown>) {
@@ -768,6 +769,74 @@ async function main() {
     if (detectLang('Entschuldigung')?.confidence !== 'likely') {
       throw new Error('a Latin-script guess should never claim certainty')
     }
+  })
+
+  // --- the word inside its own example sentence --------------------------
+  // Marking it today, blanking it for a cloze card tomorrow: the same
+  // matcher. The expensive failure is a silent one — nothing highlighted, or
+  // the wrong token highlighted — so the cases below pin both ends.
+
+  await check('an inflected form in the sentence is found', () => {
+    const forms = formCandidates('dricka', 'sv', {
+      kind: 'verb',
+      infinitiv: 'dricka',
+      presens: 'dricker',
+      preteritum: 'drack',
+      supinum: 'druckit',
+    } as never)
+    const hits = markForms('Jag dricker kaffe varje morgon.', forms)
+      .filter((s) => s.hit)
+      .map((s) => s.text)
+    if (hits.join('|') !== 'dricker') throw new Error(`got ${hits.join('|') || 'nothing'}`)
+    return Promise.resolve()
+  })
+
+  await check('a German Perfekt matches on the participle alone', () => {
+    const forms = formCandidates('gehen', 'de', {
+      kind: 'verb',
+      infinitiv: 'gehen',
+      praesens: 'geht',
+      praeteritum: 'ging',
+      auxiliary: 'ist',
+      partizip2: 'gegangen',
+    } as never)
+    const hits = markForms('Er ist nach Hause gegangen.', forms)
+      .filter((s) => s.hit)
+      .map((s) => s.text)
+    if (!hits.includes('gegangen')) throw new Error(`got ${hits.join('|') || 'nothing'}`)
+    // `ist` is an auxiliary and must not light up on its own.
+    if (hits.includes('ist')) throw new Error('matched the auxiliary')
+    return Promise.resolve()
+  })
+
+  await check('a form inside a longer word is not a match', () => {
+    const segments = markForms('Hundraåriga hundar.', ['hund'])
+    const hits = segments.filter((s) => s.hit).map((s) => s.text)
+    if (hits.length !== 0) throw new Error(`got ${hits.join('|')}`)
+    return Promise.resolve()
+  })
+
+  await check('the longest form wins at the same position', () => {
+    const hits = markForms('Hunden sover.', ['hund', 'hunden'])
+      .filter((s) => s.hit)
+      .map((s) => s.text)
+    if (hits.join('|') !== 'Hunden') throw new Error(`got ${hits.join('|') || 'nothing'}`)
+    return Promise.resolve()
+  })
+
+  await check('segments always reconstruct the original sentence', () => {
+    const text = 'Jag dricker kaffe, och hon dricker te.'
+    const rebuilt = markForms(text, ['dricker', 'te'])
+      .map((s) => s.text)
+      .join('')
+    if (rebuilt !== text) throw new Error('the sentence came back changed')
+    return Promise.resolve()
+  })
+
+  await check('no forms means no highlighting, not a crash', () => {
+    const segments = markForms('En mening utan träffar.', [])
+    if (segments.length !== 1 || segments[0].hit) throw new Error('unexpected match')
+    return Promise.resolve()
   })
 
   // The Add box no longer asks which language you typed in. Two things have

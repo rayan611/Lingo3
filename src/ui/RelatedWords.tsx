@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { db, lemmaKey } from '../db/db'
+import { SpeakButton } from './SpeakButton'
 import { addRelatedWord, RELATED_STAGGER_DAYS } from '../ai/expand'
 import {
   LANG_BCP47,
@@ -122,6 +123,13 @@ export function RelatedWords({
                 </span>
                 <span className="badge subtle">{LANG_NAMES[r.lang]}</span>
                 {r.register && <span className="badge">{r.register}</span>}
+                <SpeakButton
+                  text={r.word}
+                  lang={r.lang}
+                  size="sm"
+                  label="Listen"
+                  rate={settings.speechRate}
+                />
               </div>
               {r.meaning && <div className="related-meaning">{r.meaning}</div>}
               {r.note && <div className="note">{r.note}</div>}

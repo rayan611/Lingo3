@@ -1243,8 +1243,17 @@ kbd {
    right so a long word never shoves it off the card. */
 .answer-word-row { display: flex; align-items: center; gap: 10px; }
 .answer-word-row .answer-word { flex: 1; min-width: 0; }
-.example-row { display: flex; align-items: flex-start; gap: 8px; }
+/* Bottom-aligned on purpose: the example speaker ends up as low in the block
+   as it can, putting the most distance between it and the headword speaker
+   above. */
+.example-row { display: flex; align-items: flex-end; gap: 8px; }
 .example-row .example { flex: 1; min-width: 0; }
+
+/* The forms table and its speaker. The button lines up with the first row
+   rather than the dl's top border. */
+.forms-row { display: flex; align-items: flex-start; gap: 8px; }
+.forms-row .forms { flex: 1; min-width: 0; }
+.forms-row > .speak { margin-top: 9px; }
 
 /* --- speak ----------------------------------------------------------------
    A quiet circle, the same shape as the tab chips so the app has one kind of
@@ -1265,9 +1274,21 @@ kbd {
   vertical-align: middle;
   transition: background-color 0.15s, color 0.15s;
 }
-.speak-sm { width: 40px; height: 40px; }
 .speak:hover { color: var(--accent); }
 .speak.speaking { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* The small speaker keeps the full 40px tap target and gives up the circle
+   instead. It sits under the headword's own speaker on the same card, and two
+   identical filled circles one above the other read as the same control
+   twice; a quiet one reads as the secondary action it is. */
+.speak-sm {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: var(--ink-faint);
+}
+.speak-sm:hover { background: var(--bg-tint); color: var(--accent); }
+.speak-sm.speaking { background: var(--accent-soft); color: var(--accent-ink); }
 
 /* --- collapsed panels ------------------------------------------------------
    A shut <details> inside a panel: the bulk-add box and the feedback box at
@@ -2076,13 +2097,15 @@ details.feedback > summary:hover h3 { color: var(--accent); }
   white-space: nowrap;
 }
 
-/* Example-sentence audio is deliberately lower and farther from the
-   headword speaker, so the two controls read as different actions. */
-.example > .speak {
-  vertical-align: text-bottom;
-  position: relative;
-  top: 2px;
-  margin-right: 5px;
+/* The word inside its own example sentence. A tint rather than a bold or a
+   colour: the sentence is already italic and already quiet, and the mark has
+   to survive both themes without turning into a second emphasis. */
+.example mark {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: inherit;
+  font: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
 }
 
 

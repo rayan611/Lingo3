@@ -11,6 +11,8 @@ import { genderBadge, morphLines } from '../lib/morphology'
 import { normaliseTags } from '../ai/expand'
 import { TagEditor } from './TagEditor'
 import { SpeakButton } from './SpeakButton'
+import { ExampleSentence } from './ExampleSentence'
+import { formCandidates } from '../lib/highlight'
 import { PARTS_OF_SPEECH, type PartOfSpeech } from '../db/types'
 
 /**
@@ -130,35 +132,49 @@ export function WordCard({
               <div className="answer-meaning">{entry.meaning}</div>
 
               {lines.length > 0 && (
-                <dl className="forms">
-                  {lines.map((l) => (
-                    <div key={l.label} className="form-row">
-                      <dt>{l.label}</dt>
-                      <dd lang={LANG_BCP47[entry.lang]}>{l.value}</dd>
-                    </div>
-                  ))}
-                </dl>
+                <div className="forms-row">
+                  <dl className="forms">
+                    {lines.map((l) => (
+                      <div key={l.label} className="form-row">
+                        <dt>{l.label}</dt>
+                        <dd lang={LANG_BCP47[entry.lang]}>{l.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  {/* The forms read aloud, values only — "hunden, hundar",
+                      not "definite, plural". The labels are what you already
+                      know; the sound of the form is the part you do not. */}
+                  <SpeakButton
+                    text={lines.map((l) => l.value).join(', ')}
+                    lang={entry.lang}
+                    size="sm"
+                    label="Listen to the forms"
+                    rate={settings.speechRate}
+                  />
+                </div>
               )}
 
               {entry.example && (
-                <div className="example" lang={LANG_BCP47[entry.lang]}>
-                  <SpeakButton
-                    text={entry.example}
-                    lang={entry.lang}
-                    size="sm"
-                    label="Listen to the example"
-                    rate={settings.speechRate}
-                  />{' '}
-                  {entry.example}
-                  {entry.exampleGloss && !isNative && (
-                    <div
-                      className={`example-gloss ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
-                      lang={LANG_BCP47[settings.nativeLang]}
-                    >
-                      {entry.exampleGloss}
-                    </div>
+                <ExampleSentence
+                  text={entry.example}
+                  lang={entry.lang}
+                  forms={formCandidates(
+                    entry.headword,
+                    entry.lang,
+                    entry.morphology,
                   )}
-                </div>
+                  rate={settings.speechRate}
+                  gloss={
+                    entry.exampleGloss && !isNative ? (
+                      <div
+                        className={`example-gloss ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
+                        lang={LANG_BCP47[settings.nativeLang]}
+                      >
+                        {entry.exampleGloss}
+                      </div>
+                    ) : undefined
+                  }
+                />
               )}
               {entry.notes && <div className="note">{entry.notes}</div>}
             </div>

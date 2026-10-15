@@ -5,6 +5,8 @@ import { db } from '../db/db'
 import { buildQueue, queueCounts, type QueueItem } from '../fsrs/queue'
 import { SuggestionBox } from './Suggestions'
 import { SpeakButton } from './SpeakButton'
+import { ExampleSentence } from './ExampleSentence'
+import { formCandidates } from '../lib/highlight'
 import {
   GRADES,
   GRADE_HINTS,
@@ -449,14 +451,25 @@ function LanguageAnswer({
         where it is the question rather than the answer.
       */}
       {lines.length > 0 && (
-        <dl className="forms">
-          {lines.map((l) => (
-            <div key={l.label} className="form-row">
-              <dt>{l.label}</dt>
-              <dd lang={LANG_BCP47[card.lang]}>{l.value}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="forms-row">
+          <dl className="forms">
+            {lines.map((l) => (
+              <div key={l.label} className="form-row">
+                <dt>{l.label}</dt>
+                <dd lang={LANG_BCP47[card.lang]}>{l.value}</dd>
+              </div>
+            ))}
+          </dl>
+          {/* The forms read aloud, values only — the labels are what you
+              already know, the sound of the form is what you do not. */}
+          <SpeakButton
+            text={lines.map((l) => l.value).join(', ')}
+            lang={card.lang as Lang}
+            size="sm"
+            label="Listen to the forms"
+            rate={settings.speechRate}
+          />
+        </div>
       )}
 
       {/*
@@ -467,18 +480,12 @@ function LanguageAnswer({
         where reading it is the point.
       */}
       {entry?.example && (
-        <div className="example-row">
-          <div className="example" lang={LANG_BCP47[card.lang]}>
-            {entry.example}
-          </div>
-          <SpeakButton
-            text={entry.example}
-            lang={card.lang as Lang}
-            size="sm"
-            label="Listen to the example"
-            rate={settings.speechRate}
-          />
-        </div>
+        <ExampleSentence
+          text={entry.example}
+          lang={card.lang as Lang}
+          forms={formCandidates(entry.headword, card.lang, entry.morphology)}
+          rate={settings.speechRate}
+        />
       )}
       {entry?.notes && <div className="note">{entry.notes}</div>}
 
