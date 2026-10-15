@@ -179,16 +179,10 @@ function Workspace({
 }) {
   const [tab, setTab] = useState<Tab>('add')
   const suppressTabHistory = useRef(false)
+  const tabHistoryInitialized = useRef(false)
 
   // Keep the six main sections in browser history so Back/Forward works
   // predictably without changing the URL or disturbing the privacy route.
-  useEffect(() => {
-    window.history.replaceState(
-      { ...(window.history.state ?? {}), lingo3Tab: 'add' },
-      '',
-    )
-  }, [])
-
   useEffect(() => {
     const onTabPop = (event: PopStateEvent) => {
       const previous = event.state?.lingo3Tab
@@ -204,6 +198,14 @@ function Workspace({
   useEffect(() => {
     if (suppressTabHistory.current) {
       suppressTabHistory.current = false
+      return
+    }
+    if (!tabHistoryInitialized.current) {
+      tabHistoryInitialized.current = true
+      window.history.replaceState(
+        { ...(window.history.state ?? {}), lingo3Tab: tab },
+        '',
+      )
       return
     }
     window.history.pushState(
