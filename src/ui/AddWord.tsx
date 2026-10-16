@@ -25,7 +25,8 @@ import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
 import { RelatedWords } from './RelatedWords'
 import { SuggestionBox } from './Suggestions'
-import { LaterList, parkWord } from './LaterList'
+import { LaterList } from './LaterList'
+import { dropLaterWord, parkWord } from '../db/later'
 
 /**
  * Categories offered before you have any of your own, grouped the way a
@@ -225,7 +226,7 @@ export function AddWord({ settings }: Props) {
       // leaving it parked would mean working through it again tomorrow to
       // reach the same answer.
       if (laterId) {
-        await db.later.delete(laterId)
+        await dropLaterWord(laterId)
         setLaterId(null)
       }
       setPreview(null)
@@ -338,7 +339,10 @@ export function AddWord({ settings }: Props) {
             >
               {busy && mode === 'check' ? 'Checking…' : 'Check'}
             </button>
-            <span className="muted small">See what the model made of it first</span>
+            {/* The two lines are kept to the same length on purpose: unequal
+                lines wrapped to different heights and the buttons above them
+                read as sitting at different levels. */}
+            <span className="muted small">See it first, save nothing</span>
           </div>
           <div className="add-action">
             <button
@@ -349,9 +353,7 @@ export function AddWord({ settings }: Props) {
             >
               {busy && mode === 'add' ? 'Adding…' : 'Check and add'}
             </button>
-            <span className="muted small">
-              Straight into your word bank — for when you know the word
-            </span>
+            <span className="muted small">Check and save direct</span>
           </div>
         </div>
 

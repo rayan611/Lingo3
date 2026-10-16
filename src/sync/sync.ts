@@ -1,6 +1,6 @@
 import { db, getMeta, setMeta } from '../db/db'
 import { supabase } from '../auth/supabase'
-import { DEFAULT_SETTINGS, type Card, type Concept, type Entry, type Lang, type ReviewLogRow, type Settings, type Story } from '../db/types'
+import { DEFAULT_SETTINGS, type Card, type Concept, type Entry, type Lang, type LaterWord, type ReviewLogRow, type Settings, type Story } from '../db/types'
 
 /**
  * Last-write-wins sync against Supabase.
@@ -160,6 +160,28 @@ const storyIn = (r: Row): Story => ({
   knownCount: Number(r.known_count ?? 0),
   unknownWords: Array.isArray(r.unknown_words) ? (r.unknown_words as string[]) : [],
   glossary: (r.glossary as Story['glossary']) ?? undefined,
+  createdAt: ms(r.created_at as string),
+  updatedAt: ms(r.updated_at as string),
+  deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
+})
+
+/**
+ * The parked-word list. Three columns and a soft delete — it is a line of
+ * text with a date, and the only reason it is here at all is that the phone
+ * is where words get written down and the laptop is where they get added.
+ */
+const laterOut = (l: LaterWord, userId: string): Row => ({
+  id: l.id,
+  user_id: userId,
+  lemma: l.lemma,
+  created_at: iso(l.createdAt),
+  updated_at: iso(l.updatedAt),
+  deleted_at: l.deletedAt ? iso(l.deletedAt) : null,
+})
+
+const laterIn = (r: Row): LaterWord => ({
+  id: r.id as string,
+  lemma: r.lemma as string,
   createdAt: ms(r.created_at as string),
   updatedAt: ms(r.updated_at as string),
   deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
@@ -353,6 +375,16 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
     count += stories.length
   }
 
+  const later = await db.later.filter((l) => l.updatedAt > from).toArray()
+  if (later.length) {
+    const { error } = await sb
+      .from('later_words')
+      .upsert(later.map((l) => laterOut(l, userId)))
+      .abortSignal(signal)
+    if (error) throw new Error(`later_words: ${error.message}`)
+    count += later.length
+  }
+
   // Append-only: push by reviewedAt, ignore duplicates rather than updating.
   const logSince = Number(await getMeta(CURSOR_LOG)) || 0
   const logs = await db.reviewLog
@@ -441,6 +473,15 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
     .abortSignal(signal)
   if (sErr) throw new Error(`stories: ${sErr.message}`)
   count += await mergeInto(db.stories, (stories ?? []).map(storyIn))
+
+  const { data: later, error: lErr } = await sb
+    .from('later_words')
+    .select('*')
+    .eq('user_id', userId)
+    .gt('updated_at', from)
+    .abortSignal(signal)
+  if (lErr) throw new Error(`later_words: ${lErr.message}`)
+  count += await mergeInto(db.later, (later ?? []).map(laterIn))
 
   const { data: remoteSettings, error: settingsErr } = await sb
     .from('user_settings')

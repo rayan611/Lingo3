@@ -99,6 +99,23 @@ export class Lingo3DB extends Dexie {
     this.version(5).stores({
       later: 'id, createdAt',
     })
+
+    // v6: the later list follows the account. Sync resolves on `updatedAt`
+    // and needs `deletedAt` to carry a removal across, so both are indexed
+    // and backfilled — an existing row has never been changed since it was
+    // written, so its `createdAt` is its `updatedAt`.
+    this.version(6)
+      .stores({
+        later: 'id, createdAt, updatedAt, deletedAt',
+      })
+      .upgrade(async (tx) => {
+        await tx
+          .table('later')
+          .toCollection()
+          .modify((row: LaterWord) => {
+            if (!row.updatedAt) row.updatedAt = row.createdAt
+          })
+      })
   }
 }
 

@@ -5,6 +5,7 @@ import {
   signIn,
   signUp,
 } from './useSession'
+import { PasswordField } from './PasswordField'
 
 type Mode = 'in' | 'up' | 'forgot'
 
@@ -115,18 +116,14 @@ export function SignIn() {
               just said you cannot remember is the classic version of this
               form, and it is nonsense. */}
           {mode !== 'forgot' && (
-            <label className="field">
-              <span>Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
-                minLength={6}
-                required
-                disabled={busy}
-              />
-            </label>
+            <PasswordField
+              label="Password"
+              value={password}
+              onChange={setPassword}
+              autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
+              minLength={6}
+              disabled={busy}
+            />
           )}
 
           {mode === 'in' && (

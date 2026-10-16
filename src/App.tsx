@@ -271,6 +271,33 @@ function Workspace({
     setSyncing(false)
   }, [userId])
 
+  /**
+   * Whether the syncing badge is showing — which is not the same question as
+   * whether a sync is running.
+   *
+   * A sync fires six seconds after every local write, so during a review
+   * session the badge appeared and disappeared every few seconds. In a
+   * `flex-wrap` header that is not a flicker, it is a reflow: on a phone the
+   * badge pushed the meta row onto a second line and the whole page moved
+   * down under your thumb, then moved back. Two guards, and the first is the
+   * one that matters:
+   *
+   *   - the badge's space is reserved in the layout at all times (the `idle`
+   *     class hides it with `visibility`, which keeps its box), so appearing
+   *     and disappearing can never change the header's height;
+   *   - and it waits 400ms before appearing at all, so a sync that finishes
+   *     quickly — which is most of them — never shows anything.
+   */
+  const [showSyncing, setShowSyncing] = useState(false)
+  useEffect(() => {
+    if (!syncing) {
+      setShowSyncing(false)
+      return
+    }
+    const timer = window.setTimeout(() => setShowSyncing(true), 400)
+    return () => window.clearTimeout(timer)
+  }, [syncing])
+
   // Sync on load, when the connection returns, and every few minutes. Reviewing
   // never waits on it — the app reads local data regardless.
   useEffect(() => {
@@ -366,7 +393,13 @@ function Workspace({
         <div className="topbar-meta">
           <span className="brand-sub">{learningLine(settings)}</span>
           {!online && <span className="badge offline">offline</span>}
-          {syncing && <span className="badge subtle">syncing…</span>}
+          {/* Always rendered, hidden when idle: see showSyncing above. */}
+          <span
+            className={`badge subtle sync-badge${showSyncing ? '' : ' idle'}`}
+            aria-hidden={!showSyncing}
+          >
+            syncing…
+          </span>
           {syncState?.error && !BENIGN_SYNC_ERRORS.has(syncState.error) && (
             <span className="badge warn-badge">sync failed</span>
           )}

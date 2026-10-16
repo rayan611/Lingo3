@@ -27,6 +27,12 @@ import {
   STALE_LOCK_MS,
   mergeInto,
 } from '../src/sync/sync'
+import { dropLaterWord, parkWord } from '../src/db/later'
+
+/** What the Later list actually shows — the deleted rows are still in there. */
+async function visibleLater() {
+  return db.later.filter((row) => !row.deletedAt).toArray()
+}
 
 let failures = 0
 function check(label: string, ok: boolean, detail = '') {
@@ -240,6 +246,52 @@ async function main() {
   check(
     "another user's pins are not visible here",
     Object.keys(await readDeviceOverride()).length === 0,
+  )
+
+  console.log('\n10. The parked-word list survives being synced')
+  await openForUser('user-later')
+  const parked = await parkWord('försenad')
+  check('a word is parked', parked)
+  check('and it is on the list', (await visibleLater()).length === 1)
+
+  check('parking the same word again is refused', !(await parkWord('Försenad ')))
+
+  // The load-bearing one. A hard delete would leave no row at all, and a row
+  // that is missing locally always loses last-write-wins — so the next full
+  // resync would hand the word straight back.
+  const row = (await db.later.toArray())[0]
+  await dropLaterWord(row.id)
+  check('removing it takes it off the list', (await visibleLater()).length === 0)
+  check(
+    'but the row is still there, carrying a deletedAt for the other device',
+    (await db.later.count()) === 1 &&
+      Boolean((await db.later.get(row.id))?.deletedAt),
+  )
+
+  // Writing it down again revives the row rather than making a second one,
+  // which would show the same word twice on the list.
+  check('writing it down again is allowed', await parkWord('försenad'))
+  check(
+    'and revives the row rather than adding a second',
+    (await db.later.count()) === 1 && (await visibleLater()).length === 1,
+  )
+
+  // The sync rule itself: an older remote copy must not overwrite a newer
+  // local one, exactly as for concepts and cards.
+  const live = (await db.later.toArray())[0]
+  await mergeInto(db.later, [
+    { ...live, lemma: 'stale', updatedAt: live.updatedAt - 1000 },
+  ])
+  check(
+    'an older remote parked word does not overwrite a newer local one',
+    (await db.later.get(live.id))?.lemma === 'försenad',
+  )
+  await mergeInto(db.later, [
+    { ...live, lemma: 'nyare', updatedAt: live.updatedAt + 1000 },
+  ])
+  check(
+    'a newer one does',
+    (await db.later.get(live.id))?.lemma === 'nyare',
   )
 
   console.log(

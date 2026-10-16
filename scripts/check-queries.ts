@@ -18,7 +18,7 @@ import { activeTargets } from '../src/db/types'
 import type { Concept, Entry, Lang, ReviewLogRow } from '../src/db/types'
 import { detectLang } from '../src/lib/detectLang'
 import { formCandidates, markForms } from '../src/lib/highlight'
-import { parkWord } from '../src/ui/LaterList'
+import { dropLaterWord, parkWord } from '../src/db/later'
 import { buildCloze } from '../src/lib/cloze'
 import { sameWord } from '../src/lib/answer'
 
@@ -920,8 +920,8 @@ async function main() {
     await db.later.clear()
     const now = Date.now()
     await db.later.bulkPut([
-      { id: 'l2', lemma: 'förälder', createdAt: now },
-      { id: 'l1', lemma: 'delaktighet', createdAt: now - 5000 },
+      { id: 'l2', lemma: 'förälder', createdAt: now, updatedAt: now },
+      { id: 'l1', lemma: 'delaktighet', createdAt: now - 5000, updatedAt: now - 5000 },
     ])
     const rows = await db.later.orderBy('createdAt').toArray()
     if (rows.map((r) => r.id).join(',') !== 'l1,l2') {
@@ -942,13 +942,18 @@ async function main() {
     if ((await db.later.count()) !== 0) throw new Error('something was stored')
   })
 
-  await check('a parked word is removable', async () => {
+  // Removal is soft now that the list follows the account: the row stays,
+  // carrying a deletedAt, because a row that is simply missing locally loses
+  // last-write-wins and would come back on the next full resync.
+  await check('a removed parked word leaves the list but not the store', async () => {
     await db.later.clear()
     await parkWord('wetteifern')
     const row = await db.later.toCollection().first()
     if (!row) throw new Error('nothing was parked')
-    await db.later.delete(row.id)
-    if ((await db.later.count()) !== 0) throw new Error('the row survived')
+    await dropLaterWord(row.id)
+    const visible = await db.later.filter((r) => !r.deletedAt).toArray()
+    if (visible.length !== 0) throw new Error('it is still on the list')
+    if ((await db.later.count()) !== 1) throw new Error('the row was hard-deleted')
   })
 
   await check('parking writes no concept, entry or card', async () => {

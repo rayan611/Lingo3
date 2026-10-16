@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { signOut, updatePassword } from './useSession'
+import { PasswordField } from './PasswordField'
 
 /**
  * Set a new password, after arriving on a reset link.
@@ -55,41 +56,35 @@ export function ResetPassword({
               : 'You followed a reset link, so you can set a new password now.'}
           </p>
 
-          <label className="field">
-            <span>New password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"
-              minLength={MIN}
-              required
-              autoFocus
-              disabled={busy}
-            />
+          <PasswordField
+            label="New password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="new-password"
+            minLength={MIN}
+            disabled={busy}
+            autoFocus
+          >
             <span className="muted small">
               {tooShort
                 ? `At least ${MIN} characters.`
                 : `${MIN} characters or more. A phrase you will remember beats a short one you will not.`}
             </span>
-          </label>
+          </PasswordField>
 
-          <label className="field">
-            <span>Type it again</span>
-            <input
-              type="password"
-              value={again}
-              onChange={(e) => setAgain(e.target.value)}
-              autoComplete="new-password"
-              required
-              disabled={busy}
-            />
+          <PasswordField
+            label="Type it again"
+            value={again}
+            onChange={setAgain}
+            autoComplete="new-password"
+            disabled={busy}
+          >
             {mismatch && (
               <span className="muted small error-text">
                 These two do not match yet.
               </span>
             )}
-          </label>
+          </PasswordField>
 
           <button className="primary big" type="submit" disabled={busy || !ready}>
             {busy ? 'Saving…' : 'Save password and continue'}

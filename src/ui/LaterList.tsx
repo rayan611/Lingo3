@@ -1,28 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
+import { dropLaterWord } from '../db/later'
 import type { LaterWord } from '../db/types'
-
-/** Same word twice is one entry — case and surrounding space ignored. */
-function key(lemma: string): string {
-  return lemma.trim().toLocaleLowerCase()
-}
-
-/**
- * Parks a word for later. Returns false when it is already on the list, so
- * the caller can say so rather than silently doing nothing.
- */
-export async function parkWord(lemma: string): Promise<boolean> {
-  const text = lemma.trim()
-  if (!text) return false
-  const existing = await db.later.toArray()
-  if (existing.some((row) => key(row.lemma) === key(text))) return false
-  await db.later.add({
-    id: crypto.randomUUID(),
-    lemma: text,
-    createdAt: Date.now(),
-  })
-  return true
-}
 
 /**
  * Words written down but not yet added.
@@ -42,6 +21,10 @@ export async function parkWord(lemma: string): Promise<boolean> {
  * Collapsed by default once it has more than a handful in it: a long list of
  * things you have not done, open every time you reach the screen, is a
  * reproach rather than a tool.
+ *
+ * The list follows the account: words get written down on the phone in class
+ * and worked through on the laptop later, which is the case the device-local
+ * version was always going to lose.
  */
 export function LaterList({
   busy,
@@ -50,7 +33,15 @@ export function LaterList({
   busy: boolean
   onUse: (row: LaterWord, which: 'check' | 'add') => void
 }) {
-  const rows = useLiveQuery(() => db.later.orderBy('createdAt').toArray(), [], [])
+  const rows = useLiveQuery(
+    () =>
+      db.later
+        .orderBy('createdAt')
+        .filter((row) => !row.deletedAt)
+        .toArray(),
+    [],
+    [],
+  )
 
   if (rows.length === 0) return null
 
@@ -93,7 +84,7 @@ export function LaterList({
                 className="chip drop"
                 disabled={busy}
                 aria-label={`Remove ${row.lemma}`}
-                onClick={() => void db.later.delete(row.id)}
+                onClick={() => void dropLaterWord(row.id)}
               >
                 Remove
               </button>

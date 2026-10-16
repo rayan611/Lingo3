@@ -377,17 +377,25 @@ export const STORY_GENRES = [
  * line of text with a date, and it leaves this table only by becoming a real
  * word or by being thrown away.
  *
- * Device-local, like the theme: it is a scratchpad for the twenty minutes
- * between writing a word down and having time to add it properly. Making it
- * sync would mean a Postgres table, RLS and a place in push/pull for rows
- * that are meant to be gone by the evening. If it turns out words get parked
- * on the phone and added on the laptop, that is the moment to reconsider —
- * not before.
+ * It shipped device-local, on the argument that a scratchpad for the twenty
+ * minutes between writing a word down and having time to add it properly is
+ * not worth a Postgres table. That turned out to be the wrong read of how it
+ * is used: words get parked on the phone in class and worked through on the
+ * laptop in the evening, which was named as the condition for reconsidering.
+ * It follows the account now.
+ *
+ * Which is why it carries `updatedAt` and a soft `deletedAt` like every other
+ * synced row: a word removed on the laptop has to be representable as a
+ * change the phone can receive, and a row that is simply missing locally
+ * always loses last-write-wins — so a hard delete would be undone by the next
+ * full resync.
  */
 export interface LaterWord {
   id: string
   lemma: string
   createdAt: number
+  updatedAt: number
+  deletedAt?: number
 }
 
 /** A word added while offline, waiting for expansion. */

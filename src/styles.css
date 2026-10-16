@@ -386,6 +386,31 @@ p { margin: 0.4rem 0; }
 .field .optional em { font-style: italic; color: var(--ink-faint); }
 .field-grow { flex: 1; min-width: 150px; }
 
+/* The reveal button sits inside the box rather than beside it, so the field
+   keeps the same width as the email field above it. Right padding on the
+   input is what keeps a long password from running under the eye. */
+.password-box { position: relative; display: block; }
+.password-box input { padding-right: 46px; }
+.password-reveal {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--ink-faint);
+  cursor: pointer;
+}
+.password-reveal:hover:not(:disabled) { color: var(--ink); }
+.password-reveal:disabled { opacity: 0.5; cursor: default; }
+
 input, select, textarea {
   font: inherit;
   padding: 10px 12px;
@@ -490,6 +515,9 @@ kbd {
   color: var(--ink-soft);
 }
 .badge.subtle { background: transparent; border: 1px solid var(--line); }
+/* `visibility`, not `display`: the box stays, so the badge coming and going
+   cannot wrap the meta row onto a second line and shove the page down. */
+.badge.sync-badge.idle { visibility: hidden; }
 .badge.offline { background: var(--warn-soft); color: var(--warn); }
 .badge.new { background: var(--accent); color: #fff; }
 .badge.warn-badge { background: var(--warn-soft); color: var(--warn); }
@@ -1339,7 +1367,21 @@ kbd {
   gap: 6px;
 }
 .add-action { flex: 1 1 0; min-width: 0; }
-.add-action button { width: 100%; padding: 12px; font-size: 0.95rem; }
+/* Same height, text centred in it, label never wrapping. The two buttons used
+   to be the height of their own labels, so a label that wrapped at one width
+   and not the other left them visibly at different levels — and took the line
+   underneath with it. A min-height plus nowrap makes that impossible rather
+   than unlikely. */
+.add-action button {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
 .add-action .small { text-align: center; line-height: 1.35; }
 
 /* Check is blue, Check and add is green. Both are coloured now: a plain
