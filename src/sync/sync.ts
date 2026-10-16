@@ -187,6 +187,27 @@ const laterIn = (r: Row): LaterWord => ({
   deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
 })
 
+/**
+ * True when an error means "that table is not there yet".
+ *
+ * `later_words` is the one table whose migration may not have been applied
+ * when the code reading it is already live — every other migration in this
+ * project shipped first, and this one could not be applied from here. A
+ * missing table must cost the parked list its cross-device copy, not take
+ * concepts, cards and the review log down with it: without this, one
+ * `relation does not exist` throws out of `push` and the whole sync reports
+ * failure until the SQL is run.
+ *
+ * Remove this once the migration is in. It is a grace period, not a design.
+ */
+function isMissingTable(error: { code?: string; message?: string }): boolean {
+  return (
+    error.code === '42P01' ||
+    error.code === 'PGRST205' ||
+    /does not exist|could not find the table/i.test(error.message ?? '')
+  )
+}
+
 const logOut = (l: ReviewLogRow, userId: string): Row => ({
   id: l.id,
   user_id: userId,
@@ -381,8 +402,10 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
       .from('later_words')
       .upsert(later.map((l) => laterOut(l, userId)))
       .abortSignal(signal)
-    if (error) throw new Error(`later_words: ${error.message}`)
-    count += later.length
+    if (error && !isMissingTable(error)) {
+      throw new Error(`later_words: ${error.message}`)
+    }
+    if (!error) count += later.length
   }
 
   // Append-only: push by reviewedAt, ignore duplicates rather than updating.
@@ -480,8 +503,8 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
     .eq('user_id', userId)
     .gt('updated_at', from)
     .abortSignal(signal)
-  if (lErr) throw new Error(`later_words: ${lErr.message}`)
-  count += await mergeInto(db.later, (later ?? []).map(laterIn))
+  if (lErr && !isMissingTable(lErr)) throw new Error(`later_words: ${lErr.message}`)
+  if (!lErr) count += await mergeInto(db.later, (later ?? []).map(laterIn))
 
   const { data: remoteSettings, error: settingsErr } = await sb
     .from('user_settings')
