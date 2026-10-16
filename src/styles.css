@@ -52,9 +52,9 @@
   /* The mark. Fixed across every theme and matching the installed icon: a
      logo that changes colour with the palette is not a logo. Mirrored in
      scripts/make-icons.py — change both together. */
-  --logo-tile-top: #5BB0F7;
-  --logo-tile: #1A6FCC;
+  --logo-tile: #7A52A8;
   --logo-ink: #ffffff;
+  --logo-accent: #5FD9B6;
 }
 
 /* The automatic palette: dark, but ONLY when no theme has been chosen.

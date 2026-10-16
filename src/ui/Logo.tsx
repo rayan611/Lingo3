@@ -1,26 +1,31 @@
-import { useId } from 'react'
-
 /**
- * The L3 mark: white "L3" on a sky-blue tile.
+ * The L3 mark: white "L3" on a violet tile, over a mint swash.
  *
  * Inline SVG rather than an image file so it costs no request and stays crisp
  * at any size. The colours are fixed rather than themed — a mark that changes
  * colour with the palette is decoration, not identity — and they are the same
  * colours as the installed home-screen icon, which `scripts/make-icons.py`
- * renders from the same three values. Change one, re-run that.
+ * renders from the same values. Change one, re-run that.
  *
- * Two things that were decided the hard way. The gradient is the one place in
- * this app where a gradient belongs: an icon is a picture, not part of the
- * interface, and flat navy read as a placeholder at home-screen size. The
- * letters are sans rather than the Georgia the wordmark uses, because the
- * smallest place this appears is a 16px browser tab, where a serif's thin
- * strokes simply vanish.
+ * Three things that were decided the hard way.
+ *
+ * The letters are an OUTLINE, not text. They are Cambria's shapes, by way of
+ * Caladea — the metric-compatible open twin — converted to a path, because a
+ * `font-family` on an icon is a wish: nobody has Cambria on Android, nobody
+ * has Caladea anywhere, and `favicon.svg` is fetched as a standalone document
+ * where a webfont would not load at all. As a path it is the same mark on
+ * every device, and it needs no font request. Regenerate it from the TTF if
+ * the wordmark ever changes.
+ *
+ * The tile is FLAT. The old sky mark needed a gradient to stop reading as a
+ * placeholder; violet at this chroma does not, and flat survives being
+ * resized by a launcher better than a ramp does.
+ *
+ * The swash is what the serif leans on. Without it the letters float in the
+ * middle of the tile; with it they stand on something, and the mint is the
+ * only other colour in the mark.
  */
 export function Logo({ size = 30 }: { size?: number }) {
-  // One gradient id per instance: the header and the landing page both render
-  // a Logo, and two <defs> sharing an id is a silent wrong fill.
-  const gradientId = useId()
-
   return (
     <svg
       className="logo"
@@ -30,26 +35,23 @@ export function Logo({ size = 30 }: { size?: number }) {
       role="img"
       aria-label="Lingo3"
     >
-      <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="var(--logo-tile-top)" />
-          <stop offset="1" stopColor="var(--logo-tile)" />
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="14" fill={`url(#${gradientId})`} />
-      <text
-        x="32"
-        y="33"
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill="var(--logo-ink)"
-        fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif"
-        fontSize="30"
-        fontWeight="700"
-        letterSpacing="-1.2"
-      >
-        L3
-      </text>
+      <rect width="64" height="64" rx="14" fill="var(--logo-tile)" />
+      <path d={L3_PATH} fill="var(--logo-ink)" />
+      <path
+        d="M13.6 50.4q18.4 -6.4 36.8 0"
+        stroke="var(--logo-accent)"
+        strokeWidth="3.6"
+        strokeLinecap="round"
+        fill="none"
+      />
     </svg>
   )
 }
+
+/**
+ * "L3" in Caladea Bold at 39.2/1000 em, ink centred on x=32 with the baseline
+ * at y=42.4. Generated from Caladea-Bold.ttf with fontTools; the same string
+ * is in `public/favicon.svg` and in `scripts/make-icons.py`'s header comment.
+ */
+const L3_PATH =
+  'M15.01 39.81V19.04Q14.38 18.49 12.58 17.86L12.77 16.25H23.71L23.47 17.86Q22.53 18.06 21.95 18.29Q21.36 18.53 20.77 19.04V39.97H27.63Q28.88 38.09 29.47 34.99Q30.26 34.87 31.08 34.87Q31.71 34.87 32.37 34.99L31.98 42.4H12.62L12.77 40.79Q13.4 40.71 14.07 40.42Q14.73 40.13 15.01 39.81ZM33.16 37.3Q33.16 35.85 34.02 35.05Q34.88 34.25 36.17 34.25Q37.51 34.25 38.88 35.3Q38.53 36.05 38.53 37.11Q38.53 38.36 39.29 39.15Q40.06 39.93 41.58 39.93Q44.96 39.93 44.96 35.27Q44.96 32.72 43.33 31.31Q41.7 29.9 38.72 29.9V27.46Q44.49 26.99 44.49 22.49Q44.49 20.21 43.78 19.13Q43.07 18.06 41.86 18.06Q40.41 18.06 39.68 19.08Q38.96 20.1 38.96 21.55Q38.96 22.84 39.51 23.86Q38.41 25.03 36.68 25.03Q35.12 25.03 34.25 24.09Q33.39 23.15 33.39 21.66Q33.39 19.7 34.74 18.39Q36.1 17.08 38.12 16.45Q40.13 15.82 42.09 15.82Q44.64 15.82 46.6 16.67Q48.56 17.51 49.66 19.02Q50.76 20.53 50.76 22.49Q50.76 24.68 49.46 26.25Q48.17 27.82 45.62 28.64Q48.84 29.35 50.13 30.95Q51.42 32.56 51.42 35.3Q51.42 37.7 49.99 39.38Q48.56 41.07 46.29 41.89Q44.01 42.71 41.58 42.71Q38.06 42.71 35.61 41.26Q33.16 39.81 33.16 37.3Z'

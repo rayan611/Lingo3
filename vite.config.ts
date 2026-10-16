@@ -22,11 +22,11 @@ export default defineConfig({
         // for about twelve characters and no more.
         short_name: 'Lingo3',
         description: 'Learn up to 3 languages at once, from your own words',
-        // The deep end of the L3 gradient, so the splash screen and the
-        // Android task-switcher bar match the icon. The bottom of the ramp
-        // rather than the top: the bar sits under the icon, and matching the
-        // lighter end leaves a visible seam.
-        theme_color: '#1A6FCC',
+        // The tile's own violet, so the splash screen and the Android
+        // task-switcher bar match the icon exactly. The mark is flat now, so
+        // there is no longer a lighter and a darker end to choose between —
+        // which is one fewer thing that can leave a seam.
+        theme_color: '#7A52A8',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
