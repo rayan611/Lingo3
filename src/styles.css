@@ -55,6 +55,11 @@
   --logo-tile: #7A52A8;
   --logo-ink: #ffffff;
   --logo-accent: #5FD9B6;
+  /* The wordmark beside the mark. Unlike --logo-tile this one DOES move
+     between palettes: the tile carries its own white letters and is legible
+     on anything, but "Lingo3" is set directly on the page background, and
+     the tile's violet on slate is marginal at best. Same hue, lifted. */
+  --brand-ink: #6B4697;
 }
 
 /* The automatic palette: dark, but ONLY when no theme has been chosen.
@@ -95,6 +100,7 @@
     --tab-review: #b79ae0;
     --tab-browse: #e295b2;
     --tab-settings: #9fb0c0;
+    --brand-ink: #B592DD;
   }
 }
 
@@ -143,6 +149,7 @@ p { margin: 0.4rem 0; }
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.4rem;
   letter-spacing: -0.015em;
+  color: var(--brand-ink);
 }
 .logo { display: block; flex: none; }
 /* Set off from the app name by a thin rule rather than a gap, so the two
@@ -820,6 +827,7 @@ kbd {
   font-size: 2.2rem;
   margin: 0 0 6px;
   letter-spacing: -0.02em;
+  color: var(--brand-ink);
 }
 .signin-tagline { font-size: 1.02rem; color: var(--ink); margin: 0 0 12px; }
 .signin-blurb { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 16px; }
@@ -1045,6 +1053,7 @@ kbd {
   --tab-review: #b79ae0;
   --tab-browse: #e295b2;
   --tab-settings: #9fb0c0;
+  --brand-ink: #B592DD;
 }
 
 /* Dark blue: the same structure in cooler slate, with a blue accent in place
@@ -1081,6 +1090,7 @@ kbd {
   --tab-review: #b79ae0;
   --tab-browse: #e295b2;
   --tab-settings: #9fb0c0;
+  --brand-ink: #B592DD;
 }
 
 /* --- Header: name, languages, install -------------------------------------- */
