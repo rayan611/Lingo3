@@ -149,6 +149,23 @@ export async function signUp(email: string, password: string) {
   return { needsConfirmation: !data.session }
 }
 
+/**
+ * Hand off to Google and come back signed in.
+ *
+ * `redirectTo` must be on the Supabase Auth allowlist or the trip back lands
+ * on the Site URL instead. There is no password to create and nothing to
+ * confirm, so the only failure worth reporting is not reaching Supabase at
+ * all — everything after the redirect is handled by `detectSessionInUrl`,
+ * which is what `onAuthStateChange` is already listening for.
+ */
+export async function signInWithGoogle() {
+  const { error } = await supabase().auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: `${window.location.origin}/` },
+  })
+  if (error) throw new Error(friendly(error.message))
+}
+
 export async function signOut() {
   await supabase().auth.signOut()
 }
