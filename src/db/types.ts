@@ -5,39 +5,15 @@ import { DEFAULT_THEME, type Theme } from '../lib/theme'
 // Languages
 // ---------------------------------------------------------------------------
 
-/**
- * ADDING A LANGUAGE
- *
- * Add one entry to LANGUAGES below and you are done. Nothing is hard-coded to
- * three languages: the schema is per (word x language), the queue reads
- * whatever is active, and a language with no morphology rules of its own falls
- * back to plain entries rather than breaking.
- *
- * Two optional extras, worth doing for a language you will actually study:
- *   - morphology rules in MorphologySchema below (gender, verb forms)
- *   - display labels in src/lib/morphology.ts, so forms are labelled in that
- *     language's own grammatical terms
- *   - the matching block in MORPHOLOGY_RULES in api/expand.ts, so the model
- *     knows which fields to fill
- *
- * Without those three, the language still works — you just get the headword,
- * meaning and example rather than tables of forms.
- */
-export const LANGUAGES = {
-  fa: { name: 'Persian', native: 'فارسی', bcp47: 'fa-IR', rtl: true },
-  en: { name: 'English', native: 'English', bcp47: 'en-GB', rtl: false },
-  sv: { name: 'Swedish', native: 'Svenska', bcp47: 'sv-SE', rtl: false },
-  de: { name: 'German', native: 'Deutsch', bcp47: 'de-DE', rtl: false },
-  es: { name: 'Spanish', native: 'Español', bcp47: 'es-ES', rtl: false },
-  ru: { name: 'Russian', native: 'Русский', bcp47: 'ru-RU', rtl: false },
-} as const satisfies Record<
-  string,
-  { name: string; native: string; bcp47: string; rtl: boolean }
->
-
-export type Lang = keyof typeof LANGUAGES
-
-export const LANGS = Object.keys(LANGUAGES) as Lang[]
+// Languages live in their own dependency-free module so the serverless
+// handlers can import the same list the app uses; re-exported here because
+// everything already imports them from this file.
+export {
+  LANGUAGES,
+  LANGS,
+  type Lang,
+} from './langs'
+import { LANGUAGES, LANGS, type Lang } from './langs'
 
 // Derived, so a new language cannot be half-added — one entry above and every
 // lookup below has it.
@@ -149,6 +125,34 @@ const esNoun = z.object({
   plural: z.string().optional(),
 })
 
+/**
+ * Italian. Spanish's structure plus the auxiliary.
+ *
+ * The auxiliary is the reason this is not simply esVerb renamed: the passato
+ * prossimo takes essere or avere, the choice is not predictable from the verb
+ * alone, and with essere the participle agrees with the subject. It is the
+ * Italian equivalent of the German haben/sein error, so it is required rather
+ * than optional — a guess here is drilled for months.
+ */
+const itNoun = z.object({
+  kind: z.literal('noun'),
+  gender: z.enum(['il', 'la']),
+  plural: z.string().optional(),
+})
+
+const itVerb = z.object({
+  kind: z.literal('verb'),
+  infinito: z.string(),
+  /** 3rd person singular, where an irregular stem shows. */
+  presente: z.string(),
+  participio: z.string(),
+  /** passato prossimo auxiliary. Not predictable; never guessed. */
+  ausiliare: z.enum(['essere', 'avere']),
+  gerundio: z.string().optional(),
+  /** Reflexive verbs carry the pronoun: "alzarsi", not "alzare". */
+  riflessivo: z.boolean().optional(),
+})
+
 const esVerb = z.object({
   kind: z.literal('verb'),
   infinitivo: z.string(),
@@ -227,6 +231,8 @@ export type EnNoun = z.infer<typeof enNoun>
 export type EnVerb = z.infer<typeof enVerb>
 export type EsNoun = z.infer<typeof esNoun>
 export type EsVerb = z.infer<typeof esVerb>
+export type ItNoun = z.infer<typeof itNoun>
+export type ItVerb = z.infer<typeof itVerb>
 export type RuNoun = z.infer<typeof ruNoun>
 export type RuVerb = z.infer<typeof ruVerb>
 
@@ -236,6 +242,7 @@ export const MorphologySchema = z.discriminatedUnion('lang', [
   z.object({ lang: z.literal('en'), form: z.union([enNoun, enVerb, simple]) }),
   z.object({ lang: z.literal('es'), form: z.union([esNoun, esVerb, simple]) }),
   z.object({ lang: z.literal('ru'), form: z.union([ruNoun, ruVerb, simple]) }),
+  z.object({ lang: z.literal('it'), form: z.union([itNoun, itVerb, simple]) }),
   z.object({ lang: z.literal('fa'), form: faSimple }),
 ])
 export type Morphology = z.infer<typeof MorphologySchema>

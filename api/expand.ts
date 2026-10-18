@@ -1,5 +1,14 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
-import { parseExpandInput } from '../src/server/aiInput.js'
+import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
+
+/**
+ * The language list the two response schemas validate against.
+ *
+ * Spread into a plain array because both schema builders mutate nothing but
+ * expect a writable string[]. Derived, so a language added to LANGUAGES
+ * cannot be rejected here — which is exactly what used to happen.
+ */
+const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
 
 /**
  * Vercel serverless function: expands one word into every selected language in
@@ -109,6 +118,19 @@ Spanish (es):
             "gerundio":"...", "reflexivo":true|false }
   anything else -> { "kind":"simple" }
 
+Italian (it):
+  noun -> { "kind":"noun", "gender":"il"|"la", "plural":"..." }
+            Use il or la as the gender marker even where the word itself takes
+            l' or lo in front of a vowel or s+consonant: the marker names the
+            gender, the article in a sentence is a separate matter.
+  verb -> { "kind":"verb", "infinito":"...", "presente":"<3rd person sing>",
+            "participio":"<participio passato>",
+            "ausiliare":"essere"|"avere", "gerundio":"...",
+            "riflessivo":true|false }
+            Give the infinitive of a reflexive verb with the pronoun attached
+            ("alzarsi"), and set riflessivo true.
+  anything else -> { "kind":"simple" }
+
 Russian (ru):
   noun -> { "kind":"noun", "gender":"м"|"ж"|"с", "genitive":"...",
             "dative":"...", "accusative":"...", "instrumental":"...",
@@ -130,11 +152,11 @@ Russian (ru):
 Persian (fa):
   always -> { "kind":"simple" }
 
-Gender is never optional for a Swedish, German, Spanish or Russian noun, and
-neither is the German auxiliary or the Russian aspect. They are the
-fields a learner most often gets wrong, so guessing is worse than useless —
-if you are genuinely unsure of a form, say so in "notes" rather than
-inventing one.
+Gender is never optional for a Swedish, German, Spanish, Italian or Russian
+noun, and neither is the German auxiliary, the Italian ausiliare or the
+Russian aspect. They are the fields a learner most often gets wrong, so
+guessing is worse than useless — if you are genuinely unsure of a form, say so
+in "notes" rather than inventing one.
 `.trim()
 
 const TOOL = {
@@ -169,7 +191,7 @@ const TOOL = {
       },
       detectedLang: {
         type: 'string',
-        enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'],
+        enum: LANG_ENUM,
         description:
           'Which of the requested languages the learner actually typed the input in. Always fill this in, even when it seems obvious. If the word is spelled identically in several of them, pick the one the learner is most likely to have meant given which languages they are studying.',
       },
@@ -180,7 +202,7 @@ const TOOL = {
         items: {
           type: 'object',
           properties: {
-            lang: { type: 'string', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
+            lang: { type: 'string', enum: LANG_ENUM },
             word: { type: 'string' },
             meaning: { type: 'string', description: 'A few words at most.' },
             register: {
@@ -202,7 +224,7 @@ const TOOL = {
         items: {
           type: 'object',
           properties: {
-            lang: { type: 'string', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
+            lang: { type: 'string', enum: LANG_ENUM },
             headword: {
               type: 'string',
               description:
@@ -566,14 +588,14 @@ const GEMINI_SCHEMA = {
       enum: ['noun', 'verb', 'adjective', 'adverb', 'preposition', 'phrase', 'other'],
     },
     normalisedLemma: { type: 'STRING' },
-    detectedLang: { type: 'STRING', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
+    detectedLang: { type: 'STRING', enum: LANG_ENUM },
     tags: { type: 'ARRAY', items: { type: 'STRING' } },
     related: {
       type: 'ARRAY',
       items: {
         type: 'OBJECT',
         properties: {
-          lang: { type: 'STRING', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
+          lang: { type: 'STRING', enum: LANG_ENUM },
           word: { type: 'STRING' },
           meaning: { type: 'STRING' },
           register: { type: 'STRING' },
@@ -587,7 +609,7 @@ const GEMINI_SCHEMA = {
       items: {
         type: 'OBJECT',
         properties: {
-          lang: { type: 'STRING', enum: ['fa', 'en', 'sv', 'de', 'es', 'ru'] },
+          lang: { type: 'STRING', enum: LANG_ENUM },
           headword: { type: 'STRING' },
           meaning: { type: 'STRING' },
           morphologyJson: {

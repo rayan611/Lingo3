@@ -1,5 +1,15 @@
-export const SUPPORTED_LANGS = ['fa', 'en', 'sv', 'de', 'es', 'ru'] as const
-export type SupportedLang = (typeof SUPPORTED_LANGS)[number]
+import { LANGS, type Lang } from '../db/langs.js'
+
+/**
+ * Derived from LANGUAGES rather than listed again.
+ *
+ * This used to be its own hard-coded array, and a second copy of it lived in
+ * the two JSON schemas in api/expand.ts. Adding a language to LANGUAGES then
+ * left the server rejecting it — the one failure mode the comment on
+ * LANGUAGES promises cannot happen.
+ */
+export const SUPPORTED_LANGS: readonly Lang[] = LANGS
+export type SupportedLang = Lang
 
 const LANG_SET: ReadonlySet<string> = new Set(SUPPORTED_LANGS)
 const GENRES = new Set(['fun', 'fact', 'social', 'dialogue', 'joke'])
@@ -42,7 +52,10 @@ export function parseExpandInput(input: unknown): ParseResult<ExpandInput> {
   }
 
   if (!Array.isArray(input.langs) || input.langs.length < 1 || input.langs.length > SUPPORTED_LANGS.length) {
-    return { ok: false, error: 'langs must contain between 1 and 6 supported languages.' }
+    return {
+      ok: false,
+      error: `langs must contain between 1 and ${SUPPORTED_LANGS.length} supported languages.`,
+    }
   }
   if (!input.langs.every(isSupportedLang)) {
     return { ok: false, error: 'langs contains an unsupported language.' }
