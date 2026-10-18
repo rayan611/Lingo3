@@ -238,7 +238,13 @@ export async function setMeta(key: string, value: string | number | null) {
 export async function ensureSettings(): Promise<Settings> {
   const existing = await db.settings.get('singleton')
   if (existing) return existing
-  const fresh = { ...DEFAULT_SETTINGS, updatedAt: Date.now() }
+  // `updatedAt: 0` means "never set", not "set at the epoch", and it is what
+  // makes a second device inherit the account instead of overwriting it. A
+  // defaults row stamped with Date.now() is newer than the account row it has
+  // never seen, so the first pull skipped it under last-write-wins and the
+  // push then sent the defaults up — which is why a new device asked for the
+  // name again and started on the wrong theme and languages.
+  const fresh = { ...DEFAULT_SETTINGS, updatedAt: 0 }
   await db.settings.put(fresh)
   return fresh
 }

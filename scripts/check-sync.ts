@@ -128,6 +128,27 @@ async function main() {
   await ensureSettings()
   check('and is idempotent', (await db.settings.count()) === 1)
 
+  // The load-bearing one for a second device. The defaults row must rank as
+  // "never set", or it is newer than the account row it has never seen: the
+  // pull skips it under last-write-wins, the push then sends the defaults up,
+  // and the device asks for the name again on an account that already has one.
+  const fresh = await db.settings.get('singleton')
+  check(
+    'a never-edited settings row is stamped 0, not now',
+    fresh?.updatedAt === 0,
+    `updatedAt ${fresh?.updatedAt}`,
+  )
+  check(
+    'so any account row outranks it',
+    1 > (fresh?.updatedAt ?? 0),
+  )
+  await saveSettings({ displayName: 'Rayan' })
+  const edited = await db.settings.get('singleton')
+  check(
+    'and an edited one is stamped, so it still pushes',
+    (edited?.updatedAt ?? 0) > 0 && edited?.displayName === 'Rayan',
+  )
+
   console.log('\n5. Sync cursors survive and reset')
   await setMeta('sync.lastPulledAt', 12345)
   check('cursor reads back', (await getMeta('sync.lastPulledAt')) === 12345)
