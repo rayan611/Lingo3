@@ -9,19 +9,18 @@ import type { Lang } from '../db/types'
  * than showing a button that does nothing when tapped — a dead control is
  * worse than an absent one.
  *
- * Two sizes: `sm` sits inline beside a headword, the default beside a block of
- * text. Both are the same control; only the circle changes.
+ * One size and one look everywhere it appears: the same action in a smaller
+ * place is still the same action, and a quieter copy of it read as a second,
+ * different control.
  */
 export function SpeakButton({
   text,
   lang,
-  size = 'md',
   label,
   rate,
 }: {
   text: string
   lang: Lang
-  size?: 'sm' | 'md'
   label?: string
   /** The speaking rate from Settings; the module's own default when absent. */
   rate?: number
@@ -52,7 +51,7 @@ export function SpeakButton({
   return (
     <button
       type="button"
-      className={`speak ${size === 'sm' ? 'speak-sm' : ''} ${speaking ? 'speaking' : ''}`}
+      className={`speak ${speaking ? 'speaking' : ''}`}
       onClick={go}
       title={label ?? 'Listen'}
       aria-label={speaking ? 'Stop speaking' : label ?? 'Listen'}
@@ -60,8 +59,8 @@ export function SpeakButton({
     >
       <svg
         viewBox="0 0 24 24"
-        width={size === 'sm' ? 12 : 15}
-        height={size === 'sm' ? 12 : 15}
+        width={16}
+        height={16}
         fill="none"
         stroke="currentColor"
         strokeWidth={1.9}

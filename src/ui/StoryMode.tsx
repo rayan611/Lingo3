@@ -405,7 +405,6 @@ function StoryView({
           <SpeakButton
             text={picked.word}
             lang={lang}
-            size="sm"
             rate={settings.speechRate}
           />
           {picked.meaning ? (

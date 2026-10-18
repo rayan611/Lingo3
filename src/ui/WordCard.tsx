@@ -147,7 +147,6 @@ export function WordCard({
                   <SpeakButton
                     text={lines.map((l) => l.value).join(', ')}
                     lang={entry.lang}
-                    size="sm"
                     label="Listen to the forms"
                     rate={settings.speechRate}
                   />

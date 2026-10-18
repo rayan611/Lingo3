@@ -133,7 +133,6 @@ export function RelatedWords({
                 <SpeakButton
                   text={r.word}
                   lang={r.lang}
-                  size="sm"
                   label="Listen"
                   rate={settings.speechRate}
                 />

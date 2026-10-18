@@ -43,7 +43,6 @@ export function ExampleSentence({
       <SpeakButton
         text={text}
         lang={lang}
-        size="sm"
         label="Listen to the example"
         rate={rate}
       />

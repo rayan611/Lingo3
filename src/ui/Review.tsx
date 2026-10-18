@@ -521,7 +521,6 @@ function LanguageAnswer({
           <SpeakButton
             text={lines.map((l) => l.value).join(', ')}
             lang={card.lang as Lang}
-            size="sm"
             label="Listen to the forms"
             rate={settings.speechRate}
           />
@@ -607,7 +606,7 @@ function UpcomingAnswer({
           {entry?.headword ?? '—'}
         </div>
         {entry?.headword && (
-          <SpeakButton text={entry.headword} lang={card.lang as Lang} size="sm" />
+          <SpeakButton text={entry.headword} lang={card.lang as Lang} />
         )}
       </div>
       {entry?.example && (
