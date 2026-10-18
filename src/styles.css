@@ -54,6 +54,18 @@
   --grade-good: #2f6f5e;
   --grade-easy: #3a6ea5;
 
+  /* Grammatical gender, by CLASS rather than by article, so one colour means
+     the same thing in every language: masculine/common blue, feminine rose,
+     neuter violet. Gender carries no meaning a learner can reason about — it
+     is pure recall, and it is what they get wrong most — so a non-linguistic
+     second cue is worth three tokens. Redefined in every palette below, like
+     --grade-*, because a hue picked against paper goes muddy on slate.
+
+     Colour is never the only cue: the article itself is always in the chip. */
+  --gender-m: #3a6ea5;
+  --gender-f: #a3372f;
+  --gender-n: #8a5a9e;
+
   /* One hue per tab. Mid-chroma on purpose: these sit behind a 15px glyph in
      a small chip, where a saturated colour reads as a warning light. Each is
      redefined for the dark palettes below — the same hue, lifted, because a
@@ -109,6 +121,10 @@
     --grade-hard: #d9a85d;
     --grade-good: #6cb79e;
     --grade-easy: #85aedb;
+
+    --gender-m: #85aedb;
+    --gender-f: #e08a7e;
+    --gender-n: #bb96cd;
 
     --tab-add: #73c195;
     --tab-training: #dcb063;
@@ -551,32 +567,31 @@ kbd {
 }
 
 .gender {
-  font-size: 0.8rem;
+  font-size: var(--fs-small);
   font-weight: 600;
   padding: 2px 10px;
   border-radius: 999px;
   border: 1px solid currentColor;
   background: color-mix(in srgb, currentColor 10%, transparent);
 }
-.gender-en, .gender-der { color: #3a6ea5; }
-.gender-ett, .gender-das { color: #8a5a9e; }
-.gender-die { color: #a3372f; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .gender-en,
-  :root:not([data-theme]) .gender-der { color: #85aedb; }
-  :root:not([data-theme]) .gender-ett,
-  :root:not([data-theme]) .gender-das { color: #bb96cd; }
-  :root:not([data-theme]) .gender-die { color: #e08a7e; }
-}
-/* The same lift, for the dark themes that are chosen rather than inferred.
-   These used to ride on the media query above, which no longer matches once
-   a theme is named. */
-:root[data-theme='dark'] .gender-en, :root[data-theme='dark'] .gender-der,
-:root[data-theme='dark-blue'] .gender-en, :root[data-theme='dark-blue'] .gender-der { color: #85aedb; }
-:root[data-theme='dark'] .gender-ett, :root[data-theme='dark'] .gender-das,
-:root[data-theme='dark-blue'] .gender-ett, :root[data-theme='dark-blue'] .gender-das { color: #bb96cd; }
-:root[data-theme='dark'] .gender-die,
-:root[data-theme='dark-blue'] .gender-die { color: #e08a7e; }
+/* Keyed on the article itself, because that is what `genderBadge` returns —
+   and grouped by gender class, so der/el/il/м are one colour in every
+   language. Swedish has no masculine: `en` is the common gender, the
+   non-neuter half of the pair, so it sits with the blues and `ett` with the
+   neuters. No per-theme overrides: the tokens do that. */
+.gender-en,            /* sv common */
+.gender-der,           /* de */
+.gender-el,            /* es */
+.gender-il,            /* it */
+.gender-м { color: var(--gender-m); }
+
+.gender-die,           /* de */
+.gender-la,            /* es, it */
+.gender-ж { color: var(--gender-f); }
+
+.gender-ett,           /* sv neuter */
+.gender-das,           /* de */
+.gender-с { color: var(--gender-n); }
 
 .lang-chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1094,6 +1109,10 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
   --grade-good: #6cb79e;
   --grade-easy: #85aedb;
 
+  --gender-m: #85aedb;
+  --gender-f: #e08a7e;
+  --gender-n: #bb96cd;
+
   --tab-add: #73c195;
   --tab-training: #dcb063;
   --tab-read: #85aedb;
@@ -1130,6 +1149,10 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
   --grade-hard: #d9a85d;
   --grade-good: #6fa8dc;
   --grade-easy: #8fcfb8;
+
+  --gender-m: #85aedb;
+  --gender-f: #e08a7e;
+  --gender-n: #bb96cd;
 
   --tab-add: #73c195;
   --tab-training: #dcb063;
@@ -2265,6 +2288,10 @@ button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: v
   --grade-hard: #d98300;
   --grade-good: #12a373;
   --grade-easy: #4f7df3;
+
+  --gender-m: #4f7df3;
+  --gender-f: #e03a5f;
+  --gender-n: #9333ea;
 
   --tab-add: #0d9488;
   --tab-training: #c2700a;
