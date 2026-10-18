@@ -1,5 +1,5 @@
 import { parseExpandInput, parseStoryInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
-import { LANGS } from '../src/db/langs.js'
+import { LANGS, LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
 /**
  * The expansion endpoint, exercised through both calling conventions.
@@ -386,6 +386,18 @@ check(
   !/\['fa',\s*'en'/.test(apiSource),
   'found a hard-coded language array in api/expand.ts',
 )
+check(
+  'every language has a prompt name, so no prompt says a bare code',
+  LANGS.every((l) => Boolean(LANG_PROMPT_NAMES[l])),
+  `missing: ${LANGS.filter((l) => !LANG_PROMPT_NAMES[l]).join(',')}`,
+)
+check(
+  'and neither handler keeps its own copy of that table',
+  !/fa: 'Persian \(Farsi\)'/.test(apiSource) &&
+    !/fa: 'Persian \(Farsi\)'/.test(readFileSync('api/story.ts', 'utf8')),
+  'a hard-coded LANG_NAMES is back in api/',
+)
+
 for (const lang of LANGS) {
   const parsed = parseExpandInput({
     lemma: 'prova',

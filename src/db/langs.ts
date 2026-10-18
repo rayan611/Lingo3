@@ -44,3 +44,23 @@ export const LANGUAGES = {
 export type Lang = keyof typeof LANGUAGES
 
 export const LANGS = Object.keys(LANGUAGES) as Lang[]
+
+/**
+ * The names used when NAMING a language to a model, as opposed to the UI's
+ * own `LANG_NAMES` in types.ts.
+ *
+ * Separate because the model is told "Persian (Farsi)" — both names, since a
+ * prompt is read once with no context to disambiguate — while the interface
+ * says plain "Persian". Lives here so the serverless handlers can import it:
+ * both of them had their own copy, and neither gained Italian when Italian
+ * was added, so an Italian prompt said "it" where it meant "Italian".
+ */
+export const LANG_PROMPT_NAMES: Record<Lang, string> = {
+  fa: 'Persian (Farsi)',
+  en: 'English',
+  sv: 'Swedish',
+  de: 'German',
+  es: 'Spanish',
+  ru: 'Russian',
+  it: 'Italian',
+}

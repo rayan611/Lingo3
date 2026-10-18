@@ -1,5 +1,6 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
+import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
 /**
  * The language list the two response schemas validate against.
@@ -70,14 +71,7 @@ export const maxDuration = 60
  */
 const UPSTREAM_TIMEOUT_MS = 50_000
 
-const LANG_NAMES: Record<string, string> = {
-  fa: 'Persian (Farsi)',
-  en: 'English',
-  sv: 'Swedish',
-  de: 'German',
-  es: 'Spanish',
-  ru: 'Russian',
-}
+const LANG_NAMES = LANG_PROMPT_NAMES as Record<string, string>
 
 /**
  * Morphology rules, written per language on purpose. German needs an auxiliary

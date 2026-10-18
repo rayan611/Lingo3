@@ -1,5 +1,6 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { parseStoryInput } from '../src/server/aiInput.js'
+import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
 /**
  * Vercel serverless function: writes a short text out of words the reader
@@ -30,17 +31,10 @@ const GEMINI_URL = (model: string) =>
 export const maxDuration = 60
 const UPSTREAM_TIMEOUT_MS = 50_000
 
-/** Lower than expansion's 80: a story is a much bigger answer. */
+/* The story cap is lower than expansion's 80: a story is a much bigger
+   answer. It is passed inline to enforceAiRateLimit below. */
 
-
-const LANG_NAMES: Record<string, string> = {
-  fa: 'Persian (Farsi)',
-  en: 'English',
-  sv: 'Swedish',
-  de: 'German',
-  es: 'Spanish',
-  ru: 'Russian',
-}
+const LANG_NAMES = LANG_PROMPT_NAMES as Record<string, string>
 
 const GENRES: Record<string, string> = {
   fun: 'a light, slightly funny everyday scene',
