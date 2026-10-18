@@ -53,9 +53,8 @@ export function LaterList({
       </summary>
 
       <p className="muted small">
-        Written down, not looked up yet. Check fills the box above with the
-        word so you can see what the model makes of it; Add puts it straight
-        in. Either way it leaves this list once it is really saved.
+        Check fills the box above so you can see it first; Add puts it
+        straight in. Either way the word leaves this list once it is saved.
       </p>
 
       <ul className="later-list">
