@@ -1,4 +1,5 @@
-import { parseExpandInput, parseStoryInput } from '../src/server/aiInput.js'
+import { parseExpandInput, parseStoryInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
+import { LANGS } from '../src/db/langs.js'
 
 /**
  * The expansion endpoint, exercised through both calling conventions.
@@ -361,4 +362,45 @@ if (failures > 0) {
   console.log(`\n${failures} check(s) failed.`)
   process.exit(1)
 }
-console.log('\nAll endpoint checks passed.')
+// ---------------------------------------------------------------------------
+// Every language the app offers is one the API will accept.
+//
+// The failure this guards: the handler kept its own hard-coded list of
+// language codes, in three places, next to a comment in LANGUAGES promising
+// that adding one entry was enough. Adding Italian to the app left the server
+// rejecting every Italian word — in production only, because nothing here
+// compared the two lists.
+// ---------------------------------------------------------------------------
+
+console.log('\nThe API accepts every language the app offers')
+
+const apiSource = readFileSync('api/expand.ts', 'utf8')
+check(
+  'the server list is derived from LANGUAGES, not a second copy',
+  SUPPORTED_LANGS.length === LANGS.length &&
+    LANGS.every((l) => SUPPORTED_LANGS.includes(l)),
+  `app ${LANGS.join(',')} vs api ${SUPPORTED_LANGS.join(',')}`,
+)
+check(
+  'and no inline language enum has crept back into api/expand.ts',
+  !/\['fa',\s*'en'/.test(apiSource),
+  'found a hard-coded language array in api/expand.ts',
+)
+for (const lang of LANGS) {
+  const parsed = parseExpandInput({
+    lemma: 'prova',
+    nativeLang: 'en',
+    langs: [lang],
+  })
+  check(`${lang} is accepted by parseExpandInput`, parsed.ok, JSON.stringify(parsed))
+}
+
+// The summary used to be an unconditional "passed" with no exit code, so a
+// failing endpoint check printed FAIL and the build went green anyway. It is
+// the only suite that did this; the other three already exit non-zero.
+console.log(
+  failures === 0
+    ? '\nAll endpoint checks passed.\n'
+    : `\n${failures} endpoint check(s) failed.\n`,
+)
+process.exit(failures === 0 ? 0 : 1)

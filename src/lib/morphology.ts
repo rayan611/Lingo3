@@ -6,6 +6,8 @@ import type {
   Entry,
   EsNoun,
   EsVerb,
+  ItNoun,
+  ItVerb,
   Lang,
   Morphology,
   RuNoun,
@@ -90,6 +92,24 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     ])
   }
 
+  if (lang === 'it') {
+    if (form.kind === 'noun') {
+      const f = form as ItNoun
+      return compact([f.plural && { label: 'plurale', value: f.plural }])
+    }
+    const f = form as ItVerb
+    return compact([
+      { label: 'infinito', value: f.infinito },
+      { label: 'presente', value: f.presente },
+      // Auxiliary and participle together, because that pair is the unit you
+      // actually have to produce — "è andato", not "essere" on its own. Same
+      // reasoning as German's Perfekt line above.
+      { label: 'passato prossimo', value: `${f.ausiliare} ${f.participio}` },
+      f.gerundio ? { label: 'gerundio', value: f.gerundio } : undefined,
+      f.riflessivo ? { label: 'riflessivo', value: 'sì' } : undefined,
+    ])
+  }
+
   if (lang === 'ru') {
     if (form.kind === 'noun') {
       const f = form as RuNoun
@@ -142,6 +162,7 @@ export function genderBadge(lang: Lang, form: Form | undefined): string | null {
   if (lang === 'sv') return (form as SvNoun).gender
   if (lang === 'de') return (form as DeNoun).gender
   if (lang === 'es') return (form as EsNoun).gender
+  if (lang === 'it') return (form as ItNoun).gender
   if (lang === 'ru') return (form as RuNoun).gender
   return null
 }
@@ -153,7 +174,7 @@ export function isIncomplete(entry: Entry): boolean {
   // The languages where a missing gender is expensive: it decides the article
   // or the whole declension, and the scheduler will drill a wrong one for
   // months.
-  if (!['sv', 'de', 'es', 'ru'].includes(entry.lang)) return false
+  if (!['sv', 'de', 'es', 'ru', 'it'].includes(entry.lang)) return false
   return !genderBadge(entry.lang, entry.morphology)
 }
 
