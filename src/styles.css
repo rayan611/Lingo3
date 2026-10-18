@@ -30,6 +30,22 @@
 
   --radius: 14px;
   --radius-sm: 10px;
+
+  /* --- type scale ---------------------------------------------------------
+     One ladder for everything that carries content, so a headword, its
+     meaning and its example are sized by their role rather than by whichever
+     rule happened to set them. Sizes only — weight and colour stay with each
+     rule. rem throughout, so no palette has to redefine them. */
+  --fs-word-lg: 2.2rem;   /* the word as a question, on the prompt */
+  --fs-word: 1.4rem;      /* the word itself, on an answer card */
+  --fs-sub: 1.1rem;       /* a secondary headword: related, word-card title */
+  --fs-body: 1rem;
+  --fs-meaning: 0.98rem;  /* meanings and other expressions of the word */
+  --fs-example: 0.98rem;  /* example sentences */
+  --fs-forms: 0.95rem;    /* morphology values */
+  --fs-small: 0.86rem;    /* captions and hints */
+  --fs-label: 0.75rem;    /* uppercase field labels */
+
   --shadow: 0 1px 2px rgba(29, 39, 48, 0.05), 0 6px 16px -10px rgba(29, 39, 48, 0.18);
   --shadow-lift: 0 2px 4px rgba(29, 39, 48, 0.06), 0 14px 30px -16px rgba(29, 39, 48, 0.28);
 
@@ -125,7 +141,7 @@ h3 { font-size: 0.95rem; margin: 1.35rem 0 0.5rem; }
 p { margin: 0.4rem 0; }
 
 .muted { color: var(--ink-soft); }
-.small { font-size: 0.85rem; }
+.small { font-size: var(--fs-small); }
 .rtl { direction: rtl; text-align: right; }
 
 .app {
@@ -604,7 +620,7 @@ kbd {
   background: linear-gradient(90deg, var(--accent), var(--grade-easy));
 }
 .prompt-word {
-  font-size: 2.2rem;
+  font-size: var(--fs-word-lg);
   font-family: Georgia, 'Times New Roman', serif;
   line-height: 1.2;
   letter-spacing: -0.015em;
@@ -643,14 +659,14 @@ kbd {
 }
 .answer.upcoming .answer-word { font-weight: 500; color: var(--ink-soft); }
 .answer-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-.answer-word { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; }
-.answer-meaning { color: var(--ink-soft); font-size: 0.92rem; }
+.answer-word { font-size: var(--fs-word); font-weight: 600; letter-spacing: -0.01em; }
+.answer-meaning { color: var(--ink-soft); font-size: var(--fs-meaning); }
 
 .forms {
   display: flex; flex-wrap: wrap; gap: 6px 18px;
   margin: 12px 0 0; padding: 12px 0 0;
   border-top: 1px solid var(--line-soft);
-  font-size: 0.86rem;
+  font-size: var(--fs-forms);
 }
 .form-row { display: flex; gap: 6px; }
 .form-row dt { color: var(--ink-faint); }
@@ -662,7 +678,7 @@ kbd {
   border-radius: var(--radius-sm);
   background: var(--panel-soft);
   border-left: 2px solid var(--line);
-  font-size: 0.92rem;
+  font-size: var(--fs-example);
   color: var(--ink-soft);
   font-style: italic;
 }
@@ -671,7 +687,7 @@ kbd {
   padding-top: 6px;
   border-top: 1px dashed var(--line);
   font-style: normal;
-  font-size: 0.88rem;
+  font-size: var(--fs-small);
   color: var(--ink-faint);
 }
 
@@ -757,7 +773,7 @@ kbd {
 /* --- word card & lists --------------------------------------------------- */
 
 .word-card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.word-card-head h3 { margin: 0; font-size: 1.15rem; }
+.word-card-head h3 { margin: 0; font-size: var(--fs-sub); }
 
 .lang-stack { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; }
 .lang-row {
@@ -847,6 +863,37 @@ kbd {
 }
 .signin-points strong { color: var(--ink); font-weight: 600; }
 .signin-switch { margin-top: 16px; text-align: center; }
+
+/* A rule with the word sitting in the gap, so the two ways in read as
+   alternatives rather than as a second step. */
+.signin-or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 12px;
+  color: var(--ink-faint);
+  font-size: var(--fs-small);
+}
+.signin-or::before,
+.signin-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+/* White with a real border, which is Google's own guidance for the button
+   and also the only way it does not compete with the primary one above it. */
+button.google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 600;
+}
+button.google:hover:not(:disabled) { background: var(--bg-tint); }
 
 /* --- diagnostics --------------------------------------------------------- */
 
@@ -1222,8 +1269,8 @@ kbd {
   background: var(--panel-soft);
 }
 .related-main { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-.related-word { font-size: 1.05rem; font-weight: 600; }
-.related-meaning { color: var(--ink-soft); font-size: 0.88rem; margin-top: 0.15rem; }
+.related-word { font-size: var(--fs-sub); font-weight: 600; }
+.related-meaning { color: var(--ink-soft); font-size: var(--fs-small); margin-top: 0.15rem; }
 .related-action { margin-top: 0.45rem; }
 .related-result {
   display: inline-block;
@@ -1364,19 +1411,22 @@ kbd {
 /* Each button carries its own one-line description, so the two are columns
    rather than a row of buttons with one shared paragraph underneath — a
    shared paragraph cannot say which button it is describing. */
+/* Two equal columns, not two flex items: flex sizes to content first and
+   only then shares what is left, so the wider label could still win a pixel
+   or two. A grid gives each exactly half, whatever is in it. */
 .add-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-top: 18px;
-  align-items: stretch;
+  align-items: start;
 }
 .add-action {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: 6px;
 }
-.add-action { flex: 1 1 0; min-width: 0; }
 /* Same height, text centred in it, label never wrapping. The two buttons used
    to be the height of their own labels, so a label that wrapped at one width
    and not the other left them visibly at different levels — and took the line
@@ -1392,7 +1442,14 @@ kbd {
   justify-content: center;
   white-space: nowrap;
 }
-.add-action .small { text-align: center; line-height: 1.35; }
+/* Two lines are reserved under both buttons whether or not both captions use
+   them, so a caption that wraps at one width and not the other cannot leave
+   the two columns at different heights. */
+.add-action .small {
+  text-align: center;
+  line-height: 1.35;
+  min-height: calc(2 * 1.35em);
+}
 
 /* Check is blue, Check and add is green. Both are coloured now: a plain
    button beside a filled one reads as the lesser of the two, and Check is not
@@ -1428,9 +1485,8 @@ button.inspect:hover:not(:disabled) {
    right so a long word never shoves it off the card. */
 .answer-word-row { display: flex; align-items: center; gap: 10px; }
 .answer-word-row .answer-word { flex: 1; min-width: 0; }
-/* Bottom-aligned on purpose: the example speaker ends up as low in the block
-   as it can, putting the most distance between it and the headword speaker
-   above. */
+/* Bottom-aligned: the example speaker sits as low in the block as it can, so
+   it is clearly attached to the sentence rather than to the headword above. */
 .example-row { display: flex; align-items: flex-end; gap: 8px; }
 .example-row .example { flex: 1; min-width: 0; }
 
@@ -1438,12 +1494,17 @@ button.inspect:hover:not(:disabled) {
    rather than the dl's top border. */
 .forms-row { display: flex; align-items: flex-start; gap: 8px; }
 .forms-row .forms { flex: 1; min-width: 0; }
-.forms-row > .speak { margin-top: 9px; }
+.forms-row > .speak { margin-top: 4px; }
 
 /* --- speak ----------------------------------------------------------------
-   A quiet circle, the same shape as the tab chips so the app has one kind of
-   icon button. It only ever appears when the device has a voice for that
-   language, so it never sits there dead. */
+   One speaker, one size, everywhere it appears — beside a headword, under an
+   example, in a forms table, in the related list. They used to come in two
+   sizes and two weights, which made the quieter one read as a different
+   control rather than the same one in a smaller place.
+
+   Blue is --grade-easy, which every palette already redefines, so this costs
+   no new token: it is the app's one non-accent colour and it is what makes a
+   speaker findable without hunting. */
 .speak {
   display: inline-grid;
   place-items: center;
@@ -1453,27 +1514,14 @@ button.inspect:hover:not(:disabled) {
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: var(--bg-tint);
-  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--grade-easy) 13%, transparent);
+  color: var(--grade-easy);
   cursor: pointer;
   vertical-align: middle;
   transition: background-color 0.15s, color 0.15s;
 }
-.speak:hover { color: var(--accent); }
-.speak.speaking { background: var(--accent-soft); color: var(--accent-ink); }
-
-/* The small speaker keeps the full 40px tap target and gives up the circle
-   instead. It sits under the headword's own speaker on the same card, and two
-   identical filled circles one above the other read as the same control
-   twice; a quiet one reads as the secondary action it is. */
-.speak-sm {
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  color: var(--ink-faint);
-}
-.speak-sm:hover { background: var(--bg-tint); color: var(--accent); }
-.speak-sm.speaking { background: var(--accent-soft); color: var(--accent-ink); }
+.speak:hover { background: color-mix(in srgb, var(--grade-easy) 22%, transparent); }
+.speak.speaking { background: var(--grade-easy); color: var(--panel); }
 
 /* --- collapsed panels ------------------------------------------------------
    A shut <details> inside a panel: the bulk-add box and the feedback box at
