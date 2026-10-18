@@ -31,7 +31,6 @@ import { Training } from './ui/Training'
 import { StoryMode } from './ui/StoryMode'
 import { SettingsPanel } from './ui/SettingsPanel'
 import {
-  IconAdd,
   IconReading,
   IconReview,
   IconSettings,
@@ -414,34 +413,6 @@ function Workspace({
         <NamePrompt />
       )}
 
-      {/* Ordered the way a session actually goes: add words, train them,
-          read them, then review. The tab was called Test and is called Review
-          now — "test" names what the screen does to you, "review" names what
-          you are doing, and it is the word the rest of the app, the id, the
-          route and review_log already use. Only the label moved; renaming the
-          storage layer to match a label is how a sync bug gets shipped for
-          nothing. */}
-      <nav className="tabs">
-        <TabButton id="add" tab={tab} set={setTab} icon={<IconAdd />}>
-          Add
-        </TabButton>
-        <TabButton id="training" tab={tab} set={setTab} icon={<IconTraining />}>
-          Training
-        </TabButton>
-        <TabButton id="read" tab={tab} set={setTab} icon={<IconReading />}>
-          Reading
-        </TabButton>
-        <TabButton id="review" tab={tab} set={setTab} badge={due} icon={<IconReview />}>
-          Review
-        </TabButton>
-        <TabButton id="browse" tab={tab} set={setTab} icon={<IconWords />}>
-          Words
-        </TabButton>
-        <TabButton id="settings" tab={tab} set={setTab} icon={<IconSettings />}>
-          Settings
-        </TabButton>
-      </nav>
-
       {syncState?.error && !BENIGN_SYNC_ERRORS.has(syncState.error) && (
         <div className="sync-banner">
           <div>
@@ -467,22 +438,38 @@ function Workspace({
       )}
 
       <main className="content">
-        {tab === 'review' && (
-          <ReviewTab settings={settings} onExit={() => setTab('add')} />
+        {/* Home is the tiles AND the Add form, in that order: the tiles are
+            the way to everything else, and adding a word is the thing you
+            came to do, so it is on the page rather than behind one of them.
+            The tiles are deliberately small — the Add box has to be visible
+            on a phone without scrolling past them. */}
+        {tab === 'add' && (
+          <>
+            <HomeTiles set={setTab} due={due} />
+            <AddWord settings={settings} />
+          </>
         )}
-        {tab === 'training' && <Training settings={settings} />}
-        {tab === 'read' && <StoryMode settings={settings} />}
-        {tab === 'add' && <AddWord settings={settings} />}
-        {tab === 'browse' && <Browse settings={settings} />}
-        {tab === 'settings' && (
-          <SettingsPanel
-            settings={settings}
-            userId={userId}
-            email={email}
-            syncState={syncState}
-            syncing={syncing}
-            onSync={runSync}
-          />
+
+        {tab !== 'add' && (
+          <>
+            <BackHome set={setTab} />
+            {tab === 'review' && (
+              <ReviewTab settings={settings} onExit={() => setTab('add')} />
+            )}
+            {tab === 'training' && <Training settings={settings} />}
+            {tab === 'read' && <StoryMode settings={settings} />}
+            {tab === 'browse' && <Browse settings={settings} />}
+            {tab === 'settings' && (
+              <SettingsPanel
+                settings={settings}
+                userId={userId}
+                email={email}
+                syncState={syncState}
+                syncing={syncing}
+                onSync={runSync}
+              />
+            )}
+          </>
         )}
       </main>
     </div>
@@ -526,16 +513,45 @@ function ReviewTab({
   )
 }
 
-function TabButton({
+/**
+ * The home tiles: the way to every screen that is not Add.
+ *
+ * Identical on a phone and on a desktop — one layout, so there is nothing to
+ * relearn between the two. They auto-fit rather than using a fixed column
+ * count, which is what keeps them from becoming letterbox slabs on a wide
+ * window, and they are sized so the Add form below is on screen on a phone
+ * without scrolling: that is the whole point of putting them here.
+ */
+function HomeTiles({ set, due }: { set: (t: Tab) => void; due: number }) {
+  return (
+    <nav className="tiles" aria-label="Go to">
+      <Tile id="review" set={set} badge={due} icon={<IconReview />}>
+        Review words
+      </Tile>
+      <Tile id="training" set={set} icon={<IconTraining />}>
+        Recall test
+      </Tile>
+      <Tile id="browse" set={set} icon={<IconWords />}>
+        My words
+      </Tile>
+      <Tile id="read" set={set} icon={<IconReading />}>
+        Read a story
+      </Tile>
+      <Tile id="settings" set={set} icon={<IconSettings />}>
+        Settings
+      </Tile>
+    </nav>
+  )
+}
+
+function Tile({
   id,
-  tab,
   set,
   badge,
   icon,
   children,
 }: {
   id: Tab
-  tab: Tab
   set: (t: Tab) => void
   badge?: number
   icon: React.ReactNode
@@ -543,18 +559,37 @@ function TabButton({
 }) {
   return (
     <button
-      /* tab-<id> carries nothing but the hue. Six tabs in one accent colour
-         read as one undifferentiated strip; a colour per tab is the cheapest
-         way to make the one you want findable without moving anything. */
-      className={`tab tab-${id} ${tab === id ? 'active' : ''}`}
+      /* tile-<id> carries nothing but the hue, the same one the tab used to
+         have: five tiles in one accent colour read as one undifferentiated
+         block, and a colour each is the cheapest way to make the one you
+         want findable by shape rather than by reading all five. */
+      className={`tile tile-${id}`}
       onClick={() => set(id)}
-      aria-current={tab === id ? 'page' : undefined}
     >
-      <span className="tab-icon" aria-hidden="true">
+      <span className="tile-icon" aria-hidden="true">
         {icon}
       </span>
-      <span className="tab-label">{children}</span>
-      {badge !== undefined && badge > 0 && <span className="tab-badge">{badge}</span>}
+      <span className="tile-label">{children}</span>
+      {badge !== undefined && badge > 0 && (
+        <span className="tile-badge" aria-label={`${badge} due`}>
+          {badge}
+        </span>
+      )}
+    </button>
+  )
+}
+
+/**
+ * The way back, on every screen that is not home.
+ *
+ * The mark in the corner also goes home, but a logo is a convention people
+ * have to already know; with the tab strip gone this is the only obvious
+ * control, so it is spelled out.
+ */
+function BackHome({ set }: { set: (t: Tab) => void }) {
+  return (
+    <button type="button" className="back-home" onClick={() => set('add')}>
+      <span aria-hidden="true">&#8249;</span> Home
     </button>
   )
 }

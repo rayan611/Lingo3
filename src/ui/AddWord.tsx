@@ -317,14 +317,31 @@ export function AddWord({ settings }: Props) {
             ever be one thing, and a word is routinely several: `beställa` is
             restaurant and work. This is the same editor the word card uses,
             so categories chosen here and changed later cannot drift apart,
-            and anything you type becomes a category from then on. */}
-        <TagEditor
-          tags={draftTags}
-          onChange={setDraftTags}
-          suggestions={categorySuggestions}
-          disabled={busy}
-          label="Categories — pick any, or type a new one"
-        />
+            and anything you type becomes a category from then on.
+
+            Shut by default, and the same <details> idiom as bulk-add and
+            feedback. Open, it is a topic field plus six suggestion chips —
+            about 210px, which on a phone pushed Check and Check-and-add off
+            the bottom of the screen. Categories are optional and most words
+            are added without one; the two buttons are not optional. The
+            summary carries the count, so a chosen category is never hidden
+            behind a shut panel. */}
+        <details className="categories">
+          <summary>
+            Categories
+            {draftTags.length > 0 && (
+              <span className="chip-count">{draftTags.length}</span>
+            )}
+            <span className="muted small">pick any, or type a new one</span>
+          </summary>
+          <TagEditor
+            tags={draftTags}
+            onChange={setDraftTags}
+            suggestions={categorySuggestions}
+            disabled={busy}
+            label=""
+          />
+        </details>
 
         {/* Two buttons rather than one button and a checkbox: a checkbox that
             silently changes what the button beside it does is a mode you have

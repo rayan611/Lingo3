@@ -208,110 +208,130 @@ p { margin: 0.4rem 0; }
 /* Wraps instead of scrolling sideways. A horizontally scrolling tab bar hides
    whichever tab you are looking for and gives no sign that it is doing it;
    two visible rows beat one row with half of it off-screen. */
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 4px;
-  padding: 5px;
-  margin-bottom: 20px;
-  background: var(--panel-soft);
-  border: 1px solid var(--line);
-  border-radius: 22px;
+/* --- home tiles -----------------------------------------------------------
+   The way to every screen that is not Add. One layout on a phone and on a
+   desktop, because two layouts means two things to relearn.
+
+   auto-fit with a 96px floor rather than a fixed column count: three across a
+   phone, five across a wide window, and never a row of letterbox slabs. The
+   sizes are chosen against the one constraint that matters here — the Add
+   form underneath has to be on screen on a phone without scrolling past the
+   tiles, so a tile is a chip with a label, not a card. */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
 }
-.tab {
-  background: none;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 15px;
-  font: inherit;
-  /* One step up from 0.9rem. The labels are the only thing naming what each
-     tab does, so they are read, not glanced at. */
-  font-size: 1rem;
-  color: var(--ink-soft);
-  cursor: pointer;
-  white-space: nowrap;
+.tile {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 7px;
-  transition: background-color 0.15s, color 0.15s;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  min-height: 78px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
 }
+.tile:hover { color: var(--ink); box-shadow: var(--shadow); }
+
 /* A round chip rather than an icon font or an image: no extra request, no
-   glyph that fails to load, and it scales with the text. */
-.tab-icon {
+   glyph that fails to load, and it scales with the text. The hue is set per
+   tile below; this is the fallback for anything without one. */
+.tile-icon {
   display: grid;
   place-items: center;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   flex: none;
   border-radius: 50%;
-  /* The hue is set per tab below; this is the fallback for anything without
-     one. The chip keeps its size whatever is inside it, so the bar does not
-     move when the icons change. */
-  --tab-hue: var(--ink-faint);
-  background: color-mix(in srgb, var(--tab-hue) 15%, transparent);
-  color: var(--tab-hue);
-  font-size: 0.82rem;
+  --tile-hue: var(--ink-faint);
+  background: color-mix(in srgb, var(--tile-hue) 15%, transparent);
+  color: var(--tile-hue);
   line-height: 1;
-  transition: background-color 0.15s, color 0.15s;
 }
-.tab-add .tab-icon { --tab-hue: var(--tab-add); }
-.tab-training .tab-icon { --tab-hue: var(--tab-training); }
-.tab-read .tab-icon { --tab-hue: var(--tab-read); }
-.tab-review .tab-icon { --tab-hue: var(--tab-review); }
-.tab-browse .tab-icon { --tab-hue: var(--tab-browse); }
-.tab-settings .tab-icon { --tab-hue: var(--tab-settings); }
-/* Selected: the chip fills with its own colour rather than the one accent, so
-   the active tab is still identifiable at a glance in a screenshot. */
-.tab.active .tab-icon { background: var(--tab-hue); color: #fff; }
-/* A dark theme's hues are light ones, so white ink on them would be unreadable.
-   The chip keeps dark ink there instead. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .tab.active .tab-icon { color: #16202a; }
-}
-:root[data-theme='dark'] .tab.active .tab-icon,
-:root[data-theme='dark-blue'] .tab.active .tab-icon { color: #16202a; }
-.tab:hover { color: var(--ink); }
-.tab.active {
-  color: var(--ink);
-  background: var(--panel);
-  box-shadow: var(--shadow);
-  font-weight: 500;
-}
-/* Two rows of three on a phone: every tab reachable with a thumb and none of
-   them off the edge. The icon moves above the label rather than beside it, so
-   both still fit across a third of a narrow screen.
+/* The same hues the tabs carried, from the same tokens every palette already
+   redefines — so a tile is found by its colour rather than by reading all
+   five labels. */
+.tile-training .tile-icon { --tile-hue: var(--tab-training); }
+.tile-read .tile-icon { --tile-hue: var(--tab-read); }
+.tile-review .tile-icon { --tile-hue: var(--tab-review); }
+.tile-browse .tile-icon { --tile-hue: var(--tab-browse); }
+.tile-settings .tile-icon { --tile-hue: var(--tab-settings); }
 
-   The label always stays. An icon-only tab bar makes you learn six glyphs to
-   use the app, and the icons here are a plus sign and some geometry — they
-   label nothing on their own. */
-@media (max-width: 560px) {
-  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-radius: 18px; }
-  .tab {
-    flex-direction: column;
-    justify-content: center;
-    padding: 8px 4px;
-    gap: 4px;
-    font-size: 0.86rem;
-  }
-  .tab-icon { width: 26px; height: 26px; font-size: 0.9rem; }
-  .tab-label { line-height: 1.1; }
-  /* The due count would push the column out of line, so it rides on the icon
-     instead of sitting after the label. */
-  .tab { position: relative; }
-  .tab .tab-badge {
-    position: absolute;
-    top: 4px;
-    left: 50%;
-    margin-left: 4px;
-    font-size: 0.64rem;
-    padding: 0 5px;
-  }
+.tile-label { display: block; }
+
+/* The due count, on the Review tile only. Top right rather than beside the
+   label, so a two-digit count cannot push the label into a second line and
+   make that one tile taller than its neighbours. */
+.tile-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  font-variant-numeric: tabular-nums;
 }
-@media (max-width: 340px) {
-  .tab { font-size: 0.8rem; }
-  .tab-icon { width: 22px; height: 22px; font-size: 0.8rem; }
+
+/* Two rows of three on a narrow phone, which is also where the floor matters
+   most: below this the label needs the room more than the icon does. */
+@media (max-width: 380px) {
+  .tiles { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tile { min-height: 72px; padding: 10px 5px; font-size: 0.78rem; }
+  .tile-icon { width: 26px; height: 26px; }
 }
+
+/* The categories panel on Add. Shut by default; the summary carries a count
+   so a chosen category is never invisible behind a closed panel. */
+details.categories { margin-top: 14px; }
+details.categories > summary { gap: 10px; }
+details.categories[open] { margin-bottom: 4px; }
+.chip-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* --- back home ------------------------------------------------------------
+   With the tab strip gone this is the only obvious way back, so it is a
+   labelled control rather than a bare chevron, and it sits above the screen
+   it leaves rather than floating over it. */
+.back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 7px 14px 7px 11px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: var(--fs-small);
+  cursor: pointer;
+}
+.back-home:hover { color: var(--ink); background: var(--panel); }
 
 /* The greeting used to be dropped below 560px on the grounds that you know
    your own name. It is kept now: it is the only thing on the screen that says
@@ -350,14 +370,6 @@ p { margin: 0.4rem 0; }
 }
 .brand-home:hover:not(:disabled) { border: none; }
 .brand-home:active:not(:disabled) { transform: none; }
-.tab-badge {
-  background: var(--accent);
-  color: #fff;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  padding: 1px 7px;
-  font-variant-numeric: tabular-nums;
-}
 
 /* --- panels -------------------------------------------------------------- */
 
@@ -1070,10 +1082,6 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
 }
 
 
-@media (max-width: 460px) {
-  .tab { padding: 8px 11px; font-size: 0.85rem; }
-}
-
 
 /* ---------------------------------------------------------------------------
    Explicit themes.
@@ -1457,6 +1465,12 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
    than unlikely. */
 .add-action button {
   width: 100%;
+  /* button.primary carries a global margin-top: 16px — a layout rule living
+     on a colour class. That, not the column widths, is why these two never
+     lined up: only the right-hand one is .primary, so only it was pushed
+     down 16px. Cancelled here rather than removed there, because .primary is
+     used on a dozen screens that do rely on that margin. */
+  margin-top: 0;
   min-height: 46px;
   padding: 12px;
   font-size: 0.95rem;
@@ -1552,6 +1566,7 @@ button.inspect:hover:not(:disabled) {
    marker is replaced with one that sits where the eye already is. */
 details.bulk > summary,
 details.later > summary,
+details.categories > summary,
 details.feedback > summary {
   display: flex;
   align-items: center;
@@ -1564,12 +1579,14 @@ details.feedback > summary {
 }
 details.bulk > summary::-webkit-details-marker,
 details.later > summary::-webkit-details-marker,
+details.categories > summary::-webkit-details-marker,
 details.feedback > summary::-webkit-details-marker { display: none; }
 details.bulk > summary h3,
 details.later > summary h3,
 details.feedback > summary h3 { margin: 0; }
 details.bulk > summary::after,
 details.later > summary::after,
+details.categories > summary::after,
 details.feedback > summary::after {
   content: '＋';
   margin-left: auto;
@@ -1579,6 +1596,7 @@ details.feedback > summary::after {
 }
 details.bulk[open] > summary::after,
 details.later[open] > summary::after,
+details.categories[open] > summary::after,
 details.feedback[open] > summary::after { content: '−'; }
 details.bulk > summary:hover h3,
 details.later > summary:hover h3,
@@ -2370,7 +2388,6 @@ button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: v
   box-shadow: 0 8px 22px -16px rgba(124, 58, 237, 0.7);
 }
 
-:root[data-theme='bloom'] .tab.active .tab-icon { color: #fff; }
 
 /* The way out of the sign-in form, under the password field where you look
    when the password does not work. */

@@ -37,7 +37,10 @@ export function TagEditor({
 
   return (
     <div className="tag-editor">
-      <span className="muted small">{label}</span>
+      {/* An empty label means the caller has its own heading above — a
+          <details> summary, for instance — and an empty <span> there would
+          still take its line height. */}
+      {label && <span className="muted small">{label}</span>}
       <div className="tag-row">
         {tags.map((t) => (
           <span key={t} className="tag">
