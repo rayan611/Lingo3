@@ -477,8 +477,16 @@ function Workspace({
 }
 
 /**
- * "Learning Swedish, German and English" — but on a phone three full language
- * names wrap badly, so below a narrow width it is the codes instead.
+ * The languages being studied, named and nothing else.
+ *
+ * It used to read "Learning Swedish, German and English". The verb was the
+ * longest word in the line and said nothing the rest of the app does not —
+ * this is a language-learning app and these are the languages. Dropping it
+ * also buys back the width that was pushing the line onto its own level
+ * beside the mark. Separated by middots rather than "and", for the same
+ * reason: it is a label, not a sentence.
+ *
+ * Below a narrow width three full names still do not fit, so it is the codes.
  */
 function learningLine(settings: Settings): string {
   const active = activeTargets(settings)
@@ -486,11 +494,7 @@ function learningLine(settings: Settings): string {
   const narrow =
     typeof window !== 'undefined' && window.innerWidth < 420 && active.length > 2
   const names = active.map((l) => (narrow ? l.toUpperCase() : LANG_NAMES[l]))
-  const list =
-    names.length > 1
-      ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`
-      : names[0]
-  return `Learning ${list}`
+  return names.join(' · ')
 }
 
 function ReviewTab({
