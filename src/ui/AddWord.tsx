@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import {
@@ -238,6 +238,23 @@ export function AddWord({ settings }: Props) {
   }
 
   /** Puts the typed word on the later list and empties the box. */
+  const wordRef = useRef<HTMLInputElement>(null)
+
+  /**
+   * Focus the word box on a desktop only.
+   *
+   * It used to be `autoFocus`, which fires every time this screen mounts —
+   * and with the tiles, that is every press of Home. On a phone that slides
+   * the keyboard up over the tiles you just navigated with, for a field you
+   * had not asked to type in. A pointer-fine device has no such keyboard, so
+   * there the focus stays as a convenience.
+   */
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    wordRef.current?.focus()
+  }, [])
+
   async function park() {
     const text = lemma.trim()
     if (!text) return
@@ -287,31 +304,21 @@ export function AddWord({ settings }: Props) {
             way every time after. */}
         <h2>Add a word</h2>
 
-        {/* The park button sits with the input rather than with Check and
-            Add, because it is not a third way of adding a word — it is a way
-            of putting the box down. */}
-        <div className="word-input-row">
-          <input
-            className="word-input"
-            value={lemma}
-            onChange={(e) => {
-              setLemma(e.target.value)
-              setLaterId(null)
-            }}
-            placeholder="Word, verb, or short phrase"
-            autoFocus
-            disabled={busy}
-          />
-          <button
-            type="button"
-            className="chip park"
-            disabled={busy || !lemma.trim()}
-            title="Keep this word for later without looking it up"
-            onClick={() => void park()}
-          >
-            Add later
-          </button>
-        </div>
+        {/* The word box gets the whole width. Add later used to sit beside
+            it and took a third of the line from the one field this screen
+            exists for; it is neither urgent nor frequent, so it has moved
+            down to the quiet row with Categories. */}
+        <input
+          className="word-input"
+          value={lemma}
+          onChange={(e) => {
+            setLemma(e.target.value)
+            setLaterId(null)
+          }}
+          ref={wordRef}
+          placeholder="Enter a word"
+          disabled={busy}
+        />
 
         {/* The single-select Category menu that used to sit here could only
             ever be one thing, and a word is routinely several: `beställa` is
@@ -326,22 +333,37 @@ export function AddWord({ settings }: Props) {
             are added without one; the two buttons are not optional. The
             summary carries the count, so a chosen category is never hidden
             behind a shut panel. */}
-        <details className="categories">
-          <summary>
-            Categories
-            {draftTags.length > 0 && (
-              <span className="chip-count">{draftTags.length}</span>
-            )}
-            <span className="muted small">pick any, or type a new one</span>
-          </summary>
-          <TagEditor
-            tags={draftTags}
-            onChange={setDraftTags}
-            suggestions={categorySuggestions}
-            disabled={busy}
-            label=""
-          />
-        </details>
+        {/* The two optional things on this screen, side by side on one quiet
+            row between the word box and the two buttons: give it a category,
+            or put it down for later. Neither is part of adding a word, which
+            is why neither sits above. */}
+        <div className="add-aside">
+          <details className="categories">
+            <summary>
+              Categories
+              {draftTags.length > 0 && (
+                <span className="chip-count">{draftTags.length}</span>
+              )}
+              <span className="muted small">pick any, or type a new one</span>
+            </summary>
+            <TagEditor
+              tags={draftTags}
+              onChange={setDraftTags}
+              suggestions={categorySuggestions}
+              disabled={busy}
+              label=""
+            />
+          </details>
+          <button
+            type="button"
+            className="chip park"
+            disabled={busy || !lemma.trim()}
+            title="Keep this word for later without looking it up"
+            onClick={() => void park()}
+          >
+            Add later
+          </button>
+        </div>
 
         {/* Two buttons rather than one button and a checkbox: a checkbox that
             silently changes what the button beside it does is a mode you have
