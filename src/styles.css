@@ -70,7 +70,6 @@
      a small chip, where a saturated colour reads as a warning light. Each is
      redefined for the dark palettes below — the same hue, lifted, because a
      colour chosen against paper goes muddy on slate. */
-  --tab-add: #2f7a52;
   --tab-training: #9a6514;
   --tab-read: #2f6090;
   --tab-review: #6a4a9c;
@@ -125,8 +124,6 @@
     --gender-m: #85aedb;
     --gender-f: #e08a7e;
     --gender-n: #bb96cd;
-
-    --tab-add: #73c195;
     --tab-training: #dcb063;
     --tab-read: #85aedb;
     --tab-review: #b79ae0;
@@ -173,7 +170,12 @@ p { margin: 0.4rem 0; }
 .topbar {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: center;
+  /* Baselines, not boxes. Centred, the two sides measured as perfectly
+     aligned and still looked wrong: the name is 1.4rem Georgia and the
+     language line is 0.75rem, so equal box centres put their baselines on
+     different levels and the small text reads as floating above the big.
+     Sharing a baseline is what "on the same line" actually means here. */
+  align-items: baseline;
   gap: 12px;
   padding: 22px 0 14px;
 }
@@ -313,6 +315,24 @@ details.categories[open] { margin-bottom: 4px; }
   font-weight: 600;
 }
 
+/* The optional row: Categories on the left taking the width it needs, Add
+   later held to its own size on the right. Top-aligned, so opening Categories
+   grows downward and leaves the button where it was. */
+.add-aside {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+}
+.add-aside > .categories { flex: 1; min-width: 0; margin-top: 0; }
+.add-aside > .park { flex: none; }
+/* The hint is decorative — the word "Categories" and the + already say what
+   the row does. Sharing a narrow line with Add later, it wrapped into a
+   four-word-tall column, so below this width it goes. */
+@media (max-width: 460px) {
+  .add-aside > .categories > summary > .small { display: none; }
+}
+
 /* --- back home ------------------------------------------------------------
    With the tab strip gone this is the only obvious way back, so it is a
    labelled control rather than a bare chevron, and it sits above the screen
@@ -383,10 +403,6 @@ details.categories[open] { margin-bottom: 4px; }
   box-shadow: var(--shadow);
 }
 .panel.done { text-align: center; padding: 56px 20px; }
-.warn-panel {
-  border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
-  background: var(--warn-soft);
-}
 
 /* Words saved but not expanded. Red rather than amber, and with a pulse: this
    is not a notice, it is a job that has not finished, and the only thing that
@@ -481,6 +497,14 @@ input:focus, select:focus, textarea:focus {
 button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* The word field is the main event on the Add screen, so it reads as one. */
+.word-input { width: 100%; }
+/* The watermark is smaller than what you type into it: at the full 1.35rem a
+   placeholder reads as content already in the box, and on a narrow phone the
+   old longer text was clipped mid-word. */
+.word-input::placeholder {
+  font-size: 1rem;
+  color: var(--ink-faint);
+}
 .word-input {
   font-size: 1.35rem;
   font-family: Georgia, 'Times New Roman', serif;
@@ -1120,8 +1144,6 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
   --gender-m: #85aedb;
   --gender-f: #e08a7e;
   --gender-n: #bb96cd;
-
-  --tab-add: #73c195;
   --tab-training: #dcb063;
   --tab-read: #85aedb;
   --tab-review: #b79ae0;
@@ -1161,8 +1183,6 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
   --gender-m: #85aedb;
   --gender-f: #e08a7e;
   --gender-n: #bb96cd;
-
-  --tab-add: #73c195;
   --tab-training: #dcb063;
   --tab-read: #85aedb;
   --tab-review: #b79ae0;
@@ -1430,13 +1450,6 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
   text-align: center;
 }
 
-/* The detected-language nudge under the Add form's dropdown. A link rather
-   than a button: it is an offer, and accepting it is one tap. */
-.lang-guess {
-  align-self: flex-start;
-  margin-top: 4px;
-  font-size: 0.78rem;
-}
 
 /* Check beside Add, equal width on a phone so neither is the accidental tap. */
 /* Each button carries its own one-line description, so the two are columns
@@ -1471,9 +1484,9 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
      down 16px. Cancelled here rather than removed there, because .primary is
      used on a dozen screens that do rely on that margin. */
   margin-top: 0;
-  min-height: 46px;
-  padding: 12px;
-  font-size: 0.95rem;
+  min-height: 42px;
+  padding: 10px 8px;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1507,9 +1520,9 @@ button.inspect:hover:not(:disabled) {
 /* One row at every width. Stacking them below 460px put the second button
    under the fold on a phone, which is where the whole screen is used. */
 @media (max-width: 460px) {
-  .add-actions { gap: 8px; }
-  .add-action button { padding: 12px 6px; font-size: 0.88rem; }
-  .add-action .small { font-size: 0.72rem; }
+  .add-actions { gap: 6px; }
+  .add-action button { padding: 10px 4px; font-size: 0.82rem; }
+  .add-action .small { font-size: 0.7rem; }
 }
 
 /* The collision block is a status, not a dialog: it does not cover the form,
@@ -1606,9 +1619,6 @@ details.feedback > summary:hover h3 { color: var(--accent); }
    One row per word, the word on the left and its three actions on the right.
    Below 520px the actions drop to their own line rather than squeezing: a
    Swedish compound and three buttons do not share a phone's width. */
-.word-input-row { display: flex; align-items: center; gap: 8px; }
-.word-input-row .word-input { flex: 1; min-width: 0; }
-.word-input-row .park { flex: none; margin-top: 14px; align-self: stretch; }
 
 .later-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
 .later-list > li {
@@ -2310,8 +2320,6 @@ button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: v
   --gender-m: #4f7df3;
   --gender-f: #e03a5f;
   --gender-n: #9333ea;
-
-  --tab-add: #0d9488;
   --tab-training: #c2700a;
   --tab-read: #2563eb;
   --tab-review: #7c3aed;
