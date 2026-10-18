@@ -407,7 +407,12 @@ function Workspace({
         </div>
       </header>
 
-      {authConfigured && !settings.displayName && <NamePrompt />}
+      {/* Not before the first sync has answered: on a second device the name
+          is already on the account and arrives with the first pull, and
+          asking in the second before it lands is how it got asked twice. */}
+      {authConfigured && syncState !== null && !settings.displayName && (
+        <NamePrompt />
+      )}
 
       {/* Ordered the way a session actually goes: add words, train them,
           read them, then review. The tab was called Test and is called Review
