@@ -271,7 +271,9 @@ p { margin: 0.4rem 0; }
 .tile-browse .tile-icon { --tile-hue: var(--tab-browse); }
 .tile-settings .tile-icon { --tile-hue: var(--tab-settings); }
 
-.tile-label { display: block; }
+/* 600, not 700: the tiles are the first thing on the home screen and the
+   labels were reading as caption text beside their icons. */
+.tile-label { display: block; font-weight: 600; }
 
 /* The due count, on the Review tile only. Top right rather than beside the
    label, so a two-digit count cannot push the label into a second line and

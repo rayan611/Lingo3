@@ -530,10 +530,10 @@ function HomeTiles({ set, due }: { set: (t: Tab) => void; due: number }) {
   return (
     <nav className="tiles" aria-label="Go to">
       <Tile id="review" set={set} badge={due} icon={<IconReview />}>
-        Review words
+        Test
       </Tile>
       <Tile id="training" set={set} icon={<IconTraining />}>
-        Recall test
+        Review
       </Tile>
       <Tile id="browse" set={set} icon={<IconWords />}>
         My words

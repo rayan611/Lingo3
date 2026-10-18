@@ -118,7 +118,7 @@ export function Training({ settings }: { settings: Settings }) {
     return (
       <div className="stack">
         <div className="panel">
-          <h2>Training</h2>
+          <h2>Review</h2>
           <p className="muted">
             {topic === 'all'
               ? 'No words yet. Add some on the Add tab.'
