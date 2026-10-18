@@ -37,7 +37,9 @@ async function visibleLater() {
 let failures = 0
 function check(label: string, ok: boolean, detail = '') {
   if (!ok) failures++
-  console.log(`  [${ok ? 'PASS' : 'FAIL'}] ${label}${detail ? ` — ${detail}` : ''}`)
+  // Detail only on failure. It used to print on both, so a passing line read
+  // "[PASS] theme is pushed — missing theme in upsert", which is nonsense.
+  console.log(`  [${ok ? 'PASS' : 'FAIL'}] ${label}${!ok && detail ? ` — ${detail}` : ''}`)
 }
 
 function concept(id: string, lemma: string, updatedAt = Date.now()): Concept {
@@ -148,6 +150,45 @@ async function main() {
     'and an edited one is stamped, so it still pushes',
     (edited?.updatedAt ?? 0) > 0 && edited?.displayName === 'Rayan',
   )
+
+  console.log('\n4b. Every settings field actually syncs')
+  // Static, on purpose: the push and pull are inline in sync.ts around a
+  // Supabase client, and the failure worth guarding is not a runtime one —
+  // it is adding a field to Settings and forgetting one of the two halves,
+  // which types cannot catch because both sides are loose object literals.
+  // The field is then silently per-device forever.
+  {
+    const { readFileSync } = await import('node:fs')
+    const syncSrc = readFileSync('src/sync/sync.ts', 'utf8')
+    const pushBlock = syncSrc.slice(
+      syncSrc.indexOf("from('user_settings').upsert"),
+      syncSrc.indexOf("advanceCursor(CURSOR_PUSH"),
+    )
+    const pullBlock = syncSrc.slice(
+      syncSrc.indexOf('const merged: Settings'),
+      syncSrc.indexOf('await db.settings.put(merged)'),
+    )
+    const snake = (k: string) => k.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`)
+    // Read from the Settings INTERFACE, not from DEFAULT_SETTINGS. The
+    // optional fields — displayName, typedLang, autoAdvance — have no
+    // default, so keying off the defaults object silently skipped exactly
+    // the fields most likely to be forgotten. displayName is the one that
+    // decides whether your name follows the account to a second device.
+    const typesSrc = readFileSync('src/db/types.ts', 'utf8')
+    const iface = typesSrc.slice(
+      typesSrc.indexOf('export interface Settings'),
+      typesSrc.indexOf('\n}', typesSrc.indexOf('export interface Settings')),
+    )
+    const fields = [...iface.matchAll(/^\s{2}([a-zA-Z]+)\??:/gm)]
+      .map((m) => m[1])
+      .filter((k) => k !== 'id' && k !== 'updatedAt')
+    check('the Settings interface was parsed', fields.length >= 10, `found ${fields.length}`)
+    check('the push and pull blocks were both found', pushBlock.length > 0 && pullBlock.length > 0)
+    for (const f of fields) {
+      check(`${f} is pushed`, pushBlock.includes(`${snake(f)}:`), `missing ${snake(f)} in upsert`)
+      check(`${f} is pulled`, pullBlock.includes(`${f}:`), `missing ${f} in merged`)
+    }
+  }
 
   console.log('\n5. Sync cursors survive and reset')
   await setMeta('sync.lastPulledAt', 12345)
