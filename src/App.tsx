@@ -391,6 +391,11 @@ function Workspace({
           )}
         </div>
         <div className="topbar-meta">
+          {/* Both sites carry the same words and the same account, so without
+              this there is no way to tell from the screen which one you are
+              typing into — and "I tested it and it was fine" about the wrong
+              one is the failure this whole arrangement exists to avoid. */}
+          {__IS_BETA__ && <span className="badge beta-badge">BETA</span>}
           <span className="brand-sub">{learningLine(settings)}</span>
           {!online && <span className="badge offline">offline</span>}
           {/* Always rendered, hidden when idle: see showSyncing above. */}

@@ -2692,3 +2692,13 @@ details.help h3 { margin: 22px 0 6px; }
 /* No column swap for the right-to-left case: dir="rtl" already lays the grid
    out right-to-left, so the 26px marker column lands on the right by itself.
    Overriding the template here put it back on the left. */
+
+/* The beta marker. Warn colours rather than the accent: it is a state to
+   notice, not a feature to admire, and it has to survive every theme. */
+.badge.beta-badge {
+  background: var(--warn-soft);
+  color: var(--warn);
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
