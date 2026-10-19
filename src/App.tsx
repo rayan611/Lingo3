@@ -31,6 +31,7 @@ import { Training } from './ui/Training'
 import { StoryMode } from './ui/StoryMode'
 import { SettingsPanel } from './ui/SettingsPanel'
 import {
+  IconAdd,
   IconReading,
   IconReview,
   IconSettings,
@@ -438,21 +439,18 @@ function Workspace({
       )}
 
       <main className="content">
-        {/* Home is the tiles AND the Add form, in that order: the tiles are
-            the way to everything else, and adding a word is the thing you
-            came to do, so it is on the page rather than behind one of them.
-            The tiles are deliberately small — the Add box has to be visible
-            on a phone without scrolling past them. */}
-        {tab === 'add' && (
-          <>
-            <HomeTiles set={setTab} due={due} />
-            <AddWord settings={settings} />
-          </>
-        )}
+        {/* The tiles sit above every screen, not just home: a permanent nav
+            means no Back control on each screen and no two-step trip to get
+            from one section to another. The current one is marked, so the
+            row doubles as the answer to "where am I". They are deliberately
+            small — the Add box has to be visible on a phone without
+            scrolling past them. */}
+        <HomeTiles set={setTab} due={due} active={tab} />
+
+        {tab === 'add' && <AddWord settings={settings} />}
 
         {tab !== 'add' && (
           <>
-            <BackHome set={setTab} />
             {tab === 'review' && (
               <ReviewTab settings={settings} onExit={() => setTab('add')} />
             )}
@@ -518,30 +516,44 @@ function ReviewTab({
 }
 
 /**
- * The home tiles: the way to every screen that is not Add.
+ * The nav tiles: the way to every screen, shown on every screen.
  *
  * Identical on a phone and on a desktop — one layout, so there is nothing to
  * relearn between the two. They auto-fit rather than using a fixed column
  * count, which is what keeps them from becoming letterbox slabs on a wide
  * window, and they are sized so the Add form below is on screen on a phone
  * without scrolling: that is the whole point of putting them here.
+ *
+ * Add is a tile like any other, which is what replaced the Back control:
+ * every destination including home is one press away from everywhere.
  */
-function HomeTiles({ set, due }: { set: (t: Tab) => void; due: number }) {
+function HomeTiles({
+  set,
+  due,
+  active,
+}: {
+  set: (t: Tab) => void
+  due: number
+  active: Tab
+}) {
   return (
     <nav className="tiles" aria-label="Go to">
-      <Tile id="review" set={set} badge={due} icon={<IconReview />}>
-        Test
+      <Tile id="add" set={set} active={active} icon={<IconAdd />}>
+        Add a word
       </Tile>
-      <Tile id="training" set={set} icon={<IconTraining />}>
+      <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
+        Recall test
+      </Tile>
+      <Tile id="training" set={set} active={active} icon={<IconTraining />}>
         Review
       </Tile>
-      <Tile id="browse" set={set} icon={<IconWords />}>
+      <Tile id="browse" set={set} active={active} icon={<IconWords />}>
         My words
       </Tile>
-      <Tile id="read" set={set} icon={<IconReading />}>
+      <Tile id="read" set={set} active={active} icon={<IconReading />}>
         Read a story
       </Tile>
-      <Tile id="settings" set={set} icon={<IconSettings />}>
+      <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings
       </Tile>
     </nav>
@@ -551,23 +563,27 @@ function HomeTiles({ set, due }: { set: (t: Tab) => void; due: number }) {
 function Tile({
   id,
   set,
+  active,
   badge,
   icon,
   children,
 }: {
   id: Tab
   set: (t: Tab) => void
+  active: Tab
   badge?: number
   icon: React.ReactNode
   children: React.ReactNode
 }) {
+  const isActive = active === id
   return (
     <button
+      aria-current={isActive ? 'page' : undefined}
       /* tile-<id> carries nothing but the hue, the same one the tab used to
          have: five tiles in one accent colour read as one undifferentiated
          block, and a colour each is the cheapest way to make the one you
          want findable by shape rather than by reading all five. */
-      className={`tile tile-${id}`}
+      className={`tile tile-${id}${isActive ? ' is-active' : ''}`}
       onClick={() => set(id)}
     >
       <span className="tile-icon" aria-hidden="true">
@@ -583,17 +599,3 @@ function Tile({
   )
 }
 
-/**
- * The way back, on every screen that is not home.
- *
- * The mark in the corner also goes home, but a logo is a convention people
- * have to already know; with the tab strip gone this is the only obvious
- * control, so it is spelled out.
- */
-function BackHome({ set }: { set: (t: Tab) => void }) {
-  return (
-    <button type="button" className="back-home" onClick={() => set('add')}>
-      <span aria-hidden="true">&#8249;</span> Home
-    </button>
-  )
-}

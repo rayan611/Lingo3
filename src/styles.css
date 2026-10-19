@@ -199,10 +199,14 @@ p { margin: 0.4rem 0; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Pinned to the top of the bar and hard against the right edge. Sharing the
+   grid's baseline put it a few pixels low against the 1.4rem mark beside it,
+   which read as sagging rather than as aligned. */
 .topbar-meta {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  align-self: center;
   gap: 8px;
   flex-wrap: wrap;
 }
@@ -226,6 +230,9 @@ p { margin: 0.4rem 0; }
   margin-bottom: 18px;
 }
 .tile {
+  /* Declared on the tile, not the icon, because the active state tints the
+     whole tile from the same hue. */
+  --tile-hue: var(--ink-faint);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -236,7 +243,10 @@ p { margin: 0.4rem 0; }
   min-height: 78px;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  /* Squarer than a panel on purpose: these are the one control group on the
+     screen that is always there, and the flatter corner is what separates a
+     nav tile from the rounded cards it sits above. */
+  border-radius: 8px;
   color: var(--ink-soft);
   font: inherit;
   font-size: var(--fs-small);
@@ -246,6 +256,21 @@ p { margin: 0.4rem 0; }
   transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
 }
 .tile:hover { color: var(--ink); box-shadow: var(--shadow); }
+
+/* Where you are. The tiles never leave the screen now, so one of them has to
+   answer that — by the tile's own hue rather than one shared accent, so the
+   marked tile is the same colour you pressed to get here. Three signals, not
+   one: tinted face, full-strength border, darker label. Colour alone would
+   be invisible to anyone who cannot separate these hues. */
+.tile.is-active {
+  background: color-mix(in srgb, var(--tile-hue, var(--accent)) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--tile-hue, var(--accent)) 55%, transparent);
+  color: var(--ink);
+  font-weight: 600;
+}
+.tile.is-active .tile-icon {
+  background: color-mix(in srgb, var(--tile-hue) 22%, transparent);
+}
 
 /* A round chip rather than an icon font or an image: no extra request, no
    glyph that fails to load, and it scales with the text. The hue is set per
@@ -257,7 +282,6 @@ p { margin: 0.4rem 0; }
   height: 30px;
   flex: none;
   border-radius: 50%;
-  --tile-hue: var(--ink-faint);
   background: color-mix(in srgb, var(--tile-hue) 15%, transparent);
   color: var(--tile-hue);
   line-height: 1;
@@ -265,11 +289,12 @@ p { margin: 0.4rem 0; }
 /* The same hues the tabs carried, from the same tokens every palette already
    redefines — so a tile is found by its colour rather than by reading all
    five labels. */
-.tile-training .tile-icon { --tile-hue: var(--tab-training); }
-.tile-read .tile-icon { --tile-hue: var(--tab-read); }
-.tile-review .tile-icon { --tile-hue: var(--tab-review); }
-.tile-browse .tile-icon { --tile-hue: var(--tab-browse); }
-.tile-settings .tile-icon { --tile-hue: var(--tab-settings); }
+.tile-add { --tile-hue: var(--accent); }
+.tile-training { --tile-hue: var(--tab-training); }
+.tile-read { --tile-hue: var(--tab-read); }
+.tile-review { --tile-hue: var(--tab-review); }
+.tile-browse { --tile-hue: var(--tab-browse); }
+.tile-settings { --tile-hue: var(--tab-settings); }
 
 /* 600, not 700: the tiles are the first thing on the home screen and the
    labels were reading as caption text beside their icons. */
@@ -302,7 +327,26 @@ p { margin: 0.4rem 0; }
 /* The categories panel on Add. Shut by default; the summary carries a count
    so a chosen category is never invisible behind a closed panel. */
 details.categories { margin-top: 14px; }
-details.categories > summary { gap: 10px; }
+/* A pill sized to its own text rather than a full-width row, so the + lands
+   right after the word instead of being flung to the far edge by the
+   margin-left:auto the wide panels want. */
+details.categories > summary {
+  display: inline-flex;
+  width: fit-content;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-soft);
+  font-size: 0.88rem;
+  margin: 0;
+}
+details.categories > summary:hover { border-color: var(--accent); }
+details.categories > summary::after { margin-left: 0; }
+details.categories[open] > summary {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
 details.categories[open] { margin-bottom: 4px; }
 .chip-count {
   display: inline-grid;
@@ -328,33 +372,6 @@ details.categories[open] { margin-bottom: 4px; }
 }
 .add-aside > .categories { flex: 1; min-width: 0; margin-top: 0; }
 .add-aside > .park { flex: none; }
-/* The hint is decorative — the word "Categories" and the + already say what
-   the row does. Sharing a narrow line with Add later, it wrapped into a
-   four-word-tall column, so below this width it goes. */
-@media (max-width: 460px) {
-  .add-aside > .categories > summary > .small { display: none; }
-}
-
-/* --- back home ------------------------------------------------------------
-   With the tab strip gone this is the only obvious way back, so it is a
-   labelled control rather than a bare chevron, and it sits above the screen
-   it leaves rather than floating over it. */
-.back-home {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 14px;
-  padding: 7px 14px 7px 11px;
-  background: var(--panel-soft);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: var(--fs-small);
-  cursor: pointer;
-}
-.back-home:hover { color: var(--ink); background: var(--panel); }
-
 /* The greeting used to be dropped below 560px on the grounds that you know
    your own name. It is kept now: it is the only thing on the screen that says
    WHICH account is open, and two people on one laptop is a case this app
@@ -594,7 +611,11 @@ kbd {
 .badge.subtle { background: transparent; border: 1px solid var(--line); }
 /* `visibility`, not `display`: the box stays, so the badge coming and going
    cannot wrap the meta row onto a second line and shove the page down. */
-.badge.sync-badge.idle { visibility: hidden; }
+/* display, not visibility: hidden it still held its box, and that reserved
+   strip was what pushed the language line in from the right edge on every
+   screen where nothing was syncing. The cost is that the row shifts a little
+   when a sync starts, which is both rare and brief. */
+.badge.sync-badge.idle { display: none; }
 .badge.offline { background: var(--warn-soft); color: var(--warn); }
 .badge.new { background: var(--accent); color: #fff; }
 .badge.warn-badge { background: var(--warn-soft); color: var(--warn); }
@@ -2362,6 +2383,10 @@ button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: v
 /* Pills everywhere. The radius token already rounds the panels; buttons are
    their own shape and have to be asked. */
 :root[data-theme='bloom'] button { border-radius: 999px; }
+/* Except the nav tiles: the pill rule above would otherwise override their
+   squarer corner, and in this theme they were the one thing on the screen
+   that could not be told apart from a plain button. */
+:root[data-theme='bloom'] .tile { border-radius: 10px; }
 
 /* The one gradient, on the one button that commits something — the same
    violet-to-pink as Open app, so the action that starts a session and the

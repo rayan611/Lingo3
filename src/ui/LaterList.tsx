@@ -53,8 +53,7 @@ export function LaterList({
       </summary>
 
       <p className="muted small">
-        Check fills the box above so you can see it first; Add puts it
-        straight in. Either way the word leaves this list once it is saved.
+        Check looks it up first; Add saves it straight away.
       </p>
 
       <ul className="later-list">

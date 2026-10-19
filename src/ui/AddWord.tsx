@@ -302,7 +302,10 @@ export function AddWord({ settings }: Props) {
             nothing is saved until you press Add, which is what the line under
             each button says. All of it was true on your first visit and in the
             way every time after. */}
-        <h2>Add a word</h2>
+        {/* No heading: the placeholder in the box below says the same thing
+            in the one place you are already looking, and the nav tile above
+            is lit. A heading that repeats the control under it is a line of
+            vertical space for nothing, which on a phone is the whole cost. */}
 
         {/* The word box gets the whole width. Add later used to sit beside
             it and took a third of the line from the one field this screen
@@ -316,7 +319,7 @@ export function AddWord({ settings }: Props) {
             setLaterId(null)
           }}
           ref={wordRef}
-          placeholder="Enter a word"
+          placeholder="Add your word or phrase here"
           disabled={busy}
         />
 
@@ -344,7 +347,6 @@ export function AddWord({ settings }: Props) {
               {draftTags.length > 0 && (
                 <span className="chip-count">{draftTags.length}</span>
               )}
-              <span className="muted small">pick any, or type a new one</span>
             </summary>
             <TagEditor
               tags={draftTags}
