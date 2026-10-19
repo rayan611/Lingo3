@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ensureDisplayFonts } from '../lib/theme'
+import { HowTo } from './HowTo'
 import { InstallButton } from './InstallButton'
 import { Logo } from './Logo'
 
@@ -138,6 +139,7 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
           <Logo size={26} />
         </a>
         <ul>
+          <li><a href="#how">How it works</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#feedback">Feedback</a></li>
@@ -172,6 +174,18 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
       </header>
 
       <Deck />
+
+      {/* After the deck, before "why it exists": the deck says what the app
+          does for you, this says what you actually press, and the reasons
+          only matter to someone still reading after both. */}
+      <section className="lx-prose" id="how">
+        <h2>How to use it</h2>
+        <p>
+          Six steps, in the order you meet them. None of it needs reading
+          twice — it is here again in Settings once you are inside.
+        </p>
+        <HowTo />
+      </section>
 
       <section className="lx-prose" id="about">
         <h2>Why it exists</h2>

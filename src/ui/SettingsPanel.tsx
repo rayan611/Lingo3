@@ -21,6 +21,7 @@ import { resetSyncCursors, type SyncResult } from '../sync/sync'
 import { DEFAULT_THEME, THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { DeleteAccount } from './DeleteAccount'
+import { HowTo } from './HowTo'
 import { ImportExport } from './ImportExport'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
@@ -610,6 +611,27 @@ export function SettingsPanel({
         </p>
         <button onClick={() => void exportData()}>Export JSON</button>
       </div>
+
+      {/* Shut by default and low on the page: it is the longest thing in
+          Settings and the thing you need least often, but it is the only
+          answer in the app to "what does Recall test do that Review does
+          not" once the landing page is behind you. */}
+      <details className="panel help">
+        <summary>
+          <h2>Help &amp; About</h2>
+        </summary>
+        <HowTo />
+        <h3>About</h3>
+        <p className="muted small">
+          Lingo3 is built and run by one person learning Swedish and German in
+          Sweden. Your vocabulary is yours: nothing is sold, there are no
+          adverts, and Settings → Full backup gives you the lot as a file.
+        </p>
+        <p className="muted small">
+          Something wrong or missing — a bad article, a word that came back
+          odd? The suggestion box below reaches a human.
+        </p>
+      </details>
 
       <SuggestionBox />
 

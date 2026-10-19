@@ -1602,6 +1602,7 @@ button.inspect:hover:not(:disabled) {
    marker is replaced with one that sits where the eye already is. */
 details.bulk > summary,
 details.later > summary,
+details.help > summary,
 details.categories > summary,
 details.feedback > summary {
   display: flex;
@@ -1615,13 +1616,16 @@ details.feedback > summary {
 }
 details.bulk > summary::-webkit-details-marker,
 details.later > summary::-webkit-details-marker,
+details.help > summary::-webkit-details-marker,
 details.categories > summary::-webkit-details-marker,
 details.feedback > summary::-webkit-details-marker { display: none; }
 details.bulk > summary h3,
 details.later > summary h3,
+details.help > summary h2,
 details.feedback > summary h3 { margin: 0; }
 details.bulk > summary::after,
 details.later > summary::after,
+details.help > summary::after,
 details.categories > summary::after,
 details.feedback > summary::after {
   content: '＋';
@@ -1632,6 +1636,7 @@ details.feedback > summary::after {
 }
 details.bulk[open] > summary::after,
 details.later[open] > summary::after,
+details.help[open] > summary::after,
 details.categories[open] > summary::after,
 details.feedback[open] > summary::after { content: '−'; }
 details.bulk > summary:hover h3,
@@ -2618,3 +2623,60 @@ button.chip {
     min-height: 38px;
   }
 }
+
+/* --- how to use ------------------------------------------------------------
+   One component, two homes: a section on the landing page and a shut panel in
+   Settings. The numbers are the point — these are steps in the order you meet
+   them, not a feature list — so the marker is drawn rather than left to the
+   browser, which puts it in the margin where a narrow phone clips it. */
+.howto-steps {
+  list-style: none;
+  counter-reset: howto;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.howto-steps > li {
+  counter-increment: howto;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px 12px;
+}
+.howto-steps > li::before {
+  content: counter(howto);
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-ink, var(--accent));
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.howto-step-title { margin: 3px 0 0; font-size: 1rem; }
+.howto-steps > li p { margin: 4px 0 0; color: var(--ink-soft); }
+.howto-notes {
+  margin: 20px 0 0;
+  padding: 14px 16px 14px 32px;
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  display: grid;
+  gap: 8px;
+}
+/* On the landing page the panel tint is invisible against the page, so the
+   notes get a rule instead of a box. */
+.lx-prose .howto-notes {
+  background: none;
+  border-left: 2px solid var(--line);
+  border-radius: 0;
+  padding: 2px 0 2px 18px;
+  margin-left: 2px;
+}
+details.help > summary { margin: 0; padding: 0; }
+details.help[open] > summary { margin-bottom: 14px; }
+details.help h3 { margin: 22px 0 6px; }
