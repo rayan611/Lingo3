@@ -21,7 +21,7 @@ import { resetSyncCursors, type SyncResult } from '../sync/sync'
 import { DEFAULT_THEME, THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { DeleteAccount } from './DeleteAccount'
-import { HowTo } from './HowTo'
+import { HowTo, QuickStart } from './HowTo'
 import { ImportExport } from './ImportExport'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
@@ -620,6 +620,11 @@ export function SettingsPanel({
         <summary>
           <h2>Help &amp; About</h2>
         </summary>
+        {/* The short version first, in a language the reader already has:
+            someone opening Help is usually stuck now, and six English
+            paragraphs are the wrong answer to that. */}
+        <QuickStart lang={settings.nativeLang} />
+        <h3>All of it, step by step</h3>
         <HowTo />
         <h3>About</h3>
         <p className="muted small">

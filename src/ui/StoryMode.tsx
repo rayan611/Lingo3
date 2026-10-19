@@ -170,7 +170,13 @@ export function StoryMode({ settings }: { settings: Settings }) {
               onChange={(e) => setLength(e.target.value as 'short' | 'long')}
             >
               <option value="short">Short</option>
-              <option value="long">Longer</option>
+              {/* Shown but not selectable: a longer text costs noticeably
+                  more per generation and has not been tuned, and an option
+                  that quietly disappears reads as a feature being taken
+                  away. Left in place so it is clear it is coming. */}
+              <option value="long" disabled>
+                Longer — coming soon
+              </option>
             </select>
           </label>
         </div>

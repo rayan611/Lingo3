@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ensureDisplayFonts } from '../lib/theme'
-import { HowTo } from './HowTo'
+import { HowTo, QuickStart, guessLang } from './HowTo'
 import { InstallButton } from './InstallButton'
 import { Logo } from './Logo'
 
@@ -181,9 +181,15 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
       <section className="lx-prose" id="how">
         <h2>How to use it</h2>
         <p>
-          Six steps, in the order you meet them. None of it needs reading
-          twice — it is here again in Settings once you are inside.
+          The short version first, in English or in your own language. The
+          longer one is underneath, and both are in Settings once you are
+          inside.
         </p>
+        {/* Starts in English and offers whatever the browser says the
+            visitor reads — the app's own interface is English, so opening
+            in a language the page is not written in would be a surprise. */}
+        <QuickStart lang={guessLang()} initial="en" />
+        <h3 className="lx-how-more">All of it, step by step</h3>
         <HowTo />
       </section>
 

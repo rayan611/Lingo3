@@ -2680,3 +2680,15 @@ button.chip {
 details.help > summary { margin: 0; padding: 0; }
 details.help[open] > summary { margin-bottom: 14px; }
 details.help h3 { margin: 22px 0 6px; }
+
+/* --- quick start ----------------------------------------------------------
+   The five-line guide, with the two-language switch above it. Shares the
+   numbered-step styling with the long form; everything here is the switch
+   and the right-to-left case. */
+.quickstart-langs { display: flex; gap: 7px; margin: 0 0 14px; }
+.quickstart-body { margin: 0; }
+.quickstart-body > p:first-child { margin-top: 0; }
+.quickstart + h3 { margin-top: 24px; }
+/* No column swap for the right-to-left case: dir="rtl" already lays the grid
+   out right-to-left, so the 26px marker column lands on the right by itself.
+   Overriding the template here put it back on the left. */
