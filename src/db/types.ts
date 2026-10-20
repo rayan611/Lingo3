@@ -109,6 +109,8 @@ const deVerb = z.object({
   partizip2: z.string(),
   /** Perfect tense auxiliary. Getting this wrong is the classic learner error. */
   auxiliary: z.enum(['haben', 'sein']),
+  /** du-form imperative. */
+  imperativ: z.string().optional(),
   separable: z.boolean(),
   /** The detached prefix, if separable: "aufstehen" -> "auf". */
   prefix: z.string().optional(),
@@ -151,6 +153,8 @@ const itVerb = z.object({
   gerundio: z.string().optional(),
   /** Reflexive verbs carry the pronoun: "alzarsi", not "alzare". */
   riflessivo: z.boolean().optional(),
+  /** tu-form imperative. */
+  imperativo: z.string().optional(),
 })
 
 /** French. Gender as the article it takes, like Italian; le/la even before a
@@ -171,6 +175,8 @@ const frVerb = z.object({
   auxiliaire: z.enum(['être', 'avoir']),
   /** Pronominal verbs carry the pronoun: "se lever". */
   pronominal: z.boolean().optional(),
+  /** tu-form imperative. */
+  imperatif: z.string().optional(),
 })
 
 const esVerb = z.object({
@@ -183,6 +189,8 @@ const esVerb = z.object({
   gerundio: z.string().optional(),
   /** Reflexive verbs carry the pronoun: "levantarse", not "levantar". */
   reflexivo: z.boolean().optional(),
+  /** tú-form imperative. */
+  imperativo: z.string().optional(),
 })
 
 /**
@@ -222,6 +230,8 @@ const ruVerb = z.object({
   presentFirst: z.string().optional(),
   presentThird: z.string().optional(),
   past: z.string().optional(),
+  /** ты-form imperative. */
+  imperative: z.string().optional(),
 })
 
 const enNoun = z.object({

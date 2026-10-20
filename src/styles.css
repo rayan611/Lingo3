@@ -2823,3 +2823,65 @@ details.help h3 { margin: 22px 0 6px; }
 .translate-text { font-size: var(--fs-word); font-weight: 600; overflow-wrap: anywhere; margin-bottom: 2px; }
 
 .reveal-button { width: 100%; }
+
+/* --- add screen: word stack ---------------------------------------------- */
+.word-meta { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.word-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+.word-meta-line strong { font-size: var(--fs-body); color: var(--ink); }
+.word-meta .pos-select { width: auto; font-size: var(--fs-small); padding: 2px 6px; min-height: 0; }
+.word-meta .tag-editor { font-size: var(--fs-small); gap: 4px; }
+.word-meta .tag-editor > .muted.small { display: none; }
+.word-meta .tag { padding: 2px 8px; font-size: 0.8rem; }
+.word-meta .tag-add input, .word-meta .tag-add button { min-height: 32px; padding: 4px 10px; font-size: 0.85rem; }
+.word-meta .chip { min-height: 30px; padding: 3px 9px; font-size: 0.8rem; }
+.word-card .lang-stack { margin-top: 0; }
+.word-card .lang-stack > .lang-row:first-child { border-top: none; padding-top: 0; }
+.translate-langs select { font-size: 0.88rem; padding-left: 8px; padding-right: 4px; }
+.not-saved { color: var(--danger); font-weight: 600; font-size: 0.78rem; }
+.native-card { border-left: 4px solid var(--accent); }
+.native-card .lang-row.native { margin: 0; padding: 0; background: none; }
+
+/* Forms on their own lines: infinitive + imperative, then the tenses. */
+.forms { display: flex; flex-direction: column; gap: 4px; }
+.forms-line { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; }
+
+/* The report box: light green, so it reads as a friendly door, not a warning. */
+.feedback-panel {
+  background: color-mix(in srgb, var(--grade-good) 9%, var(--panel));
+  border-color: color-mix(in srgb, var(--grade-good) 30%, var(--line));
+}
+
+/* The sync indicator is a dot on the logo: it takes no room in the header, so
+   a sync can never push the page down. */
+.brand-home { position: relative; }
+.sync-dot {
+  position: absolute;
+  top: -2px;
+  left: 30px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--panel);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.sync-dot.on { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .sync-dot.on { animation: sync-pulse 1s ease-in-out infinite; }
+}
+@keyframes sync-pulse { 50% { opacity: 0.35; } }
+
+/* Quick translate: From on its own line, the three targets side by side. */
+.translate-langs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.translate-langs .field.inline { grid-column: 1 / -1; }
+.translate-langs .to-label { display: none; }
+.translate-langs select { width: 100%; }

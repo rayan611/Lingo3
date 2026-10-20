@@ -76,10 +76,7 @@ export function BulkAdd({ settings }: { settings: Settings }) {
           <h3>Add a list</h3>
         </summary>
 
-        <p className="muted small">
-          A comma or a new line starts the next word. If a word is ambiguous,
-          put the sense after an equals sign — <code>bank = the river kind</code>.
-        </p>
+        <p className="muted small">A comma or a new line starts the next word.</p>
 
         <textarea
           className="bulk-input"

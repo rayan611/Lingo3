@@ -21,6 +21,14 @@ import type {
 export interface MorphLine {
   label: string
   value: string
+  /**
+   * Which display line it sits on. Verbs use two: the base forms
+   * (infinitive, imperative), then the tenses (present, past, perfect).
+   * Extras such as a separable prefix go on line 3. Default 1.
+   */
+  row?: 1 | 2 | 3
+  /** Shown after the value but never part of it: "ät" + "!". */
+  suffix?: string
 }
 
 type Form = Morphology['form']
@@ -50,11 +58,11 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as SvVerb
     return compact([
-      { label: 'infinitiv', value: f.infinitiv },
-      { label: 'presens', value: f.presens },
-      { label: 'preteritum', value: f.preteritum },
-      { label: 'supinum', value: f.supinum },
-      f.imperativ ? { label: 'imperativ', value: f.imperativ } : undefined,
+      { label: 'infinitiv', value: f.infinitiv, row: 1 },
+      imp('imperativ', f.imperativ),
+      { label: 'presens', value: f.presens, row: 2 },
+      { label: 'preteritum', value: f.preteritum, row: 2 },
+      { label: 'perfekt', value: `har ${f.supinum}`, row: 2 },
     ])
   }
 
@@ -68,13 +76,14 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as DeVerb
     return compact([
-      { label: 'Infinitiv', value: f.infinitiv },
-      { label: 'Präsens', value: f.praesens },
-      { label: 'Präteritum', value: f.praeteritum },
+      { label: 'Infinitiv', value: f.infinitiv, row: 1 },
+      imp('Imperativ', f.imperativ),
+      { label: 'Präsens', value: f.praesens, row: 2 },
+      { label: 'Präteritum', value: f.praeteritum, row: 2 },
       // The auxiliary is shown joined to the participle because that is the
       // unit you actually have to produce: "ist gegangen", not "sein".
-      { label: 'Perfekt', value: `${f.auxiliary} ${f.partizip2}` },
-      f.separable ? { label: 'trennbar', value: f.prefix ?? 'ja' } : undefined,
+      { label: 'Perfekt', value: `${f.auxiliary === 'sein' ? 'ist' : 'hat'} ${f.partizip2}`, row: 2 },
+      f.separable ? { label: 'trennbar', value: f.prefix ?? 'ja', row: 3 } : undefined,
     ])
   }
 
@@ -85,12 +94,13 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as EsVerb
     return compact([
-      { label: 'infinitivo', value: f.infinitivo },
-      { label: 'presente', value: f.presente },
-      { label: 'pretérito', value: f.preterito },
-      { label: 'participio', value: f.participio },
-      f.gerundio ? { label: 'gerundio', value: f.gerundio } : undefined,
-      f.reflexivo ? { label: 'reflexivo', value: 'sí' } : undefined,
+      { label: 'infinitivo', value: f.infinitivo, row: 1 },
+      imp('imperativo', f.imperativo),
+      { label: 'presente', value: f.presente, row: 2 },
+      { label: 'pretérito', value: f.preterito, row: 2 },
+      { label: 'perfecto', value: `ha ${f.participio}`, row: 2 },
+      f.gerundio ? { label: 'gerundio', value: f.gerundio, row: 3 } : undefined,
+      f.reflexivo ? { label: 'reflexivo', value: 'sí', row: 3 } : undefined,
     ])
   }
 
@@ -101,14 +111,15 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as ItVerb
     return compact([
-      { label: 'infinito', value: f.infinito },
-      { label: 'presente', value: f.presente },
+      { label: 'infinito', value: f.infinito, row: 1 },
+      imp('imperativo', f.imperativo),
+      { label: 'presente', value: f.presente, row: 2 },
       // Auxiliary and participle together, because that pair is the unit you
       // actually have to produce — "è andato", not "essere" on its own. Same
       // reasoning as German's Perfekt line above.
-      { label: 'passato prossimo', value: `${f.ausiliare} ${f.participio}` },
-      f.gerundio ? { label: 'gerundio', value: f.gerundio } : undefined,
-      f.riflessivo ? { label: 'riflessivo', value: 'sì' } : undefined,
+      { label: 'passato prossimo', value: `${f.ausiliare === 'essere' ? 'è' : 'ha'} ${f.participio}`, row: 2 },
+      f.gerundio ? { label: 'gerundio', value: f.gerundio, row: 3 } : undefined,
+      f.riflessivo ? { label: 'riflessivo', value: 'sì', row: 3 } : undefined,
     ])
   }
 
@@ -119,11 +130,12 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as FrVerb
     return compact([
-      { label: 'infinitif', value: f.infinitif },
-      { label: 'présent', value: f.present },
+      { label: 'infinitif', value: f.infinitif, row: 1 },
+      imp('impératif', f.imperatif),
+      { label: 'présent', value: f.present, row: 2 },
       // Auxiliary and participle together — "est allé" is the unit you produce.
-      { label: 'passé composé', value: `${f.auxiliaire} ${f.participe}` },
-      f.pronominal ? { label: 'pronominal', value: 'oui' } : undefined,
+      { label: 'passé composé', value: `${f.auxiliaire === 'être' ? 'est' : 'a'} ${f.participe}`, row: 2 },
+      f.pronominal ? { label: 'pronominal', value: 'oui', row: 3 } : undefined,
     ])
   }
 
@@ -141,15 +153,17 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as RuVerb
     return compact([
-      { label: 'вид', value: f.aspect },
+      { label: 'инфинитив', value: f.infinitive, row: 1 },
+      imp('повелительное', f.imperative),
+      { label: 'вид', value: f.aspect, row: 3 },
       // The other half of the pair, which you also have to be able to produce.
       // Kept on the same entry rather than split into a second word: to a
       // learner this is one item with two forms, and splitting it would mean
       // two review histories for one memory.
-      f.aspectPartner ? { label: 'видовая пара', value: f.aspectPartner } : undefined,
-      f.presentFirst ? { label: 'я', value: f.presentFirst } : undefined,
-      f.presentThird ? { label: 'он/она', value: f.presentThird } : undefined,
-      f.past ? { label: 'прошедшее', value: f.past } : undefined,
+      f.aspectPartner ? { label: 'видовая пара', value: f.aspectPartner, row: 3 } : undefined,
+      f.presentFirst ? { label: 'я', value: f.presentFirst, row: 2 } : undefined,
+      f.presentThird ? { label: 'он/она', value: f.presentThird, row: 2 } : undefined,
+      f.past ? { label: 'прошедшее', value: f.past, row: 2 } : undefined,
     ])
   }
 
@@ -160,8 +174,12 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     }
     const f = form as EnVerb
     return compact([
-      { label: 'past', value: f.past },
-      { label: 'participle', value: f.pastParticiple },
+      { label: 'base', value: f.base, row: 1 },
+      // The English imperative is the base form, so it needs no field.
+      { label: 'imperative', value: f.base, row: 1, suffix: '!' },
+      { label: 'present', value: f.thirdPerson, row: 2 },
+      { label: 'past', value: f.past, row: 2 },
+      { label: 'perfect', value: `has ${f.pastParticiple}`, row: 2 },
     ])
   }
 
@@ -194,6 +212,11 @@ export function isIncomplete(entry: Entry): boolean {
   // months.
   if (!['sv', 'de', 'es', 'ru', 'it', 'fr'].includes(entry.lang)) return false
   return !genderBadge(entry.lang, entry.morphology)
+}
+
+/** The imperative, when the model gave one: line 1, with its "!". */
+function imp(label: string, value: string | undefined): MorphLine | undefined {
+  return value ? { label, value: value.replace(/!+$/, ''), row: 1, suffix: '!' } : undefined
 }
 
 function compact(items: (MorphLine | false | undefined | '')[]): MorphLine[] {

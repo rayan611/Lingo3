@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import type { Grade } from 'ts-fsrs'
 import { db } from '../db/db'
@@ -7,6 +7,7 @@ import { SuggestionBox } from './Suggestions'
 import { SpeakButton } from './SpeakButton'
 import { ExampleSentence } from './ExampleSentence'
 import { WordCard } from './WordCard'
+import { Forms } from './Forms'
 import { formCandidates } from '../lib/highlight'
 import { buildCloze } from '../lib/cloze'
 import { sameWord } from '../lib/answer'
@@ -491,9 +492,6 @@ export function Review({ settings, onExit }: Props) {
           )}
 
           <div className="answers">
-            {done.map((card) => (
-              <GradedLine key={card.lang} card={card} item={item} grade={graded[card.lang]} />
-            ))}
             {current && (
               <LanguageAnswer
                 key={cardKey(item, current)}
@@ -509,6 +507,12 @@ export function Review({ settings, onExit }: Props) {
                 Next <kbd>space</kbd>
               </button>
             )}
+            {/* Below the card being graded, never above it: a graded language
+                that stayed on top pushed the next card — and its buttons —
+                down by a row each time. */}
+            {done.map((card) => (
+              <GradedLine key={card.lang} card={card} item={item} grade={graded[card.lang]} />
+            ))}
             {item.upcomingCards
               .filter((card) => !extra.includes(card.lang as Lang))
               .map((card) => (
@@ -564,6 +568,12 @@ function LanguageAnswer({
   )
   const lines = entry ? morphLines(card.lang, entry.morphology) : []
   const gender = entry ? genderBadge(card.lang, entry.morphology) : null
+  // On a short screen, bring the buttons into view when this card arrives —
+  // only as far as needed ('nearest'), so nothing moves when they already fit.
+  const gradesRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    gradesRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+  }, [card.id])
   const priority = activeTargets(settings).indexOf(card.lang as Lang) + 1
 
   return (
@@ -601,26 +611,7 @@ function LanguageAnswer({
         meaning alone: that is on the prompt card, in the native language,
         where it is the question rather than the answer.
       */}
-      {lines.length > 0 && (
-        <div className="forms-row">
-          <dl className="forms">
-            {lines.map((l) => (
-              <div key={l.label} className="form-row">
-                <dt>{l.label}</dt>
-                <dd lang={LANG_BCP47[card.lang]}>{l.value}</dd>
-              </div>
-            ))}
-          </dl>
-          {/* The forms read aloud, values only — the labels are what you
-              already know, the sound of the form is what you do not. */}
-          <SpeakButton
-            text={lines.map((l) => l.value).join(', ')}
-            lang={card.lang as Lang}
-            label="Listen to the forms"
-            rate={settings.speechRate}
-          />
-        </div>
-      )}
+      <Forms lines={lines} lang={card.lang as Lang} rate={settings.speechRate} />
 
       {/*
         The example is shown in the target language only. Its translation into
@@ -639,7 +630,7 @@ function LanguageAnswer({
       )}
       {entry?.notes && <div className="note">{entry.notes}</div>}
 
-      <div className="grades">
+      <div className="grades" ref={gradesRef}>
         {GRADES.map((g, i) => (
           <button
             key={g}

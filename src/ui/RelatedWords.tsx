@@ -107,11 +107,8 @@ export function RelatedWords({
   return (
     <div className="panel related">
       <h3>Worth knowing beside it</h3>
-      <p className="muted small">
-        Mostly register, not synonyms — the difference between these is usually
-        who you are talking to. Added words wait {RELATED_STAGGER_DAYS} days
-        before their first review, so they do not turn up in the same session as
-        the word they came from.
+      <p className="muted small" title={`Added words wait ${RELATED_STAGGER_DAYS} days before their first review.`}>
+        Close words, different register.
       </p>
 
       <ul className="related-list">

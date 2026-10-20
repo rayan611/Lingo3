@@ -86,7 +86,7 @@ Swedish (sv):
   noun -> { "kind":"noun", "gender":"en"|"ett", "definiteSingular":"...",
             "indefinitePlural":"...", "definitePlural":"..." }
   verb -> { "kind":"verb", "infinitiv":"...", "presens":"...",
-            "preteritum":"...", "supinum":"...", "imperativ":"...",
+            "preteritum":"...", "supinum":"...", "imperativ":"<e.g. ät>",
             "particle":"..." (only for particle verbs, else omit) }
   anything else -> { "kind":"simple" }
 
@@ -96,7 +96,8 @@ German (de):
   verb -> { "kind":"verb", "infinitiv":"...", "praesens":"<3rd person sing>",
             "praeteritum":"<3rd person sing>", "partizip2":"...",
             "auxiliary":"haben"|"sein", "separable":true|false,
-            "prefix":"..." (only when separable, else omit) }
+            "prefix":"..." (only when separable, else omit),
+            "imperativ":"<du form, e.g. geh>" }
   anything else -> { "kind":"simple" }
 
 English (en):
@@ -109,7 +110,8 @@ Spanish (es):
   noun -> { "kind":"noun", "gender":"el"|"la", "plural":"..." }
   verb -> { "kind":"verb", "infinitivo":"...", "presente":"<3rd person sing>",
             "preterito":"<3rd person sing>", "participio":"...",
-            "gerundio":"...", "reflexivo":true|false }
+            "gerundio":"...", "reflexivo":true|false,
+            "imperativo":"<tú form>" }
   anything else -> { "kind":"simple" }
 
 Italian (it):
@@ -120,7 +122,7 @@ Italian (it):
   verb -> { "kind":"verb", "infinito":"...", "presente":"<3rd person sing>",
             "participio":"<participio passato>",
             "ausiliare":"essere"|"avere", "gerundio":"...",
-            "riflessivo":true|false }
+            "riflessivo":true|false, "imperativo":"<tu form>" }
             Give the infinitive of a reflexive verb with the pronoun attached
             ("alzarsi"), and set riflessivo true.
   anything else -> { "kind":"simple" }
@@ -130,7 +132,7 @@ French (fr):
             Use le or la as the gender marker even where the word takes l'.
   verb -> { "kind":"verb", "infinitif":"...", "present":"<3rd person sing>",
             "participe":"<participe passé>", "auxiliaire":"être"|"avoir",
-            "pronominal":true|false }
+            "pronominal":true|false, "imperatif":"<tu form>" }
             Give a pronominal verb with its pronoun ("se lever").
   anything else -> { "kind":"simple" }
 
@@ -144,7 +146,7 @@ Russian (ru):
             "aspect":"несовершенный"|"совершенный",
             "aspectPartner":"<the other aspect of the same verb>",
             "presentFirst":"<я form>", "presentThird":"<он/она form>",
-            "past":"<masculine singular>" }
+            "past":"<masculine singular>", "imperative":"<ты form>" }
             Russian verbs come in aspect pairs. Give ONE entry, for the aspect
             that fits the sense asked for, and put the other half in
             aspectPartner — a learner has to produce both, but it is one word

@@ -1,18 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
-import {
-  LANG_BCP47,
-  LANG_NAMES,
-  RTL_LANGS,
-  activeTargets,
-  type Settings,
-} from '../db/types'
-import { genderBadge, morphLines } from '../lib/morphology'
+import { LANG_NAMES, activeTargets, type Settings } from '../db/types'
 import { normaliseTags } from '../ai/expand'
 import { TagEditor } from './TagEditor'
-import { SpeakButton } from './SpeakButton'
-import { ExampleSentence } from './ExampleSentence'
-import { formCandidates } from '../lib/highlight'
+import { WordStack } from './WordStack'
 import { PARTS_OF_SPEECH, type PartOfSpeech } from '../db/types'
 
 /**
@@ -65,19 +56,11 @@ export function WordCard({
     .filter((e) => order.includes(e.lang))
     .sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang))
 
-  if (sorted.length === 0) {
-    return (
-      <div className="panel">
-        <h3>{concept.lemma}</h3>
-        <p className="muted small">Not expanded yet.</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="panel word-card">
-      <div className="word-card-head">
-        <h3>{concept.lemma}</h3>
+  const meta = (
+    <>
+      <div className="word-meta-line">
+        <strong>{concept.lemma}</strong>
+        <span>Read as {LANG_NAMES[concept.sourceLang]}</span>
         {/* Part of speech is the model's, but it is wrong often enough on
             phrases that it has to be correctable. */}
         <select
@@ -93,93 +76,20 @@ export function WordCard({
           ))}
         </select>
       </div>
-
       <TagEditor
         tags={concept.tags ?? []}
         suggestions={suggestions}
         onChange={(next) => void patch({ tags: normaliseTags(next) })}
       />
+      {sorted.length === 0 && <p className="muted small">Not expanded yet.</p>}
+    </>
+  )
 
-      <div className="lang-stack">
-        {sorted.map((entry) => {
-          const gender = genderBadge(entry.lang, entry.morphology)
-          const lines = morphLines(entry.lang, entry.morphology)
-          const isNative = entry.lang === settings.nativeLang
-          return (
-            <div
-              key={entry.lang}
-              className={`lang-row ${isNative ? 'native' : ''}`}
-            >
-              <div className="lang-row-head">
-                <span className="lang-chip">{LANG_NAMES[entry.lang]}</span>
-                {gender && (
-                  <span className={`gender gender-${gender}`}>{gender}</span>
-                )}
-              </div>
-              <div className="answer-word-row">
-                <div
-                  className={`answer-word ${RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}
-                  lang={LANG_BCP47[entry.lang]}
-                >
-                  {entry.headword}
-                </div>
-                <SpeakButton
-                  text={entry.headword}
-                  lang={entry.lang}
-                  rate={settings.speechRate}
-                />
-              </div>
-              <div className="answer-meaning">{entry.meaning}</div>
-
-              {lines.length > 0 && (
-                <div className="forms-row">
-                  <dl className="forms">
-                    {lines.map((l) => (
-                      <div key={l.label} className="form-row">
-                        <dt>{l.label}</dt>
-                        <dd lang={LANG_BCP47[entry.lang]}>{l.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  {/* The forms read aloud, values only — "hunden, hundar",
-                      not "definite, plural". The labels are what you already
-                      know; the sound of the form is the part you do not. */}
-                  <SpeakButton
-                    text={lines.map((l) => l.value).join(', ')}
-                    lang={entry.lang}
-                    label="Listen to the forms"
-                    rate={settings.speechRate}
-                  />
-                </div>
-              )}
-
-              {entry.example && (
-                <ExampleSentence
-                  text={entry.example}
-                  lang={entry.lang}
-                  forms={formCandidates(
-                    entry.headword,
-                    entry.lang,
-                    entry.morphology,
-                  )}
-                  rate={settings.speechRate}
-                  gloss={
-                    entry.exampleGloss && !isNative ? (
-                      <div
-                        className={`example-gloss ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
-                        lang={LANG_BCP47[settings.nativeLang]}
-                      >
-                        {entry.exampleGloss}
-                      </div>
-                    ) : undefined
-                  }
-                />
-              )}
-              {entry.notes && <div className="note">{entry.notes}</div>}
-            </div>
-          )
-        })}
-      </div>
-    </div>
+  return (
+    <WordStack
+      entries={sorted.map((e) => ({ ...e, form: e.morphology }))}
+      settings={settings}
+      meta={meta}
+    />
   )
 }

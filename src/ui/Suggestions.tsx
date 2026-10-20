@@ -104,7 +104,7 @@ export function SuggestionBox({
 
   if (compact) {
     return (
-      <div className="panel">
+      <div className="panel feedback-panel">
         <details className="feedback">
           <summary>
             <h3>Something to report?</h3>

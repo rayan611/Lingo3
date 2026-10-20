@@ -119,7 +119,7 @@ export function Translate({ settings }: { settings: Settings }) {
               ))}
             </select>
           </label>
-          <span className="muted small">to</span>
+          <span className="muted small to-label">to</span>
           {slots.map((code, i) => (
             <select
               key={i}

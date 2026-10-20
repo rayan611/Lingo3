@@ -181,6 +181,16 @@ function Workspace({
   email: string | null
 }) {
   const [tab, setTab] = useState<Tab>('add')
+  /**
+   * Bumped by pressing Add a word (tile or logo): AddWord is keyed on it, so
+   * the screen comes back empty — no word in the box, no card, no preview —
+   * ready for the next word.
+   */
+  const [addKey, setAddKey] = useState(0)
+  const goTab = useCallback((next: Tab) => {
+    if (next === 'add') setAddKey((k) => k + 1)
+    setTab(next)
+  }, [])
   const suppressTabHistory = useRef(false)
   const tabHistoryInitialized = useRef(false)
 
@@ -389,11 +399,18 @@ function Workspace({
           <button
             type="button"
             className="brand-home"
-            onClick={() => setTab('add')}
+            onClick={() => goTab('add')}
             aria-label="Go to Add a word"
             title="Add a word"
           >
             <Logo />
+            {/* Syncing, as a dot on the mark: it takes no room, so starting
+                and finishing a sync can never move the page. */}
+            <span
+              className={`sync-dot${showSyncing ? ' on' : ''}`}
+              role="status"
+              aria-label={showSyncing ? 'Syncing' : undefined}
+            />
             <span className="brand">Lingo3</span>
           </button>
           {settings.displayName && (
@@ -409,12 +426,6 @@ function Workspace({
           <span className="brand-sub">{learningLine(settings)}</span>
           {!online && <span className="badge offline">offline</span>}
           {/* Always rendered, hidden when idle: see showSyncing above. */}
-          <span
-            className={`badge subtle sync-badge${showSyncing ? '' : ' idle'}`}
-            aria-hidden={!showSyncing}
-          >
-            syncing…
-          </span>
           {syncState?.error && !BENIGN_SYNC_ERRORS.has(syncState.error) && (
             <span className="badge warn-badge">sync failed</span>
           )}
@@ -460,9 +471,9 @@ function Workspace({
             row doubles as the answer to "where am I". They are deliberately
             small — the Add box has to be visible on a phone without
             scrolling past them. */}
-        <HomeTiles set={setTab} due={due} active={tab} />
+        <HomeTiles set={goTab} due={due} active={tab} />
 
-        {tab === 'add' && <AddWord settings={settings} />}
+        {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
         {tab !== 'add' && (
           <>

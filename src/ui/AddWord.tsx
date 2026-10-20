@@ -113,6 +113,15 @@ export function AddWord({ settings }: Props) {
    * stored anywhere, they come back with the expansion.
    */
   const [related, setRelated] = useState<RelatedWord[]>([])
+  /**
+   * The word last checked or added. It stays in the box so you can see what
+   * the cards below belong to; the two buttons stay off until the box says
+   * something else, so the same word is never looked up twice by accident.
+   */
+  const [doneWord, setDoneWord] = useState<string | null>(null)
+  const unchanged = doneWord !== null && lemma.trim() === doneWord
+  /** A word is on screen: the page switches to its "after check" order. */
+  const showing = !!preview || !!lastId
 
   /** Topics already in use, offered as one-tap suggestions. */
   const tagSuggestions = useLiveQuery(
@@ -164,11 +173,12 @@ export function AddWord({ settings }: Props) {
     // same tick has not reached this closure yet, and reading stale state
     // here would look up whatever was in the box before.
     const term = (word ?? lemma).trim()
-    if (!term || busy) return
+    if (!term || busy || (!sourceLang && term === doneWord)) return
     setMode(which)
     setBusy(true)
     setStatus(null)
     setPreview(null)
+    setLastId(null)
     setCollision(null)
     setRelated([])
     try {
@@ -183,6 +193,7 @@ export function AddWord({ settings }: Props) {
       // build.
       const result = await previewWord({ lemma: term, sourceLang, settings })
 
+      setDoneWord(term)
       if (result.status === 'duplicate') {
         setLastId(result.conceptId)
         setCollision(result)
@@ -220,7 +231,6 @@ export function AddWord({ settings }: Props) {
         setStatus({ kind: 'warn', text: result.message ?? 'Already saved.' })
       } else {
         setStatus({ kind: 'ok', text: `Added "${toSave.lemma}".` })
-        setLemma('')
       }
       // Off the list either way: a duplicate is already in the word bank, so
       // leaving it parked would mean working through it again tomorrow to
@@ -341,7 +351,7 @@ export function AddWord({ settings }: Props) {
             or put it down for later. Neither is part of adding a word, which
             is why neither sits above. */}
         <div className="add-aside">
-          <details className="categories">
+          {!showing && <details className="categories">
             <summary>
               Categories
               {draftTags.length > 0 && (
@@ -355,7 +365,7 @@ export function AddWord({ settings }: Props) {
               disabled={busy}
               label=""
             />
-          </details>
+          </details>}
           <button
             type="button"
             className="chip park"
@@ -376,7 +386,7 @@ export function AddWord({ settings }: Props) {
             <button
               type="submit"
               className="inspect"
-              disabled={busy || !lemma.trim()}
+              disabled={busy || !lemma.trim() || unchanged}
             >
               {busy && mode === 'check' ? 'Checking…' : 'Check'}
             </button>
@@ -389,7 +399,7 @@ export function AddWord({ settings }: Props) {
             <button
               type="button"
               className="primary"
-              disabled={busy || !lemma.trim()}
+              disabled={busy || !lemma.trim() || unchanged}
               onClick={() => void run('add')}
             >
               {busy && mode === 'add' ? 'Adding…' : 'Check and add'}
@@ -474,8 +484,6 @@ export function AddWord({ settings }: Props) {
         />
       )}
 
-      <BulkAdd settings={settings} />
-
       {lastId && <WordCard conceptId={lastId} settings={settings} />}
 
       {/* After the card, not before it. These are suggestions about a word you
@@ -489,13 +497,35 @@ export function AddWord({ settings }: Props) {
         />
       )}
 
+      {/* Empty screen: list → later → recent. With a word on screen the
+          later list comes first, since a parked word is the likeliest next
+          thing to check. */}
+      {showing ? (
+        <>
+          <LaterList busy={busy} onUse={useLater} />
+          <BulkAdd settings={settings} />
+        </>
+      ) : (
+        <>
+          <BulkAdd settings={settings} />
+          <LaterList busy={busy} onUse={useLater} />
+        </>
+      )}
+
       {recent.length > 0 && (
         <div className="panel">
           <h3>Recently added</h3>
           <ul className="chip-list">
             {recent.map((c) => (
               <li key={c.id}>
-                <button className="chip" onClick={() => setLastId(c.id)}>
+                <button
+                  className="chip"
+                  onClick={() => {
+                    setPreview(null)
+                    setRelated([])
+                    setLastId(c.id)
+                  }}
+                >
                   {c.lemma}
                 </button>
               </li>
@@ -503,8 +533,6 @@ export function AddWord({ settings }: Props) {
           </ul>
         </div>
       )}
-
-      <LaterList busy={busy} onUse={useLater} />
 
       {/* The foot of the Add screen. A word that came back wrong is reported
           from where it was added, and the context field records that. */}
