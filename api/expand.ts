@@ -125,6 +125,15 @@ Italian (it):
             ("alzarsi"), and set riflessivo true.
   anything else -> { "kind":"simple" }
 
+French (fr):
+  noun -> { "kind":"noun", "gender":"le"|"la", "plural":"..." }
+            Use le or la as the gender marker even where the word takes l'.
+  verb -> { "kind":"verb", "infinitif":"...", "present":"<3rd person sing>",
+            "participe":"<participe passé>", "auxiliaire":"être"|"avoir",
+            "pronominal":true|false }
+            Give a pronominal verb with its pronoun ("se lever").
+  anything else -> { "kind":"simple" }
+
 Russian (ru):
   noun -> { "kind":"noun", "gender":"м"|"ж"|"с", "genitive":"...",
             "dative":"...", "accusative":"...", "instrumental":"...",
@@ -146,8 +155,9 @@ Russian (ru):
 Persian (fa):
   always -> { "kind":"simple" }
 
-Gender is never optional for a Swedish, German, Spanish, Italian or Russian
-noun, and neither is the German auxiliary, the Italian ausiliare or the
+Gender is never optional for a Swedish, German, Spanish, Italian, French or
+Russian noun, and neither is the German auxiliary, the Italian ausiliare, the
+French auxiliaire or the
 Russian aspect. They are the fields a learner most often gets wrong, so
 guessing is worse than useless — if you are genuinely unsure of a form, say so
 in "notes" rather than inventing one.

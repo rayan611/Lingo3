@@ -206,4 +206,29 @@ export const QUICK_START: Record<Lang, QuickStart> = {
       },
     ],
   },
+  fr: {
+    intro: "Toute l'app en cinq étapes.",
+    steps: [
+      {
+        title: 'Choisissez vos langues',
+        body: 'Dans Settings → Languages, choisissez la langue dans laquelle vous pensez et jusqu’à trois langues que vous apprenez.',
+      },
+      {
+        title: 'Ajoutez un mot',
+        body: 'Tapez un mot ou une courte expression et appuyez sur Check and add — inutile de dire de quelle langue il s’agit.',
+      },
+      {
+        title: 'Recall test',
+        body: 'Les mots du jour : regardez la question, répondez de tête, retournez la carte et dites comment ça s’est passé.',
+      },
+      {
+        title: 'Review',
+        body: 'Les mêmes mots sans être interrogé, à feuilleter quand vous voulez simplement regarder.',
+      },
+      {
+        title: 'Mes mots et les textes',
+        body: 'Tout ce que vous avez ajouté, avec une recherche — et un court texte écrit avec vos mots quand vous le voulez.',
+      },
+    ],
+  },
 }

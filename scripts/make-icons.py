@@ -44,9 +44,9 @@ TEXT = "L3"
 # the PNG and the SVG are the same picture.
 FONT_RATIO = 39.2 / 64  # cap size
 INK_CENTRE_Y = 29.25 / 64  # where the middle of the letters sits
-SWASH_Y = 50.4 / 64  # the ends of the swash
-SWASH_LIFT = 6.4 / 64  # how far its middle rises above the ends
-SWASH_X0, SWASH_X1 = 13.6 / 64, 50.4 / 64
+SWASH_Y = 47.6 / 64  # the ends of the swash
+SWASH_LIFT = -9.2 / 64  # negative: the middle dips below the ends, a smile
+SWASH_X0, SWASH_X1 = 15.2 / 64, 48.8 / 64
 SWASH_WIDTH = 3.6 / 64
 RADIUS = 14 / 64
 
@@ -54,6 +54,7 @@ OUT = Path(__file__).resolve().parent.parent / "public"
 
 # Caladea Bold — Cambria's metric-compatible twin. The first one present wins.
 FONT_CANDIDATES = [
+    "/usr/share/fonts/truetype/crosextra/Caladea-Bold.ttf",
     "/usr/share/fonts/truetype/crosextra/Caladea-Bold.ttf",
     "/usr/share/fonts/caladea/Caladea-Bold.ttf",
     "/Library/Fonts/Caladea-Bold.ttf",
@@ -141,7 +142,7 @@ L3_PATH = (
 svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <rect width="64" height="64" rx="14" fill="{TILE}"/>
   <path d="{L3_PATH}" fill="{INK}"/>
-  <path d="M13.6 50.4q18.4 -6.4 36.8 0" stroke="{ACCENT}" stroke-width="3.6"
+  <path d="M15.2 47.6q16.8 9.2 33.6 0" stroke="{ACCENT}" stroke-width="3.6"
         stroke-linecap="round" fill="none"/>
 </svg>
 """

@@ -38,7 +38,7 @@ export function Logo({ size = 30 }: { size?: number }) {
       <rect width="64" height="64" rx="14" fill="var(--logo-tile)" />
       <path d={L3_PATH} fill="var(--logo-ink)" />
       <path
-        d="M13.6 50.4q18.4 -6.4 36.8 0"
+        d="M15.2 47.6q16.8 9.2 33.6 0"
         stroke="var(--logo-accent)"
         strokeWidth="3.6"
         strokeLinecap="round"

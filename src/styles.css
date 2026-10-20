@@ -2702,3 +2702,124 @@ details.help h3 { margin: 22px 0 6px; }
   font-weight: 700;
   letter-spacing: 0.04em;
 }
+
+/* --- recall test: focus mode ---------------------------------------------
+   The test is full screen. The header and the tiles go, a thin bar with the
+   way back stays, and the card, its answer and the four grade buttons fit one
+   phone screen without scrolling. One language is graded at a time, so the
+   buttons are never pushed below the fold by a second answer card. */
+.app.focus .topbar,
+.app.focus .tiles { display: none; }
+.app.focus { padding-top: calc(8px + env(safe-area-inset-top)); }
+
+.review { gap: 12px; }
+.review-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+}
+.review-back { font-weight: 600; padding-left: 0; }
+.review-topic {
+  margin-left: auto;
+  width: auto;
+  max-width: 48%;
+  font-size: 0.85rem;
+  padding: 5px 8px;
+}
+
+.prompt { padding: 34px 20px 26px; }
+.prompt.flippable { cursor: pointer; }
+.prompt.revealed { padding: 16px 44px 14px; box-shadow: var(--shadow); }
+.prompt.revealed .prompt-word { font-size: 1.5rem; }
+.prompt.revealed .prompt-pos { margin-top: 6px; }
+.prompt-hint { margin-top: 14px; }
+.prompt-info {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-height: 0;
+  padding: 6px 8px;
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.prompt-info:hover { color: var(--accent); }
+
+.review .answer { padding: 14px 16px; }
+.review .answer.upcoming { padding: 10px 14px; }
+.review .answer.upcoming .example { margin-top: 6px; padding: 6px 10px; }
+
+.graded-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+}
+.graded-word { font-weight: 600; }
+.graded-grade { margin-left: auto; font-weight: 600; font-size: var(--fs-small); }
+
+/* Four in one row on every width: a 2x2 grid cost a second row of thumb
+   targets, which was exactly what pushed the buttons off the screen. */
+.grades { grid-template-columns: repeat(4, 1fr); margin-top: 12px; }
+@media (max-width: 480px) {
+  .grades { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .grade { min-height: 52px; padding: 8px 2px; }
+  .grade-label { font-size: 0.88rem; }
+  .grade-interval { font-size: 0.72rem; }
+  .grade kbd { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .review .answer:not(.upcoming) { animation: flip-in 0.16s ease-out; }
+}
+@keyframes flip-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- my words: phrase on one line, actions on the next -------------------- */
+@media (max-width: 560px) {
+  /* Line 1: the whole phrase. Line 2: its badges on the left, the actions
+     on the right — so a long phrase is never squeezed by the buttons. */
+  .word-list li { position: relative; display: block; }
+  .word-list-item { flex-wrap: wrap; gap: 4px 8px; width: 100%; padding: 10px 10px 8px; align-items: center; }
+  .word-list-lemma { flex: 1 1 100%; min-width: 0; }
+  /* Holds line 2 open even when a word has no badges, so the actions never
+     sit on top of the phrase. */
+  .word-list-item::after { content: ''; flex: 0 0 150px; height: 30px; margin-left: auto; }
+  .word-list-actions { position: absolute; right: 4px; bottom: 6px; }
+}
+
+/* Example sentences read as body text, not as a caption. */
+:root { --fs-example: 1.05rem; }
+
+/* Seven tiles: one row on a wide screen, 4 + 3 on a phone, never a lone tile
+   on a third row. */
+.tiles { grid-template-columns: repeat(7, 1fr); gap: 6px; }
+@media (max-width: 560px) {
+  .tiles { grid-template-columns: repeat(4, 1fr); }
+  .tile { min-height: 66px; padding: 8px 4px; font-size: 0.76rem; }
+  .tile-icon { width: 26px; height: 26px; }
+}
+.tile-translate { --tile-hue: var(--tab-read); }
+
+/* --- quick translate ------------------------------------------------------ */
+.translate { display: flex; flex-direction: column; gap: 12px; }
+.translate h2 { margin: 0; }
+.translate-langs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.translate-langs select { width: auto; flex: 1 1 90px; min-width: 0; }
+.translate-langs .field.inline { flex: 1 1 140px; }
+.translate textarea { width: 100%; resize: vertical; font-size: var(--fs-body); }
+.translate-results { display: flex; flex-direction: column; gap: 10px; }
+.translate-row { padding: 10px 12px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }
+.translate-row.source { background: var(--panel-soft); }
+.translate-row-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.translate-text { font-size: var(--fs-word); font-weight: 600; overflow-wrap: anywhere; margin-bottom: 2px; }
+
+.reveal-button { width: 100%; }

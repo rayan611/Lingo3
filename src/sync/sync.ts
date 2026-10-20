@@ -413,6 +413,8 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
       auto_advance: settings.autoAdvance ?? null,
       speak_on_reveal: settings.speakOnReveal ?? null,
       speech_rate: settings.speechRate ?? null,
+      translate_from: settings.translateFrom ?? null,
+      translate_to: settings.translateTo ?? null,
       native_lang: settings.nativeLang,
       target_langs: settings.targetLangs,
       active_langs: settings.activeLangs,
@@ -507,6 +509,8 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
           remoteSettings.speech_rate == null
             ? undefined
             : Number(remoteSettings.speech_rate),
+        translateFrom: (remoteSettings.translate_from as string) ?? undefined,
+        translateTo: (remoteSettings.translate_to as string[]) ?? undefined,
         nativeLang: remoteSettings.native_lang as Lang,
         targetLangs: remoteSettings.target_langs as Lang[],
         activeLangs: remoteSettings.active_langs as Lang[],

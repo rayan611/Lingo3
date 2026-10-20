@@ -36,6 +36,7 @@ export const LANGUAGES = {
   es: { name: 'Spanish', native: 'Español', bcp47: 'es-ES', rtl: false },
   ru: { name: 'Russian', native: 'Русский', bcp47: 'ru-RU', rtl: false },
   it: { name: 'Italian', native: 'Italiano', bcp47: 'it-IT', rtl: false },
+  fr: { name: 'French', native: 'Français', bcp47: 'fr-FR', rtl: false },
 } as const satisfies Record<
   string,
   { name: string; native: string; bcp47: string; rtl: boolean }
@@ -63,4 +64,5 @@ export const LANG_PROMPT_NAMES: Record<Lang, string> = {
   es: 'Spanish',
   ru: 'Russian',
   it: 'Italian',
+  fr: 'French',
 }

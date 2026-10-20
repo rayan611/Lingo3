@@ -79,7 +79,8 @@ export function Privacy({ onBack }: { onBack?: () => void }) {
           currently Google (Gemini), with Anthropic as a fallback — which
           returns its translations, grammatical forms and an example sentence.
           The same happens when you generate a reading text, where the words
-          sent are the vocabulary the text is to be built from.
+          sent are the vocabulary the text is to be built from. Quick translate
+          sends the text you type there, and it is not stored on our server.
         </p>
         <p>
           Your email address and your review history are never sent with it. The

@@ -82,3 +82,13 @@ export function IconSettings() {
     </svg>
   )
 }
+
+/** Translate — two speech marks crossing, an A and a mark. */
+export function IconTranslate() {
+  return (
+    <svg {...base}>
+      <path d="M4 5h8M8 3v2M10 5c-.5 3-2.5 5.5-5 7M6.5 8.5c1 1.5 2.5 2.7 4 3.5" />
+      <path d="M13 21l3.5-8 3.5 8M14.2 18.3h4.6" />
+    </svg>
+  )
+}

@@ -27,6 +27,7 @@ const BENIGN_SYNC_ERRORS = new Set(['offline', 'already running'])
 import { AddWord } from './ui/AddWord'
 import { Review } from './ui/Review'
 import { Browse } from './ui/Browse'
+import { Translate } from './ui/Translate'
 import { Training } from './ui/Training'
 import { StoryMode } from './ui/StoryMode'
 import { SettingsPanel } from './ui/SettingsPanel'
@@ -36,6 +37,7 @@ import {
   IconReview,
   IconSettings,
   IconTraining,
+  IconTranslate,
   IconWords,
 } from './ui/icons'
 import { InstallButton } from './ui/InstallButton'
@@ -50,11 +52,12 @@ import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
  * phone without a sideways scroll that hid whichever tab you wanted, and of
  * the seven, Profile was the one you open monthly rather than daily.
  */
-type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'settings'
+type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings'
 
 function isTab(value: unknown): value is Tab {
   return value === 'add' || value === 'training' || value === 'read' ||
-    value === 'review' || value === 'browse' || value === 'settings'
+    value === 'review' || value === 'browse' || value === 'translate' ||
+    value === 'settings'
 }
 
 export function App() {
@@ -186,9 +189,14 @@ function Workspace({
   useEffect(() => {
     const onTabPop = (event: PopStateEvent) => {
       const previous = event.state?.lingo3Tab
+      // Only a real tab change may set the flag: an in-screen history entry
+      // (the word page inside Review) pops back to the same tab, and a flag
+      // left set there would swallow the next tab's history entry.
       if (isTab(previous)) {
-        suppressTabHistory.current = true
-        setTab(previous)
+        setTab((current) => {
+          if (current !== previous) suppressTabHistory.current = true
+          return previous
+        })
       }
     }
     window.addEventListener('popstate', onTabPop)
@@ -365,7 +373,9 @@ function Workspace({
   const due = counts?.total ?? 0
 
   return (
-    <div className="app">
+    // The recall test is full screen: the header and tiles are hidden so the
+    // card, the answer and the grade buttons fit one phone screen.
+    <div className={`app${tab === 'review' ? ' focus' : ''}`}>
       {/* Two zones: who you are in this app, and what you are studying.
           The greeting sits with the mark rather than in a column of its own —
           centred, it read as a third unrelated thing and was the first to be
@@ -462,6 +472,7 @@ function Workspace({
             {tab === 'training' && <Training settings={settings} />}
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
+            {tab === 'translate' && <Translate settings={settings} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}
@@ -557,6 +568,9 @@ function HomeTiles({
       </Tile>
       <Tile id="read" set={set} active={active} icon={<IconReading />}>
         Read a story
+      </Tile>
+      <Tile id="translate" set={set} active={active} icon={<IconTranslate />}>
+        Translate
       </Tile>
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings

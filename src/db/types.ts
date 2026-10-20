@@ -153,6 +153,26 @@ const itVerb = z.object({
   riflessivo: z.boolean().optional(),
 })
 
+/** French. Gender as the article it takes, like Italian; le/la even before a
+ * vowel (l'), since the marker names the gender, not the elided article. */
+const frNoun = z.object({
+  kind: z.literal('noun'),
+  gender: z.enum(['le', 'la']),
+  plural: z.string().optional(),
+})
+
+const frVerb = z.object({
+  kind: z.literal('verb'),
+  infinitif: z.string(),
+  /** 3rd person singular présent. */
+  present: z.string(),
+  participe: z.string(),
+  /** passé composé auxiliary. Not predictable; never guessed. */
+  auxiliaire: z.enum(['être', 'avoir']),
+  /** Pronominal verbs carry the pronoun: "se lever". */
+  pronominal: z.boolean().optional(),
+})
+
 const esVerb = z.object({
   kind: z.literal('verb'),
   infinitivo: z.string(),
@@ -233,6 +253,8 @@ export type EsNoun = z.infer<typeof esNoun>
 export type EsVerb = z.infer<typeof esVerb>
 export type ItNoun = z.infer<typeof itNoun>
 export type ItVerb = z.infer<typeof itVerb>
+export type FrNoun = z.infer<typeof frNoun>
+export type FrVerb = z.infer<typeof frVerb>
 export type RuNoun = z.infer<typeof ruNoun>
 export type RuVerb = z.infer<typeof ruVerb>
 
@@ -243,6 +265,7 @@ export const MorphologySchema = z.discriminatedUnion('lang', [
   z.object({ lang: z.literal('es'), form: z.union([esNoun, esVerb, simple]) }),
   z.object({ lang: z.literal('ru'), form: z.union([ruNoun, ruVerb, simple]) }),
   z.object({ lang: z.literal('it'), form: z.union([itNoun, itVerb, simple]) }),
+  z.object({ lang: z.literal('fr'), form: z.union([frNoun, frVerb, simple]) }),
   z.object({ lang: z.literal('fa'), form: faSimple }),
 ])
 export type Morphology = z.infer<typeof MorphologySchema>
@@ -490,6 +513,13 @@ export interface Settings {
    * listening at conversational pace — that is what Reading is for.
    */
   speechRate?: number
+  /**
+   * Quick translate: the language you type in and up to three to see it in.
+   * Independent of the languages you study, and account data so every device
+   * opens the translator the same way. Codes from TRANSLATE_LANGS.
+   */
+  translateFrom?: string
+  translateTo?: string[]
   updatedAt: number
 }
 

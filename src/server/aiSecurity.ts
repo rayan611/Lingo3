@@ -39,7 +39,7 @@ export async function authenticateAiRequest(req: Request): Promise<AuthResult> {
 export async function enforceAiRateLimit(
   req: Request,
   userId: string,
-  endpoint: 'expand' | 'story',
+  endpoint: 'expand' | 'story' | 'translate',
   limit: number,
 ): Promise<LimitResult> {
   if (SUPABASE_URL && SUPABASE_KEY && req.headers.get('authorization')) {
@@ -61,7 +61,9 @@ export async function enforceAiRateLimit(
         ? { allowed: true }
         : { allowed: false, status: 429, message: endpoint === 'expand'
             ? 'Too many words in one hour. Try again later.'
-            : 'Too many texts in one hour. Try again later.' }
+            : endpoint === 'translate'
+              ? 'Too many translations in one hour. Try again later.'
+              : 'Too many texts in one hour. Try again later.' }
     } catch {
       if (PRODUCTION) return { allowed: false, status: 503, message: 'The AI safety service is temporarily unavailable.' }
       return memoryLimit(userId, endpoint, limit)

@@ -205,7 +205,7 @@ export function Browse({ settings }: Props) {
           {concepts.map((c) => (
             <li key={c.id} className={selected === c.id ? 'active' : ''}>
               <button className="word-list-item" onClick={() => setSelected(c.id)}>
-                <span className="word-list-lemma">{c.lemma}</span>
+                <span className="word-list-lemma" title={c.lemma}>{c.lemma}</span>
                 <span className="badge subtle">{c.pos}</span>
                 {!flagged.seen.has(c.id) ? (
                   <span className="badge flag" title="No translations yet">

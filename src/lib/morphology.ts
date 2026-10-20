@@ -7,6 +7,8 @@ import type {
   EsNoun,
   EsVerb,
   ItNoun,
+  FrNoun,
+  FrVerb,
   ItVerb,
   Lang,
   Morphology,
@@ -110,6 +112,21 @@ export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
     ])
   }
 
+  if (lang === 'fr') {
+    if (form.kind === 'noun') {
+      const f = form as FrNoun
+      return compact([f.plural && { label: 'pluriel', value: f.plural }])
+    }
+    const f = form as FrVerb
+    return compact([
+      { label: 'infinitif', value: f.infinitif },
+      { label: 'présent', value: f.present },
+      // Auxiliary and participle together — "est allé" is the unit you produce.
+      { label: 'passé composé', value: `${f.auxiliaire} ${f.participe}` },
+      f.pronominal ? { label: 'pronominal', value: 'oui' } : undefined,
+    ])
+  }
+
   if (lang === 'ru') {
     if (form.kind === 'noun') {
       const f = form as RuNoun
@@ -163,6 +180,7 @@ export function genderBadge(lang: Lang, form: Form | undefined): string | null {
   if (lang === 'de') return (form as DeNoun).gender
   if (lang === 'es') return (form as EsNoun).gender
   if (lang === 'it') return (form as ItNoun).gender
+  if (lang === 'fr') return (form as FrNoun).gender
   if (lang === 'ru') return (form as RuNoun).gender
   return null
 }
@@ -174,7 +192,7 @@ export function isIncomplete(entry: Entry): boolean {
   // The languages where a missing gender is expensive: it decides the article
   // or the whole declension, and the scheduler will drill a wrong one for
   // months.
-  if (!['sv', 'de', 'es', 'ru', 'it'].includes(entry.lang)) return false
+  if (!['sv', 'de', 'es', 'ru', 'it', 'fr'].includes(entry.lang)) return false
   return !genderBadge(entry.lang, entry.morphology)
 }
 

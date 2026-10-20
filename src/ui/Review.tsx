@@ -6,6 +6,7 @@ import { buildQueue, queueCounts, type QueueItem } from '../fsrs/queue'
 import { SuggestionBox } from './Suggestions'
 import { SpeakButton } from './SpeakButton'
 import { ExampleSentence } from './ExampleSentence'
+import { WordCard } from './WordCard'
 import { formCandidates } from '../lib/highlight'
 import { buildCloze } from '../lib/cloze'
 import { sameWord } from '../lib/answer'
@@ -46,6 +47,27 @@ export function Review({ settings, onExit }: Props) {
   const [topic, setTopic] = useState<string>('all')
   /** Upcoming languages the user chose to review early on this word. */
   const [extra, setExtra] = useState<Lang[]>([])
+  /**
+   * The full word page, opened from ⓘ on the card. Kept inside Review rather
+   * than as a tab switch: switching tabs rebuilds the queue and loses your
+   * place. A history entry is pushed so the phone's Back returns to the card.
+   */
+  const [detail, setDetail] = useState(false)
+  useEffect(() => {
+    const onPop = (e: PopStateEvent) => {
+      if (!e.state?.lingo3Detail) setDetail(false)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+  function openDetail() {
+    window.history.pushState({ ...(window.history.state ?? {}), lingo3Detail: true }, '')
+    setDetail(true)
+  }
+  function closeDetail() {
+    if (window.history.state?.lingo3Detail) window.history.back()
+    else setDetail(false)
+  }
 
   useEffect(() => {
     setQueue(null)
@@ -179,6 +201,7 @@ export function Review({ settings, onExit }: Props) {
   useEffect(() => {
     if (!item) return
     const onKey = (e: KeyboardEvent) => {
+      if (detail) return
       if (e.target instanceof HTMLInputElement) return
       if (e.code === 'Space') {
         // While typing an answer, space is a space.
@@ -292,18 +315,84 @@ export function Review({ settings, onExit }: Props) {
   const prompt = item.entries.find((e) => e.lang === settings.nativeLang)
   const remaining = queue.length - index
 
+  // One language is graded at a time, so the four buttons are always on the
+  // screen: the first ungraded due language, then any upcoming one you chose
+  // to review early.
+  const pending = [
+    ...item.dueCards,
+    ...item.upcomingCards.filter((c) => extra.includes(c.lang as Lang)),
+  ]
+  const current = pending.find((c) => graded[c.lang] === undefined)
+  const done = pending.filter((c) => graded[c.lang] !== undefined)
+
+  const bar = (
+    <div className="review-bar">
+      <button
+        type="button"
+        className="link review-back"
+        onClick={detail ? closeDetail : onExit}
+        aria-label={detail ? 'Back to the test' : 'Back to the menu'}
+      >
+        ← {detail ? 'Test' : 'Menu'}
+      </button>
+      <span className="muted small">{remaining} left</span>
+      {item.isNew && <span className="badge new">new</span>}
+      {!detail && topics.length > 0 && (
+        <select
+          className="review-topic"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+          aria-label="Focus on a topic"
+        >
+          <option value="all">All topics{counts ? ` · ${counts.overall}` : ''}</option>
+          {topics.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+  )
+
+  if (detail) {
+    return (
+      <div className="review">
+        {bar}
+        <WordCard conceptId={item.concept.id} settings={settings} />
+      </div>
+    )
+  }
+
+  const flip = () => {
+    if (revealed) return
+    if (typedLang) checkTyped()
+    else setRevealed(true)
+  }
+
   return (
     <div className="review">
-      <TopicBar topic={topic} setTopic={setTopic} topics={topics} counts={counts} />
-      <div className="review-head">
-        <span className="muted">{remaining} left</span>
-        {item.isNew && <span className="badge new">new</span>}
-        <button className="link" onClick={onExit}>
-          Stop
-        </button>
-      </div>
+      {bar}
 
-      <div className="prompt" lang={LANG_BCP47[settings.nativeLang]}>
+      <div
+        className={`prompt ${revealed ? 'revealed' : 'flippable'}`}
+        lang={LANG_BCP47[settings.nativeLang]}
+        onClick={typedLang ? undefined : flip}
+        role={!revealed && !typedLang ? 'button' : undefined}
+        tabIndex={!revealed && !typedLang ? 0 : undefined}
+      >
+        <button
+          type="button"
+          className="prompt-info"
+          onClick={(e) => {
+            e.stopPropagation()
+            openDetail()
+          }}
+          aria-label="Open the full word page"
+          title="Full word page"
+        >
+          ⓘ
+        </button>
         <div
           className={`prompt-word ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
         >
@@ -317,15 +406,21 @@ export function Review({ settings, onExit }: Props) {
         */}
         {prompt?.meaning && <div className="prompt-gloss">{prompt.meaning}</div>}
         <div className="prompt-pos muted">{item.concept.pos}</div>
+        {!revealed && !typedLang && (
+          <div className="prompt-hint muted small">
+            Recall it in {item.dueCards.map((c) => LANG_NAMES[c.lang]).join(', ')}
+          </div>
+        )}
       </div>
 
+      {!revealed && !typedLang && (
+        <button className="primary big reveal-button" onClick={flip}>
+          Show answer <kbd>space</kbd>
+        </button>
+      )}
       {!revealed ? (
-        <div className="reveal-area">
-          <p className="muted">
-            Recall it in{' '}
-            {item.dueCards.map((c) => LANG_NAMES[c.lang]).join(', ')}.
-          </p>
-          {typedLang && (
+        typedLang && (
+          <div className="reveal-area">
             <form
               className="typed"
               onSubmit={(e) => {
@@ -370,11 +465,11 @@ export function Review({ settings, onExit }: Props) {
                 )}
               </p>
             </form>
-          )}
-          <button className="primary big" onClick={() => (typedLang ? checkTyped() : setRevealed(true))}>
-            Show answer <kbd>space</kbd>
-          </button>
-        </div>
+            <button className="primary big" onClick={flip}>
+              Check <kbd>enter</kbd>
+            </button>
+          </div>
+        )
       ) : (
         <>
           {typedVerdict && typedEntry && (
@@ -396,27 +491,27 @@ export function Review({ settings, onExit }: Props) {
           )}
 
           <div className="answers">
-            {item.dueCards.map((card) => (
+            {done.map((card) => (
+              <GradedLine key={card.lang} card={card} item={item} grade={graded[card.lang]} />
+            ))}
+            {current && (
               <LanguageAnswer
-                key={card.lang}
-                card={card}
+                key={cardKey(item, current)}
+                card={current}
                 item={item}
                 settings={settings}
-                grade={graded[card.lang]}
-                onRate={(g) => void rate(card, g)}
+                grade={undefined}
+                onRate={(g) => void rate(current, g)}
               />
-            ))}
-            {item.upcomingCards.map((card) =>
-              extra.includes(card.lang) ? (
-                <LanguageAnswer
-                  key={card.lang}
-                  card={card}
-                  item={item}
-                  settings={settings}
-                  grade={graded[card.lang]}
-                  onRate={(g) => void rate(card, g)}
-                />
-              ) : (
+            )}
+            {!current && (
+              <button className="primary big" onClick={advance}>
+                Next <kbd>space</kbd>
+              </button>
+            )}
+            {item.upcomingCards
+              .filter((card) => !extra.includes(card.lang as Lang))
+              .map((card) => (
                 <UpcomingAnswer
                   key={card.lang}
                   card={card}
@@ -424,24 +519,7 @@ export function Review({ settings, onExit }: Props) {
                   settings={settings}
                   onReviewNow={() => setExtra((e) => [...e, card.lang as Lang])}
                 />
-              ),
-            )}
-          </div>
-
-          <div className="next-bar">
-            <button
-              className="primary big"
-              disabled={!allGraded}
-              onClick={advance}
-            >
-              {allGraded ? (
-                <>
-                  Next <kbd>space</kbd>
-                </>
-              ) : (
-                'Rate every due language to continue'
-              )}
-            </button>
+              ))}
           </div>
         </>
       )}
@@ -449,6 +527,23 @@ export function Review({ settings, onExit }: Props) {
   )
 }
 
+function cardKey(item: QueueItem, card: Card) {
+  return `${item.concept.id}:${card.lang}`
+}
+
+/** A language already graded on this word, folded to one line. */
+function GradedLine({ card, item, grade }: { card: Card; item: QueueItem; grade: Grade | undefined }) {
+  const entry = item.entries.find((e) => e.lang === card.lang)
+  return (
+    <div className="graded-line">
+      <span className="lang-chip">{LANG_NAMES[card.lang]}</span>
+      <span className="graded-word" lang={LANG_BCP47[card.lang]}>{entry?.headword ?? '—'}</span>
+      {grade !== undefined && (
+        <span className={`graded-grade grade-${grade}`}>{GRADE_LABELS[grade]}</span>
+      )}
+    </div>
+  )
+}
 function LanguageAnswer({
   card,
   item,
