@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import {
   adoptLocalData,
@@ -26,11 +26,6 @@ import { sync, type SyncResult } from './sync/sync'
 const BENIGN_SYNC_ERRORS = new Set(['offline', 'already running'])
 import { AddWord } from './ui/AddWord'
 import { Review } from './ui/Review'
-import { Browse } from './ui/Browse'
-import { Translate } from './ui/Translate'
-import { Training } from './ui/Training'
-import { StoryMode } from './ui/StoryMode'
-import { SettingsPanel } from './ui/SettingsPanel'
 import {
   IconAdd,
   IconReading,
@@ -43,9 +38,24 @@ import {
 import { InstallButton } from './ui/InstallButton'
 import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
-import { Landing, shouldShowLanding } from './ui/Landing'
-import { Privacy } from './ui/Privacy'
+import { shouldShowLanding } from './ui/landingSeen'
+import { lazyScreen } from './ui/lazyScreen'
 import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
+
+/**
+ * Screens that are not needed to open the app, each in its own chunk, so the
+ * first load on a phone is the Add screen and Review and little else. The
+ * service worker precaches every chunk, so they still open offline.
+ */
+const Landing = lazyScreen(() => import('./ui/Landing'), 'Landing')
+const Privacy = lazyScreen(() => import('./ui/Privacy'), 'Privacy')
+const Browse = lazyScreen(() => import('./ui/Browse'), 'Browse')
+const Translate = lazyScreen(() => import('./ui/Translate'), 'Translate')
+const Training = lazyScreen(() => import('./ui/Training'), 'Training')
+const StoryMode = lazyScreen(() => import('./ui/StoryMode'), 'StoryMode')
+const SettingsPanel = lazyScreen(() => import('./ui/SettingsPanel'), 'SettingsPanel')
+
+const screenFallback = <div className="boot">Loading…</div>
 
 /**
  * Profile is not here: it lives inside Settings now. Seven tabs did not fit a
@@ -136,12 +146,14 @@ export function App() {
 
   if (path.replace(/\/+$/, '') === '/privacy') {
     return (
-      <Privacy
-        onBack={() => {
-          window.history.pushState({}, '', '/')
-          setPath('/')
-        }}
-      />
+      <Suspense fallback={screenFallback}>
+        <Privacy
+          onBack={() => {
+            window.history.pushState({}, '', '/')
+            setPath('/')
+          }}
+        />
+      </Suspense>
     )
   }
 
@@ -152,7 +164,11 @@ export function App() {
   // The front door, for a first visit in a browser. Someone already signed in
   // has plainly been here before, so they go straight through.
   if (showLanding && !session) {
-    return <Landing onOpen={() => setShowLanding(false)} />
+    return (
+      <Suspense fallback={screenFallback}>
+        <Landing onOpen={() => setShowLanding(false)} />
+      </Suspense>
+    )
   }
 
   if (authConfigured && !session) {
@@ -476,7 +492,7 @@ function Workspace({
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
         {tab !== 'add' && (
-          <>
+          <Suspense fallback={screenFallback}>
             {tab === 'review' && (
               <ReviewTab settings={settings} onExit={() => setTab('add')} />
             )}
@@ -494,7 +510,7 @@ function Workspace({
                 onSync={runSync}
               />
             )}
-          </>
+          </Suspense>
         )}
       </main>
     </div>

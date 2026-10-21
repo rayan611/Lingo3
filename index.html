@@ -88,7 +88,7 @@
         old service worker still serving a stale or broken copy — tap below to
         clear it and reload.
       </p>
-      <button onclick="window.__linguaReset()">Clear cache and reload</button>
+      <button id="boot-reset" type="button">Clear cache and reload</button>
       <p>
         If that doesn't help, the error is below. Send it to Claude and it can
         be fixed.
@@ -96,54 +96,7 @@
       <pre id="boot-error">(no error captured)</pre>
     </div>
 
-    <script>
-      // Capture anything that goes wrong before or during boot, so a failure
-      // shows a message and an escape hatch rather than a black screen.
-      window.__linguaBootError = null;
-      function showBootFallback(detail) {
-        var el = document.getElementById('boot-fallback');
-        if (!el || el.classList.contains('visible')) return;
-        el.classList.add('visible');
-        if (detail) {
-          document.getElementById('boot-error').textContent = String(detail);
-        }
-      }
-      window.addEventListener('error', function (e) {
-        window.__linguaBootError = (e && (e.error && e.error.stack || e.message)) || 'script error';
-        showBootFallback(window.__linguaBootError);
-      });
-      window.addEventListener('unhandledrejection', function (e) {
-        window.__linguaBootError = (e && e.reason && (e.reason.stack || e.reason.message)) || 'promise rejection';
-        showBootFallback(window.__linguaBootError);
-      });
-
-      // Unregister every service worker and delete every cache, then reload
-      // from the network. This is the cure for a shell cached from a login
-      // wall or a half-broken deploy.
-      window.__linguaReset = async function () {
-        try {
-          if ('serviceWorker' in navigator) {
-            var regs = await navigator.serviceWorker.getRegistrations();
-            await Promise.all(regs.map(function (r) { return r.unregister(); }));
-          }
-          if (window.caches) {
-            var keys = await caches.keys();
-            await Promise.all(keys.map(function (k) { return caches.delete(k); }));
-          }
-        } catch (err) {
-          /* best effort — reload regardless */
-        }
-        location.replace(location.pathname + '?reset=' + Date.now());
-      };
-
-      // If React hasn't mounted after a few seconds, something is wrong.
-      setTimeout(function () {
-        var root = document.getElementById('root');
-        if (root && root.childElementCount === 0) {
-          showBootFallback(window.__linguaBootError || 'The app bundle did not mount within 8 seconds.');
-        }
-      }, 8000);
-    </script>
+    <script src="/boot.js"></script>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>

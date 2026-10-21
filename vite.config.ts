@@ -22,6 +22,21 @@ export default defineConfig({
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     __IS_BETA__: JSON.stringify(IS_BETA),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Libraries in chunks of their own, apart from the app's code. They
+        // change a few times a year and the app every few days; split, a
+        // deploy re-downloads only what changed instead of all of it.
+        manualChunks(id: string) {
+          if (!id.includes('node_modules')) return undefined
+          if (id.includes('@supabase')) return 'vendor-supabase'
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'vendor-react'
+          return 'vendor'
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     // The beta lives on a real domain, so it has to say so to a crawler as
