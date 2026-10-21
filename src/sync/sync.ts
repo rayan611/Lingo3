@@ -18,7 +18,15 @@ import { DEFAULT_SETTINGS, type Card, type Concept, type Entry, type Lang, type 
  * be representable as a change the other device can receive.
  */
 
-const CURSOR_PULL = 'sync.lastPulledAt'
+/**
+ * The pull cursor is a SERVER timestamp: the newest `synced_at` this device
+ * has seen. It replaced `sync.lastPulledAt`, which was this device's own
+ * clock compared against `updated_at` stamped by the other device's clock — a
+ * phone running a few minutes slow wrote rows dated before the laptop's
+ * cursor, and the laptop never pulled them. A new key, so every device does
+ * one full re-read when it first runs this code; merges are idempotent.
+ */
+const CURSOR_PULL = 'sync.lastPulledSyncedAt'
 const CURSOR_PUSH = 'sync.lastPushedAt'
 const CURSOR_LOG = 'sync.lastLogPushedAt'
 
@@ -433,57 +441,83 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
   return count
 }
 
+/** Rows per request. PostgREST's default `max-rows` is 1000; asking for no
+ * more than that is what makes "a short page means the end" true. */
+export const PULL_PAGE_SIZE = 1000
+
+/**
+ * How far back each pull re-reads past the stored cursor. `synced_at` is
+ * stamped when a row is written, not when its transaction commits, so a row
+ * can become visible slightly after a newer one. Re-reading a minute costs a
+ * handful of rows that `mergeInto` then ignores.
+ */
+export const PULL_OVERLAP_MS = 60_000
+
+/**
+ * Reads every row changed since `since`, a page at a time.
+ *
+ * Unpaged, a query silently stops at PostgREST's row cap: the first sync on a
+ * new device would get 1000 of someone's 3000 cards, advance the cursor, and
+ * never ask for the rest. Pages are keyed on `synced_at` (>= the last one
+ * seen, so rows sharing the boundary timestamp are not skipped) rather than on
+ * offsets, which shift when a row is written mid-pull.
+ *
+ * `fetchPage` returns rows ordered by `synced_at` ascending. The raw string is
+ * passed back as the next lower bound because it keeps Postgres' microseconds;
+ * a round trip through Date would truncate them and could skip a row.
+ */
+export async function pullPaged(
+  fetchPage: (from: string, limit: number) => Promise<Row[]>,
+  since: number,
+  pageSize = PULL_PAGE_SIZE,
+): Promise<{ rows: Row[]; newest: number }> {
+  const byId = new Map<string, Row>()
+  let from = iso(Math.max(0, since - PULL_OVERLAP_MS))
+  let newest = 0
+  for (;;) {
+    const page = await fetchPage(from, pageSize)
+    for (const row of page) {
+      byId.set(row.id as string, row)
+      newest = Math.max(newest, ms(row.synced_at as string))
+    }
+    if (page.length < pageSize) break
+    const last = page[page.length - 1].synced_at as string
+    // A full page that never got past its own lower bound would loop forever.
+    // It takes a whole page of rows written in the same microsecond.
+    if (last === from) throw new Error('pull: a page of rows share one timestamp')
+    from = last
+  }
+  return { rows: [...byId.values()], newest }
+}
+
 async function pull(userId: string, signal: AbortSignal): Promise<number> {
   const sb = supabase()
   const since = Number(await getMeta(CURSOR_PULL)) || 0
-  const from = iso(Math.max(0, since - 1000))
-  const startedAt = Date.now()
+  let newest = 0
   let count = 0
 
-  const { data: concepts, error: cErr } = await sb
-    .from('concepts')
-    .select('*')
-    .eq('user_id', userId)
-    .gt('updated_at', from)
-    .abortSignal(signal)
-  if (cErr) throw new Error(`concepts: ${cErr.message}`)
-  count += await mergeInto(db.concepts, (concepts ?? []).map(conceptIn))
+  const read = async (table: string): Promise<Row[]> => {
+    const result = await pullPaged(async (from, limit) => {
+      const { data, error } = await sb
+        .from(table)
+        .select('*')
+        .eq('user_id', userId)
+        .gte('synced_at', from)
+        .order('synced_at', { ascending: true })
+        .limit(limit)
+        .abortSignal(signal)
+      if (error) throw new Error(`${table}: ${error.message}`)
+      return (data ?? []) as Row[]
+    }, since)
+    newest = Math.max(newest, result.newest)
+    return result.rows
+  }
 
-  const { data: entries, error: eErr } = await sb
-    .from('entries')
-    .select('*')
-    .eq('user_id', userId)
-    .gt('updated_at', from)
-    .abortSignal(signal)
-  if (eErr) throw new Error(`entries: ${eErr.message}`)
-  count += await mergeInto(db.entries, (entries ?? []).map(entryIn))
-
-  const { data: cards, error: kErr } = await sb
-    .from('cards')
-    .select('*')
-    .eq('user_id', userId)
-    .gt('updated_at', from)
-    .abortSignal(signal)
-  if (kErr) throw new Error(`cards: ${kErr.message}`)
-  count += await mergeInto(db.cards, (cards ?? []).map(cardIn))
-
-  const { data: stories, error: sErr } = await sb
-    .from('stories')
-    .select('*')
-    .eq('user_id', userId)
-    .gt('updated_at', from)
-    .abortSignal(signal)
-  if (sErr) throw new Error(`stories: ${sErr.message}`)
-  count += await mergeInto(db.stories, (stories ?? []).map(storyIn))
-
-  const { data: later, error: lErr } = await sb
-    .from('later_words')
-    .select('*')
-    .eq('user_id', userId)
-    .gt('updated_at', from)
-    .abortSignal(signal)
-  if (lErr) throw new Error(`later_words: ${lErr.message}`)
-  count += await mergeInto(db.later, (later ?? []).map(laterIn))
+  count += await mergeInto(db.concepts, (await read('concepts')).map(conceptIn))
+  count += await mergeInto(db.entries, (await read('entries')).map(entryIn))
+  count += await mergeInto(db.cards, (await read('cards')).map(cardIn))
+  count += await mergeInto(db.stories, (await read('stories')).map(storyIn))
+  count += await mergeInto(db.later, (await read('later_words')).map(laterIn))
 
   const { data: remoteSettings, error: settingsErr } = await sb
     .from('user_settings')
@@ -524,7 +558,9 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
     }
   }
 
-  await advanceCursor(CURSOR_PULL, startedAt)
+  // Only ever a server time, and only when something came back: falling back
+  // to this device's clock is exactly the bug the cursor exists to avoid.
+  if (newest > 0) await advanceCursor(CURSOR_PULL, newest)
   return count
 }
 

@@ -26,6 +26,8 @@ import {
   withTimeout,
   STALE_LOCK_MS,
   mergeInto,
+  pullPaged,
+  PULL_OVERLAP_MS,
 } from '../src/sync/sync'
 import { dropLaterWord, parkWord } from '../src/db/later'
 
@@ -191,10 +193,10 @@ async function main() {
   }
 
   console.log('\n5. Sync cursors survive and reset')
-  await setMeta('sync.lastPulledAt', 12345)
-  check('cursor reads back', (await getMeta('sync.lastPulledAt')) === 12345)
-  await setMeta('sync.lastPulledAt', 0)
-  check('cursor resets to zero', (await getMeta('sync.lastPulledAt')) === 0)
+  await setMeta('sync.lastPulledSyncedAt', 12345)
+  check('cursor reads back', (await getMeta('sync.lastPulledSyncedAt')) === 12345)
+  await setMeta('sync.lastPulledSyncedAt', 0)
+  check('cursor resets to zero', (await getMeta('sync.lastPulledSyncedAt')) === 0)
 
   console.log('\n6. A hung sync cannot hold the lock forever')
   // The bug this guards: `running` was only cleared in a `finally`, so a fetch
@@ -355,6 +357,65 @@ async function main() {
     'a newer one does',
     (await db.later.get(live.id))?.lemma === 'nyare',
   )
+
+  console.log('\n11. A pull reads every page, on the server clock')
+  {
+    // A stand-in for PostgREST: rows at or after `from`, oldest first, capped
+    // at `limit` — the cap being what silently truncated the unpaged pull.
+    const BASE = Date.UTC(2026, 9, 21)
+    const server = (stamps: number[]) => {
+      const rows = stamps.map((t, i) => ({ id: `r${i}`, synced_at: new Date(t).toISOString() }))
+      const calls: string[] = []
+      const fetchPage = async (from: string, limit: number) => {
+        calls.push(from)
+        return rows
+          .filter((r) => r.synced_at >= from)
+          .sort((a, b) => (a.synced_at < b.synced_at ? -1 : 1))
+          .slice(0, limit)
+      }
+      return { fetchPage, calls }
+    }
+
+    const many = server(Array.from({ length: 2500 }, (_, i) => BASE + i))
+    const all = await pullPaged(many.fetchPage, 0, 1000)
+    check('2500 rows over a 1000-row cap all arrive', all.rows.length === 2500, `got ${all.rows.length}`)
+    check('it took more than one page', many.calls.length >= 3, `${many.calls.length} calls`)
+    check('the cursor is the newest server stamp', all.newest === BASE + 2499)
+
+    // Two rows on one timestamp, split across a page boundary of 3: the
+    // second would be lost if pages resumed strictly after the last stamp.
+    const ties = server([BASE, BASE + 1, BASE + 2, BASE + 2, BASE + 3])
+    const tied = await pullPaged(ties.fetchPage, 0, 3)
+    check('rows sharing the boundary timestamp are not skipped', tied.rows.length === 5, `got ${tied.rows.length}`)
+
+    const since = BASE + 10 * 60_000
+    const overlap = server([BASE])
+    await pullPaged(overlap.fetchPage, since, 1000)
+    check(
+      'each pull re-reads a window behind the cursor',
+      overlap.calls[0] === new Date(since - PULL_OVERLAP_MS).toISOString(),
+    )
+
+    const empty = await pullPaged(server([]).fetchPage, since, 1000)
+    check('nothing new leaves the cursor where it was', empty.newest === 0 && empty.rows.length === 0)
+
+    let threw = false
+    try {
+      await pullPaged(server([BASE, BASE, BASE]).fetchPage, 0, 3)
+    } catch {
+      threw = true
+    }
+    check('a full page on one timestamp fails loudly instead of looping', threw)
+
+    const { readFileSync } = await import('node:fs')
+    const syncSrc = readFileSync('src/sync/sync.ts', 'utf8')
+    const pullSrc = syncSrc.slice(syncSrc.indexOf('async function pull('))
+    check('the pull no longer filters on device-stamped updated_at', !pullSrc.includes("'updated_at', from"))
+    check(
+      'and its cursor is never this device\'s clock',
+      !/advanceCursor\(CURSOR_PULL,\s*(startedAt|Date\.now)/.test(pullSrc),
+    )
+  }
 
   console.log(
     failures === 0 ? '\nAll checks passed.\n' : `\n${failures} check(s) failed.\n`,
