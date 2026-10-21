@@ -207,8 +207,6 @@ async function respond(req: Request): Promise<Response> {
 
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
-  const rate = await enforceAiRateLimit(req, auth.userId, 'translate', 60)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
   if (!apiKey) return json({ error: 'No model key is configured on the server.' }, 500)
@@ -221,6 +219,11 @@ async function respond(req: Request): Promise<Response> {
   }
   const parsed = parseTranslateInput(body)
   if (!parsed.ok) return json({ error: parsed.error }, 400)
+
+  // Counted only once the request is known to be valid, so a malformed one
+  // (or a client bug) does not spend the person's hourly allowance.
+  const rate = await enforceAiRateLimit(req, auth.userId, 'translate', 60)
+  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const prompt = buildPrompt(parsed.value)
   const abort = new AbortController()

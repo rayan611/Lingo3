@@ -255,8 +255,6 @@ async function respond(req: Request): Promise<Response> {
 
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
-  const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
   if (!apiKey) {
@@ -277,6 +275,11 @@ async function respond(req: Request): Promise<Response> {
   }
   const parsed = parseStoryInput(rawBody)
   if (!parsed.ok) return json({ error: parsed.error }, 400)
+
+  // Counted only once the request is known to be valid, so a malformed one
+  // (or a client bug) does not spend the person's hourly allowance.
+  const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
+  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const { lang, nativeLang, words, genre, length, unknownShare } = parsed.value
   const prompt = buildPrompt({ lang, nativeLang, words, genre, length, unknownShare })

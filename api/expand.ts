@@ -454,8 +454,6 @@ async function respond(req: Request): Promise<Response> {
 
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
-  const rate = await enforceAiRateLimit(req, auth.userId, 'expand', 80)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
   if (!apiKey) {
@@ -476,6 +474,11 @@ async function respond(req: Request): Promise<Response> {
   }
   const parsed = parseExpandInput(rawBody)
   if (!parsed.ok) return json({ error: parsed.error }, 400)
+
+  // Counted only once the request is known to be valid, so a malformed one
+  // (or a client bug) does not spend the person's hourly allowance.
+  const rate = await enforceAiRateLimit(req, auth.userId, 'expand', 80)
+  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const { lemma, sourceLang, nativeLang, langs, hint } = parsed.value
   const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint })
