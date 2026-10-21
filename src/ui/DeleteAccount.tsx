@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { deleteAccount, verifyPassword } from '../auth/deleteAccount'
+import { Captcha, captchaEnabled } from '../auth/Captcha'
 
 /**
  * Deleting an account: required by both app stores, and the one control in
@@ -36,6 +37,8 @@ export function DeleteAccount({
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaReset, setCaptchaReset] = useState(0)
 
   /** What will actually be lost, counted rather than described. */
   const counts = useLiveQuery(async () => {
@@ -59,7 +62,7 @@ export function DeleteAccount({
     setError(null)
     try {
       // Checked before anything is deleted, so a wrong password costs nothing.
-      await verifyPassword(email, password)
+      await verifyPassword(email, password, captchaToken ?? undefined)
       await deleteAccount(userId)
       // A full reload rather than a state change: every live query, the open
       // Dexie handle and the session are all gone underneath this component,
@@ -68,6 +71,8 @@ export function DeleteAccount({
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err))
       setBusy(false)
+      // The token was spent on that attempt.
+      if (captchaEnabled) setCaptchaReset((n) => n + 1)
     }
   }
 
@@ -143,6 +148,7 @@ export function DeleteAccount({
               disabled={busy}
             />
           </label>
+          <Captcha onToken={setCaptchaToken} resetKey={captchaReset} />
           {error && <p className="error-text small">{error}</p>}
           <div className="row">
             <button onClick={reset} disabled={busy}>
@@ -150,7 +156,7 @@ export function DeleteAccount({
             </button>
             <button
               className="danger"
-              disabled={busy || password.length === 0}
+              disabled={busy || password.length === 0 || (captchaEnabled && !captchaToken)}
               onClick={() => void confirmPassword()}
             >
               {busy ? 'Deleting…' : 'Delete my account permanently'}

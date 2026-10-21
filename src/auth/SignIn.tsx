@@ -7,6 +7,7 @@ import {
   signUp,
 } from './useSession'
 import { PasswordField } from './PasswordField'
+import { Captcha, captchaEnabled } from './Captcha'
 
 type Mode = 'in' | 'up' | 'forgot'
 
@@ -19,16 +20,21 @@ export function SignIn() {
   // them here and failed, that is the first thing they need to know.
   const [error, setError] = useState<string | null>(() => consumeAuthLinkError())
   const [notice, setNotice] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  // Bumped after every attempt: a token is good for one try only.
+  const [captchaReset, setCaptchaReset] = useState(0)
+  const waitingForCaptcha = captchaEnabled && !captchaToken
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (busy) return
+    if (busy || waitingForCaptcha) return
+    const token = captchaToken ?? undefined
     setBusy(true)
     setError(null)
     setNotice(null)
     try {
       if (mode === 'forgot') {
-        await requestPasswordReset(email.trim())
+        await requestPasswordReset(email.trim(), token)
         // Deliberately the same answer whether or not that address has an
         // account. "No such user" would turn this box into a way of finding
         // out who has one.
@@ -36,9 +42,9 @@ export function SignIn() {
           'If that address has an account, a reset link is on its way. It is good for one hour — check spam if it does not arrive.',
         )
       } else if (mode === 'in') {
-        await signIn(email.trim(), password)
+        await signIn(email.trim(), password, token)
       } else {
-        const { needsConfirmation } = await signUp(email.trim(), password)
+        const { needsConfirmation } = await signUp(email.trim(), password, token)
         if (needsConfirmation) {
           setNotice(
             'Account created. Check your email for a confirmation link, then sign in.',
@@ -50,6 +56,7 @@ export function SignIn() {
       setError(err instanceof Error ? err.message : String(err))
     } finally {
       setBusy(false)
+      if (captchaEnabled) setCaptchaReset((n) => n + 1)
     }
   }
 
@@ -143,9 +150,13 @@ export function SignIn() {
             </div>
           )}
 
-          <button className="primary big" type="submit" disabled={busy}>
+          <Captcha onToken={setCaptchaToken} resetKey={captchaReset} />
+
+          <button className="primary big" type="submit" disabled={busy || waitingForCaptcha}>
             {busy
               ? 'Working…'
+              : waitingForCaptcha
+                ? 'Checking you are human…'
               : mode === 'in'
                 ? 'Sign in'
                 : mode === 'up'

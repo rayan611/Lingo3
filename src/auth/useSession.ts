@@ -123,9 +123,10 @@ export function useSession(): SessionState {
  * `redirectTo` is where the link lands. It has to be on the Supabase Auth
  * allowlist or the link silently falls back to the Site URL.
  */
-export async function requestPasswordReset(email: string) {
+export async function requestPasswordReset(email: string, captchaToken?: string) {
   const { error } = await supabase().auth.resetPasswordForEmail(email, {
     redirectTo: `${window.location.origin}/`,
+    captchaToken,
   })
   if (error) throw new Error(friendly(error.message))
 }
@@ -136,13 +137,25 @@ export async function updatePassword(password: string) {
   if (error) throw new Error(friendly(error.message))
 }
 
-export async function signIn(email: string, password: string) {
-  const { error } = await supabase().auth.signInWithPassword({ email, password })
+/**
+ * `captchaToken` is the Turnstile token from <Captcha>, when CAPTCHA is on.
+ * Undefined is fine while it is off; Supabase only asks once it is enabled.
+ */
+export async function signIn(email: string, password: string, captchaToken?: string) {
+  const { error } = await supabase().auth.signInWithPassword({
+    email,
+    password,
+    options: { captchaToken },
+  })
   if (error) throw new Error(friendly(error.message))
 }
 
-export async function signUp(email: string, password: string) {
-  const { data, error } = await supabase().auth.signUp({ email, password })
+export async function signUp(email: string, password: string, captchaToken?: string) {
+  const { data, error } = await supabase().auth.signUp({
+    email,
+    password,
+    options: { captchaToken },
+  })
   if (error) throw new Error(friendly(error.message))
   // When email confirmation is on, no session comes back and the person has to
   // click a link first. Saying so beats a form that silently does nothing.

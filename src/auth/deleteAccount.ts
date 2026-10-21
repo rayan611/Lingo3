@@ -33,8 +33,14 @@ import { dbNameFor, db } from '../db/db'
 export async function verifyPassword(
   email: string,
   password: string,
+  captchaToken?: string,
 ): Promise<void> {
-  const { error } = await supabase().auth.signInWithPassword({ email, password })
+  // A sign-in underneath, so it needs a CAPTCHA token like any other.
+  const { error } = await supabase().auth.signInWithPassword({
+    email,
+    password,
+    options: { captchaToken },
+  })
   if (error) {
     throw new Error(
       error.message.toLowerCase().includes('invalid login')

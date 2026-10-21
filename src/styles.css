@@ -2885,3 +2885,10 @@ details.help h3 { margin: 22px 0 6px; }
 .translate-langs .field.inline { grid-column: 1 / -1; }
 .translate-langs .to-label { display: none; }
 .translate-langs select { width: 100%; }
+
+/* Turnstile draws its own box; this only keeps it off the neighbours. Empty
+   (and so invisible) while the widget is loading or CAPTCHA is off. */
+.captcha {
+  margin: 12px 0;
+  min-height: 0;
+}
