@@ -16,6 +16,7 @@ import { useSession } from './auth/useSession'
 import { ResetPassword } from './auth/ResetPassword'
 import { SignIn } from './auth/SignIn'
 import { sync, type SyncResult } from './sync/sync'
+import { pendingGoogleConfirmation } from './auth/deleteAccount'
 
 /**
  * Sync outcomes that are not failures and must not raise a banner. `offline`
@@ -196,7 +197,11 @@ function Workspace({
   userId: string | null
   email: string | null
 }) {
-  const [tab, setTab] = useState<Tab>('add')
+  // Coming back from Google halfway through deleting the account: that panel
+  // lives in Settings, so open there rather than on Add.
+  const [tab, setTab] = useState<Tab>(() =>
+    pendingGoogleConfirmation() ? 'settings' : 'add',
+  )
   /**
    * Bumped by pressing Add a word (tile or logo): AddWord is keyed on it, so
    * the screen comes back empty — no word in the box, no card, no preview —

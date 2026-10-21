@@ -1,4 +1,5 @@
 import Dexie from 'dexie'
+import type { User } from '@supabase/supabase-js'
 import { supabase } from './supabase'
 import { dbNameFor, db } from '../db/db'
 
@@ -48,6 +49,101 @@ export async function verifyPassword(
         : error.message,
     )
   }
+}
+
+/**
+ * The second confirmation for someone who signs in with Google.
+ *
+ * They have no password, so the password step could never be passed and the
+ * account could not be deleted at all — which both app stores reject. The
+ * equivalent check is a fresh Google sign-in: it proves the same thing (it is
+ * you, not someone holding your unlocked phone) by the means the account
+ * actually has.
+ *
+ * It leaves the page, so the intent is written down first and picked up by
+ * the delete panel when Google sends the person back.
+ */
+const PENDING_KEY = 'lingua.deleteAfterGoogle'
+
+/** How recent the Google sign-in must be for the last button to work. */
+export const GOOGLE_CONFIRM_MAX_AGE_MS = 5 * 60_000
+
+/** Does this account have a password to check, or only Google? */
+export function hasPassword(user: User | null | undefined): boolean {
+  const meta = user?.app_metadata ?? {}
+  const providers: unknown[] = Array.isArray(meta.providers)
+    ? meta.providers
+    : [meta.provider]
+  return providers.includes('email')
+}
+
+export async function confirmWithGoogle(): Promise<void> {
+  try {
+    sessionStorage.setItem(PENDING_KEY, String(Date.now()))
+  } catch {
+    /* without it the person lands on Add and has to open Settings again */
+  }
+  const { error } = await supabase().auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/`,
+      // Always show Google's account chooser, so this is a step the person
+      // takes rather than one a remembered Google session takes for them.
+      queryParams: { prompt: 'select_account' },
+    },
+  })
+  if (error) {
+    clearGoogleConfirmation()
+    throw new Error(error.message)
+  }
+}
+
+/** True when the person has just come back from confirmWithGoogle. */
+export function pendingGoogleConfirmation(now = Date.now()): boolean {
+  try {
+    const at = Number(sessionStorage.getItem(PENDING_KEY))
+    return at > 0 && now - at < GOOGLE_CONFIRM_MAX_AGE_MS * 2
+  } catch {
+    return false
+  }
+}
+
+export function clearGoogleConfirmation(): void {
+  try {
+    sessionStorage.removeItem(PENDING_KEY)
+  } catch {
+    /* nothing to clear */
+  }
+}
+
+/**
+ * When the current session last signed in with Google, from the `amr` claim
+ * Supabase puts in every access token, or null if it never did.
+ *
+ * Read from the token rather than from a flag this page set: the flag says the
+ * person meant to confirm, the token says Google actually signed them in.
+ */
+export function googleSignInAt(accessToken: string | undefined): number | null {
+  if (!accessToken) return null
+  try {
+    const part = accessToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const claims = JSON.parse(atob(part.padEnd(part.length + ((4 - (part.length % 4)) % 4), '='))) as {
+      amr?: { method?: string; timestamp?: number }[]
+    }
+    const times = (claims.amr ?? [])
+      .filter((entry) => entry.method === 'oauth' && typeof entry.timestamp === 'number')
+      .map((entry) => (entry.timestamp as number) * 1000)
+    return times.length ? Math.max(...times) : null
+  } catch {
+    return null
+  }
+}
+
+/** Has this session signed in with Google recently enough to delete? */
+export async function recentlyConfirmedWithGoogle(now = Date.now()): Promise<boolean> {
+  const { data } = await supabase().auth.getSession()
+  const at = googleSignInAt(data.session?.access_token)
+  return at !== null && now - at < GOOGLE_CONFIRM_MAX_AGE_MS
 }
 
 /**

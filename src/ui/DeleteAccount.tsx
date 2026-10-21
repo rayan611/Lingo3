@@ -1,7 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
-import { deleteAccount, verifyPassword } from '../auth/deleteAccount'
+import {
+  clearGoogleConfirmation,
+  confirmWithGoogle,
+  deleteAccount,
+  hasPassword,
+  pendingGoogleConfirmation,
+  recentlyConfirmedWithGoogle,
+  verifyPassword,
+} from '../auth/deleteAccount'
+import { supabase } from '../auth/supabase'
 import { Captcha, captchaEnabled } from '../auth/Captcha'
 
 /**
@@ -18,6 +27,8 @@ import { Captcha, captchaEnabled } from '../auth/Captcha'
  *     the warning; the password proves it is you, and not someone holding your
  *     unlocked phone. Two dialogs that both say "are you sure" are one
  *     confirmation asked twice.
+ *     An account made with Google has no password, so for it the second
+ *     check is a fresh Google sign-in instead (see confirmWithGoogle).
  *  3. It states the real numbers. "Delete 45 words and 123 reviews" is a
  *     sentence you can refuse; "delete your data" is not.
  */
@@ -32,7 +43,13 @@ export function DeleteAccount({
   userId: string
   email: string
 }) {
-  const [stage, setStage] = useState<Stage>('closed')
+  // Back from Google mid-deletion: reopen at the last step, not at the top.
+  const [resuming] = useState(() => pendingGoogleConfirmation())
+  const [stage, setStage] = useState<Stage>(resuming ? 'password' : 'closed')
+  /** null until the session has been read. */
+  const [method, setMethod] = useState<'password' | 'google' | null>(null)
+  const [googleConfirmed, setGoogleConfirmed] = useState(false)
+  const panel = useRef<HTMLDetailsElement>(null)
   const [typed, setTyped] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
@@ -49,7 +66,29 @@ export function DeleteAccount({
     return { words, reviews }
   }, [])
 
+  useEffect(() => {
+    let cancelled = false
+    supabase()
+      .auth.getSession()
+      .then(async ({ data }) => {
+        if (cancelled) return
+        setMethod(hasPassword(data.session?.user) ? 'password' : 'google')
+        if (resuming) {
+          setGoogleConfirmed(await recentlyConfirmedWithGoogle())
+          panel.current?.scrollIntoView({ block: 'center' })
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setMethod('password')
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [resuming])
+
   function reset() {
+    clearGoogleConfirmation()
+    setGoogleConfirmed(false)
     setStage('closed')
     setTyped('')
     setPassword('')
@@ -76,8 +115,45 @@ export function DeleteAccount({
     }
   }
 
+  async function goToGoogle() {
+    if (busy) return
+    setBusy(true)
+    setError(null)
+    try {
+      // Leaves the page on success; Google sends the person back here.
+      await confirmWithGoogle()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+      setBusy(false)
+    }
+  }
+
+  async function deleteAfterGoogle() {
+    if (busy) return
+    setBusy(true)
+    setError(null)
+    try {
+      // Checked again at the moment of deleting: the screen may have sat
+      // open long enough for the confirmation to go stale.
+      if (!(await recentlyConfirmedWithGoogle())) {
+        setGoogleConfirmed(false)
+        throw new Error('That confirmation has expired. Confirm with Google again.')
+      }
+      await deleteAccount(userId)
+      clearGoogleConfirmation()
+      window.location.replace('/')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+      setBusy(false)
+    }
+  }
+
   return (
-    <details className="panel account-danger">
+    <details
+      className="panel account-danger"
+      ref={panel}
+      open={stage !== 'closed' ? true : undefined}
+    >
       <summary>Account</summary>
 
       {stage === 'closed' && (
@@ -131,7 +207,43 @@ export function DeleteAccount({
         </>
       )}
 
-      {stage === 'password' && (
+      {stage === 'password' && method === 'google' && (
+        <>
+          {googleConfirmed ? (
+            <p>
+              Confirmed with Google as <strong>{email}</strong>. This is the
+              last step — after this there is nothing to undo.
+            </p>
+          ) : (
+            <p>
+              Last step. You signed up with Google, so confirm it is you by
+              choosing your Google account again — this is the check that stops
+              someone deleting your account from a phone you left unlocked.
+            </p>
+          )}
+          {error && <p className="error-text small">{error}</p>}
+          <div className="row">
+            <button onClick={reset} disabled={busy}>
+              Cancel
+            </button>
+            {googleConfirmed ? (
+              <button
+                className="danger"
+                disabled={busy}
+                onClick={() => void deleteAfterGoogle()}
+              >
+                {busy ? 'Deleting…' : 'Delete my account permanently'}
+              </button>
+            ) : (
+              <button className="danger" disabled={busy} onClick={() => void goToGoogle()}>
+                {busy ? 'Opening Google…' : 'Confirm with Google'}
+              </button>
+            )}
+          </div>
+        </>
+      )}
+
+      {stage === 'password' && method === 'password' && (
         <>
           <p>
             Last step. Enter your password to confirm it is you — this is the

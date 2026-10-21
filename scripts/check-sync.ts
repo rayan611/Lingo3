@@ -30,6 +30,7 @@ import {
   PULL_OVERLAP_MS,
 } from '../src/sync/sync'
 import { dropLaterWord, parkWord } from '../src/db/later'
+import { googleSignInAt, hasPassword } from '../src/auth/deleteAccount'
 
 /** What the Later list actually shows — the deleted rows are still in there. */
 async function visibleLater() {
@@ -415,6 +416,38 @@ async function main() {
       'and its cursor is never this device\'s clock',
       !/advanceCursor\(CURSOR_PULL,\s*(startedAt|Date\.now)/.test(pullSrc),
     )
+  }
+
+  console.log('\n12. Google accounts can be deleted, and only after a fresh Google sign-in')
+  {
+    // A token is header.payload.signature; only the payload is read.
+    const token = (claims: object) =>
+      `x.${Buffer.from(JSON.stringify(claims)).toString('base64url')}.y`
+    const t = 1_792_570_000
+    check(
+      'the Google sign-in time is read from the token',
+      googleSignInAt(token({ amr: [{ method: 'oauth', timestamp: t }] })) === t * 1000,
+    )
+    check(
+      'the latest of several Google sign-ins wins',
+      googleSignInAt(token({ amr: [{ method: 'oauth', timestamp: t - 99 }, { method: 'oauth', timestamp: t }] })) === t * 1000,
+    )
+    check(
+      'a password sign-in does not count as a Google confirmation',
+      googleSignInAt(token({ amr: [{ method: 'password', timestamp: t }] })) === null,
+    )
+    check('no token, no confirmation', googleSignInAt(undefined) === null)
+    check('a malformed token is no confirmation, not a crash', googleSignInAt('not-a-jwt') === null)
+
+    type U = Parameters<typeof hasPassword>[0]
+    const user = (app_metadata: object) => ({ app_metadata }) as unknown as U
+    check('an email account asks for its password', hasPassword(user({ provider: 'email', providers: ['email'] })))
+    check('a Google-only account does not', !hasPassword(user({ provider: 'google', providers: ['google'] })))
+    check(
+      'an account with both still uses its password',
+      hasPassword(user({ provider: 'google', providers: ['google', 'email'] })),
+    )
+    check('an older session with only `provider` still works', hasPassword(user({ provider: 'email' })))
   }
 
   console.log(
