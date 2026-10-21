@@ -5,6 +5,9 @@
 -- is, the Delete account flow in Settings reaches its last step and fails with
 -- "function does not exist" — nothing is lost, it simply cannot complete.
 --
+-- The later_words line was added by hand in v3.6 (see that migration); this
+-- file now matches what is live.
+--
 -- Required by Apple for any app with accounts, and by Google as a documented
 -- deletion route.
 --
@@ -43,6 +46,7 @@ begin
   delete from public.concepts      where user_id = uid;
   delete from public.stories       where user_id = uid;
   delete from public.suggestions   where user_id = uid;
+  delete from public.later_words   where user_id = uid;
   delete from public.user_settings where user_id = uid;
 
   -- Last: once this row is gone the caller's token refers to nobody, so
