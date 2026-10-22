@@ -1,4 +1,5 @@
 import { authConfigured, supabase } from '../auth/supabase'
+import { AiUnavailableError, aiDownStatus } from './unavailable'
 
 export interface Translation {
   lang: string
@@ -62,13 +63,16 @@ export async function translate(
       body: JSON.stringify({ text, from, to }),
     })
   } catch {
-    throw new Error('You are offline. Translation needs a connection.')
+    throw new AiUnavailableError('You are offline. Translation needs a connection.')
   }
   let body: { translations?: Translation[]; error?: string } = {}
   try {
     body = await res.json()
   } catch {
     /* fall through to the status message */
+  }
+  if (aiDownStatus(res.status) || (res.ok && !body.translations)) {
+    throw new AiUnavailableError(body.error ?? `Translation failed (${res.status}).`)
   }
   if (!res.ok || !body.translations) {
     throw new Error(body.error ?? `Translation failed (${res.status}).`)

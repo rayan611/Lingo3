@@ -12,6 +12,8 @@ import {
   type StoryRequest,
 } from '../ai/story'
 import { SpeakButton } from './SpeakButton'
+import { AiDown } from './AiDown'
+import { AiUnavailableError } from '../ai/unavailable'
 import { addRelatedWord } from '../ai/expand'
 import {
   LANG_BCP47,
@@ -43,6 +45,7 @@ export function StoryMode({ settings }: { settings: Settings }) {
   const [topics, setTopics] = useState<string[]>([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [down, setDown] = useState(false)
   const [result, setResult] = useState<
     { story: GeneratedStory; coverage: Coverage; req: StoryRequest } | null
   >(null)
@@ -102,6 +105,7 @@ export function StoryMode({ settings }: { settings: Settings }) {
   async function run() {
     setBusy(true)
     setError(null)
+    setDown(false)
     setResult(null)
     setSavedId(null)
     setReading(null)
@@ -116,7 +120,8 @@ export function StoryMode({ settings }: { settings: Settings }) {
       const { story, coverage } = await generateStory(req, settings)
       setResult({ story, coverage, req })
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
+      if (err instanceof AiUnavailableError) setDown(true)
+      else setError(err instanceof Error ? err.message : String(err))
     } finally {
       setBusy(false)
     }
@@ -228,6 +233,7 @@ export function StoryMode({ settings }: { settings: Settings }) {
           {busy ? 'Writing…' : 'Write me a text'}
         </button>
 
+        {down && <AiDown what="Writing a text" busy={busy} onRetry={() => void run()} />}
         {error && <div className="status error">{error}</div>}
       </div>
 

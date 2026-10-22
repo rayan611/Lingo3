@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import {
   commitPreview,
+  ExpansionError,
   normaliseTags,
   previewWord,
   processPending,
@@ -20,6 +21,7 @@ import {
   type Settings,
 } from '../db/types'
 import { TagEditor } from './TagEditor'
+import { AiDown } from './AiDown'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
@@ -84,7 +86,7 @@ export function AddWord({ settings }: Props) {
    */
   const [collision, setCollision] = useState<DuplicateInfo | null>(null)
   const [busy, setBusy] = useState(false)
-  const [status, setStatus] = useState<{ kind: string; text: string } | null>(null)
+  const [status, setStatus] = useState<{ kind: string; text: string; retry?: () => void } | null>(null)
   const [lastId, setLastId] = useState<string | null>(null)
   const [preview, setPreview] = useState<WordPreview | null>(null)
   /**
@@ -209,7 +211,11 @@ export function AddWord({ settings }: Props) {
         setPreview(result.preview)
       }
     } catch (err) {
-      setStatus({ kind: 'error', text: err instanceof Error ? err.message : String(err) })
+      if (err instanceof ExpansionError && err.unavailable) {
+        setStatus({ kind: 'down', text: '', retry: () => void run(which, sourceLang, term) })
+      } else {
+        setStatus({ kind: 'error', text: err instanceof Error ? err.message : String(err) })
+      }
     } finally {
       setBusy(false)
       setMode(null)
@@ -408,7 +414,11 @@ export function AddWord({ settings }: Props) {
           </div>
         </div>
 
-        {status && <div className={`status ${status.kind}`}>{status.text}</div>}
+        {status?.retry ? (
+          <AiDown what="Looking up words" busy={busy} onRetry={status.retry} />
+        ) : (
+          status && <div className={`status ${status.kind}`}>{status.text}</div>
+        )}
 
         {collision && (
           <div className="status warn collision">

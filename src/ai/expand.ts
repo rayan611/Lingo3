@@ -1,4 +1,5 @@
 import { db, compositeId, lemmaKey, newId } from '../db/db'
+import { aiDownStatus } from './unavailable'
 import { detectLang } from '../lib/detectLang'
 import { authConfigured, supabase } from '../auth/supabase'
 import { makeCard } from '../fsrs/scheduler'
@@ -34,6 +35,8 @@ export class ExpansionError extends Error {
   constructor(
     message: string,
     readonly retryable: boolean,
+    /** Offline or the model side is down — see ./unavailable. */
+    readonly unavailable = false,
   ) {
     super(message)
   }
@@ -64,7 +67,7 @@ export async function fetchExpansion(opts: {
       body: JSON.stringify(opts),
     })
   } catch {
-    throw new ExpansionError('Offline — queued for later.', true)
+    throw new ExpansionError('Offline — queued for later.', true, true)
   }
 
   if (!res.ok) {
@@ -96,7 +99,7 @@ export async function fetchExpansion(opts: {
           : res.status === 401
             ? 'Your session expired. Reload the page and press "Expand now".'
             : `Request failed (${res.status}).`
-    throw new ExpansionError(detail || fallback, retryable)
+    throw new ExpansionError(detail || fallback, retryable, aiDownStatus(res.status))
   }
 
   const parsed = ExpansionSchema.safeParse(await res.json())

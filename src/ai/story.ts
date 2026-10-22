@@ -1,4 +1,5 @@
 import { db, newId } from '../db/db'
+import { AiUnavailableError, aiDownStatus } from './unavailable'
 import { authConfigured, supabase } from '../auth/supabase'
 import { matchesTopic } from '../fsrs/queue'
 import { morphLines } from '../lib/morphology'
@@ -216,7 +217,7 @@ export async function generateStory(
       }),
     })
   } catch {
-    throw new StoryError('You are offline — a text needs the network.')
+    throw new AiUnavailableError('You are offline — a text needs the network.')
   }
 
   if (!res.ok) {
@@ -227,6 +228,7 @@ export async function generateStory(
     } catch {
       /* not JSON; the status will have to do */
     }
+    if (aiDownStatus(res.status)) throw new AiUnavailableError(detail || `Request failed (${res.status}).`)
     throw new StoryError(detail || `Request failed (${res.status}).`)
   }
 

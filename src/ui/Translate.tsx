@@ -10,6 +10,8 @@ import {
   isTranslateLang,
 } from '../db/translateLangs'
 import { translate, type Translation } from '../ai/translate'
+import { AiUnavailableError } from '../ai/unavailable'
+import { AiDown } from './AiDown'
 import { SpeakButton } from './SpeakButton'
 
 const CODES = Object.keys(TRANSLATE_LANGS)
@@ -40,6 +42,7 @@ export function Translate({ settings }: { settings: Settings }) {
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [down, setDown] = useState(false)
   const [result, setResult] = useState<{ source: Translation; rows: Translation[] } | null>(null)
   const [parked, setParked] = useState<Record<string, string>>({})
 
@@ -59,12 +62,14 @@ export function Translate({ settings }: { settings: Settings }) {
     if (!clean || to.length === 0) return
     setBusy(true)
     setError(null)
+    setDown(false)
     setParked({})
     try {
       const rows = await translate(clean, from, to)
       setResult({ source: { lang: from, text: clean }, rows })
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
+      if (err instanceof AiUnavailableError) setDown(true)
+      else setError(err instanceof Error ? err.message : String(err))
     } finally {
       setBusy(false)
     }
@@ -154,6 +159,7 @@ export function Translate({ settings }: { settings: Settings }) {
         <button className="primary" disabled={busy || !text.trim() || to.length === 0}>
           {busy ? 'Translating…' : 'Translate'}
         </button>
+        {down && <AiDown what="Translation" busy={busy} onRetry={() => void run()} />}
         {error && <p className="error-text small">{error}</p>}
         <p className="muted small">Translated by AI. Nothing you type here is saved.</p>
       </form>

@@ -596,6 +596,9 @@ kbd {
 .status.ok { background: var(--accent-soft); color: var(--accent-ink); }
 .status.warn { background: var(--warn-soft); color: var(--warn); }
 .status.error { background: var(--danger-soft); color: var(--danger); }
+.status.ai-down { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.status.ai-down span { flex: 1; min-width: 12rem; }
+.status.ai-down button { white-space: nowrap; }
 
 /* --- badges -------------------------------------------------------------- */
 
