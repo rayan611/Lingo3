@@ -21,6 +21,13 @@ window.addEventListener('unhandledrejection', function (e) {
   showBootFallback(window.__linguaBootError);
 });
 
+// Chrome can offer its install prompt before the app bundle has loaded and
+// started listening; keep it for src/ui/installState.ts to pick up.
+window.addEventListener('beforeinstallprompt', function (e) {
+  e.preventDefault();
+  window.__installPrompt = e;
+});
+
 // Unregister every service worker and delete every cache, then reload
 // from the network. This is the cure for a shell cached from a login
 // wall or a half-broken deploy.

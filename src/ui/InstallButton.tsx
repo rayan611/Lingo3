@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { promptInstall, useInstallMode } from './installState'
 
 /**
  * Offer to install the app, in the two different ways the two platforms need.
@@ -12,47 +13,13 @@ import { useEffect, useState } from 'react'
  * what `display-mode: standalone` tells us. Without that check it would nag
  * forever on the one device where it is least useful.
  */
-interface InstallPromptEvent extends Event {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
-}
-
 const DISMISSED = 'lingua.installHintDismissed'
 
 export function InstallButton() {
-  const [deferred, setDeferred] = useState<InstallPromptEvent | null>(null)
+  const mode = useInstallMode()
   const [showIosHint, setShowIosHint] = useState(false)
-  const [installed, setInstalled] = useState(false)
 
-  useEffect(() => {
-    const standalone =
-      window.matchMedia?.('(display-mode: standalone)').matches ||
-      // Safari's own flag, which predates the media query.
-      (navigator as { standalone?: boolean }).standalone === true
-    if (standalone) {
-      setInstalled(true)
-      return
-    }
-
-    const onPrompt = (e: Event) => {
-      e.preventDefault()
-      setDeferred(e as InstallPromptEvent)
-    }
-    const onInstalled = () => setInstalled(true)
-    window.addEventListener('beforeinstallprompt', onPrompt)
-    window.addEventListener('appinstalled', onInstalled)
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt)
-      window.removeEventListener('appinstalled', onInstalled)
-    }
-  }, [])
-
-  if (installed) return null
-
-  const isIos =
-    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-    // iPadOS reports itself as a Mac, but a Mac has no touch points.
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  if (mode === 'installed') return null
 
   let dismissed = false
   try {
@@ -61,20 +28,15 @@ export function InstallButton() {
     /* storage blocked — show it */
   }
 
-  if (deferred) {
+  if (mode === 'prompt') {
     return (
-      <button
-        className="install-button"
-        onClick={() => {
-          void deferred.prompt().then(() => setDeferred(null))
-        }}
-      >
+      <button className="install-button" onClick={() => void promptInstall()}>
         Install
       </button>
     )
   }
 
-  if (isIos && !dismissed) {
+  if (mode === 'ios' && !dismissed) {
     return (
       <>
         <button className="install-button" onClick={() => setShowIosHint(true)}>
