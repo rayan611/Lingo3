@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { LANG_NAMES, activeTargets, type Settings } from '../db/types'
@@ -14,9 +15,12 @@ import { PARTS_OF_SPEECH, type PartOfSpeech } from '../db/types'
 export function WordCard({
   conceptId,
   settings,
+  actions,
 }: {
   conceptId: string
   settings: Settings
+  /** Buttons shown at the far end of the word's header line. */
+  actions?: ReactNode
 }) {
   /** Topics already in use elsewhere, offered as one-tap additions. */
   const suggestions = useLiveQuery(
@@ -75,6 +79,7 @@ export function WordCard({
             </option>
           ))}
         </select>
+        {actions}
       </div>
       <TagEditor
         tags={concept.tags ?? []}

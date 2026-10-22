@@ -3,6 +3,17 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-22 — Remove from review / Delete on test and review cards
+
+- `src/ui/CardActions.tsx`: small **Remove from review** and red **Delete** buttons at the far edge of
+  the Recall test prompt card (`src/ui/Review.tsx`) and the Review word card (`src/ui/Training.tsx`,
+  via a new `actions` slot on `WordCard`). Styles `.card-actions`, `.card-action` in `src/styles.css`.
+- `src/lib/wordActions.ts`: `removeFromReview` (suspends every card; resume in My words) and
+  `deleteWord` (soft delete, now also used by My words).
+- Recall test drops the word from the queue and shows the next one. Review now hides words whose cards
+  are all suspended, so paused words no longer show there.
+- Not done yet: the same buttons in Glowis and Concordia.
+
 ## 2026-10-22 — AI unavailable: calm note + Try again
 
 When offline or when the model side answers 5xx, the screen shows

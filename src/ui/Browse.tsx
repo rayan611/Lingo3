@@ -6,6 +6,7 @@ import { isIncomplete } from '../lib/morphology'
 import { PARTS_OF_SPEECH, activeTargets, type Settings } from '../db/types'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
+import { deleteWord } from '../lib/wordActions'
 
 export function Browse({ settings }: Props) {
   const [query, setQuery] = useState('')
@@ -136,22 +137,7 @@ export function Browse({ settings }: Props) {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this word and its review history?')) return
-    const now = Date.now()
-
-    // Soft delete throughout. Removing the card rows locally while they live
-    // on the server meant the next full resync quietly put them back, because
-    // a row that is absent locally always looks older than the remote one.
-    // Suspending them instead takes them out of the queue and replicates.
-    const concept = await db.concepts.get(id)
-    if (concept) {
-      await db.concepts.put({ ...concept, deletedAt: now, updatedAt: now })
-    }
-    const cards = await db.cards.where('conceptId').equals(id).toArray()
-    if (cards.length) {
-      await db.cards.bulkPut(
-        cards.map((c) => ({ ...c, suspended: true, updatedAt: now })),
-      )
-    }
+    await deleteWord(id)
     if (selected === id) setSelected(null)
   }
 

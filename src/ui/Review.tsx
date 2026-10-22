@@ -8,6 +8,7 @@ import { SpeakButton } from './SpeakButton'
 import { ExampleSentence } from './ExampleSentence'
 import { WordCard } from './WordCard'
 import { Forms } from './Forms'
+import { CardActions } from './CardActions'
 import { formCandidates } from '../lib/highlight'
 import { buildCloze } from '../lib/cloze'
 import { sameWord } from '../lib/answer'
@@ -114,6 +115,16 @@ export function Review({ settings, onExit }: Props) {
     setIndex((i) => i + 1)
     setSessionCount((c) => c + 1)
   }, [])
+
+  /** After a word is removed from review or deleted: drop it and show the next. */
+  const dropCurrent = useCallback(() => {
+    setRevealed(false)
+    setGraded({})
+    setTyped('')
+    setTypedVerdict(null)
+    setExtra([])
+    setQueue((q) => (q ? q.filter((_, i) => i !== index) : q))
+  }, [index])
 
   /**
    * Speak the answer once, as soon as it is revealed.
@@ -412,6 +423,7 @@ export function Review({ settings, onExit }: Props) {
             Recall it in {item.dueCards.map((c) => LANG_NAMES[c.lang]).join(', ')}
           </div>
         )}
+        <CardActions conceptId={item.concept.id} onDone={dropCurrent} />
       </div>
 
       {!revealed && !typedLang && (

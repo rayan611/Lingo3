@@ -4,6 +4,7 @@ import { db } from '../db/db'
 import { matchesTopic } from '../fsrs/queue'
 import type { Concept, Settings } from '../db/types'
 import { WordCard } from './WordCard'
+import { CardActions } from './CardActions'
 
 type Sort = 'added' | 'oldest' | 'hardest' | 'alpha'
 
@@ -55,8 +56,20 @@ export function Training({ settings }: { settings: Settings }) {
   const words = useLiveQuery(
     async () => {
       const concepts = await db.concepts.orderBy('createdAt').reverse().toArray()
+      // A word removed from review has every card suspended; it stays out of
+      // this list too until it is resumed in My words.
+      const allCards = await db.cards.toArray()
+      const active = new Set<string>()
+      const withCards = new Set<string>()
+      for (const card of allCards) {
+        withCards.add(card.conceptId)
+        if (!card.suspended) active.add(card.conceptId)
+      }
       const live = concepts.filter(
-        (c) => !c.deletedAt && matchesTopic(c, topic === 'all' ? null : topic),
+        (c) =>
+          !c.deletedAt &&
+          (active.has(c.id) || !withCards.has(c.id)) &&
+          matchesTopic(c, topic === 'all' ? null : topic),
       )
       if (sort !== 'hardest') return { list: live, difficulty: new Map<string, number>() }
 
@@ -166,7 +179,13 @@ export function Training({ settings }: { settings: Settings }) {
         </p>
       </div>
 
-      {current && <WordCard conceptId={current.id} settings={settings} />}
+      {current && (
+        <WordCard
+          conceptId={current.id}
+          settings={settings}
+          actions={<CardActions conceptId={current.id} />}
+        />
+      )}
 
       <div className="panel training-nav">
         <button onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}>
