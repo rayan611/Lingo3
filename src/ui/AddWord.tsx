@@ -22,7 +22,7 @@ import {
 } from '../db/types'
 import { TagEditor } from './TagEditor'
 import { defaultListId, listCollections } from '../db/collections'
-import { IconLater } from './icons'
+import { IconLater, IconWords } from './icons'
 import { AiDown } from './AiDown'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
@@ -335,7 +335,7 @@ export function AddWord({ settings }: Props) {
 
   return (
     <div className="stack">
-      <form className="panel" onSubmit={(e) => {
+      <form className="panel add-panel" onSubmit={(e) => {
           e.preventDefault()
           void run('check')
         }}>
@@ -351,82 +351,88 @@ export function AddWord({ settings }: Props) {
             is lit. A heading that repeats the control under it is a line of
             vertical space for nothing, which on a phone is the whole cost. */}
 
-        {/* The word box keeps nearly the whole width. Add later sits inside
-            its right edge as a small bookmark: it acts on what is typed in
-            this box and nothing else, so it belongs to the box — but it is
-            neither urgent nor frequent, so it is drawn quiet and small rather
-            than taking a third of the line as it once did. */}
-        <div className="word-box">
-          <input
-            className="word-input"
-            value={lemma}
-            onChange={(e) => {
-              setLemma(e.target.value)
-              setLaterId(null)
-            }}
-            ref={wordRef}
-            placeholder="Add your word or phrase here"
-            disabled={busy}
-          />
+        {/* The word box gets the whole width: it is the one field this
+            screen exists for. */}
+        <input
+          className="word-input"
+          value={lemma}
+          onChange={(e) => {
+            setLemma(e.target.value)
+            setLaterId(null)
+          }}
+          ref={wordRef}
+          placeholder="Add your word or phrase here"
+          disabled={busy}
+        />
+
+        {/* One row of three small pills between the box and the two
+            buttons: where the word goes, what it is about, and putting it
+            down for later. All optional, all answered for you by default.
+            The list pill shows the list's name behind a list icon rather
+            than the word "List", which is what makes three fit across a
+            phone. Save for later is pale blue — the colour of "keep, do
+            nothing yet" — so it never reads as one of the two buttons
+            under it. The categories editor opens under the row, full
+            width, instead of inside it. */}
+        <div className="add-aside">
+          {myLists.length > 1 && (
+            <label className="add-pill list-pick" title="Which list to file this word in">
+              <IconWords />
+              <select
+                value={targetList || defaultId}
+                onChange={(e) =>
+                  setTargetList(e.target.value === defaultId ? '' : e.target.value)
+                }
+                disabled={busy}
+                aria-label="Which list to file this word in"
+              >
+                {/* No "(default)" after the name: the closed menu shows the
+                    option's full text, and on a phone the suffix pushed the
+                    name itself out of sight. The default is what is chosen
+                    when you arrive, which says it already. */}
+                {myLists.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              {/* The name is drawn as text and the select lies over the whole
+                  pill, invisible: a native select clips its own text early
+                  and unevenly, and a span ends in a proper ellipsis. Tapping
+                  anywhere on the pill still opens the real menu. */}
+              <span className="add-pill-value" aria-hidden="true">
+                {myLists.find((c) => c.id === (targetList || defaultId))?.name ?? ''}
+              </span>
+              <span className="add-pill-caret" aria-hidden="true">▾</span>
+            </label>
+          )}
+          {!showing && (
+            <button
+              type="button"
+              className={`add-pill${categoriesOpen ? ' is-open' : ''}`}
+              aria-expanded={categoriesOpen}
+              onClick={() => setCategoriesOpen((v) => !v)}
+            >
+              <span className="add-pill-label">Categories</span>
+              {draftTags.length > 0 && (
+                <span className="chip-count">{draftTags.length}</span>
+              )}
+              <span aria-hidden="true" className="add-pill-mark">
+                {categoriesOpen ? '−' : '+'}
+              </span>
+            </button>
+          )}
           <button
             type="button"
-            className="word-later"
+            className="add-pill later-pill"
             disabled={busy || !lemma.trim()}
             title="Keep this word for later without looking it up"
-            aria-label="Add later — keep this word without looking it up"
             onClick={() => void park()}
           >
             <IconLater />
-            <span>Later</span>
+            <span>Save for later</span>
           </button>
         </div>
-
-        {/* Where the word goes and what it is about, as two small chips on
-            one row: both optional, both answered for you by default. The
-            list chip names the list rather than saying "Default", so you can
-            see where the word will land without opening it. The categories
-            editor opens under the row, full width, instead of inside it — in
-            the row it was squeezed beside the list menu and ran over it. */}
-        {(myLists.length > 1 || !showing) && (
-          <div className="add-aside">
-            {myLists.length > 1 && (
-              <label className="add-pill list-pick" title="Which list to file this word in">
-                <span className="add-pill-label">List</span>
-                <select
-                  value={targetList || defaultId}
-                  onChange={(e) =>
-                    setTargetList(e.target.value === defaultId ? '' : e.target.value)
-                  }
-                  disabled={busy}
-                  aria-label="Which list to file this word in"
-                >
-                  {myLists.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                      {c.id === defaultId ? ' (default)' : ''}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
-            {!showing && (
-              <button
-                type="button"
-                className={`add-pill${categoriesOpen ? ' is-open' : ''}`}
-                aria-expanded={categoriesOpen}
-                onClick={() => setCategoriesOpen((v) => !v)}
-              >
-                <span className="add-pill-label">Categories</span>
-                {draftTags.length > 0 && (
-                  <span className="chip-count">{draftTags.length}</span>
-                )}
-                <span aria-hidden="true" className="add-pill-mark">
-                  {categoriesOpen ? '−' : '+'}
-                </span>
-              </button>
-            )}
-          </div>
-        )}
         {!showing && categoriesOpen && (
           <div className="add-categories">
             <TagEditor

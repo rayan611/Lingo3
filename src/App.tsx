@@ -459,7 +459,16 @@ function Workspace({
               typing into — and "I tested it and it was fine" about the wrong
               one is the failure this whole arrangement exists to avoid. */}
           {__IS_BETA__ && <span className="badge beta-badge">BETA</span>}
-          <span className="brand-sub">{learningLine(settings)}</span>
+          {/* The languages you are learning, each its own pill: they are
+              what the whole app is about, and a faint 0.75rem line read as
+              a footnote. */}
+          <span className="brand-langs">
+            {learningLine(settings).map((name) => (
+              <span key={name} className="brand-lang">
+                {name}
+              </span>
+            ))}
+          </span>
           {!online && <span className="badge offline">offline</span>}
           {/* Always rendered, hidden when idle: see showSyncing above. */}
           {syncState?.error && !BENIGN_SYNC_ERRORS.has(syncState.error) && (
@@ -549,13 +558,13 @@ function Workspace({
  *
  * Below a narrow width three full names still do not fit, so it is the codes.
  */
-function learningLine(settings: Settings): string {
+function learningLine(settings: Settings): string[] {
   const active = activeTargets(settings)
-  if (active.length === 0) return 'no active language'
+  if (active.length === 0) return ['no active language']
+  // Three full names do not fit beside the logo on a phone; codes do.
   const narrow =
     typeof window !== 'undefined' && window.innerWidth < 420 && active.length > 2
-  const names = active.map((l) => (narrow ? l.toUpperCase() : LANG_NAMES[l]))
-  return names.join(' · ')
+  return active.map((l) => (narrow ? l.toUpperCase() : LANG_NAMES[l]))
 }
 
 function ReviewTab({

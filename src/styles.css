@@ -3083,29 +3083,6 @@ details.help h3 { margin: 22px 0 6px; }
 }
 .word-list-pick select { max-width: 9rem; font-weight: 500; }
 
-/* --- the word box on Add, with Add later inside its right edge ------------ */
-.word-box { position: relative; margin-top: 14px; }
-.word-box .word-input { margin-top: 0; padding-right: 92px; }
-.word-later {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 32px;
-  padding: 4px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg-tint);
-  color: var(--ink-soft);
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.word-later:hover:not(:disabled) { border-color: var(--ink-faint); color: var(--ink); }
-.word-later:active:not(:disabled) { transform: translateY(-50%) translateY(1px); }
-
 /* --- which lists My words shows -------------------------------------------
    A row of toggle chips above the words. Off chips are plain so the ones
    that are on read as on at a glance; the count rides along in each. */
@@ -3205,3 +3182,130 @@ input[type='radio']:focus { box-shadow: none; }
 .list-new > p { margin: 8px 0 0; }
 .list-new .status { margin-top: 8px; }
 .list-new > p button.link { min-height: 0; padding: 0 2px; }
+
+/* ---------------------------------------------------------------------------
+   Home: equal tile rows, the languages you learn, and the Add panel
+   --------------------------------------------------------------------------- */
+
+/* Every row of tiles the same height. Rows used to size to their own tallest
+   label, so on a narrow phone a label that wrapped ("Read a story") made the
+   second row taller than the first. */
+.tiles { grid-auto-rows: 1fr; }
+
+/* The languages you are learning, as pills beside the logo: bold, in the
+   accent colour, one per language. */
+.brand-langs { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.brand-lang {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--accent-ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* The Add panel is the app's main window and is drawn as one: a soft accent
+   wash instead of the plain white every other panel has, an accent edge and
+   a deeper shadow. Tighter inside than other panels, so the word box and its
+   buttons fill it instead of floating in white space. */
+.panel.add-panel {
+  padding: 14px;
+  background:
+    linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 9%, var(--panel)) 0%,
+      var(--panel) 55%,
+      color-mix(in srgb, var(--grade-easy) 6%, var(--panel)) 100%);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 38%, var(--line));
+  box-shadow:
+    0 18px 40px -28px color-mix(in srgb, var(--accent) 70%, transparent),
+    var(--shadow);
+}
+.add-panel .word-input { margin-top: 0; }
+.tiles { margin-bottom: 12px; }
+
+/* The three pills: the list, Categories, Save for later, on one row.
+   Categories and Save for later keep their own width; the list pill takes
+   what is left and its name ends in an ellipsis, since the name is the one
+   part you already know. */
+.add-panel .add-aside {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.add-panel .add-aside > .add-pill { flex: none; }
+.add-panel .add-aside > .list-pick { flex: 0 1 auto; min-width: 0; justify-content: flex-start; }
+.add-panel .add-pill {
+  justify-content: center;
+  min-width: 0;
+  min-height: 38px;
+  padding: 4px 8px;
+  gap: 5px;
+  font-size: 0.82rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.add-panel .add-pill > span:not(.chip-count):not(.add-pill-mark) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.add-panel .add-pill svg { flex: none; }
+.add-panel .list-pick { position: relative; }
+.add-panel .list-pick select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.add-pill-value {
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.add-panel .list-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.add-pill-caret { flex: none; color: var(--muted); font-size: 0.8rem; line-height: 1; }
+
+/* Save for later: pale blue, the colour this app uses for looking without
+   committing, so it never reads as one of the two buttons under it. */
+.add-pill.later-pill {
+  background: color-mix(in srgb, var(--grade-easy) 10%, var(--panel));
+  border-color: color-mix(in srgb, var(--grade-easy) 35%, var(--line));
+  color: var(--grade-easy);
+  font-weight: 600;
+}
+.add-pill.later-pill:hover:not(:disabled) { border-color: var(--grade-easy); }
+
+/* Check and Check and add: a size up, still one row. */
+.add-panel .add-actions { margin-top: 12px; gap: 8px; }
+.add-panel .add-action button {
+  min-height: 50px;
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+.add-panel .add-action .small { font-size: 0.78rem; min-height: 0; }
+@media (max-width: 460px) {
+  .add-panel .add-action button { font-size: 0.95rem; padding: 10px 4px; }
+  .add-panel .add-action .small { font-size: 0.72rem; }
+}
+
+/* A narrow phone: the pills give up their padding and Categories its +
+   before any of them gives up its words. */
+@media (max-width: 380px) {
+  .add-panel .add-pill { padding: 4px 7px; gap: 4px; font-size: 0.78rem; }
+  .add-panel .add-pill-mark { display: none; }
+}
+/* On a phone the list icon gives its 20px to the list's name: the caret
+   already says it is a menu, and the name is what you need to read. */
+@media (max-width: 420px) {
+  .add-panel .list-pick svg { display: none; }
+}

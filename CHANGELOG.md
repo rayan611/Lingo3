@@ -3,6 +3,28 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Add screen as the main window; language pills; equal tiles
+
+- Add panel (`.add-panel`): soft accent wash, accent edge and deeper shadow; tighter padding (14px)
+  and no gap above the word box. Check / Check and add are 50px high with 1rem labels.
+- One row under the word box: the list (its name only, with a ▾; the real select lies invisible over
+  the pill, since a native select clipped the name early), Categories, and a pale-blue
+  **Save for later** with a bookmark icon. It replaces the small "Later" inside the field.
+  "(default)" is no longer appended to the option text.
+- Header: each language you learn is a bold accent pill instead of a faint 0.75rem line.
+- Tiles: `grid-auto-rows: 1fr`, so the second row is always as tall as the first.
+
+## 2026-10-24 — Groq as the first backup AI
+
+- `src/server/aiFallback.ts`: provider order is now **Gemini → Groq → Claude**; only providers with a
+  key are tried. `callGroq()` / `readGroq()` send each endpoint's existing Claude tool to Groq's
+  OpenAI-style chat API as a forced function call, so the answer has exactly the shape
+  `readAnthropic` returns. Default model `openai/gpt-oss-120b` with `reasoning_effort: 'low'`;
+  `GROQ_MODEL` replaces it (`LINGUA_MODEL` still only applies to the first provider).
+- Used by `api/expand.ts`, `api/story.ts` and `api/translate.ts`. Ten new checks in
+  `scripts/check-api.mts`.
+- `GROQ_API_KEY` is set in Vercel for Production only (like `GEMINI_API_KEY`), so beta has no AI.
+
 ## 2026-10-24 — Lists: default list, clearer cards, list filter, tidy Add row
 
 Released to production (lingo3.com) together with the 10-23 word lists, the calm AI-down text and the
