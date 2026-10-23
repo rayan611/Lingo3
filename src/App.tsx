@@ -105,6 +105,18 @@ export function App() {
 
   const [dbReady, setDbReady] = useState(false)
   const [dbKey, setDbKey] = useState('local')
+  // Opening the local store can stall rather than fail: an older copy of the
+  // app still open in another tab, or parked in the phone's app switcher,
+  // holds the database while this one needs to upgrade it, and the open
+  // simply waits. So a slow open gets a plain explanation and a way out
+  // instead of "Opening your words…" forever, and a failed one shows why.
+  const [dbStuck, setDbStuck] = useState(false)
+  const [dbError, setDbError] = useState<string | null>(null)
+  useEffect(() => {
+    if (dbReady || session === undefined) return
+    const timer = setTimeout(() => setDbStuck(true), 8000)
+    return () => clearTimeout(timer)
+  }, [dbReady, session])
   // Read once, not on every render: it must not flip to the landing page
   // underneath someone who is already using the app.
   const [showLanding, setShowLanding] = useState(shouldShowLanding)
@@ -142,7 +154,10 @@ export function App() {
         setDbKey(userId ?? 'local')
         setDbReady(true)
       }
-    })()
+    })().catch((err: unknown) => {
+      if (cancelled) return
+      setDbError(err instanceof Error ? `${err.name}: ${err.message}` : String(err))
+    })
     return () => {
       cancelled = true
     }
@@ -187,7 +202,8 @@ export function App() {
   }
 
   if (!dbReady) {
-    return <div className="boot">Opening your words…</div>
+    if (!dbStuck && !dbError) return <div className="boot">Opening your words…</div>
+    return <DbStuck error={dbError} />
   }
 
   return <Workspace key={dbKey} userId={userId} email={email} />
@@ -649,3 +665,30 @@ function Tile({
   )
 }
 
+
+/**
+ * Shown when the local store has not opened after a few seconds, or failed to.
+ * Nothing here deletes data: reload, or clear the cached app (service worker
+ * and caches — never IndexedDB, where the words live).
+ */
+function DbStuck({ error }: { error: string | null }) {
+  const reset = (window as { __linguaReset?: () => void }).__linguaReset
+  return (
+    <div className="boot">
+      <p>{error ? 'Your words could not be opened.' : 'Opening your words is taking longer than it should.'}</p>
+      <p className="muted small">
+        Lingo3 is probably still open somewhere else — another browser tab, or an older
+        copy in your phone's app switcher — and is holding your words while this one
+        updates them. Close every other Lingo3 tab or window (swipe it away in the app
+        switcher), then reload. Your words are safe either way.
+      </p>
+      <p>
+        <button type="button" onClick={() => location.reload()}>Reload</button>{' '}
+        {reset && (
+          <button type="button" onClick={() => reset()}>Clear cache and reload</button>
+        )}
+      </p>
+      {error && <pre className="muted small">{error}</pre>}
+    </div>
+  )
+}

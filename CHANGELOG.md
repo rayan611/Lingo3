@@ -72,6 +72,17 @@ multi-valued and separate.
 Still open: no paid plan exists, so "Lift the limits" under Your lists is simply a switch. Pack words
 have no examples until you ask for them. Import is off.
 
+## 2026-10-23 — "Opening your words…" no longer waits forever
+
+- Reproduced: after the v7 (lists) database upgrade, an older copy of the app still open — another
+  tab, or a PWA parked in the phone's app switcher — holds the IndexedDB connection, the upgrade
+  waits, and the boot screen sat on "Opening your words…" indefinitely. A failed open was also
+  swallowed (the boot promise had no catch).
+- `src/App.tsx`: after 8 s, or on an error, `DbStuck` explains it (close other Lingo3 tabs/windows,
+  then reload) with Reload and Clear cache buttons, and shows the error text if there is one.
+  Nothing deletes IndexedDB. Checked in Chromium with a held connection: the note appears at 8 s;
+  closing the other tab and reloading opens the app.
+
 ## 2026-10-23 — Backup AI: Claude answers when Gemini cannot
 
 - `src/server/aiFallback.ts`: `firstAnswer()` tries the configured providers in order — Gemini, then
