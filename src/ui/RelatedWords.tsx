@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { db, lemmaKey } from '../db/db'
+import { parkWord } from '../db/later'
 import { SpeakButton } from './SpeakButton'
 import { addRelatedWord, RELATED_STAGGER_DAYS } from '../ai/expand'
 import {
@@ -21,6 +22,9 @@ import {
  *   2. semantically similar words learned at the same time interfere with each
  *      other, so a word and its register variant should not arrive in the same
  *      review session. Added words wait a few days for their first review.
+ *
+ * Each one can also be parked on the add-later list, for when now is not the
+ * moment to take it on.
  *
  * What is asked for is register rather than synonymy: hallo and tjena mean the
  * same thing, and knowing which to use with your manager is the part a
@@ -69,6 +73,15 @@ export function RelatedWords({
   }, [related])
 
   if (shown.length === 0) return null
+
+  async function later(r: RelatedWord) {
+    const id = `${r.lang}:${r.word}`
+    const added = await parkWord(r.word)
+    setDone((d) => ({
+      ...d,
+      [id]: { text: added ? 'saved for later' : 'already on the later list' },
+    }))
+  }
 
   async function add(r: RelatedWord) {
     const id = `${r.lang}:${r.word}`
@@ -146,13 +159,23 @@ export function RelatedWords({
                 ) : already ? (
                   <span className="muted small">already in your list</span>
                 ) : (
-                  <button
-                    className="chip"
-                    disabled={busy !== null}
-                    onClick={() => void add(r)}
-                  >
-                    {busy === id ? 'adding…' : '+ add'}
-                  </button>
+                  <>
+                    <button
+                      className="chip"
+                      disabled={busy !== null}
+                      onClick={() => void add(r)}
+                    >
+                      {busy === id ? 'adding…' : '+ add'}
+                    </button>
+                    <button
+                      type="button"
+                      className="link small"
+                      disabled={busy !== null}
+                      onClick={() => void later(r)}
+                    >
+                      + add later
+                    </button>
+                  </>
                 )}
               </div>
             </li>
