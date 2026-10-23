@@ -42,6 +42,19 @@ multi-valued and separate.
 Still open: no paid plan exists, so "Lift the limits" under Your lists is simply a switch. Pack words
 have no examples until you ask for them. Import is off.
 
+## 2026-10-23 — AI-down text everywhere, functions next to the database
+
+- `aiErrorText(err, what)` in `src/ai/unavailable.ts`: the calm "… isn't available right now" line for
+  places with no room for the full `AiDown` note. Used by Bulk add (summary line), Related words (the
+  row's status) and Browse re-expand (the alert), which still showed raw errors.
+- `vercel.json`: `"regions": ["dub1"]`, so `/api/*` runs in Dublin next to the Supabase project
+  (eu-west-1) instead of US East: the session check and rate-limit call no longer cross the Atlantic.
+- Checked, no change needed: AI routes require a signed-in user; hourly limits (expand 80, translate
+  60, story 20) are atomic in `consume_ai_rate_limit` and cannot be reset from the app; `is_admin`
+  is guarded by a trigger; `npm audit` 0.
+- Still open: confirm CAPTCHA is on in Supabase (Auth → Attack Protection, Turnstile secret);
+  `GEMINI_API_KEY` is production-only, so AI does not work on beta.lingo3.com.
+
 ## 2026-10-22 — AI unavailable: calm note + Try again
 
 When offline or when the model side answers 5xx, the screen shows

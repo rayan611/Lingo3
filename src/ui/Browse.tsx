@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { reExpand } from '../ai/expand'
+import { aiErrorText } from '../ai/unavailable'
 import { isIncomplete } from '../lib/morphology'
 import {
   PARTS_OF_SPEECH,
@@ -125,7 +126,7 @@ export function Browse({ settings }: Props) {
     try {
       await reExpand(id, settings)
     } catch (err) {
-      alert(err instanceof Error ? err.message : String(err))
+      alert(aiErrorText(err, 'Re-expanding'))
     } finally {
       setBusy(false)
     }

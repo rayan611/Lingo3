@@ -3,6 +3,7 @@ import { db, lemmaKey } from '../db/db'
 import { parkWord } from '../db/later'
 import { SpeakButton } from './SpeakButton'
 import { addRelatedWord, RELATED_STAGGER_DAYS } from '../ai/expand'
+import { aiErrorText } from '../ai/unavailable'
 import {
   LANG_BCP47,
   LANG_NAMES,
@@ -108,7 +109,7 @@ export function RelatedWords({
       setDone((d) => ({
         ...d,
         [id]: {
-          text: err instanceof Error ? err.message : String(err),
+          text: aiErrorText(err, 'Adding words'),
           failed: true,
         },
       }))

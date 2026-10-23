@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { aiErrorText } from '../ai/unavailable'
 import {
   addWordsBulk,
   parseBulkInput,
@@ -58,7 +59,7 @@ export function BulkAdd({ settings }: { settings: Settings }) {
         setSummary('Saved. They will expand when you are back online.')
       }
     } catch (err) {
-      setSummary(err instanceof Error ? err.message : String(err))
+      setSummary(aiErrorText(err, 'Expanding words'))
     } finally {
       setBusy(false)
       setProgress(null)

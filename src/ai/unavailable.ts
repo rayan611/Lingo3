@@ -12,3 +12,17 @@ export class AiUnavailableError extends Error {}
 export function aiDownStatus(status: number) {
   return status >= 500
 }
+
+/**
+ * The text to show for a failed AI call where there is no room for the full
+ * AiDown note (a list row, a summary line): the same calm sentence when the AI
+ * side is down, the real message when the request itself was wrong.
+ */
+export function aiErrorText(err: unknown, what: string) {
+  const down =
+    err instanceof AiUnavailableError ||
+    (err as { unavailable?: unknown } | null)?.unavailable === true ||
+    (typeof navigator !== 'undefined' && !navigator.onLine)
+  if (down) return `${what} isn't available right now. Try again in a little while.`
+  return err instanceof Error ? err.message : String(err)
+}
