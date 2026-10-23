@@ -40,7 +40,13 @@ export function WordLists({ settings }: { settings: Settings }) {
   const [renaming, setRenaming] = useState<string | null>(null)
   const [draftName, setDraftName] = useState('')
   const [busy, setBusy] = useState(false)
-  const [status, setStatus] = useState<{ kind: string; text: string } | null>(null)
+  /** `at` says which part of the panel the message belongs under, so an
+      error from the new-list box is shown in that box, not a screen below. */
+  const [status, setStatus] = useState<{
+    kind: string
+    text: string
+    at: 'new' | 'foot'
+  } | null>(null)
 
   const collections = useLiveQuery(() => listCollections(), [], [])
   const counts = useLiveQuery(() => collectionCounts(), [], new Map<string, number>())
@@ -57,15 +63,19 @@ export function WordLists({ settings }: { settings: Settings }) {
   /** Where a word goes when the Add screen is left on its default. */
   const defaultId = defaultListId(settings, mine)
 
-  async function run(what: () => Promise<string | void>) {
+  async function run(what: () => Promise<string | void>, at: 'new' | 'foot' = 'foot') {
     if (busy) return
     setBusy(true)
     setStatus(null)
     try {
       const message = await what()
-      if (message) setStatus({ kind: 'ok', text: message })
+      if (message) setStatus({ kind: 'ok', text: message, at })
     } catch (err) {
-      setStatus({ kind: 'warn', text: err instanceof Error ? err.message : String(err) })
+      setStatus({
+        kind: 'warn',
+        text: err instanceof Error ? err.message : String(err),
+        at,
+      })
     } finally {
       setBusy(false)
     }
@@ -80,6 +90,81 @@ export function WordLists({ settings }: { settings: Settings }) {
         is about. The list marked <strong>Default</strong> is where a new word
         goes unless you pick another on the Add screen.
       </p>
+
+      {/* Making a list comes first, in a box of its own, and the lists you
+          have come after it: at the foot of the cards the field read as part
+          of the last card, and with three lists it was off the screen. The
+          limit is said out loud here rather than discovered by pressing a
+          button that refuses. */}
+      <div className="list-new">
+        <h3>Add a new list</h3>
+        <div className="row">
+          <input
+            className="field-grow"
+            value={newName}
+            maxLength={60}
+            placeholder="Name a new list — Words at work, University…"
+            disabled={busy || mine.length >= plan.collections}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key !== 'Enter' || !newName.trim()) return
+              void run(async () => {
+                await createCollection(newName, settings)
+                setNewName('')
+              }, 'new')
+            }}
+          />
+          <button
+            disabled={busy || !newName.trim() || mine.length >= plan.collections}
+            onClick={() =>
+              void run(async () => {
+                await createCollection(newName, settings)
+                setNewName('')
+              }, 'new')
+            }
+          >
+            Add list
+          </button>
+        </div>
+        <p className="muted small">
+          {mine.length} of {plan.collections} list{plan.collections === 1 ? '' : 's'} used
+          {mine.length >= plan.collections ? ' — this is the limit on this plan.' : '.'}{' '}
+          Starter packs below do not count against it.
+          {settings.plan !== 'full' && (
+            <>
+              {' '}
+              <button
+                className="link"
+                disabled={busy}
+                onClick={() =>
+                  void run(async () => {
+                    await saveSettings({ plan: 'full' })
+                    return 'Limits lifted on this account.'
+                  })
+                }
+              >
+                Lift the limits
+              </button>{' '}
+              — there is no billing yet, so this is simply a switch.
+            </>
+          )}
+          {settings.plan === 'full' && (
+            <>
+              {' '}
+              <button
+                className="link"
+                disabled={busy}
+                onClick={() => void run(() => saveSettings({ plan: 'free' }))}
+              >
+                Back to the free limits
+              </button>
+            </>
+          )}
+        </p>
+        {status?.at === 'new' && (
+          <div className={`status ${status.kind}`}>{status.text}</div>
+        )}
+      </div>
 
       <div className="list-cards">
         {mine.map((c) => (
@@ -145,72 +230,6 @@ export function WordLists({ settings }: { settings: Settings }) {
           />
         ))}
       </div>
-
-      {/* The limit, said out loud rather than discovered by pressing a button
-          that refuses. */}
-      <div className="row">
-        <input
-          className="field-grow"
-          value={newName}
-          maxLength={60}
-          placeholder="Name a new list — Words at work, University…"
-          disabled={busy || mine.length >= plan.collections}
-          onChange={(e) => setNewName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key !== 'Enter' || !newName.trim()) return
-            void run(async () => {
-              await createCollection(newName, settings)
-              setNewName('')
-            })
-          }}
-        />
-        <button
-          disabled={busy || !newName.trim() || mine.length >= plan.collections}
-          onClick={() =>
-            void run(async () => {
-              await createCollection(newName, settings)
-              setNewName('')
-            })
-          }
-        >
-          Add list
-        </button>
-      </div>
-      <p className="muted small">
-        {mine.length} of {plan.collections} list{plan.collections === 1 ? '' : 's'} used
-        {mine.length >= plan.collections && ' — this is the limit on this plan.'}{' '}
-        Starter packs below do not count against it.
-        {settings.plan !== 'full' && (
-          <>
-            {' '}
-            <button
-              className="link"
-              disabled={busy}
-              onClick={() =>
-                void run(async () => {
-                  await saveSettings({ plan: 'full' })
-                  return 'Limits lifted on this account.'
-                })
-              }
-            >
-              Lift the limits
-            </button>{' '}
-            — there is no billing yet, so this is simply a switch.
-          </>
-        )}
-        {settings.plan === 'full' && (
-          <>
-            {' '}
-            <button
-              className="link"
-              disabled={busy}
-              onClick={() => void run(() => saveSettings({ plan: 'free' }))}
-            >
-              Back to the free limits
-            </button>
-          </>
-        )}
-      </p>
 
       <h3>Starter packs</h3>
       <p className="muted small">
@@ -336,7 +355,9 @@ export function WordLists({ settings }: { settings: Settings }) {
         Import a list
       </button>
 
-      {status && <div className={`status ${status.kind}`}>{status.text}</div>}
+      {status?.at === 'foot' && (
+        <div className={`status ${status.kind}`}>{status.text}</div>
+      )}
     </div>
   )
 }

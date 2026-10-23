@@ -7,6 +7,8 @@
 -- yet, and a removed list must not be able to fail a settings write. The
 -- client resolves a missing or stale id to the built-in default list.
 --
+-- Applied to project vfximbxcxczntqywdryd (Lingo3) on 2026-10-24.
+--
 -- Until this runs, the client sends settings without the column (see
 -- isMissingSchema in src/sync/sync.ts), so the choice stays on the device.
 

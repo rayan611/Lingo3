@@ -3188,3 +3188,20 @@ input[type='radio']:focus { box-shadow: none; }
 /* The × on a topic pill. The phone-wide 44px button height made every pill
    that carried one twice the height of the pills beside it. */
 .tag-remove { min-height: 0; height: 24px; min-width: 24px; }
+
+/* Making a list: its own box above the cards, so it reads as "add one" and
+   not as part of the last list. */
+.list-new {
+  margin: 12px 0 4px;
+  padding: 12px 14px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: var(--radius-sm);
+  background: var(--bg-tint);
+}
+.list-new > h3 { margin: 0 0 8px; }
+.list-new .row { align-items: center; gap: 8px; flex-wrap: nowrap; }
+.list-new .row > input { min-width: 0; }
+.list-new .row > button { flex: none; }
+.list-new > p { margin: 8px 0 0; }
+.list-new .status { margin-top: 8px; }
+.list-new > p button.link { min-height: 0; padding: 0 2px; }

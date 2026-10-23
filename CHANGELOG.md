@@ -22,10 +22,13 @@ session does not have to rediscover it.
 - Add (`src/ui/AddWord.tsx`): List and Categories are two small pills on one row; the list pill names
   the list (default preselected each visit). Categories opens full width below the row instead of
   inside it, where it ran over the list menu. **Add later** is a small bookmark inside the word box.
+- **Add a new list** is its own dashed box at the top of Your lists, above the cards; a duplicate
+  name or the plan limit is reported inside that box.
 - Smaller: no empty band above a panel's first heading ("Recently added"); topic pills no longer
   double height on a phone (the × inherited the 44px button height).
 
-Still open: run the migration on the database, or the default list stays on the device that set it.
+The migration was applied to vfximbxcxczntqywdryd on 2026-10-24, so the default list follows the
+account.
 
 ## 2026-10-23 — Word lists (collections), starter packs, per-list export
 
