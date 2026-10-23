@@ -5,6 +5,9 @@ session does not have to rediscover it.
 
 ## 2026-10-24 — Lists: default list, clearer cards, list filter, tidy Add row
 
+Released to production (lingo3.com) together with the 10-23 word lists, the calm AI-down text and the
+backup AI — all of it had been beta-only or undeployed until then.
+
 - **Checkboxes were 42px slabs.** The global `input` rule (width 100%, padding, 42px min-height) hit
   every checkbox and radio. Reset at the foot of `src/styles.css`; also fixes Settings and the importer.
 - List cards (`src/ui/WordLists.tsx`): each switch now has a title and a line saying what on and off
