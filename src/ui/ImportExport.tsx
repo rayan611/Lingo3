@@ -99,7 +99,12 @@ export function ImportExport({ settings }: { settings: Settings }) {
     setBusy(true)
     setStatus(null)
     try {
-      const added = await addWordsBulk({ lines, sourceLang, category: 'daily' })
+      const added = await addWordsBulk({
+        lines,
+        sourceLang,
+        category: 'daily',
+        settings,
+      })
       let text = `Queued ${added.queued} of ${lines.length}.`
       if (added.duplicates.length) {
         text += ` ${added.duplicates.length} already in your list.`

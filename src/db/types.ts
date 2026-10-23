@@ -281,6 +281,115 @@ export const MorphologySchema = z.discriminatedUnion('lang', [
 export type Morphology = z.infer<typeof MorphologySchema>
 
 // ---------------------------------------------------------------------------
+// Collections — the shelf a word is filed on
+//
+// A collection is the ONE group a word belongs to: "A1", "Words at work",
+// "University". Tags are something else and stay something else — a word is
+// routinely about several topics, and it is filed in exactly one place. The
+// two answer different questions ("what is this word about?" versus "which of
+// my lists is it in?") and collapsing them was the thing to avoid: a word in
+// four lists is in no list, which is precisely the failure `tags` already
+// exists to absorb.
+//
+// One owner per word is what makes everything downstream cheap: counting a
+// list is a count, exporting one is a filter, and "set this list aside" is a
+// single flag rather than a membership table to reconcile across devices.
+// ---------------------------------------------------------------------------
+
+/**
+ * Where a collection came from.
+ *
+ * `user` is one you made. `library` is one filled from a pack that ships with
+ * the app (A1, A2, everyday words) — same rows, same cards, same sync; the
+ * difference is only that the app knows how to refill it and that it does not
+ * count against the free limit. See PLANS below for why that distinction
+ * earns its keep.
+ */
+export const COLLECTION_KINDS = ['user', 'library'] as const
+export type CollectionKind = (typeof COLLECTION_KINDS)[number]
+
+export interface Collection {
+  id: string
+  name: string
+  kind: CollectionKind
+  /** Which shipped pack filled this one. Only ever set on `library`. */
+  packId?: string
+  /** Order in the word-lists screen; lower first. */
+  sortOrder: number
+  /**
+   * Whether the words in it are being studied right now.
+   *
+   * Off takes every word in the list out of the queue and out of the new-word
+   * budget, and touches no FSRS state whatsoever — exactly like pausing a
+   * language. Turning it back on in March resumes the intervals where they
+   * were rather than starting over, which is the whole reason this is a flag
+   * on the collection and not a bulk edit of the cards.
+   */
+  active: boolean
+  /**
+   * Whether this list is offered when exporting. Separate from `active`
+   * because the two questions are genuinely different: a finished list you no
+   * longer drill is still the one you want to hand to someone else.
+   */
+  inExport: boolean
+  createdAt: number
+  updatedAt: number
+  /** Soft delete, like everything else that syncs. */
+  deletedAt?: number
+}
+
+/**
+ * The list every word lands in before anyone has made a second one.
+ *
+ * A fixed id rather than a generated one, and that is load-bearing: the
+ * default is created independently on the phone and on the laptop, and two
+ * random ids would mean two "My words" lists that then both sync. A constant
+ * makes the two writes the same row.
+ *
+ * Shaped as a UUID because Postgres stores it in a `uuid` column.
+ */
+export const DEFAULT_COLLECTION_ID = '00000000-0000-4000-8000-00000000c0de'
+export const DEFAULT_COLLECTION_NAME = 'My words'
+
+/** Library collection ids are fixed per pack, for the same reason. */
+export const PACK_COLLECTION_IDS: Record<string, string> = {
+  a1: '00000000-0000-4000-8000-00000000a101',
+  a2: '00000000-0000-4000-8000-00000000a202',
+  daily: '00000000-0000-4000-8000-00000000da11',
+}
+
+/**
+ * How many lists and how many words you get.
+ *
+ * Library packs are deliberately NOT counted. Three free slots filled by A1,
+ * A2 and everyday words would leave a new account with nowhere to put its own
+ * words, which turns a starter kit into a wall — so the shipped lists are
+ * free and the limit applies only to the ones you make.
+ *
+ * `wordsPerCollection` is a cap on rows, not bytes. A fully expanded word is
+ * roughly a kilobyte across its concept, its entries and its cards, so three
+ * full lists is under a megabyte and storage is not what is scarce here —
+ * model calls are. The cap exists so one runaway import cannot become
+ * everyone's bill.
+ */
+export interface Plan {
+  collections: number
+  wordsPerCollection: number
+}
+
+export const PLANS = {
+  free: { collections: 3, wordsPerCollection: 300 },
+  // Nothing sells this yet: there is no billing, so for now it is a switch in
+  // Settings and the honest description of it is "the limits off", not "the
+  // paid plan". Naming it `full` rather than `pro` keeps that honest.
+  full: { collections: 50, wordsPerCollection: 100_000 },
+} as const satisfies Record<string, Plan>
+
+export type PlanName = keyof typeof PLANS
+
+export const DEFAULT_PLAN: PlanName = 'free'
+
+// ---------------------------------------------------------------------------
 // Core records
 // ---------------------------------------------------------------------------
 
@@ -306,10 +415,40 @@ export interface Concept {
    */
   tags?: string[]
   notes?: string
+  /**
+   * The one collection this word is filed in.
+   *
+   * Optional in the type and never optional in practice: every word written
+   * from now on carries one, and the Dexie v7 upgrade put every older word
+   * into the default list. It stays optional so a row pulled from a device
+   * still running the previous build — which has no such column — parses
+   * instead of throwing, and `collectionOf()` resolves it to the default.
+   */
+  collectionId?: string
+  /**
+   * Which catalogue item this word came from, when it came from a shipped
+   * pack.
+   *
+   * This is the field that makes the packs overlap safely. "red" is an A1
+   * word and it is also an everyday-colours word; enabling both lists must
+   * not produce two cards for it. Both packs name the same `seedId`, the
+   * second enable sees the word already present, and it is skipped rather
+   * than duplicated — so the lists can be curated for what belongs in them
+   * rather than trimmed to avoid each other.
+   */
+  seedId?: string
   createdAt: number
   updatedAt: number
   /** Soft delete — a hard delete can't be replicated to other devices. */
   deletedAt?: number
+}
+
+/**
+ * The collection a word is in, for a word written before collections existed
+ * or pulled from a device that does not know about them yet.
+ */
+export function collectionOf(concept: { collectionId?: string }): string {
+  return concept.collectionId || DEFAULT_COLLECTION_ID
 }
 
 export interface Entry {
@@ -530,6 +669,15 @@ export interface Settings {
    */
   translateFrom?: string
   translateTo?: string[]
+  /**
+   * Which limits apply to this account — see PLANS.
+   *
+   * Account data, because a limit that differed between your phone and your
+   * laptop would be a bug rather than a preference. Undefined means the
+   * default, so an account that predates this reads as `free` without a
+   * backfill.
+   */
+  plan?: PlanName
   updatedAt: number
 }
 

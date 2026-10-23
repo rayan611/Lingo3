@@ -53,12 +53,20 @@ Push to GitHub, import the repo on Vercel, and set `ANTHROPIC_API_KEY` as an env
 ## Data model
 
 ```
+Collection     one list; a Concept belongs to exactly one
 Concept        one idea, language-independent
   └── Entry    one per language: headword, meaning, morphology, example
   └── Card     one per target language: FSRS state
 ReviewLog      append-only, never conflicts on sync
 Pending        words added offline, awaiting expansion
 ```
+
+A **list** is where a word is filed; **topics** are what it is about, and a word has several of
+those. Keeping them apart is what makes counting, exporting and setting a list aside cheap — one
+owner per word, so each is a filter rather than a membership table to reconcile across devices.
+
+Setting a list aside is a flag on the list, never a bulk suspend of its cards: no FSRS state is
+touched, so a list switched off in October resumes its intervals when it comes back in March.
 
 Every mutable row carries `updatedAt`, so last-write-wins sync can be added later without a migration. The review log is append-only by design — it is the bulk of write volume and it can never conflict.
 
@@ -70,3 +78,7 @@ Morphology is stored **per language**, not in a shared schema. German needs an a
 - **No audio.** Deferred — Web Speech voices depend on what the device has installed.
 - **No reading generator.** Needs roughly 300 known words before it produces text that reads naturally rather than forced.
 - **Four-language ceiling.** The schema is general, but the UI assumes a handful.
+- **No list import.** Bringing a whole list in from another app is switched off: deciding what counts
+  as a duplicate of a word you already have is unsettled. The CSV importer under Settings works.
+- **Starter packs ship without morphology.** The three packs carry the headword (with its article)
+  and a gloss in all eight languages; verb tables and example sentences arrive when you press redo.

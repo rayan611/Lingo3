@@ -3,9 +3,16 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { reExpand } from '../ai/expand'
 import { isIncomplete } from '../lib/morphology'
-import { PARTS_OF_SPEECH, activeTargets, type Settings } from '../db/types'
+import {
+  PARTS_OF_SPEECH,
+  activeTargets,
+  collectionOf,
+  type Settings,
+} from '../db/types'
+import { listCollections, moveWord } from '../db/collections'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
+import { WordLists } from './WordLists'
 
 export function Browse({ settings }: Props) {
   const [query, setQuery] = useState('')
@@ -19,6 +26,8 @@ export function Browse({ settings }: Props) {
    * already there; only the control was missing.
    */
   const [pos, setPos] = useState<string>('all')
+  /** Which list is being looked at. 'all' is every list, set aside or not. */
+  const [list, setList] = useState<string>('all')
   const [troubleOnly, setTroubleOnly] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -78,18 +87,22 @@ export function Browse({ settings }: Props) {
     new Set<string>(),
   )
 
+  /** Every list, for the filter and for the move menu on each word. */
+  const collections = useLiveQuery(() => listCollections(), [], [])
+
   const concepts = useLiveQuery(async () => {
     const all = await db.concepts.orderBy('createdAt').reverse().toArray()
     const q = query.trim().toLocaleLowerCase()
     return all.filter((c) => {
       if (c.deletedAt) return false
+      if (list !== 'all' && collectionOf(c) !== list) return false
       if (!matchesTopic(c, topic)) return false
       if (pos !== 'all' && c.pos !== pos) return false
       if (troubleOnly && !leeches.has(c.id)) return false
       if (!q) return true
       return c.lemma.toLocaleLowerCase().includes(q)
     })
-  }, [query, topic, pos, troubleOnly, leeches], [])
+  }, [query, topic, pos, list, troubleOnly, leeches], [])
 
   /** Every topic in use, from tags and from the old single category field. */
   const topics = useLiveQuery(
@@ -157,6 +170,11 @@ export function Browse({ settings }: Props) {
 
   return (
     <div className="stack">
+      {/* Above the words themselves: which list you are looking at is the
+          first question on this screen, and the answer to it changes what
+          the list below contains. */}
+      <WordLists settings={settings} />
+
       <div className="panel">
         <h2>Your words</h2>
         <div className="row">
@@ -166,6 +184,23 @@ export function Browse({ settings }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search"
           />
+          {/* Only once there is a second list. Until then every word is in
+              the same one and the menu answers nothing. */}
+          {collections.length > 1 && (
+            <select
+              value={list}
+              onChange={(e) => setList(e.target.value)}
+              aria-label="List"
+            >
+              <option value="all">All lists</option>
+              {collections.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                  {c.active ? '' : ' (set aside)'}
+                </option>
+              ))}
+            </select>
+          )}
           <select value={topic} onChange={(e) => setTopic(e.target.value)}>
             <option value="all">All topics</option>
             {topics.map((t) => (
@@ -228,6 +263,24 @@ export function Browse({ settings }: Props) {
                 ) : null}
               </button>
               <div className="word-list-actions">
+                {/* Moving a word is a filing change and nothing else: no card
+                    is touched, so a word that moves from "A1" to "Words at
+                    work" keeps every interval it has earned. */}
+                {collections.length > 1 && (
+                  <select
+                    className="link move-list"
+                    value={collectionOf(c)}
+                    onChange={(e) => void moveWord(c.id, e.target.value)}
+                    aria-label={`Which list "${c.lemma}" is in`}
+                    title="Move to another list"
+                  >
+                    {collections.map((col) => (
+                      <option key={col.id} value={col.id}>
+                        {col.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
                 <button
                   className="link"
                   disabled={busy}

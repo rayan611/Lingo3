@@ -162,8 +162,13 @@ async function main() {
   {
     const { readFileSync } = await import('node:fs')
     const syncSrc = readFileSync('src/sync/sync.ts', 'utf8')
+    // Anchored on the row literal rather than on the upsert call. The two
+    // used to be the same place; they stopped being so when the settings
+    // push grew a retry that re-sends the row without a column the server
+    // does not have yet, which needs the row in a variable first. What is
+    // being checked is unchanged: that every field of Settings is in it.
     const pushBlock = syncSrc.slice(
-      syncSrc.indexOf("from('user_settings').upsert"),
+      syncSrc.indexOf("const settingsRow: Row = {"),
       syncSrc.indexOf("advanceCursor(CURSOR_PUSH"),
     )
     const pullBlock = syncSrc.slice(

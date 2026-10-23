@@ -1,4 +1,5 @@
 import { db, compositeId, lemmaKey, newId } from '../db/db'
+import { defaultTargetCollection, roomIn } from '../db/collections'
 import { aiDownStatus } from './unavailable'
 import { detectLang } from '../lib/detectLang'
 import { authConfigured, supabase } from '../auth/supabase'
@@ -286,6 +287,8 @@ export async function addWord(opts: {
   sourceLang?: Lang
   category: Category
   hint?: string
+  /** Which list to file it in. Falls back to the first one with room. */
+  collectionId?: string
   settings: Settings
 }): Promise<AddWordResult> {
   const { settings } = opts
@@ -302,6 +305,15 @@ export async function addWord(opts: {
     }
   }
 
+  const collectionId =
+    opts.collectionId ?? (await defaultTargetCollection(settings))
+  const { free, limit } = await roomIn(collectionId, settings)
+  if (free <= 0) {
+    throw new Error(
+      `That list is full at ${limit} words. Move some out, start another list, or lift the limits under Your lists.`,
+    )
+  }
+
   const now = Date.now()
   const concept: Concept = {
     id: newId(),
@@ -309,6 +321,7 @@ export async function addWord(opts: {
     sourceLang: opts.sourceLang ?? provisionalLang(lemma, settings),
     pos: 'other',
     category: opts.category,
+    collectionId,
     notes: opts.hint,
     createdAt: now,
     updatedAt: now,
@@ -485,6 +498,7 @@ export async function commitPreview(opts: {
   preview: WordPreview
   category: Category
   tags?: string[]
+  collectionId?: string
   settings: Settings
 }): Promise<AddWordResult> {
   const { preview, settings } = opts
@@ -500,6 +514,15 @@ export async function commitPreview(opts: {
     }
   }
 
+  const collectionId =
+    opts.collectionId ?? (await defaultTargetCollection(settings))
+  const { free, limit } = await roomIn(collectionId, settings)
+  if (free <= 0) {
+    throw new Error(
+      `That list is full at ${limit} words. Move some out, start another list, or lift the limits under Your lists.`,
+    )
+  }
+
   const now = Date.now()
   const concept: Concept = {
     id: newId(),
@@ -512,6 +535,7 @@ export async function commitPreview(opts: {
       provisionalLang(preview.lemma, settings),
     pos: preview.expansion.pos as PartOfSpeech,
     category: opts.category,
+    collectionId,
     tags: opts.tags?.length
       ? normaliseTags(opts.tags)
       : normaliseTags(preview.expansion.tags),
@@ -585,12 +609,35 @@ export async function addWordsBulk(opts: {
   sourceLang: Lang
   category: Category
   tags?: string[]
+  collectionId?: string
+  /**
+   * Needed for the room check. Optional so the existing callers that do not
+   * care about limits keep compiling; without it the paste is not trimmed,
+   * which is the old behaviour exactly.
+   */
+  settings?: Pick<Settings, 'plan'>
 }): Promise<BulkAddResult> {
   const duplicates: BulkAddResult['duplicates'] = []
   let queued = 0
   let skipped = 0
 
+  const collectionId =
+    opts.collectionId ??
+    (opts.settings ? await defaultTargetCollection(opts.settings) : undefined)
+
+  // How many of this paste will fit. Trimming is better than refusing: a list
+  // of fifty with room for forty should add forty and say so, not reject all
+  // fifty because of the last ten.
+  let room = Number.POSITIVE_INFINITY
+  if (collectionId && opts.settings) {
+    room = (await roomIn(collectionId, opts.settings, opts.lines.length)).free
+  }
+
   for (const line of opts.lines) {
+    if (room <= 0) {
+      skipped++
+      continue
+    }
     const lemma = line.lemma.trim()
     if (!lemma) {
       skipped++
@@ -619,6 +666,7 @@ export async function addWordsBulk(opts: {
       sourceLang: opts.sourceLang,
       pos: 'other',
       category: opts.category,
+      collectionId,
       tags: line.tags?.length
         ? normaliseTags(line.tags)
         : opts.tags?.length
@@ -636,6 +684,7 @@ export async function addWordsBulk(opts: {
       createdAt: now,
     })
     queued++
+    room--
   }
 
   return { queued, duplicates, skipped }
@@ -722,6 +771,8 @@ export async function addRelatedWord(opts: {
   sourceLang?: Lang
   category: Category
   tags?: string[]
+  /** The list the word it was suggested beside lives in, when there is one. */
+  collectionId?: string
   settings: Settings
 }): Promise<AddWordResult> {
   const { settings } = opts
@@ -737,6 +788,13 @@ export async function addRelatedWord(opts: {
     }
   }
 
+  const collectionId =
+    opts.collectionId ?? (await defaultTargetCollection(settings))
+  const { free, limit } = await roomIn(collectionId, settings)
+  if (free <= 0) {
+    throw new Error(`That list is full at ${limit} words.`)
+  }
+
   const now = Date.now()
   const concept: Concept = {
     id: newId(),
@@ -744,6 +802,7 @@ export async function addRelatedWord(opts: {
     sourceLang: opts.sourceLang ?? provisionalLang(lemma, settings),
     pos: 'other',
     category: opts.category,
+    collectionId,
     tags: opts.tags?.length ? normaliseTags(opts.tags) : undefined,
     createdAt: now,
     updatedAt: now,

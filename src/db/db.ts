@@ -1,9 +1,12 @@
 import Dexie, { type Table } from 'dexie'
 import {
+  DEFAULT_COLLECTION_ID,
+  DEFAULT_COLLECTION_NAME,
   DEFAULT_SETTINGS,
   DEVICE_OVERRIDABLE,
   effectiveSettings,
   type Card,
+  type Collection,
   type DeviceOverridableKey,
   type DeviceOverride,
   type Concept,
@@ -31,6 +34,7 @@ export interface MetaRow {
  * simpler and impossible to get wrong by forgetting a `where` clause.
  */
 export class Lingo3DB extends Dexie {
+  collections!: Table<Collection, string>
   concepts!: Table<Concept, string>
   entries!: Table<Entry, string>
   cards!: Table<Card, string>
@@ -116,6 +120,47 @@ export class Lingo3DB extends Dexie {
             if (!row.updatedAt) row.updatedAt = row.createdAt
           })
       })
+
+    // v7: collections — the one list a word is filed in.
+    //
+    // `collectionId` is indexed because every list on the word-lists screen
+    // is a count or a filter on it, and an unindexed filter would walk every
+    // concept once per card drawn. `seedId` is indexed for the same reason in
+    // a narrower place: enabling a pack asks "which of these 100 do I already
+    // have" once per item, and that has to be a key lookup.
+    //
+    // The upgrade is the interesting half. Every existing word is put in a
+    // default list rather than left without one, because "no collection" is a
+    // state every screen would then have to handle forever, and the honest
+    // answer for a word added before lists existed is that it is in your main
+    // one. `updatedAt` is deliberately NOT touched: restamping every concept
+    // would push the entire vocabulary through the next sync as if it had all
+    // just changed, on every device, for a field the server fills in itself.
+    this.version(7)
+      .stores({
+        collections: 'id, kind, sortOrder, updatedAt, deletedAt',
+        concepts:
+          'id, lemma, sourceLang, pos, category, createdAt, updatedAt, deletedAt, *tags, collectionId, seedId',
+      })
+      .upgrade(async (tx) => {
+        const now = Date.now()
+        await tx.table('collections').put({
+          id: DEFAULT_COLLECTION_ID,
+          name: DEFAULT_COLLECTION_NAME,
+          kind: 'user',
+          sortOrder: 0,
+          active: true,
+          inExport: true,
+          createdAt: now,
+          updatedAt: now,
+        } satisfies Collection)
+        await tx
+          .table('concepts')
+          .toCollection()
+          .modify((c: Concept) => {
+            if (!c.collectionId) c.collectionId = DEFAULT_COLLECTION_ID
+          })
+      })
   }
 }
 
@@ -165,8 +210,9 @@ export async function adoptLocalData(): Promise<number> {
   const local = new Lingo3DB(dbNameFor(null))
   try {
     await local.open()
-    const [concepts, entries, cards, reviewLog, pending, later] =
+    const [collections, concepts, entries, cards, reviewLog, pending, later] =
       await Promise.all([
+        local.collections.toArray(),
         local.concepts.toArray(),
         local.entries.toArray(),
         local.cards.toArray(),
@@ -175,16 +221,24 @@ export async function adoptLocalData(): Promise<number> {
         local.later.toArray(),
       ])
     // Parked words count: signing up with nothing added but a list of words
-    // written down in class should not throw that list away.
-    if (concepts.length === 0 && later.length === 0) return 0
+    // written down in class should not throw that list away. So does an empty
+    // list someone made and named before signing up.
+    if (concepts.length === 0 && later.length === 0 && collections.length === 0) {
+      return 0
+    }
 
     await db.transaction(
       'rw',
       // The array form: Dexie's variadic overload stops at five tables.
-      [db.concepts, db.entries, db.cards, db.reviewLog, db.pending, db.later],
+      [
+        db.collections, db.concepts, db.entries, db.cards, db.reviewLog,
+        db.pending, db.later,
+      ],
       async () => {
         // bulkPut, not bulkAdd: re-running this must not explode on rows that
-        // already made it across.
+        // already made it across. Collections first: a concept that arrives
+        // before its list exists would show up under nothing.
+        await db.collections.bulkPut(collections)
         await db.concepts.bulkPut(concepts)
         await db.entries.bulkPut(entries)
         await db.cards.bulkPut(cards)
@@ -197,11 +251,12 @@ export async function adoptLocalData(): Promise<number> {
     await local.transaction(
       'rw',
       [
-        local.concepts, local.entries, local.cards, local.reviewLog,
-        local.pending, local.later,
+        local.collections, local.concepts, local.entries, local.cards,
+        local.reviewLog, local.pending, local.later,
       ],
       async () => {
         await Promise.all([
+          local.collections.clear(),
           local.concepts.clear(),
           local.entries.clear(),
           local.cards.clear(),

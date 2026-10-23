@@ -21,6 +21,7 @@ import {
   type Settings,
 } from '../db/types'
 import { TagEditor } from './TagEditor'
+import { listCollections } from '../db/collections'
 import { AiDown } from './AiDown'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
@@ -109,6 +110,26 @@ export function AddWord({ settings }: Props) {
   const [laterId, setLaterId] = useState<string | null>(null)
   /** The tags that will be saved — seeded by the model, edited here. */
   const [draftTags, setDraftTags] = useState<string[]>([])
+  /**
+   * Which list the word is filed in. Empty means "wherever the app would put
+   * it", which is the default list — so someone who has never made a second
+   * list never has to answer this question, and the picker below is not even
+   * rendered for them.
+   */
+  const [targetList, setTargetList] = useState('')
+
+  /**
+   * The lists a typed word may go into.
+   *
+   * Pack lists are left out on purpose: A1 is a curated hundred words, and a
+   * word typed by hand in the middle of it makes the list something other
+   * than what its name claims. Your own lists only.
+   */
+  const myLists = useLiveQuery(
+    async () => (await listCollections()).filter((c) => c.kind === 'user'),
+    [],
+    [],
+  )
   /**
    * Suggestions from the last expansion. Kept after the word is saved so the
    * list does not vanish at the moment it becomes useful — these are not
@@ -230,6 +251,7 @@ export function AddWord({ settings }: Props) {
         preview: toSave,
         category: legacyCategory(tags),
         tags,
+        collectionId: targetList || undefined,
         settings,
       })
       setLastId(result.conceptId)
@@ -357,6 +379,27 @@ export function AddWord({ settings }: Props) {
             or put it down for later. Neither is part of adding a word, which
             is why neither sits above. */}
         <div className="add-aside">
+          {/* Only once there is a choice to make. One list is not a choice,
+              and a menu with one item in it is a question you have to read
+              before realising it was never asking anything. */}
+          {!showing && myLists.length > 1 && (
+            <label className="chip list-pick">
+              <span className="muted small">List</span>
+              <select
+                value={targetList}
+                onChange={(e) => setTargetList(e.target.value)}
+                disabled={busy}
+                aria-label="Which list to file this word in"
+              >
+                <option value="">Default</option>
+                {myLists.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           {!showing && <details className="categories">
             <summary>
               Categories

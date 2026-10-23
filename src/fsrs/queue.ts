@@ -1,5 +1,6 @@
 import { State } from 'ts-fsrs'
 import { db } from '../db/db'
+import { activeCollectionIds, inActiveCollection } from '../db/collections'
 import { activeTargets } from '../db/types'
 import type { Card, Concept, Entry, Lang, Settings } from '../db/types'
 
@@ -70,6 +71,11 @@ export async function buildQueue(
   const active = activeTargets(settings)
   if (active.length === 0) return []
 
+  // Lists that are set aside. Read once per queue build, not once per word:
+  // `null` means nothing is set aside, which is the common case and skips the
+  // check entirely.
+  const activeLists = await activeCollectionIds()
+
   const now = Date.now()
 
   const dueCards = await db.cards
@@ -105,6 +111,12 @@ export async function buildQueue(
   const candidates = concepts
     .map((concept, i) => {
       if (!concept || concept.deletedAt) return null
+      // A list that is switched off is not studied at all: its words leave the
+      // queue, leave the counts, and leave the new-word budget alone. This is
+      // the difference between it and the topic filter below — that one
+      // narrows what you see of today's due words, this one changes what is
+      // due. Nothing about the cards is touched either way.
+      if (!inActiveCollection(concept, activeLists)) return null
       // A topic filter narrows which words appear; it never changes which ones
       // are due. Everything outside the filter stays due and keeps counting
       // against the global total shown in the header.
@@ -187,15 +199,24 @@ export async function queueCounts(
           .filter((c) => !c.suspended && c.due <= now)
           .toArray()
 
-  // When a topic is in focus, drop cards whose concept is outside it — but
-  // only after the due query, so the numbers mean "due AND in this topic".
+  // Two narrowings, and they are not the same kind of thing. A list that is
+  // switched off is genuinely not due — the badge on the tile must not count
+  // words you have set aside, or it sends you to a review screen with nothing
+  // in it. A topic in focus only narrows what you are looking at.
+  //
+  // Both need the concepts, so they are read once and applied together.
+  const activeLists = await activeCollectionIds()
+  const narrowing = activeLists !== null || (!!topic && topic !== 'all')
   let visible = cards
-  if (topic && topic !== 'all' && cards.length) {
+  if (narrowing && cards.length) {
     const ids = [...new Set(cards.map((c) => c.conceptId))]
     const concepts = await db.concepts.bulkGet(ids)
     const keep = new Set(
       concepts
-        .filter((c): c is Concept => !!c && matchesTopic(c, topic))
+        .filter(
+          (c): c is Concept =>
+            !!c && inActiveCollection(c, activeLists) && matchesTopic(c, topic),
+        )
         .map((c) => c.id),
     )
     visible = cards.filter((c) => keep.has(c.conceptId))

@@ -1,6 +1,6 @@
 import { db, getMeta, setMeta } from '../db/db'
 import { supabase } from '../auth/supabase'
-import { DEFAULT_SETTINGS, type Card, type Concept, type Entry, type Lang, type LaterWord, type ReviewLogRow, type Settings, type Story } from '../db/types'
+import { DEFAULT_SETTINGS, type Card, type Collection, type CollectionKind, type Concept, type Entry, type Lang, type LaterWord, type PlanName, type ReviewLogRow, type Settings, type Story } from '../db/types'
 
 /**
  * Last-write-wins sync against Supabase.
@@ -47,6 +47,36 @@ const ms = (s: string | null | undefined) => (s ? new Date(s).getTime() : 0)
 
 type Row = Record<string, unknown>
 
+const collectionOut = (c: Collection, userId: string): Row => ({
+  id: c.id,
+  user_id: userId,
+  name: c.name,
+  kind: c.kind,
+  pack_id: c.packId ?? null,
+  sort_order: c.sortOrder,
+  active: c.active,
+  in_export: c.inExport,
+  created_at: iso(c.createdAt),
+  updated_at: iso(c.updatedAt),
+  deleted_at: c.deletedAt ? iso(c.deletedAt) : null,
+})
+
+const collectionIn = (r: Row): Collection => ({
+  id: r.id as string,
+  name: (r.name as string) ?? '',
+  kind: (r.kind as CollectionKind) ?? 'user',
+  packId: (r.pack_id as string) ?? undefined,
+  sortOrder: Number(r.sort_order ?? 0),
+  // Both default to true rather than to false: a row written by a build that
+  // did not have the column yet should leave the list being studied, not
+  // silently take every word in it out of the queue.
+  active: r.active == null ? true : Boolean(r.active),
+  inExport: r.in_export == null ? true : Boolean(r.in_export),
+  createdAt: ms(r.created_at as string),
+  updatedAt: ms(r.updated_at as string),
+  deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
+})
+
 const conceptOut = (c: Concept, userId: string): Row => ({
   id: c.id,
   user_id: userId,
@@ -56,6 +86,8 @@ const conceptOut = (c: Concept, userId: string): Row => ({
   category: c.category,
   tags: c.tags ?? [],
   notes: c.notes ?? null,
+  collection_id: c.collectionId ?? null,
+  seed_id: c.seedId ?? null,
   created_at: iso(c.createdAt),
   updated_at: iso(c.updatedAt),
   deleted_at: c.deletedAt ? iso(c.deletedAt) : null,
@@ -71,6 +103,11 @@ const conceptIn = (r: Row): Concept => ({
   // no tag list mean the same thing here, so both normalise to undefined.
   tags: Array.isArray(r.tags) && r.tags.length ? (r.tags as string[]) : undefined,
   notes: (r.notes as string) ?? undefined,
+  // Left undefined rather than defaulted here: `collectionOf()` resolves it,
+  // and writing the default id into the row would quietly claim the word was
+  // filed deliberately when it was only ever filed by omission.
+  collectionId: (r.collection_id as string) ?? undefined,
+  seedId: (r.seed_id as string) ?? undefined,
   createdAt: ms(r.created_at as string),
   updatedAt: ms(r.updated_at as string),
   deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
@@ -212,6 +249,34 @@ const logOut = (l: ReviewLogRow, userId: string): Row => ({
   reviewed_at: iso(l.reviewedAt),
 })
 
+/**
+ * Is this error "that table or column does not exist on the server"?
+ *
+ * Beta and production share one database and one Supabase schema, and the
+ * schema is migrated separately from the deploy. So there is a window — maybe
+ * minutes, maybe a weekend — where the client knows about `collections` and
+ * the server does not, and in that window every sync would fail on the first
+ * push and no words, cards or reviews would reach the server at all. A
+ * feature that is not finished rolling out must not be able to take sync down
+ * with it.
+ *
+ * PostgREST answers 42P01 for an unknown relation and PGRST204/PGRST205 for a
+ * column or table missing from its schema cache; the message is matched too,
+ * because the code is not always populated on an older gateway.
+ */
+export function isMissingSchema(error: { code?: string; message?: string }): boolean {
+  const code = error.code ?? ''
+  if (code === '42P01' || code === '42703' || code === 'PGRST204' || code === 'PGRST205') {
+    return true
+  }
+  const message = (error.message ?? '').toLowerCase()
+  return (
+    message.includes('does not exist') ||
+    message.includes('could not find the table') ||
+    message.includes('schema cache')
+  )
+}
+
 // --- sync ------------------------------------------------------------------
 
 /**
@@ -343,13 +408,34 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
   const startedAt = Date.now()
   let count = 0
 
+  // Collections before concepts: a word arriving on another device before the
+  // list it belongs to would render under nothing until the next pull.
+  const collections = await db.collections.filter((c) => c.updatedAt > from).toArray()
+  if (collections.length) {
+    const { error } = await sb
+      .from('collections')
+      .upsert(collections.map((c) => collectionOut(c, userId)))
+      .abortSignal(signal)
+    // Not fatal while the migration is still rolling out — see isMissingSchema.
+    if (error && !isMissingSchema(error)) {
+      throw new Error(`collections: ${error.message}`)
+    }
+    if (!error) count += collections.length
+  }
+
   const concepts = await db.concepts.filter((c) => c.updatedAt > from).toArray()
   if (concepts.length) {
-    const { error } = await sb
-      .from('concepts')
-      .upsert(concepts.map((c) => conceptOut(c, userId)))
-      .abortSignal(signal)
-    if (error) throw new Error(`concepts: ${error.message}`)
+    const rows = concepts.map((c) => conceptOut(c, userId))
+    const { error } = await sb.from('concepts').upsert(rows).abortSignal(signal)
+    if (error) {
+      // The columns are new. If the server has not got them yet, send the
+      // words without them rather than losing the words: a vocabulary that
+      // syncs minus its filing is strictly better than one that does not sync.
+      if (!isMissingSchema(error)) throw new Error(`concepts: ${error.message}`)
+      const stripped = rows.map(({ collection_id: _c, seed_id: _s, ...rest }) => rest)
+      const retry = await sb.from('concepts').upsert(stripped).abortSignal(signal)
+      if (retry.error) throw new Error(`concepts: ${retry.error.message}`)
+    }
     count += concepts.length
   }
 
@@ -410,7 +496,7 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
 
   const settings = await db.settings.get('singleton')
   if (settings && settings.updatedAt > from) {
-    const { error } = await sb.from('user_settings').upsert({
+    const settingsRow: Row = {
       user_id: userId,
       display_name: settings.displayName ?? null,
       // The preferences that follow the account. `settings` here is the raw
@@ -426,12 +512,23 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
       native_lang: settings.nativeLang,
       target_langs: settings.targetLangs,
       active_langs: settings.activeLangs,
+      plan: settings.plan ?? null,
       daily_new_limit: settings.dailyNewLimit,
       daily_review_limit: settings.dailyReviewLimit,
       request_retention: settings.requestRetention,
       updated_at: iso(settings.updatedAt),
-    }).abortSignal(signal)
-    if (error) throw new Error(`settings: ${error.message}`)
+    }
+    const { error } = await sb
+      .from('user_settings')
+      .upsert(settingsRow)
+      .abortSignal(signal)
+    if (error) {
+      // `plan` is new; same rule as the concept columns above.
+      if (!isMissingSchema(error)) throw new Error(`settings: ${error.message}`)
+      const { plan: _plan, ...rest } = settingsRow
+      const retry = await sb.from('user_settings').upsert(rest).abortSignal(signal)
+      if (retry.error) throw new Error(`settings: ${retry.error.message}`)
+    }
     count += 1
   }
 
@@ -496,7 +593,10 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
   let newest = 0
   let count = 0
 
-  const read = async (table: string): Promise<Row[]> => {
+  const read = async (
+    table: string,
+    optional = false,
+  ): Promise<Row[]> => {
     const result = await pullPaged(async (from, limit) => {
       const { data, error } = await sb
         .from(table)
@@ -506,13 +606,22 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
         .order('synced_at', { ascending: true })
         .limit(limit)
         .abortSignal(signal)
-      if (error) throw new Error(`${table}: ${error.message}`)
+      if (error) {
+        // A table this build knows about and the server does not yet. Reading
+        // nothing is right: there cannot be rows in a table that is not there.
+        if (optional && isMissingSchema(error)) return []
+        throw new Error(`${table}: ${error.message}`)
+      }
       return (data ?? []) as Row[]
     }, since)
     newest = Math.max(newest, result.newest)
     return result.rows
   }
 
+  count += await mergeInto(
+    db.collections,
+    (await read('collections', true)).map(collectionIn),
+  )
   count += await mergeInto(db.concepts, (await read('concepts')).map(conceptIn))
   count += await mergeInto(db.entries, (await read('entries')).map(entryIn))
   count += await mergeInto(db.cards, (await read('cards')).map(cardIn))
@@ -548,6 +657,7 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
         nativeLang: remoteSettings.native_lang as Lang,
         targetLangs: remoteSettings.target_langs as Lang[],
         activeLangs: remoteSettings.active_langs as Lang[],
+        plan: (remoteSettings.plan as PlanName) ?? undefined,
         dailyNewLimit: Number(remoteSettings.daily_new_limit),
         dailyReviewLimit: Number(remoteSettings.daily_review_limit),
         requestRetention: Number(remoteSettings.request_retention),

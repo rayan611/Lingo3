@@ -40,7 +40,7 @@ export function BulkAdd({ settings }: { settings: Settings }) {
     setSummary(null)
     setProgress(null)
     try {
-      const added = await addWordsBulk({ lines, sourceLang, category })
+      const added = await addWordsBulk({ lines, sourceLang, category, settings })
       setResult(added)
       setText('')
 

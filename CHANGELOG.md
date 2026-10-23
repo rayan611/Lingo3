@@ -3,6 +3,45 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-23 — Word lists (collections), starter packs, per-list export
+
+Beta only, on `beta.lingo3.com`. Every word is now filed in exactly one **list**; topics stay
+multi-valued and separate.
+
+- `src/db/types.ts`: `Collection` (name, kind, active, inExport), `Concept.collectionId` and
+  `Concept.seedId`, `PLANS` (free = 3 lists of your own x 300 words) and `Settings.plan`.
+- `src/db/collections.ts`: create / rename / set aside / remove, the room check, `activeCollectionIds`.
+  Removing a list of your own moves its words to the default list; it never deletes them.
+- Dexie v7 (`src/db/db.ts`): `collections` store, `collectionId` and `seedId` indexed, every existing
+  word backfilled into a fixed-id default list. `updatedAt` deliberately not restamped.
+- `supabase/migrations/20261023120000_lingo3_collections.sql`: `collections` table + RLS +
+  `synced_at` trigger, `concepts.collection_id` / `seed_id`, `user_settings.plan`. Additive only —
+  production shares this database and never reads the new columns.
+- `src/sync/sync.ts`: collections push first and pull first; `isMissingSchema()` lets a client that
+  knows about the new table reach a server that does not yet, without taking the whole sync down.
+- **Set aside** is a flag on the list, not a bulk suspend: no FSRS state is touched, so turning a list
+  back on in March resumes its intervals. `buildQueue` and `queueCounts` both honour it — the count
+  has to drop too, or the tile badge sends you to an empty review screen.
+- Starter packs (`src/seed/`): A1, A2 and Everyday words, 100 concepts each, written out in all eight
+  languages. No model call, no network — enabling one is a local transaction.
+  **Each concept is in exactly one pack**, so all three is 300 distinct words; `seedId` is checked on
+  install as the safety net, and against words you added yourself, article-stripped.
+  Morphology tables and example sentences are not shipped — "redo" fills them in.
+- Per-list export (`src/lib/exportDeck.ts`): Anki tab-separated with `#separator` / `#deck` /
+  `#tags column` directives and one column per language; and a two-column CSV where target languages
+  2 and 3 stack on the answer side, for apps that only have two fields. Primary = your first active
+  target language, the same order the review card stacks.
+- `src/ui/WordLists.tsx`, shown at the top of **My words** rather than as an eighth tile.
+  List picker on Add; list filter and a move menu in Browse. Moving a word touches no card.
+- Importing a whole list is visible and disabled, as agreed — the duplicate question is unsettled.
+  The CSV importer under Settings is unchanged and still works.
+- `scripts/check-collections.ts` (in `npm run check`): pack integrity, including "no word appears
+  twice in any language across all packs". It caught two real homographs on the first run —
+  German *sie* (she/they) inside A1, Persian نه (no/nine) across packs — both now disambiguated.
+
+Still open: no paid plan exists, so "Lift the limits" under Your lists is simply a switch. Pack words
+have no examples until you ask for them. Import is off.
+
 ## 2026-10-22 — AI unavailable: calm note + Try again
 
 When offline or when the model side answers 5xx, the screen shows

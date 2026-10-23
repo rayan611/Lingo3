@@ -1,4 +1,4 @@
--- Lingo3 — snapshot of the live `public` schema, 2026-10-21.
+-- Lingo3 — snapshot of the live `public` schema, 2026-10-23.
 --
 -- NOT a migration, and not applied by anything. The first five tables
 -- (concepts, entries, cards, review_log, user_settings) were created from the
@@ -29,6 +29,12 @@ create table public.concepts (
   deleted_at timestamp with time zone,
   tags text[] not null default '{}'::text[],
   synced_at timestamp with time zone not null default clock_timestamp(),
+  -- Nullable, and resolved to the default list in the client rather than
+  -- here: production shares this database and does not write it. No foreign
+  -- key to collections either — sync pushes tables one at a time and cannot
+  -- promise concepts arrive after their list.
+  collection_id uuid,
+  seed_id text,
   constraint concepts_pkey PRIMARY KEY (id),
   constraint concepts_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 );
@@ -117,10 +123,32 @@ create table public.user_settings (
   speech_rate double precision,
   translate_from text,
   translate_to text[],
+  plan text,
   constraint user_settings_pkey PRIMARY KEY (user_id),
-  constraint user_settings_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+  constraint user_settings_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE,
+  constraint user_settings_plan_check CHECK ((plan IS NULL OR (plan = ANY (ARRAY['free'::text, 'full'::text]))))
 );
 alter table public.user_settings enable row level security;
+
+create table public.collections (
+  id uuid not null,
+  user_id uuid not null,
+  name text not null,
+  kind text not null default 'user',
+  pack_id text,
+  sort_order integer not null default 0,
+  active boolean not null default true,
+  in_export boolean not null default true,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  deleted_at timestamp with time zone,
+  synced_at timestamp with time zone not null default clock_timestamp(),
+  constraint collections_pkey PRIMARY KEY (id),
+  constraint collections_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE,
+  constraint collections_kind_check CHECK ((kind = ANY (ARRAY['user'::text, 'library'::text]))),
+  constraint collections_name_check CHECK (((char_length(name) >= 1) AND (char_length(name) <= 60)))
+);
+alter table public.collections enable row level security;
 
 create table public.stories (
   id uuid not null,
@@ -192,7 +220,11 @@ CREATE INDEX cards_due_idx ON public.cards USING btree (user_id, lang, due);
 CREATE INDEX cards_sync_idx ON public.cards USING btree (user_id, updated_at);
 CREATE INDEX cards_user_synced_idx ON public.cards USING btree (user_id, synced_at);
 CREATE INDEX concepts_sync_idx ON public.concepts USING btree (user_id, updated_at);
+CREATE INDEX concepts_collection_idx ON public.concepts USING btree (user_id, collection_id);
+CREATE INDEX concepts_seed_idx ON public.concepts USING btree (user_id, seed_id) WHERE (seed_id IS NOT NULL);
 CREATE INDEX concepts_tags_idx ON public.concepts USING gin (tags);
+CREATE INDEX collections_user_synced_idx ON public.collections USING btree (user_id, synced_at);
+CREATE INDEX collections_user_updated_idx ON public.collections USING btree (user_id, updated_at);
 CREATE INDEX concepts_user_synced_idx ON public.concepts USING btree (user_id, synced_at);
 CREATE INDEX entries_sync_idx ON public.entries USING btree (user_id, updated_at);
 CREATE INDEX entries_user_synced_idx ON public.entries USING btree (user_id, synced_at);
@@ -308,6 +340,7 @@ begin
   delete from public.cards         where user_id = uid;
   delete from public.entries       where user_id = uid;
   delete from public.concepts      where user_id = uid;
+  delete from public.collections   where user_id = uid;
   delete from public.stories       where user_id = uid;
   delete from public.suggestions   where user_id = uid;
   delete from public.later_words   where user_id = uid;
@@ -409,6 +442,10 @@ create policy "own settings" on public.user_settings as permissive for all to au
   using ((( SELECT auth.uid() AS uid) = user_id))
   with check ((( SELECT auth.uid() AS uid) = user_id));
 
+create policy collections_own on public.collections as permissive for all to authenticated
+  using ((user_id = ( SELECT auth.uid() AS uid)))
+  with check ((user_id = ( SELECT auth.uid() AS uid)));
+
 create policy "stories are private to their owner" on public.stories as permissive for all to authenticated
   using ((( SELECT auth.uid() AS uid) = user_id))
   with check ((( SELECT auth.uid() AS uid) = user_id));
@@ -453,5 +490,6 @@ create trigger protect_ai_rate_limit_row before insert or update on public.ai_ra
 create trigger stamp_synced_at before insert or update on public.concepts for each row execute function public.stamp_synced_at();
 create trigger stamp_synced_at before insert or update on public.entries for each row execute function public.stamp_synced_at();
 create trigger stamp_synced_at before insert or update on public.cards for each row execute function public.stamp_synced_at();
+create trigger stamp_synced_at before insert or update on public.collections for each row execute function public.stamp_synced_at();
 create trigger stamp_synced_at before insert or update on public.stories for each row execute function public.stamp_synced_at();
 create trigger stamp_synced_at before insert or update on public.later_words for each row execute function public.stamp_synced_at();

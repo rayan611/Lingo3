@@ -8,6 +8,7 @@ import {
   readSettings,
   saveSettings,
 } from './db/db'
+import { ensureDefaultCollection } from './db/collections'
 import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
@@ -120,6 +121,9 @@ export function App() {
       }
       // Create the settings row here, once, rather than from a live query.
       const current = await ensureSettings()
+      // And the default list, for the same reason and in the same place: a
+      // word has to have somewhere to go before the first screen renders.
+      await ensureDefaultCollection()
       // One-time lift of the device's existing theme into the account, for
       // anyone who chose one before themes followed the account. Done once,
       // only when the account has no theme of its own, so it cannot keep
