@@ -1384,7 +1384,13 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
 .related-main { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
 .related-word { font-size: var(--fs-sub); font-weight: 600; }
 .related-meaning { color: var(--ink-soft); font-size: var(--fs-small); margin-top: 0.15rem; }
-.related-action { margin-top: 0.45rem; }
+.related-action {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
 .related-result {
   display: inline-block;
   padding: 3px 10px;
