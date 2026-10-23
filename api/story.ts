@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { configuredProviders, firstAnswer, modelFor } from '../src/server/aiFallback.js'
 import { parseStoryInput } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
@@ -17,12 +18,10 @@ import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
  */
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
-const PROVIDER: 'gemini' | 'anthropic' = GEMINI_KEY ? 'gemini' : 'anthropic'
-
-const MODEL =
-  process.env.LINGUA_STORY_MODEL ??
-  process.env.LINGUA_MODEL ??
-  (PROVIDER === 'gemini' ? 'gemini-3.8-flash' : 'claude-haiku-5-5')
+// Gemini first, Claude as the backup when Gemini is busy, down or too slow
+// (see src/server/aiFallback.ts). With one key set, only that one is used.
+const PROVIDERS = configuredProviders({ gemini: GEMINI_KEY, anthropic: ANTHROPIC_KEY })
+const MODEL_OVERRIDE = process.env.LINGUA_STORY_MODEL ?? process.env.LINGUA_MODEL
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
 const GEMINI_URL = (model: string) =>
@@ -256,8 +255,7 @@ async function respond(req: Request): Promise<Response> {
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
 
-  const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
-  if (!apiKey) {
+  if (PROVIDERS.length === 0) {
     return json(
       {
         error:
@@ -284,57 +282,24 @@ async function respond(req: Request): Promise<Response> {
   const { lang, nativeLang, words, genre, length, unknownShare } = parsed.value
   const prompt = buildPrompt({ lang, nativeLang, words, genre, length, unknownShare })
 
-  const abort = new AbortController()
-  const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
-
-  let upstream: Response
-  try {
-    upstream =
-      PROVIDER === 'gemini'
-        ? await callGemini(prompt, apiKey, abort.signal)
-        : await callAnthropic(prompt, apiKey, abort.signal)
-  } catch (err) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      return json({ error: 'The model took too long. Try again.' }, 504)
-    }
-    console.error('[story.ts] model request failed', err instanceof Error ? err.name : 'unknown')
-    return json({ error: 'Could not reach the language model. Please try again.' }, 502)
-  } finally {
-    clearTimeout(timer)
-  }
-
-  if (!upstream.ok) {
-    // Do not return raw provider responses to the browser: they can expose
-    // internal diagnostics. Keep the user-facing error actionable and bounded.
-    console.warn('[story.ts] model provider returned status', upstream.status)
-    return json(
-      {
-        error: upstream.status === 429
-          ? 'The language model is busy. Please try again shortly.'
-          : 'The language model could not complete the request. Please try again.',
-      },
-      upstream.status === 429 ? 429 : 502,
-    )
-  }
-
-  let story: unknown
-  try {
-    story =
-      PROVIDER === 'gemini'
-        ? readGemini(await upstream.json())
-        : readAnthropic(await upstream.json())
-  } catch (err) {
-    // The message, not the error object: readGemini turns the reasons a model
-    // stops into sentences meant for the person waiting for a text.
-    const why = err instanceof Error ? err.message : String(err)
-    return json({ error: why }, 502)
-  }
-
-  if (!story) return json({ error: 'Model did not return a usable text.' }, 502)
-  return json(story, 200)
+  const result = await firstAnswer(
+    PROVIDERS.map((provider) => ({
+      provider,
+      call: (signal: AbortSignal) =>
+        provider === 'gemini'
+          ? callGemini(prompt, GEMINI_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE))
+          : callAnthropic(prompt, ANTHROPIC_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE)),
+      read: provider === 'gemini' ? readGemini : readAnthropic,
+    })),
+    UPSTREAM_TIMEOUT_MS,
+    'story.ts',
+    'The model took too long. Try again.',
+  )
+  if (!result.ok) return json({ error: result.error }, result.status)
+  return json(result.value, 200)
 }
 
-function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
+function callAnthropic(prompt: string, key: string, signal: AbortSignal, model: string) {
   return fetch(ANTHROPIC_URL, {
     method: 'POST',
     signal,
@@ -344,7 +309,7 @@ function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: 2048,
       // Not zero, unlike expansion: the same six words should not produce the
       // same story every morning.
@@ -393,8 +358,8 @@ function geminiBody(prompt: string, withThinking: boolean) {
   })
 }
 
-async function callGemini(prompt: string, key: string, signal: AbortSignal) {
-  const url = `${GEMINI_URL(MODEL)}?key=${encodeURIComponent(key)}`
+async function callGemini(prompt: string, key: string, signal: AbortSignal, model: string) {
+  const url = `${GEMINI_URL(model)}?key=${encodeURIComponent(key)}`
   const send = (withThinking: boolean) =>
     fetch(url, {
       method: 'POST',

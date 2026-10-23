@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { configuredProviders, firstAnswer, modelFor } from '../src/server/aiFallback.js'
 import {
   TRANSLATE_LANGS,
   TRANSLATE_MAX_CHARS,
@@ -14,11 +15,10 @@ import {
  */
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
-const PROVIDER: 'gemini' | 'anthropic' = GEMINI_KEY ? 'gemini' : 'anthropic'
-
-const MODEL =
-  process.env.LINGUA_MODEL ??
-  (PROVIDER === 'gemini' ? 'gemini-3.8-flash' : 'claude-haiku-5-5')
+// Gemini first, Claude as the backup when Gemini is busy, down or too slow
+// (see src/server/aiFallback.ts). With one key set, only that one is used.
+const PROVIDERS = configuredProviders({ gemini: GEMINI_KEY, anthropic: ANTHROPIC_KEY })
+const MODEL_OVERRIDE = process.env.LINGUA_MODEL
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
 const GEMINI_URL = (model: string) =>
@@ -208,8 +208,7 @@ async function respond(req: Request): Promise<Response> {
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
 
-  const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
-  if (!apiKey) return json({ error: 'No model key is configured on the server.' }, 500)
+  if (PROVIDERS.length === 0) return json({ error: 'No model key is configured on the server.' }, 500)
 
   let body: unknown
   try {
@@ -226,46 +225,21 @@ async function respond(req: Request): Promise<Response> {
   if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   const prompt = buildPrompt(parsed.value)
-  const abort = new AbortController()
-  const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
-
-  let upstream: Response
-  try {
-    upstream =
-      PROVIDER === 'gemini'
-        ? await callGemini(prompt, apiKey, abort.signal)
-        : await callAnthropic(prompt, apiKey, abort.signal)
-  } catch (err) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      return json({ error: 'The model took too long. Try again.' }, 504)
-    }
-    console.error('[translate.ts] model request failed', err instanceof Error ? err.name : 'unknown')
-    return json({ error: 'Could not reach the language model. Please try again.' }, 502)
-  } finally {
-    clearTimeout(timer)
-  }
-
-  if (!upstream.ok) {
-    console.warn('[translate.ts] model provider returned status', upstream.status)
-    return json(
-      {
-        error: upstream.status === 429
-          ? 'The language model is busy. Please try again shortly.'
-          : 'The language model could not complete the request. Please try again.',
-      },
-      upstream.status === 429 ? 429 : 502,
-    )
-  }
-
-  let out: unknown
-  try {
-    out =
-      PROVIDER === 'gemini'
-        ? readGemini(await upstream.json())
-        : readAnthropic(await upstream.json())
-  } catch (err) {
-    return json({ error: err instanceof Error ? err.message : String(err) }, 502)
-  }
+  const result = await firstAnswer(
+    PROVIDERS.map((provider) => ({
+      provider,
+      call: (signal: AbortSignal) =>
+        provider === 'gemini'
+          ? callGemini(prompt, GEMINI_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE))
+          : callAnthropic(prompt, ANTHROPIC_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE)),
+      read: provider === 'gemini' ? readGemini : readAnthropic,
+    })),
+    UPSTREAM_TIMEOUT_MS,
+    'translate.ts',
+    'The model took too long. Try again.',
+  )
+  if (!result.ok) return json({ error: result.error }, result.status)
+  const out = result.value
 
   // Keep only the languages that were asked for, in the order they were asked.
   const rows = (out as { translations?: { lang?: unknown; text?: unknown }[] } | null)
@@ -283,7 +257,7 @@ async function respond(req: Request): Promise<Response> {
   return json({ translations }, 200)
 }
 
-function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
+function callAnthropic(prompt: string, key: string, signal: AbortSignal, model: string) {
   return fetch(ANTHROPIC_URL, {
     method: 'POST',
     signal,
@@ -293,7 +267,7 @@ function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: 600,
       temperature: 0,
       tools: [TOOL],
@@ -324,8 +298,8 @@ function geminiBody(prompt: string, withThinking: boolean) {
   })
 }
 
-async function callGemini(prompt: string, key: string, signal: AbortSignal) {
-  const url = `${GEMINI_URL(MODEL)}?key=${encodeURIComponent(key)}`
+async function callGemini(prompt: string, key: string, signal: AbortSignal, model: string) {
+  const url = `${GEMINI_URL(model)}?key=${encodeURIComponent(key)}`
   const send = (withThinking: boolean) =>
     fetch(url, {
       method: 'POST',

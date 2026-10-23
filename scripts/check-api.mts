@@ -407,6 +407,75 @@ for (const lang of LANGS) {
   check(`${lang} is accepted by parseExpandInput`, parsed.ok, JSON.stringify(parsed))
 }
 
+// ---------------------------------------------------------------------------
+// The backup model: when the first provider cannot answer, the next one does.
+// ---------------------------------------------------------------------------
+console.log('\nA second provider answers when the first cannot')
+{
+  const { firstAnswer, configuredProviders, modelFor } = await import('../src/server/aiFallback')
+  const reply = (status: number, body: unknown = { ok: true }) =>
+    async () => new Response(JSON.stringify(body), { status })
+  const quiet = async <T,>(fn: () => Promise<T>) => {
+    const w = console.warn, e = console.error
+    console.warn = () => {}; console.error = () => {}
+    try { return await fn() } finally { console.warn = w; console.error = e }
+  }
+  const read = (d: unknown) => d
+
+  const down = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(503), read },
+    { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
+  ], 5000, 't', 'slow'))
+  check('Gemini 503 -> Claude answers', down.ok && down.provider === 'anthropic', JSON.stringify(down))
+
+  const busy = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(429), read },
+    { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
+  ], 5000, 't', 'slow'))
+  check('Gemini 429 -> Claude answers', busy.ok && busy.provider === 'anthropic', JSON.stringify(busy))
+
+  const hang = (signal: AbortSignal) => new Promise<Response>((_, reject) =>
+    signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' }))))
+  const slow = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: hang, read },
+    { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
+  ], 10000, 't', 'slow'))
+  check('Gemini too slow -> Claude still answers in time', slow.ok && slow.provider === 'anthropic', JSON.stringify(slow))
+
+  const bad = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(200), read: () => { throw new Error('The model stopped early (SAFETY).') } },
+    { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
+  ], 5000, 't', 'slow'))
+  check('unusable Gemini answer -> Claude answers', bad.ok && bad.provider === 'anthropic', JSON.stringify(bad))
+
+  const first = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(200, { word: 'hund' }), read },
+    { provider: 'anthropic', call: async () => { throw new Error('must not be called') }, read },
+  ], 5000, 't', 'slow'))
+  check('a working Gemini is used and Claude is never called', first.ok && first.provider === 'gemini', JSON.stringify(first))
+
+  const both = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(503), read },
+    { provider: 'anthropic', call: reply(429), read },
+  ], 5000, 't', 'slow'))
+  check('both down -> the last status reaches the app (429 = busy)', !both.ok && both.status === 429, JSON.stringify(both))
+
+  const allDown = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(500), read },
+    { provider: 'anthropic', call: reply(502), read },
+  ], 5000, 't', 'slow'))
+  check('both 5xx -> 502, so the app shows its calm "not available" note', !allDown.ok && allDown.status === 502, JSON.stringify(allDown))
+
+  check('only keys that are set are tried, Gemini first',
+    JSON.stringify(configuredProviders({ gemini: 'g', anthropic: 'a' })) === '["gemini","anthropic"]' &&
+    JSON.stringify(configuredProviders({ gemini: undefined, anthropic: 'a' })) === '["anthropic"]',
+    'wrong order or unset key tried')
+  check('LINGUA_MODEL applies to the first provider only',
+    modelFor('gemini', ['gemini', 'anthropic'], 'gemini-x') === 'gemini-x' &&
+    modelFor('anthropic', ['gemini', 'anthropic'], 'gemini-x') === 'claude-haiku-5-5',
+    'the override leaked into the backup')
+}
+
 // The summary used to be an unconditional "passed" with no exit code, so a
 // failing endpoint check printed FAIL and the build went green anyway. It is
 // the only suite that did this; the other three already exit non-zero.

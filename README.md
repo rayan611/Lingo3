@@ -21,7 +21,7 @@ Expansion happens once, when you add the word, and the result is stored locally 
 | App | Vite + React + TypeScript, `vite-plugin-pwa` |
 | Local store | Dexie (IndexedDB) |
 | Scheduling | `ts-fsrs` (FSRS v6) |
-| Expansion | Claude via a Vercel serverless function |
+| Expansion | Gemini, with Claude as the backup (`src/server/aiFallback.ts`), via Vercel serverless functions |
 | Validation | `zod` — bad model output is rejected, not written |
 
 ## Running it
@@ -48,7 +48,7 @@ npm run check     # scheduling behaviour checks
 
 ## Deploying
 
-Push to GitHub, import the repo on Vercel, and set `ANTHROPIC_API_KEY` as an environment variable in the project settings. The key stays server-side and never reaches the browser.
+Push to GitHub, import the repo on Vercel, and set `GEMINI_API_KEY` and `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, Claude when Gemini cannot; either one alone also works). The key stays server-side and never reaches the browser.
 
 ## Data model
 
