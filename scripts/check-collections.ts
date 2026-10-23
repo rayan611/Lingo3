@@ -23,6 +23,8 @@ import { makeCard } from '../src/fsrs/scheduler'
 import { buildQueue, queueCounts } from '../src/fsrs/queue'
 import {
   createCollection,
+  defaultListId,
+  defaultTargetCollection,
   ensureDefaultCollection,
   listCollections,
   moveWord,
@@ -269,6 +271,37 @@ async function main() {
       .equals(DEFAULT_COLLECTION_ID)
       .count()
     if (home < before) throw new Error('they did not arrive in the default list')
+  })
+
+  await check('a chosen default list is where new words go', async () => {
+    const uni = await createCollection('Evening class', { plan: 'full' })
+    const into = await defaultTargetCollection({ plan: 'full', defaultCollectionId: uni.id })
+    if (into !== uni.id) throw new Error(`went to ${into}`)
+    const none = await defaultTargetCollection({ plan: 'full' })
+    if (none !== DEFAULT_COLLECTION_ID) throw new Error('no choice should mean the built-in list')
+  })
+
+  await check('a stale or pack default falls back to the built-in list', async () => {
+    const all = await listCollections()
+    if (defaultListId({ defaultCollectionId: 'gone' }, all) !== DEFAULT_COLLECTION_ID) {
+      throw new Error('a removed list was still the default')
+    }
+    const pack = all.find((c) => c.kind === 'library')
+    if (pack && defaultListId({ defaultCollectionId: pack.id }, all) !== DEFAULT_COLLECTION_ID) {
+      throw new Error('a pack became the default')
+    }
+  })
+
+  await check('removing a list sends its words where you say', async () => {
+    const all = await listCollections()
+    const uni = all.find((c) => c.name === 'Evening class')!
+    const gone = await createCollection('Short-lived', { plan: 'full' })
+    const concept = (await db.concepts.toArray()).find((c) => !c.deletedAt)!
+    await moveWord(concept.id, gone.id)
+    await deleteCollection(gone.id, uni.id)
+    if (collectionOf((await db.concepts.get(concept.id))!) !== uni.id) {
+      throw new Error('the word did not follow the chosen default')
+    }
   })
 
   await check('removing a pack takes its words with it', async () => {

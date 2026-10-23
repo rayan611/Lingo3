@@ -678,6 +678,15 @@ export interface Settings {
    * backfill.
    */
   plan?: PlanName
+  /**
+   * The list a new word is filed in when nobody picks one on the Add screen.
+   *
+   * Undefined means the built-in default list. A list that has since been
+   * removed, or one that is a pack, resolves to the built-in default too — see
+   * `defaultListId()` — so a stale id here can never send a word nowhere.
+   * Account data, so the phone and the laptop file new words in the same place.
+   */
+  defaultCollectionId?: string
   updatedAt: number
 }
 

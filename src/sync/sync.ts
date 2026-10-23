@@ -513,6 +513,7 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
       target_langs: settings.targetLangs,
       active_langs: settings.activeLangs,
       plan: settings.plan ?? null,
+      default_collection_id: settings.defaultCollectionId ?? null,
       daily_new_limit: settings.dailyNewLimit,
       daily_review_limit: settings.dailyReviewLimit,
       request_retention: settings.requestRetention,
@@ -523,9 +524,10 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
       .upsert(settingsRow)
       .abortSignal(signal)
     if (error) {
-      // `plan` is new; same rule as the concept columns above.
+      // `plan` and `default_collection_id` are new; same rule as the concept
+      // columns above.
       if (!isMissingSchema(error)) throw new Error(`settings: ${error.message}`)
-      const { plan: _plan, ...rest } = settingsRow
+      const { plan: _plan, default_collection_id: _default, ...rest } = settingsRow
       const retry = await sb.from('user_settings').upsert(rest).abortSignal(signal)
       if (retry.error) throw new Error(`settings: ${retry.error.message}`)
     }
@@ -658,6 +660,8 @@ async function pull(userId: string, signal: AbortSignal): Promise<number> {
         targetLangs: remoteSettings.target_langs as Lang[],
         activeLangs: remoteSettings.active_langs as Lang[],
         plan: (remoteSettings.plan as PlanName) ?? undefined,
+        defaultCollectionId:
+          (remoteSettings.default_collection_id as string) ?? undefined,
         dailyNewLimit: Number(remoteSettings.daily_new_limit),
         dailyReviewLimit: Number(remoteSettings.daily_review_limit),
         requestRetention: Number(remoteSettings.request_retention),

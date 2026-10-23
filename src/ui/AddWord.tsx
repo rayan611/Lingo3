@@ -21,7 +21,8 @@ import {
   type Settings,
 } from '../db/types'
 import { TagEditor } from './TagEditor'
-import { listCollections } from '../db/collections'
+import { defaultListId, listCollections } from '../db/collections'
+import { IconLater } from './icons'
 import { AiDown } from './AiDown'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
@@ -111,12 +112,16 @@ export function AddWord({ settings }: Props) {
   /** The tags that will be saved — seeded by the model, edited here. */
   const [draftTags, setDraftTags] = useState<string[]>([])
   /**
-   * Which list the word is filed in. Empty means "wherever the app would put
-   * it", which is the default list — so someone who has never made a second
-   * list never has to answer this question, and the picker below is not even
-   * rendered for them.
+   * Which list the word is filed in. Empty means "the default list" — the one
+   * marked Default under My words — and the picker shows that list by name
+   * rather than the word "Default", so you can see where the word will go.
+   * A list picked here holds until you leave the screen; coming back to Add
+   * starts on the default again. Someone who has never made a second list
+   * never has to answer this question: the picker is not rendered for them.
    */
   const [targetList, setTargetList] = useState('')
+  /** Whether the categories editor under the chip row is open. */
+  const [categoriesOpen, setCategoriesOpen] = useState(false)
 
   /**
    * The lists a typed word may go into.
@@ -130,6 +135,7 @@ export function AddWord({ settings }: Props) {
     [],
     [],
   )
+  const defaultId = defaultListId(settings, myLists)
   /**
    * Suggestions from the last expansion. Kept after the word is saved so the
    * list does not vanish at the moment it becomes useful — these are not
@@ -345,68 +351,84 @@ export function AddWord({ settings }: Props) {
             is lit. A heading that repeats the control under it is a line of
             vertical space for nothing, which on a phone is the whole cost. */}
 
-        {/* The word box gets the whole width. Add later used to sit beside
-            it and took a third of the line from the one field this screen
-            exists for; it is neither urgent nor frequent, so it has moved
-            down to the quiet row with Categories. */}
-        <input
-          className="word-input"
-          value={lemma}
-          onChange={(e) => {
-            setLemma(e.target.value)
-            setLaterId(null)
-          }}
-          ref={wordRef}
-          placeholder="Add your word or phrase here"
-          disabled={busy}
-        />
+        {/* The word box keeps nearly the whole width. Add later sits inside
+            its right edge as a small bookmark: it acts on what is typed in
+            this box and nothing else, so it belongs to the box — but it is
+            neither urgent nor frequent, so it is drawn quiet and small rather
+            than taking a third of the line as it once did. */}
+        <div className="word-box">
+          <input
+            className="word-input"
+            value={lemma}
+            onChange={(e) => {
+              setLemma(e.target.value)
+              setLaterId(null)
+            }}
+            ref={wordRef}
+            placeholder="Add your word or phrase here"
+            disabled={busy}
+          />
+          <button
+            type="button"
+            className="word-later"
+            disabled={busy || !lemma.trim()}
+            title="Keep this word for later without looking it up"
+            aria-label="Add later — keep this word without looking it up"
+            onClick={() => void park()}
+          >
+            <IconLater />
+            <span>Later</span>
+          </button>
+        </div>
 
-        {/* The single-select Category menu that used to sit here could only
-            ever be one thing, and a word is routinely several: `beställa` is
-            restaurant and work. This is the same editor the word card uses,
-            so categories chosen here and changed later cannot drift apart,
-            and anything you type becomes a category from then on.
-
-            Shut by default, and the same <details> idiom as bulk-add and
-            feedback. Open, it is a topic field plus six suggestion chips —
-            about 210px, which on a phone pushed Check and Check-and-add off
-            the bottom of the screen. Categories are optional and most words
-            are added without one; the two buttons are not optional. The
-            summary carries the count, so a chosen category is never hidden
-            behind a shut panel. */}
-        {/* The two optional things on this screen, side by side on one quiet
-            row between the word box and the two buttons: give it a category,
-            or put it down for later. Neither is part of adding a word, which
-            is why neither sits above. */}
-        <div className="add-aside">
-          {/* Only once there is a choice to make. One list is not a choice,
-              and a menu with one item in it is a question you have to read
-              before realising it was never asking anything. */}
-          {!showing && myLists.length > 1 && (
-            <label className="chip list-pick">
-              <span className="muted small">List</span>
-              <select
-                value={targetList}
-                onChange={(e) => setTargetList(e.target.value)}
-                disabled={busy}
-                aria-label="Which list to file this word in"
+        {/* Where the word goes and what it is about, as two small chips on
+            one row: both optional, both answered for you by default. The
+            list chip names the list rather than saying "Default", so you can
+            see where the word will land without opening it. The categories
+            editor opens under the row, full width, instead of inside it — in
+            the row it was squeezed beside the list menu and ran over it. */}
+        {(myLists.length > 1 || !showing) && (
+          <div className="add-aside">
+            {myLists.length > 1 && (
+              <label className="add-pill list-pick" title="Which list to file this word in">
+                <span className="add-pill-label">List</span>
+                <select
+                  value={targetList || defaultId}
+                  onChange={(e) =>
+                    setTargetList(e.target.value === defaultId ? '' : e.target.value)
+                  }
+                  disabled={busy}
+                  aria-label="Which list to file this word in"
+                >
+                  {myLists.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                      {c.id === defaultId ? ' (default)' : ''}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {!showing && (
+              <button
+                type="button"
+                className={`add-pill${categoriesOpen ? ' is-open' : ''}`}
+                aria-expanded={categoriesOpen}
+                onClick={() => setCategoriesOpen((v) => !v)}
               >
-                <option value="">Default</option>
-                {myLists.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          {!showing && <details className="categories">
-            <summary>
-              Categories
-              {draftTags.length > 0 && (
-                <span className="chip-count">{draftTags.length}</span>
-              )}
-            </summary>
+                <span className="add-pill-label">Categories</span>
+                {draftTags.length > 0 && (
+                  <span className="chip-count">{draftTags.length}</span>
+                )}
+                <span aria-hidden="true" className="add-pill-mark">
+                  {categoriesOpen ? '−' : '+'}
+                </span>
+              </button>
+            )}
+          </div>
+        )}
+        {!showing && categoriesOpen && (
+          <div className="add-categories">
             <TagEditor
               tags={draftTags}
               onChange={setDraftTags}
@@ -414,17 +436,8 @@ export function AddWord({ settings }: Props) {
               disabled={busy}
               label=""
             />
-          </details>}
-          <button
-            type="button"
-            className="chip park"
-            disabled={busy || !lemma.trim()}
-            title="Keep this word for later without looking it up"
-            onClick={() => void park()}
-          >
-            Add later
-          </button>
-        </div>
+          </div>
+        )}
 
         {/* Two buttons rather than one button and a checkbox: a checkbox that
             silently changes what the button beside it does is a mode you have

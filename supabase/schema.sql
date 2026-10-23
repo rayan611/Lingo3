@@ -124,6 +124,7 @@ create table public.user_settings (
   translate_from text,
   translate_to text[],
   plan text,
+  default_collection_id text,
   constraint user_settings_pkey PRIMARY KEY (user_id),
   constraint user_settings_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE,
   constraint user_settings_plan_check CHECK ((plan IS NULL OR (plan = ANY (ARRAY['free'::text, 'full'::text]))))

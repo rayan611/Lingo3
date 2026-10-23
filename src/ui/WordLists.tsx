@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import {
   collectionCounts,
   createCollection,
+  defaultListId,
   deleteCollection,
   listCollections,
   planOf,
@@ -53,6 +54,8 @@ export function WordLists({ settings }: { settings: Settings }) {
   const mine = collections.filter((c) => c.kind === 'user')
   const libraries = collections.filter((c) => c.kind === 'library')
   const targets = activeTargets(settings)
+  /** Where a word goes when the Add screen is left on its default. */
+  const defaultId = defaultListId(settings, mine)
 
   async function run(what: () => Promise<string | void>) {
     if (busy) return
@@ -74,7 +77,8 @@ export function WordLists({ settings }: { settings: Settings }) {
       <p className="muted small">
         Every word sits in exactly one list. Topics are separate and a word can
         have several of those — a list is where it is filed, a topic is what it
-        is about.
+        is about. The list marked <strong>Default</strong> is where a new word
+        goes unless you pick another on the Add screen.
       </p>
 
       <div className="list-cards">
@@ -90,6 +94,13 @@ export function WordLists({ settings }: { settings: Settings }) {
                remove button rather than one that explains itself after you
                press it. */
             canDelete={c.id !== DEFAULT_COLLECTION_ID}
+            isDefault={c.id === defaultId}
+            onMakeDefault={() =>
+              // No status line: the card itself turns to "Default for new
+              // words", where you are looking, and the line would land at the
+              // foot of the panel, a screen away on a phone.
+              void run(() => saveSettings({ defaultCollectionId: c.id }))
+            }
             renaming={renaming === c.id}
             draftName={draftName}
             onDraftName={setDraftName}
@@ -116,15 +127,19 @@ export function WordLists({ settings }: { settings: Settings }) {
             }
             onDelete={() =>
               void run(async () => {
+                // Its words go to the default you chose, unless this is it —
+                // then to the built-in list, which can never be removed.
+                const into = c.id === defaultId ? DEFAULT_COLLECTION_ID : defaultId
+                const intoName = mine.find((m) => m.id === into)?.name ?? 'your default list'
                 if (
                   !confirm(
-                    `Remove the list "${c.name}"? Its words move to your default list — nothing is deleted.`,
+                    `Remove the list "${c.name}"? Its words move to "${intoName}" — nothing is deleted.`,
                   )
                 ) {
                   return
                 }
-                const moved = await deleteCollection(c.id)
-                return `"${c.name}" removed. ${moved} word${moved === 1 ? '' : 's'} moved to your default list.`
+                const moved = await deleteCollection(c.id, into)
+                return `"${c.name}" removed. ${moved} word${moved === 1 ? '' : 's'} moved to "${intoName}".`
               })
             }
           />
@@ -221,30 +236,16 @@ export function WordLists({ settings }: { settings: Settings }) {
               </div>
               <p className="muted small">{pack.blurb}</p>
               {here && (
-                <div className="list-card-toggles">
-                  <label className="checkline">
-                    <input
-                      type="checkbox"
-                      checked={here.active}
-                      disabled={busy}
-                      onChange={() =>
-                        void run(() => setCollectionActive(here.id, !here.active))
-                      }
-                    />
-                    <span>In review and learning</span>
-                  </label>
-                  <label className="checkline">
-                    <input
-                      type="checkbox"
-                      checked={here.inExport}
-                      disabled={busy}
-                      onChange={() =>
-                        void run(() => setCollectionInExport(here.id, !here.inExport))
-                      }
-                    />
-                    <span>Offered when exporting</span>
-                  </label>
-                </div>
+                <ListToggles
+                  collection={here}
+                  busy={busy}
+                  onToggleActive={() =>
+                    void run(() => setCollectionActive(here.id, !here.active))
+                  }
+                  onToggleExport={() =>
+                    void run(() => setCollectionInExport(here.id, !here.inExport))
+                  }
+                />
               )}
               <div className="row">
                 {installed < (state?.total ?? 0) || !here ? (
@@ -346,6 +347,8 @@ function ListCard({
   limit,
   busy,
   canDelete,
+  isDefault,
+  onMakeDefault,
   renaming,
   draftName,
   onDraftName,
@@ -363,6 +366,8 @@ function ListCard({
   settings: Settings
   busy: boolean
   canDelete: boolean
+  isDefault: boolean
+  onMakeDefault: () => void
   renaming: boolean
   draftName: string
   onDraftName: (v: string) => void
@@ -391,33 +396,42 @@ function ListCard({
             }}
           />
         ) : (
-          <strong>{collection.name}</strong>
+          <strong title={collection.name}>{collection.name}</strong>
         )}
         <span className={`badge subtle${full ? ' flag' : ''}`}>
           {count}/{limit}
         </span>
       </div>
 
-      <div className="list-card-toggles">
-        <label className="checkline">
-          <input
-            type="checkbox"
-            checked={collection.active}
-            disabled={busy}
-            onChange={onToggleActive}
-          />
-          <span>In review and learning</span>
-        </label>
-        <label className="checkline">
-          <input
-            type="checkbox"
-            checked={collection.inExport}
-            disabled={busy}
-            onChange={onToggleExport}
-          />
-          <span>Offered when exporting</span>
-        </label>
-      </div>
+      {/* A radio, not a third checkbox: exactly one list is the default, and
+          a radio says so before you press it. Its name is shared across the
+          cards, so the browser keeps the group honest as well. */}
+      <label className={`list-default${isDefault ? ' is-default' : ''}`}>
+        <input
+          type="radio"
+          name="default-list"
+          checked={isDefault}
+          disabled={busy}
+          onChange={onMakeDefault}
+        />
+        <span>
+          <span className="list-toggle-title">
+            {isDefault ? 'Default for new words' : 'Make default for new words'}
+          </span>
+          <span className="list-toggle-help">
+            {isDefault
+              ? 'Words you add go here unless you pick another list on the Add screen.'
+              : 'Tap to send new words here by default.'}
+          </span>
+        </span>
+      </label>
+
+      <ListToggles
+        collection={collection}
+        busy={busy}
+        onToggleActive={onToggleActive}
+        onToggleExport={onToggleExport}
+      />
 
       <div className="row">
         {renaming ? (
@@ -458,6 +472,61 @@ function ListCard({
           </>
         )}
       </div>
+    </div>
+  )
+}
+
+/**
+ * The two switches every list has, each with the sentence that says what it
+ * does. The labels alone ("In review and learning") were read as a status
+ * rather than as something you could change, and neither said what happens
+ * when it is off.
+ */
+function ListToggles({
+  collection,
+  busy,
+  onToggleActive,
+  onToggleExport,
+}: {
+  collection: Collection
+  busy: boolean
+  onToggleActive: () => void
+  onToggleExport: () => void
+}) {
+  return (
+    <div className="list-card-toggles">
+      <label className="list-toggle">
+        <input
+          type="checkbox"
+          checked={collection.active}
+          disabled={busy}
+          onChange={onToggleActive}
+        />
+        <span>
+          <span className="list-toggle-title">Study these words</span>
+          <span className="list-toggle-help">
+            {collection.active
+              ? 'On: its words come up in Recall test and Review.'
+              : 'Off: set aside. Nothing is lost — the schedule resumes when you turn it back on.'}
+          </span>
+        </span>
+      </label>
+      <label className="list-toggle">
+        <input
+          type="checkbox"
+          checked={collection.inExport}
+          disabled={busy}
+          onChange={onToggleExport}
+        />
+        <span>
+          <span className="list-toggle-title">Include in Export CSV</span>
+          <span className="list-toggle-help">
+            {collection.inExport
+              ? 'On: its words are in the file from Settings → Export CSV.'
+              : 'Off: left out of that file. Anki and CSV below still export this list alone.'}
+          </span>
+        </span>
+      </label>
     </div>
   )
 }

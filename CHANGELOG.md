@@ -3,6 +3,30 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Lists: default list, clearer cards, list filter, tidy Add row
+
+- **Checkboxes were 42px slabs.** The global `input` rule (width 100%, padding, 42px min-height) hit
+  every checkbox and radio. Reset at the foot of `src/styles.css`; also fixes Settings and the importer.
+- List cards (`src/ui/WordLists.tsx`): each switch now has a title and a line saying what on and off
+  mean ("Study these words", "Include in Export CSV"). New radio **Default for new words** per list.
+- `Settings.defaultCollectionId` (synced as `user_settings.default_collection_id`, migration
+  `20261024120000_lingo3_default_list.sql`). `defaultListId()` resolves a removed or pack id to the
+  built-in list; `defaultTargetCollection()` tries the chosen list first. Removing a list moves its
+  words to the chosen default (or the built-in one if it was the default).
+- `inExport` was stored but never read. Settings → Export CSV now leaves out lists switched off, and
+  the file gains a `list` column.
+- My words (`src/ui/Browse.tsx`): the per-row list menu is gone (it pushed redo/pause/delete out of
+  line); a row of toggle chips above the words picks which lists are shown, several at once, with
+  counts. Moving a word to another list is on the word's card (`WordCard.tsx`). Topic and kind menus
+  share a line on a phone.
+- Add (`src/ui/AddWord.tsx`): List and Categories are two small pills on one row; the list pill names
+  the list (default preselected each visit). Categories opens full width below the row instead of
+  inside it, where it ran over the list menu. **Add later** is a small bookmark inside the word box.
+- Smaller: no empty band above a panel's first heading ("Recently added"); topic pills no longer
+  double height on a phone (the × inherited the 44px button height).
+
+Still open: run the migration on the database, or the default list stays on the device that set it.
+
 ## 2026-10-23 — Word lists (collections), starter packs, per-list export
 
 Beta only, on `beta.lingo3.com`. Every word is now filed in exactly one **list**; topics stay

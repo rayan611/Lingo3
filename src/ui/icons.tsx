@@ -92,3 +92,12 @@ export function IconTranslate() {
     </svg>
   )
 }
+
+/** Add later — a bookmark: kept, not yet dealt with. */
+export function IconLater() {
+  return (
+    <svg {...base}>
+      <path d="M7 4h10v16l-5-3.5L7 20z" />
+    </svg>
+  )
+}

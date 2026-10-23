@@ -211,16 +211,21 @@ export async function setCollectionInExport(id: string, inExport: boolean): Prom
  * Anyone who truly wants them gone can delete them from My words, where the
  * confirmation names what is being lost.
  */
-export async function deleteCollection(id: string): Promise<number> {
+export async function deleteCollection(
+  id: string,
+  /** Where its words go: the list you chose as default, or the built-in one. */
+  into: string = DEFAULT_COLLECTION_ID,
+): Promise<number> {
   if (id === DEFAULT_COLLECTION_ID) {
     throw new Error('The default list cannot be removed.')
   }
+  const target = into === id ? DEFAULT_COLLECTION_ID : into
   const now = Date.now()
   await ensureDefaultCollection()
   const moved = await db.concepts.where('collectionId').equals(id).toArray()
   if (moved.length) {
     await db.concepts.bulkPut(
-      moved.map((c) => ({ ...c, collectionId: DEFAULT_COLLECTION_ID, updatedAt: now })),
+      moved.map((c) => ({ ...c, collectionId: target, updatedAt: now })),
     )
   }
   await patch(id, { deletedAt: now })
@@ -258,21 +263,44 @@ export async function roomIn(
 }
 
 /**
+ * The list you chose as the default, resolved against the lists that exist.
+ *
+ * Pure, so the Add screen can preselect it from the lists it already has in a
+ * live query. A choice that no longer names one of your own lists — removed,
+ * or never synced to this device — falls back to the built-in default rather
+ * than to nothing.
+ */
+export function defaultListId(
+  settings: Pick<Settings, 'defaultCollectionId'>,
+  collections: Pick<Collection, 'id' | 'kind' | 'deletedAt'>[],
+): string {
+  const chosen = settings.defaultCollectionId
+  if (
+    chosen &&
+    collections.some((c) => c.id === chosen && c.kind === 'user' && !c.deletedAt)
+  ) {
+    return chosen
+  }
+  return DEFAULT_COLLECTION_ID
+}
+
+/**
  * The list a new word goes into when nobody said.
  *
- * The first `user` list that still has room, default first. A pack list is
- * never chosen: those hold a curated set and a word typed by hand does not
- * belong in the middle of A1.
+ * The list you marked as default first, then the first other `user` list that
+ * still has room. A pack list is never chosen: those hold a curated set and a
+ * word typed by hand does not belong in the middle of A1.
  */
 export async function defaultTargetCollection(
-  settings: Pick<Settings, 'plan'>,
+  settings: Pick<Settings, 'plan' | 'defaultCollectionId'>,
 ): Promise<string> {
   await ensureDefaultCollection()
   const all = await listCollections()
   const mine = all.filter((c) => c.kind === 'user')
+  const first = defaultListId(settings, mine)
   const ordered = [
-    ...mine.filter((c) => c.id === DEFAULT_COLLECTION_ID),
-    ...mine.filter((c) => c.id !== DEFAULT_COLLECTION_ID),
+    ...mine.filter((c) => c.id === first),
+    ...mine.filter((c) => c.id !== first),
   ]
   for (const c of ordered) {
     const { free } = await roomIn(c.id, settings)
@@ -281,5 +309,5 @@ export async function defaultTargetCollection(
   // Every list full. Return the default anyway and let the caller's own room
   // check produce the message — "which list" and "is there room" are two
   // questions and answering the first with an exception confuses them.
-  return DEFAULT_COLLECTION_ID
+  return first
 }

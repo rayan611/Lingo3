@@ -8,7 +8,7 @@ import {
   sniffDelimiter,
   toCsv,
 } from '../lib/csv'
-import { LANG_NAMES, type Lang, type Settings } from '../db/types'
+import { LANG_NAMES, collectionOf, type Lang, type Settings } from '../db/types'
 
 type ColumnRole = 'ignore' | 'word' | 'hint' | 'topic'
 
@@ -240,7 +240,8 @@ export function ImportExport({ settings }: { settings: Settings }) {
       <p className="muted small">
         One row per word per language, readable by a spreadsheet and by Anki.
         Worth doing before clearing site data or changing browser — you own
-        these words, and being able to leave is part of that.
+        these words, and being able to leave is part of that. Lists you have
+        unticked “Include in Export CSV” for under My words are left out.
       </p>
       <div className="row">
         <button onClick={() => void exportCsv()}>Export CSV</button>
@@ -250,10 +251,18 @@ export function ImportExport({ settings }: { settings: Settings }) {
 }
 
 async function exportCsv() {
-  const [concepts, entries] = await Promise.all([
+  const [concepts, entries, collections] = await Promise.all([
     db.concepts.toArray(),
     db.entries.toArray(),
+    db.collections.toArray(),
   ])
+  // The per-list "Include in Export CSV" switch on My words. A word whose list
+  // row has not arrived on this device yet is kept: leaving words out of a
+  // backup by accident is the worse mistake.
+  const listName = new Map(collections.map((c) => [c.id, c.name]))
+  const excluded = new Set(
+    collections.filter((c) => !c.deletedAt && !c.inExport).map((c) => c.id),
+  )
   const byConcept = new Map<string, typeof entries>()
   for (const e of entries) {
     const list = byConcept.get(e.conceptId) ?? []
@@ -262,10 +271,11 @@ async function exportCsv() {
   }
 
   const rows: (string | undefined)[][] = [
-    ['lemma', 'language', 'headword', 'meaning', 'example', 'gloss', 'pos', 'topics'],
+    ['lemma', 'language', 'headword', 'meaning', 'example', 'gloss', 'pos', 'topics', 'list'],
   ]
   for (const c of concepts) {
     if (c.deletedAt) continue
+    if (excluded.has(collectionOf(c))) continue
     for (const e of byConcept.get(c.id) ?? []) {
       rows.push([
         c.lemma,
@@ -276,6 +286,7 @@ async function exportCsv() {
         e.exampleGloss,
         c.pos,
         (c.tags ?? []).join('; '),
+        listName.get(collectionOf(c)),
       ])
     }
   }

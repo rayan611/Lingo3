@@ -10,7 +10,7 @@ import {
   collectionOf,
   type Settings,
 } from '../db/types'
-import { listCollections, moveWord } from '../db/collections'
+import { collectionCounts, listCollections } from '../db/collections'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
 import { WordLists } from './WordLists'
@@ -27,8 +27,13 @@ export function Browse({ settings }: Props) {
    * already there; only the control was missing.
    */
   const [pos, setPos] = useState<string>('all')
-  /** Which list is being looked at. 'all' is every list, set aside or not. */
-  const [list, setList] = useState<string>('all')
+  /**
+   * Which lists' words are shown. `null` is every list, set aside or not; a
+   * set is the lists ticked in the chip row above the words. More than one
+   * can be on at once — "Work and University, but not the A1 pack" is a
+   * question a single menu could not ask.
+   */
+  const [lists, setLists] = useState<Set<string> | null>(null)
   const [troubleOnly, setTroubleOnly] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -88,22 +93,33 @@ export function Browse({ settings }: Props) {
     new Set<string>(),
   )
 
-  /** Every list, for the filter and for the move menu on each word. */
+  /** Every list, for the chip row that filters the words below. */
   const collections = useLiveQuery(() => listCollections(), [], [])
+  const listCounts = useLiveQuery(() => collectionCounts(), [], new Map<string, number>())
+
+  function toggleList(id: string) {
+    setLists((current) => {
+      const next = new Set(current ?? [])
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      // Nothing ticked reads as "show me everything", not as an empty screen.
+      return next.size === 0 ? null : next
+    })
+  }
 
   const concepts = useLiveQuery(async () => {
     const all = await db.concepts.orderBy('createdAt').reverse().toArray()
     const q = query.trim().toLocaleLowerCase()
     return all.filter((c) => {
       if (c.deletedAt) return false
-      if (list !== 'all' && collectionOf(c) !== list) return false
+      if (lists && !lists.has(collectionOf(c))) return false
       if (!matchesTopic(c, topic)) return false
       if (pos !== 'all' && c.pos !== pos) return false
       if (troubleOnly && !leeches.has(c.id)) return false
       if (!q) return true
       return c.lemma.toLocaleLowerCase().includes(q)
     })
-  }, [query, topic, pos, list, troubleOnly, leeches], [])
+  }, [query, topic, pos, lists, troubleOnly, leeches], [])
 
   /** Every topic in use, from tags and from the old single category field. */
   const topics = useLiveQuery(
@@ -178,30 +194,46 @@ export function Browse({ settings }: Props) {
 
       <div className="panel">
         <h2>Your words</h2>
-        <div className="row">
+        {/* Which lists to show, as a row of chips rather than a menu: the
+            words below used to carry their list's name on every row, which
+            pushed redo/pause/delete out of line. The name now lives here,
+            once, and on the word's own card when it is opened. Only once
+            there is a second list — until then the row answers nothing. */}
+        {collections.length > 1 && (
+          <div className="list-filter" role="group" aria-label="Show words from">
+            <button
+              type="button"
+              className={`chip${lists === null ? ' chip-on' : ''}`}
+              aria-pressed={lists === null}
+              onClick={() => setLists(null)}
+            >
+              All lists
+            </button>
+            {collections.map((c) => {
+              const on = lists?.has(c.id) ?? false
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  className={`chip${on ? ' chip-on' : ''}${c.active ? '' : ' is-off'}`}
+                  aria-pressed={on}
+                  onClick={() => toggleList(c.id)}
+                  title={c.active ? undefined : 'Set aside — not in review'}
+                >
+                  {c.name}
+                  <span className="chip-num">{listCounts.get(c.id) ?? 0}</span>
+                </button>
+              )
+            })}
+          </div>
+        )}
+        <div className="row browse-filters">
           <input
             className="field-grow"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search"
           />
-          {/* Only once there is a second list. Until then every word is in
-              the same one and the menu answers nothing. */}
-          {collections.length > 1 && (
-            <select
-              value={list}
-              onChange={(e) => setList(e.target.value)}
-              aria-label="List"
-            >
-              <option value="all">All lists</option>
-              {collections.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                  {c.active ? '' : ' (set aside)'}
-                </option>
-              ))}
-            </select>
-          )}
           <select value={topic} onChange={(e) => setTopic(e.target.value)}>
             <option value="all">All topics</option>
             {topics.map((t) => (
@@ -264,24 +296,6 @@ export function Browse({ settings }: Props) {
                 ) : null}
               </button>
               <div className="word-list-actions">
-                {/* Moving a word is a filing change and nothing else: no card
-                    is touched, so a word that moves from "A1" to "Words at
-                    work" keeps every interval it has earned. */}
-                {collections.length > 1 && (
-                  <select
-                    className="link move-list"
-                    value={collectionOf(c)}
-                    onChange={(e) => void moveWord(c.id, e.target.value)}
-                    aria-label={`Which list "${c.lemma}" is in`}
-                    title="Move to another list"
-                  >
-                    {collections.map((col) => (
-                      <option key={col.id} value={col.id}>
-                        {col.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
                 <button
                   className="link"
                   disabled={busy}

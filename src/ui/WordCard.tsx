@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
-import { LANG_NAMES, activeTargets, type Settings } from '../db/types'
+import { LANG_NAMES, activeTargets, collectionOf, type Settings } from '../db/types'
+import { listCollections, moveWord } from '../db/collections'
 import { normaliseTags } from '../ai/expand'
 import { TagEditor } from './TagEditor'
 import { WordStack } from './WordStack'
@@ -32,6 +33,10 @@ export function WordCard({
     [],
     [],
   )
+
+  /** Every list, for the "which list" menu. Moved here from each row of My
+      words, where it pushed the row's buttons out of line. */
+  const collections = useLiveQuery(() => listCollections(), [], [])
 
   const data = useLiveQuery(async () => {
     const concept = await db.concepts.get(conceptId)
@@ -75,6 +80,25 @@ export function WordCard({
             </option>
           ))}
         </select>
+        {/* Moving a word is a filing change and nothing else: no card is
+            touched, so a word that moves from "A1" to "Words at work" keeps
+            every interval it has earned. */}
+        {collections.length > 1 && (
+          <label className="word-list-pick">
+            <span>List</span>
+            <select
+              value={collectionOf(concept)}
+              onChange={(e) => void moveWord(concept.id, e.target.value)}
+              aria-label={`Which list "${concept.lemma}" is in`}
+            >
+              {collections.map((col) => (
+                <option key={col.id} value={col.id}>
+                  {col.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </div>
       <TagEditor
         tags={concept.tags ?? []}
