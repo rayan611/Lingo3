@@ -40,6 +40,7 @@ import { InstallButton } from './ui/InstallButton'
 import { NamePrompt } from './ui/NamePrompt'
 import { Logo } from './ui/Logo'
 import { shouldShowLanding } from './ui/landingSeen'
+import { inviterFromPath } from './lib/invite'
 import { lazyScreen } from './ui/lazyScreen'
 import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
 
@@ -119,7 +120,10 @@ export function App() {
   }, [dbReady, session])
   // Read once, not on every render: it must not flip to the landing page
   // underneath someone who is already using the app.
-  const [showLanding, setShowLanding] = useState(shouldShowLanding)
+  // An invite link (lingo3.com/invite/<name>) always opens on the front page,
+  // which greets the visitor by the inviter's name.
+  const [inviter] = useState(() => inviterFromPath(window.location.pathname))
+  const [showLanding, setShowLanding] = useState(() => shouldShowLanding() || inviter !== '')
 
   // Point Dexie at this user's store before rendering anything that queries it.
   useEffect(() => {
@@ -185,7 +189,13 @@ export function App() {
   if (showLanding && !session) {
     return (
       <Suspense fallback={screenFallback}>
-        <Landing onOpen={() => setShowLanding(false)} />
+        <Landing
+          inviter={inviter}
+          onOpen={() => {
+            if (inviter) window.history.replaceState({}, '', '/')
+            setShowLanding(false)
+          }}
+        />
       </Suspense>
     )
   }

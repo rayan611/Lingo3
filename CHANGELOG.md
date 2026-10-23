@@ -3,6 +3,20 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-23 — Settings → Invite others
+
+- `src/ui/InviteOthers.tsx`: a panel under **You** with a short, editable message and the person's own
+  link, `lingo3.com/invite/<their name>`. Share sheet, WhatsApp, Telegram, SMS, email, Facebook,
+  copy message, copy link. The edit is a device-local draft (`lingua.inviteDraft`); "Use the original
+  text" clears it. An edit that drops the link gets it appended when sent.
+- `src/lib/invite.ts`: the English message, the link, and the share addresses; checked by
+  `scripts/check-invite.ts` (part of `npm run check`).
+- The front page greets an invited visitor: `/invite/<name>` always opens the landing, shows
+  "💌 <name> invited you to Lingo3" and sets the tab title. The name comes only from the link and is
+  shown as plain text; nothing is looked up or stored. The existing SPA rewrite already serves the path.
+- Open: link previews in WhatsApp/Facebook still show the general Lingo3 card (crawlers do not run
+  JavaScript). A personal preview would need a small server function.
+
 ## 2026-10-24 — Review as a full-screen flashcard; shorter tiles; "Not reviewed first"
 
 - **Review (`src/ui/Training.tsx`) is full screen**, like the recall test: `.app.focus` now also

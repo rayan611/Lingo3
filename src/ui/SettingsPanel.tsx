@@ -23,6 +23,7 @@ import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { DeleteAccount } from './DeleteAccount'
 import { HowTo, QuickStart } from './HowTo'
 import { ImportExport } from './ImportExport'
+import { InviteOthers } from './InviteOthers'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
 
@@ -296,6 +297,8 @@ export function SettingsPanel({
           />
         </label>
       </div>
+
+      <InviteOthers name={settings.displayName} />
 
       <div className="panel">
         <h2>Languages</h2>

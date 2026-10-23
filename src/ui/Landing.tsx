@@ -4,6 +4,7 @@ import { HowTo, QuickStart, guessLang } from './HowTo'
 import { InstallButton } from './InstallButton'
 import { Logo } from './Logo'
 import { SEEN_KEY } from './landingSeen'
+import { INVITE_WELCOME, fillInvite } from '../lib/invite'
 
 /**
  * Where feedback from someone who is not signed in goes.
@@ -82,7 +83,11 @@ const SLIDES: {
   },
 ]
 
-export function Landing({ onOpen }: { onOpen: () => void }) {
+export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?: string }) {
+  useEffect(() => {
+    if (inviter) document.title = fillInvite(INVITE_WELCOME, { name: inviter })
+  }, [inviter])
+
   // Shared with the bloom theme: the same request, so one of them warms the
   // cache for the other.
   useEffect(ensureDisplayFonts, [])
@@ -123,6 +128,9 @@ export function Landing({ onOpen }: { onOpen: () => void }) {
           reason the name carries the hero and the strapline is one line under
           it: a second big headline would push the button past the fold. */}
       <header className="lx-hero" id="top">
+        {inviter && (
+          <p className="lx-invited">💌 {fillInvite(INVITE_WELCOME, { name: inviter })}</p>
+        )}
         <h1 className="lx-mark">Lingo3</h1>
         <p className="lx-tagline">Three languages. Your own words.</p>
         <p className="lx-sub">

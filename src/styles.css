@@ -2033,6 +2033,15 @@ button.chip.park:hover:not(:disabled) { border-color: var(--ink-faint); color: v
   .lx-mark { color: var(--lx-violet); }
 }
 
+.lx-invited {
+  display: inline-block;
+  margin: 0 0 0.6rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--lx-violet) 35%, transparent);
+  background: color-mix(in srgb, var(--lx-violet) 10%, transparent);
+  font-weight: 600;
+}
 .lx-tagline {
   font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
   font-weight: 500;
