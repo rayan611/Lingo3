@@ -1,21 +1,58 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
+import { listCollections } from '../db/collections'
 import { matchesTopic } from '../fsrs/queue'
-import type { Concept, Settings } from '../db/types'
+import { PARTS_OF_SPEECH, collectionOf, type Concept, type Settings } from '../db/types'
 import { WordCard } from './WordCard'
 
-type Sort = 'added' | 'oldest' | 'hardest' | 'alpha'
+type Sort = 'added' | 'unseen' | 'oldest' | 'hardest' | 'alpha'
 
 const SORT_LABELS: Record<Sort, string> = {
   added: 'Newest first',
+  unseen: 'Not reviewed first',
   oldest: 'Oldest first',
   hardest: 'Hardest first',
   alpha: 'A–Z',
 }
 
 /**
- * Training: step through words without being asked anything.
+ * When each word was last on screen here, on this device.
+ *
+ * localStorage and not Dexie: it is a reading aid, not study data — it must
+ * not sync, and above all it must never come near FSRS (see below). Losing it
+ * costs nothing but the order of "Not reviewed first".
+ */
+const SEEN_KEY = 'lingo3.reviewSeen'
+
+function readSeen(): Record<string, number> {
+  try {
+    const raw = localStorage.getItem(SEEN_KEY)
+    return raw ? (JSON.parse(raw) as Record<string, number>) : {}
+  } catch {
+    return {}
+  }
+}
+
+function markSeen(conceptId: string) {
+  try {
+    const seen = readSeen()
+    seen[conceptId] = Date.now()
+    localStorage.setItem(SEEN_KEY, JSON.stringify(seen))
+  } catch {
+    // Private mode or full storage: the order just stays as it was.
+  }
+}
+
+/** The Type picker carries both topics and parts of speech, prefixed apart. */
+function matchesKind(concept: Concept, kind: string): boolean {
+  if (kind === 'all') return true
+  if (kind.startsWith('pos:')) return concept.pos === kind.slice(4)
+  return matchesTopic(concept, kind.slice(4))
+}
+
+/**
+ * Review: step through words without being asked anything.
  *
  * The hard rule here is that nothing in this screen touches FSRS state. No
  * grades, no review log, no card writes. If browsing counted as a review,
@@ -23,27 +60,48 @@ const SORT_LABELS: Record<Sort, string> = {
  * anything — which is the same failure as one card carrying three languages'
  * answers, just arriving from the other direction.
  *
+ * Full screen, like the recall test: the header and tiles are hidden, a thin
+ * bar holds Back and the three pickers, and the word with every language fits
+ * one phone screen so Next can be pressed again and again without scrolling.
+ * The word's list, type and topics sit below the Next bar — tap the native
+ * word to get there.
+ *
  * The native-language gloss of the example is shown here. It is hidden during
  * a test, where it would hand you the answer; here, reading it is the point.
  */
-export function Training({ settings }: { settings: Settings }) {
-  const [topic, setTopic] = useState('all')
+export function Training({
+  settings,
+  onExit,
+}: {
+  settings: Settings
+  onExit: () => void
+}) {
+  const [list, setList] = useState('all')
+  const [kind, setKind] = useState('all')
   const [sort, setSort] = useState<Sort>('added')
   const [index, setIndex] = useState(0)
 
-  const topics = useLiveQuery(
+  const collections = useLiveQuery(() => listCollections(), [], [])
+
+  /** Topics and parts of speech actually in use, for the Type picker. */
+  const kinds = useLiveQuery(
     async () => {
       const all = await db.concepts.toArray()
-      const set = new Set<string>()
+      const topics = new Set<string>()
+      const pos = new Set<string>()
       for (const c of all) {
         if (c.deletedAt) continue
-        if (c.category) set.add(c.category)
-        for (const t of c.tags ?? []) set.add(t)
+        if (c.category) topics.add(c.category)
+        for (const t of c.tags ?? []) topics.add(t)
+        if (c.pos) pos.add(c.pos)
       }
-      return [...set].sort()
+      return {
+        topics: [...topics].sort(),
+        pos: PARTS_OF_SPEECH.filter((p) => pos.has(p)),
+      }
     },
     [],
-    [],
+    { topics: [] as string[], pos: [] as string[] },
   )
 
   /**
@@ -56,7 +114,10 @@ export function Training({ settings }: { settings: Settings }) {
     async () => {
       const concepts = await db.concepts.orderBy('createdAt').reverse().toArray()
       const live = concepts.filter(
-        (c) => !c.deletedAt && matchesTopic(c, topic === 'all' ? null : topic),
+        (c) =>
+          !c.deletedAt &&
+          (list === 'all' || collectionOf(c) === list) &&
+          matchesKind(c, kind),
       )
       if (sort !== 'hardest') return { list: live, difficulty: new Map<string, number>() }
 
@@ -74,29 +135,51 @@ export function Training({ settings }: { settings: Settings }) {
       }
       return { list: live, difficulty }
     },
-    [topic, sort, settings.activeLangs],
+    [list, kind, sort, settings.activeLangs],
     { list: [] as Concept[], difficulty: new Map<string, number>() },
   )
 
+  /**
+   * Read once per choice of filter and order, not on every render: the word
+   * on screen is marked seen as you arrive, and re-sorting on that would move
+   * the next word out from under the Next button.
+   */
+  const seen = useMemo(() => readSeen(), [list, kind, sort])
+
   const ordered = useMemo(() => {
-    const list = [...words.list]
-    if (sort === 'oldest') list.reverse()
+    const out = [...words.list]
+    if (sort === 'oldest') out.reverse()
     else if (sort === 'alpha')
-      list.sort((a, b) => a.lemma.localeCompare(b.lemma))
+      out.sort((a, b) => a.lemma.localeCompare(b.lemma))
     else if (sort === 'hardest')
-      list.sort(
+      out.sort(
         (a, b) =>
           (words.difficulty.get(b.id) ?? 0) - (words.difficulty.get(a.id) ?? 0),
       )
-    return list
-  }, [words, sort])
+    // Never seen first (newest first among them, as they already are), then
+    // the ones seen longest ago. A stable sort keeps the rest in place.
+    else if (sort === 'unseen')
+      out.sort((a, b) => (seen[a.id] ?? 0) - (seen[b.id] ?? 0))
+    return out
+  }, [words, sort, seen])
 
   // Changing the filter should not leave you pointing past the end of the list.
   useEffect(() => {
     setIndex(0)
-  }, [topic, sort])
+  }, [list, kind, sort])
 
   const current = ordered[Math.min(index, Math.max(0, ordered.length - 1))]
+  const last = ordered.length - 1
+  const next = () => setIndex((i) => Math.min(i + 1, last))
+  const prev = () => setIndex((i) => Math.max(0, i - 1))
+
+  const currentId = current?.id
+  useEffect(() => {
+    if (currentId) markSeen(currentId)
+    // A new word starts at the top: the previous one may have been left
+    // scrolled down to its settings.
+    window.scrollTo({ top: 0 })
+  }, [currentId])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -114,75 +197,178 @@ export function Training({ settings }: { settings: Settings }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [ordered.length])
 
+  /** Swipe left for the next word, right for the previous one. */
+  const touch = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0]
+    touch.current = t ? { x: t.clientX, y: t.clientY } : null
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touch.current
+    const t = e.changedTouches[0]
+    touch.current = null
+    if (!start || !t) return
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    if (dx < 0) next()
+    else prev()
+  }
+
+  const listName =
+    list === 'all' ? 'All lists' : collections.find((c) => c.id === list)?.name ?? 'All lists'
+  const kindName = kind === 'all' ? 'All types' : kind.slice(4)
+  const filtered = list !== 'all' || kind !== 'all'
+
+  const bar = (
+    <div className="flash-bar">
+      <button
+        type="button"
+        className="flash-back"
+        onClick={onExit}
+        aria-label="Back to the menu"
+        title="Back to the menu"
+      >
+        ←
+      </button>
+      <Pick label="List" value={listName}>
+        <select
+          value={list}
+          onChange={(e) => setList(e.target.value)}
+          aria-label="Which list"
+        >
+          <option value="all">All lists</option>
+          {collections.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+      </Pick>
+      <Pick label="Type" value={kindName}>
+        <select
+          value={kind}
+          onChange={(e) => setKind(e.target.value)}
+          aria-label="Which topic or part of speech"
+        >
+          <option value="all">All types</option>
+          {kinds.topics.length > 0 && (
+            <optgroup label="Topics">
+              {kinds.topics.map((t) => (
+                <option key={t} value={`tag:${t}`}>
+                  {t}
+                </option>
+              ))}
+            </optgroup>
+          )}
+          {kinds.pos.length > 0 && (
+            <optgroup label="Part of speech">
+              {kinds.pos.map((p) => (
+                <option key={p} value={`pos:${p}`}>
+                  {p}
+                </option>
+              ))}
+            </optgroup>
+          )}
+        </select>
+      </Pick>
+      <Pick label="Order" value={SORT_LABELS[sort]}>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as Sort)}
+          aria-label="Order"
+        >
+          {(Object.keys(SORT_LABELS) as Sort[]).map((s) => (
+            <option key={s} value={s}>
+              {SORT_LABELS[s]}
+            </option>
+          ))}
+        </select>
+      </Pick>
+    </div>
+  )
+
   if (ordered.length === 0) {
     return (
-      <div className="stack">
+      <div className="flash">
+        {bar}
         <div className="panel">
-          <h2>Review</h2>
           <p className="muted">
-            {topic === 'all'
-              ? 'No words yet. Add some on the Add tab.'
-              : `Nothing tagged “${topic}”.`}
+            {filtered
+              ? 'No words match this list and type.'
+              : 'No words yet. Add some on the Add tab.'}
           </p>
-          {topic !== 'all' && (
-            <button onClick={() => setTopic('all')}>Show all topics</button>
+          {filtered && (
+            <button
+              onClick={() => {
+                setList('all')
+                setKind('all')
+              }}
+            >
+              Show all words
+            </button>
           )}
         </div>
       </div>
     )
   }
 
-  return (
-    <div className="stack">
-      <div className="panel">
-        <div className="topic-bar">
-          <label className="field inline">
-            <span className="muted small">Topic</span>
-            <select value={topic} onChange={(e) => setTopic(e.target.value)}>
-              <option value="all">All topics</option>
-              {topics.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="field inline">
-            <span className="muted small">Order</span>
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as Sort)}
-            >
-              {(Object.keys(SORT_LABELS) as Sort[]).map((s) => (
-                <option key={s} value={s}>
-                  {SORT_LABELS[s]}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <p className="muted small">
-          Reading only — nothing here changes your review schedule.
-        </p>
-      </div>
-
-      {current && <WordCard conceptId={current.id} settings={settings} />}
-
-      <div className="panel training-nav">
-        <button onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}>
-          ← Previous
-        </button>
-        <span className="muted small">
-          {Math.min(index + 1, ordered.length)} of {ordered.length}
-        </span>
-        <button
-          className="primary"
-          onClick={() => setIndex((i) => Math.min(i + 1, ordered.length - 1))}
-          disabled={index >= ordered.length - 1}
-        >
-          Next →
-        </button>
-      </div>
+  // Sticky, so Next stays under the thumb in the same place on every word —
+  // and still in view when you scroll down to the word's settings.
+  const nav = (
+    <div className="flash-nav">
+      <button onClick={prev} disabled={index === 0} aria-label="Previous word">
+        ←
+      </button>
+      <span className="muted small">
+        {Math.min(index + 1, ordered.length)} / {ordered.length}
+      </span>
+      <button
+        className="primary"
+        onClick={next}
+        disabled={index >= last}
+        aria-label="Next word"
+      >
+        Next →
+      </button>
     </div>
+  )
+
+  return (
+    <div className="flash" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {bar}
+      {current && (
+        <WordCard conceptId={current.id} settings={settings} flash between={nav} />
+      )}
+      <p className="muted small flash-note">
+        Reading only — nothing here changes your review schedule.
+      </p>
+    </div>
+  )
+}
+
+/**
+ * A small picker: its name above, the choice below, and the real select laid
+ * invisibly over the whole thing, so a tap anywhere opens the native list and
+ * a long name still ends in a proper ellipsis.
+ */
+function Pick({
+  label,
+  value,
+  children,
+}: {
+  label: string
+  value: string
+  children: ReactNode
+}) {
+  return (
+    <label className="flash-pick">
+      <span className="flash-pick-label">{label}</span>
+      <span className="flash-pick-value" aria-hidden="true">
+        <span className="flash-pick-text">{value}</span>
+        <span className="flash-pick-caret">▾</span>
+      </span>
+      {children}
+    </label>
   )
 }

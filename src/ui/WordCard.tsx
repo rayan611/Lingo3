@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { LANG_NAMES, activeTargets, collectionOf, type Settings } from '../db/types'
@@ -15,9 +16,14 @@ import { PARTS_OF_SPEECH, type PartOfSpeech } from '../db/types'
 export function WordCard({
   conceptId,
   settings,
+  flash = false,
+  between,
 }: {
   conceptId: string
   settings: Settings
+  /** Review's flashcard layout — see `WordStack`. */
+  flash?: boolean
+  between?: ReactNode
 }) {
   /** Topics already in use elsewhere, offered as one-tap additions. */
   const suggestions = useLiveQuery(
@@ -114,6 +120,8 @@ export function WordCard({
       entries={sorted.map((e) => ({ ...e, form: e.morphology }))}
       settings={settings}
       meta={meta}
+      flash={flash}
+      between={between}
     />
   )
 }

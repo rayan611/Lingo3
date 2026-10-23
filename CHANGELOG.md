@@ -3,6 +3,27 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Review as a full-screen flashcard; shorter tiles; "Not reviewed first"
+
+- **Review (`src/ui/Training.tsx`) is full screen**, like the recall test: `.app.focus` now also
+  applies to the `training` tab, so the header and tiles are hidden. A thin bar holds **←** (back to
+  Add; the phone's Back also works) and three small pickers — **List**, **Type** (topics and parts
+  of speech, in two groups) and **Order** — each with its name above its value and the native select
+  invisible over the pill, so a tap opens the list.
+- **One flashcard**: `WordCard`/`WordStack` take `flash` and `between`. The native word heads the
+  card, every language follows, then the sticky **← / n of N / Next →** bar, then the meta panel
+  (type, list, topics) below the fold. Tapping the native word scrolls to that panel. Swipe left or
+  right also moves between words. Checked at 390×844 and 375×667: a verb in three languages, with
+  examples, glosses and all forms, fits above the Next bar with no scroll.
+- In the flashcard each language's chip, word, speaker and meaning share one line; forms flow on one
+  line; speakers are 28px (`.flash-card .speak` also resets the phone-wide 44px button floor).
+- **Sort "Not reviewed first"**: words never shown in Review on this device first, then the ones seen
+  longest ago. Kept in localStorage (`lingo3.reviewSeen`): it does not sync and never touches FSRS.
+  The seen map is read once per filter/order choice so the list does not reshuffle under Next.
+- **Every word card** (`WordStack` `LangRow`): the example now comes right after the meaning, then
+  the forms. Language rows, examples, glosses and forms have about half the padding they had.
+- **Tiles** on every screen are shorter: 60px (54px on phones), smaller icon, tighter gap.
+
 ## 2026-10-24 — Add screen as the main window; language pills; equal tiles
 
 - Add panel (`.add-panel`): soft accent wash, accent edge and deeper shadow; tighter padding (14px)

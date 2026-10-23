@@ -419,9 +419,9 @@ function Workspace({
   const due = counts?.total ?? 0
 
   return (
-    // The recall test is full screen: the header and tiles are hidden so the
-    // card, the answer and the grade buttons fit one phone screen.
-    <div className={`app${tab === 'review' ? ' focus' : ''}`}>
+    // The recall test and Review are full screen: the header and tiles are
+    // hidden so the card and its buttons fit one phone screen.
+    <div className={`app${tab === 'review' || tab === 'training' ? ' focus' : ''}`}>
       {/* Two zones: who you are in this app, and what you are studying.
           The greeting sits with the mark rather than in a column of its own —
           centred, it read as a third unrelated thing and was the first to be
@@ -525,7 +525,9 @@ function Workspace({
             {tab === 'review' && (
               <ReviewTab settings={settings} onExit={() => setTab('add')} />
             )}
-            {tab === 'training' && <Training settings={settings} />}
+            {tab === 'training' && (
+              <Training settings={settings} onExit={() => goTab('add')} />
+            )}
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
             {tab === 'translate' && <Translate settings={settings} />}
