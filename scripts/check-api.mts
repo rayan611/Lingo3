@@ -476,6 +476,93 @@ console.log('\nA second provider answers when the first cannot')
     'the override leaked into the backup')
 }
 
+// ---------------------------------------------------------------------------
+// Groq: the first backup, between Gemini and Claude.
+// ---------------------------------------------------------------------------
+console.log('\nGroq answers when Gemini cannot')
+{
+  const { firstAnswer, configuredProviders, modelFor, callGroq, readGroq } = await import(
+    '../src/server/aiFallback'
+  )
+  const reply = (status: number, body: unknown = { ok: true }) =>
+    async () => new Response(JSON.stringify(body), { status })
+  const quiet = async <T,>(fn: () => Promise<T>) => {
+    const w = console.warn, e = console.error
+    console.warn = () => {}; console.error = () => {}
+    try { return await fn() } finally { console.warn = w; console.error = e }
+  }
+  const groqReply = (args: unknown) => ({
+    choices: [{ message: { content: null, tool_calls: [
+      { type: 'function', function: { name: 'record_word', arguments: JSON.stringify(args) } },
+    ] } }],
+  })
+  const read = (d: unknown) => d
+
+  check('order is Gemini, Groq, Claude, and only keys that are set',
+    JSON.stringify(configuredProviders({ gemini: 'g', groq: 'q', anthropic: 'a' })) === '["gemini","groq","anthropic"]' &&
+    JSON.stringify(configuredProviders({ gemini: 'g', groq: 'q' })) === '["gemini","groq"]' &&
+    JSON.stringify(configuredProviders({ groq: 'q' })) === '["groq"]',
+    'wrong order or unset key tried')
+
+  check('Groq uses its own default, or GROQ_MODEL, never LINGUA_MODEL',
+    modelFor('groq', ['gemini', 'groq'], 'gemini-x', undefined) === 'openai/gpt-oss-120b' &&
+    modelFor('groq', ['gemini', 'groq'], 'gemini-x', 'llama-3.3-70b-versatile') === 'llama-3.3-70b-versatile',
+    'the Groq model is wrong')
+
+  const unwrap = readGroq('record_word')
+  const word = unwrap(groqReply({ pos: 'noun', normalisedLemma: 'hund' })) as { pos?: string } | null
+  check('the forced tool call is unwrapped to the same object Claude returns', word?.pos === 'noun', JSON.stringify(word))
+  const asText = unwrap({ choices: [{ message: { content: '```json\n{"pos":"verb"}\n```' } }] }) as { pos?: string } | null
+  check('JSON written as plain text is accepted too', asText?.pos === 'verb', JSON.stringify(asText))
+  check('an answer that is not JSON is unusable, so the next provider is tried',
+    unwrap({ choices: [{ message: { content: 'Sorry, I cannot.' } }] }) === null, 'prose was accepted')
+
+  const viaGroq = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(503), read },
+    { provider: 'groq', call: reply(200, groqReply({ pos: 'noun' })), read: unwrap },
+    { provider: 'anthropic', call: async () => { throw new Error('must not be called') }, read },
+  ], 5000, 't', 'slow'))
+  check('Gemini 503 -> Groq answers, Claude is not called', viaGroq.ok && viaGroq.provider === 'groq', JSON.stringify(viaGroq))
+
+  const pastGroq = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(429), read },
+    { provider: 'groq', call: reply(429), read: unwrap },
+    { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
+  ], 5000, 't', 'slow'))
+  check('Gemini and Groq both busy -> Claude answers', pastGroq.ok && pastGroq.provider === 'anthropic', JSON.stringify(pastGroq))
+
+  // What actually goes over the wire: the endpoint's own tool, forced.
+  const realFetch = globalThis.fetch
+  let sent: { url?: string; auth?: string; body?: Record<string, unknown> } = {}
+  globalThis.fetch = (async (url: string, init: RequestInit) => {
+    sent = {
+      url,
+      auth: (init.headers as Record<string, string>).authorization,
+      body: JSON.parse(String(init.body)),
+    }
+    return new Response('{}', { status: 200 })
+  }) as typeof fetch
+  try {
+    const tool = { name: 'record_word', description: 'd', input_schema: { type: 'object', properties: {} } }
+    await callGroq(tool, 'prompt', 'gsk_test', new AbortController().signal, 'openai/gpt-oss-120b', {
+      maxTokens: 4096,
+      temperature: 0,
+    })
+  } finally {
+    globalThis.fetch = realFetch
+  }
+  const body = sent.body as { tool_choice?: { function?: { name?: string } }; tools?: Array<{ function?: { parameters?: unknown } }>; reasoning_effort?: string } | undefined
+  check('Groq request: chat completions URL with a bearer key',
+    sent.url === 'https://api.groq.com/openai/v1/chat/completions' && sent.auth === 'Bearer gsk_test',
+    JSON.stringify({ url: sent.url, auth: sent.auth }))
+  check('Groq request: the endpoint tool is forced and passed through unchanged',
+    body?.tool_choice?.function?.name === 'record_word' &&
+      JSON.stringify(body?.tools?.[0]?.function?.parameters) === '{"type":"object","properties":{}}',
+    JSON.stringify(body))
+  check('Groq request: low reasoning on gpt-oss, so a backup answers quickly',
+    body?.reasoning_effort === 'low', JSON.stringify(body))
+}
+
 // The summary used to be an unconditional "passed" with no exit code, so a
 // failing endpoint check printed FAIL and the build went green anyway. It is
 // the only suite that did this; the other three already exit non-zero.

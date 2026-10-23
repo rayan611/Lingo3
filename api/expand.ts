@@ -1,5 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
-import { configuredProviders, firstAnswer, modelFor } from '../src/server/aiFallback.js'
+import { callGroq, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
@@ -31,18 +31,24 @@ const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
 // cost difference at a few dozen words a day is small, and a wrong der/die/das
 // gets drilled into you by the scheduler for months.
 /**
- * Two providers, tried in order: Gemini first when its key is present,
- * Anthropic (Claude) as the backup when Gemini is busy, down, too slow or
- * answers something unusable — see src/server/aiFallback.ts. With only one
- * key set, only that provider is used. Nothing downstream knows or cares which one answered — both are
+ * Three providers, tried in order: Gemini, then Groq, then Anthropic (Claude),
+ * each taking over when the one before is busy, down, too slow or answers
+ * something unusable — see src/server/aiFallback.ts. Only providers with a
+ * key are tried. Nothing downstream knows or cares which one answered — all are
  * normalised to the same shape before they leave this file, and the database,
  * the scheduler and the review screen see identical entries either way.
  */
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
-// Gemini first, Claude as the backup when Gemini is busy, down or too slow
-// (see src/server/aiFallback.ts). With one key set, only that one is used.
-const PROVIDERS = configuredProviders({ gemini: GEMINI_KEY, anthropic: ANTHROPIC_KEY })
+const GROQ_KEY = process.env.GROQ_API_KEY
+// Gemini first, then Groq, then Claude, each taking over when the one before
+// is busy, down or too slow (see src/server/aiFallback.ts). Only providers
+// with a key are tried; with one key set, only that one is used.
+const PROVIDERS = configuredProviders({
+  gemini: GEMINI_KEY,
+  groq: GROQ_KEY,
+  anthropic: ANTHROPIC_KEY,
+})
 const MODEL_OVERRIDE = process.env.LINGUA_MODEL
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
@@ -456,7 +462,7 @@ async function respond(req: Request): Promise<Response> {
     return json(
       {
         error:
-          'No model key is configured on the server. Set GEMINI_API_KEY or ANTHROPIC_API_KEY.',
+          'No model key is configured on the server. Set GEMINI_API_KEY, GROQ_API_KEY or ANTHROPIC_API_KEY.',
       },
       500,
     )
@@ -482,11 +488,23 @@ async function respond(req: Request): Promise<Response> {
   const result = await firstAnswer(
     PROVIDERS.map((provider) => ({
       provider,
-      call: (signal: AbortSignal) =>
+      call: (signal: AbortSignal) => {
+        const model = modelFor(provider, PROVIDERS, MODEL_OVERRIDE)
+        if (provider === 'gemini') return callGemini(prompt, GEMINI_KEY!, signal, model)
+        if (provider === 'groq') {
+          return callGroq(TOOL, prompt, GROQ_KEY!, signal, model, {
+            maxTokens: 4096,
+            temperature: 0,
+          })
+        }
+        return callAnthropic(prompt, ANTHROPIC_KEY!, signal, model)
+      },
+      read:
         provider === 'gemini'
-          ? callGemini(prompt, GEMINI_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE))
-          : callAnthropic(prompt, ANTHROPIC_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE)),
-      read: provider === 'gemini' ? readGemini : readAnthropic,
+          ? readGemini
+          : provider === 'groq'
+            ? readGroq(TOOL.name)
+            : readAnthropic,
     })),
     UPSTREAM_TIMEOUT_MS,
     'expand.ts',

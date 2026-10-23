@@ -1,5 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
-import { configuredProviders, firstAnswer, modelFor } from '../src/server/aiFallback.js'
+import { callGroq, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import {
   TRANSLATE_LANGS,
   TRANSLATE_MAX_CHARS,
@@ -15,9 +15,15 @@ import {
  */
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
-// Gemini first, Claude as the backup when Gemini is busy, down or too slow
-// (see src/server/aiFallback.ts). With one key set, only that one is used.
-const PROVIDERS = configuredProviders({ gemini: GEMINI_KEY, anthropic: ANTHROPIC_KEY })
+const GROQ_KEY = process.env.GROQ_API_KEY
+// Gemini first, then Groq, then Claude, each taking over when the one before
+// is busy, down or too slow (see src/server/aiFallback.ts). Only providers
+// with a key are tried; with one key set, only that one is used.
+const PROVIDERS = configuredProviders({
+  gemini: GEMINI_KEY,
+  groq: GROQ_KEY,
+  anthropic: ANTHROPIC_KEY,
+})
 const MODEL_OVERRIDE = process.env.LINGUA_MODEL
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
@@ -228,11 +234,23 @@ async function respond(req: Request): Promise<Response> {
   const result = await firstAnswer(
     PROVIDERS.map((provider) => ({
       provider,
-      call: (signal: AbortSignal) =>
+      call: (signal: AbortSignal) => {
+        const model = modelFor(provider, PROVIDERS, MODEL_OVERRIDE)
+        if (provider === 'gemini') return callGemini(prompt, GEMINI_KEY!, signal, model)
+        if (provider === 'groq') {
+          return callGroq(TOOL, prompt, GROQ_KEY!, signal, model, {
+            maxTokens: 1500,
+            temperature: 0,
+          })
+        }
+        return callAnthropic(prompt, ANTHROPIC_KEY!, signal, model)
+      },
+      read:
         provider === 'gemini'
-          ? callGemini(prompt, GEMINI_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE))
-          : callAnthropic(prompt, ANTHROPIC_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE)),
-      read: provider === 'gemini' ? readGemini : readAnthropic,
+          ? readGemini
+          : provider === 'groq'
+            ? readGroq(TOOL.name)
+            : readAnthropic,
     })),
     UPSTREAM_TIMEOUT_MS,
     'translate.ts',

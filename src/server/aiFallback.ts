@@ -1,31 +1,142 @@
 /// <reference types="node" />
 
 /**
- * A backup model. Each api/ endpoint lists the providers it has keys for,
- * Gemini first; when one cannot answer — busy (429), down (5xx), too slow,
+ * Backup models. Each api/ endpoint lists the providers it has keys for, in
+ * the order below; when one cannot answer — busy (429), down (5xx), too slow,
  * unreachable, or an answer that does not read — the next one gets the same
  * prompt. With one key configured this behaves exactly as before.
+ *
+ * Gemini first, Groq as the first backup, Claude last. Groq is second because
+ * it is the fastest of the three to answer, which matters most when the first
+ * attempt has already spent part of the time budget.
  */
 
-export type Provider = 'gemini' | 'anthropic'
+export type Provider = 'gemini' | 'groq' | 'anthropic'
+
+export const PROVIDER_ORDER: readonly Provider[] = ['gemini', 'groq', 'anthropic']
 
 export const DEFAULT_MODELS: Record<Provider, string> = {
   gemini: 'gemini-3.8-flash',
+  // A production model on Groq that supports forced tool calls and writes all
+  // eight of the app's languages well. GROQ_MODEL replaces it.
+  groq: 'openai/gpt-oss-120b',
   anthropic: 'claude-haiku-5-5',
 }
 
 /** The providers that have a key, in the order they are tried. */
-export function configuredProviders(keys: Record<Provider, string | undefined>): Provider[] {
-  return (['gemini', 'anthropic'] as const).filter((p) => !!keys[p])
+export function configuredProviders(keys: Partial<Record<Provider, string | undefined>>): Provider[] {
+  return PROVIDER_ORDER.filter((p) => !!keys[p])
 }
 
 /**
  * The model for a provider. An override (LINGUA_MODEL and friends) names a
- * model of the first provider, so it only applies there; the backup always
- * uses its own default.
+ * model of the first provider, so it only applies there. A backup uses its own
+ * default — except Groq, whose model can be set on its own with GROQ_MODEL,
+ * since Groq's catalogue changes more often than the other two.
  */
-export function modelFor(provider: Provider, providers: Provider[], override?: string) {
-  return provider === providers[0] && override ? override : DEFAULT_MODELS[provider]
+export function modelFor(
+  provider: Provider,
+  providers: readonly Provider[],
+  override?: string,
+  groqModel: string | undefined = process.env.GROQ_MODEL,
+) {
+  if (provider === providers[0] && override) return override
+  if (provider === 'groq' && groqModel) return groqModel
+  return DEFAULT_MODELS[provider]
+}
+
+// ---------------------------------------------------------------------------
+// Groq
+// ---------------------------------------------------------------------------
+
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
+
+/** The tool each endpoint already gives Claude: name, description, schema. */
+export type ToolSpec = {
+  name: string
+  description?: string
+  input_schema: unknown
+}
+
+/**
+ * Asks Groq for the same answer the endpoint asks Claude for.
+ *
+ * Groq speaks the OpenAI chat format, and a forced function call there is the
+ * same idea as Claude's forced tool: the endpoint's existing tool schema is
+ * passed through unchanged, so the answer comes back in exactly the shape
+ * readAnthropic returns and nothing after this call needs to know who wrote it.
+ *
+ * `reasoning_effort: 'low'` because the default model reasons before it
+ * answers, and that reasoning is counted against both the token ceiling and
+ * the time budget a backup has left.
+ */
+export function callGroq(
+  tool: ToolSpec,
+  prompt: string,
+  key: string,
+  signal: AbortSignal,
+  model: string,
+  opts: { maxTokens: number; temperature: number },
+) {
+  return fetch(GROQ_URL, {
+    method: 'POST',
+    signal,
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${key}`,
+    },
+    body: JSON.stringify({
+      model,
+      max_completion_tokens: opts.maxTokens,
+      temperature: opts.temperature,
+      ...(model.startsWith('openai/gpt-oss') ? { reasoning_effort: 'low' } : {}),
+      messages: [{ role: 'user', content: prompt }],
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: tool.name,
+            description: tool.description ?? '',
+            parameters: tool.input_schema,
+          },
+        },
+      ],
+      tool_choice: { type: 'function', function: { name: tool.name } },
+    }),
+  })
+}
+
+/**
+ * Unwraps Groq's answer to the tool's arguments, as an object.
+ *
+ * The arguments arrive as a JSON string. A model that ignores the forced call
+ * and writes the JSON as plain text is accepted too, so long as it parses —
+ * the endpoint validates the shape afterwards either way. Anything else is
+ * `null`, which `firstAnswer` treats as unusable and moves on.
+ */
+export function readGroq(toolName: string) {
+  return (data: unknown): unknown => {
+    const message = (
+      data as {
+        choices?: Array<{
+          message?: {
+            content?: string | null
+            tool_calls?: Array<{ function?: { name?: string; arguments?: string } }>
+          }
+        }>
+      }
+    ).choices?.[0]?.message
+    const call = message?.tool_calls?.find((c) => c.function?.name === toolName)
+    const raw = call?.function?.arguments ?? message?.content ?? ''
+    const text = raw.trim().replace(/^```(?:json)?\s*|\s*```$/g, '')
+    if (!text) return null
+    try {
+      const value = JSON.parse(text)
+      return value && typeof value === 'object' ? value : null
+    } catch {
+      return null
+    }
+  }
 }
 
 export type Attempt = {
