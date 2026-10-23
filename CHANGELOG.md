@@ -42,6 +42,21 @@ multi-valued and separate.
 Still open: no paid plan exists, so "Lift the limits" under Your lists is simply a switch. Pack words
 have no examples until you ask for them. Import is off.
 
+## 2026-10-23 — Backup AI: Claude answers when Gemini cannot
+
+- `src/server/aiFallback.ts`: `firstAnswer()` tries the configured providers in order — Gemini, then
+  Claude (Anthropic) — within the endpoint's time budget. The first gets 60% of it when a backup
+  exists, so a hung Gemini still leaves Claude time to answer. Falls through on 429, 5xx, timeout,
+  network failure or an unusable answer. Both down: the last status reaches the app (429 = busy,
+  else 502/504 → the calm "not available" note).
+- Used by all three endpoints (`api/expand.ts`, `api/story.ts`, `api/translate.ts`); each call
+  function now takes its model. `LINGUA_MODEL` / `LINGUA_STORY_MODEL` apply to the first provider
+  only; the backup uses `claude-haiku-5-5`. Logs say `answered by backup anthropic` when it is used.
+- Off until `ANTHROPIC_API_KEY` is set in Vercel (production). With only `GEMINI_API_KEY`
+  nothing changes.
+- Checks: 9 new cases in `scripts/check-api.mts` (503, 429, timeout, unusable answer, both down,
+  key order, model override).
+
 ## 2026-10-23 — AI-down text everywhere, functions next to the database
 
 - `aiErrorText(err, what)` in `src/ai/unavailable.ts`: the calm "… isn't available right now" line for

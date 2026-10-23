@@ -1,4 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
+import { configuredProviders, firstAnswer, modelFor } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
@@ -30,23 +31,19 @@ const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
 // cost difference at a few dozen words a day is small, and a wrong der/die/das
 // gets drilled into you by the scheduler for months.
 /**
- * Two providers, chosen by which key is configured. Gemini wins when its key
- * is present, because setting it is a deliberate act; Anthropic is the
- * fallback. Nothing downstream knows or cares which one answered — both are
+ * Two providers, tried in order: Gemini first when its key is present,
+ * Anthropic (Claude) as the backup when Gemini is busy, down, too slow or
+ * answers something unusable — see src/server/aiFallback.ts. With only one
+ * key set, only that provider is used. Nothing downstream knows or cares which one answered — both are
  * normalised to the same shape before they leave this file, and the database,
  * the scheduler and the review screen see identical entries either way.
  */
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
-const PROVIDER: 'gemini' | 'anthropic' = GEMINI_KEY ? 'gemini' : 'anthropic'
-
-// Google retired gemini-2.5-flash for keys created after its deprecation: a new
-// key gets 404 "no longer available to new users", naming its replacement. The
-// model string is the one piece of this file with a shelf life, so when the
-// expansion starts 404ing, read the message — it says what to put here.
-const MODEL =
-  process.env.LINGUA_MODEL ??
-  (PROVIDER === 'gemini' ? 'gemini-3.8-flash' : 'claude-haiku-5-5')
+// Gemini first, Claude as the backup when Gemini is busy, down or too slow
+// (see src/server/aiFallback.ts). With one key set, only that one is used.
+const PROVIDERS = configuredProviders({ gemini: GEMINI_KEY, anthropic: ANTHROPIC_KEY })
+const MODEL_OVERRIDE = process.env.LINGUA_MODEL
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
 const GEMINI_URL = (model: string) =>
@@ -455,8 +452,7 @@ async function respond(req: Request): Promise<Response> {
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
 
-  const apiKey = PROVIDER === 'gemini' ? GEMINI_KEY : ANTHROPIC_KEY
-  if (!apiKey) {
+  if (PROVIDERS.length === 0) {
     return json(
       {
         error:
@@ -483,67 +479,28 @@ async function respond(req: Request): Promise<Response> {
   const { lemma, sourceLang, nativeLang, langs, hint } = parsed.value
   const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint })
 
-  const abort = new AbortController()
-  const timer = setTimeout(() => abort.abort(), UPSTREAM_TIMEOUT_MS)
-
-  let upstream: Response
-  try {
-    upstream =
-      PROVIDER === 'gemini'
-        ? await callGemini(prompt, apiKey, abort.signal)
-        : await callAnthropic(prompt, apiKey, abort.signal)
-  } catch (err) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      return json(
-        { error: 'The model took too long to answer. Try "Expand now" again.' },
-        504,
-      )
-    }
-    console.error('[expand.ts] model request failed', err instanceof Error ? err.name : 'unknown')
-    return json({ error: 'Could not reach the language model. Please try again.' }, 502)
-  } finally {
-    clearTimeout(timer)
-  }
-
-  if (!upstream.ok) {
-    // Do not return raw provider responses to the browser: they can expose
-    // internal diagnostics. Keep the user-facing error actionable and bounded.
-    console.warn('[expand.ts] model provider returned status', upstream.status)
-    return json(
-      {
-        error: upstream.status === 429
-          ? 'The language model is busy. Please try again shortly.'
-          : 'The language model could not complete the request. Please try again.',
-      },
-      upstream.status === 429 ? 429 : 502,
-    )
-  }
-
-  let expansion: unknown
-  try {
-    expansion =
-      PROVIDER === 'gemini'
-        ? readGemini(await upstream.json())
-        : readAnthropic(await upstream.json())
-  } catch (err) {
-    // The message, not the error object: readGemini turns the reasons a model
-    // stops into sentences, and those are what the queue stores and shows.
-    const why = err instanceof Error ? err.message : String(err)
-    return json({ error: why }, 502)
-  }
-
-  if (!expansion) {
-    return json({ error: 'Model did not return a usable result.' }, 502)
-  }
-
-  return json(expansion, 200)
+  const result = await firstAnswer(
+    PROVIDERS.map((provider) => ({
+      provider,
+      call: (signal: AbortSignal) =>
+        provider === 'gemini'
+          ? callGemini(prompt, GEMINI_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE))
+          : callAnthropic(prompt, ANTHROPIC_KEY!, signal, modelFor(provider, PROVIDERS, MODEL_OVERRIDE)),
+      read: provider === 'gemini' ? readGemini : readAnthropic,
+    })),
+    UPSTREAM_TIMEOUT_MS,
+    'expand.ts',
+    'The model took too long to answer. Try "Expand now" again.',
+  )
+  if (!result.ok) return json({ error: result.error }, result.status)
+  return json(result.value, 200)
 }
 
 // ---------------------------------------------------------------------------
 // Anthropic
 // ---------------------------------------------------------------------------
 
-function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
+function callAnthropic(prompt: string, key: string, signal: AbortSignal, model: string) {
   return fetch(ANTHROPIC_URL, {
     method: 'POST',
     signal,
@@ -553,7 +510,7 @@ function callAnthropic(prompt: string, key: string, signal: AbortSignal) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: 2048,
       temperature: 0,
       tools: [TOOL],
@@ -637,7 +594,7 @@ const GEMINI_SCHEMA = {
   required: ['pos', 'entries', 'detectedLang'],
 }
 
-function callGemini(prompt: string, key: string, signal: AbortSignal) {
+function callGemini(prompt: string, key: string, signal: AbortSignal, model: string) {
   // The tool-call instruction is Anthropic-specific; Gemini is told to fill
   // the schema instead, and morphology goes in as a JSON string.
   const adapted = prompt
@@ -650,7 +607,7 @@ function callGemini(prompt: string, key: string, signal: AbortSignal) {
       ].join(' '),
     )
 
-  return fetch(`${GEMINI_URL(MODEL)}?key=${encodeURIComponent(key)}`, {
+  return fetch(`${GEMINI_URL(model)}?key=${encodeURIComponent(key)}`, {
     method: 'POST',
     signal,
     headers: { 'content-type': 'application/json' },
