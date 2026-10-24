@@ -3,6 +3,12 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Voice guide: Windows
+
+- `src/ui/VoiceHint.tsx`: a fourth tab, **Windows** (Settings → Time & language → Speech → Add
+  voices; or add the language with Text-to-speech ticked), opened first on Windows. Notes that
+  Edge has voices of its own if Chrome still shows none after a restart.
+
 ## 2026-10-24 — Hint to install a voice, with steps for Android, iPhone and Mac
 
 - `src/ui/VoiceHint.tsx`: under Settings → Languages → Learning, a note when this device has no voice

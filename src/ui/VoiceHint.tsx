@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { LANG_NAMES, type Lang } from '../db/types'
 import { missingVoices, onVoicesChanged } from '../lib/speak'
 
-type Platform = 'android' | 'ios' | 'mac'
+type Platform = 'android' | 'ios' | 'mac' | 'windows'
 
 const PLATFORM_LABELS: Record<Platform, string> = {
   android: 'Android',
   ios: 'iPhone / iPad',
   mac: 'Mac',
+  windows: 'Windows',
 }
 
 /** The guide opens on the device you are holding; the others are a tap away. */
@@ -20,6 +21,7 @@ function guessPlatform(): Platform {
     return 'ios'
   }
   if (/macintosh|mac os x/i.test(ua)) return 'mac'
+  if (/windows/i.test(ua)) return 'windows'
   return 'android'
 }
 
@@ -52,6 +54,27 @@ function Steps({ platform, names }: { platform: Platform; names: string }) {
         <li>Tap {names} and pick a voice — an Enhanced or Premium one sounds best.</li>
         <li>Tap the download ⤓ button and wait for it to finish.</li>
         <li>Close Lingo3 (swipe it away) and open it again.</li>
+      </ol>
+    )
+  }
+  if (platform === 'windows') {
+    return (
+      <ol className="voice-steps">
+        <li>
+          Open <strong>Settings → Time &amp; language → Speech</strong>.
+        </li>
+        <li>
+          Under <strong>Manage voices</strong>, click <strong>Add voices</strong>, tick {names}{' '}
+          and click <strong>Add</strong>.
+        </li>
+        <li>
+          If {names} is not in that list: <strong>Time &amp; language → Language &amp; region →
+          Add a language</strong>, choose it and keep <strong>Text-to-speech</strong> ticked.
+        </li>
+        <li>
+          Restart the computer, then open Lingo3 again. If Chrome still has no voice, try Microsoft
+          Edge, which also has natural voices of its own.
+        </li>
       </ol>
     )
   }
@@ -127,7 +150,7 @@ export function VoiceHint({ langs }: { langs: readonly Lang[] }) {
           <Steps platform={platform} names={names} />
           <p className="muted small">
             Menu names differ a little between phone makers and system versions. If a step is not
-            where it says, search the Settings app for “text-to-speech” or “spoken content”.
+            where it says, search the Settings app for “text-to-speech”, “speech” or “spoken content”.
           </p>
         </div>
       )}
