@@ -3,6 +3,21 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Review: home icon, the Next bar at the foot, and the five-second rule
+
+- The back control is a **home icon** (`IconHome`), which is what it does: it leaves the session for
+  Add a word.
+- **Card and the Previous / Next bar are one viewport tall** (`.flash-page`, `min-height:
+  calc(100dvh - 68px)`, the card taking the slack), so the buttons land at the foot of the phone
+  rather than directly under a short word. Measured: 905/915 on a 6" phone, 834/844 on an iPhone 14,
+  657/667 on an SE. The meta panel (type, list, topics) starts just below the fold, as before.
+- **A word counts as read only after five seconds on screen** (`READ_AFTER_MS`). The timer is
+  dropped when the word changes, so pressing Next through ten words in three seconds marks none of
+  them — otherwise words nobody looked at would be pushed to the back of the next session, which is
+  the opposite of the point. It does not pause when the phone is locked.
+- **"Not reviewed first" is now the default order**, so opening Review carries on where the reading
+  stopped instead of starting again at the newest word.
+
 ## 2026-10-24 — Review as a full-screen flashcard; shorter tiles; "Not reviewed first"
 
 - **Review (`src/ui/Training.tsx`) is full screen**, like the recall test: `.app.focus` now also

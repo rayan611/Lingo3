@@ -57,6 +57,10 @@ export function WordStack({
   if (flash) {
     return (
       <>
+        {/* Card and the Previous / Next bar fill one phone screen, so the
+            buttons land at the foot of the viewport rather than directly
+            under a short word. The meta panel below starts off screen. */}
+        <div className="flash-page">
         <div className="panel word-card flash-card">
           {native && (
             <LangRow
@@ -78,6 +82,7 @@ export function WordStack({
           {footer}
         </div>
         {between}
+        </div>
         <div className="panel word-meta" ref={metaRef}>
           {meta}
         </div>

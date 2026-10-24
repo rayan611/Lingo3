@@ -3492,3 +3492,18 @@ input[type='radio']:focus { box-shadow: none; }
    word taller than the line they sit on. */
 .flash-card .speak,
 .flash-card .word-link { min-height: 0; }
+
+/* The Next bar sits at the foot of the phone, not directly under the card:
+   card and bar together are one viewport tall and the card takes the slack,
+   so the button lands under the thumb in the same place whatever the word
+   is. The word's list, type and topics start just below the fold. */
+.flash-page {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: calc(100dvh - 68px);
+}
+.flash-page > .flash-card { margin-bottom: auto; }
+/* The home button carries an icon now, so it is square and centred. */
+.flash-back { display: grid; place-items: center; }
+.flash-back svg { width: 19px; height: 19px; }

@@ -101,3 +101,14 @@ export function IconLater() {
     </svg>
   )
 }
+
+/** Home — the way out of a full-screen session, back to Add a word. */
+export function IconHome() {
+  return (
+    <svg {...base}>
+      <path d="M4 10.5 12 4l8 6.5" />
+      <path d="M6 9.8V19a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.8" />
+      <path d="M10 20v-5.5h4V20" />
+    </svg>
+  )
+}

@@ -5,6 +5,7 @@ import { listCollections } from '../db/collections'
 import { matchesTopic } from '../fsrs/queue'
 import { PARTS_OF_SPEECH, collectionOf, type Concept, type Settings } from '../db/types'
 import { WordCard } from './WordCard'
+import { IconHome } from './icons'
 
 type Sort = 'added' | 'unseen' | 'oldest' | 'hardest' | 'alpha'
 
@@ -17,13 +18,21 @@ const SORT_LABELS: Record<Sort, string> = {
 }
 
 /**
- * When each word was last on screen here, on this device.
+ * When each word was last *read* here, on this device.
+ *
+ * Read, not merely shown: a word counts only once it has been on screen for
+ * READ_AFTER_MS. Pressing Next through ten words in three seconds is not
+ * reviewing them, and marking them read would push words you never looked at
+ * to the back of the next session — exactly the opposite of what this is for.
  *
  * localStorage and not Dexie: it is a reading aid, not study data — it must
  * not sync, and above all it must never come near FSRS (see below). Losing it
- * costs nothing but the order of "Not reviewed first".
+ * costs nothing but the order of the default run.
  */
 const SEEN_KEY = 'lingo3.reviewSeen'
+
+/** How long a word must stay on screen before it counts as read. */
+const READ_AFTER_MS = 5000
 
 function readSeen(): Record<string, number> {
   try {
@@ -78,7 +87,12 @@ export function Training({
 }) {
   const [list, setList] = useState('all')
   const [kind, setKind] = useState('all')
-  const [sort, setSort] = useState<Sort>('added')
+  /**
+   * The default run: words never read first, then the ones read longest ago,
+   * so opening Review carries on where the reading stopped rather than
+   * starting again at the newest word.
+   */
+  const [sort, setSort] = useState<Sort>('unseen')
   const [index, setIndex] = useState(0)
 
   const collections = useLiveQuery(() => listCollections(), [], [])
@@ -175,10 +189,14 @@ export function Training({
 
   const currentId = current?.id
   useEffect(() => {
-    if (currentId) markSeen(currentId)
     // A new word starts at the top: the previous one may have been left
     // scrolled down to its settings.
     window.scrollTo({ top: 0 })
+    if (!currentId) return
+    // Marked read only once it has held the screen — see READ_AFTER_MS. The
+    // timer is dropped when the word changes, so a quick pass marks nothing.
+    const timer = window.setTimeout(() => markSeen(currentId), READ_AFTER_MS)
+    return () => window.clearTimeout(timer)
   }, [currentId])
 
   useEffect(() => {
@@ -226,10 +244,10 @@ export function Training({
         type="button"
         className="flash-back"
         onClick={onExit}
-        aria-label="Back to the menu"
-        title="Back to the menu"
+        aria-label="Back to Add a word"
+        title="Back to Add a word"
       >
-        ←
+        <IconHome />
       </button>
       <Pick label="List" value={listName}>
         <select
