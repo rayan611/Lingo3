@@ -3,6 +3,23 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Speakers for languages the device has no voice for
+
+- The speaker was hidden whenever the device had no voice for a language — Swedish on many Android
+  phones, most languages on desktop Chrome on Linux. Now `src/lib/speak.ts` uses the device voice
+  when there is one (unchanged) and otherwise fetches the audio from the new **`api/tts.ts`**.
+  `canSpeak()` replaces the old check in `SpeakButton`: the speaker shows if there is a local voice
+  or the device is online.
+- `api/tts.ts`: signed-in callers only, text up to 200 characters, any app language; returns MP3
+  from Google Translate's voice (no key). A non-audio answer upstream is a 502, not passed on.
+  Cached by the browser for a week and in memory for the session (80 clips).
+- iOS: the first tap plays a few ms of generated silence so the audio element may play after the
+  fetch. Not tried on a real iPhone yet.
+- Settings → Audio text says that a language without a local voice goes over the internet.
+- Eight new checks in `scripts/check-api.mts`.
+- Open: Google's voice for Persian is unverified from here; if it has none, the request is a 502 and
+  the tap stays silent.
+
 ## 2026-10-24 — Review: Simple / Advanced, Next at the foot, Home button
 
 - **Simple / Advanced** (`src/ui/Training.tsx`): a small switch under the pickers. Simple shows each

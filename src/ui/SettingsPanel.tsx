@@ -470,8 +470,10 @@ export function SettingsPanel({
         <div className="panel">
           <h2>Audio</h2>
           <p className="muted small">
-            Voices come from this device, not from us — nothing is downloaded
-            and nothing is sent anywhere. Quality is the operating system's:
+            Voices come from this device first — nothing is downloaded and
+            nothing is sent anywhere. Only a language this device has no voice
+            for is fetched as audio over the internet. Quality is the
+            operating system's:
             Swedish and German are good on Android, Windows and macOS. On
             iOS the better voice is a download in Settings → Accessibility →
             Spoken Content; until then you get the basic one.
@@ -550,8 +552,8 @@ export function SettingsPanel({
             {!hasVoiceFor(previewLang) && (
               <span className="muted small">
                 No {LANG_NAMES[previewLang]} voice on this device — the
-                speakers are hidden for that language rather than doing
-                nothing when tapped.
+                speakers fetch the audio over the internet instead, so
+                they need a connection for this language.
               </span>
             )}
           </div>

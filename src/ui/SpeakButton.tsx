@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
-import { hasVoiceFor, speak, speechSupported, stopSpeaking } from '../lib/speak'
+import { canSpeak, speak, stopSpeaking } from '../lib/speak'
 import type { Lang } from '../db/types'
 
 /**
  * A speaker beside a word or a sentence.
  *
- * It renders nothing at all when the device cannot speak that language, rather
- * than showing a button that does nothing when tapped — a dead control is
- * worse than an absent one.
+ * It renders nothing at all when the device cannot speak that language and is
+ * offline (so the fallback audio cannot be fetched either), rather than
+ * showing a button that does nothing when tapped — a dead control is worse
+ * than an absent one.
  *
  * One size and one look everywhere it appears: the same action in a smaller
  * place is still the same action, and a quieter copy of it read as a second,
@@ -31,7 +32,7 @@ export function SpeakButton({
   // closed text — stops with it.
   useEffect(() => () => stopSpeaking(), [])
 
-  if (!speechSupported() || !text.trim() || !hasVoiceFor(lang)) return null
+  if (!text.trim() || !canSpeak(lang)) return null
 
   function go() {
     if (speaking) {

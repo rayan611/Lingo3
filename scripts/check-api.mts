@@ -616,6 +616,73 @@ console.log('\nAI status (admin)')
   }
 }
 
+// /api/tts — the spoken fallback for languages the device has no voice for.
+console.log('\n/api/tts')
+{
+  const { default: ttsHandler, parseTtsInput, TTS_MAX_CHARS } = await import('../api/tts')
+  check('a word in a known language is accepted',
+    parseTtsInput({ text: ' arbeta ', lang: 'sv' }).ok === true, 'sv rejected')
+  check('every app language is accepted',
+    LANGS.every((lang) => parseTtsInput({ text: 'x', lang }).ok), 'a language is missing')
+  check('an unknown language is refused',
+    parseTtsInput({ text: 'x', lang: 'xx' }).ok === false, 'xx accepted')
+  check('an empty or overlong text is refused',
+    !parseTtsInput({ text: '  ', lang: 'sv' }).ok &&
+      !parseTtsInput({ text: 'a'.repeat(TTS_MAX_CHARS + 1), lang: 'sv' }).ok,
+    'accepted')
+
+  const realFetch = globalThis.fetch
+  let asked = ''
+  const signedIn = (url: string) =>
+    url.includes('/auth/v1/user') ? new Response(JSON.stringify({ id: 'u1' }), { status: 200 }) : null
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const user = signedIn(String(input))
+    if (user) return user
+    asked = String(input)
+    return new Response(new Uint8Array([0xff, 0xf3]), {
+      status: 200,
+      headers: { 'content-type': 'audio/mpeg' },
+    })
+  }) as typeof fetch
+  try {
+    const res = (await ttsHandler(
+      new Request('https://x/api/tts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: 'Bearer t' },
+        body: JSON.stringify({ text: 'god morgon', lang: 'sv' }),
+      }),
+    )) as Response
+    check('a Swedish text comes back as audio',
+      res.status === 200 && res.headers.get('content-type') === 'audio/mpeg',
+      `${res.status} ${res.headers.get('content-type')}`)
+    check('the voice is asked in Swedish, for the text given',
+      asked.includes('tl=sv') && asked.includes('q=god%20morgon'), asked)
+
+    const anonymous = (await ttsHandler(
+      new Request('https://x/api/tts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: 'hej', lang: 'sv' }),
+      }),
+    )) as Response
+    check('signed-out callers are refused', anonymous.status === 401, String(anonymous.status))
+
+    globalThis.fetch = (async (input: RequestInfo | URL) =>
+      signedIn(String(input)) ??
+      new Response('<html>', { status: 200, headers: { 'content-type': 'text/html' } })) as typeof fetch
+    const bad = (await ttsHandler(
+      new Request('https://x/api/tts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: 'Bearer t' },
+        body: JSON.stringify({ text: 'hej', lang: 'sv' }),
+      }),
+    )) as Response
+    check('a non-audio answer upstream is an error, not passed on', bad.status === 502, String(bad.status))
+  } finally {
+    globalThis.fetch = realFetch
+  }
+}
+
 // The summary used to be an unconditional "passed" with no exit code, so a
 // failing endpoint check printed FAIL and the build went green anyway. It is
 // the only suite that did this; the other three already exit non-zero.
