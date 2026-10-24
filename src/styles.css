@@ -3501,3 +3501,26 @@ input[type='radio']:focus { box-shadow: none; }
    word taller than the line they sit on. */
 .flash-card .speak,
 .flash-card .word-link { min-height: 0; }
+
+/* --- admin: AI status ------------------------------------------------------
+   One row per provider: a dot, the name, where it sits in the fallback order
+   and the model, the time it took; under it what it answered or why not. */
+.ai-status { margin-top: 8px; }
+.ai-status > button { margin-top: 4px; }
+.ai-status-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.ai-status-list > li {
+  padding: 8px 12px;
+  border: 1px solid var(--line-soft);
+  border-left-width: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+}
+.ai-status-list > li p { margin: 4px 0 0; overflow-wrap: anywhere; }
+.ai-status-head { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
+.ai-status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex: none; }
+.ai-status-ms { margin-left: auto; font-variant-numeric: tabular-nums; font-size: 0.85rem; color: var(--ink-soft); }
+.ai-status-list > li.is-ok { border-left-color: var(--grade-good, #16a34a); }
+.ai-status-list > li.is-ok .ai-status-dot { background: var(--grade-good, #16a34a); }
+.ai-status-list > li.is-bad { border-left-color: var(--danger); }
+.ai-status-list > li.is-bad .ai-status-dot { background: var(--danger); }
+.ai-status-list > li.is-none { opacity: 0.7; }

@@ -1,5 +1,12 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
-import { callGroq, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
+import {
+  callGroq,
+  configuredProviders,
+  firstAnswer,
+  modelFor,
+  readGroq,
+  type Provider,
+} from '../src/server/aiFallback.js'
 import {
   TRANSLATE_LANGS,
   TRANSLATE_MAX_CHARS,
@@ -273,6 +280,50 @@ async function respond(req: Request): Promise<Response> {
     return json({ error: 'Model did not return a translation.' }, 502)
   }
   return json({ translations }, 200)
+}
+
+/**
+ * One provider on its own, doing a real translation — for the admin AI
+ * status check (api/ai-status.ts).
+ *
+ * It goes through exactly the call and reader this endpoint uses, with no
+ * fallback, so a pass means that provider's key, model and answer format all
+ * work today, and a failure is that provider's own. The error is the
+ * provider's own words, cut short: "API key not valid" is the sentence that
+ * says which setting to fix, and the person reading it is an admin.
+ */
+export async function probeProvider(
+  provider: Provider,
+  signal: AbortSignal,
+): Promise<{ ok: true; model: string; text: string } | { ok: false; model: string; error: string }> {
+  const key =
+    provider === 'gemini' ? GEMINI_KEY : provider === 'groq' ? GROQ_KEY : ANTHROPIC_KEY
+  const model = modelFor(provider, PROVIDERS, MODEL_OVERRIDE)
+  if (!key) return { ok: false, model, error: 'No key is set for this provider.' }
+  const prompt = buildPrompt({ text: 'Good morning', from: 'en', to: ['sv'] })
+  try {
+    const res =
+      provider === 'gemini'
+        ? await callGemini(prompt, key, signal, model)
+        : provider === 'groq'
+          ? await callGroq(TOOL, prompt, key, signal, model, { maxTokens: 1500, temperature: 0 })
+          : await callAnthropic(prompt, key, signal, model)
+    if (!res.ok) {
+      const body = (await res.text()).replace(/\s+/g, ' ').slice(0, 300)
+      return { ok: false, model, error: `HTTP ${res.status}${body ? ` — ${body}` : ''}` }
+    }
+    const read =
+      provider === 'gemini' ? readGemini : provider === 'groq' ? readGroq(TOOL.name) : readAnthropic
+    const out = read(await res.json()) as { translations?: { lang?: unknown; text?: unknown }[] } | null
+    const hit = out?.translations?.find((r) => r?.lang === 'sv' && typeof r.text === 'string')
+    if (!hit) return { ok: false, model, error: 'Answered, but not in the expected format.' }
+    return { ok: true, model, text: String(hit.text).trim() }
+  } catch (err) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      return { ok: false, model, error: 'Timed out.' }
+    }
+    return { ok: false, model, error: err instanceof Error ? err.message : 'Request failed.' }
+  }
 }
 
 function callAnthropic(prompt: string, key: string, signal: AbortSignal, model: string) {

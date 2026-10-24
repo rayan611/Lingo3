@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { newId } from '../db/db'
 import { authConfigured, supabase } from '../auth/supabase'
+import { AiStatus } from './AiStatus'
 
 /**
  * Suggestions go straight to Supabase, not through Dexie and the sync loop.
@@ -239,6 +240,8 @@ export function AdminPanel() {
         <Stat label="Database" value={formatBytes(stats.db_bytes)} />
         <Stat label="New suggestions" value={stats.suggestions_new} />
       </dl>
+
+      <AiStatus />
 
       <h3>Suggestions</h3>
       {open.length === 0 && closed.length === 0 && (

@@ -36,6 +36,29 @@ export async function authenticateAiRequest(req: Request): Promise<AuthResult> {
   }
 }
 
+/**
+ * Whether the signed-in caller is an admin, asked of the database's own
+ * is_admin() with the caller's token — the same function the RLS policies
+ * use, so this can never disagree with what the admin panel may read. The
+ * synced settings row is never trusted for this.
+ */
+export async function isAdminRequest(req: Request): Promise<boolean> {
+  if (!SUPABASE_URL || !SUPABASE_KEY) return !PRODUCTION
+  const authorization = req.headers.get('authorization')
+  if (!authorization) return false
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/is_admin`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, authorization, 'content-type': 'application/json' },
+      body: '{}',
+      signal: AbortSignal.timeout(3000),
+    })
+    return response.ok && (await response.json()) === true
+  } catch {
+    return false
+  }
+}
+
 export async function enforceAiRateLimit(
   req: Request,
   userId: string,

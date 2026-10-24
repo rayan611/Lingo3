@@ -17,6 +17,16 @@ session does not have to rediscover it.
 - Open: link previews in WhatsApp/Facebook still show the general Lingo3 card (crawlers do not run
   JavaScript). A personal preview would need a small server function.
 
+## 2026-10-24 — Admin: AI status check
+
+- `api/ai-status.ts` (admins only, via the database's `is_admin()`): every provider with a key does one
+  real translation ("Good morning" → Swedish) through `probeProvider()` in `api/translate.ts` — the
+  same call and reader the app uses, no fallback, all in parallel, 20 s each. Returns per provider:
+  configured or not, place in the order, model, ok, time, the answer or the provider's own error.
+- `src/ui/AiStatus.tsx`: a "Check the AIs" button in the Admin panel under Settings. Nothing runs
+  until it is pressed; not counted against the hourly AI limits.
+- `isAdminRequest()` in `src/server/aiSecurity.ts`. Five new checks in `scripts/check-api.mts`.
+
 ## 2026-10-24 — Review as a full-screen flashcard; shorter tiles; "Not reviewed first"
 
 - **Review (`src/ui/Training.tsx`) is full screen**, like the recall test: `.app.focus` now also

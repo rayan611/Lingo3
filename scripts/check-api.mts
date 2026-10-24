@@ -563,6 +563,59 @@ console.log('\nGroq answers when Gemini cannot')
     body?.reasoning_effort === 'low', JSON.stringify(body))
 }
 
+// ---------------------------------------------------------------------------
+// The admin AI status check: admins only, every provider asked on its own.
+// ---------------------------------------------------------------------------
+console.log('\nAI status (admin)')
+{
+  process.env.GEMINI_API_KEY = 'g-test'
+  process.env.GROQ_API_KEY = 'gsk_test'
+  delete process.env.ANTHROPIC_API_KEY
+  const { default: statusHandler } = await import('../api/ai-status')
+  const realFetch = globalThis.fetch
+  let admin = false
+  let aiCalls = 0
+  globalThis.fetch = (async (input: string | URL | Request) => {
+    const url = String(input instanceof Request ? input.url : input)
+    if (url.includes('api.groq.com') || url.includes('generativelanguage')) aiCalls++
+    if (url.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u1' }), { status: 200 })
+    if (url.includes('/rpc/is_admin')) return new Response(JSON.stringify(admin), { status: 200 })
+    if (url.includes('api.groq.com')) {
+      return new Response(JSON.stringify({ choices: [{ message: { tool_calls: [{ function: {
+        name: 'translate', arguments: JSON.stringify({ translations: [{ lang: 'sv', text: 'God morgon' }] }),
+      } }] } }] }), { status: 200 })
+    }
+    if (url.includes('generativelanguage')) {
+      return new Response(JSON.stringify({ error: { message: 'API key not valid.' } }), { status: 400 })
+    }
+    throw new Error(`unexpected fetch ${url}`)
+  }) as typeof fetch
+  const ask = () => statusHandler(new Request('https://x/api/ai-status', {
+    method: 'POST', headers: { authorization: 'Bearer t' }, body: '{}',
+  })) as Promise<Response>
+  try {
+    const refused = await ask()
+    check('not an admin -> 403, and no AI is called',
+      refused.status === 403 && aiCalls === 0, `${refused.status}, ${aiCalls} AI calls`)
+
+    admin = true
+    const res = await ask()
+    const body = (await res.json()) as { providers?: Array<Record<string, unknown>> }
+    const by = (p: string) => body.providers?.find((r) => r.provider === p)
+    check('admin -> 200 with all three providers listed', res.status === 200 && body.providers?.length === 3, JSON.stringify(body))
+    check('a working provider shows its answer and its place in the order',
+      by('groq')?.ok === true && by('groq')?.sample === 'God morgon' && by('groq')?.position === 2,
+      JSON.stringify(by('groq')))
+    check('a failing provider shows its own error',
+      by('gemini')?.ok === false && String(by('gemini')?.error).includes('API key not valid'),
+      JSON.stringify(by('gemini')))
+    check('a provider without a key is listed as not configured',
+      by('anthropic')?.configured === false, JSON.stringify(by('anthropic')))
+  } finally {
+    globalThis.fetch = realFetch
+  }
+}
+
 // The summary used to be an unconditional "passed" with no exit code, so a
 // failing endpoint check printed FAIL and the build went green anyway. It is
 // the only suite that did this; the other three already exit non-zero.
