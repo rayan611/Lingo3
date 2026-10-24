@@ -1,0 +1,29 @@
+# Hourly check that all three apps answer. A failed run is what GitHub emails about, so a site
+# that is down shows up in the inbox within the hour. Lives in this repository because it is
+# public: Actions minutes cost nothing here. Checks the page and one route that needs the
+# database, so "the page loads but nothing works" counts as down too.
+name: uptime
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Every site answers
+        run: |
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 --retry 2 --retry-delay 10 "$1")
+            if [ "$code" = "$2" ]; then echo "ok   $code $1"; else echo "::error::$1 answered $code (expected $2)"; fail=1; fi
+          }
+          check https://lingo3.com/ 200
+          check https://www.concordia360.com/ 200
+          check https://www.concordia360.com/app 200
+          check https://glowis.app/ 200
+          check https://glowis.app/api/site 200
+          exit $fail
