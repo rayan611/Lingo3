@@ -3,6 +3,22 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — A + to start the next word, and no repeated example translations in Advanced
+
+- `src/ui/AddWord.tsx`: a small round **+** at the end of the word box clears the box, the preview,
+  the saved card and its suggestions — the next word without a trip up to the Add tile, which was
+  the only way to that state before. It is off when there is nothing to clear, and puts the focus
+  back only on a pointer-fine device, so a phone does not raise the keyboard over the cleared card.
+- The Categories pill's own **+** is a caret (▾/▴) now: two + signs a few millimetres apart meant
+  two different things.
+- `src/ui/WordStack.tsx`: a `hideGloss` flag on `LangRow`, set for the flashcard layout (Training →
+  Advanced). The expansion is asked for the SAME situation in every language, so the native row at
+  the top already carries that sentence; repeating it under each target language was three
+  near-identical lines of Persian. The full word page in Browse keeps the glosses — there, reading
+  one is the point.
+- Still open: voice input into the word box was considered and dropped for now — the Web Speech API
+  is online-only (against the app's offline goal), absent in Firefox, and poor on single words.
+
 ## 2026-10-24 — Voice guide: Windows
 
 - `src/ui/VoiceHint.tsx`: a fourth tab, **Windows** (Settings → Time & language → Speech → Add

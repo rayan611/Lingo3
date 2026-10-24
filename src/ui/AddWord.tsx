@@ -285,6 +285,38 @@ export function AddWord({ settings }: Props) {
   const wordRef = useRef<HTMLInputElement>(null)
 
   /**
+   * Back to an empty box, ready for the next word.
+   *
+   * Everything a word leaves behind goes: the box, the preview, the saved
+   * card, its suggestions and the tags that came with it. Before this, the
+   * only way to that state was pressing the Add tile at the top of the
+   * screen, which is a trip to the navigation to do something that belongs
+   * to the form itself.
+   *
+   * The focus is put back only on a pointer-fine device, for the same reason
+   * the mount effect below does: on a phone it would slide the keyboard up
+   * over the card you have just cleared.
+   */
+  function startNewWord() {
+    setLemma('')
+    setLaterId(null)
+    setCollision(null)
+    setStatus(null)
+    setPreview(null)
+    setLastId(null)
+    setRelated([])
+    setDoneWord(null)
+    setDraftTags([])
+    setCategoriesOpen(false)
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+    ) {
+      wordRef.current?.focus()
+    }
+  }
+
+  /**
    * Focus the word box on a desktop only.
    *
    * It used to be `autoFocus`, which fires every time this screen mounts —
@@ -353,17 +385,33 @@ export function AddWord({ settings }: Props) {
 
         {/* The word box gets the whole width: it is the one field this
             screen exists for. */}
-        <input
-          className="word-input"
-          value={lemma}
-          onChange={(e) => {
-            setLemma(e.target.value)
-            setLaterId(null)
-          }}
-          ref={wordRef}
-          placeholder="Add your word or phrase here"
-          disabled={busy}
-        />
+        {/* The round + at the end of the box starts the next word: it clears
+            the box, the preview and the card below it. The Categories pill
+            under here used to carry a + of its own for "open"; it is a caret
+            now, so the only + on the screen means one thing. */}
+        <div className="word-input-wrap">
+          <input
+            className="word-input"
+            value={lemma}
+            onChange={(e) => {
+              setLemma(e.target.value)
+              setLaterId(null)
+            }}
+            ref={wordRef}
+            placeholder="Add your word or phrase here"
+            disabled={busy}
+          />
+          <button
+            type="button"
+            className="word-input-new"
+            onClick={startNewWord}
+            disabled={busy || (!lemma.trim() && !showing)}
+            aria-label="Start a new word"
+            title="Start a new word"
+          >
+            +
+          </button>
+        </div>
 
         {/* One row of three small pills between the box and the two
             buttons: where the word goes, what it is about, and putting it
@@ -418,7 +466,7 @@ export function AddWord({ settings }: Props) {
                 <span className="chip-count">{draftTags.length}</span>
               )}
               <span aria-hidden="true" className="add-pill-mark">
-                {categoriesOpen ? '−' : '+'}
+                {categoriesOpen ? '▴' : '▾'}
               </span>
             </button>
           )}

@@ -71,7 +71,7 @@ export function WordStack({
           {others.length > 0 && (
             <div className="lang-stack">
               {others.map((e) => (
-                <LangRow key={e.lang} entry={e} settings={settings} />
+                <LangRow key={e.lang} entry={e} settings={settings} hideGloss />
               ))}
             </div>
           )}
@@ -111,11 +111,23 @@ function LangRow({
   entry,
   settings,
   isNative = false,
+  hideGloss = false,
   onWordClick,
 }: {
   entry: StackEntry
   settings: Settings
   isNative?: boolean
+  /**
+   * Drop the native-language rendering of the example.
+   *
+   * The expansion is asked for the SAME situation in every language, so the
+   * native row at the top of the card already carries that sentence. Repeating
+   * it under each target language is three near-identical lines of the same
+   * Persian. The flashcard layout — where the whole point is a quick read down
+   * the stack — hides them; the full word page keeps them, because there
+   * reading the gloss is what you came for.
+   */
+  hideGloss?: boolean
   /** Makes the headword a button — Review uses it to reach the word's settings. */
   onWordClick?: () => void
 }) {
@@ -160,7 +172,7 @@ function LangRow({
           forms={formCandidates(entry.headword, entry.lang, entry.form)}
           rate={settings.speechRate}
           gloss={
-            entry.exampleGloss && !isNative ? (
+            entry.exampleGloss && !isNative && !hideGloss ? (
               <div
                 className={`example-gloss ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
                 lang={LANG_BCP47[settings.nativeLang]}
