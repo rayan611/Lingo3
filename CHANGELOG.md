@@ -3,6 +3,16 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Hint to install a voice, with steps for Android, iPhone and Mac
+
+- `src/ui/VoiceHint.tsx`: under Settings → Languages → Learning, a note when this device has no voice
+  for a language you study ("This device has no Swedish voice installed…"). Those speakers still work
+  online through `/api/tts`; a local voice also works offline and starts at once.
+- **How to install a voice** opens the steps, with tabs for Android, iPhone / iPad and Mac; the tab
+  for the device in hand opens first (iPadOS is told apart from a Mac by its touch points).
+- `src/lib/speak.ts`: `missingVoices()` (empty until the voice list has arrived, so nothing is flagged
+  on first paint) and `onVoicesChanged()`, so the note updates when the list arrives late.
+
 ## 2026-10-24 — Speakers for languages the device has no voice for
 
 - The speaker was hidden whenever the device had no voice for a language — Swedish on many Android

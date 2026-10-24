@@ -3557,3 +3557,30 @@ input[type='radio']:focus { box-shadow: none; }
 .ai-status-list > li.is-bad { border-left-color: var(--danger); }
 .ai-status-list > li.is-bad .ai-status-dot { background: var(--danger); }
 .ai-status-list > li.is-none { opacity: 0.7; }
+
+/* --- voice hint ------------------------------------------------------------
+   Under the languages you study when the device has no voice for one: a
+   short note, and the install steps for the phone or Mac behind a button. */
+.voice-hint {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.voice-hint p { margin: 0; }
+.voice-hint-toggle { margin: 8px 0 0; padding: 6px 12px; font-size: 0.85rem; }
+.voice-guide { margin-top: 10px; }
+.voice-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.voice-tabs button {
+  margin: 0;
+  min-height: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+.voice-tabs button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.voice-steps { margin: 10px 0 6px; padding-left: 1.3em; }
+.voice-steps li + li { margin-top: 4px; }

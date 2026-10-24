@@ -24,6 +24,7 @@ import { DeleteAccount } from './DeleteAccount'
 import { HowTo, QuickStart } from './HowTo'
 import { ImportExport } from './ImportExport'
 import { InviteOthers } from './InviteOthers'
+import { VoiceHint } from './VoiceHint'
 import { Profile } from './Profile'
 import { AdminPanel, SuggestionBox } from './Suggestions'
 
@@ -380,6 +381,8 @@ export function SettingsPanel({
             )
           })}
         </ul>
+
+        <VoiceHint langs={settings.targetLangs} />
 
         {available.some((l) => !settings.targetLangs.includes(l)) && (
           <div className="row">

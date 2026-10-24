@@ -33,14 +33,25 @@ export function speechSupported(): boolean {
  */
 let voices: SpeechSynthesisVoice[] = []
 
+const voiceListeners = new Set<() => void>()
+
 function refreshVoices() {
   if (!speechSupported()) return
   voices = window.speechSynthesis.getVoices()
 }
 
+/** Called whenever the browser's voice list changes; returns an unsubscribe. */
+export function onVoicesChanged(listener: () => void): () => void {
+  voiceListeners.add(listener)
+  return () => voiceListeners.delete(listener)
+}
+
 if (speechSupported()) {
   refreshVoices()
-  window.speechSynthesis.addEventListener?.('voiceschanged', refreshVoices)
+  window.speechSynthesis.addEventListener?.('voiceschanged', () => {
+    refreshVoices()
+    voiceListeners.forEach((listener) => listener())
+  })
 }
 
 /**
@@ -72,6 +83,19 @@ export function hasVoiceFor(lang: Lang): boolean {
     if (voices.length === 0) return true
   }
   return pickVoice(LANG_BCP47[lang]) !== undefined
+}
+
+/**
+ * The languages among `langs` this device certainly has no voice for.
+ *
+ * Empty while the voice list has not arrived: "no voices yet" must not read
+ * as "none installed", or every language would be flagged on first paint.
+ */
+export function missingVoices<T extends Lang>(langs: readonly T[]): T[] {
+  if (!speechSupported()) return []
+  if (voices.length === 0) refreshVoices()
+  if (voices.length === 0) return []
+  return langs.filter((lang) => pickVoice(LANG_BCP47[lang]) === undefined)
 }
 
 /**
