@@ -3,6 +3,18 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-24 — Review: Simple / Advanced, Next at the foot, Home button
+
+- **Simple / Advanced** (`src/ui/Training.tsx`): a small switch under the pickers. Simple shows each
+  language's word and meaning; Advanced adds the example sentences, forms (conjugations) and notes.
+  Hidden by a `flash-simple` class in CSS, nothing in `WordStack` changes. The choice is kept per
+  device in `localStorage` (`lingo3.reviewMode`), default Simple; it does not sync.
+- **Next at the foot of the screen**: `.flash-nav` is now `position: fixed` at the bottom (inside the
+  720px column, above the safe area) instead of sticky under the card, so it no longer sits
+  mid-screen on a short word. `.flash` keeps 72px at its end so the meta panel is not covered.
+- **Home instead of ←** in Review's bar: new `IconHome` in `src/ui/icons.tsx`; it still goes to Add.
+- **Smaller language pills** in the header (`.brand-lang`: 0.74rem, 2px 8px).
+
 ## 2026-10-23 — Settings → Invite others
 
 - `src/ui/InviteOthers.tsx`: a panel under **You** with a short, editable message and the person's own

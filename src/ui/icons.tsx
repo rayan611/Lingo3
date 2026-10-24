@@ -101,3 +101,13 @@ export function IconLater() {
     </svg>
   )
 }
+
+/** Home — a house: Review's way back to the start of the app. */
+export function IconHome() {
+  return (
+    <svg {...base}>
+      <path d="M4 11l8-7 8 7" />
+      <path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5" />
+    </svg>
+  )
+}

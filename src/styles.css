@@ -3205,12 +3205,12 @@ input[type='radio']:focus { box-shadow: none; }
    accent colour, one per language. */
 .brand-langs { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
 .brand-lang {
-  padding: 3px 10px;
+  padding: 2px 8px;
   border-radius: 999px;
   background: var(--accent-soft);
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   color: var(--accent-ink);
-  font-size: 0.86rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.3;
@@ -3355,6 +3355,33 @@ input[type='radio']:focus { box-shadow: none; }
   font-weight: 600;
   line-height: 1;
 }
+.flash-back svg { width: 20px; height: 20px; }
+
+/* Simple / Advanced: one small segmented switch under the pickers. */
+.flash-mode {
+  align-self: center;
+  display: inline-flex;
+  padding: 2px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.flash-mode button {
+  min-height: 0;
+  margin: 0;
+  padding: 3px 14px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.flash-mode button.on { background: var(--accent-soft); color: var(--accent-ink); }
+/* Simple: the word and its meaning in each language, nothing more. */
+.flash-simple .flash-card .example-row,
+.flash-simple .flash-card .forms-row,
+.flash-simple .flash-card .note { display: none; }
 /* Name above, choice below, the real select invisible over the whole pill. */
 .flash-pick {
   position: relative;
@@ -3434,16 +3461,22 @@ input[type='radio']:focus { box-shadow: none; }
 .word-link:hover:not(:disabled) { color: var(--accent-ink); }
 .word-link:active:not(:disabled) { transform: none; }
 
-/* Stays at the foot of the screen, so Next is under the thumb in the same
-   place on every word, and while you edit the word's settings below it. */
+/* Fixed to the foot of the screen, so Next is under the thumb in the same
+   place on every word, however short the card — and while you edit the
+   word's settings below it. The page keeps room for it at the end. */
+.flash { padding-bottom: 72px; }
 .flash-nav {
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
   z-index: 5;
+  max-width: 720px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+  padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
   background: var(--bg);
 }
 .flash-nav button { margin: 0; min-height: 50px; }

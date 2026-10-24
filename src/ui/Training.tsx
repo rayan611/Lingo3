@@ -5,6 +5,7 @@ import { listCollections } from '../db/collections'
 import { matchesTopic } from '../fsrs/queue'
 import { PARTS_OF_SPEECH, collectionOf, type Concept, type Settings } from '../db/types'
 import { WordCard } from './WordCard'
+import { IconHome } from './icons'
 
 type Sort = 'added' | 'unseen' | 'oldest' | 'hardest' | 'alpha'
 
@@ -44,6 +45,31 @@ function markSeen(conceptId: string) {
   }
 }
 
+/**
+ * Simple shows each language's word and meaning; Advanced adds the example
+ * sentences, the forms (conjugations, plurals) and notes. A reading
+ * preference for this device, so it lives beside the seen list and does not
+ * sync.
+ */
+type Mode = 'simple' | 'advanced'
+const MODE_KEY = 'lingo3.reviewMode'
+
+function readMode(): Mode {
+  try {
+    return localStorage.getItem(MODE_KEY) === 'advanced' ? 'advanced' : 'simple'
+  } catch {
+    return 'simple'
+  }
+}
+
+function saveMode(mode: Mode) {
+  try {
+    localStorage.setItem(MODE_KEY, mode)
+  } catch {
+    // Private mode or full storage: the choice lasts until the screen closes.
+  }
+}
+
 /** The Type picker carries both topics and parts of speech, prefixed apart. */
 function matchesKind(concept: Concept, kind: string): boolean {
   if (kind === 'all') return true
@@ -61,10 +87,11 @@ function matchesKind(concept: Concept, kind: string): boolean {
  * answers, just arriving from the other direction.
  *
  * Full screen, like the recall test: the header and tiles are hidden, a thin
- * bar holds Back and the three pickers, and the word with every language fits
- * one phone screen so Next can be pressed again and again without scrolling.
- * The word's list, type and topics sit below the Next bar — tap the native
- * word to get there.
+ * bar holds Home and the three pickers, and the word with every language fits
+ * one phone screen. The Previous / Next bar is fixed to the foot of the
+ * screen, so Next is under the thumb in the same place on every word however
+ * short or long the card is. The word's list, type and topics sit below the
+ * card — tap the native word to get there.
  *
  * The native-language gloss of the example is shown here. It is hidden during
  * a test, where it would hand you the answer; here, reading it is the point.
@@ -80,6 +107,11 @@ export function Training({
   const [kind, setKind] = useState('all')
   const [sort, setSort] = useState<Sort>('added')
   const [index, setIndex] = useState(0)
+  const [mode, setMode] = useState<Mode>(readMode)
+  const chooseMode = (m: Mode) => {
+    setMode(m)
+    saveMode(m)
+  }
 
   const collections = useLiveQuery(() => listCollections(), [], [])
 
@@ -226,10 +258,10 @@ export function Training({
         type="button"
         className="flash-back"
         onClick={onExit}
-        aria-label="Back to the menu"
-        title="Back to the menu"
+        aria-label="Home"
+        title="Home"
       >
-        ←
+        <IconHome />
       </button>
       <Pick label="List" value={listName}>
         <select
@@ -313,8 +345,9 @@ export function Training({
     )
   }
 
-  // Sticky, so Next stays under the thumb in the same place on every word —
-  // and still in view when you scroll down to the word's settings.
+  // Fixed to the foot of the screen, so Next stays under the thumb in the same
+  // place on every word — and still in view when you scroll down to the
+  // word's settings.
   const nav = (
     <div className="flash-nav">
       <button onClick={prev} disabled={index === 0} aria-label="Previous word">
@@ -335,8 +368,25 @@ export function Training({
   )
 
   return (
-    <div className="flash" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <div
+      className={`flash flash-${mode}`}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {bar}
+      <div className="flash-mode" role="group" aria-label="How much to show">
+        {(['simple', 'advanced'] as Mode[]).map((m) => (
+          <button
+            key={m}
+            type="button"
+            className={mode === m ? 'on' : ''}
+            aria-pressed={mode === m}
+            onClick={() => chooseMode(m)}
+          >
+            {m === 'simple' ? 'Simple' : 'Advanced'}
+          </button>
+        ))}
+      </div>
       {current && (
         <WordCard conceptId={current.id} settings={settings} flash between={nav} />
       )}
