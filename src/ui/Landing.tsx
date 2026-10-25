@@ -68,7 +68,7 @@ const SLIDES: {
   },
   {
     title: 'Hear how it sounds',
-    body: 'Every word and every text can be spoken, at a speed you set. The voices are your own device’s: nothing is recorded or sent anywhere.',
+    body: 'Every word and every text can be spoken, at a speed you set. The app tries your device’s voices first. If none is available, the text is sent to Google for speech. No microphone recording is made.',
     art: ArtSound,
   },
   {

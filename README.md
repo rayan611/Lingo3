@@ -49,7 +49,7 @@ npm run check     # scheduling behaviour checks
 
 ## Deploying
 
-Push to GitHub, import the repo on Vercel, and set `GEMINI_API_KEY`, `GROQ_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
+Automatic Vercel deployment of `main` is disabled in `vercel.json`. A push alone is not a release; use the reviewed manual Vercel release procedure and confirm the deployed commit. Configure `GEMINI_API_KEY`, `GROQ_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
 
 ## Data model
 
@@ -69,15 +69,14 @@ owner per word, so each is a filter rather than a membership table to reconcile 
 Setting a list aside is a flag on the list, never a bulk suspend of its cards: no FSRS state is
 touched, so a list switched off in October resumes its intervals when it comes back in March.
 
-Every mutable row carries `updatedAt`, so last-write-wins sync can be added later without a migration. The review log is append-only by design — it is the bulk of write volume and it can never conflict.
+Mutable rows carry update timestamps for the existing cloud-sync implementation. The review log is append-only by design — it is the bulk of write volume and it can never conflict.
 
 Morphology is stored **per language**, not in a shared schema. German needs an auxiliary verb (`haben`/`sein`) and a separable-prefix flag that Swedish has no use for; the two gender systems are unrelated. A shared schema silently drops exactly the fields a learner most often gets wrong.
 
 ## Known gaps
 
-- **No cloud sync.** Data lives in one browser. Export from Settings before clearing site data or switching device.
-- **No audio.** Deferred — Web Speech voices depend on what the device has installed.
-- **No reading generator.** Needs roughly 300 known words before it produces text that reads naturally rather than forced.
+- **Speech availability.** Device voices are preferred. The Google speech fallback needs a connection and can be unavailable; text is sent to Google when it is used.
+- **Backup remains important.** Cloud sync is available, but export a full backup before clearing site data or making bulk changes.
 - **Four-language ceiling.** The schema is general, but the UI assumes a handful.
 - **No list import.** Bringing a whole list in from another app is switched off: deciding what counts
   as a duplicate of a word you already have is unsettled. The CSV importer under Settings works.
