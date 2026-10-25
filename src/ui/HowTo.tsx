@@ -64,7 +64,7 @@ const STEPS: { title: string; body: string }[] = [
 const NOTES: string[] = [
   'Each language is remembered separately. A word that is hard in German and easy in English is two schedules, and only the one actually due is asked for.',
   'Reviewing never needs the network. Add words with no signal and they fill in when you are back online; everything syncs to your account, so a second device starts where you left off.',
-  'Tap the speaker on any word or text to hear it. The voices are your device’s own — nothing is recorded or sent anywhere.',
+  'Tap the speaker on any word or text to hear it. Your device’s voices are tried first; if none is available, the text is sent to Google for speech. No microphone recording is made.',
   'Settings → Full backup saves everything, review history included, as a file you keep.',
 ]
 

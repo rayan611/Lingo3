@@ -15,7 +15,7 @@
 const CONTACT = 'rayan.rahpou@gmail.com'
 
 /** Shown in the footer so it is obvious whether this is the current version. */
-const LAST_UPDATED = '14 October 2026'
+const LAST_UPDATED = '25 October 2026'
 
 export function Privacy({ onBack }: { onBack?: () => void }) {
   return (
@@ -84,9 +84,21 @@ export function Privacy({ onBack }: { onBack?: () => void }) {
         </p>
         <p>
           Your email address and your review history are never sent with it. The
-          provider receives the word and nothing that identifies you. Nothing is
-          sent while you are reviewing: that happens entirely on your device,
-          which is why it works offline.
+          provider receives the word and nothing that identifies you. Review scheduling and the cards themselves work entirely on your device.
+          Optional speech playback can use the network, as explained below.
+        </p>
+      </section>
+
+      <section className="landing-section">
+        <h2>Speech playback</h2>
+        <p>
+          The app tries your device’s available voices first. Some devices or
+          voices may themselves use an online speech service. If no suitable
+          voice is available, the app sends the text you ask it to speak and
+          its language to Google through our speech endpoint. It does not send
+          your account email or review history with that request, and it does
+          not record your microphone. Speech may be unavailable offline;
+          reviewing your cards still works.
         </p>
       </section>
 
