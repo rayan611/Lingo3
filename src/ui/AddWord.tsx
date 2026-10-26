@@ -504,7 +504,7 @@ export function AddWord({ settings }: Props) {
               className="inspect"
               disabled={busy || !lemma.trim() || unchanged}
             >
-              {busy && mode === 'check' ? 'Checking…' : 'Check'}
+              {busy && mode === 'check' ? <><span className="lookup-dots" aria-hidden="true"><i /><i /><i /></span>Checking…</> : 'Check'}
             </button>
             {/* The two lines are kept to the same length on purpose: unequal
                 lines wrapped to different heights and the buttons above them
@@ -518,11 +518,17 @@ export function AddWord({ settings }: Props) {
               disabled={busy || !lemma.trim() || unchanged}
               onClick={() => void run('add')}
             >
-              {busy && mode === 'add' ? 'Adding…' : 'Check and add'}
+              {busy && mode === 'add' ? <><span className="lookup-dots" aria-hidden="true"><i /><i /><i /></span>Adding…</> : 'Check and add'}
             </button>
             <span className="muted small">Check and save direct</span>
           </div>
         </div>
+
+        {busy && mode && (
+          <p className="muted small" role="status" aria-live="polite">
+            Looking up translations, forms and examples… You can read the result here when it is ready.
+          </p>
+        )}
 
         {status?.retry ? (
           <AiDown what="Looking up words" busy={busy} onRetry={status.retry} />
