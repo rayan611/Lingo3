@@ -3653,4 +3653,12 @@ input[type='radio']:focus { box-shadow: none; }
 .waiting-vocabulary-language-2 .waiting-vocabulary-label { color: var(--tab-read); }
 .waiting-vocabulary-words strong { font-size: 1.5rem; line-height: 1.3; }
 .waiting-vocabulary-meaning { color: var(--ink-soft); }
-.waiting-vocabulary-next { width: 100%; background: var(--accent); color: var(--panel); border-color: var(--accent); font-weight: 700; }
+
+/* Waiting practice always fits: natural size first, viewport scale only when needed. */
+.waiting-vocabulary { width: min(360px, calc(100vw - 24px)); max-height: none; overflow: visible; padding: 12px; transform-origin: bottom right; box-sizing: border-box; }
+.waiting-vocabulary-header { gap: 8px; }
+.waiting-vocabulary-header h3 { font-size: .9rem; line-height: 1.3; }
+.waiting-vocabulary-header button { min-width: 32px; min-height: 32px; padding: 4px; }
+.waiting-vocabulary-words { gap: 8px; margin: 10px 0 0; }
+.waiting-vocabulary-words > .waiting-vocabulary-language { padding: 9px 11px; gap: 4px; }
+.waiting-vocabulary-words strong { font-size: 1.2rem; }

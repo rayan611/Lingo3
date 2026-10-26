@@ -3,6 +3,19 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-26 — v0.4.1: automatic, no-scroll waiting practice
+
+- The waiting popup fits the visual viewport on desktop and mobile, including small landscape
+  windows and the mobile keyboard. Compact spacing and adaptive scaling replace internal scrolling.
+- Removed Next: words rotate automatically every 3–6 seconds according to the displayed text length.
+  Rotation pauses in a hidden tab and stops immediately when closed or the lookup finishes.
+- Random selection uses reviewed cards in learning languages 1 and 2. Suspended, unreviewed and
+  stable easy cards are excluded; unseen words are preferred, then less recently shown words.
+  Exposure history lasts for the current app session. A single eligible word stays visible.
+- Native-language translations, app theme and manual Close/Escape are retained. Passive exposure
+  writes no review logs, never increments counters, and never changes FSRS schedules.
+- Existing Check result block order and adjective/opposite functionality are unchanged.
+
 ## 2026-10-26 — Adjective forms and opposites; compact Check results
 
 - Adjectives now keep and display the agreement and comparison forms that exist in each language,

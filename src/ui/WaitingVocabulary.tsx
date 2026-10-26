@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { db } from '../db/db'
 import { activeCollectionIds, inActiveCollection } from '../db/collections'
 import { LANG_NAMES, type Entry, type Lang, type Settings } from '../db/types'
-import { waitingReviewCandidates } from '../lib/waitingReview'
+import { waitingReviewCandidates, chooseWaitingWord, waitingWordDuration, waitingPopupScale } from '../lib/waitingReview'
 
 // Survives popup unmounts, so a new lookup picks different concepts.
 const shown = new Map<string, number>()
@@ -17,7 +17,9 @@ type ReviewWord = { id: string; entries: Entry[]; native: Entry }
 /** Passive practice only: never changes FSRS dates or records a graded review. */
 export function WaitingVocabulary({ settings }: { settings: Settings }) {
   const [words, setWords] = useState<ReviewWord[]>([])
-  const [index, setIndex] = useState(0)
+  const [currentId, setCurrentId] = useState<string>()
+  const popup = useRef<HTMLElement>(null)
+  const [fit, setFit] = useState({ scale: 1, bottom: 12, right: 12 })
   const [visible, setVisible] = useState(false)
   const [closed, setClosed] = useState(false)
   // Keep the configured positions: a paused #1 must not silently promote #3.
@@ -54,17 +56,64 @@ export function WaitingVocabulary({ settings }: { settings: Settings }) {
         // Stored glosses may have been generated before that setting changed.
         const rows = targets.flatMap((lang) => group.filter((e) => e.lang === lang && e.headword.trim()))
         if (native && rows.length) review.push({ id, entries: rows, native })
-        if (review.length === 30) break
+
       }
-      if (!cancelled) { setWords(review); setIndex(0) }
+      if (!cancelled) { setWords(review); setCurrentId(chooseWaitingWord(review.map((w) => w.id), shown)) }
     }
     void load().catch(() => { /* Optional practice never interrupts a lookup. */ })
     return () => { cancelled = true; window.clearTimeout(timer) }
   }, [languages, nativeLang])
 
-  const word = words[index % (words.length || 1)]
+  const word = words.find((candidate) => candidate.id === currentId)
   useEffect(() => {
     if (visible && !closed && word) remember(word.id)
+  }, [visible, closed, word])
+
+  useEffect(() => {
+    if (!visible || closed || !word || words.length < 2) return
+    const text = word.entries.map((e) => `${e.headword} ${word.native.headword}`).join(' ')
+    let timer: number | undefined
+    function schedule() {
+      window.clearTimeout(timer)
+      if (document.hidden) return
+      timer = window.setTimeout(() => {
+        setCurrentId(chooseWaitingWord(words.map((w) => w.id), shown, word!.id))
+      }, waitingWordDuration(text))
+    }
+    schedule()
+    document.addEventListener('visibilitychange', schedule)
+    return () => {
+      window.clearTimeout(timer)
+      document.removeEventListener('visibilitychange', schedule)
+    }
+  }, [visible, closed, word, words])
+
+  useLayoutEffect(() => {
+    const element = popup.current
+    if (!visible || closed || !word || !element) return
+    function resize() {
+      if (!element) return
+      const viewport = window.visualViewport
+      const width = viewport?.width ?? window.innerWidth
+      const height = viewport?.height ?? window.innerHeight
+      setFit({
+        scale: waitingPopupScale(element.offsetWidth, element.offsetHeight, width - 24, height - 24),
+        bottom: Math.max(12, window.innerHeight - ((viewport?.offsetTop ?? 0) + height) + 12),
+        right: Math.max(12, window.innerWidth - ((viewport?.offsetLeft ?? 0) + width) + 12),
+      })
+    }
+    resize()
+    const observer = new ResizeObserver(resize)
+    observer.observe(element)
+    window.addEventListener('resize', resize)
+    window.visualViewport?.addEventListener('resize', resize)
+    window.visualViewport?.addEventListener('scroll', resize)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', resize)
+      window.visualViewport?.removeEventListener('resize', resize)
+      window.visualViewport?.removeEventListener('scroll', resize)
+    }
   }, [visible, closed, word])
 
   useEffect(() => {
@@ -76,12 +125,12 @@ export function WaitingVocabulary({ settings }: { settings: Settings }) {
 
   if (!visible || closed || !word) return null
   return (
-    <aside className="waiting-vocabulary" role="dialog" aria-modal="false" aria-labelledby="waiting-vocabulary-title">
+    <aside ref={popup} className="waiting-vocabulary" style={{ transform: `scale(${fit.scale})`, bottom: fit.bottom, right: fit.right }} role="dialog" aria-modal="false" aria-labelledby="waiting-vocabulary-title">
       <div className="waiting-vocabulary-header">
         <h3 id="waiting-vocabulary-title">Review some words while the app is thinking</h3>
         <button type="button" onClick={() => setClosed(true)} aria-label="Close vocabulary popup">✕</button>
       </div>
-      <div className="waiting-vocabulary-words" aria-live="polite">
+      <div className="waiting-vocabulary-words" aria-live="off">
         {word.entries.map((entry, position) => (
           <div key={entry.id} className={`waiting-vocabulary-language waiting-vocabulary-language-${position + 1}`}>
             <span className="waiting-vocabulary-label">{LANG_NAMES[entry.lang]}</span>
@@ -90,7 +139,6 @@ export function WaitingVocabulary({ settings }: { settings: Settings }) {
           </div>
         ))}
       </div>
-      {words.length > 1 && <button className="waiting-vocabulary-next" type="button" onClick={() => setIndex((i) => (i + 1) % words.length)}>Next word →</button>}
     </aside>
   )
 }
