@@ -3,6 +3,19 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-26 — Adjective forms and opposites; compact Check results
+
+- Adjectives now keep and display the agreement and comparison forms that exist in each language,
+  including Swedish `en`/`ett`, definite and plural forms, instead of falling back to a form-less
+  entry. The expansion prompt and validation use the same shape.
+- An adjective lookup asks for a natural opposite in **Worth knowing beside it**, ready to save as
+  its own word. **Check and add** recognises two opposite adjectives entered with “and”, saves them as
+  two concepts, and asks both expansions for a natural shared example containing both words.
+- Check results use a denser layout and a two-column desktop arrangement so the decision fits with
+  much less scrolling. Checking remains preview-only: it writes no review log and changes no review
+  counter.
+- App version: **0.4.0**.
+
 ## 2026-10-24 — A + to start the next word, and no repeated example translations in Advanced
 
 - `src/ui/AddWord.tsx`: a small round **+** at the end of the word box clears the box, the preview,

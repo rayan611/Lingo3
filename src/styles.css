@@ -1115,6 +1115,23 @@ button.google:hover:not(:disabled) { background: var(--bg-tint); }
 }
 .preview-card .primary.big { margin-top: 1rem; width: 100%; }
 
+/* Check is a decision screen, not a review session. Keep its result dense
+   enough to inspect without a long page trip on either a phone or desktop. */
+.preview-fit { display: grid; gap: 8px; }
+.preview-fit .panel { padding: 12px 14px; }
+.preview-fit .lang-row { padding: 5px 0; }
+.preview-fit .example { margin-top: 4px; padding: 5px 8px; }
+.preview-fit .example-gloss { margin-top: 3px; padding-top: 3px; }
+.preview-fit .forms { margin-top: 4px; padding-top: 4px; gap: 3px 12px; }
+.preview-fit .note { margin-top: 4px; padding: 4px 7px; }
+.preview-fit .word-meta .tag-editor { margin: 4px 0; }
+@media (min-width: 760px) {
+  .preview-fit { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); }
+  .preview-fit > .word-meta { grid-column: 1; }
+  .preview-fit > .native-card { grid-column: 1; }
+  .preview-fit > .word-card:not(.native-card) { grid-column: 2; grid-row: 1 / span 2; }
+}
+
 
 /* --- Topic tags ------------------------------------------------------------ */
 .tag-editor {

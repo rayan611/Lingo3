@@ -14,7 +14,7 @@ import 'fake-indexeddb/auto'
 import { db, openForUser, ensureSettings, compositeId, newId } from '../src/db/db'
 import { makeCard } from '../src/fsrs/scheduler'
 import { buildQueue, queueCounts } from '../src/fsrs/queue'
-import { activeTargets } from '../src/db/types'
+import { activeTargets, parseMorphology } from '../src/db/types'
 import type { Concept, Entry, Lang, ReviewLogRow } from '../src/db/types'
 import { detectLang } from '../src/lib/detectLang'
 import { formCandidates, markForms } from '../src/lib/highlight'
@@ -740,6 +740,13 @@ async function main() {
     if (concept?.pos !== 'noun') throw new Error('pos from the expansion was not kept')
   })
 
+  await check('an explicit opposite pair is parsed as two words, not one phrase', async () => {
+    const { oppositePair } = await import('../src/ai/expand')
+    const pair = oppositePair(' poor and rich ')
+    if (!pair || pair[0] !== 'poor' || pair[1] !== 'rich') throw new Error('pair was not split')
+    if (oppositePair('bread and butter and jam')) throw new Error('three words were treated as a pair')
+  })
+
   console.log('\nLanguage detection on the Add box')
   // A suggestion, so a miss (no guess) is cheap and a confident wrong answer
   // is not. These pin the second kind.
@@ -847,8 +854,28 @@ async function main() {
   // Measured on the live database before shipping: 82% of entries in a target
   // language produce a cloze, and the 18% that do not fall back to the plain
   // typed prompt. Nouns are 100%, verbs and set phrases carry the misses —
-  // Swedish adjective agreement (försenad → försenat) and English -ing are
-  // the two biggest, and both are forms the morphology table does not hold.
+  // Swedish adjective agreement (försenad → försenat) used to be one of the
+  // largest misses. Adjective morphology now supplies that form.
+
+  await check('adjective forms validate, display and participate in cloze matching', () => {
+    const form = parseMorphology('sv', {
+      kind: 'adjective',
+      common: 'försenad',
+      neuter: 'försenat',
+      plural: 'försenade',
+      definite: 'försenade',
+      comparative: 'mer försenad',
+      superlative: 'mest försenad',
+    })
+    if (!form || form.kind !== 'adjective') throw new Error('adjective morphology was rejected')
+    const candidates = formCandidates('försenad', 'sv', form)
+    if (!candidates.includes('försenat') || !candidates.includes('försenade')) {
+      throw new Error(`missing adjective forms: ${candidates.join(', ')}`)
+    }
+    const cloze = buildCloze('Tåget är tjugo minuter försenat.', candidates)
+    if (cloze?.answer !== 'försenat') throw new Error('the agreeing form was not blanked')
+    return Promise.resolve()
+  })
 
   await check('the gap wants the form the sentence needs, not the headword', () => {
     const forms = formCandidates('dricka', 'sv', {
@@ -876,10 +903,8 @@ async function main() {
     return Promise.resolve()
   })
 
-  await check('no form in the sentence means no cloze', () => {
-    // The real case this came from: a Swedish adjective agrees (försenad →
-    // försenat) and the morphology table holds neither form.
-    if (buildCloze('Tåget är tjugo minuter försenat.', ['försenad'])) {
+  await check('an absent form in the sentence means no cloze', () => {
+    if (buildCloze('Tåget är tjugo minuter sent.', ['försenad'])) {
       throw new Error('a cloze was built from a word that is not there')
     }
     return Promise.resolve()

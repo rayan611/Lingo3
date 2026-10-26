@@ -5,6 +5,7 @@ import {
   commitPreview,
   ExpansionError,
   normaliseTags,
+  oppositePair,
   previewWord,
   processPending,
   type DuplicateInfo,
@@ -212,6 +213,45 @@ export function AddWord({ settings }: Props) {
     setCollision(null)
     setRelated([])
     try {
+      const pair = !sourceLang && which === 'add' ? oppositePair(term) : null
+      if (pair) {
+        const hint = `These are opposite adjectives. Use a natural example containing both “${pair[0]}” and “${pair[1]}”.`
+        const results = await Promise.all(
+          pair.map((part) => previewWord({ lemma: part, settings, hint })),
+        )
+        const fresh = results.filter((result) => result.status === 'preview')
+        if (fresh.length > 0 && fresh.every((result) => result.preview.expansion.pos === 'adjective')) {
+          const ids: string[] = []
+          let duplicates = 0
+          for (const result of results) {
+            if (result.status === 'duplicate') {
+              ids.push(result.conceptId)
+              duplicates++
+              continue
+            }
+            const saved = await commitPreview({
+              preview: result.preview,
+              category: legacyCategory(normaliseTags(result.preview.expansion.tags)),
+              tags: normaliseTags(result.preview.expansion.tags),
+              collectionId: targetList || undefined,
+              settings,
+            })
+            ids.push(saved.conceptId)
+            if (saved.status === 'duplicate') duplicates++
+          }
+          setDoneWord(term)
+          setLastId(ids[ids.length - 1] ?? null)
+          setStatus({
+            kind: duplicates === 2 ? 'warn' : 'saved',
+            text: duplicates === 2
+              ? `Both “${pair[0]}” and “${pair[1]}” were already saved.`
+              : `✓ Saved “${pair[0]}” and “${pair[1]}” as two words with shared examples.`,
+          })
+          setRelated(fresh.flatMap((result) => result.preview.expansion.related ?? []))
+          return
+        }
+      }
+
       // Always expand first and look at it. The only difference quick add
       // makes is that it does not stop to ask.
       //

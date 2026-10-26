@@ -46,6 +46,7 @@ export function PreviewCard({
   const detected = preview.expansion.detectedLang
 
   return (
+    <div className="preview-fit">
     <WordStack
       entries={rows}
       settings={settings}
@@ -76,5 +77,6 @@ export function PreviewCard({
         </button>
       }
     />
+    </div>
   )
 }

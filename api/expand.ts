@@ -91,6 +91,9 @@ Swedish (sv):
   verb -> { "kind":"verb", "infinitiv":"...", "presens":"...",
             "preteritum":"...", "supinum":"...", "imperativ":"<e.g. ät>",
             "particle":"..." (only for particle verbs, else omit) }
+  adjective -> { "kind":"adjective", "common":"<en form>",
+                 "neuter":"<ett form>", "plural":"...", "definite":"...",
+                 "comparative":"...", "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 German (de):
@@ -101,12 +104,16 @@ German (de):
             "auxiliary":"haben"|"sein", "separable":true|false,
             "prefix":"..." (only when separable, else omit),
             "imperativ":"<du form, e.g. geh>" }
+  adjective -> { "kind":"adjective", "masculine":"...", "feminine":"...",
+                 "neuter":"...", "plural":"...", "comparative":"...",
+                 "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 English (en):
   noun -> { "kind":"noun", "plural":"..." }
   verb -> { "kind":"verb", "base":"...", "thirdPerson":"...", "past":"...",
             "pastParticiple":"..." }
+  adjective -> { "kind":"adjective", "comparative":"...", "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 Spanish (es):
@@ -115,6 +122,8 @@ Spanish (es):
             "preterito":"<3rd person sing>", "participio":"...",
             "gerundio":"...", "reflexivo":true|false,
             "imperativo":"<tú form>" }
+  adjective -> { "kind":"adjective", "masculine":"...", "feminine":"...",
+                 "plural":"...", "comparative":"...", "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 Italian (it):
@@ -128,6 +137,8 @@ Italian (it):
             "riflessivo":true|false, "imperativo":"<tu form>" }
             Give the infinitive of a reflexive verb with the pronoun attached
             ("alzarsi"), and set riflessivo true.
+  adjective -> { "kind":"adjective", "masculine":"...", "feminine":"...",
+                 "plural":"...", "comparative":"...", "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 French (fr):
@@ -137,6 +148,8 @@ French (fr):
             "participe":"<participe passé>", "auxiliaire":"être"|"avoir",
             "pronominal":true|false, "imperatif":"<tu form>" }
             Give a pronominal verb with its pronoun ("se lever").
+  adjective -> { "kind":"adjective", "masculine":"...", "feminine":"...",
+                 "plural":"...", "comparative":"...", "superlative":"..." }
   anything else -> { "kind":"simple" }
 
 Russian (ru):
@@ -155,6 +168,8 @@ Russian (ru):
             aspectPartner — a learner has to produce both, but it is one word
             to them. For a perfective verb, presentFirst/presentThird are the
             future forms; give them anyway and say so in notes.
+  adjective -> { "kind":"adjective", "masculine":"...", "feminine":"...",
+                 "neuter":"...", "plural":"...", "comparative":"..." }
   anything else -> { "kind":"simple" }
 
 Persian (fa):
@@ -315,6 +330,12 @@ and which one to use with a manager is the part a dictionary does not tell
 you. Same for du/ni, jobba/arbeta. Label each with a one-or-two-word register
 and a short note on when to reach for it. Return fewer, or none, rather than
 padding the list with words that are merely adjacent.
+
+For an adjective, include its natural opposite when one exists (rich -> poor)
+and label it "opposite". If the learner entered two opposite adjectives joined
+by "and", treat the first as the main word, put the second in related words so
+it can be saved separately, and make every example sentence naturally include
+BOTH adjectives. Never store the pair as one phrase.
 
 TOPICS — also return one to three lowercase topic tags for this word. Two
 kinds are useful, and a word often wants one of each.

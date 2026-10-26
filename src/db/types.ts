@@ -247,6 +247,23 @@ const enVerb = z.object({
   pastParticiple: z.string(),
 })
 
+/**
+ * Adjective agreement is smaller than a noun declension or verb conjugation,
+ * but it is still morphology.  The same optional shape works across the
+ * supported languages: each language fills only the forms it actually has.
+ */
+const adjective = z.object({
+  kind: z.literal('adjective'),
+  common: z.string().optional(),
+  masculine: z.string().optional(),
+  feminine: z.string().optional(),
+  neuter: z.string().optional(),
+  plural: z.string().optional(),
+  definite: z.string().optional(),
+  comparative: z.string().optional(),
+  superlative: z.string().optional(),
+})
+
 const faSimple = z.object({ kind: z.literal('simple') })
 const simple = z.object({ kind: z.literal('simple') })
 
@@ -259,6 +276,7 @@ export type DeNoun = z.infer<typeof deNoun>
 export type DeVerb = z.infer<typeof deVerb>
 export type EnNoun = z.infer<typeof enNoun>
 export type EnVerb = z.infer<typeof enVerb>
+export type AdjectiveForm = z.infer<typeof adjective>
 export type EsNoun = z.infer<typeof esNoun>
 export type EsVerb = z.infer<typeof esVerb>
 export type ItNoun = z.infer<typeof itNoun>
@@ -269,13 +287,13 @@ export type RuNoun = z.infer<typeof ruNoun>
 export type RuVerb = z.infer<typeof ruVerb>
 
 export const MorphologySchema = z.discriminatedUnion('lang', [
-  z.object({ lang: z.literal('sv'), form: z.union([svNoun, svVerb, simple]) }),
-  z.object({ lang: z.literal('de'), form: z.union([deNoun, deVerb, simple]) }),
-  z.object({ lang: z.literal('en'), form: z.union([enNoun, enVerb, simple]) }),
-  z.object({ lang: z.literal('es'), form: z.union([esNoun, esVerb, simple]) }),
-  z.object({ lang: z.literal('ru'), form: z.union([ruNoun, ruVerb, simple]) }),
-  z.object({ lang: z.literal('it'), form: z.union([itNoun, itVerb, simple]) }),
-  z.object({ lang: z.literal('fr'), form: z.union([frNoun, frVerb, simple]) }),
+  z.object({ lang: z.literal('sv'), form: z.union([svNoun, svVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('de'), form: z.union([deNoun, deVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('en'), form: z.union([enNoun, enVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('es'), form: z.union([esNoun, esVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('ru'), form: z.union([ruNoun, ruVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('it'), form: z.union([itNoun, itVerb, adjective, simple]) }),
+  z.object({ lang: z.literal('fr'), form: z.union([frNoun, frVerb, adjective, simple]) }),
   z.object({ lang: z.literal('fa'), form: faSimple }),
 ])
 export type Morphology = z.infer<typeof MorphologySchema>

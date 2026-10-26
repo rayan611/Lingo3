@@ -1,4 +1,5 @@
 import type {
+  AdjectiveForm,
   DeNoun,
   DeVerb,
   EnNoun,
@@ -46,6 +47,29 @@ type Form = Morphology['form']
  */
 export function morphLines(lang: Lang, form: Form | undefined): MorphLine[] {
   if (!form || form.kind === 'simple') return []
+
+  if (form.kind === 'adjective') {
+    const f = form as AdjectiveForm
+    const labels: Record<Lang, Partial<Record<keyof AdjectiveForm, string>>> = {
+      sv: { common: 'en', neuter: 'ett', plural: 'plural', definite: 'bestämd', comparative: 'komparativ', superlative: 'superlativ' },
+      de: { masculine: 'maskulin', feminine: 'feminin', neuter: 'neutrum', plural: 'Plural', comparative: 'Komparativ', superlative: 'Superlativ' },
+      en: { comparative: 'comparative', superlative: 'superlative' },
+      es: { masculine: 'masculino', feminine: 'femenino', plural: 'plural', comparative: 'comparativo', superlative: 'superlativo' },
+      it: { masculine: 'maschile', feminine: 'femminile', plural: 'plurale', comparative: 'comparativo', superlative: 'superlativo' },
+      fr: { masculine: 'masculin', feminine: 'féminin', plural: 'pluriel', comparative: 'comparatif', superlative: 'superlatif' },
+      ru: { masculine: 'мужской', feminine: 'женский', neuter: 'средний', plural: 'мн. число', comparative: 'сравнительная' },
+      fa: {},
+    }
+    const fields: (keyof AdjectiveForm)[] = [
+      'common', 'masculine', 'feminine', 'neuter', 'plural', 'definite',
+      'comparative', 'superlative',
+    ]
+    return compact(fields.map((field) => {
+      const value = f[field]
+      const label = labels[lang][field]
+      return typeof value === 'string' && label ? { label, value } : undefined
+    }))
+  }
 
   if (lang === 'sv') {
     if (form.kind === 'noun') {

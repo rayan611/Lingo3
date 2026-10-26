@@ -437,6 +437,12 @@ export function cachedPreviewCount(): number {
   return previewCache.size
 }
 
+/** Two explicitly entered words are two concepts, never one phrase. */
+export function oppositePair(input: string): [string, string] | null {
+  const parts = input.trim().split(/\s+(?:and|&)\s+/i).map((part) => part.trim())
+  return parts.length === 2 && parts.every(Boolean) ? [parts[0], parts[1]] : null
+}
+
 /**
  * Expands a word and shows it, writing nothing.
  *
