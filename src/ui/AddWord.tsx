@@ -24,6 +24,7 @@ import { TagEditor } from './TagEditor'
 import { defaultListId, listCollections } from '../db/collections'
 import { IconLater, IconWords } from './icons'
 import { AiDown } from './AiDown'
+import { WaitingVocabulary } from './WaitingVocabulary'
 import { WordCard } from './WordCard'
 import { BulkAdd } from './BulkAdd'
 import { PreviewCard } from './PreviewCard'
@@ -264,7 +265,7 @@ export function AddWord({ settings }: Props) {
       if (result.status === 'duplicate') {
         setStatus({ kind: 'warn', text: result.message ?? 'Already saved.' })
       } else {
-        setStatus({ kind: 'ok', text: `Added "${toSave.lemma}".` })
+        setStatus({ kind: 'saved', text: `✓ Saved "${toSave.lemma}" to your words.` })
       }
       // Off the list either way: a duplicate is already in the word bank, so
       // leaving it parked would mean working through it again tomorrow to
@@ -504,7 +505,7 @@ export function AddWord({ settings }: Props) {
               className="inspect"
               disabled={busy || !lemma.trim() || unchanged}
             >
-              {busy && mode === 'check' ? 'Checking…' : 'Check'}
+              {busy && mode === 'check' ? <><span className="lookup-dots" aria-hidden="true"><i /><i /><i /></span>Checking…</> : 'Check'}
             </button>
             {/* The two lines are kept to the same length on purpose: unequal
                 lines wrapped to different heights and the buttons above them
@@ -518,16 +519,24 @@ export function AddWord({ settings }: Props) {
               disabled={busy || !lemma.trim() || unchanged}
               onClick={() => void run('add')}
             >
-              {busy && mode === 'add' ? 'Adding…' : 'Check and add'}
+              {busy && mode === 'add' ? <><span className="lookup-dots" aria-hidden="true"><i /><i /><i /></span>Adding…</> : 'Check and add'}
             </button>
             <span className="muted small">Check and save direct</span>
           </div>
         </div>
 
+        {busy && mode && <WaitingVocabulary settings={settings} />}
+
+        {busy && mode && (
+          <p className="muted small" role="status" aria-live="polite">
+            Looking up translations, forms and examples… You can read the result here when it is ready.
+          </p>
+        )}
+
         {status?.retry ? (
           <AiDown what="Looking up words" busy={busy} onRetry={status.retry} />
         ) : (
-          status && <div className={`status ${status.kind}`}>{status.text}</div>
+          status && <div className={`status ${status.kind}`} role="status">{status.text}</div>
         )}
 
         {collision && (
