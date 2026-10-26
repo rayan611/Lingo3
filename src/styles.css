@@ -3625,3 +3625,15 @@ input[type='radio']:focus { box-shadow: none; }
 .waiting-vocabulary-words { display: grid; gap: 12px; margin: 16px 0; }
 .waiting-vocabulary-words > div { display: grid; gap: 4px; border-bottom: 1px solid var(--line); padding-bottom: 10px; overflow-wrap: anywhere; }
 .waiting-vocabulary-words strong { font-size: var(--fs-sub); }
+
+/* The popup inherits the active app palette, with two distinct language cards. */
+.waiting-vocabulary { border: 1px solid var(--accent); border-top: 5px solid var(--accent); background: linear-gradient(145deg, var(--panel), var(--accent-soft)); box-shadow: 0 12px 40px -12px var(--accent); }
+.waiting-vocabulary-header h3 { color: var(--accent-ink); font-size: 1rem; line-height: 1.45; }
+.waiting-vocabulary-header button { flex-shrink: 0; background: var(--panel); border-radius: 50%; }
+.waiting-vocabulary-words > .waiting-vocabulary-language { padding: 14px; border: 1px solid var(--line); border-inline-start: 4px solid var(--accent); border-radius: 12px; background: var(--panel); gap: 7px; }
+.waiting-vocabulary-words > .waiting-vocabulary-language-2 { border-inline-start-color: var(--tab-read); background: var(--panel-soft); }
+.waiting-vocabulary-label { color: var(--accent-ink); font-size: var(--fs-label); font-weight: 700; letter-spacing: .04em; }
+.waiting-vocabulary-language-2 .waiting-vocabulary-label { color: var(--tab-read); }
+.waiting-vocabulary-words strong { font-size: 1.5rem; line-height: 1.3; }
+.waiting-vocabulary-meaning { color: var(--ink-soft); }
+.waiting-vocabulary-next { width: 100%; background: var(--accent); color: var(--panel); border-color: var(--accent); font-weight: 700; }
