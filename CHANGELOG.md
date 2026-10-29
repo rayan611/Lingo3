@@ -3,6 +3,17 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — v0.5.1: suspend from Rayan; tighter CSP
+
+- **CSP** (`vercel.json`): `vercel.live` and Pusher removed from `script-src`, `connect-src` and `frame-src` —
+  they only serve the preview toolbar and widened what production pages may load. HSTS gains `preload`.
+  `media-src 'self' blob: data:` (the speaker-audio fix below) is kept.
+- **Rayan control center**: `supabase/migrations/20261029120000_lingo3_hub_user_manage.sql` (applied) puts
+  `hub_user_manage()` in the repository — it existed only in the live database — and makes suspend real:
+  `auth.users.banned_until` plus all sessions ended; unsuspend clears it; delete removes the auth user (every
+  table cascades). Actions are by user id only; the hub's user list now shows who is suspended. Only `anon`
+  (the hub's publishable key) may execute it.
+
 ## 2026-10-29 — Fix: Next in Review did nothing (live since the linked-words deploy)
 
 - `src/ui/Training.tsx`: the "stay on the word you are reading when the list changes" fix remembered
