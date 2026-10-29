@@ -221,8 +221,19 @@ export function Training({
   const current = ordered[at]
   shown.current = current ? { id: current.id, filterKey } : null
   const last = ordered.length - 1
-  const next = () => setIndex((i) => Math.min(i + 1, last))
-  const prev = () => setIndex((i) => Math.max(0, i - 1))
+  // Moving on is the one change that must move the word under you: the
+  // remembered word moves with it, or the check above would put you back.
+  const goTo = (target: number) => {
+    const to = Math.max(0, Math.min(target, last))
+    const word = ordered[to]
+    shown.current = word ? { id: word.id, filterKey } : null
+    setIndex(to)
+  }
+  const next = () => goTo(at + 1)
+  const prev = () => goTo(at - 1)
+  // The key handler is attached once per list; it reads the current moves.
+  const moves = useRef({ next, prev })
+  moves.current = { next, prev }
 
   const currentId = current?.id
   useEffect(() => {
@@ -238,10 +249,10 @@ export function Training({
       if (e.target instanceof HTMLSelectElement) return
       if (e.key === 'ArrowRight' || e.code === 'Space') {
         e.preventDefault()
-        setIndex((i) => Math.min(i + 1, ordered.length - 1))
+        moves.current.next()
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
-        setIndex((i) => Math.max(0, i - 1))
+        moves.current.prev()
       }
     }
     window.addEventListener('keydown', onKey)

@@ -3,6 +3,14 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — Fix: Next in Review did nothing (live since the linked-words deploy)
+
+- `src/ui/Training.tsx`: the "stay on the word you are reading when the list changes" fix remembered
+  the word on screen and, seeing a different word at the new position after **Next**, put you straight
+  back. Next, Previous, the arrow keys and swipes now go through `goTo()`, which moves the remembered
+  word with them; only a change to the list itself is held back. Checked: Next, Next, Previous, →, ←,
+  then a word added under you (stays on "on", 2/100 → 3/101), then Next again.
+
 ## 2026-10-29 — "A new version is ready" with an Update button; speaker audio allowed by the CSP
 
 - **Why the desktop app never updated.** Nothing told a running page about a new deploy. The service
