@@ -1,5 +1,5 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
-import { callGroq, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
+import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 
@@ -31,7 +31,7 @@ const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
 // cost difference at a few dozen words a day is small, and a wrong der/die/das
 // gets drilled into you by the scheduler for months.
 /**
- * Three providers, tried in order: Gemini, then Groq, then Anthropic (Claude),
+ * Five providers, tried in order: Gemini, Groq, Mistral, DeepSeek, then Anthropic (Claude),
  * each taking over when the one before is busy, down, too slow or answers
  * something unusable — see src/server/aiFallback.ts. Only providers with a
  * key are tried. Nothing downstream knows or cares which one answered — all are
@@ -41,12 +41,16 @@ const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
 const GROQ_KEY = process.env.GROQ_API_KEY
-// Gemini first, then Groq, then Claude, each taking over when the one before
+const MISTRAL_KEY = process.env.MISTRAL_API_KEY
+const DEEPSEEK_KEY = process.env.DEEPSEEK_API_KEY
+// Gemini first, then Groq, Mistral, DeepSeek, then Claude, each taking over when the one before
 // is busy, down or too slow (see src/server/aiFallback.ts). Only providers
 // with a key are tried; with one key set, only that one is used.
 const PROVIDERS = configuredProviders({
   gemini: GEMINI_KEY,
   groq: GROQ_KEY,
+  mistral: MISTRAL_KEY,
+  deepseek: DEEPSEEK_KEY,
   anthropic: ANTHROPIC_KEY,
 })
 const MODEL_OVERRIDE = process.env.LINGUA_MODEL
@@ -510,7 +514,7 @@ async function respond(req: Request): Promise<Response> {
     return json(
       {
         error:
-          'No model key is configured on the server. Set GEMINI_API_KEY, GROQ_API_KEY or ANTHROPIC_API_KEY.',
+          'No model key is configured on the server. Set GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY, DEEPSEEK_API_KEY or ANTHROPIC_API_KEY.',
       },
       500,
     )
@@ -545,12 +549,24 @@ async function respond(req: Request): Promise<Response> {
             temperature: 0,
           })
         }
+        if (provider === 'mistral') {
+          return callMistral(TOOL, prompt, MISTRAL_KEY!, signal, model, {
+            maxTokens: 4096,
+            temperature: 0,
+          })
+        }
+        if (provider === 'deepseek') {
+          return callDeepSeek(TOOL, prompt, DEEPSEEK_KEY!, signal, model, {
+            maxTokens: 4096,
+            temperature: 0,
+          })
+        }
         return callAnthropic(prompt, ANTHROPIC_KEY!, signal, model)
       },
       read:
         provider === 'gemini'
           ? readGemini
-          : provider === 'groq'
+          : provider === 'groq' || provider === 'mistral' || provider === 'deepseek'
             ? readGroq(TOOL.name)
             : readAnthropic,
     })),

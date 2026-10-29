@@ -21,7 +21,7 @@ Expansion happens once, when you add the word, and the result is stored locally 
 | App | Vite + React + TypeScript, `vite-plugin-pwa` |
 | Local store | Dexie (IndexedDB) |
 | Scheduling | `ts-fsrs` (FSRS v6) |
-| Expansion | Gemini, with Groq and then Claude as backups (`src/server/aiFallback.ts`), via Vercel serverless functions |
+| Expansion | Gemini, with Groq, Mistral, DeepSeek and then Claude as backups (`src/server/aiFallback.ts`), via Vercel serverless functions |
 | Validation | `zod` — bad model output is rejected, not written |
 
 ## Running it
@@ -35,6 +35,8 @@ The expansion endpoint needs a key. Locally, put it in `.env`:
 
 ```
 GROQ_API_KEY=gsk_...
+MISTRAL_API_KEY=...
+DEEPSEEK_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 LINGUA_MODEL=claude-haiku-5-5    # optional; this is the default
 ```
@@ -49,7 +51,7 @@ npm run check     # scheduling behaviour checks
 
 ## Deploying
 
-Automatic Vercel deployment of `main` is disabled in `vercel.json`. A push alone is not a release; use the reviewed manual Vercel release procedure and confirm the deployed commit. Configure `GEMINI_API_KEY`, `GROQ_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
+Automatic Vercel deployment of `main` is disabled in `vercel.json`. A push alone is not a release; use the reviewed manual Vercel release procedure and confirm the deployed commit. Configure `GEMINI_API_KEY`, `GROQ_API_KEY`, `MISTRAL_API_KEY`, `DEEPSEEK_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Mistral, then DeepSeek, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
 
 ## Data model
 

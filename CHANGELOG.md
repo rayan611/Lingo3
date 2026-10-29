@@ -3,6 +3,19 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — v0.6.0: Mistral (free) and DeepSeek as reserve AIs after Gemini and Groq
+
+- `src/server/aiFallback.ts`: the order is now Gemini → Groq → **Mistral** (free key) → **DeepSeek** (prepaid)
+  → Claude. Both use the same OpenAI-style tool call as Groq (`callMistral`, `callDeepSeek`, read by
+  `readGroq`), so translate, story and expand each gained two branches. Each is skipped until its key is set
+  in Vercel (`MISTRAL_API_KEY`, `DEEPSEEK_API_KEY`); `MISTRAL_MODEL` and `DEEPSEEK_MODEL` replace the defaults
+  `mistral-small-latest` and `deepseek-v4-flash`. Mistral's free plan may use prompts for training.
+- The admin AI status check lists DeepSeek (`api/ai-status.ts`, `src/ui/AiStatus.tsx`). The privacy page now
+  names Groq, Mistral, DeepSeek and Anthropic as fallbacks. `.env.example` and README updated; `scripts/check-api.mts`
+  covers the order, the model override, "Gemini and Groq busy → DeepSeek answers" and the request shape.
+- Open: the default model name was not checked against DeepSeek's live API from here. After setting the key,
+  press the admin AI status check; if DeepSeek shows HTTP 400 about the model, set `DEEPSEEK_MODEL`.
+
 ## 2026-10-29 — v0.5.1: suspend from Rayan; tighter CSP
 
 - **CSP** (`vercel.json`): `vercel.live` and Pusher removed from `script-src`, `connect-src` and `frame-src` —

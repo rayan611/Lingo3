@@ -17,6 +17,8 @@ type ProviderStatus =
 const NAMES: Record<string, string> = {
   gemini: 'Gemini',
   groq: 'Groq',
+  mistral: 'Mistral',
+  deepseek: 'DeepSeek',
   anthropic: 'Claude',
 }
 
@@ -24,7 +26,7 @@ const NAMES: Record<string, string> = {
  * Is each AI actually answering? Part of the admin panel.
  *
  * The fallback only ever reaches a backup when the first provider fails, so
- * on a good day nothing shows whether Groq or Claude would work when needed.
+ * on a good day nothing shows whether Groq, Mistral, DeepSeek or Claude would work when needed.
  * This asks each of them directly — one real translation apiece, through the
  * same code the app uses — and shows who answered, how fast and with what.
  * Nothing runs until the button is pressed: each press is a few model calls.

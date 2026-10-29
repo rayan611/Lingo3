@@ -6,20 +6,26 @@
  * unreachable, or an answer that does not read — the next one gets the same
  * prompt. With one key configured this behaves exactly as before.
  *
- * Gemini first, Groq as the first backup, Claude last. Groq is second because
- * it is the fastest of the three to answer, which matters most when the first
- * attempt has already spent part of the time budget.
+ * Gemini first, Groq as the first backup, then Mistral (also a free key) and
+ * DeepSeek (prepaid, far cheaper than Claude) as reserves when both free
+ * quotas are spent, Claude last. Groq is second because it is the fastest to
+ * answer, which matters most when the first attempt has already spent part of
+ * the time budget.
  */
 
-export type Provider = 'gemini' | 'groq' | 'anthropic'
+export type Provider = 'gemini' | 'groq' | 'mistral' | 'deepseek' | 'anthropic'
 
-export const PROVIDER_ORDER: readonly Provider[] = ['gemini', 'groq', 'anthropic']
+export const PROVIDER_ORDER: readonly Provider[] = ['gemini', 'groq', 'mistral', 'deepseek', 'anthropic']
 
 export const DEFAULT_MODELS: Record<Provider, string> = {
   gemini: 'gemini-3.8-flash',
   // A production model on Groq that supports forced tool calls and writes all
   // eight of the app's languages well. GROQ_MODEL replaces it.
   groq: 'openai/gpt-oss-120b',
+  // Mistral's free-plan model. MISTRAL_MODEL replaces it.
+  mistral: 'mistral-small-latest',
+  // DeepSeek's cheap model. DEEPSEEK_MODEL replaces it when DeepSeek renames it.
+  deepseek: 'deepseek-v4-flash',
   anthropic: 'claude-haiku-5-5',
 }
 
@@ -31,17 +37,21 @@ export function configuredProviders(keys: Partial<Record<Provider, string | unde
 /**
  * The model for a provider. An override (LINGUA_MODEL and friends) names a
  * model of the first provider, so it only applies there. A backup uses its own
- * default — except Groq, whose model can be set on its own with GROQ_MODEL,
- * since Groq's catalogue changes more often than the other two.
+ * default — except Groq, Mistral and DeepSeek, whose models can be set on their
+ * own with GROQ_MODEL, MISTRAL_MODEL and DEEPSEEK_MODEL, since their catalogues
+ * change often.
  */
 export function modelFor(
   provider: Provider,
   providers: readonly Provider[],
   override?: string,
   groqModel: string | undefined = process.env.GROQ_MODEL,
+  deepseekModel: string | undefined = process.env.DEEPSEEK_MODEL,
 ) {
   if (provider === providers[0] && override) return override
   if (provider === 'groq' && groqModel) return groqModel
+  if (provider === 'deepseek' && deepseekModel) return deepseekModel
+  if (provider === 'mistral' && process.env.MISTRAL_MODEL) return process.env.MISTRAL_MODEL
   return DEFAULT_MODELS[provider]
 }
 
@@ -106,8 +116,68 @@ export function callGroq(
   })
 }
 
+// ---------------------------------------------------------------------------
+// Mistral and DeepSeek
+// ---------------------------------------------------------------------------
+
+const MISTRAL_URL = 'https://api.mistral.ai/v1/chat/completions'
+const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions'
+
+type ChatToolCall = (
+  tool: ToolSpec,
+  prompt: string,
+  key: string,
+  signal: AbortSignal,
+  model: string,
+  opts: { maxTokens: number; temperature: number },
+) => Promise<Response>
+
 /**
- * Unwraps Groq's answer to the tool's arguments, as an object.
+ * Mistral and DeepSeek ask for the same answer exactly as callGroq does: both
+ * speak the OpenAI chat format with function calls, so readGroq reads their
+ * answers too. Only the address, the token-limit field and how the one tool
+ * is forced differ (Mistral takes 'any', which with a single tool means it).
+ */
+export const callMistral: ChatToolCall = (tool, prompt, key, signal, model, opts) =>
+  callChatTool(MISTRAL_URL, 'any', tool, prompt, key, signal, model, opts)
+
+export const callDeepSeek: ChatToolCall = (tool, prompt, key, signal, model, opts) =>
+  callChatTool(DEEPSEEK_URL, { type: 'function', function: { name: tool.name } }, tool, prompt, key, signal, model, opts)
+
+function callChatTool(
+  url: string,
+  toolChoice: unknown,
+  ...[tool, prompt, key, signal, model, opts]: Parameters<ChatToolCall>
+) {
+  return fetch(url, {
+    method: 'POST',
+    signal,
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${key}`,
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: opts.maxTokens,
+      temperature: opts.temperature,
+      messages: [{ role: 'user', content: prompt }],
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: tool.name,
+            description: tool.description ?? '',
+            parameters: tool.input_schema,
+          },
+        },
+      ],
+      tool_choice: toolChoice,
+    }),
+  })
+}
+
+/**
+ * Unwraps Groq's (and Mistral's and DeepSeek's) answer to the tool's arguments, as an object.
  *
  * The arguments arrive as a JSON string. A model that ignores the forced call
  * and writes the JSON as plain text is accepted too, so long as it parses —

@@ -1,5 +1,7 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import {
+  callDeepSeek,
+  callMistral,
   callGroq,
   configuredProviders,
   firstAnswer,
@@ -23,12 +25,16 @@ import {
 const GEMINI_KEY = process.env.GEMINI_API_KEY
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY
 const GROQ_KEY = process.env.GROQ_API_KEY
-// Gemini first, then Groq, then Claude, each taking over when the one before
+const MISTRAL_KEY = process.env.MISTRAL_API_KEY
+const DEEPSEEK_KEY = process.env.DEEPSEEK_API_KEY
+// Gemini first, then Groq, Mistral, DeepSeek, then Claude, each taking over when the one before
 // is busy, down or too slow (see src/server/aiFallback.ts). Only providers
 // with a key are tried; with one key set, only that one is used.
 const PROVIDERS = configuredProviders({
   gemini: GEMINI_KEY,
   groq: GROQ_KEY,
+  mistral: MISTRAL_KEY,
+  deepseek: DEEPSEEK_KEY,
   anthropic: ANTHROPIC_KEY,
 })
 const MODEL_OVERRIDE = process.env.LINGUA_MODEL
@@ -250,12 +256,24 @@ async function respond(req: Request): Promise<Response> {
             temperature: 0,
           })
         }
+        if (provider === 'mistral') {
+          return callMistral(TOOL, prompt, MISTRAL_KEY!, signal, model, {
+            maxTokens: 1500,
+            temperature: 0,
+          })
+        }
+        if (provider === 'deepseek') {
+          return callDeepSeek(TOOL, prompt, DEEPSEEK_KEY!, signal, model, {
+            maxTokens: 1500,
+            temperature: 0,
+          })
+        }
         return callAnthropic(prompt, ANTHROPIC_KEY!, signal, model)
       },
       read:
         provider === 'gemini'
           ? readGemini
-          : provider === 'groq'
+          : provider === 'groq' || provider === 'mistral' || provider === 'deepseek'
             ? readGroq(TOOL.name)
             : readAnthropic,
     })),
@@ -297,7 +315,15 @@ export async function probeProvider(
   signal: AbortSignal,
 ): Promise<{ ok: true; model: string; text: string } | { ok: false; model: string; error: string }> {
   const key =
-    provider === 'gemini' ? GEMINI_KEY : provider === 'groq' ? GROQ_KEY : ANTHROPIC_KEY
+    provider === 'gemini'
+      ? GEMINI_KEY
+      : provider === 'groq'
+        ? GROQ_KEY
+        : provider === 'mistral'
+          ? MISTRAL_KEY
+          : provider === 'deepseek'
+            ? DEEPSEEK_KEY
+            : ANTHROPIC_KEY
   const model = modelFor(provider, PROVIDERS, MODEL_OVERRIDE)
   if (!key) return { ok: false, model, error: 'No key is set for this provider.' }
   const prompt = buildPrompt({ text: 'Good morning', from: 'en', to: ['sv'] })
@@ -307,13 +333,21 @@ export async function probeProvider(
         ? await callGemini(prompt, key, signal, model)
         : provider === 'groq'
           ? await callGroq(TOOL, prompt, key, signal, model, { maxTokens: 1500, temperature: 0 })
-          : await callAnthropic(prompt, key, signal, model)
+          : provider === 'mistral'
+            ? await callMistral(TOOL, prompt, key, signal, model, { maxTokens: 1500, temperature: 0 })
+            : provider === 'deepseek'
+              ? await callDeepSeek(TOOL, prompt, key, signal, model, { maxTokens: 1500, temperature: 0 })
+              : await callAnthropic(prompt, key, signal, model)
     if (!res.ok) {
       const body = (await res.text()).replace(/\s+/g, ' ').slice(0, 300)
       return { ok: false, model, error: `HTTP ${res.status}${body ? ` — ${body}` : ''}` }
     }
     const read =
-      provider === 'gemini' ? readGemini : provider === 'groq' ? readGroq(TOOL.name) : readAnthropic
+      provider === 'gemini'
+        ? readGemini
+        : provider === 'groq' || provider === 'mistral' || provider === 'deepseek'
+          ? readGroq(TOOL.name)
+          : readAnthropic
     const out = read(await res.json()) as { translations?: { lang?: unknown; text?: unknown }[] } | null
     const hit = out?.translations?.find((r) => r?.lang === 'sv' && typeof r.text === 'string')
     if (!hit) return { ok: false, model, error: 'Answered, but not in the expected format.' }
