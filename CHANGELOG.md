@@ -3,6 +3,11 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — Recall test: no 1–4 under the grade buttons
+
+- `src/ui/Review.tsx`: the `<kbd>1</kbd>`…`<kbd>4</kbd>` under Again / Hard / Good / Easy are gone, with
+  their CSS. The keys 1–4 still grade on a keyboard. Not deployed yet; goes out with the next change.
+
 ## 2026-10-26 — v0.4.1: automatic, no-scroll waiting practice
 
 - The waiting popup fits the visual viewport on desktop and mobile, including small landscape

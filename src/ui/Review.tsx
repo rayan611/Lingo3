@@ -631,7 +631,9 @@ function LanguageAnswer({
       {entry?.notes && <div className="note">{entry.notes}</div>}
 
       <div className="grades" ref={gradesRef}>
-        {GRADES.map((g, i) => (
+        {/* No 1–4 under the buttons: the keys still grade on a keyboard, but
+            the numbers were noise on a phone and nobody read them. */}
+        {GRADES.map((g) => (
           <button
             key={g}
             className={`grade grade-${g} ${grade === g ? 'chosen' : ''}`}
@@ -641,7 +643,6 @@ function LanguageAnswer({
           >
             <span className="grade-label">{GRADE_LABELS[g]}</span>
             <span className="grade-interval">{intervals[g]}</span>
-            <kbd>{i + 1}</kbd>
           </button>
         ))}
       </div>
