@@ -6,14 +6,18 @@ import { authConfigured, supabase } from '../auth/supabase'
 import { makeCard } from '../fsrs/scheduler'
 import {
   ExpansionSchema,
+  linkKindOf,
   parseMorphology,
   type Category,
   type Concept,
   type Entry,
   type Expansion,
   type Lang,
+  type LinkKind,
   type PartOfSpeech,
+  type RelatedWord,
   type Settings,
+  type WordLink,
 } from '../db/types'
 
 /**
@@ -50,6 +54,7 @@ export async function fetchExpansion(opts: {
   nativeLang: Lang
   langs: Lang[]
   hint?: string
+  partner?: string
 }): Promise<Expansion> {
   // The endpoint is public, so it authenticates the caller. Sending the
   // session token is what makes this request ours rather than anyone's.
@@ -138,6 +143,7 @@ export async function applyExpansion(
       example: e.example,
       exampleGloss: e.exampleGloss,
       notes: e.notes,
+      links: linksFrom(expansion.related, e.lang, e.headword),
       updatedAt: now,
     }))
 
@@ -369,6 +375,8 @@ export interface WordPreview {
   lemma: string
   sourceLang?: Lang
   hint?: string
+  /** The other word, when two were entered to be learned side by side. */
+  partner?: string
   expansion: Expansion
 }
 
@@ -424,8 +432,14 @@ async function describeDuplicate(
 const previewCache = new Map<string, Expansion>()
 const PREVIEW_CACHE_MAX = 50
 
-function previewKey(lemma: string, sourceLang: Lang | undefined, hint?: string): string {
-  return `${lemmaKey(lemma, sourceLang ?? 'auto')}|${(hint ?? '').trim().toLocaleLowerCase()}`
+function previewKey(
+  lemma: string,
+  sourceLang: Lang | undefined,
+  hint?: string,
+  partner?: string,
+): string {
+  const tail = [hint, partner].map((s) => (s ?? '').trim().toLocaleLowerCase()).join('|')
+  return `${lemmaKey(lemma, sourceLang ?? 'auto')}|${tail}`
 }
 
 /** For tests and for the "expand again" button — forces the next call to be real. */
@@ -437,10 +451,112 @@ export function cachedPreviewCount(): number {
   return previewCache.size
 }
 
-/** Two explicitly entered words are two concepts, never one phrase. */
-export function oppositePair(input: string): [string, string] | null {
-  const parts = input.trim().split(/\s+(?:and|&)\s+/i).map((part) => part.trim())
+/**
+ * Two words entered together, to be learned side by side: "lön och lån",
+ * "svart / vit", "öka ↔ minska", "rich and poor". Two concepts, never one
+ * phrase.
+ *
+ * Only an explicit separator splits. Not a plain space — "god morgon" is one
+ * phrase — and not a comma either, because "ja, tack" is one too.
+ */
+export function linkedPair(input: string): [string, string] | null {
+  const parts = input
+    .trim()
+    .split(/\s*[/|↔]\s*|\s+(?:and|och|und|y|et|e|и|و|&|vs\.?|—|–)\s+/i)
+    .map((part) => part.trim())
   return parts.length === 2 && parts.every(Boolean) ? [parts[0], parts[1]] : null
+}
+
+/** The old name, kept for callers and checks that still use it. */
+export const oppositePair = linkedPair
+
+/** A headword without its article or infinitive marker, for comparing "ett lån" with "lån". */
+function bareKey(word: string, lang: Lang): string {
+  const parts = word.trim().split(/\s+/)
+  const ARTICLES = /^(en|ett|att|der|die|das|el|la|los|las|le|les|l'|il|lo|gli|the|a|an|to)$/i
+  const bare = parts.length > 1 && ARTICLES.test(parts[0]) ? parts.slice(1).join(' ') : word
+  return lemmaKey(bare, lang)
+}
+
+/** At most this many of each kind are kept per language. */
+const LINK_LIMITS: Record<LinkKind, number> = { opposite: 1, synonym: 3, lookalike: 2 }
+
+/**
+ * The linked words for one language, from what the model returned: the word
+ * itself and repeats dropped, each kind capped, opposites first.
+ */
+export function linksFrom(
+  related: RelatedWord[] | undefined,
+  lang: Lang,
+  headword: string,
+): WordLink[] | undefined {
+  if (!related?.length) return undefined
+  const self = bareKey(headword, lang)
+  const seen = new Set<string>([self])
+  const counts: Record<LinkKind, number> = { opposite: 0, synonym: 0, lookalike: 0 }
+  const out: WordLink[] = []
+  for (const r of related) {
+    if (r.lang !== lang) continue
+    const key = bareKey(r.word, lang)
+    if (seen.has(key)) continue
+    const kind = linkKindOf(r.kind, r.register)
+    if (counts[kind] >= LINK_LIMITS[kind]) continue
+    seen.add(key)
+    counts[kind]++
+    out.push({
+      kind,
+      word: r.word.trim(),
+      meaning: r.meaning,
+      register: r.register,
+      note: r.note,
+      // A shared sentence only makes sense where the two are contrasted.
+      example: kind === 'synonym' ? undefined : r.example,
+      exampleGloss: kind === 'synonym' ? undefined : r.exampleGloss,
+    })
+  }
+  const order: LinkKind[] = ['opposite', 'lookalike', 'synonym']
+  out.sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind))
+  return out.length ? out : undefined
+}
+
+/**
+ * Links two saved words to each other in every language both have, so each
+ * shows the other in Review. Used when two words were entered together. The
+ * shared example is the first word's own, which was written to contain both.
+ */
+export async function linkConcepts(
+  aId: string,
+  bId: string,
+  kind: LinkKind,
+  nativeLang: Lang,
+): Promise<void> {
+  const [aEntries, bEntries] = await Promise.all([
+    db.entries.where('conceptId').equals(aId).toArray(),
+    db.entries.where('conceptId').equals(bId).toArray(),
+  ])
+  const now = Date.now()
+  const updates: Entry[] = []
+  const attach = (from: Entry, to: Entry, shared: Entry) => {
+    const key = bareKey(to.headword, to.lang)
+    const others = (from.links ?? []).filter((l) => bareKey(l.word, from.lang) !== key)
+    const link: WordLink = {
+      kind,
+      word: to.headword,
+      meaning: to.meaning,
+      example: kind === 'synonym' ? undefined : shared.example,
+      exampleGloss: kind === 'synonym' ? undefined : shared.exampleGloss,
+    }
+    updates.push({ ...from, links: [link, ...others], updatedAt: now })
+  }
+  for (const a of aEntries) {
+    // The native word is the question, not something to contrast.
+    if (a.lang === nativeLang) continue
+    const b = bEntries.find((e) => e.lang === a.lang)
+    if (!b) continue
+    attach(a, b, a)
+    attach(b, a, a)
+  }
+  if (updates.length) await db.entries.bulkPut(updates)
 }
 
 /**
@@ -454,6 +570,7 @@ export async function previewWord(opts: {
   lemma: string
   sourceLang?: Lang
   hint?: string
+  partner?: string
   settings: Settings
   force?: boolean
 }): Promise<PreviewResult> {
@@ -471,7 +588,7 @@ export async function previewWord(opts: {
     return { status: 'duplicate', ...(await describeDuplicate(existing, opts.settings)) }
   }
 
-  const key = previewKey(lemma, opts.sourceLang, opts.hint)
+  const key = previewKey(lemma, opts.sourceLang, opts.hint, opts.partner)
   if (opts.force) previewCache.delete(key)
 
   let expansion = previewCache.get(key)
@@ -482,6 +599,7 @@ export async function previewWord(opts: {
       nativeLang: opts.settings.nativeLang,
       langs: [opts.settings.nativeLang, ...opts.settings.targetLangs],
       hint: opts.hint,
+      partner: opts.partner,
     })
     if (previewCache.size >= PREVIEW_CACHE_MAX) {
       const oldest = previewCache.keys().next().value
@@ -492,7 +610,13 @@ export async function previewWord(opts: {
 
   return {
     status: 'preview',
-    preview: { lemma, sourceLang: opts.sourceLang, hint: opts.hint, expansion },
+    preview: {
+      lemma,
+      sourceLang: opts.sourceLang,
+      hint: opts.hint,
+      partner: opts.partner,
+      expansion,
+    },
   }
 }
 
@@ -551,7 +675,9 @@ export async function commitPreview(opts: {
   }
   await db.concepts.add(concept)
   await applyExpansion(concept.id, preview.expansion, opts.settings)
-  previewCache.delete(previewKey(preview.lemma, preview.sourceLang, preview.hint))
+  previewCache.delete(
+    previewKey(preview.lemma, preview.sourceLang, preview.hint, preview.partner),
+  )
   return { conceptId: concept.id, status: 'expanded' }
 }
 

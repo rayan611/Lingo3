@@ -6,12 +6,14 @@ import {
   type Lang,
   type Morphology,
   type Settings,
+  type WordLink,
 } from '../db/types'
 import { genderBadge, morphLines } from '../lib/morphology'
 import { formCandidates } from '../lib/highlight'
 import { SpeakButton } from './SpeakButton'
 import { ExampleSentence } from './ExampleSentence'
 import { Forms } from './Forms'
+import { LinkedWords } from './LinkedWords'
 
 export interface StackEntry {
   lang: Lang
@@ -21,6 +23,7 @@ export interface StackEntry {
   example?: string
   exampleGloss?: string
   notes?: string
+  links?: WordLink[]
 }
 
 /**
@@ -164,6 +167,15 @@ function LangRow({
         <div className={`answer-meaning ${isNative && RTL_LANGS.has(entry.lang) ? 'rtl' : ''}`}>
           {entry.meaning}
         </div>
+      )}
+      {!isNative && (
+        <LinkedWords
+          links={entry.links}
+          lang={entry.lang}
+          headword={entry.headword}
+          form={entry.form}
+          settings={settings}
+        />
       )}
       {entry.example && (
         <ExampleSentence

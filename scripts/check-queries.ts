@@ -747,6 +747,110 @@ async function main() {
     if (oppositePair('bread and butter and jam')) throw new Error('three words were treated as a pair')
   })
 
+  console.log('\nLinked words')
+  await check('two words with a separator are a pair; a phrase and a comma are not', async () => {
+    const { linkedPair } = await import('../src/ai/expand')
+    const pairs: [string, [string, string] | null][] = [
+      ['lön och lån', ['lön', 'lån']],
+      ['svart / vit', ['svart', 'vit']],
+      ['öka ↔ minska', ['öka', 'minska']],
+      ['rich and poor', ['rich', 'poor']],
+      ['god morgon', null],
+      ['ja, tack', null],
+      ['en lön', null],
+    ]
+    for (const [input, want] of pairs) {
+      const got = linkedPair(input)
+      if (JSON.stringify(got) !== JSON.stringify(want)) {
+        throw new Error(`${input}: got ${JSON.stringify(got)}`)
+      }
+    }
+  })
+  await check('links are kept per language, kinds read leniently, self and repeats dropped', async () => {
+    const { linksFrom } = await import('../src/ai/expand')
+    const links = linksFrom(
+      [
+        { lang: 'sv', word: 'jobba', kind: 'synonym', register: 'casual' },
+        { lang: 'sv', word: 'vila', kind: 'antonym', example: 'Jag arbetar, sen vilar jag.' },
+        { lang: 'sv', word: 'arbeta', kind: 'synonym' },
+        { lang: 'sv', word: 'Jobba', kind: 'synonym' },
+        { lang: 'sv', word: 'knega', kind: 'synonym' },
+        { lang: 'sv', word: 'slita', kind: 'synonym' },
+        { lang: 'sv', word: 'slita2', kind: 'synonym' },
+        { lang: 'de', word: 'faulenzen', kind: 'opposite' },
+      ],
+      'sv',
+      'att arbeta',
+    )
+    if (!links) throw new Error('no links')
+    if (links[0].kind !== 'opposite' || links[0].word !== 'vila') throw new Error('opposite not first')
+    if (!links[0].example) throw new Error('the shared example of an opposite was dropped')
+    if (links.some((l) => l.word === 'arbeta')) throw new Error('the word itself was linked')
+    if (links.filter((l) => l.word.toLowerCase() === 'jobba').length !== 1) throw new Error('repeat kept')
+    if (links.filter((l) => l.kind === 'synonym').length !== 3) throw new Error('synonyms not capped at 3')
+    if (links.some((l) => l.word === 'faulenzen')) throw new Error('another language leaked in')
+  })
+  await check('one bad related word drops that word, not the whole expansion', async () => {
+    const { ExpansionSchema } = await import('../src/db/types')
+    const parsed = ExpansionSchema.safeParse({
+      pos: 'noun',
+      entries: [{ lang: 'sv', headword: 'en lön', meaning: 'salary' }],
+      related: [
+        { lang: 'sv', word: 'lån', kind: 'lookalike' },
+        { lang: 'xx', word: 'bad' },
+        ...Array.from({ length: 12 }, (_, i) => ({ lang: 'sv', word: `w${i}` })),
+      ],
+    })
+    if (!parsed.success) throw new Error(parsed.error.message)
+    const related = parsed.data.related ?? []
+    if (related[0]?.word !== 'lån') throw new Error('the good word was lost')
+    if (related.some((r) => r.word === 'bad')) throw new Error('the bad word was kept')
+    if (related.length > 10) throw new Error(`not capped: ${related.length}`)
+  })
+  await check('saving keeps links on the entry, and two words entered together are linked both ways', async () => {
+    const { commitPreview, linkConcepts } = await import('../src/ai/expand')
+    const settings = {
+      ...(await ensureSettings()),
+      nativeLang: 'fa' as Lang,
+      targetLangs: ['sv'] as Lang[],
+      activeLangs: ['sv'] as Lang[],
+    }
+    const save = (lemma: string, headword: string, meaning: string, example: string) =>
+      commitPreview({
+        preview: {
+          lemma,
+          sourceLang: 'sv',
+          expansion: {
+            pos: 'noun',
+            entries: [
+              { lang: 'fa', headword: meaning, meaning },
+              { lang: 'sv', headword, meaning, example, exampleGloss: 'gloss' },
+            ],
+            related: [{ lang: 'sv', word: 'avlöning', kind: 'synonym' }],
+          },
+        },
+        category: 'daily',
+        settings,
+      })
+    const a = await save('lön', 'en lön', 'حقوق', 'Hon tog ett lån för att lönen var låg.')
+    const b = await save('lån', 'ett lån', 'وام', 'Lånet var större än lönen.')
+    const aSv = await db.entries.get(`${a.conceptId}:sv`)
+    if (aSv?.links?.[0]?.word !== 'avlöning') throw new Error('links from the expansion were not kept')
+    await linkConcepts(a.conceptId, b.conceptId, 'lookalike', 'fa')
+    const a2 = await db.entries.get(`${a.conceptId}:sv`)
+    const b2 = await db.entries.get(`${b.conceptId}:sv`)
+    const aFa = await db.entries.get(`${a.conceptId}:fa`)
+    if (a2?.links?.[0]?.word !== 'ett lån' || a2.links[0].kind !== 'lookalike') {
+      throw new Error(`lön not linked to lån: ${JSON.stringify(a2?.links)}`)
+    }
+    if (!a2.links.some((l) => l.word === 'avlöning')) throw new Error('existing links were lost')
+    if (b2?.links?.[0]?.word !== 'en lön') throw new Error('lån not linked back to lön')
+    if (b2.links[0].example !== 'Hon tog ett lån för att lönen var låg.') {
+      throw new Error('the shared example is not the first word’s')
+    }
+    if (aFa?.links?.length) throw new Error('the native entry was linked')
+  })
+
   console.log('\nLanguage detection on the Add box')
   // A suggestion, so a miss (no guess) is cheap and a confident wrong answer
   // is not. These pin the second kind.

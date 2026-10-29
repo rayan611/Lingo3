@@ -33,6 +33,8 @@ export interface ExpandInput {
   nativeLang: SupportedLang
   langs: SupportedLang[]
   hint?: string
+  /** A second word the learner entered with this one, to learn side by side. */
+  partner?: string
 }
 
 export function parseExpandInput(input: unknown): ParseResult<ExpandInput> {
@@ -72,7 +74,16 @@ export function parseExpandInput(input: unknown): ParseResult<ExpandInput> {
     if (hint.length > 300) return { ok: false, error: 'hint is too long (maximum 300 characters).' }
   }
 
-  return { ok: true, value: { lemma, sourceLang, nativeLang, langs, hint } }
+  let partner: string | undefined
+  if (input.partner !== undefined && input.partner !== null && input.partner !== '') {
+    if (typeof input.partner !== 'string') return { ok: false, error: 'partner must be text.' }
+    partner = input.partner.trim()
+    if (partner.length > 120) {
+      return { ok: false, error: 'partner is too long (maximum 120 characters).' }
+    }
+  }
+
+  return { ok: true, value: { lemma, sourceLang, nativeLang, langs, hint, partner } }
 }
 
 export interface StoryInput {

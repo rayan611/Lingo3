@@ -113,7 +113,7 @@ const conceptIn = (r: Row): Concept => ({
   deletedAt: r.deleted_at ? ms(r.deleted_at as string) : undefined,
 })
 
-const entryOut = (e: Entry, userId: string): Row => ({
+export const entryOut = (e: Entry, userId: string): Row => ({
   id: e.id,
   user_id: userId,
   concept_id: e.conceptId,
@@ -124,10 +124,11 @@ const entryOut = (e: Entry, userId: string): Row => ({
   example: e.example ?? null,
   example_gloss: e.exampleGloss ?? null,
   notes: e.notes ?? null,
+  links: e.links?.length ? e.links : null,
   updated_at: iso(e.updatedAt),
 })
 
-const entryIn = (r: Row): Entry => ({
+export const entryIn = (r: Row): Entry => ({
   id: r.id as string,
   conceptId: r.concept_id as string,
   lang: r.lang as Lang,
@@ -137,6 +138,7 @@ const entryIn = (r: Row): Entry => ({
   example: (r.example as string) ?? undefined,
   exampleGloss: (r.example_gloss as string) ?? undefined,
   notes: (r.notes as string) ?? undefined,
+  links: Array.isArray(r.links) && r.links.length ? (r.links as Entry['links']) : undefined,
   updatedAt: ms(r.updated_at as string),
 })
 
@@ -441,11 +443,16 @@ async function push(userId: string, signal: AbortSignal): Promise<number> {
 
   const entries = await db.entries.filter((e) => e.updatedAt > from).toArray()
   if (entries.length) {
-    const { error } = await sb
-      .from('entries')
-      .upsert(entries.map((e) => entryOut(e, userId)))
-      .abortSignal(signal)
-    if (error) throw new Error(`entries: ${error.message}`)
+    const rows = entries.map((e) => entryOut(e, userId))
+    const { error } = await sb.from('entries').upsert(rows).abortSignal(signal)
+    if (error) {
+      // `links` is new: against a server without the column, send the words
+      // without their linked words rather than not at all.
+      if (!isMissingSchema(error)) throw new Error(`entries: ${error.message}`)
+      const stripped = rows.map(({ links: _l, ...rest }) => rest)
+      const retry = await sb.from('entries').upsert(stripped).abortSignal(signal)
+      if (retry.error) throw new Error(`entries: ${retry.error.message}`)
+    }
     count += entries.length
   }
 

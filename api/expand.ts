@@ -222,13 +222,13 @@ const TOOL = {
       related: {
         type: 'array',
         description:
-          'Up to four other words worth knowing beside this one, in the target languages. Prefer register and usage variants over plain synonyms: hallo/tjena differ by formality, not meaning, and which one to use with a manager is the part a dictionary does not tell you. Omit rather than padding.',
+          'Words linked to this one in each target language: its natural opposite, its one to three most common synonyms or register variants, and a look-alike that is easily confused with it. Omit any that do not genuinely exist.',
         items: {
           type: 'object',
           properties: {
             lang: { type: 'string', enum: LANG_ENUM },
             word: { type: 'string' },
-            meaning: { type: 'string', description: 'A few words at most.' },
+            meaning: { type: 'string', description: 'A few words, in the learner native language.' },
             register: {
               type: 'string',
               description:
@@ -239,8 +239,23 @@ const TOOL = {
               description:
                 'When to reach for this one instead. One short sentence.',
             },
+            kind: {
+              type: 'string',
+              enum: ['opposite', 'synonym', 'lookalike'],
+              description:
+                'opposite (svart/vit, öka/minska), synonym (jobba/arbeta, including register variants), or lookalike (lön/lån: close in sound or spelling, different meaning).',
+            },
+            example: {
+              type: 'string',
+              description:
+                'For an opposite or lookalike only: one natural sentence in that language using BOTH this word and the main word.',
+            },
+            exampleGloss: {
+              type: 'string',
+              description: 'That sentence in the learner native language.',
+            },
           },
-          required: ['lang', 'word'],
+          required: ['lang', 'word', 'kind'],
         },
       },
       entries: {
@@ -293,8 +308,9 @@ function buildPrompt(opts: {
   nativeLang: string
   langs: string[]
   hint?: string
+  partner?: string
 }) {
-  const { lemma, sourceLang, nativeLang, langs, hint } = opts
+  const { lemma, sourceLang, nativeLang, langs, hint, partner } = opts
   const targets = langs.map((l) => `${LANG_NAMES[l] ?? l} (${l})`).join(', ')
 
   return `You are building a vocabulary entry for a language learner.
@@ -310,7 +326,14 @@ someone studying these languages, and build the entry around that reading:`
 }
 
   ${lemma}
-${hint ? `\nThey added this hint about which sense they mean: ${hint}\n` : ''}
+${hint ? `\nThey added this hint about which sense they mean: ${hint}\n` : ''}${
+  partner
+    ? `\nThey entered it together with "${partner}", to learn the two side by side \
+(opposites, near-synonyms or look-alikes). Make every example sentence \
+naturally include BOTH words, and list "${partner}" (in each target language) \
+in related words with the right kind. Build the entry for "${lemma}" only.\n`
+    : ''
+}
 Produce one entry for each of these languages: ${targets}.
 
 ${MORPHOLOGY_RULES}
@@ -323,19 +346,23 @@ Swedish. The learner reads these stacked on top of each other and compares
 them, so they should be recognisably the same scene said the way each
 language actually says it.
 
-RELATED WORDS — also return up to four words worth knowing beside this one,
-in the target languages. Prefer REGISTER and usage variants over plain
-synonyms: "hallo" and "tjena" mean the same thing and differ by formality,
-and which one to use with a manager is the part a dictionary does not tell
-you. Same for du/ni, jobba/arbeta. Label each with a one-or-two-word register
-and a short note on when to reach for it. Return fewer, or none, rather than
-padding the list with words that are merely adjacent.
-
-For an adjective, include its natural opposite when one exists (rich -> poor)
-and label it "opposite". If the learner entered two opposite adjectives joined
-by "and", treat the first as the main word, put the second in related words so
-it can be saved separately, and make every example sentence naturally include
-BOTH adjectives. Never store the pair as one phrase.
+RELATED WORDS — linked words the learner can review beside this one. For
+EACH target language (not the native language), return at most:
+  - kind "opposite": its natural opposite, when one exists — svart/vit,
+    öka/minska, rich/poor. Adjectives, verbs and adverbs often have one.
+  - kind "synonym": the one to three MOST COMMON synonyms. Prefer register and
+    usage variants: "hallo" and "tjena" mean the same thing and differ by
+    formality, which is the part a dictionary does not tell you (du/ni,
+    jobba/arbeta). Label each with a one-or-two-word register and a short
+    note on when to reach for it.
+  - kind "lookalike": a common word easily confused with it in sound or
+    spelling but different in meaning — lön (salary) / lån (loan). Only a
+    genuine, everyday confusion.
+For every "opposite" and "lookalike", also give "example": one natural
+sentence in that language that uses BOTH words, and "exampleGloss": that
+sentence in the learner's native language. Give each a short "meaning" in the
+learner's native language. Omit anything that does not genuinely exist rather
+than padding the list; never put the word itself in its own list.
 
 TOPICS — also return one to three lowercase topic tags for this word. Two
 kinds are useful, and a word often wants one of each.
@@ -503,8 +530,8 @@ async function respond(req: Request): Promise<Response> {
   const rate = await enforceAiRateLimit(req, auth.userId, 'expand', 80)
   if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
-  const { lemma, sourceLang, nativeLang, langs, hint } = parsed.value
-  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint })
+  const { lemma, sourceLang, nativeLang, langs, hint, partner } = parsed.value
+  const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint, partner })
 
   const result = await firstAnswer(
     PROVIDERS.map((provider) => ({
@@ -605,8 +632,11 @@ const GEMINI_SCHEMA = {
           meaning: { type: 'STRING' },
           register: { type: 'STRING' },
           note: { type: 'STRING' },
+          kind: { type: 'STRING', enum: ['opposite', 'synonym', 'lookalike'] },
+          example: { type: 'STRING' },
+          exampleGloss: { type: 'STRING' },
         },
-        required: ['lang', 'word'],
+        required: ['lang', 'word', 'kind'],
       },
     },
     entries: {

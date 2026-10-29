@@ -9,6 +9,7 @@ import { ExampleSentence } from './ExampleSentence'
 import { WordCard } from './WordCard'
 import { Forms } from './Forms'
 import { formCandidates } from '../lib/highlight'
+import { LinkedWords } from './LinkedWords'
 import { buildCloze } from '../lib/cloze'
 import { sameWord } from '../lib/answer'
 import {
@@ -599,6 +600,17 @@ function LanguageAnswer({
             text={entry.headword}
             lang={card.lang as Lang}
             rate={settings.speechRate}
+          />
+        )}
+        {/* Opposites, synonyms and look-alikes, in the room left on the
+            word's line. Shown only now, with the answer. */}
+        {entry && (
+          <LinkedWords
+            links={entry.links}
+            lang={card.lang as Lang}
+            headword={entry.headword}
+            form={entry.morphology}
+            settings={settings}
           />
         )}
       </div>

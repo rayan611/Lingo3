@@ -72,6 +72,10 @@ check('expand: rejects a non-object body', !parseExpandInput(null).ok, 'null acc
 check('expand: rejects an unsupported target language', !parseExpandInput({ lemma: 'hund', langs: ['xx'] }).ok, 'unsupported language accepted')
 check('expand: rejects duplicate target languages', !parseExpandInput({ lemma: 'hund', langs: ['sv', 'sv'] }).ok, 'duplicate languages accepted')
 check('expand: caps hint length', !parseExpandInput({ lemma: 'hund', langs: ['sv'], hint: 'x'.repeat(301) }).ok, 'oversized hint accepted')
+const withPartner = parseExpandInput({ lemma: 'lön', partner: ' lån ', langs: ['fa', 'sv'] })
+check('expand: keeps a partner word, trimmed', withPartner.ok && withPartner.value.partner === 'lån', JSON.stringify(withPartner))
+check('expand: rejects a non-text partner', !parseExpandInput({ lemma: 'lön', partner: 3, langs: ['sv'] }).ok, 'number accepted')
+check('expand: caps partner length', !parseExpandInput({ lemma: 'lön', partner: 'x'.repeat(121), langs: ['sv'] }).ok, 'oversized partner accepted')
 
 const validStory = parseStoryInput({ lang: 'sv', nativeLang: 'fa', words: ['hund', 'katt', 'kaffe', 'morgon', 'stad'], genre: 'fun', length: 'short', unknownShare: 0.2 })
 check('story: accepts a valid request', validStory.ok, JSON.stringify(validStory))

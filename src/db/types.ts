@@ -484,7 +484,53 @@ export interface Entry {
   example?: string
   exampleGloss?: string
   notes?: string
+  /** Opposites, common synonyms and look-alikes of this word in this
+   *  language, kept from the expansion so Review can show them. */
+  links?: WordLink[]
   updatedAt: number
+}
+
+/**
+ * How a linked word relates to the one it is shown beside.
+ *
+ *   opposite  — svart / vit, öka / minska
+ *   synonym   — jobba / arbeta; register variants are synonyms with a register
+ *   lookalike — lön / lån: close in sound or spelling, different in meaning
+ */
+export const LINK_KINDS = ['opposite', 'synonym', 'lookalike'] as const
+export type LinkKind = (typeof LINK_KINDS)[number]
+
+export const LINK_SYMBOLS: Record<LinkKind, string> = {
+  opposite: '↔',
+  synonym: '≈',
+  lookalike: '≠',
+}
+
+export const LINK_LABELS: Record<LinkKind, string> = {
+  opposite: 'opposite',
+  synonym: 'similar',
+  lookalike: 'easily confused',
+}
+
+/** What a model calls the relation, read leniently: it says "antonym" as
+    often as "opposite", and anything unknown is treated as a near-synonym. */
+export function linkKindOf(raw: string | undefined, register?: string): LinkKind {
+  const k = `${raw ?? ''} ${register ?? ''}`.toLowerCase()
+  if (/opposite|antonym|contrary/.test(k)) return 'opposite'
+  if (/look|confus|similar[- ]?(spelling|sound)|false|homo|paronym/.test(k)) return 'lookalike'
+  return 'synonym'
+}
+
+export interface WordLink {
+  kind: LinkKind
+  word: string
+  meaning?: string
+  register?: string
+  note?: string
+  /** One sentence using both words — for opposites and look-alikes. */
+  example?: string
+  /** That sentence in the learner's native language. */
+  exampleGloss?: string
 }
 
 export const CARD_STATES = ['New', 'Learning', 'Review', 'Relearning'] as const
@@ -845,8 +891,30 @@ export const RelatedWordSchema = z.object({
   /** "casual", "formal", "written only", "northern Sweden" — one or two words. */
   register: z.string().max(40).optional(),
   note: z.string().max(140).optional(),
+  /** opposite / synonym / lookalike — free text from the model, read by `linkKindOf`. */
+  kind: z.string().max(40).optional(),
+  /** For an opposite or look-alike: one sentence using both words. */
+  example: z.string().max(300).optional(),
+  exampleGloss: z.string().max(300).optional(),
 })
 export type RelatedWord = z.infer<typeof RelatedWordSchema>
+
+/**
+ * Related words are a bonus, so one malformed item — or one more than asked
+ * for — drops that item, never the whole expansion.
+ */
+const RelatedListSchema = z
+  .array(z.unknown())
+  .optional()
+  .transform((items) => {
+    if (!items) return undefined
+    const ok: RelatedWord[] = []
+    for (const item of items) {
+      const parsed = RelatedWordSchema.safeParse(item)
+      if (parsed.success) ok.push(parsed.data)
+    }
+    return ok.slice(0, 10)
+  })
 
 export const ExpansionSchema = z.object({
   pos: z.enum(PARTS_OF_SPEECH),
@@ -865,7 +933,7 @@ export const ExpansionSchema = z.object({
    */
   detectedLang: z.enum(LANGS as [Lang, ...Lang[]]).optional(),
   entries: z.array(ExpansionEntrySchema).min(1),
-  related: z.array(RelatedWordSchema).max(6).optional(),
+  related: RelatedListSchema,
 })
 export type Expansion = z.infer<typeof ExpansionSchema>
 

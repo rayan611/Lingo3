@@ -4,11 +4,13 @@ import { db } from '../db/db'
 import {
   commitPreview,
   ExpansionError,
+  linkConcepts,
+  linkedPair,
   normaliseTags,
-  oppositePair,
   previewWord,
   processPending,
   type DuplicateInfo,
+  type PreviewResult,
   type WordPreview,
 } from '../ai/expand'
 import {
@@ -18,9 +20,27 @@ import {
   type Category,
   type Lang,
   type LaterWord,
+  type LinkKind,
   type RelatedWord,
   type Settings,
+  linkKindOf,
 } from '../db/types'
+
+/**
+ * How two words entered together relate, as the model saw it: whichever
+ * expansion lists the other one says so. A pair the model did not label is
+ * taken as easily confused — the reason most people type two words at once.
+ */
+function pairKind(results: PreviewResult[], pair: [string, string]): LinkKind {
+  const norm = (w: string) => w.trim().toLocaleLowerCase().split(/\s+/).pop() ?? ''
+  for (const [i, result] of results.entries()) {
+    if (result.status !== 'preview') continue
+    const other = norm(pair[1 - i])
+    const hit = result.preview.expansion.related?.find((r) => norm(r.word) === other)
+    if (hit) return linkKindOf(hit.kind, hit.register)
+  }
+  return 'lookalike'
+}
 import { TagEditor } from './TagEditor'
 import { defaultListId, listCollections } from '../db/collections'
 import { IconLater, IconWords } from './icons'
@@ -213,43 +233,65 @@ export function AddWord({ settings }: Props) {
     setCollision(null)
     setRelated([])
     try {
-      const pair = !sourceLang && which === 'add' ? oppositePair(term) : null
-      if (pair) {
-        const hint = `These are opposite adjectives. Use a natural example containing both “${pair[0]}” and “${pair[1]}”.`
-        const results = await Promise.all(
-          pair.map((part) => previewWord({ lemma: part, settings, hint })),
-        )
-        const fresh = results.filter((result) => result.status === 'preview')
-        if (fresh.length > 0 && fresh.every((result) => result.preview.expansion.pos === 'adjective')) {
-          const ids: string[] = []
-          let duplicates = 0
-          for (const result of results) {
-            if (result.status === 'duplicate') {
-              ids.push(result.conceptId)
-              duplicates++
-              continue
-            }
-            const saved = await commitPreview({
-              preview: result.preview,
-              category: legacyCategory(normaliseTags(result.preview.expansion.tags)),
-              tags: normaliseTags(result.preview.expansion.tags),
-              collectionId: targetList || undefined,
-              settings,
-            })
-            ids.push(saved.conceptId)
-            if (saved.status === 'duplicate') duplicates++
+      const pair = !sourceLang ? linkedPair(term) : null
+      if (pair && which === 'add') {
+        // Two words entered together: both are expanded with the other as
+        // partner, so every example uses both, then saved and linked.
+        const results = await Promise.all([
+          previewWord({ lemma: pair[0], partner: pair[1], settings }),
+          previewWord({ lemma: pair[1], partner: pair[0], settings }),
+        ])
+        const ids: string[] = []
+        let duplicates = 0
+        for (const result of results) {
+          if (result.status === 'duplicate') {
+            ids.push(result.conceptId)
+            duplicates++
+            continue
           }
-          setDoneWord(term)
-          setLastId(ids[ids.length - 1] ?? null)
-          setStatus({
-            kind: duplicates === 2 ? 'warn' : 'saved',
-            text: duplicates === 2
-              ? `Both “${pair[0]}” and “${pair[1]}” were already saved.`
-              : `✓ Saved “${pair[0]}” and “${pair[1]}” as two words with shared examples.`,
+          const saved = await commitPreview({
+            preview: result.preview,
+            category: legacyCategory(normaliseTags(result.preview.expansion.tags)),
+            tags: normaliseTags(result.preview.expansion.tags),
+            collectionId: targetList || undefined,
+            settings,
           })
-          setRelated(fresh.flatMap((result) => result.preview.expansion.related ?? []))
+          ids.push(saved.conceptId)
+          if (saved.status === 'duplicate') duplicates++
+        }
+        if (ids[0] && ids[1] && ids[0] !== ids[1]) {
+          await linkConcepts(ids[0], ids[1], pairKind(results, pair), settings.nativeLang)
+        }
+        setDoneWord(term)
+        setLastId(ids[0] ?? null)
+        setStatus({
+          kind: duplicates === 2 ? 'warn' : 'saved',
+          text: duplicates === 2
+            ? `Both “${pair[0]}” and “${pair[1]}” were already saved — now linked to each other.`
+            : `✓ Saved “${pair[0]}” and “${pair[1]}” as two linked words with shared examples.`,
+        })
+        setRelated(
+          results.flatMap((result) =>
+            result.status === 'preview' ? result.preview.expansion.related ?? [] : [],
+          ),
+        )
+        return
+      }
+      if (pair) {
+        // Check on a pair: the first word, built with the second as its
+        // partner, so its examples use both and the second is offered under
+        // Linked words, ready to add.
+        const result = await previewWord({ lemma: pair[0], partner: pair[1], settings })
+        setDoneWord(term)
+        if (result.status === 'duplicate') {
+          setLastId(result.conceptId)
+          setCollision(result)
           return
         }
+        setRelated(result.preview.expansion.related ?? [])
+        setDraftTags(normaliseTags(result.preview.expansion.tags))
+        setPreview(result.preview)
+        return
       }
 
       // Always expand first and look at it. The only difference quick add

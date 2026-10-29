@@ -28,6 +28,8 @@ import {
   mergeInto,
   pullPaged,
   PULL_OVERLAP_MS,
+  entryIn,
+  entryOut,
 } from '../src/sync/sync'
 import { dropLaterWord, parkWord } from '../src/db/later'
 
@@ -57,6 +59,26 @@ function concept(id: string, lemma: string, updatedAt = Date.now()): Concept {
 }
 
 async function main() {
+  console.log('\n0. Linked words travel with their entry')
+  {
+    const entry = {
+      id: 'c1:sv',
+      conceptId: 'c1',
+      lang: 'sv' as const,
+      headword: 'en lön',
+      meaning: 'salary',
+      links: [{ kind: 'lookalike' as const, word: 'ett lån', example: 'Lånet och lönen.' }],
+      updatedAt: Date.now(),
+    }
+    const row = entryOut(entry, 'u1')
+    check('links are sent with the entry', Array.isArray(row.links) && (row.links as unknown[]).length === 1)
+    const back = entryIn({ ...row, updated_at: new Date(entry.updatedAt).toISOString() })
+    check('and read back unchanged', JSON.stringify(back.links) === JSON.stringify(entry.links), JSON.stringify(back.links))
+    const none = entryOut({ ...entry, links: undefined }, 'u1')
+    check('an entry without links sends null, not an empty list', none.links === null)
+    check('a null column reads as no links', entryIn({ ...none, updated_at: new Date().toISOString() }).links === undefined)
+  }
+
   console.log('\n1. Words added before signing in are not lost')
   await openForUser(null)
   await db.concepts.bulkPut([concept('a', 'hund'), concept('b', 'katt')])

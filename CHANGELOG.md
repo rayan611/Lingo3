@@ -3,6 +3,33 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — Linked words: opposites, synonyms and look-alikes in Review
+
+- **What it is.** Each word now keeps, per language, its opposite (↔ svart/vit, öka/minska), its one to
+  three most common synonyms (≈ jobba/arbeta, with a register tag) and a look-alike that is easily
+  confused with it (≠ lön/lån). Opposites and look-alikes come with one sentence using both words, and
+  its translation.
+- **Where it shows.** A line of small chips beside the word: on the Review card (in the room left on
+  the word's line; Simple shows only the opposite) and on the recall test's answer. Tapping one opens a
+  popup — meaning, speaker, the shared sentence, **+ Add to my words** (first review after
+  `RELATED_STAGGER_DAYS`) or "already in your words". ✕, Close, a tap outside, Escape or the phone's
+  Back close it and leave you where you were; Space and 1–4 do not reach the test behind it.
+- **Two words at once.** "lön och lån", "svart / vit", "öka ↔ minska", "rich and poor" (and/och/und/y/
+  et/e/и/و/&/vs, `/`, `|`, `↔`, en dash): **Check and add** expands each with the other as `partner`
+  (every example uses both), saves both, and links them both ways (`linkConcepts`). **Check** shows the
+  first with the second offered under Linked words. Not split: a plain space ("god morgon") or a comma
+  ("ja, tack"). Replaces the adjective-only "A and B" of 10-26, which also stored its hint as notes.
+- Data: `Entry.links` (`WordLink[]`), `LINK_KINDS`/`linkKindOf` in `src/db/types.ts`; `linksFrom()`
+  keeps ≤1 opposite, ≤3 synonyms, ≤2 look-alikes per language, never the word itself. One bad related
+  word from the model now drops that word, not the whole expansion (capped at 10).
+- AI: `api/expand.ts` asks for `kind` and the shared `example`/`exampleGloss`; `partner` input in
+  `src/server/aiInput.ts`. Synced as `entries.links` (jsonb); migration
+  `20261029120000_lingo3_entry_links.sql`, **applied to vfximbxcxczntqywdryd on 2026-10-29**. Without
+  the column the client syncs entries without links (`isMissingSchema`).
+- Review (`Training.tsx`) now stays on the word you are reading when the list changes under it (a word
+  added from the popup used to push a different word under you).
+- Words saved before this have no links until they are expanded again. Not deployed yet.
+
 ## 2026-10-29 — Recall test: no 1–4 under the grades, new grade colours, Home
 
 - `src/ui/Review.tsx`: the `<kbd>1</kbd>`…`<kbd>4</kbd>` under Again / Hard / Good / Easy are gone, with

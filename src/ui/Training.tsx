@@ -195,12 +195,31 @@ export function Training({
     return out
   }, [words, sort, seen])
 
+  /** The word on screen, so a change to the list cannot swap it (below). */
+  const shown = useRef<{ id: string; filterKey: string } | null>(null)
+
   // Changing the filter should not leave you pointing past the end of the list.
   useEffect(() => {
     setIndex(0)
+    shown.current = null
   }, [list, kind, sort])
 
-  const current = ordered[Math.min(index, Math.max(0, ordered.length - 1))]
+  // A word added while you read — from a linked word's popup, or on another
+  // device — lands in the list and would shift everything after it, putting a
+  // different word under you. Stay on the word you were reading.
+  // A new filter or order does start again from the top (see above).
+  const filterKey = `${list}|${kind}|${sort}`
+  let at = Math.min(index, Math.max(0, ordered.length - 1))
+  if (shown.current?.filterKey === filterKey && ordered[at]?.id !== shown.current.id) {
+    const pinned = shown.current.id
+    const same = ordered.findIndex((c) => c.id === pinned)
+    if (same >= 0) at = same
+  }
+  useEffect(() => {
+    if (at !== index) setIndex(at)
+  }, [at, index])
+  const current = ordered[at]
+  shown.current = current ? { id: current.id, filterKey } : null
   const last = ordered.length - 1
   const next = () => setIndex((i) => Math.min(i + 1, last))
   const prev = () => setIndex((i) => Math.max(0, i - 1))
@@ -350,16 +369,16 @@ export function Training({
   // word's settings.
   const nav = (
     <div className="flash-nav">
-      <button onClick={prev} disabled={index === 0} aria-label="Previous word">
+      <button onClick={prev} disabled={at === 0} aria-label="Previous word">
         ←
       </button>
       <span className="muted small">
-        {Math.min(index + 1, ordered.length)} / {ordered.length}
+        {Math.min(at + 1, ordered.length)} / {ordered.length}
       </span>
       <button
         className="primary"
         onClick={next}
-        disabled={index >= last}
+        disabled={at >= last}
         aria-label="Next word"
       >
         Next →

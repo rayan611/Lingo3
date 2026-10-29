@@ -7,7 +7,10 @@ import { aiErrorText } from '../ai/unavailable'
 import {
   LANG_BCP47,
   LANG_NAMES,
+  LINK_LABELS,
+  LINK_SYMBOLS,
   RTL_LANGS,
+  linkKindOf,
   type Category,
   type RelatedWord,
   type Settings,
@@ -120,9 +123,9 @@ export function RelatedWords({
 
   return (
     <div className="panel related">
-      <h3>Worth knowing beside it</h3>
+      <h3>Linked words</h3>
       <p className="muted small" title={`Added words wait ${RELATED_STAGGER_DAYS} days before their first review.`}>
-        Close words, different register.
+        ↔ opposite · ≈ similar · ≠ easily confused. They also show beside the word in Review.
       </p>
 
       <ul className="related-list">
@@ -130,9 +133,13 @@ export function RelatedWords({
           const id = `${r.lang}:${r.word}`
           const status = done[id]
           const already = known.has(id)
+          const kind = linkKindOf(r.kind, r.register)
           return (
             <li key={id}>
               <div className="related-main">
+                <span className={`link-sym kind-${kind}`} title={LINK_LABELS[kind]}>
+                  {LINK_SYMBOLS[kind]}
+                </span>
                 <span
                   className={`related-word ${RTL_LANGS.has(r.lang) ? 'rtl' : ''}`}
                   lang={LANG_BCP47[r.lang]}
@@ -150,6 +157,19 @@ export function RelatedWords({
               </div>
               {r.meaning && <div className="related-meaning">{r.meaning}</div>}
               {r.note && <div className="note">{r.note}</div>}
+              {r.example && kind !== 'synonym' && (
+                <div className="related-example" lang={LANG_BCP47[r.lang]}>
+                  {r.example}
+                  {r.exampleGloss && (
+                    <div
+                      className={`example-gloss ${RTL_LANGS.has(settings.nativeLang) ? 'rtl' : ''}`}
+                      lang={LANG_BCP47[settings.nativeLang]}
+                    >
+                      {r.exampleGloss}
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="related-action">
                 {status ? (
                   <span
