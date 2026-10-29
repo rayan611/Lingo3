@@ -10,7 +10,7 @@ import { probeProvider } from './translate.js'
  * at once, each with its own time limit. A provider without a key is listed
  * as such, so the answer covers the whole chain, not only what is switched on.
  *
- * Not counted against the hourly AI limits: it is three tiny calls, pressed by
+ * Not counted against the hourly AI limits: it is a few tiny calls, pressed by
  * hand, by the person who pays for them.
  */
 export const maxDuration = 30
@@ -19,6 +19,8 @@ const PER_PROVIDER_TIMEOUT_MS = 20_000
 const KEYS: Record<Provider, string | undefined> = {
   gemini: process.env.GEMINI_API_KEY,
   groq: process.env.GROQ_API_KEY,
+  mistral: process.env.MISTRAL_API_KEY,
+  deepseek: process.env.DEEPSEEK_API_KEY,
   anthropic: process.env.ANTHROPIC_API_KEY,
 }
 

@@ -485,7 +485,7 @@ console.log('\nA second provider answers when the first cannot')
 // ---------------------------------------------------------------------------
 console.log('\nGroq answers when Gemini cannot')
 {
-  const { firstAnswer, configuredProviders, modelFor, callGroq, readGroq } = await import(
+  const { firstAnswer, configuredProviders, modelFor, callGroq, callDeepSeek, callMistral, readGroq } = await import(
     '../src/server/aiFallback'
   )
   const reply = (status: number, body: unknown = { ok: true }) =>
@@ -502,7 +502,8 @@ console.log('\nGroq answers when Gemini cannot')
   })
   const read = (d: unknown) => d
 
-  check('order is Gemini, Groq, Claude, and only keys that are set',
+  check('order is Gemini, Groq, Mistral, DeepSeek, Claude, and only keys that are set',
+    JSON.stringify(configuredProviders({ anthropic: 'a', deepseek: 'd', mistral: 'm', groq: 'q', gemini: 'g' })) === '["gemini","groq","mistral","deepseek","anthropic"]' &&
     JSON.stringify(configuredProviders({ gemini: 'g', groq: 'q', anthropic: 'a' })) === '["gemini","groq","anthropic"]' &&
     JSON.stringify(configuredProviders({ gemini: 'g', groq: 'q' })) === '["gemini","groq"]' &&
     JSON.stringify(configuredProviders({ groq: 'q' })) === '["groq"]',
@@ -512,6 +513,11 @@ console.log('\nGroq answers when Gemini cannot')
     modelFor('groq', ['gemini', 'groq'], 'gemini-x', undefined) === 'openai/gpt-oss-120b' &&
     modelFor('groq', ['gemini', 'groq'], 'gemini-x', 'llama-3.3-70b-versatile') === 'llama-3.3-70b-versatile',
     'the Groq model is wrong')
+
+  check('DeepSeek uses its own default, or DEEPSEEK_MODEL, never LINGUA_MODEL',
+    modelFor('deepseek', ['gemini', 'deepseek'], 'gemini-x', undefined, undefined) === 'deepseek-v4-flash' &&
+    modelFor('deepseek', ['gemini', 'deepseek'], 'gemini-x', undefined, 'deepseek-x') === 'deepseek-x',
+    'the DeepSeek model is wrong')
 
   const unwrap = readGroq('record_word')
   const word = unwrap(groqReply({ pos: 'noun', normalisedLemma: 'hund' })) as { pos?: string } | null
@@ -534,6 +540,24 @@ console.log('\nGroq answers when Gemini cannot')
     { provider: 'anthropic', call: reply(200, { word: 'hund' }), read },
   ], 5000, 't', 'slow'))
   check('Gemini and Groq both busy -> Claude answers', pastGroq.ok && pastGroq.provider === 'anthropic', JSON.stringify(pastGroq))
+
+  const viaDeepSeek = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(429), read },
+    { provider: 'groq', call: reply(429), read: unwrap },
+    { provider: 'deepseek', call: reply(200, groqReply({ pos: 'noun' })), read: unwrap },
+    { provider: 'anthropic', call: async () => { throw new Error('must not be called') }, read },
+  ], 5000, 't', 'slow'))
+  check('Gemini and Groq both busy -> DeepSeek answers, Claude is not called',
+    viaDeepSeek.ok && viaDeepSeek.provider === 'deepseek', JSON.stringify(viaDeepSeek))
+
+  const viaMistral = await quiet(() => firstAnswer([
+    { provider: 'gemini', call: reply(429), read },
+    { provider: 'groq', call: reply(429), read: unwrap },
+    { provider: 'mistral', call: reply(200, groqReply({ pos: 'noun' })), read: unwrap },
+    { provider: 'deepseek', call: async () => { throw new Error('must not be called') }, read },
+  ], 5000, 't', 'slow'))
+  check('Gemini and Groq both busy -> free Mistral answers before paid DeepSeek',
+    viaMistral.ok && viaMistral.provider === 'mistral', JSON.stringify(viaMistral))
 
   // What actually goes over the wire: the endpoint's own tool, forced.
   const realFetch = globalThis.fetch
@@ -565,6 +589,45 @@ console.log('\nGroq answers when Gemini cannot')
     JSON.stringify(body))
   check('Groq request: low reasoning on gpt-oss, so a backup answers quickly',
     body?.reasoning_effort === 'low', JSON.stringify(body))
+
+  globalThis.fetch = (async (url: string, init: RequestInit) => {
+    sent = {
+      url,
+      auth: (init.headers as Record<string, string>).authorization,
+      body: JSON.parse(String(init.body)),
+    }
+    return new Response('{}', { status: 200 })
+  }) as typeof fetch
+  try {
+    const tool = { name: 'record_word', description: 'd', input_schema: { type: 'object', properties: {} } }
+    await callDeepSeek(tool, 'prompt', 'sk_test', new AbortController().signal, 'deepseek-v4-flash', {
+      maxTokens: 4096,
+      temperature: 0,
+    })
+  } finally {
+    globalThis.fetch = realFetch
+  }
+  const dsBody = sent.body as { tool_choice?: { function?: { name?: string } }; max_tokens?: number } | undefined
+  check('DeepSeek request: its chat completions URL with a bearer key, tool forced',
+    sent.url === 'https://api.deepseek.com/chat/completions' && sent.auth === 'Bearer sk_test' &&
+      dsBody?.tool_choice?.function?.name === 'record_word' && dsBody?.max_tokens === 4096,
+    JSON.stringify({ url: sent.url, body: dsBody }))
+
+  globalThis.fetch = (async (url: string, init: RequestInit) => {
+    sent = { url, auth: (init.headers as Record<string, string>).authorization, body: JSON.parse(String(init.body)) }
+    return new Response('{}', { status: 200 })
+  }) as typeof fetch
+  try {
+    const tool = { name: 'record_word', description: 'd', input_schema: { type: 'object', properties: {} } }
+    await callMistral(tool, 'prompt', 'm_test', new AbortController().signal, 'mistral-small-latest', { maxTokens: 900, temperature: 0 })
+  } finally {
+    globalThis.fetch = realFetch
+  }
+  const mBody = sent.body as { tool_choice?: unknown; tools?: Array<{ function?: { name?: string } }>; max_tokens?: number } | undefined
+  check('Mistral request: its URL with a bearer key, the one tool forced with "any"',
+    sent.url === 'https://api.mistral.ai/v1/chat/completions' && sent.auth === 'Bearer m_test' &&
+      mBody?.tool_choice === 'any' && mBody?.tools?.[0]?.function?.name === 'record_word' && mBody?.max_tokens === 900,
+    JSON.stringify({ url: sent.url, body: mBody }))
 }
 
 // ---------------------------------------------------------------------------
@@ -606,7 +669,7 @@ console.log('\nAI status (admin)')
     const res = await ask()
     const body = (await res.json()) as { providers?: Array<Record<string, unknown>> }
     const by = (p: string) => body.providers?.find((r) => r.provider === p)
-    check('admin -> 200 with all three providers listed', res.status === 200 && body.providers?.length === 3, JSON.stringify(body))
+    check('admin -> 200 with all five providers listed', res.status === 200 && body.providers?.length === 5, JSON.stringify(body))
     check('a working provider shows its answer and its place in the order',
       by('groq')?.ok === true && by('groq')?.sample === 'God morgon' && by('groq')?.position === 2,
       JSON.stringify(by('groq')))
