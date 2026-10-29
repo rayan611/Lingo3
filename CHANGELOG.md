@@ -3,10 +3,16 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
-## 2026-10-29 — Recall test: no 1–4 under the grade buttons
+## 2026-10-29 — Recall test: no 1–4 under the grades, new grade colours, Home
 
 - `src/ui/Review.tsx`: the `<kbd>1</kbd>`…`<kbd>4</kbd>` under Again / Hard / Good / Easy are gone, with
-  their CSS. The keys 1–4 still grade on a keyboard. Not deployed yet; goes out with the next change.
+  their CSS. The keys 1–4 still grade on a keyboard.
+- Grade colours: **Knew it** is now a light blue and **Easy** green (`--grade-knew`, `--grade-best` at
+  the foot of `src/styles.css`), so the row reads red → amber → blue → green. Dark-blue, which swaps
+  its good/easy colours, is mapped the other way so the buttons look the same in every theme.
+- The test's top-left **← Menu** is now **Home**, a short text pill (`.review-home`); inside a word's
+  detail it is still **← Test**.
+- Not deployed yet; goes out with the next change.
 
 ## 2026-10-26 — v0.4.1: automatic, no-scroll waiting practice
 

@@ -836,8 +836,8 @@ kbd {
 }
 .grade-1 { color: var(--grade-again); }
 .grade-2 { color: var(--grade-hard); }
-.grade-3 { color: var(--grade-good); }
-.grade-4 { color: var(--grade-easy); }
+.grade-3 { color: var(--grade-knew); }
+.grade-4 { color: var(--grade-best); }
 .grade:hover:not(:disabled) { border-color: currentColor; }
 .grade.chosen { background: currentColor; border-color: currentColor; }
 .grade.chosen .grade-label, .grade.chosen .grade-interval {
@@ -2834,6 +2834,18 @@ details.help h3 { margin: 22px 0 6px; }
   min-height: 40px;
 }
 .review-back { font-weight: 600; padding-left: 0; }
+/* Home as a short text pill: the way out of the test, without taking the
+   height of a full button. */
+.review-back.review-home {
+  min-height: 0;
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
 .review-topic {
   margin-left: auto;
   width: auto;
@@ -3660,3 +3672,18 @@ input[type='radio']:focus { box-shadow: none; }
 .waiting-vocabulary-words { gap: 8px; margin: 10px 0 0; }
 .waiting-vocabulary-words > .waiting-vocabulary-language { padding: 9px 11px; gap: 4px; }
 .waiting-vocabulary-words strong { font-size: 1.2rem; }
+
+/* --- grade colours ---------------------------------------------------------
+   A ladder from bad to best: No idea red, Not sure amber, Knew it a light
+   blue, Easy green — green is the best answer, so it goes on the top step.
+   Tokens of their own because dark-blue swaps --grade-good (blue there) and
+   --grade-easy (green there), and the buttons must not swap with it. Every
+   theme sits on :root, so these resolve against that theme's own colours. */
+:root {
+  --grade-knew: color-mix(in srgb, var(--grade-easy) 75%, #5ec2ff);
+  --grade-best: var(--grade-good);
+}
+:root[data-theme='dark-blue'] {
+  --grade-knew: color-mix(in srgb, var(--grade-good) 75%, #5ec2ff);
+  --grade-best: var(--grade-easy);
+}

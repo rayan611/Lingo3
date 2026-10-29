@@ -330,11 +330,11 @@ export function Review({ settings, onExit }: Props) {
     <div className="review-bar">
       <button
         type="button"
-        className="link review-back"
+        className={`link review-back${detail ? '' : ' review-home'}`}
         onClick={detail ? closeDetail : onExit}
-        aria-label={detail ? 'Back to the test' : 'Back to the menu'}
+        aria-label={detail ? 'Back to the test' : 'Home'}
       >
-        ← {detail ? 'Test' : 'Menu'}
+        {detail ? '← Test' : 'Home'}
       </button>
       <span className="muted small">{remaining} left</span>
       {item.isNew && <span className="badge new">new</span>}
