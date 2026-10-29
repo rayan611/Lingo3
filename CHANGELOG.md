@@ -3,6 +3,29 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-29 — "A new version is ready" with an Update button; speaker audio allowed by the CSP
+
+- **Why the desktop app never updated.** Nothing told a running page about a new deploy. The service
+  worker installed it in the background, but the old code kept running until the app was reopened —
+  which phones do constantly and a desktop app almost never; and a browser only looks for a new worker
+  when a page loads. There was no update notice on any platform.
+- `src/lib/updates.ts`: registers the service worker itself (`injectRegister: false` in
+  `vite.config.ts`; the injected `registerSW.js` is gone) and watches two signals — the worker taking
+  over (`controllerchange`) and `/version.json`, written at build time with `__BUILD_ID__`. Checks 20 s
+  after start, every 30 min, when the app comes back to the screen or gets focus (at most every 5 min)
+  and when it comes back online.
+- `src/ui/UpdateBanner.tsx`: "✨ A new version of Lingo3 is ready. **Update now** · Later", floating at
+  the top of every screen (the bottom is Review's Next bar). Never reloads by itself; **Later** hides
+  it for an hour. Settings → under the version line: **Check for updates** / **Update now** with the
+  result ("You have the latest version", "Could not check").
+- Tested with two builds served in turn: no banner on the current build, banner after the new one went
+  up, Update reloaded into the new build, no banner after. Clients still on the old code get this the
+  next time they open the app once.
+- **CSP fix (`vercel.json`): `media-src 'self' blob: data:`.** Without it `media-src` fell back to
+  `default-src 'self'`, which blocks the `blob:` audio of the speaker fallback (`/api/tts`) and the
+  `data:` silence that unlocks iOS — so on lingo3.com that fallback could not play.
+- Version **0.5.0** (linked words, update notice).
+
 ## 2026-10-29 — Linked words: opposites, synonyms and look-alikes in Review
 
 - **What it is.** Each word now keeps, per language, its opposite (↔ svart/vit, öka/minska), its one to

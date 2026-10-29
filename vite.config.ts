@@ -13,6 +13,12 @@ import pkg from './package.json'
  */
 const IS_BETA = process.env.VITE_BETA === '1'
 
+/**
+ * Names this build. Baked into the code and written to /version.json, so a
+ * running app can ask the server whether a newer build is out (src/lib/updates.ts).
+ */
+const BUILD_ID = `${pkg.version}-${Date.now().toString(36)}`
+
 export default defineConfig({
   // Baked in at build time and shown at the bottom of Settings. Without a
   // version on screen there is no way to tell, from a phone, whether the
@@ -21,6 +27,7 @@ export default defineConfig({
     __APP_VERSION__: JSON.stringify(pkg.version),
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     __IS_BETA__: JSON.stringify(IS_BETA),
+    __BUILD_ID__: JSON.stringify(BUILD_ID),
   },
   build: {
     rollupOptions: {
@@ -53,8 +60,21 @@ export default defineConfig({
         )
       },
     },
+    {
+      name: 'version-file',
+      generateBundle() {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'version.json',
+          source: JSON.stringify({ version: pkg.version, build: BUILD_ID }),
+        })
+      },
+    },
     VitePWA({
       registerType: 'autoUpdate',
+      // Registered by src/lib/updates.ts instead of an injected script, so the
+      // app can watch for new versions and offer the update itself.
+      injectRegister: false,
       includeAssets: ['favicon.svg'],
       manifest: {
         name: IS_BETA

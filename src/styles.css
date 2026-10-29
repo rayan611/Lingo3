@@ -3785,3 +3785,32 @@ input[type='radio']:focus { box-shadow: none; }
 .link-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
 .link-actions button { margin: 0; }
 .link-actions .primary { flex: 1; }
+
+/* --- update ----------------------------------------------------------------
+   "A new version is ready", floating at the top of every screen; the bottom
+   belongs to Review's Next bar. And the manual check under Settings. */
+.update-banner {
+  position: fixed;
+  top: calc(8px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 6px 6px 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 999px;
+  background: var(--panel);
+  box-shadow: var(--shadow-lift);
+  color: var(--ink);
+  font-size: 0.85rem;
+}
+.update-banner-text { min-width: 0; }
+.update-banner button { min-height: 0; margin: 0; padding: 5px 12px; border-radius: 999px; font-size: 0.8rem; white-space: nowrap; }
+.update-banner-go { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.update-banner-later { background: none; border: none; color: var(--ink-soft); }
+.update-check { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding-bottom: 1rem; }
+.update-check button { margin: 0; }

@@ -21,6 +21,7 @@ import { resetSyncCursors, type SyncResult } from '../sync/sync'
 import { DEFAULT_THEME, THEMES, THEME_LABELS, type Theme } from '../lib/theme'
 import { hasVoiceFor, speak, speechSupported } from '../lib/speak'
 import { DeleteAccount } from './DeleteAccount'
+import { applyUpdate, checkForUpdate, useUpdateStatus } from '../lib/updates'
 import { HowTo, QuickStart } from './HowTo'
 import { ImportExport } from './ImportExport'
 import { InviteOthers } from './InviteOthers'
@@ -670,6 +671,7 @@ export function SettingsPanel({
       <p className="version-line">
         Lingo3 v{__APP_VERSION__} · built {__BUILD_DATE__}
       </p>
+      <UpdateCheck />
     </div>
   )
 }
@@ -723,4 +725,40 @@ async function exportData() {
   a.download = `lingo3-${new Date().toISOString().slice(0, 10)}.json`
   a.click()
   URL.revokeObjectURL(url)
+}
+
+/** Check for updates by hand, under the version line, and apply one. */
+function UpdateCheck() {
+  const status = useUpdateStatus()
+  const text: Record<typeof status, string> = {
+    idle: '',
+    checking: 'Checking…',
+    current: '✓ You have the latest version.',
+    ready: 'A new version is ready.',
+    updating: 'Updating…',
+    error: 'Could not check — are you online?',
+  }
+  return (
+    <div className="update-check">
+      {status === 'ready' || status === 'updating' ? (
+        <button
+          type="button"
+          className="primary"
+          disabled={status === 'updating'}
+          onClick={() => void applyUpdate()}
+        >
+          {status === 'updating' ? 'Updating…' : 'Update now'}
+        </button>
+      ) : (
+        <button
+          type="button"
+          disabled={status === 'checking'}
+          onClick={() => void checkForUpdate()}
+        >
+          Check for updates
+        </button>
+      )}
+      {text[status] && <span className="muted small">{text[status]}</span>}
+    </div>
+  )
 }
