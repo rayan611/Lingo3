@@ -51,11 +51,11 @@ npm run check     # scheduling behaviour checks
 
 ## Deploying
 
-**Treat a merge to `main` as a release.** `vercel.json` sets `git.deploymentEnabled.main: false`,
-but every merge in October 2026 (PRs #6–#8) reached production within two minutes anyway, with
-Rayan's account as the creator. What triggers it was not found from here (a deploy hook, the
-Vercel CLI, or a session told to deploy). Until that is settled, merge only what may go live, and
-confirm the deployed commit under Vercel → Deployments.
+**A merge to `main` does not deploy by itself** (`git.deploymentEnabled.main: false` in
+`vercel.json`; checked with PR #9, which stayed undeployed). A release is a separate step: a
+production deployment of the merged `main` commit, from the Vercel dashboard or the Vercel API
+(the Claude sessions use the latter, which is why those deployments show Rayan's account as the
+creator). Confirm the deployed commit under Vercel → Deployments.
 
 Preview builds (every branch, and `beta.lingo3.com` for the `beta` branch) use the **production**
 Supabase project, so a branch's sync code runs against real accounts. Since v0.7.0 they sit behind

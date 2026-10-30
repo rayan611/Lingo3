@@ -33,7 +33,8 @@ session does not have to rediscover it.
   in zod 4 (a major); it validates our own server's output in the browser, so it waits.
 - **Vercel**: Deployment Protection (Vercel Authentication) on for previews, so branch builds and
   `beta.lingo3.com`, which use the production database, open only for the Vercel team.
-- README: release reality, backups, expected advisor notices.
+- README: how a release actually happens (a merge does not deploy; a production deployment of the
+  merged commit does), backups, expected advisor notices.
 
 ## 2026-10-30 — v0.6.1: the control center can check the AIs
 
