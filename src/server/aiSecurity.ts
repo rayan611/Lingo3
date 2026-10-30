@@ -77,7 +77,16 @@ export async function enforceAiRateLimit(
         body: JSON.stringify({ p_endpoint: endpoint }),
         signal: AbortSignal.timeout(3000),
       })
-      if (!response.ok) throw new Error('Rate-limit service unavailable')
+      if (!response.ok) {
+        // Speech got its bucket in migration 20261030120000. Until a database
+        // has it, the function refuses 'tts' as unknown; speech is not an AI
+        // cost, so it stays on rather than failing closed like the others.
+        if (endpoint === 'tts' && (await response.text()).includes('Unknown AI endpoint')) {
+          console.warn('[aiSecurity] tts limit not in the database yet; allowed')
+          return { allowed: true }
+        }
+        throw new Error('Rate-limit service unavailable')
+      }
       const allowed: unknown = await response.json()
       if (typeof allowed !== 'boolean') throw new Error('Invalid rate-limit response')
       return allowed

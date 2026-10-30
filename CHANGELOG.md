@@ -13,9 +13,10 @@ session does not have to rediscover it.
 - **Control-center token** (`supabase/migrations/20261030120000_lingo3_hub_audit_tts_limit.sql`):
   every delete, suspend, unsuspend and feedback-status change is written to the new `hub_audit`
   (admins can read it); deletes are capped at 3 an hour and suspends at 20. **Open:** migration
-  written; it must be applied **before** this version is deployed (see the next point).
-- **Speech** (`api/tts.ts`): its own 300-an-hour bucket in `consume_ai_rate_limit()`. The limiter
-  fails closed in production, so deploying this before the migration above would turn speech off.
+  written, not yet applied (three approval prompts went unanswered).
+- **Speech** (`api/tts.ts`): its own 300-an-hour bucket in `consume_ai_rate_limit()`. Until the
+  migration is applied the database calls 'tts' unknown, and `src/server/aiSecurity.ts` lets speech
+  through in exactly that case (logged), so deploying first does not switch speech off.
 - **`/api/hub-ai`** answers at most once a minute per warm instance (`api/ai-status.ts`).
 - **Screens have addresses** (`src/App.tsx`, `TAB_PATHS`): `/`, `/recall`, `/review`, `/words`,
   `/read`, `/translate`, `/settings`, named after the tiles. Refresh stays on the screen, Back works
