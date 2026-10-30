@@ -76,12 +76,18 @@ export function Privacy({ onBack }: { onBack?: () => void }) {
         <h2>The one thing worth knowing</h2>
         <p>
           When you add a word, that word is sent to an AI model provider —
-          currently Google (Gemini), with Groq, Mistral, DeepSeek and
-          Anthropic as fallbacks when it is busy — which
+          currently Google (Gemini), with Groq and then Mistral as fallbacks
+          when it is busy — which
           returns its translations, grammatical forms and an example sentence.
           The same happens when you generate a reading text, where the words
           sent are the vocabulary the text is to be built from. Quick translate
           sends the text you type there, and it is not stored on our server.
+        </p>
+        <p>
+          Mistral is used on its free plan, and on that plan Mistral may use
+          what it receives to train its models. It is only asked when Gemini
+          and Groq are both unavailable, but it can happen, so do not type
+          anything private into Quick translate.
         </p>
         <p>
           Your email address and your review history are never sent with it. The

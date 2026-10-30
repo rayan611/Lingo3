@@ -1,0 +1,88 @@
+# Daily database backup to Google Drive.
+#
+# Supabase's free plan keeps no backups, so this is the only copy of the synced words outside
+# Supabase. Once a day: pg_dump of the public and auth schemas (every table, plus the accounts
+# they belong to), encrypted with BACKUP_PASSPHRASE, handed to a small Google Apps Script in
+# Rayan's Drive (scripts/backup-drive.gs) that files it in "App backups/lingo3" and bins copies
+# older than 30 days. Setup and restore: README, "Backups". A failed run is what GitHub emails.
+#
+# This repository is public, so nothing secret may be printed: the database URL, the upload
+# URL and both passphrases come from repository secrets and never reach the log, and the dump
+# is encrypted before it leaves the runner. Until SUPABASE_DB_URL is set the job only says so.
+name: backup
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: backup
+  cancel-in-progress: false
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      BACKUP_UPLOAD_URL: ${{ secrets.BACKUP_UPLOAD_URL }}
+      BACKUP_UPLOAD_SECRET: ${{ secrets.BACKUP_UPLOAD_SECRET }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+    steps:
+      - name: Check the secrets are set
+        id: ready
+        run: |
+          missing=""
+          for name in SUPABASE_DB_URL BACKUP_UPLOAD_URL BACKUP_UPLOAD_SECRET BACKUP_PASSPHRASE; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::notice::Backup not configured yet. Missing secrets:$missing (see README, Backups)."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dump the database
+        if: steps.ready.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          # pg_dump must be at least the server's major version (17); the image pins it.
+          docker run --rm -e DB_URL="$SUPABASE_DB_URL" -v "$PWD:/out" postgres:17 \
+            sh -c 'pg_dump "$DB_URL" --format=custom --no-owner --no-privileges \
+                     --schema=public --schema=auth --file=/out/lingo3.dump'
+          # A dump without the word tables in it is a failed backup, not a small one.
+          tables=$(docker run --rm -v "$PWD:/out" postgres:17 pg_restore --list /out/lingo3.dump \
+                   | grep -cE 'TABLE DATA (public (concepts|entries|cards|review_log)|auth users) ' || true)
+          if [ "$tables" -lt 5 ]; then
+            echo "::error::The dump is missing tables (found $tables of 5)."
+            exit 1
+          fi
+          echo "Dump OK: $(stat -c %s lingo3.dump) bytes, core tables present."
+
+      - name: Encrypt
+        if: steps.ready.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          printf '%s' "$BACKUP_PASSPHRASE" > pass.txt
+          gpg --batch --yes --pinentry-mode loopback --passphrase-file pass.txt \
+              --symmetric --cipher-algo AES256 --output lingo3.dump.gpg lingo3.dump
+          rm -f pass.txt lingo3.dump
+
+      - name: Send to Google Drive
+        if: steps.ready.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          name="lingo3-$(date -u +%Y-%m-%d).dump.gpg"
+          base64 -w0 lingo3.dump.gpg > data.b64
+          jq -n --arg secret "$BACKUP_UPLOAD_SECRET" --arg name "$name" --rawfile data data.b64 \
+             '{secret: $secret, app: "lingo3", name: $name, data: $data}' > body.json
+          rm -f data.b64
+          # Apps Script answers a POST with a redirect to the result; -L follows it.
+          answer=$(curl -sS -L --fail --max-time 120 -H 'content-type: application/json' \
+                   --data-binary @body.json "$BACKUP_UPLOAD_URL")
+          rm -f body.json lingo3.dump.gpg
+          case "$answer" in
+            ok*) echo "Saved to Drive: $name" ;;
+            *) echo "::error::Drive did not confirm the upload (answer: ${answer:0:80})"; exit 1 ;;
+          esac

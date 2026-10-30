@@ -20,6 +20,8 @@ import { probeProvider } from './translate.js'
  */
 export const maxDuration = 30
 const PER_PROVIDER_TIMEOUT_MS = 20_000
+const HUB_PROBE_INTERVAL_MS = 60_000
+let lastHubProbe = 0
 
 const KEYS: Record<Provider, string | undefined> = {
   gemini: process.env.GEMINI_API_KEY,
@@ -74,6 +76,14 @@ async function respond(req: Request): Promise<Response> {
   const hubToken = req.headers.get('x-hub-token')
   if (hubToken) {
     if (!(await isHubToken(hubToken))) return json({ error: 'Forbidden' }, 403)
+    // Every check is a handful of paid AI calls: once a minute is plenty for a
+    // button pressed by hand. Per warm instance only, which is enough to stop
+    // a loop with a leaked token from running up a bill.
+    const now = Date.now()
+    if (now - lastHubProbe < HUB_PROBE_INTERVAL_MS) {
+      return json({ error: 'Checked less than a minute ago. Try again shortly.' }, 429)
+    }
+    lastHubProbe = now
   } else {
     const auth = await authenticateAiRequest(req)
     if (!auth.ok) return json({ error: auth.message }, auth.status)

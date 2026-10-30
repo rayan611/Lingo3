@@ -129,7 +129,9 @@ export function SignIn() {
               value={password}
               onChange={setPassword}
               autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
-              minLength={6}
+              // 8 for new accounts, like a reset; sign-in keeps 6 so older
+              // accounts with a 6-character password can still get in.
+              minLength={mode === 'up' ? 8 : 6}
               disabled={busy}
             />
           )}

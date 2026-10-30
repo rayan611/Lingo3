@@ -51,7 +51,75 @@ npm run check     # scheduling behaviour checks
 
 ## Deploying
 
-Automatic Vercel deployment of `main` is disabled in `vercel.json`. A push alone is not a release; use the reviewed manual Vercel release procedure and confirm the deployed commit. Configure `GEMINI_API_KEY`, `GROQ_API_KEY`, `MISTRAL_API_KEY`, `DEEPSEEK_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Mistral, then DeepSeek, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
+**Treat a merge to `main` as a release.** `vercel.json` sets `git.deploymentEnabled.main: false`,
+but every merge in October 2026 (PRs #6–#8) reached production within two minutes anyway, with
+Rayan's account as the creator. What triggers it was not found from here (a deploy hook, the
+Vercel CLI, or a session told to deploy). Until that is settled, merge only what may go live, and
+confirm the deployed commit under Vercel → Deployments.
+
+Preview builds (every branch, and `beta.lingo3.com` for the `beta` branch) use the **production**
+Supabase project, so a branch's sync code runs against real accounts. Since v0.7.0 they sit behind
+Vercel Authentication (Settings → Deployment Protection → Vercel Authentication, "Preview"): only
+people signed in to the Vercel team can open them. Production (lingo3.com) is not affected.
+
+Configure `GEMINI_API_KEY`, `GROQ_API_KEY`, `MISTRAL_API_KEY`, `DEEPSEEK_API_KEY` and/or `ANTHROPIC_API_KEY` as environment variables in the project settings (Gemini answers first, then Groq, then Mistral, then DeepSeek, then Claude; any one alone also works). The key stays server-side and never reaches the browser.
+
+If you switch a provider on or off, update the list in `src/ui/Privacy.tsx` in the same change:
+the privacy page names the providers in use, and says which may train on what they receive.
+
+## Backups
+
+Supabase's free plan keeps **no** backups. `.github/workflows/backup.yml` makes one every night at
+02:17 UTC: a `pg_dump` of the `public` and `auth` schemas, encrypted, sent to Google Drive (folder
+**App backups / lingo3**), keeping 30 days. A failed run is emailed by GitHub. Setup, once — all of
+it works from a phone browser:
+
+1. **Drive receiver.** script.google.com → New project → paste `scripts/backup-drive.gs`. Change
+   `SECRET` to a long random text (letters and digits). Deploy → New deployment → type *Web app*,
+   execute as *Me*, access *Anyone* → allow the Drive permission → copy the Web app URL.
+2. **Database address.** Supabase → Lingo3 → Connect → *Session pooler* → copy the URI and put the
+   database password in it (Database → Settings → reset it if you do not have it). The direct
+   connection does not work from GitHub (IPv6 only).
+3. **GitHub secrets.** github.com/rayan611/Lingo3 → Settings → Secrets and variables → Actions →
+   New repository secret, four times:
+   `SUPABASE_DB_URL` (step 2), `BACKUP_UPLOAD_URL` (the Web app URL), `BACKUP_UPLOAD_SECRET` (the
+   `SECRET` text), `BACKUP_PASSPHRASE` (a different long text — **write it down somewhere safe**:
+   without it the backups cannot be opened, and nobody can recover it).
+4. **Test.** Actions → backup → Run workflow. A green run and a file in Drive mean it works.
+
+Until all four secrets exist the job only notes that it is not configured, so it never fails
+noisily. The repository is public; the secrets never appear in the log and the file is encrypted
+before it leaves GitHub.
+
+**Restoring** (needs a computer with PostgreSQL 17 tools and gpg):
+
+```bash
+gpg --decrypt lingo3-2026-10-31.dump.gpg > lingo3.dump
+```
+
+```bash
+pg_restore --list lingo3.dump
+```
+
+```bash
+pg_restore --dbname "$TARGET_DB_URL" --data-only --schema=public lingo3.dump
+```
+
+Restore into a fresh Supabase project, or into the same one after the damage is understood.
+`--data-only` with the schema already in place (`supabase/schema.sql` plus `supabase/migrations/`)
+is the safe order; the `auth` schema is in the dump so accounts can be matched up by id.
+
+## Database advisor notices that are expected
+
+Supabase's advisor lists these; they were checked in the 2026-10-30 audit and are intentional:
+
+- `hub_access` has RLS with no policy: nothing may read it except the functions below.
+- `hub_call`, `hub_feedback_status`, `hub_user_manage` callable by `anon`: the control center calls
+  them with its token, checked against a hash inside each. Since v0.7.0 every user action is
+  recorded in `hub_audit`, and deletes (3/hour) and suspends (20/hour) are capped.
+- `is_admin`, `admin_stats`, `delete_my_account` callable by signed-in users: each checks the
+  caller itself.
+- Leaked-password protection: a Pro-plan feature; Lingo3's organisation is on the free plan.
 
 ## Data model
 

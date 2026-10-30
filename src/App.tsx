@@ -72,6 +72,28 @@ function isTab(value: unknown): value is Tab {
     value === 'settings'
 }
 
+/**
+ * Each screen's address, named after the tile the learner sees — so the
+ * `review` tab (tile "Recall test") lives at /recall and the `training` tab
+ * (tile "Review") at /review. A refresh stays on the screen, and a screen can
+ * be bookmarked or linked. Every path is served index.html already.
+ */
+const TAB_PATHS: Record<Tab, string> = {
+  add: '/',
+  review: '/recall',
+  training: '/review',
+  browse: '/words',
+  read: '/read',
+  translate: '/translate',
+  settings: '/settings',
+}
+
+function tabFromPath(pathname: string): Tab | null {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  const found = (Object.keys(TAB_PATHS) as Tab[]).find((t) => TAB_PATHS[t] === path)
+  return found ?? null
+}
+
 export function App() {
   const { session, userId, email, recovery, endRecovery } = useSession()
 
@@ -226,7 +248,7 @@ function Workspace({
   userId: string | null
   email: string | null
 }) {
-  const [tab, setTab] = useState<Tab>('add')
+  const [tab, setTab] = useState<Tab>(() => tabFromPath(window.location.pathname) ?? 'add')
   /**
    * Bumped by pressing Add a word (tile or logo): AddWord is keyed on it, so
    * the screen comes back empty — no word in the box, no card, no preview —
@@ -266,15 +288,19 @@ function Workspace({
     }
     if (!tabHistoryInitialized.current) {
       tabHistoryInitialized.current = true
+      // Leave an address that is not a screen (an invite link) as it is.
+      const onScreenPath = tabFromPath(window.location.pathname) !== null
       window.history.replaceState(
         { ...(window.history.state ?? {}), lingo3Tab: tab },
         '',
+        onScreenPath ? TAB_PATHS[tab] : undefined,
       )
       return
     }
     window.history.pushState(
       { ...(window.history.state ?? {}), lingo3Tab: tab },
       '',
+      TAB_PATHS[tab],
     )
   }, [tab])
 
