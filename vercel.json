@@ -10,6 +10,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/hub-ai",
+      "destination": "/api/ai-status"
+    },
+    {
       "source": "/((?!api/|assets/).*)",
       "destination": "/index.html"
     }

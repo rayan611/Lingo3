@@ -12,6 +12,11 @@ import { probeProvider } from './translate.js'
  *
  * Not counted against the hourly AI limits: it is a few tiny calls, pressed by
  * hand, by the person who pays for them.
+ *
+ * The Rayan control center asks the same question at /api/hub-ai (a rewrite
+ * to this file) with its connector token in `x-hub-token`. The token is only
+ * accepted if this project's own hub_call() accepts it, so it opens nothing
+ * that the connector does not already open.
  */
 export const maxDuration = 30
 const PER_PROVIDER_TIMEOUT_MS = 20_000
@@ -45,12 +50,35 @@ function json(payload: unknown, status: number): Response {
   })
 }
 
+/** Is this the control center's connector token? Asked of hub_call(), which holds its hash. */
+async function isHubToken(token: string): Promise<boolean> {
+  const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const key = process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY
+  if (!url || !key || token.length < 20) return false
+  try {
+    const response = await fetch(`${url}/rest/v1/rpc/hub_call`, {
+      method: 'POST',
+      headers: { apikey: key, 'content-type': 'application/json' },
+      body: JSON.stringify({ p_token: token, p_op: 'health', p_args: {} }),
+      signal: AbortSignal.timeout(8000),
+    })
+    return response.ok
+  } catch {
+    return false
+  }
+}
+
 async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
-  const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
-  if (!(await isAdminRequest(req))) return json({ error: 'Admins only.' }, 403)
+  const hubToken = req.headers.get('x-hub-token')
+  if (hubToken) {
+    if (!(await isHubToken(hubToken))) return json({ error: 'Forbidden' }, 403)
+  } else {
+    const auth = await authenticateAiRequest(req)
+    if (!auth.ok) return json({ error: auth.message }, auth.status)
+    if (!(await isAdminRequest(req))) return json({ error: 'Admins only.' }, 403)
+  }
 
   const order = configuredProviders(KEYS)
   const providers: ProviderStatus[] = await Promise.all(
