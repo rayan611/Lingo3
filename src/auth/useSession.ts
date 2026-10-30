@@ -187,7 +187,11 @@ function friendly(message: string): string {
   const m = message.toLowerCase()
   if (m.includes('invalid login')) return 'Wrong email or password.'
   if (m.includes('already registered')) return 'That email already has an account — sign in instead.'
-  if (m.includes('password should be')) return 'Password must be at least 6 characters.'
+  if (m.includes('password should be')) {
+    // The minimum is Supabase's setting; repeat its number rather than guess it.
+    const min = /at least (\d+)/.exec(m)?.[1] ?? '8'
+    return `Password must be at least ${min} characters.`
+  }
   if (m.includes('failed to fetch') || m.includes('network')) {
     return 'Could not reach the server. Check your connection.'
   }

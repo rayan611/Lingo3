@@ -3,6 +3,37 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-30 — v0.7.0: fixes from the full-chain audit; nightly backup to Google Drive
+
+- **Backups** (Supabase free plan has none): `.github/workflows/backup.yml` dumps `public` + `auth`
+  nightly, encrypts it and posts it to a Google Apps Script in Rayan's Drive
+  (`scripts/backup-drive.gs`), which keeps 30 days under *App backups / lingo3*. Idle until its four
+  secrets are set; setup and restore in README → Backups. **Open:** Rayan sets it up and runs it once by
+  hand; the dump of the `auth` schema has not been tried against the live database yet.
+- **Control-center token** (`supabase/migrations/20261030120000_lingo3_hub_audit_tts_limit.sql`):
+  every delete, suspend, unsuspend and feedback-status change is written to the new `hub_audit`
+  (admins can read it); deletes are capped at 3 an hour and suspends at 20. **Open:** migration
+  written; it must be applied **before** this version is deployed (see the next point).
+- **Speech** (`api/tts.ts`): its own 300-an-hour bucket in `consume_ai_rate_limit()`. The limiter
+  fails closed in production, so deploying this before the migration above would turn speech off.
+- **`/api/hub-ai`** answers at most once a minute per warm instance (`api/ai-status.ts`).
+- **Screens have addresses** (`src/App.tsx`, `TAB_PATHS`): `/`, `/recall`, `/review`, `/words`,
+  `/read`, `/translate`, `/settings`, named after the tiles. Refresh stays on the screen, Back works
+  as before, `/privacy` and `/invite/<name>` untouched. Internal tab ids are unchanged (`review` is
+  still the Recall test), which the comment on `TAB_PATHS` spells out.
+- **Privacy page** names only the providers in use (Gemini, Groq, Mistral) and says Mistral's free
+  plan may train on what it receives.
+- **Passwords**: new accounts need 8 characters (sign-in still accepts 6 for older accounts); the
+  server's own minimum is repeated in its error. **Open:** set Supabase → Auth → Email → minimum
+  password length to 8. Leaked-password protection needs the Pro plan.
+- **Sharing**: `public/og-image.png` (1200×630, not precached), `summary_large_image`,
+  `robots.txt`, `sitemap.xml`.
+- **Dependencies**: vite 6.4.5 and transitive fixes via `npm audit fix`. zod's advisory is fixed only
+  in zod 4 (a major); it validates our own server's output in the browser, so it waits.
+- **Vercel**: Deployment Protection (Vercel Authentication) on for previews, so branch builds and
+  `beta.lingo3.com`, which use the production database, open only for the Vercel team.
+- README: release reality, backups, expected advisor notices.
+
 ## 2026-10-30 — v0.6.1: the control center can check the AIs
 
 - `api/ai-status.ts`: besides signed-in admins, it now accepts the Rayan control center's connector token in

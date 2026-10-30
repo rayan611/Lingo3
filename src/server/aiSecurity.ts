@@ -62,7 +62,7 @@ export async function isAdminRequest(req: Request): Promise<boolean> {
 export async function enforceAiRateLimit(
   req: Request,
   userId: string,
-  endpoint: 'expand' | 'story' | 'translate',
+  endpoint: 'expand' | 'story' | 'translate' | 'tts',
   limit: number,
 ): Promise<LimitResult> {
   if (SUPABASE_URL && SUPABASE_KEY && req.headers.get('authorization')) {
@@ -86,7 +86,9 @@ export async function enforceAiRateLimit(
             ? 'Too many words in one hour. Try again later.'
             : endpoint === 'translate'
               ? 'Too many translations in one hour. Try again later.'
-              : 'Too many texts in one hour. Try again later.' }
+              : endpoint === 'tts'
+                ? 'Too much speech in one hour. Try again later.'
+                : 'Too many texts in one hour. Try again later.' }
     } catch {
       if (PRODUCTION) return { allowed: false, status: 503, message: 'The AI safety service is temporarily unavailable.' }
       return memoryLimit(userId, endpoint, limit)

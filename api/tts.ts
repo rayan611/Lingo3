@@ -1,4 +1,4 @@
-import { authenticateAiRequest } from '../src/server/aiSecurity.js'
+import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { LANGS, type Lang } from '../src/db/langs.js'
 
 /**
@@ -17,6 +17,8 @@ import { LANGS, type Lang } from '../src/db/langs.js'
 export const maxDuration = 15
 const UPSTREAM_TIMEOUT_MS = 10_000
 export const TTS_MAX_CHARS = 200
+/** Must match the 'tts' limit in consume_ai_rate_limit(). */
+const TTS_HOURLY_LIMIT = 300
 
 /** Google's language codes are the bare ones. */
 const GOOGLE_LANG: Record<Lang, string> = {
@@ -54,6 +56,11 @@ async function respond(req: Request): Promise<Response> {
 
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
+
+  // Its own hourly bucket in consume_ai_rate_limit(), so one account cannot
+  // loop this relay and get the server's address blocked for everyone.
+  const rate = await enforceAiRateLimit(req, auth.userId, 'tts', TTS_HOURLY_LIMIT)
+  if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
   let raw: unknown
   try {

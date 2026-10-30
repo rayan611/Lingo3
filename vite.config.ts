@@ -106,6 +106,8 @@ export default defineConfig({
       workbox: {
         // App shell is precached, so review works with no network at all.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // The link-preview image is for other sites' crawlers, never the app.
+        globIgnores: ['**/og-image.png'],
         navigateFallback: '/index.html',
         // Without these, a bad shell cached by an older service worker (for
         // example a login wall served while deployment protection was on)
