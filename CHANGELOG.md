@@ -3,6 +3,13 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-10-30 — v0.6.1: the control center can check the AIs
+
+- `api/ai-status.ts`: besides signed-in admins, it now accepts the Rayan control center's connector token in
+  `x-hub-token` (at `/api/hub-ai`, a rewrite in `vercel.json`) and answers the same per-provider check. The
+  token is accepted only if this database's `hub_call(token, 'health')` accepts it. Checks added to
+  `scripts/check-api.mts` (wrong token → 403 with no AI call; right token → every provider).
+
 ## 2026-10-29 — v0.6.0: Mistral (free) and DeepSeek as reserve AIs after Gemini and Groq
 
 - `src/server/aiFallback.ts`: the order is now Gemini → Groq → **Mistral** (free key) → **DeepSeek** (prepaid)

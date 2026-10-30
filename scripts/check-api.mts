@@ -642,11 +642,15 @@ console.log('\nAI status (admin)')
   const realFetch = globalThis.fetch
   let admin = false
   let aiCalls = 0
-  globalThis.fetch = (async (input: string | URL | Request) => {
+  globalThis.fetch = (async (input: string | URL | Request, init?: RequestInit) => {
     const url = String(input instanceof Request ? input.url : input)
     if (url.includes('api.groq.com') || url.includes('generativelanguage')) aiCalls++
     if (url.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u1' }), { status: 200 })
     if (url.includes('/rpc/is_admin')) return new Response(JSON.stringify(admin), { status: 200 })
+    if (url.includes('/rpc/hub_call')) {
+      const token = JSON.parse(String((init as RequestInit | undefined)?.body ?? '{}')).p_token
+      return new Response(token === 'hub-token-good-0123456789' ? '{"ok":true}' : '{"message":"not allowed"}', { status: token === 'hub-token-good-0123456789' ? 200 : 400 })
+    }
     if (url.includes('api.groq.com')) {
       return new Response(JSON.stringify({ choices: [{ message: { tool_calls: [{ function: {
         name: 'translate', arguments: JSON.stringify({ translations: [{ lang: 'sv', text: 'God morgon' }] }),
@@ -678,6 +682,23 @@ console.log('\nAI status (admin)')
       JSON.stringify(by('gemini')))
     check('a provider without a key is listed as not configured',
       by('anthropic')?.configured === false, JSON.stringify(by('anthropic')))
+
+    // The control center: its connector token instead of a signed-in admin.
+    const hadUrl = process.env.SUPABASE_URL, hadKey = process.env.SUPABASE_ANON_KEY
+    process.env.SUPABASE_URL = 'https://db.test'; process.env.SUPABASE_ANON_KEY = 'anon'
+    const hub = (token: string) => statusHandler(new Request('https://x/api/hub-ai', {
+      method: 'POST', headers: { 'x-hub-token': token }, body: '{}',
+    })) as Promise<Response>
+    aiCalls = 0
+    const badHub = await hub('hub-token-wrong-0123456789')
+    check('control center with a wrong token -> 403, and no AI is called',
+      badHub.status === 403 && aiCalls === 0, `${badHub.status}, ${aiCalls} AI calls`)
+    const goodHub = await hub('hub-token-good-0123456789')
+    const hubBody = (await goodHub.json()) as { providers?: unknown[] }
+    check('control center with its connector token -> 200 with every provider',
+      goodHub.status === 200 && hubBody.providers?.length === 5, JSON.stringify(hubBody).slice(0, 200))
+    if (hadUrl === undefined) delete process.env.SUPABASE_URL; else process.env.SUPABASE_URL = hadUrl
+    if (hadKey === undefined) delete process.env.SUPABASE_ANON_KEY; else process.env.SUPABASE_ANON_KEY = hadKey
   } finally {
     globalThis.fetch = realFetch
   }
