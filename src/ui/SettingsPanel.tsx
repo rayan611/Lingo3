@@ -645,6 +645,9 @@ export function SettingsPanel({
           Something wrong or missing — a bad article, a word that came back
           odd? The suggestion box below reaches a human.
         </p>
+        <p className="muted small">
+          Swedish dictionary source: <a href="https://www.sprakbanken.se/resurser/lexin" target="_blank" rel="noreferrer">Svenska ord/LEXIN, Språkbanken Text</a>, CC BY 4.0.
+        </p>
       </details>
 
       <SuggestionBox />
@@ -762,3 +765,4 @@ function UpdateCheck() {
     </div>
   )
 }
+
