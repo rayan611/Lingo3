@@ -56,6 +56,26 @@ export async function fetchExpansion(opts: {
   hint?: string
   partner?: string
 }): Promise<Expansion> {
+  // A ready shared entry has the same shape as an AI expansion. Keep the
+  // user's chosen copy in Dexie through applyExpansion, so review works offline.
+  // Hints and paired words ask for a custom sense/example and bypass the bank.
+  if (authConfigured && !opts.hint && !opts.partner) {
+    try {
+      const { data, error } = await supabase().rpc('lookup_shared_expansion', {
+        search_term: opts.lemma,
+        search_lang: opts.sourceLang ?? null,
+        native_lang: opts.nativeLang,
+        target_langs: opts.langs.filter((lang) => lang !== opts.nativeLang),
+      })
+      if (!error && data) {
+        const ready = ExpansionSchema.safeParse(data)
+        if (ready.success) return ready.data
+      }
+    } catch {
+      // A bank lookup failure must not prevent the existing AI path.
+    }
+  }
+
   // The endpoint is public, so it authenticates the caller. Sending the
   // session token is what makes this request ours rather than anyone's.
   const headers: Record<string, string> = { 'content-type': 'application/json' }
@@ -981,3 +1001,4 @@ export async function reExpand(
   })
   await applyExpansion(conceptId, expansion, settings)
 }
+
