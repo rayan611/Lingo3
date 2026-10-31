@@ -2,6 +2,7 @@ import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecur
 import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
+import { ExpansionSchema } from '../src/db/types.js'
 
 /**
  * The language list the two response schemas validate against.
@@ -510,6 +511,23 @@ async function respond(req: Request): Promise<Response> {
   const auth = await authenticateAiRequest(req)
   if (!auth.ok) return json({ error: auth.message }, auth.status)
 
+  let rawBody: unknown
+  try {
+    rawBody = await req.json()
+  } catch {
+    return json({ error: 'Invalid JSON body.' }, 400)
+  }
+  const parsed = parseExpandInput(rawBody)
+  if (!parsed.ok) return json({ error: parsed.error }, 400)
+
+  const { lemma, sourceLang, nativeLang, langs, hint, partner } = parsed.value
+  // Direct API callers get the same no-AI fast path as the browser. Hinted
+  // senses and paired-word examples must still be generated for that context.
+  if (!hint && !partner) {
+    const shared = await lookupShared(req, lemma, sourceLang, nativeLang, langs)
+    if (shared) return json(shared, 200)
+  }
+
   if (PROVIDERS.length === 0) {
     return json(
       {
@@ -520,21 +538,11 @@ async function respond(req: Request): Promise<Response> {
     )
   }
 
-  let rawBody: unknown
-  try {
-    rawBody = await req.json()
-  } catch {
-    return json({ error: 'Invalid JSON body.' }, 400)
-  }
-  const parsed = parseExpandInput(rawBody)
-  if (!parsed.ok) return json({ error: parsed.error }, 400)
-
   // Counted only once the request is known to be valid, so a malformed one
   // (or a client bug) does not spend the person's hourly allowance.
   const rate = await enforceAiRateLimit(req, auth.userId, 'expand', 80)
   if (!rate.allowed) return json({ error: rate.message }, rate.status)
 
-  const { lemma, sourceLang, nativeLang, langs, hint, partner } = parsed.value
   const prompt = buildPrompt({ lemma, sourceLang, nativeLang, langs, hint, partner })
 
   const result = await firstAnswer(
@@ -575,7 +583,71 @@ async function respond(req: Request): Promise<Response> {
     'The model took too long to answer. Try "Expand now" again.',
   )
   if (!result.ok) return json({ error: result.error }, result.status)
+  if (!hint && !partner) {
+    const validated = ExpansionSchema.safeParse(result.value)
+    const wanted = new Set([nativeLang, ...langs])
+    if (validated.success && [...wanted].every((lang) =>
+      validated.data.entries.some((entry) => entry.lang === lang && entry.example?.trim())
+    )) {
+      await cacheShared(validated.data)
+    }
+  }
   return json(result.value, 200)
+}
+
+function sharedRpcUrl(name: string): string | null {
+  const base = process.env.VITE_SUPABASE_URL
+  if (!base) return null
+  return `${base.replace(/\/$/, '')}/rest/v1/rpc/${name}`
+}
+
+async function lookupShared(
+  req: Request, lemma: string, sourceLang: string | undefined,
+  nativeLang: string, langs: string[],
+): Promise<unknown | null> {
+  const url = sharedRpcUrl('lookup_shared_expansion')
+  const key = process.env.VITE_SUPABASE_ANON_KEY
+  if (!url || !key) return null
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        apikey: key,
+        authorization: req.headers.get('authorization') ?? `Bearer ${key}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        search_term: lemma, search_lang: sourceLang ?? null,
+        native_lang: nativeLang, target_langs: langs,
+      }),
+      signal: AbortSignal.timeout(1800),
+    })
+    if (!response.ok) return null
+    const parsed = ExpansionSchema.safeParse(await response.json())
+    return parsed.success ? parsed.data : null
+  } catch {
+    return null
+  }
+}
+
+async function cacheShared(expansion: ReturnType<typeof ExpansionSchema.parse>): Promise<void> {
+  const url = sharedRpcUrl('cache_ai_expansion')
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key || !expansion.detectedLang) return
+  const source = expansion.entries.find((e) => e.lang === expansion.detectedLang)
+  if (!source) return
+  const cacheKey = `ai:${expansion.detectedLang}:${expansion.pos}:${source.headword.trim().toLocaleLowerCase()}`
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { apikey: key, authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ cache_key: cacheKey, expansion }),
+      signal: AbortSignal.timeout(2500),
+    })
+    if (!response.ok) console.warn('[expand.ts] shared cache write failed', response.status)
+  } catch {
+    console.warn('[expand.ts] shared cache write unavailable')
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -764,3 +836,4 @@ export function readGemini(data: unknown): unknown {
   }
   return parsed
 }
+
