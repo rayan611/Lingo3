@@ -934,6 +934,11 @@ export const ExpansionSchema = z.object({
   detectedLang: z.enum(LANGS as [Lang, ...Lang[]]).optional(),
   entries: z.array(ExpansionEntrySchema).min(1),
   related: RelatedListSchema,
+  /**
+   * Where this answer came from: the shared bank (no AI call) or a fresh AI
+   * answer. Only used to label the preview; it is never stored on a card.
+   */
+  origin: z.enum(['bank', 'ai']).optional(),
 })
 export type Expansion = z.infer<typeof ExpansionSchema>
 

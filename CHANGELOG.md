@@ -3,6 +3,16 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (later) — where an answer came from; review queue for AI-added words
+
+- **Label** (`Expansion.origin`, `fetchExpansion`, `PreviewCard`): the preview shows *Shared bank* (no AI
+  call) or *AI*. Never stored on a card; `/api/expand` marks its own bank hits `origin: 'bank'`.
+- **Review queue** (`supabase/migrations/20261101010000_shared_review.sql`): `status` may be `rejected`,
+  `shared_concepts.reviewed_at`, view `shared_review_queue` (AI concepts still unreviewed, service role
+  only) and `review_shared_concept(id, approve)`. AI words are served at once; reject one and it stops
+  being served and is never switched back on by `cache_ai_expansion`. **Open:** no screen for this yet,
+  review from the Supabase SQL editor.
+
 ## 2026-11-01 — shared vocabulary bank: found by how people type, grows with every new word
 
 - **Lookup** (`supabase/migrations/20261101003000_shared_lookup_key.sql`, `…004000_…explicit.sql`):

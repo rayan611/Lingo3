@@ -58,6 +58,11 @@ export function PreviewCard({
             <strong>{lemma}</strong>
             {detected && <span>Read as {LANG_NAMES[detected]}</span>}
             <span>{preview.expansion.pos}</span>
+            {preview.expansion.origin && (
+              <span title={preview.expansion.origin === 'bank' ? 'Found in the shared word bank, no AI used' : 'Written by AI just now'}>
+                {preview.expansion.origin === 'bank' ? 'Shared bank' : 'AI'}
+              </span>
+            )}
             <span className="not-saved" title="Checked, not saved yet">● not saved</span>
           </div>
           {lemma.toLocaleLowerCase() !== preview.lemma.trim().toLocaleLowerCase() && (
