@@ -16,6 +16,9 @@ stored in `dictionary_words` and `dictionary_senses`. They are source material,
 not yet ready multilingual cards; they fall through to AI until the required
 target-language entries have been generated and checked. A spelling match
 alone does not merge a core concept with a Lexin sense.
+On a miss for a Swedish word, a bounded set of Lexin definitions and Swedish
+examples is passed as reference data to the AI prompt; the model writes new
+parallel examples for the card.
 
 After a complete AI result, the Vercel endpoint can cache it through the
 service-role-only `cache_ai_expansion` function. This requires
