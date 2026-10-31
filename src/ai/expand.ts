@@ -69,7 +69,7 @@ export async function fetchExpansion(opts: {
       })
       if (!error && data) {
         const ready = ExpansionSchema.safeParse(data)
-        if (ready.success) return ready.data
+        if (ready.success) return { ...ready.data, origin: 'bank' }
       }
     } catch {
       // A bank lookup failure must not prevent the existing AI path.
@@ -132,7 +132,7 @@ export async function fetchExpansion(opts: {
   if (!parsed.success) {
     throw new ExpansionError('The model returned an unexpected shape.', true)
   }
-  return parsed.data
+  return { ...parsed.data, origin: parsed.data.origin ?? 'ai' }
 }
 
 /**

@@ -545,7 +545,7 @@ async function respond(req: Request): Promise<Response> {
   // senses and paired-word examples must still be generated for that context.
   if (!hint && !partner) {
     const shared = await lookupShared(req, lemma, sourceLang, nativeLang, langs)
-    if (shared) return json(shared, 200)
+    if (shared) return json({ ...(shared as object), origin: 'bank' }, 200)
   }
 
   if (PROVIDERS.length === 0) {
