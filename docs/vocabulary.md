@@ -20,6 +20,19 @@ On a miss for a Swedish word, a bounded set of Lexin definitions and Swedish
 examples is passed as reference data to the AI prompt; the model writes new
 parallel examples for the card.
 
+## How words are found and added
+
+Lookup (`lookup_shared_expansion`) compares `shared_entries.lemma_key`: lower-case,
+with the article / `to` / `att` removed and accents kept. So `hus`, `ett hus`
+and `Hus` find the same card, while `schon` does not return `schön`. When a bare
+word belongs to two concepts (noun and verb `love`) the lookup declines and the
+AI decides; `to love` is explicit and finds the verb.
+
+Every word added without a hint or paired word that the bank did not have is
+stored after the AI answers. It joins the concept with the same language, part of
+speech and `lemma_key`, and later requests with other languages add those
+languages to it. A stored entry is never overwritten.
+
 After a complete AI result, the Vercel endpoint can cache it through the
 service-role-only `cache_ai_expansion` function. This requires
 `SUPABASE_SERVICE_ROLE_KEY` as a **server-side Vercel Secret**. The secret must

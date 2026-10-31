@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "check": "tsx scripts/check-queries.ts && tsx scripts/check-scheduling.ts && tsx scripts/check-sync.ts && tsx scripts/check-collections.ts && tsx scripts/check-api.mts && tsx scripts/check-invite.ts && tsx scripts/check-waiting-review.ts",
+    "check": "tsx scripts/check-queries.ts && tsx scripts/check-scheduling.ts && tsx scripts/check-sync.ts && tsx scripts/check-collections.ts && tsx scripts/check-api.mts && tsx scripts/check-invite.ts && tsx scripts/check-waiting-review.ts && tsx scripts/check-shared-vocab.ts",
     "test": "npm run check"
   },
   "dependencies": {

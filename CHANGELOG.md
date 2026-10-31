@@ -3,6 +3,27 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 — shared vocabulary bank: found by how people type, grows with every new word
+
+- **Lookup** (`supabase/migrations/20261101003000_shared_lookup_key.sql`, `…004000_…explicit.sql`):
+  `shared_entries.lemma_key` (generated: lower-case, article / `to` / `att` removed, accents **kept** so
+  `schon` never returns `schön`). `hus`, `agua`, `eat`, `Haus`, `casa` now hit the 299 core concepts;
+  `to love` picks the verb while a bare `love` stays ambiguous and goes to the AI. Result carries
+  `normalisedLemma` without the article, like the AI path.
+- **Growth** (`cache_ai_expansion`, `src/server/sharedVocab.ts`, `api/expand.ts`): after a plain AI
+  expansion (no hint, no paired word) the answer is stored. The concept is matched by language + part of
+  speech + `lemma_key`, so `hus` and `ett hus` are one concept; later requests with other languages add
+  them to it; a stored entry (core or earlier AI) is never overwritten. Entries without a headword and an
+  example are dropped, the typed language plus one more is the minimum. `…005000_…fix_names.sql` renames
+  PL/pgSQL locals that shadowed columns (found by testing the function, not by reading it).
+- **Secret keys**: `sb_secret_…` keys are sent in `apikey` only, JWT service keys also in `Authorization`.
+  A missing `SUPABASE_SERVICE_ROLE_KEY` now logs a warning instead of silently doing nothing.
+- **Checks**: `scripts/check-shared-vocab.ts` (in `npm test`). SQL tested against the live project inside a
+  rolled-back transaction.
+- **Open:** `SUPABASE_SERVICE_ROLE_KEY` must be set in Vercel (Production) or nothing is written. Hinted /
+  paired words stay personal on purpose (their sense is the user's). AI answers become `ready` at once
+  with structural checks only; no review queue yet. Lexin licence note in `docs/vocabulary.md` still stands.
+
 ## 2026-10-30 — v0.7.0: fixes from the full-chain audit; nightly backup to Google Drive
 
 - **Backups** (Supabase free plan has none): `.github/workflows/backup.yml` dumps `public` + `auth`

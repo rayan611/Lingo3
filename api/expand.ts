@@ -1,6 +1,7 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
+import { serviceHeaders, sharedCachePayload } from '../src/server/sharedVocab.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 import { z } from 'zod'
 
@@ -606,14 +607,12 @@ async function respond(req: Request): Promise<Response> {
     'The model took too long to answer. Try "Expand now" again.',
   )
   if (!result.ok) return json({ error: result.error }, result.status)
+  // A word typed plainly (no hint, no paired word) is worth keeping for the
+  // next person. The write is awaited: Vercel may freeze the function as soon
+  // as the response is sent.
   if (!hint && !partner) {
     const validated = ServerExpansionSchema.safeParse(result.value)
-    const wanted = new Set([nativeLang, ...langs])
-    if (validated.success && [...wanted].every((lang) =>
-      validated.data.entries.some((entry) => entry.lang === lang && entry.example?.trim())
-    )) {
-      await cacheShared(validated.data)
-    }
+    if (validated.success) await cacheShared(validated.data)
   }
   return json(result.value, 200)
 }
@@ -679,15 +678,18 @@ async function lookupLexin(req: Request, lemma: string): Promise<unknown[] | nul
 async function cacheShared(expansion: z.infer<typeof ServerExpansionSchema>): Promise<void> {
   const url = sharedRpcUrl('cache_ai_expansion')
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!url || !key || !expansion.detectedLang) return
-  const source = expansion.entries.find((e) => e.lang === expansion.detectedLang)
-  if (!source) return
-  const cacheKey = `ai:${expansion.detectedLang}:${expansion.pos}:${source.headword.trim().toLocaleLowerCase()}`
+  if (!url) return
+  if (!key) {
+    console.warn('[expand.ts] SUPABASE_SERVICE_ROLE_KEY is not set; shared vocabulary is not growing')
+    return
+  }
+  const payload = sharedCachePayload(expansion)
+  if (!payload) return
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: { apikey: key, authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ cache_key: cacheKey, expansion }),
+      headers: serviceHeaders(key),
+      body: JSON.stringify(payload),
       signal: AbortSignal.timeout(2500),
     })
     if (!response.ok) console.warn('[expand.ts] shared cache write failed', response.status)
