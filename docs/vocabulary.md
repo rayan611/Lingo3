@@ -4,7 +4,7 @@ The common vocabulary lives in Supabase; a learner's selected concepts,
 entries, and FSRS cards continue to live in the app's local Dexie store and
 sync tables. This keeps review available offline and keeps scheduling private.
 
-The core pack has 299 reviewed multilingual concepts (1,794 language entries)
+The supplied core pack has 299 multilingual concepts (1,794 language entries)
 with parallel examples. `lookup_shared_expansion` returns the same `Expansion`
 shape as `/api/expand`, including the meaning and example gloss in the user's
 native language. Exact, unambiguous, complete matches are returned without an
