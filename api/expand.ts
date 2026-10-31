@@ -2,7 +2,7 @@ import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecur
 import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
-import { ExpansionSchema } from '../src/db/types.js'
+import { z } from 'zod'
 
 /**
  * The language list the two response schemas validate against.
@@ -12,6 +12,25 @@ import { ExpansionSchema } from '../src/db/types.js'
  * cannot be rejected here — which is exactly what used to happen.
  */
 const LANG_ENUM: string[] = [...SUPPORTED_LANGS]
+
+// Kept server-only: importing the app's schema here would also load browser
+// theme code into the Node API typecheck. The browser validates again before
+// writing the result to Dexie.
+const ServerExpansionSchema = z.object({
+  pos: z.enum(['noun', 'verb', 'adjective', 'adverb', 'preposition', 'phrase', 'other']),
+  tags: z.array(z.string()).optional(),
+  normalisedLemma: z.string().optional(),
+  detectedLang: z.string().refine((lang) => LANG_ENUM.includes(lang)).optional(),
+  entries: z.array(z.object({
+    lang: z.string().refine((lang) => LANG_ENUM.includes(lang)),
+    headword: z.string().min(1),
+    meaning: z.string().min(1),
+    morphology: z.unknown().optional(),
+    example: z.string().optional(),
+    exampleGloss: z.string().optional(),
+    notes: z.string().optional(),
+  }).passthrough()).min(1),
+}).passthrough()
 
 /**
  * Vercel serverless function: expands one word into every selected language in
@@ -584,7 +603,7 @@ async function respond(req: Request): Promise<Response> {
   )
   if (!result.ok) return json({ error: result.error }, result.status)
   if (!hint && !partner) {
-    const validated = ExpansionSchema.safeParse(result.value)
+    const validated = ServerExpansionSchema.safeParse(result.value)
     const wanted = new Set([nativeLang, ...langs])
     if (validated.success && [...wanted].every((lang) =>
       validated.data.entries.some((entry) => entry.lang === lang && entry.example?.trim())
@@ -623,14 +642,14 @@ async function lookupShared(
       signal: AbortSignal.timeout(1800),
     })
     if (!response.ok) return null
-    const parsed = ExpansionSchema.safeParse(await response.json())
+    const parsed = ServerExpansionSchema.safeParse(await response.json())
     return parsed.success ? parsed.data : null
   } catch {
     return null
   }
 }
 
-async function cacheShared(expansion: ReturnType<typeof ExpansionSchema.parse>): Promise<void> {
+async function cacheShared(expansion: z.infer<typeof ServerExpansionSchema>): Promise<void> {
   const url = sharedRpcUrl('cache_ai_expansion')
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key || !expansion.detectedLang) return
