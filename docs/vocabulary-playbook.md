@@ -12,7 +12,7 @@ Lingo3 has one **central shared vocabulary bank** in Supabase. Every word is a *
 
 Why: the app's AI should only answer when the bank cannot. Cards prepared in advance (by Claude in a chat, not by the app's AI) are cheaper, faster and consistent.
 
-Current state (after batch 002, 2026-11-01): **741 concepts**, 4,444 entries, no duplicates, no empty examples, every core concept has all 6 languages. Batch 001: 237 of 254 candidates imported; batch 002: 204 of 245 imported. Always re-run the health check (section 8) for live numbers before a new batch.
+Current state (after batch 003, 2026-11-01): **973 concepts**, 5,836 entries, no duplicates, no empty examples, every core concept has all 6 languages. Batch 001: 237 of 254 candidates imported; batch 002: 204 of 245 imported; batch 003: 232 imported, 0 skipped at import (pre-checked). Always re-run the health check (section 8) for live numbers before a new batch.
 
 ## 2. How the app uses the bank (runtime flow)
 
@@ -50,6 +50,15 @@ Project: Supabase project **Lingo3**, id `vfximbxcxczntqywdryd` (eu-west-1). Rep
 
 ## 4. Golden rule: no duplicates, ever
 
+**Working style since batch 003: pre-check first, write cards second.** Never write full cards for a candidate that has not passed `public.precheck_core_vocab`. Duplicates are prevented before any card exists; the importer is only the last safety net.
+
+1. Draft a *headword-level* candidate list for ALL six languages (including Farsi), one row per concept: `p|slug|fa|en|sv|de|es|it`.
+2. Convert it to JSON `[{"id":"core.<n|v|a|d>.<slug>","p":"noun|verb|adjective|adverb","e":{"fa":"…","en":"…","sv":"…","de":"…","es":"…","it":"…"}}]`, put it in a temporary file on the batch branch (e.g. `tmp-cand/cand.json`), push, and load it with `pg_net` (section 5, step 6).
+3. Run `select public.precheck_core_vocab(content::jsonb) from net._http_response where id = <id>;` It returns `[{id, why, with}]` for: an id that already exists, a headword (per language, by lemma key + pos) already in the bank, and two candidates in the same batch sharing a headword. Change or drop the candidate and repeat until it returns `[]`.
+4. Only then write the full cards. After building, run the pre-check again on the final headwords (`h` of every entry) because writing cards often changes headwords; it must still return `[]`.
+5. The same noun/verb pair can share a headword (sv `hosta`, de `husten`); `build_batch.py` flags that as a clash, so keep only one of them in the batch.
+6. Delete the temporary candidate files from the branch before the data commit.
+
 Before choosing words for a batch, and again before importing:
 
 1. Query what is in the bank (per language lemma keys and existing ids):
@@ -61,6 +70,8 @@ Before choosing words for a batch, and again before importing:
 3. IDs (`core.n.xxx`, `core.v.xxx`, `core.a.xxx`, `core.d.xxx`) must be new. Batch 001 had 3 id collisions (`a.full`, `d.still`, `d.soon`) — those concepts were silently skipped, so re-add them under different slugs in a later batch.
 4. Within one batch headwords must be unique per language after stripping the article and diacritics (sv `var`/`vår`, `svar`/`svår` clash in the app).
 5. The importer is the final safety net: it skips any concept whose `source_key` exists, **and** any concept that shares (language, lemma_key, pos) with an existing non-rejected card, and reports both. Always read its report.
+
+Batch 003 (232 concepts): drafted 262 candidates, pre-check removed or renamed about 30 before any card was written; the noun cough was dropped (clashes with verb cough in sv/de). Zero skipped at import.
 
 Skipped (synonym overlaps with cards already in the bank — do not re-submit as they are; they may be re-added later only with a clearly different sense):
 - batch 001: pretty, warm, calm, clear, real, fake, approximately, fairly, before, later, ever, away, moon, photo; id collisions full, still, soon.
@@ -80,7 +91,8 @@ Work directory suggestion: a scratch folder with `src/` (pipe files), `build_bat
    order by w.lemma limit 400;
    ```
    Prefer frequent, everyday nouns, verbs, adjectives, adverbs (about 100 N / 70 V / 50 A / 30 D). Skip proper names, abbreviations, very rare or very technical words.
-2. **Write source files** `n.txt, v.txt, a.txt, d.txt` in pipe format (section 6).
+2. **Pre-check candidates** (section 4, working style). Only precheck-clean candidates move on.
+2b. **Write source files** `n.txt, v.txt, a.txt, d.txt` in pipe format (section 6).
 3. **Build:** `python3 build_batch.py <srcdir> <outdir>` → `batch.json` (format `lingo3-vocab/1`). Fix every reported problem (field counts, in-batch clashes).
 4. **Validate morphology** with the repo's own parser: `npx tsx check/validate.ts batch.json` (must print `bad: 0`).
 5. **Commit** the JSON as `data/shared-vocab/batch-NNN.json` on a branch; push; open a PR.
@@ -165,7 +177,8 @@ Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `
 3. **Id collisions are silent**: the importer counts them under `already_present`. Check `source_key` before choosing slugs.
 4. **Synonyms collide** (pretty/beautiful, real/true, before/already). Check translations, not just Swedish.
 5. English modal verbs are stored without `to` (`can`, `must`).
-6. Merging to main needs the user's explicit OK each time; production deploy is manual after the merge.
+6. **Pre-check before writing cards** (`precheck_core_vocab`), and again after building; this avoids duplicate rows and wasted work.
+7. Merging to main needs the user's explicit OK each time; production deploy is manual after the merge.
 
 ## 9. Standing rules
 
@@ -181,4 +194,4 @@ Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `
 2. Admin UI for the queue (optional).
 3. Clean up duplicates created before the consensus merge (optional).
 4. Lexin licence check before public release.
-5. Batches 002, 003 … of 250 words each, following section 5.
+5. Batches 004 … of 250 words each, following sections 4 and 5.
