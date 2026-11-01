@@ -487,13 +487,45 @@ function toWebRequest(req: NodeRequest, fallbackPath: string): Request {
  * nothing thrown inside reaches the platform's error page — an HTML 500 is
  * unreadable to the app, which can then only report the status number.
  */
+type Defer = (work: Promise<unknown>) => void
+
+/** Vercel's own waitUntil, when the runtime exposes it (no package needed). */
+function platformWaitUntil(): ((p: Promise<unknown>) => void) | null {
+  try {
+    const ctx = (globalThis as Record<symbol, unknown>)[Symbol.for('@vercel/request-context')] as
+      | { get?: () => { waitUntil?: (p: Promise<unknown>) => void } | undefined }
+      | undefined
+    const waitUntil = ctx?.get?.()?.waitUntil
+    return typeof waitUntil === 'function' ? waitUntil : null
+  } catch {
+    return null
+  }
+}
+
 function makeHandler(
-  respond: (req: Request) => Promise<Response>,
+  respond: (req: Request, defer: Defer) => Promise<Response>,
   fallbackPath: string,
 ) {
-  const guarded = async (req: Request): Promise<Response> => {
+  // Work that must not delay the answer (e.g. saving a new word to the shared
+  // bank). It runs after the response has been sent: through the platform's
+  // waitUntil when available, otherwise after res.end() on the Node convention.
+  // Only if neither exists (web convention without waitUntil) is it awaited
+  // before returning, because the platform may freeze the function.
+  const guarded = async (
+    req: Request,
+    pending: Promise<unknown>[],
+    keepAlive: boolean,
+  ): Promise<Response> => {
+    const defer: Defer = (work) => {
+      const safe = work.catch(() => undefined)
+      const waitUntil = platformWaitUntil()
+      if (waitUntil) waitUntil(safe)
+      else pending.push(safe)
+    }
     try {
-      return await respond(req)
+      const response = await respond(req, defer)
+      if (!keepAlive && pending.length) await Promise.allSettled(pending.splice(0))
+      return response
     } catch (err) {
       console.error('[expand.ts] unhandled request error', err instanceof Error ? err.name : 'unknown')
       return json({ error: 'Unexpected server error. Please try again.' }, 500)
@@ -504,13 +536,15 @@ function makeHandler(
     req: Request | NodeRequest,
     res?: NodeResponse,
   ): Promise<Response | void> {
+    const pending: Promise<unknown>[] = []
     if (!res || typeof res.setHeader !== 'function') {
-      return guarded(req as Request)
+      return guarded(req as Request, pending, false)
     }
-    const response = await guarded(toWebRequest(req as NodeRequest, fallbackPath))
+    const response = await guarded(toWebRequest(req as NodeRequest, fallbackPath), pending, true)
     res.statusCode = response.status
     response.headers.forEach((value, key) => res.setHeader(key, value))
     res.end(await response.text())
+    if (pending.length) await Promise.allSettled(pending)
   }
 }
 
@@ -523,7 +557,7 @@ function makeHandler(
 
 export default makeHandler(respond, '/api/expand')
 
-async function respond(req: Request): Promise<Response> {
+async function respond(req: Request, defer: Defer): Promise<Response> {
   if (req.method !== 'POST') {
     return json({ error: 'Method not allowed' }, 405)
   }
@@ -608,11 +642,11 @@ async function respond(req: Request): Promise<Response> {
   )
   if (!result.ok) return json({ error: result.error }, result.status)
   // A word typed plainly (no hint, no paired word) is worth keeping for the
-  // next person. The write is awaited: Vercel may freeze the function as soon
-  // as the response is sent.
+  // next person. It is saved after the answer has been sent, so the user
+  // never waits for it.
   if (!hint && !partner) {
     const validated = ServerExpansionSchema.safeParse(result.value)
-    if (validated.success) await cacheShared(validated.data)
+    if (validated.success) defer(cacheShared(validated.data))
   }
   return json(result.value, 200)
 }

@@ -3,6 +3,14 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (morning) — vocabulary batch 001, importer, save-after-answer
+
+- `data/shared-vocab/batch-001.json` (254 candidates, 237 imported) and migration
+  `20261101030000_import_core_vocab_batch.sql` (`import_core_vocab_batch`: idempotent, skips and reports
+  words already in the bank). Procedure for further batches: `docs/vocabulary-playbook.md`.
+- `api/expand.ts`: a new word is saved to the shared bank **after** the answer is sent (platform
+  `waitUntil`, or after `res.end()` on the Node convention), so the user no longer waits for it.
+
 ## 2026-11-01 (night) — one concept for the same meaning typed in different languages
 
 - `supabase/migrations/20261101020000_cache_merge_consensus.sql`: `cache_ai_expansion` first looks for a
