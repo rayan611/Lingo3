@@ -3,6 +3,13 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (late morning) — partial bank hits
+
+- `supabase/migrations/20261101040000_shared_lookup_partial.sql`: `lookup_shared_partial` returns a stored
+  card that has the learner's native language but lacks some other selected languages, listing them in `missing`.
+- `api/expand.ts`: on a partial hit the AI is asked only for the missing languages; the bank's cards are kept,
+  the combined card is returned and saved afterwards (the bank grows language by language).
+
 ## 2026-11-01 (morning) — vocabulary batch 001, importer, save-after-answer
 
 - `data/shared-vocab/batch-001.json` (254 candidates, 237 imported) and migration
