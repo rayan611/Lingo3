@@ -225,7 +225,7 @@ async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
   const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  if (auth.ok === false) return json({ error: auth.message }, auth.status)
 
   if (PROVIDERS.length === 0) return json({ error: 'No model key is configured on the server.' }, 500)
 
@@ -236,12 +236,12 @@ async function respond(req: Request): Promise<Response> {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
   const parsed = parseTranslateInput(body)
-  if (!parsed.ok) return json({ error: parsed.error }, 400)
+  if (parsed.ok === false) return json({ error: parsed.error }, 400)
 
   // Counted only once the request is known to be valid, so a malformed one
   // (or a client bug) does not spend the person's hourly allowance.
   const rate = await enforceAiRateLimit(req, auth.userId, 'translate', 60)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
+  if (rate.allowed === false) return json({ error: rate.message }, rate.status)
 
   const prompt = buildPrompt(parsed.value)
   const result = await firstAnswer(
@@ -281,7 +281,7 @@ async function respond(req: Request): Promise<Response> {
     'translate.ts',
     'The model took too long. Try again.',
   )
-  if (!result.ok) return json({ error: result.error }, result.status)
+  if (result.ok === false) return json({ error: result.error }, result.status)
   const out = result.value
 
   // Keep only the languages that were asked for, in the order they were asked.
@@ -338,7 +338,7 @@ export async function probeProvider(
             : provider === 'deepseek'
               ? await callDeepSeek(TOOL, prompt, key, signal, model, { maxTokens: 1500, temperature: 0 })
               : await callAnthropic(prompt, key, signal, model)
-    if (!res.ok) {
+    if (res.ok === false) {
       const body = (await res.text()).replace(/\s+/g, ' ').slice(0, 300)
       return { ok: false, model, error: `HTTP ${res.status}${body ? ` — ${body}` : ''}` }
     }
