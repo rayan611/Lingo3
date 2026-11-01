@@ -1,0 +1,233 @@
+{
+  "format": "lingo3-vocab/1",
+  "langs": [
+    "fa",
+    "en",
+    "sv",
+    "de",
+    "es",
+    "it"
+  ],
+  "n": 3,
+  "concepts": [
+    {
+      "id": "core.v.accept",
+      "p": "verb",
+      "t": [
+        "communication"
+      ],
+      "e": {
+        "fa": {
+          "h": "پذیرفتن",
+          "x": "من پیشنهاد تو را می‌پذیرم."
+        },
+        "en": {
+          "h": "accept",
+          "f": {
+            "kind": "verb",
+            "thirdPerson": "accepts",
+            "past": "accepted",
+            "pastParticiple": "accepted"
+          },
+          "x": "I accept your suggestion."
+        },
+        "sv": {
+          "h": "acceptera",
+          "f": {
+            "kind": "verb",
+            "present": "accepterar",
+            "preterite": "accepterade",
+            "supine": "accepterat",
+            "imperative": "acceptera",
+            "participle": "accepterande"
+          },
+          "x": "Jag accepterar ditt förslag."
+        },
+        "de": {
+          "h": "akzeptieren",
+          "f": {
+            "kind": "verb",
+            "present": "akzeptiert",
+            "preterite": "akzeptierte",
+            "pastParticiple": "akzeptiert",
+            "auxiliary": "haben",
+            "imperative": "akzeptiere"
+          },
+          "x": "Ich akzeptiere deinen Vorschlag."
+        },
+        "es": {
+          "h": "aceptar",
+          "f": {
+            "kind": "verb",
+            "present": "acepto",
+            "preterite": "acepté",
+            "pastParticiple": "aceptado",
+            "gerund": "aceptando",
+            "imperative": "acepta",
+            "reflexive": false
+          },
+          "x": "Acepto tu propuesta."
+        },
+        "it": {
+          "h": "accettare",
+          "f": {
+            "kind": "verb",
+            "present": "accetto",
+            "pastParticiple": "accettato",
+            "auxiliary": "avere",
+            "gerund": "accettando",
+            "imperative": "accetta",
+            "reflexive": false
+          },
+          "x": "Accetto la tua proposta."
+        }
+      }
+    },
+    {
+      "id": "core.v.subscribe",
+      "p": "verb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "مشترک شدن",
+          "x": "من مشترک یک مجله می‌شوم."
+        },
+        "en": {
+          "h": "subscribe",
+          "f": {
+            "kind": "verb",
+            "thirdPerson": "subscribes",
+            "past": "subscribed",
+            "pastParticiple": "subscribed"
+          },
+          "x": "I subscribe to a magazine."
+        },
+        "sv": {
+          "h": "abonnera",
+          "f": {
+            "kind": "verb",
+            "present": "abonnerar",
+            "preterite": "abonnerade",
+            "supine": "abonnerat",
+            "imperative": "abonnera",
+            "participle": "abonnerande"
+          },
+          "x": "Jag abonnerar på en tidning."
+        },
+        "de": {
+          "h": "abonnieren",
+          "f": {
+            "kind": "verb",
+            "present": "abonniert",
+            "preterite": "abonnierte",
+            "pastParticiple": "abonniert",
+            "auxiliary": "haben",
+            "imperative": "abonniere"
+          },
+          "x": "Ich abonniere eine Zeitschrift."
+        },
+        "es": {
+          "h": "suscribirse",
+          "f": {
+            "kind": "verb",
+            "present": "me suscribo",
+            "preterite": "me suscribí",
+            "pastParticiple": "suscrito",
+            "gerund": "suscribiéndose",
+            "imperative": "suscríbete",
+            "reflexive": true
+          },
+          "x": "Me suscribo a una revista."
+        },
+        "it": {
+          "h": "abbonarsi",
+          "f": {
+            "kind": "verb",
+            "present": "mi abbono",
+            "pastParticiple": "abbonato",
+            "auxiliary": "essere",
+            "gerund": "abbonandosi",
+            "imperative": "abbonati",
+            "reflexive": true
+          },
+          "x": "Mi abbono a una rivista."
+        }
+      }
+    },
+    {
+      "id": "core.v.adopt",
+      "p": "verb",
+      "t": [
+        "family"
+      ],
+      "e": {
+        "fa": {
+          "h": "به فرزندی پذیرفتن",
+          "x": "آن‌ها تصمیم دارند کودکی را به فرزندی بپذیرند."
+        },
+        "en": {
+          "h": "adopt",
+          "f": {
+            "kind": "verb",
+            "thirdPerson": "adopts",
+            "past": "adopted",
+            "pastParticiple": "adopted"
+          },
+          "x": "They want to adopt a child."
+        },
+        "sv": {
+          "h": "adoptera",
+          "f": {
+            "kind": "verb",
+            "present": "adopterar",
+            "preterite": "adopterade",
+            "supine": "adopterat",
+            "imperative": "adoptera",
+            "participle": "adopterande"
+          },
+          "x": "De vill adoptera ett barn."
+        },
+        "de": {
+          "h": "adoptieren",
+          "f": {
+            "kind": "verb",
+            "present": "adoptiert",
+            "preterite": "adoptierte",
+            "pastParticiple": "adoptiert",
+            "auxiliary": "haben",
+            "imperative": "adoptiere"
+          },
+          "x": "Sie möchten ein Kind adoptieren."
+        },
+        "es": {
+          "h": "adoptar",
+          "f": {
+            "kind": "verb",
+            "present": "adopto",
+            "preterite": "adopté",
+            "pastParticiple": "adoptado",
+            "gerund": "adoptando",
+            "imperative": "adopta",
+            "reflexive": false
+          },
+          "x": "Quieren adoptar a un niño."
+        },
+        "it": {
+          "h": "adottare",
+          "f": {
+            "kind": "verb",
+            "present": "adotto",
+            "pastParticiple": "adottato",
+            "auxiliary": "avere",
+            "gerund": "adottando",
+            "imperative": "adotta",
+            "reflexive": false
+          },
+          "x": "Vogliono adottare un bambino."
+        }
+      }
+    }
+  ]
+}
