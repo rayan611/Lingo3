@@ -2,7 +2,7 @@
 
 Give this whole file to a new chat. It explains what exists, the rules, and the exact procedure to add the next batch of 250 words without creating duplicates.
 
-Last updated: 2026-11-01 (after batch 001).
+Last updated: 2026-11-01 (after batch 002).
 
 ---
 
@@ -12,13 +12,14 @@ Lingo3 has one **central shared vocabulary bank** in Supabase. Every word is a *
 
 Why: the app's AI should only answer when the bank cannot. Cards prepared in advance (by Claude in a chat, not by the app's AI) are cheaper, faster and consistent.
 
-Current state: core batch (299) + batch 001 (237 imported) + words users added through the AI. About 537+ concepts, 3,200+ entries. Check live numbers with SQL before starting.
+Current state (after batch 002, 2026-11-01): **741 concepts**, 4,444 entries, no duplicates, no empty examples, every core concept has all 6 languages. Batch 001: 237 of 254 candidates imported; batch 002: 204 of 245 imported. Always re-run the health check (section 8) for live numbers before a new batch.
 
 ## 2. How the app uses the bank (runtime flow)
 
 1. User types a word (any of the six languages, with or without article / `to` / `att`).
 2. The app first asks the bank: `lookup_shared_expansion(search_term, search_lang, native_lang, target_langs)`.
    - Matching uses `shared_lemma_key(word, lang)`: lowercase, article / `to` / `att` removed, NFC, **accents kept** (schon ≠ schön), Arabic ي/ك → ی/ک.
+   - Results are returned **without JSON nulls** (the public function wraps `*_raw` in `jsonb_strip_nulls`; the client and server also run `stripNulls`). Nulls break the zod schemas and cause the bank hit to be silently discarded — this happened once and made every bank hit fall through to the AI.
    - A candidate must be `status = 'ready'` and have **all wanted languages** (user's native + target languages) with headword and example.
    - `core` beats `ai`; a form typed with its article/`to` beats a bare homograph.
    - If not exactly one concept / one matching language → returns null (ambiguous words go to the AI).
@@ -39,7 +40,8 @@ Tables
 
 Functions
 - `shared_bare_word`, `shared_lemma_key`
-- `lookup_shared_expansion` (anon, authenticated, service_role)
+- `lookup_shared_expansion` (anon, authenticated, service_role) — full hit; wraps `lookup_shared_expansion_raw` + `jsonb_strip_nulls`
+- `lookup_shared_partial` (anon, authenticated) — native-language card exists but other selected languages are missing; returns `missing`; wraps `lookup_shared_partial_raw`
 - `cache_ai_expansion` (service_role only)
 - `review_shared_concept(concept, approve)` + view `shared_review_queue` (service_role only)
 - `import_core_vocab_batch(doc jsonb)` (service_role only) — bulk importer, see section 5
@@ -60,7 +62,10 @@ Before choosing words for a batch, and again before importing:
 4. Within one batch headwords must be unique per language after stripping the article and diacritics (sv `var`/`vår`, `svar`/`svår` clash in the app).
 5. The importer is the final safety net: it skips any concept whose `source_key` exists, **and** any concept that shares (language, lemma_key, pos) with an existing non-rejected card, and reports both. Always read its report.
 
-Skipped from batch 001 (re-use ideas, but with a different word choice): pretty, warm, calm, clear, real, fake, approximately, fairly, before, later, ever, away, moon, photo, plus the 3 id collisions (full, still, soon).
+Skipped (synonym overlaps with cards already in the bank — do not re-submit as they are; they may be re-added later only with a clearly different sense):
+- batch 001: pretty, warm, calm, clear, real, fake, approximately, fairly, before, later, ever, away, moon, photo; id collisions full, still, soon.
+- batch 002: coarse, mild, simple, free (adj), personal, spicy, sleepy, mean, secure, handsome, least, most, where to, indoors, outdoors, earlier, sound, café, menu, jar, letter (alphabet), lesson, history, evening, manage, scream, try on, earn, hope, carry, fetch, boil; plus 9 id collisions (already_present).
+Tip: the importer reports `with:` the existing concept; rank candidates by everyday frequency, and choose words whose English/German/Spanish/Italian translations are not already headwords in the bank (check `shared_entries.lemma_key` for ALL six languages, not only Swedish).
 
 ## 5. Procedure for a new batch of 250
 
@@ -131,6 +136,36 @@ If a standalone file is wanted (offline chats), export a list: `select lemma, po
 - AI-added concepts: `select * from shared_review_queue;` (service role). Approve or reject with `review_shared_concept(concept_id, true|false)`. Rejected cards stop being returned by lookup.
 - Periodic quality pass by Claude: read a slice of cards (core and ai), fix wrong forms/examples with `update shared_entries …`, and set `reviewed_at`. A scheduled task can do this weekly on the queue.
 - No admin UI for the queue yet.
+
+### Health check (run before and after every batch)
+
+```sql
+-- counts by source / status / pos
+select source, status, pos, count(*) from public.shared_concepts group by 1,2,3 order by 1,2,3;
+-- concepts that do not have all 6 languages (expected: only 'ai' concepts)
+select c.source_key, count(e.*) from public.shared_concepts c left join public.shared_entries e on e.concept_id=c.id
+group by 1 having count(e.*) < 6;
+-- duplicates (must return no rows)
+select e.lang, e.lemma_key, c.pos, count(*) from public.shared_entries e join public.shared_concepts c on c.id=e.concept_id
+where c.status<>'rejected' group by 1,2,3 having count(*)>1;
+-- empty examples (must return no rows)
+select concept_id, lang from public.shared_entries where nullif(trim(coalesce(example,'')),'') is null;
+-- morphology kind must equal pos (fa is null by design; plural-only nouns like pengar/vacaciones may be null)
+select c.source_key, e.lang from public.shared_entries e join public.shared_concepts c on c.id=e.concept_id
+where e.morphology is not null and e.morphology->>'kind' is distinct from c.pos;
+-- noun headwords carry their article (sv en/ett, de der/die/das, es/it el/la/il/lo/l')
+```
+
+Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `las vacaciones`, `le vacanze`, `i soldi`); the AI-added test concept `ai:sv:noun:bedömning` has Farsi morphology kind `simple`.
+
+### Lessons learned (do not repeat)
+
+1. **Test as the app does.** Database-side tests run with admin rights and bypass RLS and the app's zod validation. After any change to lookup output, also (a) test as `authenticated` (`set local role authenticated`) and (b) parse the real output with `ExpansionSchema` (`src/db/types.ts`).
+2. **A word with a hint or a paired word never uses the bank** (by design: they need a custom sense/example). A slow search with a hint is expected.
+3. **Id collisions are silent**: the importer counts them under `already_present`. Check `source_key` before choosing slugs.
+4. **Synonyms collide** (pretty/beautiful, real/true, before/already). Check translations, not just Swedish.
+5. English modal verbs are stored without `to` (`can`, `must`).
+6. Merging to main needs the user's explicit OK each time; production deploy is manual after the merge.
 
 ## 9. Standing rules
 

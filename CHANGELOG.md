@@ -3,6 +3,11 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (afternoon) — vocabulary batch 002
+
+- `data/shared-vocab/batch-002.json` (245 candidates): 204 imported, 32 skipped as synonym overlaps, 9 id collisions.
+  Bank is now 741 concepts / 4,444 entries; health check clean. Playbook updated.
+
 ## 2026-11-01 (noon) — bank hits were being discarded (null fields)
 
 - Bank answers carried JSON `null` (empty notes, Farsi morphology) and both zod schemas reject null, so every
