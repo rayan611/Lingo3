@@ -70,7 +70,19 @@ begin
     if concept_uuid is not null then return concept_uuid; end if;
   end if;
 
-t (concept_id,lang) do nothing;
+  if concept_uuid is null then
+    insert into public.shared_concepts(source_key,source,source_lang,lemma,pos,tags,status)
+    values (cache_key,'ai',v_lang,v_word,v_pos,
+            coalesce(array(select jsonb_array_elements_text(expansion->'tags')), '{}'), 'draft')
+    on conflict (source_key) do update set updated_at = now()
+    returning id into concept_uuid;
+  end if;
+
+  for item in select * from jsonb_array_elements(expansion->'entries') loop
+    insert into public.shared_entries(concept_id,lang,headword,morphology,example,notes,source)
+    values (concept_uuid,item->>'lang',item->>'headword',item->'morphology',
+            item->>'example',item->>'notes','ai')
+    on conflict (concept_id,lang) do nothing;
   end loop;
 
   update public.shared_concepts set status='ready',updated_at=now()
