@@ -55,12 +55,12 @@ async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
   const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  if (auth.ok === false) return json({ error: auth.message }, auth.status)
 
   // Its own hourly bucket in consume_ai_rate_limit(), so one account cannot
   // loop this relay and get the server's address blocked for everyone.
   const rate = await enforceAiRateLimit(req, auth.userId, 'tts', TTS_HOURLY_LIMIT)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
+  if (rate.allowed === false) return json({ error: rate.message }, rate.status)
 
   let raw: unknown
   try {
@@ -69,7 +69,7 @@ async function respond(req: Request): Promise<Response> {
     return json({ error: 'Invalid request.' }, 400)
   }
   const input = parseTtsInput(raw)
-  if (!input.ok) return json({ error: input.error }, 400)
+  if (input.ok === false) return json({ error: input.error }, 400)
 
   const url =
     'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob' +
