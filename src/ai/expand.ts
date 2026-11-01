@@ -3,6 +3,7 @@ import { defaultTargetCollection, roomIn } from '../db/collections'
 import { aiDownStatus } from './unavailable'
 import { detectLang } from '../lib/detectLang'
 import { authConfigured, supabase } from '../auth/supabase'
+import { stripNulls } from '../server/sharedVocab'
 import { makeCard } from '../fsrs/scheduler'
 import {
   ExpansionSchema,
@@ -68,7 +69,7 @@ export async function fetchExpansion(opts: {
         target_langs: opts.langs.filter((lang) => lang !== opts.nativeLang),
       })
       if (!error && data) {
-        const ready = ExpansionSchema.safeParse(data)
+        const ready = ExpansionSchema.safeParse(stripNulls(data))
         if (ready.success) return { ...ready.data, origin: 'bank' }
       }
     } catch {

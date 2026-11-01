@@ -1,7 +1,7 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
-import { serviceHeaders, sharedCachePayload } from '../src/server/sharedVocab.js'
+import { serviceHeaders, sharedCachePayload, stripNulls } from '../src/server/sharedVocab.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 import { z } from 'zod'
 
@@ -719,7 +719,7 @@ async function lookupShared(
       signal: AbortSignal.timeout(1800),
     })
     if (!response.ok) return null
-    const parsed = ServerExpansionSchema.safeParse(await response.json())
+    const parsed = ServerExpansionSchema.safeParse(stripNulls(await response.json()))
     return parsed.success ? parsed.data : null
   } catch {
     return null

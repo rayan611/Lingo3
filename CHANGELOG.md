@@ -3,6 +3,13 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (noon) — bank hits were being discarded (null fields)
+
+- Bank answers carried JSON `null` (empty notes, Farsi morphology) and both zod schemas reject null, so every
+  bank hit was thrown away and the AI ran. `supabase/migrations/20261101050000_shared_lookup_strip_nulls.sql`
+  wraps both lookup functions in `jsonb_strip_nulls`; `stripNulls()` also runs on the client and server.
+  Regression check added to `scripts/check-shared-vocab.ts`.
+
 ## 2026-11-01 (late morning) — partial bank hits
 
 - `supabase/migrations/20261101040000_shared_lookup_partial.sql`: `lookup_shared_partial` returns a stored
