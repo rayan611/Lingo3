@@ -31,7 +31,10 @@ AI decides; `to love` is explicit and finds the verb.
 Every word added without a hint or paired word that the bank did not have is
 stored after the AI answers. It joins the concept with the same language, part of
 speech and `lemma_key`, and later requests with other languages add those
-languages to it. A stored entry is never overwritten.
+languages to it. A stored entry is never overwritten. If the typed word is not
+stored but the answer shares two or more languages' words with one stored concept
+(same part of speech), it joins that concept, so the same meaning typed in Persian
+or Spanish ends up as one concept. One shared language is not enough.
 
 After a complete AI result, the Vercel endpoint can cache it through the
 service-role-only `cache_ai_expansion` function. This requires
