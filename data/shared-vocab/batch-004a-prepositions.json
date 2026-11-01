@@ -1,0 +1,1502 @@
+{
+  "format": "lingo3-vocab/1",
+  "langs": [
+    "fa",
+    "en",
+    "sv",
+    "de",
+    "es",
+    "it"
+  ],
+  "n": 31,
+  "concepts": [
+    {
+      "id": "core.prep.in",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "در",
+          "x": "کلید در کشو است."
+        },
+        "en": {
+          "h": "in",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The key is in the drawer."
+        },
+        "sv": {
+          "h": "i",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Nyckeln ligger i lådan."
+        },
+        "de": {
+          "h": "in",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Der Schlüssel liegt in der Schublade."
+        },
+        "es": {
+          "h": "en",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La llave está en el cajón."
+        },
+        "it": {
+          "h": "in",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La chiave è nel cassetto."
+        }
+      }
+    },
+    {
+      "id": "core.prep.on",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "روی",
+          "x": "کتاب روی میز است."
+        },
+        "en": {
+          "h": "on",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The book is on the table."
+        },
+        "sv": {
+          "h": "på",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Boken ligger på bordet."
+        },
+        "de": {
+          "h": "auf",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Das Buch liegt auf dem Tisch."
+        },
+        "es": {
+          "h": "sobre",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "El libro está sobre la mesa."
+        },
+        "it": {
+          "h": "su",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Il libro è sul tavolo."
+        }
+      }
+    },
+    {
+      "id": "core.prep.under",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "زیر",
+          "x": "گربه زیر میز خوابیده است."
+        },
+        "en": {
+          "h": "under",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The cat is sleeping under the table."
+        },
+        "sv": {
+          "h": "under",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Katten sover under bordet."
+        },
+        "de": {
+          "h": "unter",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Die Katze schläft unter dem Tisch."
+        },
+        "es": {
+          "h": "debajo de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "El gato duerme debajo de la mesa."
+        },
+        "it": {
+          "h": "sotto",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Il gatto dorme sotto il tavolo."
+        }
+      }
+    },
+    {
+      "id": "core.prep.above",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بالای",
+          "x": "چراغ بالای میز آویزان است."
+        },
+        "en": {
+          "h": "above",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The lamp hangs above the table."
+        },
+        "sv": {
+          "h": "ovanför",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lampan hänger ovanför bordet."
+        },
+        "de": {
+          "h": "über",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Die Lampe hängt über dem Tisch."
+        },
+        "es": {
+          "h": "encima de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La lámpara cuelga encima de la mesa."
+        },
+        "it": {
+          "h": "sopra",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La lampada è appesa sopra il tavolo."
+        }
+      }
+    },
+    {
+      "id": "core.prep.beside",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "کنار",
+          "x": "او کنار من نشسته است."
+        },
+        "en": {
+          "h": "next to",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "She is sitting next to me."
+        },
+        "sv": {
+          "h": "bredvid",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Hon sitter bredvid mig."
+        },
+        "de": {
+          "h": "neben",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Sie sitzt neben mir."
+        },
+        "es": {
+          "h": "al lado de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ella está sentada a mi lado."
+        },
+        "it": {
+          "h": "accanto a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lei è seduta accanto a me."
+        }
+      }
+    },
+    {
+      "id": "core.prep.between",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بین",
+          "x": "مدرسه بین بانک و پارک است."
+        },
+        "en": {
+          "h": "between",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The school is between the bank and the park."
+        },
+        "sv": {
+          "h": "mellan",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Skolan ligger mellan banken och parken."
+        },
+        "de": {
+          "h": "zwischen",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Die Schule liegt zwischen der Bank und dem Park."
+        },
+        "es": {
+          "h": "entre",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La escuela está entre el banco y el parque."
+        },
+        "it": {
+          "h": "tra",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La scuola si trova tra la banca e il parco."
+        }
+      }
+    },
+    {
+      "id": "core.prep.behind",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "پشت",
+          "x": "دوچرخه پشت خانه است."
+        },
+        "en": {
+          "h": "behind",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The bicycle is behind the house."
+        },
+        "sv": {
+          "h": "bakom",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Cykeln står bakom huset."
+        },
+        "de": {
+          "h": "hinter",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Das Fahrrad steht hinter dem Haus."
+        },
+        "es": {
+          "h": "detrás de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La bicicleta está detrás de la casa."
+        },
+        "it": {
+          "h": "dietro",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La bicicletta è dietro la casa."
+        }
+      }
+    },
+    {
+      "id": "core.prep.through",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "از میان",
+          "x": "از میان پارک گذشتیم."
+        },
+        "en": {
+          "h": "through",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We walked through the park."
+        },
+        "sv": {
+          "h": "genom",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi gick genom parken."
+        },
+        "de": {
+          "h": "durch",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir gingen durch den Park."
+        },
+        "es": {
+          "h": "a través de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Caminamos a través del parque."
+        },
+        "it": {
+          "h": "attraverso",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Siamo passati attraverso il parco."
+        }
+      }
+    },
+    {
+      "id": "core.prep.without",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بدون",
+          "x": "او بدون چتر بیرون رفت."
+        },
+        "en": {
+          "h": "without",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "She went out without an umbrella."
+        },
+        "sv": {
+          "h": "utan",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Hon gick ut utan paraply."
+        },
+        "de": {
+          "h": "ohne",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Sie ging ohne Regenschirm hinaus."
+        },
+        "es": {
+          "h": "sin",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ella salió sin paraguas."
+        },
+        "it": {
+          "h": "senza",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lei è uscita senza ombrello."
+        }
+      }
+    },
+    {
+      "id": "core.prep.with",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "با",
+          "x": "من با دوستم سفر می‌کنم."
+        },
+        "en": {
+          "h": "with",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "I am travelling with my friend."
+        },
+        "sv": {
+          "h": "med",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Jag reser med min vän."
+        },
+        "de": {
+          "h": "mit",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ich reise mit meinem Freund."
+        },
+        "es": {
+          "h": "con",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Viajo con mi amigo."
+        },
+        "it": {
+          "h": "con",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Viaggio con un amico."
+        }
+      }
+    },
+    {
+      "id": "core.prep.to",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "به",
+          "x": "من به مدرسه می‌روم."
+        },
+        "en": {
+          "h": "to",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "I go to school."
+        },
+        "sv": {
+          "h": "till",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Jag går till skolan."
+        },
+        "de": {
+          "h": "zu",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ich gehe zur Schule."
+        },
+        "es": {
+          "h": "a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Voy a la escuela."
+        },
+        "it": {
+          "h": "a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vado a scuola."
+        }
+      }
+    },
+    {
+      "id": "core.prep.from",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "از",
+          "x": "او اهل استکهلم است."
+        },
+        "en": {
+          "h": "from",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "She comes from Stockholm."
+        },
+        "sv": {
+          "h": "från",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Hon kommer från Stockholm."
+        },
+        "de": {
+          "h": "aus",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Sie kommt aus Stockholm."
+        },
+        "es": {
+          "h": "de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ella viene de Estocolmo."
+        },
+        "it": {
+          "h": "da",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lei viene da Stoccolma."
+        }
+      }
+    },
+    {
+      "id": "core.prep.for",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "برای",
+          "x": "این هدیه برای توست."
+        },
+        "en": {
+          "h": "for",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "This gift is for you."
+        },
+        "sv": {
+          "h": "för",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Den här presenten är för dig."
+        },
+        "de": {
+          "h": "für",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Dieses Geschenk ist für dich."
+        },
+        "es": {
+          "h": "para",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Este regalo es para ti."
+        },
+        "it": {
+          "h": "per",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Questo regalo è per te."
+        }
+      }
+    },
+    {
+      "id": "core.prep.after",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بعد از",
+          "x": "بعد از کار همدیگر را می‌بینیم."
+        },
+        "en": {
+          "h": "after",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We will meet after work."
+        },
+        "sv": {
+          "h": "efter",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi ses efter jobbet."
+        },
+        "de": {
+          "h": "nach",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir sehen uns nach der Arbeit."
+        },
+        "es": {
+          "h": "después de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Nos vemos después del trabajo."
+        },
+        "it": {
+          "h": "dopo",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ci vediamo dopo il lavoro."
+        }
+      }
+    },
+    {
+      "id": "core.prep.before",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "پیش از",
+          "x": "پیش از غذا دست‌هایت را بشوی."
+        },
+        "en": {
+          "h": "before",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wash your hands before the meal."
+        },
+        "sv": {
+          "h": "före",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Tvätta händerna före maten."
+        },
+        "de": {
+          "h": "vor",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wasch dir vor dem Essen die Hände."
+        },
+        "es": {
+          "h": "antes de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lávate las manos antes de comer."
+        },
+        "it": {
+          "h": "prima di",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Lavati le mani prima di mangiare."
+        }
+      }
+    },
+    {
+      "id": "core.prep.near",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "نزدیک",
+          "x": "ما نزدیک ایستگاه زندگی می‌کنیم."
+        },
+        "en": {
+          "h": "near",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We live near the station."
+        },
+        "sv": {
+          "h": "nära",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi bor nära stationen."
+        },
+        "de": {
+          "h": "in der Nähe von",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir wohnen in der Nähe des Bahnhofs."
+        },
+        "es": {
+          "h": "cerca de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vivimos cerca de la estación."
+        },
+        "it": {
+          "h": "vicino a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Abitiamo vicino alla stazione."
+        }
+      }
+    },
+    {
+      "id": "core.prep.outside",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بیرون از",
+          "x": "بچه‌ها بیرون از خانه بازی می‌کنند."
+        },
+        "en": {
+          "h": "outside",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The children are playing outside the house."
+        },
+        "sv": {
+          "h": "utanför",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Barnen leker utanför huset."
+        },
+        "de": {
+          "h": "außerhalb",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Die Kinder spielen außerhalb des Hauses."
+        },
+        "es": {
+          "h": "fuera de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Los niños juegan fuera de la casa."
+        },
+        "it": {
+          "h": "fuori da",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "I bambini giocano fuori dalla casa."
+        }
+      }
+    },
+    {
+      "id": "core.prep.along",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "در امتداد",
+          "x": "در امتداد رودخانه قدم می‌زنیم."
+        },
+        "en": {
+          "h": "along",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We walk along the river."
+        },
+        "sv": {
+          "h": "längs",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi går längs floden."
+        },
+        "de": {
+          "h": "entlang",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir gehen den Fluss entlang."
+        },
+        "es": {
+          "h": "a lo largo de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Caminamos a lo largo del río."
+        },
+        "it": {
+          "h": "lungo",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Camminiamo lungo il fiume."
+        }
+      }
+    },
+    {
+      "id": "core.prep.despite",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "با وجود",
+          "x": "با وجود باران بیرون رفتیم."
+        },
+        "en": {
+          "h": "despite",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We went out despite the rain."
+        },
+        "sv": {
+          "h": "trots",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi gick ut trots regnet."
+        },
+        "de": {
+          "h": "trotz",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir gingen trotz des Regens hinaus."
+        },
+        "es": {
+          "h": "a pesar de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Salimos a pesar de la lluvia."
+        },
+        "it": {
+          "h": "nonostante",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Siamo usciti nonostante la pioggia."
+        }
+      }
+    },
+    {
+      "id": "core.prep.according_to",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "طبق",
+          "x": "طبق برنامه، قطار ساعت هشت حرکت می‌کند."
+        },
+        "en": {
+          "h": "according to",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "According to the timetable, the train leaves at eight."
+        },
+        "sv": {
+          "h": "enligt",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Enligt tidtabellen går tåget klockan åtta."
+        },
+        "de": {
+          "h": "laut",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Laut Fahrplan fährt der Zug um acht Uhr ab."
+        },
+        "es": {
+          "h": "según",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Según el horario, el tren sale a las ocho."
+        },
+        "it": {
+          "h": "secondo",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Secondo l'orario, il treno parte alle otto."
+        }
+      }
+    },
+    {
+      "id": "core.prep.towards",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "به سوی",
+          "x": "او به سوی در دوید."
+        },
+        "en": {
+          "h": "towards",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "He ran towards the door."
+        },
+        "sv": {
+          "h": "mot",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Han sprang mot dörren."
+        },
+        "de": {
+          "h": "in Richtung",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Er lief in Richtung Tür."
+        },
+        "es": {
+          "h": "hacia",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Corrió hacia la puerta."
+        },
+        "it": {
+          "h": "verso",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Corse verso la porta."
+        }
+      }
+    },
+    {
+      "id": "core.prep.around",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "دور",
+          "x": "دور دریاچه قدم زدیم."
+        },
+        "en": {
+          "h": "around",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We walked around the lake."
+        },
+        "sv": {
+          "h": "runt",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi gick runt sjön."
+        },
+        "de": {
+          "h": "um",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir gingen um den See."
+        },
+        "es": {
+          "h": "alrededor de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Caminamos alrededor del lago."
+        },
+        "it": {
+          "h": "intorno a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Abbiamo camminato intorno al lago."
+        }
+      }
+    },
+    {
+      "id": "core.prep.regarding",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "درباره",
+          "x": "من دربارهٔ جلسه یک سؤال دارم."
+        },
+        "en": {
+          "h": "regarding",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "I have a question regarding the meeting."
+        },
+        "sv": {
+          "h": "angående",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Jag har en fråga angående mötet."
+        },
+        "de": {
+          "h": "bezüglich",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ich habe eine Frage bezüglich des Treffens."
+        },
+        "es": {
+          "h": "con respecto a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Tengo una pregunta con respecto a la reunión."
+        },
+        "it": {
+          "h": "riguardo a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Ho una domanda riguardo alla riunione."
+        }
+      }
+    },
+    {
+      "id": "core.prep.beyond",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "آن سوی",
+          "x": "جنگل آن سوی رودخانه است."
+        },
+        "en": {
+          "h": "beyond",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The forest is beyond the river."
+        },
+        "sv": {
+          "h": "bortom",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Skogen ligger bortom floden."
+        },
+        "de": {
+          "h": "jenseits",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Der Wald liegt jenseits des Flusses."
+        },
+        "es": {
+          "h": "más allá de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "El bosque está más allá del río."
+        },
+        "it": {
+          "h": "oltre",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Il bosco si trova oltre il fiume."
+        }
+      }
+    },
+    {
+      "id": "core.prep.except_for",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "به‌جز",
+          "x": "به‌جز آنا همه آمدند."
+        },
+        "en": {
+          "h": "except for",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Everyone came except for Anna."
+        },
+        "sv": {
+          "h": "förutom",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Alla kom förutom Anna."
+        },
+        "de": {
+          "h": "außer",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Alle kamen außer Anna."
+        },
+        "es": {
+          "h": "excepto",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Todos vinieron excepto Ana."
+        },
+        "it": {
+          "h": "tranne",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Sono venuti tutti tranne Anna."
+        }
+      }
+    },
+    {
+      "id": "core.prep.inside",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "داخل",
+          "x": "داخل جعبه یک نامه هست."
+        },
+        "en": {
+          "h": "inside",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "There is a letter inside the box."
+        },
+        "sv": {
+          "h": "inuti",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Det finns ett brev inuti lådan."
+        },
+        "de": {
+          "h": "im Inneren von",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Im Inneren der Schachtel liegt ein Brief."
+        },
+        "es": {
+          "h": "dentro de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Hay una carta dentro de la caja."
+        },
+        "it": {
+          "h": "all'interno di",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "C'è una lettera all'interno della scatola."
+        }
+      }
+    },
+    {
+      "id": "core.prep.until",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "تا",
+          "x": "تا ساعت پنج منتظر می‌مانیم."
+        },
+        "en": {
+          "h": "until",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We will wait until five o'clock."
+        },
+        "sv": {
+          "h": "tills",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi väntar tills klockan fem."
+        },
+        "de": {
+          "h": "bis",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir warten bis fünf Uhr."
+        },
+        "es": {
+          "h": "hasta",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Esperaremos hasta las cinco."
+        },
+        "it": {
+          "h": "fino a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Aspettiamo fino alle cinque."
+        }
+      }
+    },
+    {
+      "id": "core.prep.in_addition_to",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "علاوه بر",
+          "x": "علاوه بر اجاره، هزینهٔ برق را هم می‌پردازیم."
+        },
+        "en": {
+          "h": "in addition to",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "In addition to the rent, we pay for electricity."
+        },
+        "sv": {
+          "h": "utöver",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Utöver hyran betalar vi för el."
+        },
+        "de": {
+          "h": "zusätzlich zu",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Zusätzlich zur Miete bezahlen wir den Strom."
+        },
+        "es": {
+          "h": "además de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Además del alquiler, pagamos la electricidad."
+        },
+        "it": {
+          "h": "oltre a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Oltre all'affitto, paghiamo l'elettricità."
+        }
+      }
+    },
+    {
+      "id": "core.prep.regardless_of",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "صرف‌نظر از",
+          "x": "صرف‌نظر از هوا بیرون می‌رویم."
+        },
+        "en": {
+          "h": "regardless of",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We go out regardless of the weather."
+        },
+        "sv": {
+          "h": "oavsett",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi går ut oavsett väder."
+        },
+        "de": {
+          "h": "unabhängig von",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir gehen unabhängig vom Wetter nach draußen."
+        },
+        "es": {
+          "h": "independientemente de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Salimos independientemente del tiempo."
+        },
+        "it": {
+          "h": "indipendentemente da",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Usciamo indipendentemente dal tempo."
+        }
+      }
+    },
+    {
+      "id": "core.prep.below",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "پایینِ",
+          "x": "نیمکت پایینِ پنجره است."
+        },
+        "en": {
+          "h": "below",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "The bench is below the window."
+        },
+        "sv": {
+          "h": "nedanför",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Bänken står nedanför fönstret."
+        },
+        "de": {
+          "h": "unterhalb",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Die Bank steht unterhalb des Fensters."
+        },
+        "es": {
+          "h": "por debajo de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "El banco está por debajo de la ventana."
+        },
+        "it": {
+          "h": "al di sotto di",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "La panchina è al di sotto della finestra."
+        }
+      }
+    },
+    {
+      "id": "core.prep.based_on",
+      "p": "preposition",
+      "t": [
+        "prepositions"
+      ],
+      "e": {
+        "fa": {
+          "h": "بر اساس",
+          "x": "ما بر اساس واقعیت‌ها تصمیم می‌گیریم."
+        },
+        "en": {
+          "h": "based on",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "We make decisions based on facts."
+        },
+        "sv": {
+          "h": "utifrån",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Vi fattar beslut utifrån fakta."
+        },
+        "de": {
+          "h": "auf Grundlage von",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Wir treffen Entscheidungen auf Grundlage von Fakten."
+        },
+        "es": {
+          "h": "a partir de",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Tomamos decisiones a partir de los hechos."
+        },
+        "it": {
+          "h": "in base a",
+          "f": {
+            "kind": "simple"
+          },
+          "x": "Prendiamo decisioni in base ai fatti."
+        }
+      }
+    }
+  ]
+}
