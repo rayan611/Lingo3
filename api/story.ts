@@ -263,7 +263,7 @@ async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
 
   const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  if (auth.ok === false) return json({ error: auth.message }, auth.status)
 
   if (PROVIDERS.length === 0) {
     return json(
@@ -282,12 +282,12 @@ async function respond(req: Request): Promise<Response> {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
   const parsed = parseStoryInput(rawBody)
-  if (!parsed.ok) return json({ error: parsed.error }, 400)
+  if (parsed.ok === false) return json({ error: parsed.error }, 400)
 
   // Counted only once the request is known to be valid, so a malformed one
   // (or a client bug) does not spend the person's hourly allowance.
   const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
+  if (rate.allowed === false) return json({ error: rate.message }, rate.status)
 
   const { lang, nativeLang, words, genre, length, unknownShare } = parsed.value
   const prompt = buildPrompt({ lang, nativeLang, words, genre, length, unknownShare })
@@ -329,7 +329,7 @@ async function respond(req: Request): Promise<Response> {
     'story.ts',
     'The model took too long. Try again.',
   )
-  if (!result.ok) return json({ error: result.error }, result.status)
+  if (result.ok === false) return json({ error: result.error }, result.status)
   return json(result.value, 200)
 }
 
