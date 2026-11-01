@@ -25,7 +25,7 @@ Current state: core batch (299) + batch 001 (237 imported) + words users added t
 3. Bank hit → show the card, label "Shared bank". No AI call.
 4. Bank miss → AI answers (chain Gemini → Groq → Mistral → DeepSeek → Claude), label "AI".
 5. **After the result is shown to the user**, the AI answer is written to the bank via `cache_ai_expansion(cache_key, expansion)` (service role only), for all languages in the answer. Rationale: the write and any missing-language generation cost extra time, so the user must never wait for them.
-   - Current implementation awaits the write before responding (adds up to ~2.5 s). **Planned change:** move it after the response (e.g. Vercel `waitUntil`). Not done yet.
+   - Implemented in `api/expand.ts`: the write is deferred with the platform's `waitUntil` (or after `res.end()` on the Node convention), so the user never waits. Only if neither is available is it awaited before returning.
 6. Merge rules in `cache_ai_expansion`: find stored concept by typed word's (lang, lemma_key, pos); else merge into a concept sharing ≥2 languages' words with the same pos (ties never merge); else create a new `ai` concept. Entries use `ON CONFLICT DO NOTHING` — existing core/AI entries are never overwritten. Words with a hint or a partner stay personal and are not cached.
 7. AI-added concepts go `ready` immediately with structural checks only. Review later (section 8).
 
@@ -141,9 +141,8 @@ If a standalone file is wanted (offline chats), export a list: `select lemma, po
 
 ## 10. Open items
 
-1. Move the user-word cache write to after the response is shown.
-2. Weekly AI review of the review queue (scheduled task).
-3. Admin UI for the queue (optional).
-4. Clean up duplicates created before the consensus merge (optional).
-5. Lexin licence check before public release.
-6. Batches 002, 003 … of 250 words each, following section 5.
+1. Weekly AI review of the review queue (scheduled task).
+2. Admin UI for the queue (optional).
+3. Clean up duplicates created before the consensus merge (optional).
+4. Lexin licence check before public release.
+5. Batches 002, 003 … of 250 words each, following section 5.
