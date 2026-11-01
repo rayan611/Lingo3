@@ -3,6 +3,16 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (night) — one concept for the same meaning typed in different languages
+
+- `supabase/migrations/20261101020000_cache_merge_consensus.sql`: `cache_ai_expansion` first looks for a
+  stored concept by the typed word (as before); if there is none it merges into the stored concept of the
+  same part of speech that shares **two or more** languages' words with the answer (article and case
+  ignored, accents kept). One shared language never merges, a tie between two concepts never merges.
+  Stored entries are still never overwritten. Tested on the live project in a rolled-back transaction:
+  one overlap stays separate, two overlaps merge and add the new language, another part of speech stays
+  separate. **Open:** concepts created before this stay as they are; a clean-up of duplicates is manual.
+
 ## 2026-11-01 (later) — where an answer came from; review queue for AI-added words
 
 - **Label** (`Expansion.origin`, `fetchExpansion`, `PreviewCard`): the preview shows *Shared bank* (no AI
