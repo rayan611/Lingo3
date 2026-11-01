@@ -583,15 +583,19 @@ async function respond(req: Request, defer: Defer): Promise<Response> {
   let partialCard: z.infer<typeof ServerExpansionSchema> | null = null
   let missingLangs: string[] = []
   if (!hint && !partner) {
-    const shared = await lookupShared(req, lemma, sourceLang, nativeLang, langs)
-    if (shared) return json({ ...(shared as object), origin: 'bank' }, 200)
-    const part = (await lookupShared(req, lemma, sourceLang, nativeLang, langs, 'lookup_shared_partial')) as
+    // The partial resolver also returns complete bank hits. One lookup covers
+    // both paths, saving a network round trip when a word is absent or partial.
+    const part = (await lookupShared(req, lemma, sourceLang, nativeLang, langs)) as
       | (z.infer<typeof ServerExpansionSchema> & { missing?: unknown })
       | null
     if (part && Array.isArray(part.missing)) {
       const missing = part.missing.filter(
         (l): l is string => typeof l === 'string' && LANG_ENUM.includes(l),
       )
+      if (missing.length === 0) {
+        const { missing: _omit, ...card } = part
+        return json({ ...card, origin: 'bank' }, 200)
+      }
       if (missing.length > 0 && missing.length < langs.length) {
         const { missing: _omit, ...card } = part
         partialCard = card as z.infer<typeof ServerExpansionSchema>
@@ -699,9 +703,8 @@ function sharedRpcUrl(name: string): string | null {
 async function lookupShared(
   req: Request, lemma: string, sourceLang: string | undefined,
   nativeLang: string, langs: string[],
-  rpc: 'lookup_shared_expansion' | 'lookup_shared_partial' = 'lookup_shared_expansion',
 ): Promise<unknown | null> {
-  const url = sharedRpcUrl(rpc)
+  const url = sharedRpcUrl('lookup_shared_partial')
   const key = process.env.VITE_SUPABASE_ANON_KEY
   if (!url || !key) return null
   try {
