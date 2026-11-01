@@ -86,7 +86,7 @@ async function respond(req: Request): Promise<Response> {
     lastHubProbe = now
   } else {
     const auth = await authenticateAiRequest(req)
-    if (!auth.ok) return json({ error: auth.message }, auth.status)
+    if (auth.ok === false) return json({ error: auth.message }, auth.status)
     if (!(await isAdminRequest(req))) return json({ error: 'Admins only.' }, 403)
   }
 
