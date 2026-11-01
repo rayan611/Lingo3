@@ -97,7 +97,7 @@ async function respond(req: Request): Promise<Response> {
       const started = Date.now()
       const result = await probeProvider(provider, AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS))
       const ms = Date.now() - started
-      return result.ok
+      return result.ok === true
         ? { provider, configured: true, position: order.indexOf(provider) + 1, model: result.model, ok: true, ms, sample: result.text }
         : { provider, configured: true, position: order.indexOf(provider) + 1, model: result.model, ok: false, ms, error: result.error }
     }),
