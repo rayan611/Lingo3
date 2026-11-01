@@ -22,7 +22,8 @@ Current state: core batch (299) + batch 001 (237 imported) + words users added t
    - A candidate must be `status = 'ready'` and have **all wanted languages** (user's native + target languages) with headword and example.
    - `core` beats `ai`; a form typed with its article/`to` beats a bare homograph.
    - If not exactly one concept / one matching language → returns null (ambiguous words go to the AI).
-3. Bank hit → show the card, label "Shared bank". No AI call.
+3. Partial hit (word in bank, some selected languages missing): `lookup_shared_partial` + AI for the missing languages only; combined card saved after the answer.
+3b. Bank hit → show the card, label "Shared bank". No AI call.
 4. Bank miss → AI answers (chain Gemini → Groq → Mistral → DeepSeek → Claude), label "AI".
 5. **After the result is shown to the user**, the AI answer is written to the bank via `cache_ai_expansion(cache_key, expansion)` (service role only), for all languages in the answer. Rationale: the write and any missing-language generation cost extra time, so the user must never wait for them.
    - Implemented in `api/expand.ts`: the write is deferred with the platform's `waitUntil` (or after `res.end()` on the Node convention), so the user never waits. Only if neither is available is it awaited before returning.
