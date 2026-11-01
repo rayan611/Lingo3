@@ -1,4 +1,5 @@
-import { bareWord, serviceHeaders, sharedCachePayload } from '../src/server/sharedVocab'
+import { bareWord, serviceHeaders, sharedCachePayload, stripNulls } from '../src/server/sharedVocab'
+import { ExpansionSchema } from '../src/db/types'
 
 /**
  * The shape of what /api/expand writes to the shared vocabulary bank. The SQL
@@ -46,6 +47,17 @@ console.log('service key headers')
 check('JWT key goes in both headers', serviceHeaders('eyJabc').authorization === 'Bearer eyJabc')
 check('sb_ secret key goes in apikey only',
   serviceHeaders('sb_secret_x').apikey === 'sb_secret_x' && !('authorization' in serviceHeaders('sb_secret_x')))
+
+console.log('bank answers carry nulls')
+const bankAnswer = {
+  pos: 'noun', tags: ['travel'], detectedLang: 'fa', normalisedLemma: 'پل',
+  entries: [
+    { lang: 'fa', headword: 'پل', meaning: 'پل', example: 'x', morphology: null, notes: null, exampleGloss: null },
+    { lang: 'en', headword: 'bridge', meaning: 'پل', example: 'y', morphology: { kind: 'noun', plural: 'bridges' }, notes: null, exampleGloss: 'z' },
+  ],
+}
+check('raw nulls are rejected by the schema (why they are stripped)', !ExpansionSchema.safeParse(bankAnswer).success)
+check('stripNulls makes a bank answer valid', ExpansionSchema.safeParse(stripNulls(bankAnswer)).success)
 
 if (failures) {
   console.error(`\n${failures} check(s) failed`)

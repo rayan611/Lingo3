@@ -89,3 +89,16 @@ export function serviceHeaders(key: string): Record<string, string> {
   if (!key.startsWith('sb_')) headers.authorization = `Bearer ${key}`
   return headers
 }
+
+/** JSON nulls become absent keys: the expansion schemas accept missing, not null. */
+export function stripNulls(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stripNulls)
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>)
+        .filter(([, v]) => v !== null)
+        .map(([k, v]) => [k, stripNulls(v)]),
+    )
+  }
+  return value
+}
