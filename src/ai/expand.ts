@@ -67,7 +67,7 @@ export async function fetchExpansion(opts: {
         search_lang: opts.sourceLang ?? null,
         native_lang: opts.nativeLang,
         target_langs: opts.langs.filter((lang) => lang !== opts.nativeLang),
-      })
+      }).abortSignal(AbortSignal.timeout(1800))
       if (!error && data) {
         const ready = ExpansionSchema.safeParse(stripNulls(data))
         if (ready.success) return { ...ready.data, origin: 'bank' }
