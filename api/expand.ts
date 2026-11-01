@@ -1,7 +1,7 @@
 import { authenticateAiRequest, enforceAiRateLimit } from '../src/server/aiSecurity.js'
 import { callDeepSeek, callGroq, callMistral, configuredProviders, firstAnswer, modelFor, readGroq } from '../src/server/aiFallback.js'
 import { parseExpandInput, SUPPORTED_LANGS } from '../src/server/aiInput.js'
-import { serviceHeaders, sharedCachePayload, stripNulls } from '../src/server/sharedVocab.js'
+import { serviceHeaders, sharedCachePayload, stripNulls, type SharedExpansionIn } from '../src/server/sharedVocab.js'
 import { LANG_PROMPT_NAMES } from '../src/db/langs.js'
 import { z } from 'zod'
 
@@ -563,7 +563,7 @@ async function respond(req: Request, defer: Defer): Promise<Response> {
   }
 
   const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  if (auth.ok === false) return json({ error: auth.message }, auth.status)
 
   let rawBody: unknown
   try {
@@ -572,7 +572,7 @@ async function respond(req: Request, defer: Defer): Promise<Response> {
     return json({ error: 'Invalid JSON body.' }, 400)
   }
   const parsed = parseExpandInput(rawBody)
-  if (!parsed.ok) return json({ error: parsed.error }, 400)
+  if (parsed.ok === false) return json({ error: parsed.error }, 400)
 
   const { lemma, sourceLang, nativeLang, langs, hint, partner } = parsed.value
   // Direct API callers get the same no-AI fast path as the browser. Hinted
@@ -617,7 +617,7 @@ async function respond(req: Request, defer: Defer): Promise<Response> {
   // Counted only once the request is known to be valid, so a malformed one
   // (or a client bug) does not spend the person's hourly allowance.
   const rate = await enforceAiRateLimit(req, auth.userId, 'expand', 80)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
+  if (rate.allowed === false) return json({ error: rate.message }, rate.status)
 
   const lexin = !partner && (!sourceLang || sourceLang === 'sv')
     ? await lookupLexin(req, lemma)
@@ -669,7 +669,7 @@ async function respond(req: Request, defer: Defer): Promise<Response> {
     'expand.ts',
     'The model took too long to answer. Try "Expand now" again.',
   )
-  if (!result.ok) return json({ error: result.error }, result.status)
+  if (result.ok === false) return json({ error: result.error }, result.status)
   // A word typed plainly (no hint, no paired word) is worth keeping for the
   // next person. It is saved after the answer has been sent, so the user
   // never waits for it.
@@ -721,7 +721,7 @@ async function lookupShared(
       }),
       signal: AbortSignal.timeout(1800),
     })
-    if (!response.ok) return null
+    if (response.ok === false) return null
     const parsed = ServerExpansionSchema.safeParse(stripNulls(await response.json()))
     return parsed.success ? parsed.data : null
   } catch {
@@ -744,7 +744,7 @@ async function lookupLexin(req: Request, lemma: string): Promise<unknown[] | nul
       body: JSON.stringify({ search_term: lemma }),
       signal: AbortSignal.timeout(1800),
     })
-    if (!response.ok) return null
+    if (response.ok === false) return null
     const data: unknown = await response.json()
     return Array.isArray(data) && data.length ? data.slice(0, 5) : null
   } catch {
@@ -760,7 +760,7 @@ async function cacheShared(expansion: z.infer<typeof ServerExpansionSchema>): Pr
     console.warn('[expand.ts] SUPABASE_SERVICE_ROLE_KEY is not set; shared vocabulary is not growing')
     return
   }
-  const payload = sharedCachePayload(expansion)
+  const payload = sharedCachePayload(expansion as unknown as SharedExpansionIn)
   if (!payload) return
   try {
     const response = await fetch(url, {
@@ -769,7 +769,7 @@ async function cacheShared(expansion: z.infer<typeof ServerExpansionSchema>): Pr
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(2500),
     })
-    if (!response.ok) console.warn('[expand.ts] shared cache write failed', response.status)
+    if (response.ok === false) console.warn('[expand.ts] shared cache write failed', response.status)
   } catch {
     console.warn('[expand.ts] shared cache write unavailable')
   }
