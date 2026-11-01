@@ -3,6 +3,13 @@
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
 session does not have to rediscover it.
 
+## 2026-11-01 (evening) — vocabulary batch 003 and pre-check
+
+- `data/shared-vocab/batch-003.json`: 232 concepts imported, 0 clashes. Bank is now 973 concepts / 5,836 entries;
+  health check clean (no duplicate entries or lemma keys, no empty examples, all core concepts have 6 languages).
+- New `supabase/migrations/20261101060000_precheck_core_vocab.sql` (service_role only): checks candidates against the
+  bank in all six languages before cards are written. The playbook now requires this step (section 4).
+
 ## 2026-11-01 (afternoon) — vocabulary batch 002
 
 - `data/shared-vocab/batch-002.json` (245 candidates): 204 imported, 32 skipped as synonym overlaps, 9 id collisions.
