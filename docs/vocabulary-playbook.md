@@ -2,7 +2,7 @@
 
 Give this whole file to a new chat. It explains what exists, the rules, and the exact procedure to add the next batch of 250 words without creating duplicates.
 
-Last updated: 2026-11-01 (after batch 001, null-field fix and partial hits; bank audited).
+Last updated: 2026-11-01 (after batch 002).
 
 ---
 
@@ -12,7 +12,7 @@ Lingo3 has one **central shared vocabulary bank** in Supabase. Every word is a *
 
 Why: the app's AI should only answer when the bank cannot. Cards prepared in advance (by Claude in a chat, not by the app's AI) are cheaper, faster and consistent.
 
-Current state (audited 2026-11-01): **537 concepts** = 536 `core` (204 nouns, 151 verbs, 117 adjectives, 64 adverbs) + 1 `ai`; 3,220 entries, 536 core concepts with all 6 languages; DB ≈ 31 MB. Audit found no duplicates (per language, lemma_key, pos), no empty examples, no morphology/pos mismatches. Always re-run the health check (section 8) for live numbers before a new batch.
+Current state (after batch 002, 2026-11-01): **741 concepts**, 4,444 entries, no duplicates, no empty examples, every core concept has all 6 languages. Batch 001: 237 of 254 candidates imported; batch 002: 204 of 245 imported. Always re-run the health check (section 8) for live numbers before a new batch.
 
 ## 2. How the app uses the bank (runtime flow)
 
@@ -62,7 +62,10 @@ Before choosing words for a batch, and again before importing:
 4. Within one batch headwords must be unique per language after stripping the article and diacritics (sv `var`/`vår`, `svar`/`svår` clash in the app).
 5. The importer is the final safety net: it skips any concept whose `source_key` exists, **and** any concept that shares (language, lemma_key, pos) with an existing non-rejected card, and reports both. Always read its report.
 
-Skipped from batch 001 (re-use ideas with a different word choice and slug): pretty, warm, calm, clear, real, fake, approximately, fairly, before, later, ever, away, moon, photo, plus the 3 id collisions (full, still, soon). Batch 001 used slugs such as `bridge`, `rest`, `nice`, `quickly` — all `core.<n|v|a|d>.<english>` ids already in the bank are listed by `select source_key from shared_concepts`.
+Skipped (synonym overlaps with cards already in the bank — do not re-submit as they are; they may be re-added later only with a clearly different sense):
+- batch 001: pretty, warm, calm, clear, real, fake, approximately, fairly, before, later, ever, away, moon, photo; id collisions full, still, soon.
+- batch 002: coarse, mild, simple, free (adj), personal, spicy, sleepy, mean, secure, handsome, least, most, where to, indoors, outdoors, earlier, sound, café, menu, jar, letter (alphabet), lesson, history, evening, manage, scream, try on, earn, hope, carry, fetch, boil; plus 9 id collisions (already_present).
+Tip: the importer reports `with:` the existing concept; rank candidates by everyday frequency, and choose words whose English/German/Spanish/Italian translations are not already headwords in the bank (check `shared_entries.lemma_key` for ALL six languages, not only Swedish).
 
 ## 5. Procedure for a new batch of 250
 
