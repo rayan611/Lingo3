@@ -1,0 +1,1261 @@
+[
+  {
+    "sv": "ändamål",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:هدف"
+    ]
+  },
+  {
+    "sv": "anledning",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:reason",
+      "fa:دلیل",
+      "de:der Grund",
+      "es:la razón",
+      "it:il motivo"
+    ]
+  },
+  {
+    "sv": "ansökning",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:application",
+      "es:la solicitud",
+      "it:la domanda"
+    ]
+  },
+  {
+    "sv": "anteckning",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:la nota"
+    ]
+  },
+  {
+    "sv": "avtal",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "it:l'accordo"
+    ]
+  },
+  {
+    "sv": "bänk",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:die Bank",
+      "es:el banco"
+    ]
+  },
+  {
+    "sv": "besked",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:die Mitteilung"
+    ]
+  },
+  {
+    "sv": "blad",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:leaf",
+      "fa:برگ",
+      "de:das Blatt",
+      "es:la hoja",
+      "it:la foglia"
+    ]
+  },
+  {
+    "sv": "bokstav",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "it:la lettera"
+    ]
+  },
+  {
+    "sv": "bolag",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:company",
+      "fa:شرکت",
+      "de:die Firma",
+      "es:la empresa"
+    ]
+  },
+  {
+    "sv": "botten",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:der Boden"
+    ]
+  },
+  {
+    "sv": "bräda",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:تخته"
+    ]
+  },
+  {
+    "sv": "brand",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:fire"
+    ]
+  },
+  {
+    "sv": "bröllop",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "it:il matrimonio"
+    ]
+  },
+  {
+    "sv": "brunn",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:der Brunnen"
+    ]
+  },
+  {
+    "sv": "bubbla",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:die Blase"
+    ]
+  },
+  {
+    "sv": "budskap",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:message",
+      "fa:پیام",
+      "de:die Botschaft",
+      "es:el mensaje",
+      "it:il messaggio"
+    ]
+  },
+  {
+    "sv": "bunt",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:el paquete"
+    ]
+  },
+  {
+    "sv": "datum",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:date"
+    ]
+  },
+  {
+    "sv": "dyna",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:das Kissen",
+      "it:il cuscino"
+    ]
+  },
+  {
+    "sv": "episod",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "it:l'episodio"
+    ]
+  },
+  {
+    "sv": "erbjudande",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:پیشنهاد",
+      "de:das Angebot"
+    ]
+  },
+  {
+    "sv": "exemplar",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:نسخه"
+    ]
+  },
+  {
+    "sv": "faktura",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:die Rechnung"
+    ]
+  },
+  {
+    "sv": "fält",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:میدان"
+    ]
+  },
+  {
+    "sv": "fartyg",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:el barco"
+    ]
+  },
+  {
+    "sv": "final",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:la final"
+    ]
+  },
+  {
+    "sv": "förening",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "företagare",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förfrågan",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förhandling",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förhör",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förkläde",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förklaring",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förkortning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förlag",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förlängning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förlovning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förlust",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förmån",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förmiddag",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "formulär",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förnamn",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förordning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förort",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förpackning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förråd",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "försäljare",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "försening",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "forskare",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förskola",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förskott",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förstärkare",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förstoring",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förteckning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fortsättning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förutsättning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "förväntning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fotograf",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fotokopia",
+    "reason": "Swedish morphology requires separate review",
+    "raw": "-kopian -kopior"
+  },
+  {
+    "sv": "fraktur",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "framgång",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "framsida",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "framsteg",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fras",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "frimärke",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "frisör",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "frisyr",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "frö",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "frys",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fullmakt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "funktion",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fynd",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fyr",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "fyrkant",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:square"
+    ]
+  },
+  {
+    "sv": "galax",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "galge",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "galleri",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "garage",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "garanti",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gård",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "garderob",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:el armario"
+    ]
+  },
+  {
+    "sv": "gardin",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gåta",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gåva",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:gift",
+      "fa:هدیه",
+      "de:das Geschenk",
+      "es:el regalo",
+      "it:il regalo"
+    ]
+  },
+  {
+    "sv": "gem",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gemenskap",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "generation",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "generator",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "geni",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gevär",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gissning",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gitarr",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "glimt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "glödlampa",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "glugg",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "godkännande",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "gran",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gren",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "grind",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "gruva",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gryta",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:قابلمه",
+      "it:la pentola"
+    ]
+  },
+  {
+    "sv": "gubbe",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "guide",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gunga",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "gymnasium",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "hamn",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "handtag",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "hantverkare",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "häst",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "häfte",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "halsband",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "hammare",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "handduk",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "handske",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "hatt",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:کلاه"
+    ]
+  },
+  {
+    "sv": "häck",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "häl",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "handflata",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "häxa",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "helikopter",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "hjälm",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "hjort",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "hjul",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "horn",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "hotell",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "hylla",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "igelkott",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "insekt",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "jacka",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "jordgubbe",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "journalist",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kabel",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:cable",
+      "fa:کابل",
+      "de:das Kabel",
+      "es:el cable",
+      "it:il cavo"
+    ]
+  },
+  {
+    "sv": "kaktus",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kalkon",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kanal",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kanin",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "kanna",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kapten",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kartong",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kastrull",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "kedja",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kista",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "klämma",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "klippa",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kloster",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "knapp",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "knut",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kock",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "koffert",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kollega",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "kompass",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "konstnär",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "korv",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "krage",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:el cuello"
+    ]
+  },
+  {
+    "sv": "kran",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "krans",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kratta",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "krok",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "krona",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kruka",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kudde",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "kula",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kuvert",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "kvast",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "lykta",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "låda",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "läkare",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "lamm",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "lärling",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "lastbil",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "lejon",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "fa:شیر"
+    ]
+  },
+  {
+    "sv": "lina",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:rope",
+      "fa:طناب",
+      "de:das Seil",
+      "es:la cuerda"
+    ]
+  },
+  {
+    "sv": "linjal",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "es:la regla"
+    ]
+  },
+  {
+    "sv": "lönn",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "lök",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "lock",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "luva",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "magnet",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "mandel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "mask",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "matta",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "mekaniker",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "mikroskop",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "moln",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "motor",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "mur",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "en:wall",
+      "it:il muro"
+    ]
+  },
+  {
+    "sv": "mygga",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "myra",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "nål",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "näve",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "nyckel",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "nöt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "uggla",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "orm",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "ost",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "paddel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "padda",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "palats",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "panna",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "papegoja",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "päron",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "patron",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "pensel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "pilot",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "pingvin",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "pistol",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "plånbok",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "plommon",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "plugg",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "polis",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "präst",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "prins",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "prinsessa",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "propp",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "radio",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "räka",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "räv",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "rep",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "ring",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "robot",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "rova",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "ryggsäck",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "säl",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "såg",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "sax",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "segel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "servett",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "skål",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "sked",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "sköldpadda",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "skruv",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "skugga",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "skylt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "sladd",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "släde",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "slott",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "snigel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "snöre",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "solros",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "spade",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "spegel",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "spik",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "spindel",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "staket",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "stämpel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "stege",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "stövel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "strumpa",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "svan",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "svans",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "svärd",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "täcke",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tä lt",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "tändare",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tegel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "termometer",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "termos",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "toffel",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "traktor",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tratt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "trumma",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tulpan",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tunna",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "tupp",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "ubåt",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "vagn",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "valp",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "varg",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "vas",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "väska",
+    "reason": "not an unused Lexin noun"
+  },
+  {
+    "sv": "veterinär",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "vinge",
+    "reason": "existing or earlier candidate headword collision",
+    "clashes": [
+      "de:der Flügel"
+    ]
+  },
+  {
+    "sv": "visp",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "vittne",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "yxa",
+    "reason": "reserve beyond requested 350"
+  },
+  {
+    "sv": "zucchini",
+    "reason": "reserve beyond requested 350"
+  }
+]
