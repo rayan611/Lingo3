@@ -56,6 +56,7 @@ const Translate = lazyScreen(() => import('./ui/Translate'), 'Translate')
 const Training = lazyScreen(() => import('./ui/Training'), 'Training')
 const StoryMode = lazyScreen(() => import('./ui/StoryMode'), 'StoryMode')
 const SettingsPanel = lazyScreen(() => import('./ui/SettingsPanel'), 'SettingsPanel')
+const GrammarManager = lazyScreen(() => import('./ui/GrammarManager'), 'GrammarManager')
 
 const screenFallback = <div className="boot">Loading…</div>
 
@@ -64,12 +65,12 @@ const screenFallback = <div className="boot">Loading…</div>
  * phone without a sideways scroll that hid whichever tab you wanted, and of
  * the seven, Profile was the one you open monthly rather than daily.
  */
-type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings'
+type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings' | 'grammar'
 
 function isTab(value: unknown): value is Tab {
   return value === 'add' || value === 'training' || value === 'read' ||
     value === 'review' || value === 'browse' || value === 'translate' ||
-    value === 'settings'
+    value === 'settings' || value === 'grammar'
 }
 
 /**
@@ -86,6 +87,7 @@ const TAB_PATHS: Record<Tab, string> = {
   read: '/read',
   translate: '/translate',
   settings: '/settings',
+  grammar: '/grammar',
 }
 
 function tabFromPath(pathname: string): Tab | null {
@@ -553,6 +555,7 @@ function Workspace({
             small — the Add box has to be visible on a phone without
             scrolling past them. */}
         <HomeTiles set={goTab} due={due} active={tab} />
+        <button type="button" onClick={() => goTab('grammar')} aria-current={tab === 'grammar' ? 'page' : undefined}>Grammar Manager</button>
 
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
@@ -567,6 +570,7 @@ function Workspace({
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
             {tab === 'translate' && <Translate settings={settings} />}
+            {tab === 'grammar' && <GrammarManager lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}
