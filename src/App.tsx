@@ -568,7 +568,7 @@ function Workspace({
         {tab !== 'add' && (
           <Suspense fallback={screenFallback}>
             {tab === 'review' && (
-              <ReviewTab settings={settings} onExit={() => goTab('training-center')} />
+              <ReviewTab settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'training' && (
               <Training settings={settings} onExit={() => goTab('training-center')} />
