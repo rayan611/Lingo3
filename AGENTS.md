@@ -7,3 +7,6 @@ At the start of every new chat: read the master protocol, this repo's docs/PRODU
 Implement only approved scope, preserve working functionality, test and verify changes, use appropriate branches and PRs, and obtain explicit owner approval for high-risk production or destructive operations.
 
 Before ending every development session: update and commit docs/DEVELOPMENT_HANDOFF.md with work done, tests, deployment evidence, blockers, risks and exact next action. GitHub is the source of truth; Control Center drafts are not authoritative until published and verified in GitHub.
+
+## Lean Development Protocol v3.0 (2026-11-02)
+Follow the [central Lean Development Protocol v3.0](https://github.com/rayan611/apps-ontrol-panel-/blob/main/docs/AI_DEVELOPMENT_PROTOCOL.md) for proportional inspection, implementation, testing and handoff. This is the current owner-approved execution workflow; preserve existing security, approval and product-specific constraints.
