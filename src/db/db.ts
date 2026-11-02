@@ -1,4 +1,5 @@
 import Dexie, { type Table } from 'dexie'
+import type { GrammarSection, GrammarRule } from './grammar'
 import {
   DEFAULT_COLLECTION_ID,
   DEFAULT_COLLECTION_NAME,
@@ -44,6 +45,8 @@ export class Lingo3DB extends Dexie {
   stories!: Table<Story, string>
   settings!: Table<Settings, string>
   meta!: Table<MetaRow, string>
+  grammarSections!: Table<GrammarSection, string>
+  grammarRules!: Table<GrammarRule, string>
 
   constructor(dbName: string) {
     super(dbName)
@@ -161,6 +164,11 @@ export class Lingo3DB extends Dexie {
             if (!c.collectionId) c.collectionId = DEFAULT_COLLECTION_ID
           })
       })
+    // v8: independent, offline-first grammar stores. No existing rows are modified.
+    this.version(8).stores({
+      grammarSections: 'id, lang, parentId, updatedAt, deletedAt, [lang+sortOrder]',
+      grammarRules: 'id, lang, sectionId, updatedAt, deletedAt, [lang+sectionId]',
+    })
   }
 }
 
