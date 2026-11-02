@@ -1,3 +1,11 @@
+Date: 2026-11-02
+Project: Lingo3
+Branch: feature/training-grammar-editor-examples
+Scope: Recall test moved out of Training Center; Home icon added; grammar editor supports paragraphs, bold Markdown, headings, lists, preview, editing saved rules and examples. Authenticated background AI generates examples for new rules without blocking save. Grammar remains per-language and per-user; examples are stored in existing JSONB sync payload. Production Supabase additive generated language columns and indexes applied; RLS unchanged.
+Verification: GitHub CI and production deployment to be checked after merge; real cross-device AI/browser E2E remains unverified. No sharing with other users enabled (future opt-in only).
+Next: validate CI, merge, deploy main, confirm production SHA, test signed-in example generation and sync on two devices.
+
+---
 # Training Center navigation — 2026-11-02
 Owner requested grouping Grammar, Read a story and Review under one Training Center tile, plus a clear scope/status summary.
 
