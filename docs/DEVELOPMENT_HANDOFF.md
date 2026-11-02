@@ -1,3 +1,9 @@
+Date: 2026-11-03 | Project: Lingo3 | Branch: feature/grammar-organized-accordion
+Changes: grammar section/rule nested collapsible cards; separate explanation and examples panels; explicit AI example generation alongside manual edit; grammar language picker limited to active learning languages. No schema changes. Existing examples remain in grammar JSONB sync.
+Checks: CI and preview pending at handoff edit. Production deployment pending merge.
+Next: verify CI, merge, deploy, verify production SHA; signed-in AI and cross-device E2E still require browser testing.
+
+---
 Date: 2026-11-02
 Project: Lingo3
 Branch: feature/training-grammar-editor-examples
