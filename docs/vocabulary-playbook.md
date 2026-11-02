@@ -4,6 +4,8 @@ Give this whole file to a new chat. It explains what exists, the rules, and the 
 
 Last updated: 2026-11-01 (after batch 002).
 
+2026-11-02 batch-005 update: 350 additional Lexin noun concepts / 2,100 language entries were actually imported from branch `data/lexin-350-20261102`, excluding all previous batches. Live totals are now 1,362 concepts / 8,168 entries. See `VOCAB_BATCH_005_REPORT.md` for verified counts, selection exclusions, tests and the existing automatic-language ambiguity limitation (2,018/2,100 automatic lookups; all 2,100 explicit-language lookups pass). Do not count an idempotent reimport as new vocabulary. Main application code was not changed.
+
 ---
 
 ## 1. Goal
