@@ -30,6 +30,7 @@ import { Review } from './ui/Review'
 import {
   IconAdd,
   IconGrammar,
+  IconHome,
   IconReading,
   IconReview,
   IconSettings,
@@ -567,7 +568,7 @@ function Workspace({
         {tab !== 'add' && (
           <Suspense fallback={screenFallback}>
             {tab === 'review' && (
-              <ReviewTab settings={settings} onExit={() => goTab('training-center')} />
+              <ReviewTab settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'training' && (
               <Training settings={settings} onExit={() => goTab('training-center')} />
@@ -575,7 +576,7 @@ function Workspace({
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
             {tab === 'translate' && <Translate settings={settings} />}
-            {tab === 'grammar' && <GrammarManager syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
+            {tab === 'grammar' && <GrammarManager learningLangs={activeTargets(settings)} nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}
@@ -663,6 +664,9 @@ function HomeTiles({
       <Tile id="training-center" set={set} active={isTrainingArea(active) ? 'training-center' : active} badge={due} icon={<IconTraining />}>
         Training Center
       </Tile>
+      <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
+        Recall test
+      </Tile>
       <Tile id="browse" set={set} active={active} icon={<IconWords />}>
         My words
       </Tile>
@@ -678,17 +682,16 @@ function HomeTiles({
 
 /** Existing child routes stay bookmarkable; the home navigation groups them here. */
 function isTrainingArea(tab: Tab): boolean {
-  return ['training-center', 'grammar', 'read', 'training', 'review'].includes(tab)
+  return ['training-center', 'grammar', 'read', 'training'].includes(tab)
 }
 
 const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React.ReactNode }[] = [
   { id: 'grammar', title: 'Grammar', detail: 'Organize your grammar notes and rules.', icon: <IconGrammar /> },
   { id: 'read', title: 'Read a story', detail: 'Practice vocabulary through stories.', icon: <IconReading /> },
   { id: 'training', title: 'Review', detail: 'Browse and practice your words.', icon: <IconTraining /> },
-  { id: 'review', title: 'Recall test', detail: 'Test the words due for recall.', icon: <IconReview /> },
 ]
 
-function TrainingCenter({ set, active, due }: { set: (tab: Tab) => void; active: Tab; due: number }) {
+function TrainingCenter({ set, active }: { set: (tab: Tab) => void; active: Tab; due: number }) {
   if (active !== 'training-center') return (
     <div className="training-center-navigation">
       <button type="button" className="link" onClick={() => set('training-center')}>← Training Center</button>
@@ -702,11 +705,12 @@ function TrainingCenter({ set, active, due }: { set: (tab: Tab) => void; active:
   )
   return (
     <section className="training-center" aria-labelledby="training-center-title">
+      <button type="button" className="link" onClick={() => set('add')} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 12 }}><IconHome /> Home</button>
       <h2 id="training-center-title">Training Center</h2>
       <p className="muted">Choose how you want to learn today.</p>
       <nav className="tiles training-center-activities" aria-label="Choose a training activity">
         {TRAINING_ACTIVITIES.map(item => <Tile key={item.id} id={item.id} set={set} active={active}
-          badge={item.id === 'review' ? due : undefined} icon={item.icon}>
+          icon={item.icon}>
           <strong>{item.title}</strong><small>{item.detail}</small>
         </Tile>)}
       </nav>

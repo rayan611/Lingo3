@@ -11,6 +11,20 @@ Files: `data/shared-vocab/batch-007*`, `scripts/build-batch-007.py`, `scripts/va
 
 ---
 
+Date: 2026-11-03 | Project: Lingo3 | Branch: feature/grammar-organized-accordion
+Changes: grammar section/rule nested collapsible cards; separate explanation and examples panels; explicit AI example generation alongside manual edit; grammar language picker limited to active learning languages. No schema changes. Existing examples remain in grammar JSONB sync.
+Checks: CI and preview pending at handoff edit. Production deployment pending merge.
+Next: verify CI, merge, deploy, verify production SHA; signed-in AI and cross-device E2E still require browser testing.
+
+---
+Date: 2026-11-02
+Project: Lingo3
+Branch: feature/training-grammar-editor-examples
+Scope: Recall test moved out of Training Center; Home icon added; grammar editor supports paragraphs, bold Markdown, headings, lists, preview, editing saved rules and examples. Authenticated background AI generates examples for new rules without blocking save. Grammar remains per-language and per-user; examples are stored in existing JSONB sync payload. Production Supabase additive generated language columns and indexes applied; RLS unchanged.
+Verification: GitHub CI and production deployment to be checked after merge; real cross-device AI/browser E2E remains unverified. No sharing with other users enabled (future opt-in only).
+Next: validate CI, merge, deploy main, confirm production SHA, test signed-in example generation and sync on two devices.
+
+---
 # Training Center navigation — 2026-11-02
 Owner requested grouping Grammar, Read a story and Review under one Training Center tile, plus a clear scope/status summary.
 
