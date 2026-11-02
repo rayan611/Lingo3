@@ -1,0 +1,206 @@
+{
+  "format": "lingo3-vocab/1",
+  "langs": [
+    "fa",
+    "en",
+    "sv",
+    "de",
+    "es",
+    "it"
+  ],
+  "n": 4,
+  "concepts": [
+    {
+      "id": "core.d.absolutely",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "کاملاً",
+          "x": "من کاملاً موافقم."
+        },
+        "en": {
+          "h": "absolutely",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "I absolutely agree."
+        },
+        "sv": {
+          "h": "absolut",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Jag håller absolut med."
+        },
+        "de": {
+          "h": "absolut",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Ich stimme absolut zu."
+        },
+        "es": {
+          "h": "absolutamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Estoy absolutamente de acuerdo."
+        },
+        "it": {
+          "h": "assolutamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Sono assolutamente d'accordo."
+        }
+      }
+    },
+    {
+      "id": "core.d.apparently",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "ظاهراً",
+          "x": "ظاهراً قطار دیر می‌رسد."
+        },
+        "en": {
+          "h": "apparently",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Apparently, the train is late."
+        },
+        "sv": {
+          "h": "tydligen",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Tåget är tydligen försenat."
+        },
+        "de": {
+          "h": "offenbar",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Der Zug hat offenbar Verspätung."
+        },
+        "es": {
+          "h": "aparentemente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Aparentemente, el tren llega tarde."
+        },
+        "it": {
+          "h": "apparentemente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Apparentemente il treno è in ritardo."
+        }
+      }
+    },
+    {
+      "id": "core.d.immediately",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "فوراً",
+          "x": "لطفاً فوراً به من زنگ بزن."
+        },
+        "en": {
+          "h": "immediately",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Please call me immediately."
+        },
+        "sv": {
+          "h": "omedelbart",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Ring mig omedelbart, tack."
+        },
+        "de": {
+          "h": "sofort",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Bitte ruf mich sofort an."
+        },
+        "es": {
+          "h": "inmediatamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Llámame inmediatamente, por favor."
+        },
+        "it": {
+          "h": "immediatamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Chiamami immediatamente, per favore."
+        }
+      }
+    },
+    {
+      "id": "core.d.consequently",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "در نتیجه",
+          "x": "باران بارید و در نتیجه بازی لغو شد."
+        },
+        "en": {
+          "h": "consequently",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "It rained; consequently, the game was canceled."
+        },
+        "sv": {
+          "h": "följaktligen",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Det regnade och följaktligen ställdes matchen in."
+        },
+        "de": {
+          "h": "folglich",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Es regnete; folglich wurde das Spiel abgesagt."
+        },
+        "es": {
+          "h": "por consiguiente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Llovió; por consiguiente, se canceló el partido."
+        },
+        "it": {
+          "h": "di conseguenza",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Ha piovuto; di conseguenza la partita è stata annullata."
+        }
+      }
+    }
+  ]
+}
