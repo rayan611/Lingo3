@@ -111,3 +111,13 @@ export function IconHome() {
     </svg>
   )
 }
+
+/** Grammar — an open book with text lines. */
+export function IconGrammar() {
+  return (
+    <svg {...base}>
+      <path d="M12 6.5c-2.5-1.5-5-1.7-8-1.5v13c3-.2 5.5 0 8 1.5 2.5-1.5 5-1.7 8-1.5V5c-3-.2-5.5 0-8 1.5Z" />
+      <path d="M12 6.5v13M6.5 9h3M14.5 9h3M6.5 12h3M14.5 12h3" />
+    </svg>
+  )
+}
