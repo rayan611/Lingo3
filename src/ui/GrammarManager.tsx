@@ -4,7 +4,7 @@ import { db } from '../db/db'
 import { addGrammarSection, addGrammarRule, deleteGrammarRule } from '../db/grammar'
 import { LANG_NAMES, type Lang } from '../db/types'
 
-/** Offline-first personal grammar notebook. Cloud sync is not yet enabled. */
+/** Offline-first personal grammar notebook. Cloud sync runs for signed-in users. */
 export function GrammarManager({ lang }: { lang: Lang }) {
   const [title, setTitle] = useState('')
   const [explanation, setExplanation] = useState('')
@@ -34,7 +34,7 @@ export function GrammarManager({ lang }: { lang: Lang }) {
   }
   return <section style={{ maxWidth: 780, margin: 'auto', padding: 16 }}>
     <h2>Grammar Manager — {LANG_NAMES[lang]}</h2>
-    <p>Personal grammar notebook. Changes are saved on this device; cloud sync is not yet available.</p>
+    <p>Personal grammar notebook. Changes are saved offline and synced to your account when signed in and online.</p>
     {error && <p role="alert">{error}</p>}
     <form onSubmit={submitSection}>
       <label>New section <input value={sectionTitle} onChange={e => setSectionTitle(e.target.value)} required maxLength={120} /></label>
