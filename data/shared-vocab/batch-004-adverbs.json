@@ -8,56 +8,8 @@
     "es",
     "it"
   ],
-  "n": 4,
+  "n": 2,
   "concepts": [
-    {
-      "id": "core.d.absolutely",
-      "p": "adverb",
-      "t": [
-        "daily"
-      ],
-      "e": {
-        "fa": {
-          "h": "کاملاً",
-          "x": "من کاملاً موافقم."
-        },
-        "en": {
-          "h": "absolutely",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "I absolutely agree."
-        },
-        "sv": {
-          "h": "absolut",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Jag håller absolut med."
-        },
-        "de": {
-          "h": "absolut",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Ich stimme absolut zu."
-        },
-        "es": {
-          "h": "absolutamente",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Estoy absolutamente de acuerdo."
-        },
-        "it": {
-          "h": "assolutamente",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Sono assolutamente d'accordo."
-        }
-      }
-    },
     {
       "id": "core.d.apparently",
       "p": "adverb",
@@ -103,54 +55,6 @@
             "kind": "adverb"
           },
           "x": "Apparentemente il treno è in ritardo."
-        }
-      }
-    },
-    {
-      "id": "core.d.immediately",
-      "p": "adverb",
-      "t": [
-        "daily"
-      ],
-      "e": {
-        "fa": {
-          "h": "فوراً",
-          "x": "لطفاً فوراً به من زنگ بزن."
-        },
-        "en": {
-          "h": "immediately",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Please call me immediately."
-        },
-        "sv": {
-          "h": "omedelbart",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Ring mig omedelbart, tack."
-        },
-        "de": {
-          "h": "sofort",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Bitte ruf mich sofort an."
-        },
-        "es": {
-          "h": "inmediatamente",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Llámame inmediatamente, por favor."
-        },
-        "it": {
-          "h": "immediatamente",
-          "f": {
-            "kind": "adverb"
-          },
-          "x": "Chiamami immediatamente, per favore."
         }
       }
     },
