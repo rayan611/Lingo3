@@ -1,3 +1,13 @@
+# Training Center navigation — 2026-11-02
+Owner requested grouping Grammar, Read a story and Review under one Training Center tile, plus a clear scope/status summary.
+
+IMPLEMENTED: one Training Center primary tile; its hub contains Grammar, Read a story, Review and Recall test. Children have compact sibling navigation and a return-to-center button. Existing /grammar, /read, /review and /recall URLs remain supported. The due-word badge is preserved. Five primary tiles, responsive mobile grid. Version 0.7.2.
+TESTED: local TypeScript and production build passed. No database changes. Existing learning screens and sync logic unchanged. CI/preview and production release pending at this commit; final release evidence will be appended after verification.
+REMAINING PRODUCT SCOPE: section hierarchy/edit/delete UI; example authoring/translation UI; AI improvements and sharing; optional curated library/levels/tags; physical two-device acceptance and full backup/restore verification. These are not included in the navigation change.
+NEXT: CI, merge and production smoke checks. Previous Grammar release evidence follows.
+
+---
+
 # Grammar release completion — 2026-11-02
 Agent: Codex. Owner requested completion and merge.
 Starting Grammar PR #24 head: 47cf468; concurrent work merged #24 as c7b1573 while this session was running. Existing vocabulary batch changes are preserved.

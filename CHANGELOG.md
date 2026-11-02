@@ -1,3 +1,8 @@
+## 0.7.2 — 2026-11-02
+- Grouped Grammar, Read a story, Review and Recall test under one Training Center home tile.
+- Added a learning hub and compact navigation between its activities; existing deep links remain valid.
+- Kept the due-word badge on Training Center and Recall test.
+
 ## 0.7.1 — 2026-11-02
 - Added private grammar cloud sync with atomic conditional writes and preserved conflict copies.
 - Added grammar sync status/retry, rule editing and language selection.

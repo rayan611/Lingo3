@@ -66,12 +66,12 @@ const screenFallback = <div className="boot">Loading…</div>
  * phone without a sideways scroll that hid whichever tab you wanted, and of
  * the seven, Profile was the one you open monthly rather than daily.
  */
-type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings' | 'grammar'
+type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings' | 'grammar' | 'training-center'
 
 function isTab(value: unknown): value is Tab {
   return value === 'add' || value === 'training' || value === 'read' ||
     value === 'review' || value === 'browse' || value === 'translate' ||
-    value === 'settings' || value === 'grammar'
+    value === 'settings' || value === 'grammar' || value === 'training-center'
 }
 
 /**
@@ -89,6 +89,7 @@ const TAB_PATHS: Record<Tab, string> = {
   translate: '/translate',
   settings: '/settings',
   grammar: '/grammar',
+  'training-center': '/training-center',
 }
 
 function tabFromPath(pathname: string): Tab | null {
@@ -559,15 +560,17 @@ function Workspace({
             scrolling past them. */}
         <HomeTiles set={goTab} due={due} active={tab} />
 
+        {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} due={due} />}
+
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
         {tab !== 'add' && (
           <Suspense fallback={screenFallback}>
             {tab === 'review' && (
-              <ReviewTab settings={settings} onExit={() => setTab('add')} />
+              <ReviewTab settings={settings} onExit={() => goTab('training-center')} />
             )}
             {tab === 'training' && (
-              <Training settings={settings} onExit={() => goTab('add')} />
+              <Training settings={settings} onExit={() => goTab('training-center')} />
             )}
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
@@ -653,32 +656,61 @@ function HomeTiles({
   active: Tab
 }) {
   return (
-    <nav className="tiles" aria-label="Go to">
+    <nav className="tiles primary-tiles" aria-label="Go to">
       <Tile id="add" set={set} active={active} icon={<IconAdd />}>
         Add a word
       </Tile>
-      <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
-        Recall test
-      </Tile>
-      <Tile id="training" set={set} active={active} icon={<IconTraining />}>
-        Review
+      <Tile id="training-center" set={set} active={isTrainingArea(active) ? 'training-center' : active} badge={due} icon={<IconTraining />}>
+        Training Center
       </Tile>
       <Tile id="browse" set={set} active={active} icon={<IconWords />}>
         My words
       </Tile>
-      <Tile id="read" set={set} active={active} icon={<IconReading />}>
-        Read a story
-      </Tile>
       <Tile id="translate" set={set} active={active} icon={<IconTranslate />}>
         Translate
-      </Tile>
-      <Tile id="grammar" set={set} active={active} icon={<IconGrammar />}>
-        Grammar
       </Tile>
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings
       </Tile>
     </nav>
+  )
+}
+
+/** Existing child routes stay bookmarkable; the home navigation groups them here. */
+function isTrainingArea(tab: Tab): boolean {
+  return ['training-center', 'grammar', 'read', 'training', 'review'].includes(tab)
+}
+
+const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React.ReactNode }[] = [
+  { id: 'grammar', title: 'Grammar', detail: 'Organize your grammar notes and rules.', icon: <IconGrammar /> },
+  { id: 'read', title: 'Read a story', detail: 'Practice vocabulary through stories.', icon: <IconReading /> },
+  { id: 'training', title: 'Review', detail: 'Browse and practice your words.', icon: <IconTraining /> },
+  { id: 'review', title: 'Recall test', detail: 'Test the words due for recall.', icon: <IconReview /> },
+]
+
+function TrainingCenter({ set, active, due }: { set: (tab: Tab) => void; active: Tab; due: number }) {
+  if (active !== 'training-center') return (
+    <div className="training-center-navigation">
+      <button type="button" className="link" onClick={() => set('training-center')}>← Training Center</button>
+      <nav className="training-center-tabs" aria-label="Training activities">
+        {TRAINING_ACTIVITIES.map(item => <button key={item.id} type="button"
+          aria-current={active === item.id ? 'page' : undefined}
+          className={active === item.id ? 'is-active' : undefined}
+          onClick={() => set(item.id)}>{item.icon}<span>{item.title}</span></button>)}
+      </nav>
+    </div>
+  )
+  return (
+    <section className="training-center" aria-labelledby="training-center-title">
+      <h2 id="training-center-title">Training Center</h2>
+      <p className="muted">Choose how you want to learn today.</p>
+      <nav className="tiles training-center-activities" aria-label="Choose a training activity">
+        {TRAINING_ACTIVITIES.map(item => <Tile key={item.id} id={item.id} set={set} active={active}
+          badge={item.id === 'review' ? due : undefined} icon={item.icon}>
+          <strong>{item.title}</strong><small>{item.detail}</small>
+        </Tile>)}
+      </nav>
+    </section>
   )
 }
 
