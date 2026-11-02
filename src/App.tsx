@@ -576,7 +576,7 @@ function Workspace({
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
             {tab === 'translate' && <Translate settings={settings} />}
-            {tab === 'grammar' && <GrammarManager nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
+            {tab === 'grammar' && <GrammarManager learningLangs={activeTargets(settings)} nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}
