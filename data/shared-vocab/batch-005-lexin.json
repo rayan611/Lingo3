@@ -369,7 +369,7 @@
       "p": "noun",
       "e": {
         "sv": "en aktie",
-        "en": "share",
+        "en": "the share",
         "fa": "سهم بورسی",
         "de": "die Aktie",
         "es": "la acción",
@@ -537,7 +537,7 @@
       "p": "noun",
       "e": {
         "sv": "en ålder",
-        "en": "age",
+        "en": "the age",
         "fa": "سن",
         "de": "das Alter",
         "es": "la edad",
@@ -2073,7 +2073,7 @@
       "p": "noun",
       "e": {
         "sv": "en åtgärd",
-        "en": "measure",
+        "en": "the measure",
         "fa": "اقدام",
         "de": "die Maßnahme",
         "es": "la medida",
@@ -3465,7 +3465,7 @@
       "p": "noun",
       "e": {
         "sv": "ett behov",
-        "en": "need",
+        "en": "the need",
         "fa": "نیاز",
         "de": "das Bedürfnis",
         "es": "la necesidad",
@@ -3705,7 +3705,7 @@
       "p": "noun",
       "e": {
         "sv": "ett besök",
-        "en": "visit",
+        "en": "the visit",
         "fa": "دیدار",
         "de": "der Besuch",
         "es": "la visita",
@@ -3777,7 +3777,7 @@
       "p": "noun",
       "e": {
         "sv": "en beställning",
-        "en": "order",
+        "en": "the order",
         "fa": "سفارش",
         "de": "die Bestellung",
         "es": "el pedido",
@@ -4569,7 +4569,7 @@
       "p": "noun",
       "e": {
         "sv": "ett bråk",
-        "en": "quarrel",
+        "en": "the quarrel",
         "fa": "دعوا",
         "de": "der Streit",
         "es": "la pelea",
@@ -4713,7 +4713,7 @@
       "p": "noun",
       "e": {
         "sv": "en broms",
-        "en": "brake",
+        "en": "the brake",
         "fa": "ترمز",
         "de": "die Bremse",
         "es": "el freno",
@@ -5385,7 +5385,7 @@
       "p": "noun",
       "e": {
         "sv": "en dans",
-        "en": "dance",
+        "en": "the dance",
         "fa": "رقص",
         "de": "der Tanz",
         "es": "el baile",
@@ -7786,7 +7786,7 @@
       "e": {
         "sv": "en fjäder",
         "en": "feather",
-        "fa": "پر",
+        "fa": "پر پرنده",
         "de": "die Feder",
         "es": "la pluma",
         "it": "la piuma"
@@ -7795,7 +7795,7 @@
       "parts": [
         "fjäder",
         "feather;feathers",
-        "پر",
+        "پر پرنده",
         "die Feder;Federn",
         "la pluma;plumas",
         "la piuma;piume",
@@ -8001,7 +8001,7 @@
       "p": "noun",
       "e": {
         "sv": "en fluga",
-        "en": "fly",
+        "en": "the fly",
         "fa": "مگس",
         "de": "die Fliege",
         "es": "la mosca",

@@ -70,6 +70,7 @@ def sv_forms(lemma, raw, gender):
 
 def make_examples(heads, ds, frame):
     fa, en, sv, de, es, it = [heads[l] for l in LANGS]
+    en = re.sub(r'^(?:the|an|a) ', '', en)
     acc = de_acc(de)
     if frame == 'o':
         return dict(zip(LANGS,[f'{fa} را پیدا نمی‌کنم.',f'I cannot find the {en}.',f'Jag hittar inte {ds}.',f'Ich finde {acc} nicht.',f'No encuentro {es}.',f'Non trovo {it}.']))
