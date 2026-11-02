@@ -1,0 +1,8408 @@
+{
+  "source": "Svenska ord/LEXIN, second edition, Språkbanken Text",
+  "license": "CC BY 4.0",
+  "url": "https://www.sprakbanken.se/resurser/lexin",
+  "note": "Swedish headwords and raw inflections only. Translations and sentence frames newly authored. Selection from live dictionary_words, 2026-11-02.",
+  "selected": [
+    {
+      "id": "core.n.lexin350_subscription",
+      "p": "noun",
+      "e": {
+        "sv": "ett abonnemang",
+        "en": "subscription",
+        "fa": "اشتراک",
+        "de": "das Abonnement",
+        "es": "la suscripción",
+        "it": "l'abbonamento"
+      },
+      "raw": "abonnemanget abonnemang abonnemangen",
+      "parts": [
+        "abonnemang",
+        "subscription;subscriptions",
+        "اشتراک",
+        "das Abonnement;Abonnements",
+        "la suscripción;suscripciones",
+        "l'abbonamento;abbonamenti",
+        "a"
+      ],
+      "ds": "abonnemanget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_subscriber",
+      "p": "noun",
+      "e": {
+        "sv": "en abonnent",
+        "en": "subscriber",
+        "fa": "مشترک",
+        "de": "der Abonnent",
+        "es": "el suscriptor",
+        "it": "l'abbonato"
+      },
+      "raw": "abonnenten abonnenter",
+      "parts": [
+        "abonnent",
+        "subscriber;subscribers",
+        "مشترک",
+        "der Abonnent;Abonnenten",
+        "el suscriptor;suscriptores",
+        "l'abbonato;abbonati",
+        "p"
+      ],
+      "ds": "abonnenten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_accent",
+      "p": "noun",
+      "e": {
+        "sv": "en accent",
+        "en": "accent",
+        "fa": "لهجه",
+        "de": "der Akzent",
+        "es": "el acento",
+        "it": "l'accento"
+      },
+      "raw": "accenten accenter",
+      "parts": [
+        "accent",
+        "accent;accents",
+        "لهجه",
+        "der Akzent;Akzente",
+        "el acento;acentos",
+        "l'accento;accenti",
+        "a"
+      ],
+      "ds": "accenten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_chord",
+      "p": "noun",
+      "e": {
+        "sv": "ett ackord",
+        "en": "chord",
+        "fa": "آکورد",
+        "de": "der Akkord",
+        "es": "el acorde",
+        "it": "l'accordo"
+      },
+      "raw": "ackordet ackord ackorden",
+      "parts": [
+        "ackord",
+        "chord;chords",
+        "آکورد",
+        "der Akkord;Akkorde",
+        "el acorde;acordes",
+        "l'accordo;accordi",
+        "a"
+      ],
+      "ds": "ackordet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_adjective",
+      "p": "noun",
+      "e": {
+        "sv": "ett adjektiv",
+        "en": "adjective",
+        "fa": "صفت",
+        "de": "das Adjektiv",
+        "es": "el adjetivo",
+        "it": "l'aggettivo"
+      },
+      "raw": "adjektivet adjektiv adjektiven",
+      "parts": [
+        "adjektiv",
+        "adjective;adjectives",
+        "صفت",
+        "das Adjektiv;Adjektive",
+        "el adjetivo;adjetivos",
+        "l'aggettivo;aggettivi",
+        "a"
+      ],
+      "ds": "adjektivet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_adoption",
+      "p": "noun",
+      "e": {
+        "sv": "en adoption",
+        "en": "adoption",
+        "fa": "فرزندخواندگی",
+        "de": "die Adoption",
+        "es": "la adopción",
+        "it": "l'adozione"
+      },
+      "raw": "adoptionen adoptioner",
+      "parts": [
+        "adoption",
+        "adoption;adoptions",
+        "فرزندخواندگی",
+        "die Adoption;Adoptionen",
+        "la adopción;adopciones",
+        "l'adozione;adozioni",
+        "a"
+      ],
+      "ds": "adoptionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_address",
+      "p": "noun",
+      "e": {
+        "sv": "en adress",
+        "en": "address",
+        "fa": "نشانی",
+        "de": "die Adresse",
+        "es": "la dirección",
+        "it": "l'indirizzo"
+      },
+      "raw": "adressen adresser",
+      "parts": [
+        "adress",
+        "address;addresses",
+        "نشانی",
+        "die Adresse;Adressen",
+        "la dirección;direcciones",
+        "l'indirizzo;indirizzi",
+        "a"
+      ],
+      "ds": "adressen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_adverb",
+      "p": "noun",
+      "e": {
+        "sv": "ett adverb",
+        "en": "adverb",
+        "fa": "قید",
+        "de": "das Adverb",
+        "es": "el adverbio",
+        "it": "l'avverbio"
+      },
+      "raw": "adverbet adverb adverben",
+      "parts": [
+        "adverb",
+        "adverb;adverbs",
+        "قید",
+        "das Adverb;Adverbien",
+        "el adverbio;adverbios",
+        "l'avverbio;avverbi",
+        "a"
+      ],
+      "ds": "adverbet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_lawyer",
+      "p": "noun",
+      "e": {
+        "sv": "en advokat",
+        "en": "lawyer",
+        "fa": "وکیل",
+        "de": "der Anwalt",
+        "es": "el abogado",
+        "it": "l'avvocato"
+      },
+      "raw": "advokaten advokater",
+      "parts": [
+        "advokat",
+        "lawyer;lawyers",
+        "وکیل",
+        "der Anwalt;Anwälte",
+        "el abogado;abogados",
+        "l'avvocato;avvocati",
+        "p"
+      ],
+      "ds": "advokaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_poster",
+      "p": "noun",
+      "e": {
+        "sv": "en affisch",
+        "en": "poster",
+        "fa": "پوستر",
+        "de": "das Plakat",
+        "es": "el cartel",
+        "it": "il manifesto"
+      },
+      "raw": "affischen affischer",
+      "parts": [
+        "affisch",
+        "poster;posters",
+        "پوستر",
+        "das Plakat;Plakate",
+        "el cartel;carteles",
+        "il manifesto;manifesti",
+        "o"
+      ],
+      "ds": "affischen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_agent",
+      "p": "noun",
+      "e": {
+        "sv": "en agent",
+        "en": "agent",
+        "fa": "مأمور",
+        "de": "der Agent",
+        "es": "el agente",
+        "it": "l'agente"
+      },
+      "raw": "agenten agenter",
+      "parts": [
+        "agent",
+        "agent;agents",
+        "مأمور",
+        "der Agent;Agenten",
+        "el agente;agentes",
+        "l'agente;agenti",
+        "p"
+      ],
+      "ds": "agenten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_egg_yolk",
+      "p": "noun",
+      "e": {
+        "sv": "en äggula",
+        "en": "egg yolk",
+        "fa": "زردهٔ تخم‌مرغ",
+        "de": "das Eigelb",
+        "es": "la yema de huevo",
+        "it": "il tuorlo"
+      },
+      "raw": "äggulan äggulor",
+      "parts": [
+        "äggula",
+        "egg yolk;egg yolks",
+        "زردهٔ تخم‌مرغ",
+        "das Eigelb;Eigelbe",
+        "la yema de huevo;yemas de huevo",
+        "il tuorlo;tuorli",
+        "f"
+      ],
+      "ds": "äggulan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_possession",
+      "p": "noun",
+      "e": {
+        "sv": "en ägodel",
+        "en": "possession",
+        "fa": "دارایی شخصی",
+        "de": "der Besitzgegenstand",
+        "es": "la pertenencia",
+        "it": "il bene personale"
+      },
+      "raw": "ägodelen ägodelar",
+      "parts": [
+        "ägodel",
+        "possession;possessions",
+        "دارایی شخصی",
+        "der Besitzgegenstand;Besitzgegenstände",
+        "la pertenencia;pertenencias",
+        "il bene personale;beni personali",
+        "o"
+      ],
+      "ds": "ägodelen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_acrobat",
+      "p": "noun",
+      "e": {
+        "sv": "en akrobat",
+        "en": "acrobat",
+        "fa": "آکروبات‌باز",
+        "de": "der Akrobat",
+        "es": "el acróbata",
+        "it": "l'acrobata"
+      },
+      "raw": "akrobaten akrobater",
+      "parts": [
+        "akrobat",
+        "acrobat;acrobats",
+        "آکروبات‌باز",
+        "der Akrobat;Akrobaten",
+        "el acróbata;acróbatas",
+        "l'acrobata;acrobati",
+        "p"
+      ],
+      "ds": "akrobaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_marriage",
+      "p": "noun",
+      "e": {
+        "sv": "ett äktenskap",
+        "en": "marriage",
+        "fa": "ازدواج",
+        "de": "die Ehe",
+        "es": "el matrimonio",
+        "it": "il matrimonio"
+      },
+      "raw": "äktenskapet äktenskap äktenskapen",
+      "parts": [
+        "äktenskap",
+        "marriage;marriages",
+        "ازدواج",
+        "die Ehe;Ehen",
+        "el matrimonio;matrimonios",
+        "il matrimonio;matrimoni",
+        "a"
+      ],
+      "ds": "äktenskapet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_share",
+      "p": "noun",
+      "e": {
+        "sv": "en aktie",
+        "en": "the share",
+        "fa": "سهم بورسی",
+        "de": "die Aktie",
+        "es": "la acción",
+        "it": "l'azione"
+      },
+      "raw": "aktien aktier",
+      "parts": [
+        "aktie",
+        "share;shares",
+        "سهم بورسی",
+        "die Aktie;Aktien",
+        "la acción;acciones",
+        "l'azione;azioni",
+        "a"
+      ],
+      "ds": "aktien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_activist",
+      "p": "noun",
+      "e": {
+        "sv": "en aktivist",
+        "en": "activist",
+        "fa": "کنشگر",
+        "de": "der Aktivist",
+        "es": "el activista",
+        "it": "l'attivista"
+      },
+      "raw": "aktivisten aktivister",
+      "parts": [
+        "aktivist",
+        "activist;activists",
+        "کنشگر",
+        "der Aktivist;Aktivisten",
+        "el activista;activistas",
+        "l'attivista;attivisti",
+        "p"
+      ],
+      "ds": "aktivisten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_activity",
+      "p": "noun",
+      "e": {
+        "sv": "en aktivitet",
+        "en": "activity",
+        "fa": "فعالیت",
+        "de": "die Aktivität",
+        "es": "la actividad",
+        "it": "l'attività"
+      },
+      "raw": "aktiviteten aktiviteter",
+      "parts": [
+        "aktivitet",
+        "activity;activities",
+        "فعالیت",
+        "die Aktivität;Aktivitäten",
+        "la actividad;actividades",
+        "l'attività;attività",
+        "a"
+      ],
+      "ds": "aktiviteten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_watercolour",
+      "p": "noun",
+      "e": {
+        "sv": "en akvarell",
+        "en": "watercolour",
+        "fa": "نقاشی آبرنگ",
+        "de": "das Aquarell",
+        "es": "la acuarela",
+        "it": "l'acquerello"
+      },
+      "raw": "akvarellen akvareller",
+      "parts": [
+        "akvarell",
+        "watercolour;watercolours",
+        "نقاشی آبرنگ",
+        "das Aquarell;Aquarelle",
+        "la acuarela;acuarelas",
+        "l'acquerello;acquerelli",
+        "o"
+      ],
+      "ds": "akvarellen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_aquarium",
+      "p": "noun",
+      "e": {
+        "sv": "ett akvarium",
+        "en": "aquarium",
+        "fa": "آکواریوم",
+        "de": "das Aquarium",
+        "es": "el acuario",
+        "it": "l'acquario"
+      },
+      "raw": "akvariet akvarier",
+      "parts": [
+        "akvarium",
+        "aquarium;aquariums",
+        "آکواریوم",
+        "das Aquarium;Aquarien",
+        "el acuario;acuarios",
+        "l'acquario;acquari",
+        "o"
+      ],
+      "ds": "akvariet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_alarm",
+      "p": "noun",
+      "e": {
+        "sv": "ett alarm",
+        "en": "alarm",
+        "fa": "هشدار",
+        "de": "der Alarm",
+        "es": "la alarma",
+        "it": "l'allarme"
+      },
+      "raw": "alarmet alarm alarmen",
+      "parts": [
+        "alarm",
+        "alarm;alarms",
+        "هشدار",
+        "der Alarm;Alarme",
+        "la alarma;alarmas",
+        "l'allarme;allarmi",
+        "a"
+      ],
+      "ds": "alarmet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_album",
+      "p": "noun",
+      "e": {
+        "sv": "ett album",
+        "en": "album",
+        "fa": "آلبوم",
+        "de": "das Album",
+        "es": "el álbum",
+        "it": "l'album"
+      },
+      "raw": "albumet album albumen",
+      "parts": [
+        "album",
+        "album;albums",
+        "آلبوم",
+        "das Album;Alben",
+        "el álbum;álbumes",
+        "l'album;album",
+        "o"
+      ],
+      "ds": "albumet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_age",
+      "p": "noun",
+      "e": {
+        "sv": "en ålder",
+        "en": "the age",
+        "fa": "سن",
+        "de": "das Alter",
+        "es": "la edad",
+        "it": "l'età"
+      },
+      "raw": "åldern åldrar",
+      "parts": [
+        "ålder",
+        "age;ages",
+        "سن",
+        "das Alter;Alter",
+        "la edad;edades",
+        "l'età;età",
+        "a"
+      ],
+      "ds": "åldern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_alphabet",
+      "p": "noun",
+      "e": {
+        "sv": "ett alfabet",
+        "en": "alphabet",
+        "fa": "الفبا",
+        "de": "das Alphabet",
+        "es": "el alfabeto",
+        "it": "l'alfabeto"
+      },
+      "raw": "alfabetet alfabet alfabeten",
+      "parts": [
+        "alfabet",
+        "alphabet;alphabets",
+        "الفبا",
+        "das Alphabet;Alphabete",
+        "el alfabeto;alfabetos",
+        "l'alfabeto;alfabeti",
+        "a"
+      ],
+      "ds": "alfabetet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_alibi",
+      "p": "noun",
+      "e": {
+        "sv": "ett alibi",
+        "en": "alibi",
+        "fa": "دلیل حضور در جای دیگر",
+        "de": "das Alibi",
+        "es": "la coartada",
+        "it": "l'alibi"
+      },
+      "raw": "alibit alibin alibina",
+      "parts": [
+        "alibi",
+        "alibi;alibis",
+        "دلیل حضور در جای دیگر",
+        "das Alibi;Alibis",
+        "la coartada;coartadas",
+        "l'alibi;alibi",
+        "a"
+      ],
+      "ds": "alibit",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_alliance",
+      "p": "noun",
+      "e": {
+        "sv": "en allians",
+        "en": "alliance",
+        "fa": "ائتلاف",
+        "de": "die Allianz",
+        "es": "la alianza",
+        "it": "l'alleanza"
+      },
+      "raw": "alliansen allianser",
+      "parts": [
+        "allians",
+        "alliance;alliances",
+        "ائتلاف",
+        "die Allianz;Allianzen",
+        "la alianza;alianzas",
+        "l'alleanza;alleanze",
+        "a"
+      ],
+      "ds": "alliansen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_calendar",
+      "p": "noun",
+      "e": {
+        "sv": "en almanacka",
+        "en": "calendar",
+        "fa": "تقویم",
+        "de": "der Kalender",
+        "es": "el calendario",
+        "it": "il calendario"
+      },
+      "raw": "almanackan almanackor",
+      "parts": [
+        "almanacka",
+        "calendar;calendars",
+        "تقویم",
+        "der Kalender;Kalender",
+        "el calendario;calendarios",
+        "il calendario;calendari",
+        "o"
+      ],
+      "ds": "almanackan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_deck",
+      "p": "noun",
+      "e": {
+        "sv": "en altan",
+        "en": "deck",
+        "fa": "تراس چوبی",
+        "de": "die Holzterrasse",
+        "es": "la terraza de madera",
+        "it": "la terrazza in legno"
+      },
+      "raw": "altanen altaner",
+      "parts": [
+        "altan",
+        "deck;decks",
+        "تراس چوبی",
+        "die Holzterrasse;Holzterrassen",
+        "la terraza de madera;terrazas de madera",
+        "la terrazza in legno;terrazze in legno",
+        "l"
+      ],
+      "ds": "altanen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_altar",
+      "p": "noun",
+      "e": {
+        "sv": "ett altare",
+        "en": "altar",
+        "fa": "محراب کلیسا",
+        "de": "der Altar",
+        "es": "el altar",
+        "it": "l'altare"
+      },
+      "raw": "altaret altaren altarna",
+      "parts": [
+        "altare",
+        "altar;altars",
+        "محراب کلیسا",
+        "der Altar;Altäre",
+        "el altar;altares",
+        "l'altare;altari",
+        "l"
+      ],
+      "ds": "altaret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_alternative",
+      "p": "noun",
+      "e": {
+        "sv": "ett alternativ",
+        "en": "alternative",
+        "fa": "گزینهٔ جایگزین",
+        "de": "die Alternative",
+        "es": "la alternativa",
+        "it": "l'alternativa"
+      },
+      "raw": "alternativet alternativ alternativen",
+      "parts": [
+        "alternativ",
+        "alternative;alternatives",
+        "گزینهٔ جایگزین",
+        "die Alternative;Alternativen",
+        "la alternativa;alternativas",
+        "l'alternativa;alternative",
+        "a"
+      ],
+      "ds": "alternativet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_amateur",
+      "p": "noun",
+      "e": {
+        "sv": "en amatör",
+        "en": "amateur",
+        "fa": "فرد آماتور",
+        "de": "der Amateur",
+        "es": "el aficionado",
+        "it": "il dilettante"
+      },
+      "raw": "amatören amatörer",
+      "parts": [
+        "amatör",
+        "amateur;amateurs",
+        "فرد آماتور",
+        "der Amateur;Amateure",
+        "el aficionado;aficionados",
+        "il dilettante;dilettanti",
+        "p"
+      ],
+      "ds": "amatören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_embassy",
+      "p": "noun",
+      "e": {
+        "sv": "en ambassad",
+        "en": "embassy",
+        "fa": "سفارت",
+        "de": "die Botschaft",
+        "es": "la embajada",
+        "it": "l'ambasciata"
+      },
+      "raw": "ambassaden ambassader",
+      "parts": [
+        "ambassad",
+        "embassy;embassies",
+        "سفارت",
+        "die Botschaft;Botschaften",
+        "la embajada;embajadas",
+        "l'ambasciata;ambasciate",
+        "l"
+      ],
+      "ds": "ambassaden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_ambassador",
+      "p": "noun",
+      "e": {
+        "sv": "en ambassadör",
+        "en": "ambassador",
+        "fa": "سفیر",
+        "de": "der Botschafter",
+        "es": "el embajador",
+        "it": "l'ambasciatore"
+      },
+      "raw": "ambassadören ambassadörer",
+      "parts": [
+        "ambassadör",
+        "ambassador;ambassadors",
+        "سفیر",
+        "der Botschafter;Botschafter",
+        "el embajador;embajadores",
+        "l'ambasciatore;ambasciatori",
+        "p"
+      ],
+      "ds": "ambassadören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_ambition",
+      "p": "noun",
+      "e": {
+        "sv": "en ambition",
+        "en": "ambition",
+        "fa": "بلندپروازی",
+        "de": "der Ehrgeiz",
+        "es": "la ambición",
+        "it": "l'ambizione"
+      },
+      "raw": "ambitionen ambitioner",
+      "parts": [
+        "ambition",
+        "ambition;ambitions",
+        "بلندپروازی",
+        "der Ehrgeiz;",
+        "la ambición;ambiciones",
+        "l'ambizione;ambizioni",
+        "a"
+      ],
+      "ds": "ambitionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_amulet",
+      "p": "noun",
+      "e": {
+        "sv": "en amulett",
+        "en": "amulet",
+        "fa": "تعویذ",
+        "de": "das Amulett",
+        "es": "el amuleto",
+        "it": "l'amuleto"
+      },
+      "raw": "amuletten amuletter",
+      "parts": [
+        "amulett",
+        "amulet;amulets",
+        "تعویذ",
+        "das Amulett;Amulette",
+        "el amuleto;amuletos",
+        "l'amuleto;amuleti",
+        "o"
+      ],
+      "ds": "amuletten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_analysis",
+      "p": "noun",
+      "e": {
+        "sv": "en analys",
+        "en": "analysis",
+        "fa": "تحلیل",
+        "de": "die Analyse",
+        "es": "el análisis",
+        "it": "l'analisi"
+      },
+      "raw": "analysen analyser",
+      "parts": [
+        "analys",
+        "analysis;analyses",
+        "تحلیل",
+        "die Analyse;Analysen",
+        "el análisis;análisis",
+        "l'analisi;analisi",
+        "a"
+      ],
+      "ds": "analysen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_pineapple",
+      "p": "noun",
+      "e": {
+        "sv": "en ananas",
+        "en": "pineapple",
+        "fa": "آناناس",
+        "de": "die Ananas",
+        "es": "la piña",
+        "it": "l'ananas"
+      },
+      "raw": "ananasen ananas ananasen (el. ananaser ananaserna)",
+      "parts": [
+        "ananas",
+        "pineapple;pineapples",
+        "آناناس",
+        "die Ananas;Ananas",
+        "la piña;piñas",
+        "l'ananas;ananas",
+        "f"
+      ],
+      "ds": "ananasen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bid",
+      "p": "noun",
+      "e": {
+        "sv": "ett anbud",
+        "en": "bid",
+        "fa": "پیشنهاد مناقصه",
+        "de": "das Angebot",
+        "es": "la oferta de licitación",
+        "it": "l'offerta di gara"
+      },
+      "raw": "anbudet anbud anbuden",
+      "parts": [
+        "anbud",
+        "bid;bids",
+        "پیشنهاد مناقصه",
+        "das Angebot;Angebote",
+        "la oferta de licitación;ofertas de licitación",
+        "l'offerta di gara;offerte di gara",
+        "a"
+      ],
+      "ds": "anbudet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_proportion",
+      "p": "noun",
+      "e": {
+        "sv": "en andel",
+        "en": "proportion",
+        "fa": "نسبت",
+        "de": "der Anteil",
+        "es": "la proporción",
+        "it": "la proporzione"
+      },
+      "raw": "andelen andelar",
+      "parts": [
+        "andel",
+        "proportion;proportions",
+        "نسبت",
+        "der Anteil;Anteile",
+        "la proporción;proporciones",
+        "la proporzione;proporzioni",
+        "a"
+      ],
+      "ds": "andelen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_suffix",
+      "p": "noun",
+      "e": {
+        "sv": "en ändelse",
+        "en": "suffix",
+        "fa": "پسوند",
+        "de": "die Endung",
+        "es": "el sufijo",
+        "it": "il suffisso"
+      },
+      "raw": "ändelsen ändelser",
+      "parts": [
+        "ändelse",
+        "suffix;suffixes",
+        "پسوند",
+        "die Endung;Endungen",
+        "el sufijo;sufijos",
+        "il suffisso;suffissi",
+        "a"
+      ],
+      "ds": "ändelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_breath",
+      "p": "noun",
+      "e": {
+        "sv": "ett andetag",
+        "en": "breath",
+        "fa": "نفس",
+        "de": "der Atemzug",
+        "es": "la respiración",
+        "it": "il respiro"
+      },
+      "raw": "andetaget andetag andetagen",
+      "parts": [
+        "andetag",
+        "breath;breaths",
+        "نفس",
+        "der Atemzug;Atemzüge",
+        "la respiración;respiraciones",
+        "il respiro;respiri",
+        "a"
+      ],
+      "ds": "andetaget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_modification",
+      "p": "noun",
+      "e": {
+        "sv": "en ändring",
+        "en": "modification",
+        "fa": "اصلاح",
+        "de": "die Änderung",
+        "es": "la modificación",
+        "it": "la modifica"
+      },
+      "raw": "ändringen ändringar",
+      "parts": [
+        "ändring",
+        "modification;modifications",
+        "اصلاح",
+        "die Änderung;Änderungen",
+        "la modificación;modificaciones",
+        "la modifica;modifiche",
+        "a"
+      ],
+      "ds": "ändringen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_anecdote",
+      "p": "noun",
+      "e": {
+        "sv": "en anekdot",
+        "en": "anecdote",
+        "fa": "حکایت کوتاه",
+        "de": "die Anekdote",
+        "es": "la anécdota",
+        "it": "l'aneddoto"
+      },
+      "raw": "anekdoten anekdoter",
+      "parts": [
+        "anekdot",
+        "anecdote;anecdotes",
+        "حکایت کوتاه",
+        "die Anekdote;Anekdoten",
+        "la anécdota;anécdotas",
+        "l'aneddoto;aneddoti",
+        "a"
+      ],
+      "ds": "anekdoten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_attack",
+      "p": "noun",
+      "e": {
+        "sv": "ett anfall",
+        "en": "attack",
+        "fa": "حمله",
+        "de": "der Angriff",
+        "es": "el ataque",
+        "it": "l'attacco"
+      },
+      "raw": "anfallet anfall anfallen",
+      "parts": [
+        "anfall",
+        "attack;attacks",
+        "حمله",
+        "der Angriff;Angriffe",
+        "el ataque;ataques",
+        "l'attacco;attacchi",
+        "a"
+      ],
+      "ds": "anfallet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_angel",
+      "p": "noun",
+      "e": {
+        "sv": "en ängel",
+        "en": "angel",
+        "fa": "فرشته",
+        "de": "der Engel",
+        "es": "el ángel",
+        "it": "l'angelo"
+      },
+      "raw": "ängeln änglar",
+      "parts": [
+        "ängel",
+        "angel;angels",
+        "فرشته",
+        "der Engel;Engel",
+        "el ángel;ángeles",
+        "l'angelo;angeli",
+        "s"
+      ],
+      "ds": "ängeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_duck",
+      "p": "noun",
+      "e": {
+        "sv": "en anka",
+        "en": "duck",
+        "fa": "اردک",
+        "de": "die Ente",
+        "es": "el pato",
+        "it": "l'anatra"
+      },
+      "raw": "ankan ankor",
+      "parts": [
+        "anka",
+        "duck;ducks",
+        "اردک",
+        "die Ente;Enten",
+        "el pato;patos",
+        "l'anatra;anatre",
+        "s"
+      ],
+      "ds": "ankan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_widow",
+      "p": "noun",
+      "e": {
+        "sv": "en änka",
+        "en": "widow",
+        "fa": "زن بیوه",
+        "de": "die Witwe",
+        "es": "la viuda",
+        "it": "la vedova"
+      },
+      "raw": "änkan änkor",
+      "parts": [
+        "änka",
+        "widow;widows",
+        "زن بیوه",
+        "die Witwe;Witwen",
+        "la viuda;viudas",
+        "la vedova;vedove",
+        "p"
+      ],
+      "ds": "änkan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_anchor",
+      "p": "noun",
+      "e": {
+        "sv": "ett ankare",
+        "en": "anchor",
+        "fa": "لنگر",
+        "de": "der Anker",
+        "es": "el ancla",
+        "it": "l'ancora"
+      },
+      "raw": "ankaret ankare ankarna",
+      "parts": [
+        "ankare",
+        "anchor;anchors",
+        "لنگر",
+        "der Anker;Anker",
+        "el ancla;anclas",
+        "l'ancora;ancore",
+        "o"
+      ],
+      "ds": "ankaret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_ankle",
+      "p": "noun",
+      "e": {
+        "sv": "en ankel",
+        "en": "ankle",
+        "fa": "مچ پا",
+        "de": "der Knöchel",
+        "es": "el tobillo",
+        "it": "la caviglia"
+      },
+      "raw": "ankeln anklar",
+      "parts": [
+        "ankel",
+        "ankle;ankles",
+        "مچ پا",
+        "der Knöchel;Knöchel",
+        "el tobillo;tobillos",
+        "la caviglia;caviglie",
+        "a"
+      ],
+      "ds": "ankeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_accusation",
+      "p": "noun",
+      "e": {
+        "sv": "en anklagelse",
+        "en": "accusation",
+        "fa": "اتهام",
+        "de": "die Anschuldigung",
+        "es": "la acusación",
+        "it": "l'accusa"
+      },
+      "raw": "anklagelsen anklagelser",
+      "parts": [
+        "anklagelse",
+        "accusation;accusations",
+        "اتهام",
+        "die Anschuldigung;Anschuldigungen",
+        "la acusación;acusaciones",
+        "l'accusa;accuse",
+        "a"
+      ],
+      "ds": "anklagelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_widower",
+      "p": "noun",
+      "e": {
+        "sv": "en änkling",
+        "en": "widower",
+        "fa": "مرد بیوه",
+        "de": "der Witwer",
+        "es": "el viudo",
+        "it": "il vedovo"
+      },
+      "raw": "änklingen änklingar",
+      "parts": [
+        "änkling",
+        "widower;widowers",
+        "مرد بیوه",
+        "der Witwer;Witwer",
+        "el viudo;viudos",
+        "il vedovo;vedovi",
+        "p"
+      ],
+      "ds": "änklingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_arrival",
+      "p": "noun",
+      "e": {
+        "sv": "en ankomst",
+        "en": "arrival",
+        "fa": "ورود",
+        "de": "die Ankunft",
+        "es": "la llegada",
+        "it": "l'arrivo"
+      },
+      "raw": "ankomsten ankomster",
+      "parts": [
+        "ankomst",
+        "arrival;arrivals",
+        "ورود",
+        "die Ankunft;Ankünfte",
+        "la llegada;llegadas",
+        "l'arrivo;arrivi",
+        "a"
+      ],
+      "ds": "ankomsten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_remark",
+      "p": "noun",
+      "e": {
+        "sv": "en anmärkning",
+        "en": "remark",
+        "fa": "تذکر",
+        "de": "die Bemerkung",
+        "es": "la observación",
+        "it": "l'osservazione"
+      },
+      "raw": "anmärkningen anmärkningar",
+      "parts": [
+        "anmärkning",
+        "remark;remarks",
+        "تذکر",
+        "die Bemerkung;Bemerkungen",
+        "la observación;observaciones",
+        "l'osservazione;osservazioni",
+        "a"
+      ],
+      "ds": "anmärkningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_advertisement",
+      "p": "noun",
+      "e": {
+        "sv": "en annons",
+        "en": "advertisement",
+        "fa": "آگهی",
+        "de": "die Anzeige",
+        "es": "el anuncio",
+        "it": "l'annuncio"
+      },
+      "raw": "annonsen annonser",
+      "parts": [
+        "annons",
+        "advertisement;advertisements",
+        "آگهی",
+        "die Anzeige;Anzeigen",
+        "el anuncio;anuncios",
+        "l'annuncio;annunci",
+        "a"
+      ],
+      "ds": "annonsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_anorak",
+      "p": "noun",
+      "e": {
+        "sv": "en anorak",
+        "en": "anorak",
+        "fa": "کاپشن کلاه‌دار",
+        "de": "der Anorak",
+        "es": "el anorak",
+        "it": "la giacca a vento"
+      },
+      "raw": "anoraken anoraker",
+      "parts": [
+        "anorak",
+        "anorak;anoraks",
+        "کاپشن کلاه‌دار",
+        "der Anorak;Anoraks",
+        "el anorak;anoraks",
+        "la giacca a vento;giacche a vento",
+        "o"
+      ],
+      "ds": "anoraken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_adaptation",
+      "p": "noun",
+      "e": {
+        "sv": "en anpassning",
+        "en": "adaptation",
+        "fa": "سازگاری",
+        "de": "die Anpassung",
+        "es": "la adaptación",
+        "it": "l'adattamento"
+      },
+      "raw": "anpassningen anpassningar",
+      "parts": [
+        "anpassning",
+        "adaptation;adaptations",
+        "سازگاری",
+        "die Anpassung;Anpassungen",
+        "la adaptación;adaptaciones",
+        "l'adattamento;adattamenti",
+        "a"
+      ],
+      "ds": "anpassningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_connection",
+      "p": "noun",
+      "e": {
+        "sv": "en anslutning",
+        "en": "connection",
+        "fa": "اتصال",
+        "de": "der Anschluss",
+        "es": "la conexión",
+        "it": "il collegamento"
+      },
+      "raw": "anslutningen anslutningar",
+      "parts": [
+        "anslutning",
+        "connection;connections",
+        "اتصال",
+        "der Anschluss;Anschlüsse",
+        "la conexión;conexiones",
+        "il collegamento;collegamenti",
+        "a"
+      ],
+      "ds": "anslutningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_responsibility",
+      "p": "noun",
+      "e": {
+        "sv": "ett ansvar",
+        "en": "responsibility",
+        "fa": "مسئولیت",
+        "de": "die Verantwortung",
+        "es": "la responsabilidad",
+        "it": "la responsabilità"
+      },
+      "raw": "ansvaret",
+      "parts": [
+        "ansvar",
+        "responsibility;responsibilities",
+        "مسئولیت",
+        "die Verantwortung;Verantwortungen",
+        "la responsabilidad;responsabilidades",
+        "la responsabilità;responsabilità",
+        "a"
+      ],
+      "ds": "ansvaret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_assumption",
+      "p": "noun",
+      "e": {
+        "sv": "ett antagande",
+        "en": "assumption",
+        "fa": "فرض",
+        "de": "die Annahme",
+        "es": "la suposición",
+        "it": "l'ipotesi"
+      },
+      "raw": "antagandet antaganden antagandena",
+      "parts": [
+        "antagande",
+        "assumption;assumptions",
+        "فرض",
+        "die Annahme;Annahmen",
+        "la suposición;suposiciones",
+        "l'ipotesi;ipotesi",
+        "a"
+      ],
+      "ds": "antagandet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_antenna",
+      "p": "noun",
+      "e": {
+        "sv": "en antenn",
+        "en": "antenna",
+        "fa": "آنتن",
+        "de": "die Antenne",
+        "es": "la antena",
+        "it": "l'antenna"
+      },
+      "raw": "antennen antenner",
+      "parts": [
+        "antenn",
+        "antenna;antennas",
+        "آنتن",
+        "die Antenne;Antennen",
+        "la antena;antenas",
+        "l'antenna;antenne",
+        "o"
+      ],
+      "ds": "antennen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_antique",
+      "p": "noun",
+      "e": {
+        "sv": "en antikvitet",
+        "en": "antique",
+        "fa": "شیء عتیقه",
+        "de": "die Antiquität",
+        "es": "la antigüedad",
+        "it": "l'oggetto d'antiquariato"
+      },
+      "raw": "antikviteten antikviteter",
+      "parts": [
+        "antikvitet",
+        "antique;antiques",
+        "شیء عتیقه",
+        "die Antiquität;Antiquitäten",
+        "la antigüedad;antigüedades",
+        "l'oggetto d'antiquariato;oggetti d'antiquariato",
+        "o"
+      ],
+      "ds": "antikviteten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_hint",
+      "p": "noun",
+      "e": {
+        "sv": "en antydan",
+        "en": "hint",
+        "fa": "اشارهٔ غیرمستقیم",
+        "de": "die Andeutung",
+        "es": "la insinuación",
+        "it": "l'accenno"
+      },
+      "raw": "antydan antydningar",
+      "parts": [
+        "antydan",
+        "hint;hints",
+        "اشارهٔ غیرمستقیم",
+        "die Andeutung;Andeutungen",
+        "la insinuación;insinuaciones",
+        "l'accenno;accenni",
+        "a"
+      ],
+      "ds": "antydan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_instruction",
+      "p": "noun",
+      "e": {
+        "sv": "en anvisning",
+        "en": "instruction",
+        "fa": "دستورالعمل",
+        "de": "die Anweisung",
+        "es": "la instrucción",
+        "it": "l'istruzione"
+      },
+      "raw": "anvisningen anvisningar",
+      "parts": [
+        "anvisning",
+        "instruction;instructions",
+        "دستورالعمل",
+        "die Anweisung;Anweisungen",
+        "la instrucción;instrucciones",
+        "l'istruzione;istruzioni",
+        "a"
+      ],
+      "ds": "anvisningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_device",
+      "p": "noun",
+      "e": {
+        "sv": "en apparat",
+        "en": "device",
+        "fa": "دستگاه",
+        "de": "das Gerät",
+        "es": "el aparato",
+        "it": "l'apparecchio"
+      },
+      "raw": "apparaten apparater",
+      "parts": [
+        "apparat",
+        "device;devices",
+        "دستگاه",
+        "das Gerät;Geräte",
+        "el aparato;aparatos",
+        "l'apparecchio;apparecchi",
+        "o"
+      ],
+      "ds": "apparaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_applause",
+      "p": "noun",
+      "e": {
+        "sv": "en applåd",
+        "en": "applause",
+        "fa": "تشویق با دست زدن",
+        "de": "der Applaus",
+        "es": "el aplauso",
+        "it": "l'applauso"
+      },
+      "raw": "applåden applåder",
+      "parts": [
+        "applåd",
+        "applause;",
+        "تشویق با دست زدن",
+        "der Applaus;",
+        "el aplauso;aplausos",
+        "l'applauso;applausi",
+        "a"
+      ],
+      "ds": "applåden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_apricot",
+      "p": "noun",
+      "e": {
+        "sv": "en aprikos",
+        "en": "apricot",
+        "fa": "زردآلو",
+        "de": "die Aprikose",
+        "es": "el albaricoque",
+        "it": "l'albicocca"
+      },
+      "raw": "aprikosen aprikoser",
+      "parts": [
+        "aprikos",
+        "apricot;apricots",
+        "زردآلو",
+        "die Aprikose;Aprikosen",
+        "el albaricoque;albaricoques",
+        "l'albicocca;albicocche",
+        "f"
+      ],
+      "ds": "aprikosen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_appetite",
+      "p": "noun",
+      "e": {
+        "sv": "en aptit",
+        "en": "appetite",
+        "fa": "اشتها",
+        "de": "der Appetit",
+        "es": "el apetito",
+        "it": "l'appetito"
+      },
+      "raw": "aptiten",
+      "parts": [
+        "aptit",
+        "appetite;appetites",
+        "اشتها",
+        "der Appetit;",
+        "el apetito;apetitos",
+        "l'appetito;appetiti",
+        "a"
+      ],
+      "ds": "aptiten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_arena",
+      "p": "noun",
+      "e": {
+        "sv": "en arena",
+        "en": "arena",
+        "fa": "ورزشگاه",
+        "de": "die Arena",
+        "es": "el estadio",
+        "it": "l'arena"
+      },
+      "raw": "arenan arenor",
+      "parts": [
+        "arena",
+        "arena;arenas",
+        "ورزشگاه",
+        "die Arena;Arenen",
+        "el estadio;estadios",
+        "l'arena;arene",
+        "l"
+      ],
+      "ds": "arenan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_errand",
+      "p": "noun",
+      "e": {
+        "sv": "ett ärende",
+        "en": "errand",
+        "fa": "کار بیرون از خانه",
+        "de": "die Besorgung",
+        "es": "el recado",
+        "it": "la commissione"
+      },
+      "raw": "ärendet ärenden ärendena",
+      "parts": [
+        "ärende",
+        "errand;errands",
+        "کار بیرون از خانه",
+        "die Besorgung;Besorgungen",
+        "el recado;recados",
+        "la commissione;commissioni",
+        "a"
+      ],
+      "ds": "ärendet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_argument",
+      "p": "noun",
+      "e": {
+        "sv": "ett argument",
+        "en": "argument",
+        "fa": "استدلال",
+        "de": "das Argument",
+        "es": "el argumento",
+        "it": "l'argomento"
+      },
+      "raw": "argumentet argument argumenten",
+      "parts": [
+        "argument",
+        "argument;arguments",
+        "استدلال",
+        "das Argument;Argumente",
+        "el argumento;argumentos",
+        "l'argomento;argomenti",
+        "a"
+      ],
+      "ds": "argumentet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_archaeologist",
+      "p": "noun",
+      "e": {
+        "sv": "en arkeolog",
+        "en": "archaeologist",
+        "fa": "باستان‌شناس",
+        "de": "der Archäologe",
+        "es": "el arqueólogo",
+        "it": "l'archeologo"
+      },
+      "raw": "arkeologen arkeologer",
+      "parts": [
+        "arkeolog",
+        "archaeologist;archaeologists",
+        "باستان‌شناس",
+        "der Archäologe;Archäologen",
+        "el arqueólogo;arqueólogos",
+        "l'archeologo;archeologi",
+        "p"
+      ],
+      "ds": "arkeologen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_architect",
+      "p": "noun",
+      "e": {
+        "sv": "en arkitekt",
+        "en": "architect",
+        "fa": "معمار",
+        "de": "der Architekt",
+        "es": "el arquitecto",
+        "it": "l'architetto"
+      },
+      "raw": "arkitekten arkitekter",
+      "parts": [
+        "arkitekt",
+        "architect;architects",
+        "معمار",
+        "der Architekt;Architekten",
+        "el arquitecto;arquitectos",
+        "l'architetto;architetti",
+        "p"
+      ],
+      "ds": "arkitekten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_archive",
+      "p": "noun",
+      "e": {
+        "sv": "ett arkiv",
+        "en": "archive",
+        "fa": "بایگانی",
+        "de": "das Archiv",
+        "es": "el archivo",
+        "it": "l'archivio"
+      },
+      "raw": "arkivet arkiv arkiven",
+      "parts": [
+        "arkiv",
+        "archive;archives",
+        "بایگانی",
+        "das Archiv;Archive",
+        "el archivo;archivos",
+        "l'archivio;archivi",
+        "l"
+      ],
+      "ds": "arkivet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_army",
+      "p": "noun",
+      "e": {
+        "sv": "en armé",
+        "en": "army",
+        "fa": "ارتش",
+        "de": "die Armee",
+        "es": "el ejército",
+        "it": "l'esercito"
+      },
+      "raw": "armén arméer",
+      "parts": [
+        "armé",
+        "army;armies",
+        "ارتش",
+        "die Armee;Armeen",
+        "el ejército;ejércitos",
+        "l'esercito;eserciti",
+        "a"
+      ],
+      "ds": "armén",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_article",
+      "p": "noun",
+      "e": {
+        "sv": "en artikel",
+        "en": "article",
+        "fa": "مقاله",
+        "de": "der Artikel",
+        "es": "el artículo",
+        "it": "l'articolo"
+      },
+      "raw": "artikeln artiklar",
+      "parts": [
+        "artikel",
+        "article;articles",
+        "مقاله",
+        "der Artikel;Artikel",
+        "el artículo;artículos",
+        "l'articolo;articoli",
+        "a"
+      ],
+      "ds": "artikeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_performer",
+      "p": "noun",
+      "e": {
+        "sv": "en artist",
+        "en": "performer",
+        "fa": "هنرمند اجراکننده",
+        "de": "der Künstler",
+        "es": "el artista",
+        "it": "l'artista"
+      },
+      "raw": "artisten artister",
+      "parts": [
+        "artist",
+        "performer;performers",
+        "هنرمند اجراکننده",
+        "der Künstler;Künstler",
+        "el artista;artistas",
+        "l'artista;artisti",
+        "p"
+      ],
+      "ds": "artisten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_heir",
+      "p": "noun",
+      "e": {
+        "sv": "en arvinge",
+        "en": "heir",
+        "fa": "وارث",
+        "de": "der Erbe",
+        "es": "el heredero",
+        "it": "l'erede"
+      },
+      "raw": "arvingen arvingar",
+      "parts": [
+        "arvinge",
+        "heir;heirs",
+        "وارث",
+        "der Erbe;Erben",
+        "el heredero;herederos",
+        "l'erede;eredi",
+        "p"
+      ],
+      "ds": "arvingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fee",
+      "p": "noun",
+      "e": {
+        "sv": "ett arvode",
+        "en": "fee",
+        "fa": "حق‌الزحمه",
+        "de": "das Honorar",
+        "es": "el honorario",
+        "it": "l'onorario"
+      },
+      "raw": "arvodet arvoden arvodena",
+      "parts": [
+        "arvode",
+        "fee;fees",
+        "حق‌الزحمه",
+        "das Honorar;Honorare",
+        "el honorario;honorarios",
+        "l'onorario;onorari",
+        "a"
+      ],
+      "ds": "arvodet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_opinion",
+      "p": "noun",
+      "e": {
+        "sv": "en åsikt",
+        "en": "opinion",
+        "fa": "نظر",
+        "de": "die Meinung",
+        "es": "la opinión",
+        "it": "l'opinione"
+      },
+      "raw": "åsikten åsikter",
+      "parts": [
+        "åsikt",
+        "opinion;opinions",
+        "نظر",
+        "die Meinung;Meinungen",
+        "la opinión;opiniones",
+        "l'opinione;opinioni",
+        "a"
+      ],
+      "ds": "åsikten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_donkey",
+      "p": "noun",
+      "e": {
+        "sv": "en åsna",
+        "en": "donkey",
+        "fa": "الاغ",
+        "de": "der Esel",
+        "es": "el burro",
+        "it": "l'asino"
+      },
+      "raw": "åsnan åsnor",
+      "parts": [
+        "åsna",
+        "donkey;donkeys",
+        "الاغ",
+        "der Esel;Esel",
+        "el burro;burros",
+        "l'asino;asini",
+        "s"
+      ],
+      "ds": "åsnan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_aspect",
+      "p": "noun",
+      "e": {
+        "sv": "en aspekt",
+        "en": "aspect",
+        "fa": "جنبه",
+        "de": "der Aspekt",
+        "es": "el aspecto",
+        "it": "l'aspetto"
+      },
+      "raw": "aspekten aspekter",
+      "parts": [
+        "aspekt",
+        "aspect;aspects",
+        "جنبه",
+        "der Aspekt;Aspekte",
+        "el aspecto;aspectos",
+        "l'aspetto;aspetti",
+        "a"
+      ],
+      "ds": "aspekten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_assistant",
+      "p": "noun",
+      "e": {
+        "sv": "en assistent",
+        "en": "assistant",
+        "fa": "دستیار",
+        "de": "der Assistent",
+        "es": "el asistente",
+        "it": "l'assistente"
+      },
+      "raw": "assistenten assistenter",
+      "parts": [
+        "assistent",
+        "assistant;assistants",
+        "دستیار",
+        "der Assistent;Assistenten",
+        "el asistente;asistentes",
+        "l'assistente;assistenti",
+        "p"
+      ],
+      "ds": "assistenten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_astronaut",
+      "p": "noun",
+      "e": {
+        "sv": "en astronaut",
+        "en": "astronaut",
+        "fa": "فضانورد",
+        "de": "der Astronaut",
+        "es": "el astronauta",
+        "it": "l'astronauta"
+      },
+      "raw": "astronauten astronauter",
+      "parts": [
+        "astronaut",
+        "astronaut;astronauts",
+        "فضانورد",
+        "der Astronaut;Astronauten",
+        "el astronauta;astronautas",
+        "l'astronauta;astronauti",
+        "p"
+      ],
+      "ds": "astronauten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_studio",
+      "p": "noun",
+      "e": {
+        "sv": "en ateljé",
+        "en": "studio",
+        "fa": "کارگاه هنری",
+        "de": "das Atelier",
+        "es": "el taller artístico",
+        "it": "l'atelier"
+      },
+      "raw": "ateljén ateljéer",
+      "parts": [
+        "ateljé",
+        "studio;studios",
+        "کارگاه هنری",
+        "das Atelier;Ateliers",
+        "el taller artístico;talleres artísticos",
+        "l'atelier;atelier",
+        "l"
+      ],
+      "ds": "ateljén",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_follow_up_visit",
+      "p": "noun",
+      "e": {
+        "sv": "ett återbesök",
+        "en": "follow-up visit",
+        "fa": "مراجعهٔ مجدد",
+        "de": "der Kontrollbesuch",
+        "es": "la visita de seguimiento",
+        "it": "la visita di controllo"
+      },
+      "raw": "återbesöket återbesök återbesöken",
+      "parts": [
+        "återbesök",
+        "follow-up visit;follow-up visits",
+        "مراجعهٔ مجدد",
+        "der Kontrollbesuch;Kontrollbesuche",
+        "la visita de seguimiento;visitas de seguimiento",
+        "la visita di controllo;visite di controllo",
+        "a"
+      ],
+      "ds": "återbesöket",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_return_journey",
+      "p": "noun",
+      "e": {
+        "sv": "en återresa",
+        "en": "return journey",
+        "fa": "سفر برگشت",
+        "de": "die Rückreise",
+        "es": "el viaje de vuelta",
+        "it": "il viaggio di ritorno"
+      },
+      "raw": "återresan återresor",
+      "parts": [
+        "återresa",
+        "return journey;return journeys",
+        "سفر برگشت",
+        "die Rückreise;Rückreisen",
+        "el viaje de vuelta;viajes de vuelta",
+        "il viaggio di ritorno;viaggi di ritorno",
+        "a"
+      ],
+      "ds": "återresan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_measure",
+      "p": "noun",
+      "e": {
+        "sv": "en åtgärd",
+        "en": "the measure",
+        "fa": "اقدام",
+        "de": "die Maßnahme",
+        "es": "la medida",
+        "it": "il provvedimento"
+      },
+      "raw": "åtgärden åtgärder",
+      "parts": [
+        "åtgärd",
+        "measure;measures",
+        "اقدام",
+        "die Maßnahme;Maßnahmen",
+        "la medida;medidas",
+        "il provvedimento;provvedimenti",
+        "a"
+      ],
+      "ds": "åtgärden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_atlas",
+      "p": "noun",
+      "e": {
+        "sv": "en atlas",
+        "en": "atlas",
+        "fa": "اطلس",
+        "de": "der Atlas",
+        "es": "el atlas",
+        "it": "l'atlante"
+      },
+      "raw": "atlasen atlaser",
+      "parts": [
+        "atlas",
+        "atlas;atlases",
+        "اطلس",
+        "der Atlas;Atlanten",
+        "el atlas;atlas",
+        "l'atlante;atlanti",
+        "o"
+      ],
+      "ds": "atlasen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_atom",
+      "p": "noun",
+      "e": {
+        "sv": "en atom",
+        "en": "atom",
+        "fa": "اتم",
+        "de": "das Atom",
+        "es": "el átomo",
+        "it": "l'atomo"
+      },
+      "raw": "atomen atomer",
+      "parts": [
+        "atom",
+        "atom;atoms",
+        "اتم",
+        "das Atom;Atome",
+        "el átomo;átomos",
+        "l'atomo;atomi",
+        "a"
+      ],
+      "ds": "atomen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_attitude",
+      "p": "noun",
+      "e": {
+        "sv": "en attityd",
+        "en": "attitude",
+        "fa": "نگرش",
+        "de": "die Einstellung",
+        "es": "la actitud",
+        "it": "l'atteggiamento"
+      },
+      "raw": "attityden attityder",
+      "parts": [
+        "attityd",
+        "attitude;attitudes",
+        "نگرش",
+        "die Einstellung;Einstellungen",
+        "la actitud;actitudes",
+        "l'atteggiamento;atteggiamenti",
+        "a"
+      ],
+      "ds": "attityden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_auction",
+      "p": "noun",
+      "e": {
+        "sv": "en auktion",
+        "en": "auction",
+        "fa": "حراج",
+        "de": "die Auktion",
+        "es": "la subasta",
+        "it": "l'asta"
+      },
+      "raw": "auktionen auktioner",
+      "parts": [
+        "auktion",
+        "auction;auctions",
+        "حراج",
+        "die Auktion;Auktionen",
+        "la subasta;subastas",
+        "l'asta;aste",
+        "a"
+      ],
+      "ds": "auktionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_autograph",
+      "p": "noun",
+      "e": {
+        "sv": "en autograf",
+        "en": "autograph",
+        "fa": "امضای یادگاری",
+        "de": "das Autogramm",
+        "es": "el autógrafo",
+        "it": "l'autografo"
+      },
+      "raw": "autografen autografer",
+      "parts": [
+        "autograf",
+        "autograph;autographs",
+        "امضای یادگاری",
+        "das Autogramm;Autogramme",
+        "el autógrafo;autógrafos",
+        "l'autografo;autografi",
+        "o"
+      ],
+      "ds": "autografen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_vending_machine",
+      "p": "noun",
+      "e": {
+        "sv": "en automat",
+        "en": "vending machine",
+        "fa": "دستگاه فروش خودکار",
+        "de": "der Verkaufsautomat",
+        "es": "la máquina expendedora",
+        "it": "il distributore automatico"
+      },
+      "raw": "automaten automater",
+      "parts": [
+        "automat",
+        "vending machine;vending machines",
+        "دستگاه فروش خودکار",
+        "der Verkaufsautomat;Verkaufsautomaten",
+        "la máquina expendedora;máquinas expendedoras",
+        "il distributore automatico;distributori automatici",
+        "o"
+      ],
+      "ds": "automaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_interruption",
+      "p": "noun",
+      "e": {
+        "sv": "ett avbrott",
+        "en": "interruption",
+        "fa": "وقفه",
+        "de": "die Unterbrechung",
+        "es": "la interrupción",
+        "it": "l'interruzione"
+      },
+      "raw": "avbrottet avbrott avbrotten",
+      "parts": [
+        "avbrott",
+        "interruption;interruptions",
+        "وقفه",
+        "die Unterbrechung;Unterbrechungen",
+        "la interrupción;interrupciones",
+        "l'interruzione;interruzioni",
+        "a"
+      ],
+      "ds": "avbrottet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_deduction",
+      "p": "noun",
+      "e": {
+        "sv": "ett avdrag",
+        "en": "deduction",
+        "fa": "کسور",
+        "de": "der Abzug",
+        "es": "la deducción",
+        "it": "la detrazione"
+      },
+      "raw": "avdraget avdrag avdragen",
+      "parts": [
+        "avdrag",
+        "deduction;deductions",
+        "کسور",
+        "der Abzug;Abzüge",
+        "la deducción;deducciones",
+        "la detrazione;detrazioni",
+        "a"
+      ],
+      "ds": "avdraget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_adventure",
+      "p": "noun",
+      "e": {
+        "sv": "ett äventyr",
+        "en": "adventure",
+        "fa": "ماجراجویی",
+        "de": "das Abenteuer",
+        "es": "la aventura",
+        "it": "l'avventura"
+      },
+      "raw": "äventyret äventyr äventyren",
+      "parts": [
+        "äventyr",
+        "adventure;adventures",
+        "ماجراجویی",
+        "das Abenteuer;Abenteuer",
+        "la aventura;aventuras",
+        "l'avventura;avventure",
+        "a"
+      ],
+      "ds": "äventyret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_avenue",
+      "p": "noun",
+      "e": {
+        "sv": "en aveny",
+        "en": "avenue",
+        "fa": "خیابان عریض",
+        "de": "die Allee",
+        "es": "la avenida",
+        "it": "il viale"
+      },
+      "raw": "avenyn avenyer",
+      "parts": [
+        "aveny",
+        "avenue;avenues",
+        "خیابان عریض",
+        "die Allee;Alleen",
+        "la avenida;avenidas",
+        "il viale;viali",
+        "l"
+      ],
+      "ds": "avenyn",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_motorway_exit",
+      "p": "noun",
+      "e": {
+        "sv": "en avfart",
+        "en": "motorway exit",
+        "fa": "خروجی بزرگراه",
+        "de": "die Autobahnausfahrt",
+        "es": "la salida de autopista",
+        "it": "l'uscita autostradale"
+      },
+      "raw": "avfarten avfarter",
+      "parts": [
+        "avfart",
+        "motorway exit;motorway exits",
+        "خروجی بزرگراه",
+        "die Autobahnausfahrt;Autobahnausfahrten",
+        "la salida de autopista;salidas de autopista",
+        "l'uscita autostradale;uscite autostradali",
+        "l"
+      ],
+      "ds": "avfarten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_departure",
+      "p": "noun",
+      "e": {
+        "sv": "en avgång",
+        "en": "departure",
+        "fa": "حرکت وسیلهٔ نقلیه",
+        "de": "die Abfahrt",
+        "es": "la salida",
+        "it": "la partenza"
+      },
+      "raw": "avgången avgångar",
+      "parts": [
+        "avgång",
+        "departure;departures",
+        "حرکت وسیلهٔ نقلیه",
+        "die Abfahrt;Abfahrten",
+        "la salida;salidas",
+        "la partenza;partenze",
+        "a"
+      ],
+      "ds": "avgången",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dissertation",
+      "p": "noun",
+      "e": {
+        "sv": "en avhandling",
+        "en": "dissertation",
+        "fa": "رساله",
+        "de": "die Dissertation",
+        "es": "la tesis doctoral",
+        "it": "la tesi di dottorato"
+      },
+      "raw": "avhandlingen avhandlingar",
+      "parts": [
+        "avhandling",
+        "dissertation;dissertations",
+        "رساله",
+        "die Dissertation;Dissertationen",
+        "la tesis doctoral;tesis doctorales",
+        "la tesi di dottorato;tesi di dottorato",
+        "a"
+      ],
+      "ds": "avhandlingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_drain",
+      "p": "noun",
+      "e": {
+        "sv": "ett avlopp",
+        "en": "drain",
+        "fa": "آبرو",
+        "de": "der Abfluss",
+        "es": "el desagüe",
+        "it": "lo scarico"
+      },
+      "raw": "avloppet avlopp avloppen",
+      "parts": [
+        "avlopp",
+        "drain;drains",
+        "آبرو",
+        "der Abfluss;Abflüsse",
+        "el desagüe;desagües",
+        "lo scarico;scarichi",
+        "o"
+      ],
+      "ds": "avloppet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_avocado",
+      "p": "noun",
+      "e": {
+        "sv": "en avokado",
+        "en": "avocado",
+        "fa": "آووکادو",
+        "de": "die Avocado",
+        "es": "el aguacate",
+        "it": "l'avocado"
+      },
+      "raw": "avokadon avokador",
+      "parts": [
+        "avokado",
+        "avocado;avocados",
+        "آووکادو",
+        "die Avocado;Avocados",
+        "el aguacate;aguacates",
+        "l'avocado;avocado",
+        "f"
+      ],
+      "ds": "avokadon",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_intention",
+      "p": "noun",
+      "e": {
+        "sv": "en avsikt",
+        "en": "intention",
+        "fa": "قصد",
+        "de": "die Absicht",
+        "es": "la intención",
+        "it": "l'intenzione"
+      },
+      "raw": "avsikten avsikter",
+      "parts": [
+        "avsikt",
+        "intention;intentions",
+        "قصد",
+        "die Absicht;Absichten",
+        "la intención;intenciones",
+        "l'intenzione;intenzioni",
+        "a"
+      ],
+      "ds": "avsikten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_farewell",
+      "p": "noun",
+      "e": {
+        "sv": "ett avsked",
+        "en": "farewell",
+        "fa": "خداحافظی",
+        "de": "der Abschied",
+        "es": "la despedida",
+        "it": "il commiato"
+      },
+      "raw": "avskedet avsked avskeden",
+      "parts": [
+        "avsked",
+        "farewell;farewells",
+        "خداحافظی",
+        "der Abschied;Abschiede",
+        "la despedida;despedidas",
+        "il commiato;commiati",
+        "a"
+      ],
+      "ds": "avskedet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_rejection",
+      "p": "noun",
+      "e": {
+        "sv": "ett avslag",
+        "en": "rejection",
+        "fa": "رد درخواست",
+        "de": "die Ablehnung",
+        "es": "el rechazo",
+        "it": "il rifiuto"
+      },
+      "raw": "avslaget avslag avslagen",
+      "parts": [
+        "avslag",
+        "rejection;rejections",
+        "رد درخواست",
+        "die Ablehnung;Ablehnungen",
+        "el rechazo;rechazos",
+        "il rifiuto;rifiuti",
+        "a"
+      ],
+      "ds": "avslaget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_conclusion",
+      "p": "noun",
+      "e": {
+        "sv": "en avslutning",
+        "en": "conclusion",
+        "fa": "پایان‌بندی",
+        "de": "der Abschluss",
+        "es": "la conclusión",
+        "it": "la conclusione"
+      },
+      "raw": "avslutningen avslutningar",
+      "parts": [
+        "avslutning",
+        "conclusion;conclusions",
+        "پایان‌بندی",
+        "der Abschluss;Abschlüsse",
+        "la conclusión;conclusiones",
+        "la conclusione;conclusioni",
+        "a"
+      ],
+      "ds": "avslutningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_episode",
+      "p": "noun",
+      "e": {
+        "sv": "ett avsnitt",
+        "en": "episode",
+        "fa": "قسمت سریال",
+        "de": "die Folge",
+        "es": "el episodio",
+        "it": "l'episodio"
+      },
+      "raw": "avsnittet avsnitt avsnitten",
+      "parts": [
+        "avsnitt",
+        "episode;episodes",
+        "قسمت سریال",
+        "die Folge;Folgen",
+        "el episodio;episodios",
+        "l'episodio;episodi",
+        "a"
+      ],
+      "ds": "avsnittet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_distance",
+      "p": "noun",
+      "e": {
+        "sv": "ett avstånd",
+        "en": "distance",
+        "fa": "فاصله",
+        "de": "die Entfernung",
+        "es": "la distancia",
+        "it": "la distanza"
+      },
+      "raw": "avståndet avstånd avstånden",
+      "parts": [
+        "avstånd",
+        "distance;distances",
+        "فاصله",
+        "die Entfernung;Entfernungen",
+        "la distancia;distancias",
+        "la distanza;distanze",
+        "a"
+      ],
+      "ds": "avståndet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_deviation",
+      "p": "noun",
+      "e": {
+        "sv": "en avvikelse",
+        "en": "deviation",
+        "fa": "انحراف",
+        "de": "die Abweichung",
+        "es": "la desviación",
+        "it": "la deviazione"
+      },
+      "raw": "avvikelsen avvikelser",
+      "parts": [
+        "avvikelse",
+        "deviation;deviations",
+        "انحراف",
+        "die Abweichung;Abweichungen",
+        "la desviación;desviaciones",
+        "la deviazione;deviazioni",
+        "a"
+      ],
+      "ds": "avvikelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_azalea",
+      "p": "noun",
+      "e": {
+        "sv": "en azalea",
+        "en": "azalea",
+        "fa": "آزالیا",
+        "de": "die Azalee",
+        "es": "la azalea",
+        "it": "l'azalea"
+      },
+      "raw": "azalean azaleor",
+      "parts": [
+        "azalea",
+        "azalea;azaleas",
+        "آزالیا",
+        "die Azalee;Azaleen",
+        "la azalea;azaleas",
+        "l'azalea;azalee",
+        "s"
+      ],
+      "ds": "azalean",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_stream",
+      "p": "noun",
+      "e": {
+        "sv": "en bäck",
+        "en": "stream",
+        "fa": "جویبار",
+        "de": "der Bach",
+        "es": "el arroyo",
+        "it": "il ruscello"
+      },
+      "raw": "bäcken bäckar",
+      "parts": [
+        "bäck",
+        "stream;streams",
+        "جویبار",
+        "der Bach;Bäche",
+        "el arroyo;arroyos",
+        "il ruscello;ruscelli",
+        "l"
+      ],
+      "ds": "bäcken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_slope",
+      "p": "noun",
+      "e": {
+        "sv": "en backe",
+        "en": "slope",
+        "fa": "سراشیبی",
+        "de": "der Hang",
+        "es": "la pendiente",
+        "it": "il pendio"
+      },
+      "raw": "backen backar",
+      "parts": [
+        "backe",
+        "slope;slopes",
+        "سراشیبی",
+        "der Hang;Hänge",
+        "la pendiente;pendientes",
+        "il pendio;pendii",
+        "l"
+      ],
+      "ds": "backen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_baker",
+      "p": "noun",
+      "e": {
+        "sv": "en bagare",
+        "en": "baker",
+        "fa": "نانوا",
+        "de": "der Bäcker",
+        "es": "el panadero",
+        "it": "il panettiere"
+      },
+      "raw": "bagar(e)n bagare bagarna",
+      "parts": [
+        "bagare",
+        "baker;bakers",
+        "نانوا",
+        "der Bäcker;Bäcker",
+        "el panadero;panaderos",
+        "il panettiere;panettieri",
+        "p"
+      ],
+      "ds": "bagaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bow",
+      "p": "noun",
+      "e": {
+        "sv": "en båge",
+        "en": "bow",
+        "fa": "کمان",
+        "de": "der Bogen",
+        "es": "el arco",
+        "it": "l'arco"
+      },
+      "raw": "bågen bågar",
+      "parts": [
+        "båge",
+        "bow;bows",
+        "کمان",
+        "der Bogen;Bögen",
+        "el arco;arcos",
+        "l'arco;archi",
+        "o"
+      ],
+      "ds": "bågen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bakery",
+      "p": "noun",
+      "e": {
+        "sv": "ett bageri",
+        "en": "bakery",
+        "fa": "نانوایی",
+        "de": "die Bäckerei",
+        "es": "la panadería",
+        "it": "il panificio"
+      },
+      "raw": "bageri(e)t bagerier",
+      "parts": [
+        "bageri",
+        "bakery;bakeries",
+        "نانوایی",
+        "die Bäckerei;Bäckereien",
+        "la panadería;panaderías",
+        "il panificio;panifici",
+        "l"
+      ],
+      "ds": "bageriet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_baguette",
+      "p": "noun",
+      "e": {
+        "sv": "en bagett",
+        "en": "baguette",
+        "fa": "نان باگت",
+        "de": "das Baguette",
+        "es": "la baguette",
+        "it": "la baguette"
+      },
+      "raw": "bagetten bagetter",
+      "parts": [
+        "bagett",
+        "baguette;baguettes",
+        "نان باگت",
+        "das Baguette;Baguettes",
+        "la baguette;baguettes",
+        "la baguette;baguette",
+        "f"
+      ],
+      "ds": "bagetten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_ram",
+      "p": "noun",
+      "e": {
+        "sv": "en bagge",
+        "en": "ram",
+        "fa": "قوچ",
+        "de": "der Widder",
+        "es": "el carnero",
+        "it": "l'ariete"
+      },
+      "raw": "baggen baggar",
+      "parts": [
+        "bagge",
+        "ram;rams",
+        "قوچ",
+        "der Widder;Widder",
+        "el carnero;carneros",
+        "l'ariete;arieti",
+        "s"
+      ],
+      "ds": "baggen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_pastry",
+      "p": "noun",
+      "e": {
+        "sv": "en bakelse",
+        "en": "pastry",
+        "fa": "شیرینی خامه‌ای",
+        "de": "das Törtchen",
+        "es": "el pastelito",
+        "it": "il pasticcino"
+      },
+      "raw": "bakelsen bakelser",
+      "parts": [
+        "bakelse",
+        "pastry;pastries",
+        "شیرینی خامه‌ای",
+        "das Törtchen;Törtchen",
+        "el pastelito;pastelitos",
+        "il pasticcino;pasticcini",
+        "f"
+      ],
+      "ds": "bakelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bacterium",
+      "p": "noun",
+      "e": {
+        "sv": "en bakterie",
+        "en": "bacterium",
+        "fa": "باکتری",
+        "de": "das Bakterium",
+        "es": "la bacteria",
+        "it": "il batterio"
+      },
+      "raw": "bakterien bakterier",
+      "parts": [
+        "bakterie",
+        "bacterium;bacteria",
+        "باکتری",
+        "das Bakterium;Bakterien",
+        "la bacteria;bacterias",
+        "il batterio;batteri",
+        "a"
+      ],
+      "ds": "bakterien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_balance",
+      "p": "noun",
+      "e": {
+        "sv": "en balans",
+        "en": "balance",
+        "fa": "تعادل",
+        "de": "das Gleichgewicht",
+        "es": "el equilibrio",
+        "it": "l'equilibrio"
+      },
+      "raw": "balansen",
+      "parts": [
+        "balans",
+        "balance;balances",
+        "تعادل",
+        "das Gleichgewicht;Gleichgewichte",
+        "el equilibrio;equilibrios",
+        "l'equilibrio;equilibri",
+        "a"
+      ],
+      "ds": "balansen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_tub",
+      "p": "noun",
+      "e": {
+        "sv": "en balja",
+        "en": "tub",
+        "fa": "تشت",
+        "de": "die Wanne",
+        "es": "la palangana",
+        "it": "la bacinella"
+      },
+      "raw": "baljan baljor",
+      "parts": [
+        "balja",
+        "tub;tubs",
+        "تشت",
+        "die Wanne;Wannen",
+        "la palangana;palanganas",
+        "la bacinella;bacinelle",
+        "o"
+      ],
+      "ds": "baljan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_beam",
+      "p": "noun",
+      "e": {
+        "sv": "en balk",
+        "en": "beam",
+        "fa": "تیر ساختمانی",
+        "de": "der Balken",
+        "es": "la viga",
+        "it": "la trave"
+      },
+      "raw": "balken balkar",
+      "parts": [
+        "balk",
+        "beam;beams",
+        "تیر ساختمانی",
+        "der Balken;Balken",
+        "la viga;vigas",
+        "la trave;travi",
+        "o"
+      ],
+      "ds": "balken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_balloon",
+      "p": "noun",
+      "e": {
+        "sv": "en ballong",
+        "en": "balloon",
+        "fa": "بادکنک",
+        "de": "der Luftballon",
+        "es": "el globo",
+        "it": "il palloncino"
+      },
+      "raw": "ballongen ballonger",
+      "parts": [
+        "ballong",
+        "balloon;balloons",
+        "بادکنک",
+        "der Luftballon;Luftballons",
+        "el globo;globos",
+        "il palloncino;palloncini",
+        "o"
+      ],
+      "ds": "ballongen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_track",
+      "p": "noun",
+      "e": {
+        "sv": "en bana",
+        "en": "track",
+        "fa": "پیست",
+        "de": "die Laufbahn",
+        "es": "la pista",
+        "it": "la pista"
+      },
+      "raw": "banan banor",
+      "parts": [
+        "bana",
+        "track;tracks",
+        "پیست",
+        "die Laufbahn;Laufbahnen",
+        "la pista;pistas",
+        "la pista;piste",
+        "l"
+      ],
+      "ds": "banan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bandage",
+      "p": "noun",
+      "e": {
+        "sv": "ett bandage",
+        "en": "bandage",
+        "fa": "باند زخم",
+        "de": "der Verband",
+        "es": "el vendaje",
+        "it": "la benda"
+      },
+      "raw": "bandaget bandage bandagen",
+      "parts": [
+        "bandage",
+        "bandage;bandages",
+        "باند زخم",
+        "der Verband;Verbände",
+        "el vendaje;vendajes",
+        "la benda;bende",
+        "o"
+      ],
+      "ds": "bandaget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_bandit",
+      "p": "noun",
+      "e": {
+        "sv": "en bandit",
+        "en": "bandit",
+        "fa": "راهزن",
+        "de": "der Bandit",
+        "es": "el bandido",
+        "it": "il bandito"
+      },
+      "raw": "banditen banditer",
+      "parts": [
+        "bandit",
+        "bandit;bandits",
+        "راهزن",
+        "der Bandit;Banditen",
+        "el bandido;bandidos",
+        "il bandito;banditi",
+        "s"
+      ],
+      "ds": "banditen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cash_machine",
+      "p": "noun",
+      "e": {
+        "sv": "en bankomat",
+        "en": "cash machine",
+        "fa": "خودپرداز",
+        "de": "der Geldautomat",
+        "es": "el cajero automático",
+        "it": "il bancomat"
+      },
+      "raw": "bankomaten bankomater",
+      "parts": [
+        "bankomat",
+        "cash machine;cash machines",
+        "خودپرداز",
+        "der Geldautomat;Geldautomaten",
+        "el cajero automático;cajeros automáticos",
+        "il bancomat;bancomat",
+        "o"
+      ],
+      "ds": "bankomaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_hut",
+      "p": "noun",
+      "e": {
+        "sv": "en barack",
+        "en": "hut",
+        "fa": "آلونک",
+        "de": "die Baracke",
+        "es": "la barraca",
+        "it": "la baracca"
+      },
+      "raw": "baracken baracker",
+      "parts": [
+        "barack",
+        "hut;huts",
+        "آلونک",
+        "die Baracke;Baracken",
+        "la barraca;barracas",
+        "la baracca;baracche",
+        "l"
+      ],
+      "ds": "baracken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_childhood",
+      "p": "noun",
+      "e": {
+        "sv": "en barndom",
+        "en": "childhood",
+        "fa": "کودکی",
+        "de": "die Kindheit",
+        "es": "la infancia",
+        "it": "l'infanzia"
+      },
+      "raw": "barndomen",
+      "parts": [
+        "barndom",
+        "childhood;childhoods",
+        "کودکی",
+        "die Kindheit;Kindheiten",
+        "la infancia;infancias",
+        "l'infanzia;infanzie",
+        "a"
+      ],
+      "ds": "barndomen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_barometer",
+      "p": "noun",
+      "e": {
+        "sv": "en barometer",
+        "en": "barometer",
+        "fa": "فشارسنج هوا",
+        "de": "das Barometer",
+        "es": "el barómetro",
+        "it": "il barometro"
+      },
+      "raw": "barometern barometrar",
+      "parts": [
+        "barometer",
+        "barometer;barometers",
+        "فشارسنج هوا",
+        "das Barometer;Barometer",
+        "el barómetro;barómetros",
+        "il barometro;barometri",
+        "o"
+      ],
+      "ds": "barometern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_barrier",
+      "p": "noun",
+      "e": {
+        "sv": "en barriär",
+        "en": "barrier",
+        "fa": "مانع",
+        "de": "die Barriere",
+        "es": "la barrera",
+        "it": "la barriera"
+      },
+      "raw": "barriären barriärer",
+      "parts": [
+        "barriär",
+        "barrier;barriers",
+        "مانع",
+        "die Barriere;Barrieren",
+        "la barrera;barreras",
+        "la barriera;barriere",
+        "o"
+      ],
+      "ds": "barriären",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_beret",
+      "p": "noun",
+      "e": {
+        "sv": "en basker",
+        "en": "beret",
+        "fa": "کلاه بره",
+        "de": "die Baskenmütze",
+        "es": "la boina",
+        "it": "il basco"
+      },
+      "raw": "baskern baskrar",
+      "parts": [
+        "basker",
+        "beret;berets",
+        "کلاه بره",
+        "die Baskenmütze;Baskenmützen",
+        "la boina;boinas",
+        "il basco;baschi",
+        "o"
+      ],
+      "ds": "baskern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_swimming_pool",
+      "p": "noun",
+      "e": {
+        "sv": "en bassäng",
+        "en": "swimming pool",
+        "fa": "استخر",
+        "de": "das Schwimmbecken",
+        "es": "la piscina",
+        "it": "la piscina"
+      },
+      "raw": "bassängen bassänger",
+      "parts": [
+        "bassäng",
+        "swimming pool;swimming pools",
+        "استخر",
+        "das Schwimmbecken;Schwimmbecken",
+        "la piscina;piscinas",
+        "la piscina;piscine",
+        "l"
+      ],
+      "ds": "bassängen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_sauna",
+      "p": "noun",
+      "e": {
+        "sv": "en bastu",
+        "en": "sauna",
+        "fa": "سونا",
+        "de": "die Sauna",
+        "es": "la sauna",
+        "it": "la sauna"
+      },
+      "raw": "bastun bastur",
+      "parts": [
+        "bastu",
+        "sauna;saunas",
+        "سونا",
+        "die Sauna;Saunen",
+        "la sauna;saunas",
+        "la sauna;saune",
+        "l"
+      ],
+      "ds": "bastun",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_battery",
+      "p": "noun",
+      "e": {
+        "sv": "ett batteri",
+        "en": "battery",
+        "fa": "باتری",
+        "de": "die Batterie",
+        "es": "la batería",
+        "it": "la batteria"
+      },
+      "raw": "batteri(e)t batterier",
+      "parts": [
+        "batteri",
+        "battery;batteries",
+        "باتری",
+        "die Batterie;Batterien",
+        "la batería;baterías",
+        "la batteria;batterie",
+        "o"
+      ],
+      "ds": "batteriet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_beaver",
+      "p": "noun",
+      "e": {
+        "sv": "en bäver",
+        "en": "beaver",
+        "fa": "سگ آبی",
+        "de": "der Biber",
+        "es": "el castor",
+        "it": "il castoro"
+      },
+      "raw": "bävern bävrar",
+      "parts": [
+        "bäver",
+        "beaver;beavers",
+        "سگ آبی",
+        "der Biber;Biber",
+        "el castor;castores",
+        "il castoro;castori",
+        "s"
+      ],
+      "ds": "bävern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_anaesthesia",
+      "p": "noun",
+      "e": {
+        "sv": "en bedövning",
+        "en": "anaesthesia",
+        "fa": "بی‌حسی پزشکی",
+        "de": "die Betäubung",
+        "es": "la anestesia",
+        "it": "l'anestesia"
+      },
+      "raw": "bedövningen bedövningar",
+      "parts": [
+        "bedövning",
+        "anaesthesia;",
+        "بی‌حسی پزشکی",
+        "die Betäubung;Betäubungen",
+        "la anestesia;anestesias",
+        "l'anestesia;anestesie",
+        "a"
+      ],
+      "ds": "bedövningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fraud",
+      "p": "noun",
+      "e": {
+        "sv": "ett bedrägeri",
+        "en": "fraud",
+        "fa": "کلاهبرداری",
+        "de": "der Betrug",
+        "es": "el fraude",
+        "it": "la frode"
+      },
+      "raw": "bedrägeri(e)t bedrägerier",
+      "parts": [
+        "bedrägeri",
+        "fraud;frauds",
+        "کلاهبرداری",
+        "der Betrug;Betrügereien",
+        "el fraude;fraudes",
+        "la frode;frodi",
+        "a"
+      ],
+      "ds": "bedrägeriet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_position",
+      "p": "noun",
+      "e": {
+        "sv": "en befattning",
+        "en": "position",
+        "fa": "سمت شغلی",
+        "de": "die Stelle",
+        "es": "el puesto",
+        "it": "l'incarico"
+      },
+      "raw": "befattningen befattningar",
+      "parts": [
+        "befattning",
+        "position;positions",
+        "سمت شغلی",
+        "die Stelle;Stellen",
+        "el puesto;puestos",
+        "l'incarico;incarichi",
+        "a"
+      ],
+      "ds": "befattningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_authority",
+      "p": "noun",
+      "e": {
+        "sv": "en befogenhet",
+        "en": "authority",
+        "fa": "اختیار قانونی",
+        "de": "die Befugnis",
+        "es": "la facultad",
+        "it": "il potere"
+      },
+      "raw": "befogenheten befogenheter",
+      "parts": [
+        "befogenhet",
+        "authority;authorities",
+        "اختیار قانونی",
+        "die Befugnis;Befugnisse",
+        "la facultad;facultades",
+        "il potere;poteri",
+        "a"
+      ],
+      "ds": "befogenheten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_funeral",
+      "p": "noun",
+      "e": {
+        "sv": "en begravning",
+        "en": "funeral",
+        "fa": "مراسم خاکسپاری",
+        "de": "die Beerdigung",
+        "es": "el funeral",
+        "it": "il funerale"
+      },
+      "raw": "begravningen begravningar",
+      "parts": [
+        "begravning",
+        "funeral;funerals",
+        "مراسم خاکسپاری",
+        "die Beerdigung;Beerdigungen",
+        "el funeral;funerales",
+        "il funerale;funerali",
+        "a"
+      ],
+      "ds": "begravningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_concept",
+      "p": "noun",
+      "e": {
+        "sv": "ett begrepp",
+        "en": "concept",
+        "fa": "مفهوم",
+        "de": "der Begriff",
+        "es": "el concepto",
+        "it": "il concetto"
+      },
+      "raw": "begreppet begrepp begreppen",
+      "parts": [
+        "begrepp",
+        "concept;concepts",
+        "مفهوم",
+        "der Begriff;Begriffe",
+        "el concepto;conceptos",
+        "il concetto;concetti",
+        "a"
+      ],
+      "ds": "begreppet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_container",
+      "p": "noun",
+      "e": {
+        "sv": "en behållare",
+        "en": "container",
+        "fa": "ظرف نگهداری",
+        "de": "der Behälter",
+        "es": "el recipiente",
+        "it": "il contenitore"
+      },
+      "raw": "behållar(e)n behållare behållarna",
+      "parts": [
+        "behållare",
+        "container;containers",
+        "ظرف نگهداری",
+        "der Behälter;Behälter",
+        "el recipiente;recipientes",
+        "il contenitore;contenitori",
+        "o"
+      ],
+      "ds": "behållaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_treatment",
+      "p": "noun",
+      "e": {
+        "sv": "en behandling",
+        "en": "treatment",
+        "fa": "درمان",
+        "de": "die Behandlung",
+        "es": "el tratamiento",
+        "it": "il trattamento"
+      },
+      "raw": "behandlingen behandlingar",
+      "parts": [
+        "behandling",
+        "treatment;treatments",
+        "درمان",
+        "die Behandlung;Behandlungen",
+        "el tratamiento;tratamientos",
+        "il trattamento;trattamenti",
+        "a"
+      ],
+      "ds": "behandlingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_need",
+      "p": "noun",
+      "e": {
+        "sv": "ett behov",
+        "en": "the need",
+        "fa": "نیاز",
+        "de": "das Bedürfnis",
+        "es": "la necesidad",
+        "it": "il bisogno"
+      },
+      "raw": "behovet behov behoven",
+      "parts": [
+        "behov",
+        "need;needs",
+        "نیاز",
+        "das Bedürfnis;Bedürfnisse",
+        "la necesidad;necesidades",
+        "il bisogno;bisogni",
+        "a"
+      ],
+      "ds": "behovet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_confirmation",
+      "p": "noun",
+      "e": {
+        "sv": "en bekräftelse",
+        "en": "confirmation",
+        "fa": "تأییدیه",
+        "de": "die Bestätigung",
+        "es": "la confirmación",
+        "it": "la conferma"
+      },
+      "raw": "bekräftelsen bekräftelser",
+      "parts": [
+        "bekräftelse",
+        "confirmation;confirmations",
+        "تأییدیه",
+        "die Bestätigung;Bestätigungen",
+        "la confirmación;confirmaciones",
+        "la conferma;conferme",
+        "a"
+      ],
+      "ds": "bekräftelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_reward",
+      "p": "noun",
+      "e": {
+        "sv": "en belöning",
+        "en": "reward",
+        "fa": "پاداش",
+        "de": "die Belohnung",
+        "es": "la recompensa",
+        "it": "la ricompensa"
+      },
+      "raw": "belöningen belöningar",
+      "parts": [
+        "belöning",
+        "reward;rewards",
+        "پاداش",
+        "die Belohnung;Belohnungen",
+        "la recompensa;recompensas",
+        "la ricompensa;ricompense",
+        "a"
+      ],
+      "ds": "belöningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_amount",
+      "p": "noun",
+      "e": {
+        "sv": "ett belopp",
+        "en": "amount",
+        "fa": "مبلغ",
+        "de": "der Betrag",
+        "es": "el importe",
+        "it": "l'importo"
+      },
+      "raw": "beloppet belopp beloppen",
+      "parts": [
+        "belopp",
+        "amount;amounts",
+        "مبلغ",
+        "der Betrag;Beträge",
+        "el importe;importes",
+        "l'importo;importi",
+        "a"
+      ],
+      "ds": "beloppet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_calculation",
+      "p": "noun",
+      "e": {
+        "sv": "en beräkning",
+        "en": "calculation",
+        "fa": "محاسبه",
+        "de": "die Berechnung",
+        "es": "el cálculo",
+        "it": "il calcolo"
+      },
+      "raw": "beräkningen beräkningar",
+      "parts": [
+        "beräkning",
+        "calculation;calculations",
+        "محاسبه",
+        "die Berechnung;Berechnungen",
+        "el cálculo;cálculos",
+        "il calcolo;calcoli",
+        "a"
+      ],
+      "ds": "beräkningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_preparedness",
+      "p": "noun",
+      "e": {
+        "sv": "en beredskap",
+        "en": "preparedness",
+        "fa": "آمادگی",
+        "de": "die Bereitschaft",
+        "es": "la preparación",
+        "it": "la preparazione"
+      },
+      "raw": "beredskapen",
+      "parts": [
+        "beredskap",
+        "preparedness;",
+        "آمادگی",
+        "die Bereitschaft;Bereitschaften",
+        "la preparación;preparaciones",
+        "la preparazione;preparazioni",
+        "a"
+      ],
+      "ds": "beredskapen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_touch",
+      "p": "noun",
+      "e": {
+        "sv": "en beröring",
+        "en": "touch",
+        "fa": "لمس",
+        "de": "die Berührung",
+        "es": "el contacto",
+        "it": "il tocco"
+      },
+      "raw": "beröringen beröringar",
+      "parts": [
+        "beröring",
+        "touch;touches",
+        "لمس",
+        "die Berührung;Berührungen",
+        "el contacto;contactos",
+        "il tocco;tocchi",
+        "a"
+      ],
+      "ds": "beröringen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_crew",
+      "p": "noun",
+      "e": {
+        "sv": "en besättning",
+        "en": "crew",
+        "fa": "خدمه",
+        "de": "die Besatzung",
+        "es": "la tripulación",
+        "it": "l'equipaggio"
+      },
+      "raw": "besättningen besättningar",
+      "parts": [
+        "besättning",
+        "crew;crews",
+        "خدمه",
+        "die Besatzung;Besatzungen",
+        "la tripulación;tripulaciones",
+        "l'equipaggio;equipaggi",
+        "a"
+      ],
+      "ds": "besättningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_inspection",
+      "p": "noun",
+      "e": {
+        "sv": "en besiktning",
+        "en": "inspection",
+        "fa": "بازرسی",
+        "de": "die Inspektion",
+        "es": "la inspección",
+        "it": "l'ispezione"
+      },
+      "raw": "besiktningen besiktningar",
+      "parts": [
+        "besiktning",
+        "inspection;inspections",
+        "بازرسی",
+        "die Inspektion;Inspektionen",
+        "la inspección;inspecciones",
+        "l'ispezione;ispezioni",
+        "a"
+      ],
+      "ds": "besiktningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_description",
+      "p": "noun",
+      "e": {
+        "sv": "en beskrivning",
+        "en": "description",
+        "fa": "توصیف",
+        "de": "die Beschreibung",
+        "es": "la descripción",
+        "it": "la descrizione"
+      },
+      "raw": "beskrivningen beskrivningar",
+      "parts": [
+        "beskrivning",
+        "description;descriptions",
+        "توصیف",
+        "die Beschreibung;Beschreibungen",
+        "la descripción;descripciones",
+        "la descrizione;descrizioni",
+        "a"
+      ],
+      "ds": "beskrivningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_visit",
+      "p": "noun",
+      "e": {
+        "sv": "ett besök",
+        "en": "the visit",
+        "fa": "دیدار",
+        "de": "der Besuch",
+        "es": "la visita",
+        "it": "la visita"
+      },
+      "raw": "besöket besök besöken",
+      "parts": [
+        "besök",
+        "visit;visits",
+        "دیدار",
+        "der Besuch;Besuche",
+        "la visita;visitas",
+        "la visita;visite",
+        "a"
+      ],
+      "ds": "besöket",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_visitor",
+      "p": "noun",
+      "e": {
+        "sv": "en besökare",
+        "en": "visitor",
+        "fa": "بازدیدکننده",
+        "de": "der Besucher",
+        "es": "el visitante",
+        "it": "il visitatore"
+      },
+      "raw": "besökar(e)n besökare besökarna",
+      "parts": [
+        "besökare",
+        "visitor;visitors",
+        "بازدیدکننده",
+        "der Besucher;Besucher",
+        "el visitante;visitantes",
+        "il visitatore;visitatori",
+        "p"
+      ],
+      "ds": "besökaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_saving",
+      "p": "noun",
+      "e": {
+        "sv": "en besparing",
+        "en": "saving",
+        "fa": "پس‌انداز",
+        "de": "die Ersparnis",
+        "es": "el ahorro",
+        "it": "il risparmio"
+      },
+      "raw": "besparingen besparingar",
+      "parts": [
+        "besparing",
+        "saving;savings",
+        "پس‌انداز",
+        "die Ersparnis;Ersparnisse",
+        "el ahorro;ahorros",
+        "il risparmio;risparmi",
+        "a"
+      ],
+      "ds": "besparingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_order",
+      "p": "noun",
+      "e": {
+        "sv": "en beställning",
+        "en": "the order",
+        "fa": "سفارش",
+        "de": "die Bestellung",
+        "es": "el pedido",
+        "it": "l'ordine"
+      },
+      "raw": "beställningen beställningar",
+      "parts": [
+        "beställning",
+        "order;orders",
+        "سفارش",
+        "die Bestellung;Bestellungen",
+        "el pedido;pedidos",
+        "l'ordine;ordini",
+        "a"
+      ],
+      "ds": "beställningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_regulation",
+      "p": "noun",
+      "e": {
+        "sv": "en bestämmelse",
+        "en": "regulation",
+        "fa": "مقرره",
+        "de": "die Bestimmung",
+        "es": "la normativa",
+        "it": "la disposizione"
+      },
+      "raw": "bestämmelsen bestämmelser",
+      "parts": [
+        "bestämmelse",
+        "regulation;regulations",
+        "مقرره",
+        "die Bestimmung;Bestimmungen",
+        "la normativa;normativas",
+        "la disposizione;disposizioni",
+        "a"
+      ],
+      "ds": "bestämmelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_payment",
+      "p": "noun",
+      "e": {
+        "sv": "en betalning",
+        "en": "payment",
+        "fa": "پرداخت",
+        "de": "die Zahlung",
+        "es": "el pago",
+        "it": "il pagamento"
+      },
+      "raw": "betalningen betalningar",
+      "parts": [
+        "betalning",
+        "payment;payments",
+        "پرداخت",
+        "die Zahlung;Zahlungen",
+        "el pago;pagos",
+        "il pagamento;pagamenti",
+        "a"
+      ],
+      "ds": "betalningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_behaviour",
+      "p": "noun",
+      "e": {
+        "sv": "ett beteende",
+        "en": "behaviour",
+        "fa": "رفتار",
+        "de": "das Verhalten",
+        "es": "el comportamiento",
+        "it": "il comportamento"
+      },
+      "raw": "beteendet beteenden beteendena",
+      "parts": [
+        "beteende",
+        "behaviour;behaviours",
+        "رفتار",
+        "das Verhalten;",
+        "el comportamiento;comportamientos",
+        "il comportamento;comportamenti",
+        "a"
+      ],
+      "ds": "beteendet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_emphasis",
+      "p": "noun",
+      "e": {
+        "sv": "en betoning",
+        "en": "emphasis",
+        "fa": "تأکید",
+        "de": "die Betonung",
+        "es": "el énfasis",
+        "it": "l'enfasi"
+      },
+      "raw": "betoningen",
+      "parts": [
+        "betoning",
+        "emphasis;emphases",
+        "تأکید",
+        "die Betonung;Betonungen",
+        "el énfasis;énfasis",
+        "l'enfasi;enfasi",
+        "a"
+      ],
+      "ds": "betoningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_meaning",
+      "p": "noun",
+      "e": {
+        "sv": "en betydelse",
+        "en": "meaning",
+        "fa": "معنی",
+        "de": "die Bedeutung",
+        "es": "el significado",
+        "it": "il significato"
+      },
+      "raw": "betydelsen betydelser",
+      "parts": [
+        "betydelse",
+        "meaning;meanings",
+        "معنی",
+        "die Bedeutung;Bedeutungen",
+        "el significado;significados",
+        "il significato;significati",
+        "a"
+      ],
+      "ds": "betydelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_proof",
+      "p": "noun",
+      "e": {
+        "sv": "ett bevis",
+        "en": "proof",
+        "fa": "مدرک اثبات",
+        "de": "der Beweis",
+        "es": "la prueba",
+        "it": "la prova"
+      },
+      "raw": "beviset bevis bevisen",
+      "parts": [
+        "bevis",
+        "proof;proofs",
+        "مدرک اثبات",
+        "der Beweis;Beweise",
+        "la prueba;pruebas",
+        "la prova;prove",
+        "a"
+      ],
+      "ds": "beviset",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_librarian",
+      "p": "noun",
+      "e": {
+        "sv": "en bibliotekarie",
+        "en": "librarian",
+        "fa": "کتابدار",
+        "de": "der Bibliothekar",
+        "es": "el bibliotecario",
+        "it": "il bibliotecario"
+      },
+      "raw": "bibliotekarien bibliotekarier",
+      "parts": [
+        "bibliotekarie",
+        "librarian;librarians",
+        "کتابدار",
+        "der Bibliothekar;Bibliothekare",
+        "el bibliotecario;bibliotecarios",
+        "il bibliotecario;bibliotecari",
+        "p"
+      ],
+      "ds": "bibliotekarien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_contribution",
+      "p": "noun",
+      "e": {
+        "sv": "ett bidrag",
+        "en": "contribution",
+        "fa": "کمک مالی",
+        "de": "der Beitrag",
+        "es": "la contribución",
+        "it": "il contributo"
+      },
+      "raw": "bidraget bidrag bidragen",
+      "parts": [
+        "bidrag",
+        "contribution;contributions",
+        "کمک مالی",
+        "der Beitrag;Beiträge",
+        "la contribución;contribuciones",
+        "il contributo;contributi",
+        "a"
+      ],
+      "ds": "bidraget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_steak",
+      "p": "noun",
+      "e": {
+        "sv": "en biff",
+        "en": "steak",
+        "fa": "استیک",
+        "de": "das Steak",
+        "es": "el bistec",
+        "it": "la bistecca"
+      },
+      "raw": "biffen biffar",
+      "parts": [
+        "biff",
+        "steak;steaks",
+        "استیک",
+        "das Steak;Steaks",
+        "el bistec;bistecs",
+        "la bistecca;bistecche",
+        "f"
+      ],
+      "ds": "biffen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_attachment",
+      "p": "noun",
+      "e": {
+        "sv": "en bilaga",
+        "en": "attachment",
+        "fa": "پیوست",
+        "de": "der Anhang",
+        "es": "el anexo",
+        "it": "l'allegato"
+      },
+      "raw": "bilagan bilagor",
+      "parts": [
+        "bilaga",
+        "attachment;attachments",
+        "پیوست",
+        "der Anhang;Anhänge",
+        "el anexo;anexos",
+        "l'allegato;allegati",
+        "a"
+      ],
+      "ds": "bilagan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_biography",
+      "p": "noun",
+      "e": {
+        "sv": "en biografi",
+        "en": "biography",
+        "fa": "زندگی‌نامه",
+        "de": "die Biografie",
+        "es": "la biografía",
+        "it": "la biografia"
+      },
+      "raw": "biografi(e)n biografier",
+      "parts": [
+        "biografi",
+        "biography;biographies",
+        "زندگی‌نامه",
+        "die Biografie;Biografien",
+        "la biografía;biografías",
+        "la biografia;biografie",
+        "a"
+      ],
+      "ds": "biografien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_biologist",
+      "p": "noun",
+      "e": {
+        "sv": "en biolog",
+        "en": "biologist",
+        "fa": "زیست‌شناس",
+        "de": "der Biologe",
+        "es": "el biólogo",
+        "it": "il biologo"
+      },
+      "raw": "biologen biologer",
+      "parts": [
+        "biolog",
+        "biologist;biologists",
+        "زیست‌شناس",
+        "der Biologe;Biologen",
+        "el biólogo;biólogos",
+        "il biologo;biologi",
+        "p"
+      ],
+      "ds": "biologen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_piece",
+      "p": "noun",
+      "e": {
+        "sv": "en bit",
+        "en": "piece",
+        "fa": "تکه",
+        "de": "das Stück",
+        "es": "el trozo",
+        "it": "il pezzo"
+      },
+      "raw": "biten bitar",
+      "parts": [
+        "bit",
+        "piece;pieces",
+        "تکه",
+        "das Stück;Stücke",
+        "el trozo;trozos",
+        "il pezzo;pezzi",
+        "o"
+      ],
+      "ds": "biten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_side_effect",
+      "p": "noun",
+      "e": {
+        "sv": "en biverkning",
+        "en": "side effect",
+        "fa": "عارضهٔ جانبی",
+        "de": "die Nebenwirkung",
+        "es": "el efecto secundario",
+        "it": "l'effetto collaterale"
+      },
+      "raw": "biverkningen biverkningar",
+      "parts": [
+        "biverkning",
+        "side effect;side effects",
+        "عارضهٔ جانبی",
+        "die Nebenwirkung;Nebenwirkungen",
+        "el efecto secundario;efectos secundarios",
+        "l'effetto collaterale;effetti collaterali",
+        "a"
+      ],
+      "ds": "biverkningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_birch",
+      "p": "noun",
+      "e": {
+        "sv": "en björk",
+        "en": "birch",
+        "fa": "درخت توس",
+        "de": "die Birke",
+        "es": "el abedul",
+        "it": "la betulla"
+      },
+      "raw": "björken björkar",
+      "parts": [
+        "björk",
+        "birch;birches",
+        "درخت توس",
+        "die Birke;Birken",
+        "el abedul;abedules",
+        "la betulla;betulle",
+        "s"
+      ],
+      "ds": "björken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bear",
+      "p": "noun",
+      "e": {
+        "sv": "en björn",
+        "en": "bear",
+        "fa": "خرس",
+        "de": "der Bär",
+        "es": "el oso",
+        "it": "l'orso"
+      },
+      "raw": "björnen björnar",
+      "parts": [
+        "björn",
+        "bear;bears",
+        "خرس",
+        "der Bär;Bären",
+        "el oso;osos",
+        "l'orso;orsi",
+        "s"
+      ],
+      "ds": "björnen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_blueberry",
+      "p": "noun",
+      "e": {
+        "sv": "ett blåbär",
+        "en": "blueberry",
+        "fa": "بلوبری",
+        "de": "die Heidelbeere",
+        "es": "el arándano",
+        "it": "il mirtillo"
+      },
+      "raw": "blåbäret blåbär blåbären",
+      "parts": [
+        "blåbär",
+        "blueberry;blueberries",
+        "بلوبری",
+        "die Heidelbeere;Heidelbeeren",
+        "el arándano;arándanos",
+        "il mirtillo;mirtilli",
+        "f"
+      ],
+      "ds": "blåbäret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_mixture",
+      "p": "noun",
+      "e": {
+        "sv": "en blandning",
+        "en": "mixture",
+        "fa": "مخلوط",
+        "de": "die Mischung",
+        "es": "la mezcla",
+        "it": "la miscela"
+      },
+      "raw": "blandningen blandningar",
+      "parts": [
+        "blandning",
+        "mixture;mixtures",
+        "مخلوط",
+        "die Mischung;Mischungen",
+        "la mezcla;mezclas",
+        "la miscela;miscele",
+        "a"
+      ],
+      "ds": "blandningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_form",
+      "p": "noun",
+      "e": {
+        "sv": "en blankett",
+        "en": "form",
+        "fa": "فرم اداری",
+        "de": "das Formular",
+        "es": "el formulario",
+        "it": "il modulo"
+      },
+      "raw": "blanketten blanketter",
+      "parts": [
+        "blankett",
+        "form;forms",
+        "فرم اداری",
+        "das Formular;Formulare",
+        "el formulario;formularios",
+        "il modulo;moduli",
+        "o"
+      ],
+      "ds": "blanketten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_blister",
+      "p": "noun",
+      "e": {
+        "sv": "en blåsa",
+        "en": "blister",
+        "fa": "تاول",
+        "de": "die Blase",
+        "es": "la ampolla",
+        "it": "la vescica"
+      },
+      "raw": "blåsan blåsor",
+      "parts": [
+        "blåsa",
+        "blister;blisters",
+        "تاول",
+        "die Blase;Blasen",
+        "la ampolla;ampollas",
+        "la vescica;vesciche",
+        "a"
+      ],
+      "ds": "blåsan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_glance",
+      "p": "noun",
+      "e": {
+        "sv": "en blick",
+        "en": "glance",
+        "fa": "نگاه گذرا",
+        "de": "der Blick",
+        "es": "la mirada",
+        "it": "lo sguardo"
+      },
+      "raw": "blicken blickar",
+      "parts": [
+        "blick",
+        "glance;glances",
+        "نگاه گذرا",
+        "der Blick;Blicke",
+        "la mirada;miradas",
+        "lo sguardo;sguardi",
+        "a"
+      ],
+      "ds": "blicken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bleeding",
+      "p": "noun",
+      "e": {
+        "sv": "en blödning",
+        "en": "bleeding",
+        "fa": "خون‌ریزی",
+        "de": "die Blutung",
+        "es": "la hemorragia",
+        "it": "l'emorragia"
+      },
+      "raw": "blödningen blödningar",
+      "parts": [
+        "blödning",
+        "bleeding;",
+        "خون‌ریزی",
+        "die Blutung;Blutungen",
+        "la hemorragia;hemorragias",
+        "l'emorragia;emorragie",
+        "a"
+      ],
+      "ds": "blödningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_nappy",
+      "p": "noun",
+      "e": {
+        "sv": "en blöja",
+        "en": "nappy",
+        "fa": "پوشک",
+        "de": "die Windel",
+        "es": "el pañal",
+        "it": "il pannolino"
+      },
+      "raw": "blöjan blöjor",
+      "parts": [
+        "blöja",
+        "nappy;nappies",
+        "پوشک",
+        "die Windel;Windeln",
+        "el pañal;pañales",
+        "il pannolino;pannolini",
+        "o"
+      ],
+      "ds": "blöjan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_blouse",
+      "p": "noun",
+      "e": {
+        "sv": "en blus",
+        "en": "blouse",
+        "fa": "بلوز زنانه",
+        "de": "die Bluse",
+        "es": "la blusa",
+        "it": "la camicetta"
+      },
+      "raw": "blusen blusar",
+      "parts": [
+        "blus",
+        "blouse;blouses",
+        "بلوز زنانه",
+        "die Bluse;Blusen",
+        "la blusa;blusas",
+        "la camicetta;camicette",
+        "o"
+      ],
+      "ds": "blusen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_inflection",
+      "p": "noun",
+      "e": {
+        "sv": "en böjning",
+        "en": "inflection",
+        "fa": "صرف واژه",
+        "de": "die Flexion",
+        "es": "la flexión",
+        "it": "la flessione"
+      },
+      "raw": "böjningen böjningar",
+      "parts": [
+        "böjning",
+        "inflection;inflections",
+        "صرف واژه",
+        "die Flexion;Flexionen",
+        "la flexión;flexiones",
+        "la flessione;flessioni",
+        "a"
+      ],
+      "ds": "böjningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_ball",
+      "p": "noun",
+      "e": {
+        "sv": "en boll",
+        "en": "ball",
+        "fa": "توپ",
+        "de": "der Ball",
+        "es": "la pelota",
+        "it": "la palla"
+      },
+      "raw": "bollen bollar",
+      "parts": [
+        "boll",
+        "ball;balls",
+        "توپ",
+        "der Ball;Bälle",
+        "la pelota;pelotas",
+        "la palla;palle",
+        "o"
+      ],
+      "ds": "bollen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bean",
+      "p": "noun",
+      "e": {
+        "sv": "en böna",
+        "en": "bean",
+        "fa": "لوبیا",
+        "de": "die Bohne",
+        "es": "la judía",
+        "it": "il fagiolo"
+      },
+      "raw": "bönan bönor",
+      "parts": [
+        "böna",
+        "bean;beans",
+        "لوبیا",
+        "die Bohne;Bohnen",
+        "la judía;judías",
+        "il fagiolo;fagioli",
+        "f"
+      ],
+      "ds": "bönan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_farmer",
+      "p": "noun",
+      "e": {
+        "sv": "en bonde",
+        "en": "farmer",
+        "fa": "کشاورز",
+        "de": "der Bauer",
+        "es": "el agricultor",
+        "it": "l'agricoltore"
+      },
+      "raw": "bonden bönder",
+      "parts": [
+        "bonde",
+        "farmer;farmers",
+        "کشاورز",
+        "der Bauer;Bauern",
+        "el agricultor;agricultores",
+        "l'agricoltore;agricoltori",
+        "p"
+      ],
+      "ds": "bonden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bonus",
+      "p": "noun",
+      "e": {
+        "sv": "en bonus",
+        "en": "bonus",
+        "fa": "پاداش اضافه",
+        "de": "der Bonus",
+        "es": "la bonificación",
+        "it": "il bonus"
+      },
+      "raw": "bonusen",
+      "parts": [
+        "bonus",
+        "bonus;bonuses",
+        "پاداش اضافه",
+        "der Bonus;Boni",
+        "la bonificación;bonificaciones",
+        "il bonus;bonus",
+        "a"
+      ],
+      "ds": "bonusen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_burden",
+      "p": "noun",
+      "e": {
+        "sv": "en börda",
+        "en": "burden",
+        "fa": "بار مسئولیت",
+        "de": "die Last",
+        "es": "la carga",
+        "it": "il fardello"
+      },
+      "raw": "bördan bördor",
+      "parts": [
+        "börda",
+        "burden;burdens",
+        "بار مسئولیت",
+        "die Last;Lasten",
+        "la carga;cargas",
+        "il fardello;fardelli",
+        "a"
+      ],
+      "ds": "bördan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_drill_bit",
+      "p": "noun",
+      "e": {
+        "sv": "en borr",
+        "en": "drill bit",
+        "fa": "مته",
+        "de": "der Bohrer",
+        "es": "la broca",
+        "it": "la punta da trapano"
+      },
+      "raw": "borren borrar (el. borret borr borren)",
+      "parts": [
+        "borr",
+        "drill bit;drill bits",
+        "مته",
+        "der Bohrer;Bohrer",
+        "la broca;brocas",
+        "la punta da trapano;punte da trapano",
+        "o"
+      ],
+      "ds": "borren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dwelling",
+      "p": "noun",
+      "e": {
+        "sv": "en bostad",
+        "en": "dwelling",
+        "fa": "محل سکونت",
+        "de": "die Wohnung",
+        "es": "la vivienda",
+        "it": "l'abitazione"
+      },
+      "raw": "bostaden bostäder",
+      "parts": [
+        "bostad",
+        "dwelling;dwellings",
+        "محل سکونت",
+        "die Wohnung;Wohnungen",
+        "la vivienda;viviendas",
+        "l'abitazione;abitazioni",
+        "l"
+      ],
+      "ds": "bostaden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_quarrel",
+      "p": "noun",
+      "e": {
+        "sv": "ett bråk",
+        "en": "the quarrel",
+        "fa": "دعوا",
+        "de": "der Streit",
+        "es": "la pelea",
+        "it": "il litigio"
+      },
+      "raw": "bråket bråk bråken",
+      "parts": [
+        "bråk",
+        "quarrel;quarrels",
+        "دعوا",
+        "der Streit;Streite",
+        "la pelea;peleas",
+        "il litigio;litigi",
+        "a"
+      ],
+      "ds": "bråket",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_industry",
+      "p": "noun",
+      "e": {
+        "sv": "en bransch",
+        "en": "industry",
+        "fa": "شاخهٔ کسب‌وکار",
+        "de": "die Branche",
+        "es": "el sector",
+        "it": "il settore"
+      },
+      "raw": "branschen branscher",
+      "parts": [
+        "bransch",
+        "industry;industries",
+        "شاخهٔ کسب‌وکار",
+        "die Branche;Branchen",
+        "el sector;sectores",
+        "il settore;settori",
+        "a"
+      ],
+      "ds": "branschen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bonfire",
+      "p": "noun",
+      "e": {
+        "sv": "en brasa",
+        "en": "bonfire",
+        "fa": "آتش روباز",
+        "de": "das Lagerfeuer",
+        "es": "la hoguera",
+        "it": "il falò"
+      },
+      "raw": "brasan brasor",
+      "parts": [
+        "brasa",
+        "bonfire;bonfires",
+        "آتش روباز",
+        "das Lagerfeuer;Lagerfeuer",
+        "la hoguera;hogueras",
+        "il falò;falò",
+        "s"
+      ],
+      "ds": "brasan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_width",
+      "p": "noun",
+      "e": {
+        "sv": "en bredd",
+        "en": "width",
+        "fa": "عرض",
+        "de": "die Breite",
+        "es": "la anchura",
+        "it": "la larghezza"
+      },
+      "raw": "bredden bredder",
+      "parts": [
+        "bredd",
+        "width;widths",
+        "عرض",
+        "die Breite;Breiten",
+        "la anchura;anchuras",
+        "la larghezza;larghezze",
+        "a"
+      ],
+      "ds": "bredden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_tray",
+      "p": "noun",
+      "e": {
+        "sv": "en bricka",
+        "en": "tray",
+        "fa": "سینی",
+        "de": "das Tablett",
+        "es": "la bandeja",
+        "it": "il vassoio"
+      },
+      "raw": "brickan brickor",
+      "parts": [
+        "bricka",
+        "tray;trays",
+        "سینی",
+        "das Tablett;Tabletts",
+        "la bandeja;bandejas",
+        "il vassoio;vassoi",
+        "o"
+      ],
+      "ds": "brickan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_shortage",
+      "p": "noun",
+      "e": {
+        "sv": "en brist",
+        "en": "shortage",
+        "fa": "کمبود",
+        "de": "der Mangel",
+        "es": "la escasez",
+        "it": "la carenza"
+      },
+      "raw": "bristen brister",
+      "parts": [
+        "brist",
+        "shortage;shortages",
+        "کمبود",
+        "der Mangel;Mängel",
+        "la escasez;escaseces",
+        "la carenza;carenze",
+        "a"
+      ],
+      "ds": "bristen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_brake",
+      "p": "noun",
+      "e": {
+        "sv": "en broms",
+        "en": "the brake",
+        "fa": "ترمز",
+        "de": "die Bremse",
+        "es": "el freno",
+        "it": "il freno"
+      },
+      "raw": "bromsen bromsar",
+      "parts": [
+        "broms",
+        "brake;brakes",
+        "ترمز",
+        "die Bremse;Bremsen",
+        "el freno;frenos",
+        "il freno;freni",
+        "o"
+      ],
+      "ds": "bromsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_brooch",
+      "p": "noun",
+      "e": {
+        "sv": "en brosch",
+        "en": "brooch",
+        "fa": "سنجاق سینه",
+        "de": "die Brosche",
+        "es": "el broche",
+        "it": "la spilla"
+      },
+      "raw": "broschen broscher",
+      "parts": [
+        "brosch",
+        "brooch;brooches",
+        "سنجاق سینه",
+        "die Brosche;Broschen",
+        "el broche;broches",
+        "la spilla;spille",
+        "o"
+      ],
+      "ds": "broschen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_brochure",
+      "p": "noun",
+      "e": {
+        "sv": "en broschyr",
+        "en": "brochure",
+        "fa": "بروشور",
+        "de": "die Broschüre",
+        "es": "el folleto",
+        "it": "l'opuscolo"
+      },
+      "raw": "broschyren broschyrer",
+      "parts": [
+        "broschyr",
+        "brochure;brochures",
+        "بروشور",
+        "die Broschüre;Broschüren",
+        "el folleto;folletos",
+        "l'opuscolo;opuscoli",
+        "o"
+      ],
+      "ds": "broschyren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_crime",
+      "p": "noun",
+      "e": {
+        "sv": "ett brott",
+        "en": "crime",
+        "fa": "جرم",
+        "de": "das Verbrechen",
+        "es": "el delito",
+        "it": "il reato"
+      },
+      "raw": "brottet brott brotten",
+      "parts": [
+        "brott",
+        "crime;crimes",
+        "جرم",
+        "das Verbrechen;Verbrechen",
+        "el delito;delitos",
+        "il reato;reati",
+        "a"
+      ],
+      "ds": "brottet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_criminal",
+      "p": "noun",
+      "e": {
+        "sv": "en brottsling",
+        "en": "criminal",
+        "fa": "مجرم",
+        "de": "der Verbrecher",
+        "es": "el delincuente",
+        "it": "il criminale"
+      },
+      "raw": "brottslingen brottslingar",
+      "parts": [
+        "brottsling",
+        "criminal;criminals",
+        "مجرم",
+        "der Verbrecher;Verbrecher",
+        "el delincuente;delincuentes",
+        "il criminale;criminali",
+        "s"
+      ],
+      "ds": "brottslingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_budget",
+      "p": "noun",
+      "e": {
+        "sv": "en budget",
+        "en": "budget",
+        "fa": "بودجه",
+        "de": "das Budget",
+        "es": "el presupuesto",
+        "it": "il bilancio preventivo"
+      },
+      "raw": "budgeten budgeter (el. budgetar)",
+      "parts": [
+        "budget",
+        "budget;budgets",
+        "بودجه",
+        "das Budget;Budgets",
+        "el presupuesto;presupuestos",
+        "il bilancio preventivo;bilanci preventivi",
+        "a"
+      ],
+      "ds": "budgeten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_buffet",
+      "p": "noun",
+      "e": {
+        "sv": "en buffé",
+        "en": "buffet",
+        "fa": "بوفه",
+        "de": "das Büfett",
+        "es": "el bufé",
+        "it": "il buffet"
+      },
+      "raw": "buffén bufféer",
+      "parts": [
+        "buffé",
+        "buffet;buffets",
+        "بوفه",
+        "das Büfett;Büfetts",
+        "el bufé;bufés",
+        "il buffet;buffet",
+        "f"
+      ],
+      "ds": "buffén",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bouquet",
+      "p": "noun",
+      "e": {
+        "sv": "en bukett",
+        "en": "bouquet",
+        "fa": "دسته‌گل",
+        "de": "der Blumenstrauß",
+        "es": "el ramo",
+        "it": "il mazzo di fiori"
+      },
+      "raw": "buketten buketter",
+      "parts": [
+        "bukett",
+        "bouquet;bouquets",
+        "دسته‌گل",
+        "der Blumenstrauß;Blumensträuße",
+        "el ramo;ramos",
+        "il mazzo di fiori;mazzi di fiori",
+        "o"
+      ],
+      "ds": "buketten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_bolt",
+      "p": "noun",
+      "e": {
+        "sv": "en bult",
+        "en": "bolt",
+        "fa": "پیچ و مهره‌ای",
+        "de": "der Bolzen",
+        "es": "el perno",
+        "it": "il bullone"
+      },
+      "raw": "bulten bultar",
+      "parts": [
+        "bult",
+        "bolt;bolts",
+        "پیچ و مهره‌ای",
+        "der Bolzen;Bolzen",
+        "el perno;pernos",
+        "il bullone;bulloni",
+        "o"
+      ],
+      "ds": "bulten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_mixing_bowl",
+      "p": "noun",
+      "e": {
+        "sv": "en bunke",
+        "en": "mixing bowl",
+        "fa": "کاسهٔ مخلوط‌کن",
+        "de": "die Rührschüssel",
+        "es": "el cuenco para mezclar",
+        "it": "la ciotola per mescolare"
+      },
+      "raw": "bunken bunkar",
+      "parts": [
+        "bunke",
+        "mixing bowl;mixing bowls",
+        "کاسهٔ مخلوط‌کن",
+        "die Rührschüssel;Rührschüsseln",
+        "el cuenco para mezclar;cuencos para mezclar",
+        "la ciotola per mescolare;ciotole per mescolare",
+        "o"
+      ],
+      "ds": "bunken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cage",
+      "p": "noun",
+      "e": {
+        "sv": "en bur",
+        "en": "cage",
+        "fa": "قفس",
+        "de": "der Käfig",
+        "es": "la jaula",
+        "it": "la gabbia"
+      },
+      "raw": "buren burar",
+      "parts": [
+        "bur",
+        "cage;cages",
+        "قفس",
+        "der Käfig;Käfige",
+        "la jaula;jaulas",
+        "la gabbia;gabbie",
+        "o"
+      ],
+      "ds": "buren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_building",
+      "p": "noun",
+      "e": {
+        "sv": "en byggnad",
+        "en": "building",
+        "fa": "ساختمان",
+        "de": "das Gebäude",
+        "es": "el edificio",
+        "it": "l'edificio"
+      },
+      "raw": "byggnaden byggnader",
+      "parts": [
+        "byggnad",
+        "building;buildings",
+        "ساختمان",
+        "das Gebäude;Gebäude",
+        "el edificio;edificios",
+        "l'edificio;edifici",
+        "l"
+      ],
+      "ds": "byggnaden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_chest_of_drawers",
+      "p": "noun",
+      "e": {
+        "sv": "en byrå",
+        "en": "chest of drawers",
+        "fa": "دراور",
+        "de": "die Kommode",
+        "es": "la cómoda",
+        "it": "il comò"
+      },
+      "raw": "byrån byråar",
+      "parts": [
+        "byrå",
+        "chest of drawers;chests of drawers",
+        "دراور",
+        "die Kommode;Kommoden",
+        "la cómoda;cómodas",
+        "il comò;comò",
+        "o"
+      ],
+      "ds": "byrån",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cell",
+      "p": "noun",
+      "e": {
+        "sv": "en cell",
+        "en": "cell",
+        "fa": "سلول",
+        "de": "die Zelle",
+        "es": "la célula",
+        "it": "la cellula"
+      },
+      "raw": "cellen celler",
+      "parts": [
+        "cell",
+        "cell;cells",
+        "سلول",
+        "die Zelle;Zellen",
+        "la célula;células",
+        "la cellula;cellule",
+        "a"
+      ],
+      "ds": "cellen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cement",
+      "p": "noun",
+      "e": {
+        "sv": "en cement",
+        "en": "cement",
+        "fa": "سیمان",
+        "de": "der Zement",
+        "es": "el cemento",
+        "it": "il cemento"
+      },
+      "raw": "cementen",
+      "parts": [
+        "cement",
+        "cement;",
+        "سیمان",
+        "der Zement;",
+        "el cemento;cementos",
+        "il cemento;cementi",
+        "a"
+      ],
+      "ds": "cementen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_centre",
+      "p": "noun",
+      "e": {
+        "sv": "ett centrum",
+        "en": "centre",
+        "fa": "مرکز",
+        "de": "das Zentrum",
+        "es": "el centro",
+        "it": "il centro"
+      },
+      "raw": "centrumet (el. centret el. centrum) centrum (el. centrer el. centra) centrumen (el. centrerna el. centra)",
+      "parts": [
+        "centrum",
+        "centre;centres",
+        "مرکز",
+        "das Zentrum;Zentren",
+        "el centro;centros",
+        "il centro;centri",
+        "l"
+      ],
+      "ds": "centrumet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_certificate",
+      "p": "noun",
+      "e": {
+        "sv": "ett certifikat",
+        "en": "certificate",
+        "fa": "گواهی‌نامه",
+        "de": "das Zertifikat",
+        "es": "el certificado",
+        "it": "il certificato"
+      },
+      "raw": "certifikatet certifikat certifikaten",
+      "parts": [
+        "certifikat",
+        "certificate;certificates",
+        "گواهی‌نامه",
+        "das Zertifikat;Zertifikate",
+        "el certificado;certificados",
+        "il certificato;certificati",
+        "o"
+      ],
+      "ds": "certifikatet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_button_mushroom",
+      "p": "noun",
+      "e": {
+        "sv": "en champinjon",
+        "en": "button mushroom",
+        "fa": "قارچ دکمه‌ای",
+        "de": "der Champignon",
+        "es": "el champiñón",
+        "it": "il prataiolo"
+      },
+      "raw": "champinjonen champinjoner",
+      "parts": [
+        "champinjon",
+        "button mushroom;button mushrooms",
+        "قارچ دکمه‌ای",
+        "der Champignon;Champignons",
+        "el champiñón;champiñones",
+        "il prataiolo;prataioli",
+        "f"
+      ],
+      "ds": "champinjonen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_driver",
+      "p": "noun",
+      "e": {
+        "sv": "en chaufför",
+        "en": "driver",
+        "fa": "راننده",
+        "de": "der Fahrer",
+        "es": "el conductor",
+        "it": "l'autista"
+      },
+      "raw": "chauffören chaufförer",
+      "parts": [
+        "chaufför",
+        "driver;drivers",
+        "راننده",
+        "der Fahrer;Fahrer",
+        "el conductor;conductores",
+        "l'autista;autisti",
+        "p"
+      ],
+      "ds": "chauffören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cheque",
+      "p": "noun",
+      "e": {
+        "sv": "en check",
+        "en": "cheque",
+        "fa": "چک بانکی",
+        "de": "der Scheck",
+        "es": "el cheque",
+        "it": "l'assegno"
+      },
+      "raw": "checken checkar (el. checker)",
+      "parts": [
+        "check",
+        "cheque;cheques",
+        "چک بانکی",
+        "der Scheck;Schecks",
+        "el cheque;cheques",
+        "l'assegno;assegni",
+        "o"
+      ],
+      "ds": "checken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cigarette",
+      "p": "noun",
+      "e": {
+        "sv": "en cigarett",
+        "en": "cigarette",
+        "fa": "سیگار",
+        "de": "die Zigarette",
+        "es": "el cigarrillo",
+        "it": "la sigaretta"
+      },
+      "raw": "cigaretten cigaretter",
+      "parts": [
+        "cigarett",
+        "cigarette;cigarettes",
+        "سیگار",
+        "die Zigarette;Zigaretten",
+        "el cigarrillo;cigarrillos",
+        "la sigaretta;sigarette",
+        "o"
+      ],
+      "ds": "cigaretten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_circle",
+      "p": "noun",
+      "e": {
+        "sv": "en cirkel",
+        "en": "circle",
+        "fa": "دایره",
+        "de": "der Kreis",
+        "es": "el círculo",
+        "it": "il cerchio"
+      },
+      "raw": "cirkeln cirklar",
+      "parts": [
+        "cirkel",
+        "circle;circles",
+        "دایره",
+        "der Kreis;Kreise",
+        "el círculo;círculos",
+        "il cerchio;cerchi",
+        "a"
+      ],
+      "ds": "cirkeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_circus",
+      "p": "noun",
+      "e": {
+        "sv": "en cirkus",
+        "en": "circus",
+        "fa": "سیرک",
+        "de": "der Zirkus",
+        "es": "el circo",
+        "it": "il circo"
+      },
+      "raw": "cirkusen cirkusar",
+      "parts": [
+        "cirkus",
+        "circus;circuses",
+        "سیرک",
+        "der Zirkus;Zirkusse",
+        "el circo;circos",
+        "il circo;circhi",
+        "l"
+      ],
+      "ds": "cirkusen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_quotation",
+      "p": "noun",
+      "e": {
+        "sv": "ett citat",
+        "en": "quotation",
+        "fa": "نقل‌قول",
+        "de": "das Zitat",
+        "es": "la cita",
+        "it": "la citazione"
+      },
+      "raw": "citatet citat citaten",
+      "parts": [
+        "citat",
+        "quotation;quotations",
+        "نقل‌قول",
+        "das Zitat;Zitate",
+        "la cita;citas",
+        "la citazione;citazioni",
+        "a"
+      ],
+      "ds": "citatet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_clown",
+      "p": "noun",
+      "e": {
+        "sv": "en clown",
+        "en": "clown",
+        "fa": "دلقک",
+        "de": "der Clown",
+        "es": "el payaso",
+        "it": "il pagliaccio"
+      },
+      "raw": "clownen clowner",
+      "parts": [
+        "clown",
+        "clown;clowns",
+        "دلقک",
+        "der Clown;Clowns",
+        "el payaso;payasos",
+        "il pagliaccio;pagliacci",
+        "p"
+      ],
+      "ds": "clownen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cyclist",
+      "p": "noun",
+      "e": {
+        "sv": "en cyklist",
+        "en": "cyclist",
+        "fa": "دوچرخه‌سوار",
+        "de": "der Radfahrer",
+        "es": "el ciclista",
+        "it": "il ciclista"
+      },
+      "raw": "cyklisten cyklister",
+      "parts": [
+        "cyklist",
+        "cyclist;cyclists",
+        "دوچرخه‌سوار",
+        "der Radfahrer;Radfahrer",
+        "el ciclista;ciclistas",
+        "il ciclista;ciclisti",
+        "p"
+      ],
+      "ds": "cyklisten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cylinder",
+      "p": "noun",
+      "e": {
+        "sv": "en cylinder",
+        "en": "cylinder",
+        "fa": "استوانه",
+        "de": "der Zylinder",
+        "es": "el cilindro",
+        "it": "il cilindro"
+      },
+      "raw": "cylindern cylindrar",
+      "parts": [
+        "cylinder",
+        "cylinder;cylinders",
+        "استوانه",
+        "der Zylinder;Zylinder",
+        "el cilindro;cilindros",
+        "il cilindro;cilindri",
+        "o"
+      ],
+      "ds": "cylindern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_date",
+      "p": "noun",
+      "e": {
+        "sv": "en dadel",
+        "en": "date",
+        "fa": "خرما",
+        "de": "die Dattel",
+        "es": "el dátil",
+        "it": "il dattero"
+      },
+      "raw": "dadeln dadlar",
+      "parts": [
+        "dadel",
+        "date;dates",
+        "خرما",
+        "die Dattel;Datteln",
+        "el dátil;dátiles",
+        "il dattero;datteri",
+        "f"
+      ],
+      "ds": "dadeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dance",
+      "p": "noun",
+      "e": {
+        "sv": "en dans",
+        "en": "the dance",
+        "fa": "رقص",
+        "de": "der Tanz",
+        "es": "el baile",
+        "it": "il ballo"
+      },
+      "raw": "dansen danser",
+      "parts": [
+        "dans",
+        "dance;dances",
+        "رقص",
+        "der Tanz;Tänze",
+        "el baile;bailes",
+        "il ballo;balli",
+        "a"
+      ],
+      "ds": "dansen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dancer",
+      "p": "noun",
+      "e": {
+        "sv": "en dansör",
+        "en": "dancer",
+        "fa": "رقصنده",
+        "de": "der Tänzer",
+        "es": "el bailarín",
+        "it": "il ballerino"
+      },
+      "raw": "dansören dansörer",
+      "parts": [
+        "dansör",
+        "dancer;dancers",
+        "رقصنده",
+        "der Tänzer;Tänzer",
+        "el bailarín;bailarines",
+        "il ballerino;ballerini",
+        "p"
+      ],
+      "ds": "dansören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_debate",
+      "p": "noun",
+      "e": {
+        "sv": "en debatt",
+        "en": "debate",
+        "fa": "مناظره",
+        "de": "die Debatte",
+        "es": "el debate",
+        "it": "il dibattito"
+      },
+      "raw": "debatten debatter",
+      "parts": [
+        "debatt",
+        "debate;debates",
+        "مناظره",
+        "die Debatte;Debatten",
+        "el debate;debates",
+        "il dibattito;dibattiti",
+        "a"
+      ],
+      "ds": "debatten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_decade",
+      "p": "noun",
+      "e": {
+        "sv": "ett decennium",
+        "en": "decade",
+        "fa": "دهه",
+        "de": "das Jahrzehnt",
+        "es": "la década",
+        "it": "il decennio"
+      },
+      "raw": "decenniet decennier",
+      "parts": [
+        "decennium",
+        "decade;decades",
+        "دهه",
+        "das Jahrzehnt;Jahrzehnte",
+        "la década;décadas",
+        "il decennio;decenni",
+        "a"
+      ],
+      "ds": "decenniet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_decimal",
+      "p": "noun",
+      "e": {
+        "sv": "en decimal",
+        "en": "decimal",
+        "fa": "رقم اعشار",
+        "de": "die Dezimalstelle",
+        "es": "el decimal",
+        "it": "il decimale"
+      },
+      "raw": "decimalen decimaler",
+      "parts": [
+        "decimal",
+        "decimal;decimals",
+        "رقم اعشار",
+        "die Dezimalstelle;Dezimalstellen",
+        "el decimal;decimales",
+        "il decimale;decimali",
+        "a"
+      ],
+      "ds": "decimalen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_detective_novel",
+      "p": "noun",
+      "e": {
+        "sv": "en deckare",
+        "en": "detective novel",
+        "fa": "رمان پلیسی",
+        "de": "der Kriminalroman",
+        "es": "la novela policíaca",
+        "it": "il romanzo giallo"
+      },
+      "raw": "deckar(e)n deckare deckarna",
+      "parts": [
+        "deckare",
+        "detective novel;detective novels",
+        "رمان پلیسی",
+        "der Kriminalroman;Kriminalromane",
+        "la novela policíaca;novelas policíacas",
+        "il romanzo giallo;romanzi gialli",
+        "o"
+      ],
+      "ds": "deckaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_definition",
+      "p": "noun",
+      "e": {
+        "sv": "en definition",
+        "en": "definition",
+        "fa": "تعریف",
+        "de": "die Definition",
+        "es": "la definición",
+        "it": "la definizione"
+      },
+      "raw": "definitionen definitioner",
+      "parts": [
+        "definition",
+        "definition;definitions",
+        "تعریف",
+        "die Definition;Definitionen",
+        "la definición;definiciones",
+        "la definizione;definizioni",
+        "a"
+      ],
+      "ds": "definitionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_tax_return",
+      "p": "noun",
+      "e": {
+        "sv": "en deklaration",
+        "en": "tax return",
+        "fa": "اظهارنامهٔ مالیاتی",
+        "de": "die Steuererklärung",
+        "es": "la declaración de la renta",
+        "it": "la dichiarazione dei redditi"
+      },
+      "raw": "deklarationen deklarationer",
+      "parts": [
+        "deklaration",
+        "tax return;tax returns",
+        "اظهارنامهٔ مالیاتی",
+        "die Steuererklärung;Steuererklärungen",
+        "la declaración de la renta;declaraciones de la renta",
+        "la dichiarazione dei redditi;dichiarazioni dei redditi",
+        "a"
+      ],
+      "ds": "deklarationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_decoration",
+      "p": "noun",
+      "e": {
+        "sv": "en dekoration",
+        "en": "decoration",
+        "fa": "تزئین",
+        "de": "die Dekoration",
+        "es": "la decoración",
+        "it": "la decorazione"
+      },
+      "raw": "dekorationen dekorationer",
+      "parts": [
+        "dekoration",
+        "decoration;decorations",
+        "تزئین",
+        "die Dekoration;Dekorationen",
+        "la decoración;decoraciones",
+        "la decorazione;decorazioni",
+        "o"
+      ],
+      "ds": "dekorationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dolphin",
+      "p": "noun",
+      "e": {
+        "sv": "en delfin",
+        "en": "dolphin",
+        "fa": "دلفین",
+        "de": "der Delfin",
+        "es": "el delfín",
+        "it": "il delfino"
+      },
+      "raw": "delfinen delfiner",
+      "parts": [
+        "delfin",
+        "dolphin;dolphins",
+        "دلفین",
+        "der Delfin;Delfine",
+        "el delfín;delfines",
+        "il delfino;delfini",
+        "s"
+      ],
+      "ds": "delfinen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_demonstration",
+      "p": "noun",
+      "e": {
+        "sv": "en demonstration",
+        "en": "demonstration",
+        "fa": "تظاهرات",
+        "de": "die Demonstration",
+        "es": "la manifestación",
+        "it": "la manifestazione"
+      },
+      "raw": "demonstrationen demonstrationer",
+      "parts": [
+        "demonstration",
+        "demonstration;demonstrations",
+        "تظاهرات",
+        "die Demonstration;Demonstrationen",
+        "la manifestación;manifestaciones",
+        "la manifestazione;manifestazioni",
+        "a"
+      ],
+      "ds": "demonstrationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_deodorant",
+      "p": "noun",
+      "e": {
+        "sv": "en deodorant",
+        "en": "deodorant",
+        "fa": "دئودورانت",
+        "de": "das Deodorant",
+        "es": "el desodorante",
+        "it": "il deodorante"
+      },
+      "raw": "deodoranten deodoranter",
+      "parts": [
+        "deodorant",
+        "deodorant;deodorants",
+        "دئودورانت",
+        "das Deodorant;Deodorants",
+        "el desodorante;desodorantes",
+        "il deodorante;deodoranti",
+        "o"
+      ],
+      "ds": "deodoranten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dessert",
+      "p": "noun",
+      "e": {
+        "sv": "en dessert",
+        "en": "dessert",
+        "fa": "دسر",
+        "de": "das Dessert",
+        "es": "el postre",
+        "it": "il dessert"
+      },
+      "raw": "desserten desserter",
+      "parts": [
+        "dessert",
+        "dessert;desserts",
+        "دسر",
+        "das Dessert;Desserts",
+        "el postre;postres",
+        "il dessert;dessert",
+        "f"
+      ],
+      "ds": "desserten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_destination",
+      "p": "noun",
+      "e": {
+        "sv": "en destination",
+        "en": "destination",
+        "fa": "مقصد",
+        "de": "das Reiseziel",
+        "es": "el destino",
+        "it": "la destinazione"
+      },
+      "raw": "destinationen destinationer",
+      "parts": [
+        "destination",
+        "destination;destinations",
+        "مقصد",
+        "das Reiseziel;Reiseziele",
+        "el destino;destinos",
+        "la destinazione;destinazioni",
+        "a"
+      ],
+      "ds": "destinationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_detail",
+      "p": "noun",
+      "e": {
+        "sv": "en detalj",
+        "en": "detail",
+        "fa": "جزئیات",
+        "de": "das Detail",
+        "es": "el detalle",
+        "it": "il dettaglio"
+      },
+      "raw": "detaljen detaljer",
+      "parts": [
+        "detalj",
+        "detail;details",
+        "جزئیات",
+        "das Detail;Details",
+        "el detalle;detalles",
+        "il dettaglio;dettagli",
+        "a"
+      ],
+      "ds": "detaljen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_detective",
+      "p": "noun",
+      "e": {
+        "sv": "en detektiv",
+        "en": "detective",
+        "fa": "کارآگاه",
+        "de": "der Detektiv",
+        "es": "el detective",
+        "it": "l'investigatore"
+      },
+      "raw": "detektiven detektiver",
+      "parts": [
+        "detektiv",
+        "detective;detectives",
+        "کارآگاه",
+        "der Detektiv;Detektive",
+        "el detective;detectives",
+        "l'investigatore;investigatori",
+        "p"
+      ],
+      "ds": "detektiven",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diagnosis",
+      "p": "noun",
+      "e": {
+        "sv": "en diagnos",
+        "en": "diagnosis",
+        "fa": "تشخیص پزشکی",
+        "de": "die Diagnose",
+        "es": "el diagnóstico",
+        "it": "la diagnosi"
+      },
+      "raw": "diagnosen diagnoser",
+      "parts": [
+        "diagnos",
+        "diagnosis;diagnoses",
+        "تشخیص پزشکی",
+        "die Diagnose;Diagnosen",
+        "el diagnóstico;diagnósticos",
+        "la diagnosi;diagnosi",
+        "a"
+      ],
+      "ds": "diagnosen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diagram",
+      "p": "noun",
+      "e": {
+        "sv": "ett diagram",
+        "en": "diagram",
+        "fa": "نمودار",
+        "de": "das Diagramm",
+        "es": "el diagrama",
+        "it": "il diagramma"
+      },
+      "raw": "diagrammet diagram diagrammen",
+      "parts": [
+        "diagram",
+        "diagram;diagrams",
+        "نمودار",
+        "das Diagramm;Diagramme",
+        "el diagrama;diagramas",
+        "il diagramma;diagrammi",
+        "a"
+      ],
+      "ds": "diagrammet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_dialect",
+      "p": "noun",
+      "e": {
+        "sv": "en dialekt",
+        "en": "dialect",
+        "fa": "گویش",
+        "de": "der Dialekt",
+        "es": "el dialecto",
+        "it": "il dialetto"
+      },
+      "raw": "dialekten dialekter",
+      "parts": [
+        "dialekt",
+        "dialect;dialects",
+        "گویش",
+        "der Dialekt;Dialekte",
+        "el dialecto;dialectos",
+        "il dialetto;dialetti",
+        "a"
+      ],
+      "ds": "dialekten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dialogue",
+      "p": "noun",
+      "e": {
+        "sv": "en dialog",
+        "en": "dialogue",
+        "fa": "گفت‌وگو",
+        "de": "der Dialog",
+        "es": "el diálogo",
+        "it": "il dialogo"
+      },
+      "raw": "dialogen dialoger",
+      "parts": [
+        "dialog",
+        "dialogue;dialogues",
+        "گفت‌وگو",
+        "der Dialog;Dialoge",
+        "el diálogo;diálogos",
+        "il dialogo;dialoghi",
+        "a"
+      ],
+      "ds": "dialogen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diamond",
+      "p": "noun",
+      "e": {
+        "sv": "en diamant",
+        "en": "diamond",
+        "fa": "الماس",
+        "de": "der Diamant",
+        "es": "el diamante",
+        "it": "il diamante"
+      },
+      "raw": "diamanten diamanter",
+      "parts": [
+        "diamant",
+        "diamond;diamonds",
+        "الماس",
+        "der Diamant;Diamanten",
+        "el diamante;diamantes",
+        "il diamante;diamanti",
+        "o"
+      ],
+      "ds": "diamanten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diameter",
+      "p": "noun",
+      "e": {
+        "sv": "en diameter",
+        "en": "diameter",
+        "fa": "قطر",
+        "de": "der Durchmesser",
+        "es": "el diámetro",
+        "it": "il diametro"
+      },
+      "raw": "diametern diametrar",
+      "parts": [
+        "diameter",
+        "diameter;diameters",
+        "قطر",
+        "der Durchmesser;Durchmesser",
+        "el diámetro;diámetros",
+        "il diametro;diametri",
+        "a"
+      ],
+      "ds": "diametern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diet",
+      "p": "noun",
+      "e": {
+        "sv": "en diet",
+        "en": "diet",
+        "fa": "رژیم غذایی",
+        "de": "die Diät",
+        "es": "la dieta",
+        "it": "la dieta"
+      },
+      "raw": "dieten",
+      "parts": [
+        "diet",
+        "diet;diets",
+        "رژیم غذایی",
+        "die Diät;Diäten",
+        "la dieta;dietas",
+        "la dieta;diete",
+        "a"
+      ],
+      "ds": "dieten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_ditch",
+      "p": "noun",
+      "e": {
+        "sv": "ett dike",
+        "en": "ditch",
+        "fa": "خندق",
+        "de": "der Graben",
+        "es": "la zanja",
+        "it": "il fossato"
+      },
+      "raw": "diket diken dikena",
+      "parts": [
+        "dike",
+        "ditch;ditches",
+        "خندق",
+        "der Graben;Gräben",
+        "la zanja;zanjas",
+        "il fossato;fossati",
+        "l"
+      ],
+      "ds": "diket",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_poem",
+      "p": "noun",
+      "e": {
+        "sv": "en dikt",
+        "en": "poem",
+        "fa": "شعر",
+        "de": "das Gedicht",
+        "es": "el poema",
+        "it": "la poesia"
+      },
+      "raw": "dikten dikter",
+      "parts": [
+        "dikt",
+        "poem;poems",
+        "شعر",
+        "das Gedicht;Gedichte",
+        "el poema;poemas",
+        "la poesia;poesie",
+        "a"
+      ],
+      "ds": "dikten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_diploma",
+      "p": "noun",
+      "e": {
+        "sv": "ett diplom",
+        "en": "diploma",
+        "fa": "مدرک تحصیلی",
+        "de": "das Diplom",
+        "es": "el diploma",
+        "it": "il diploma"
+      },
+      "raw": "diplomet diplom diplomen",
+      "parts": [
+        "diplom",
+        "diploma;diplomas",
+        "مدرک تحصیلی",
+        "das Diplom;Diplome",
+        "el diploma;diplomas",
+        "il diploma;diplomi",
+        "o"
+      ],
+      "ds": "diplomet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_diplomat",
+      "p": "noun",
+      "e": {
+        "sv": "en diplomat",
+        "en": "diplomat",
+        "fa": "دیپلمات",
+        "de": "der Diplomat",
+        "es": "el diplomático",
+        "it": "il diplomatico"
+      },
+      "raw": "diplomaten diplomater",
+      "parts": [
+        "diplomat",
+        "diplomat;diplomats",
+        "دیپلمات",
+        "der Diplomat;Diplomaten",
+        "el diplomático;diplomáticos",
+        "il diplomatico;diplomatici",
+        "p"
+      ],
+      "ds": "diplomaten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_director",
+      "p": "noun",
+      "e": {
+        "sv": "en direktör",
+        "en": "director",
+        "fa": "مدیر",
+        "de": "der Direktor",
+        "es": "el director",
+        "it": "il direttore"
+      },
+      "raw": "direktören direktörer",
+      "parts": [
+        "direktör",
+        "director;directors",
+        "مدیر",
+        "der Direktor;Direktoren",
+        "el director;directores",
+        "il direttore;direttori",
+        "p"
+      ],
+      "ds": "direktören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_conductor",
+      "p": "noun",
+      "e": {
+        "sv": "en dirigent",
+        "en": "conductor",
+        "fa": "رهبر ارکستر",
+        "de": "der Dirigent",
+        "es": "el director de orquesta",
+        "it": "il direttore d'orchestra"
+      },
+      "raw": "dirigenten dirigenter",
+      "parts": [
+        "dirigent",
+        "conductor;conductors",
+        "رهبر ارکستر",
+        "der Dirigent;Dirigenten",
+        "el director de orquesta;directores de orquesta",
+        "il direttore d'orchestra;direttori d'orchestra",
+        "p"
+      ],
+      "ds": "dirigenten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_discussion",
+      "p": "noun",
+      "e": {
+        "sv": "en diskussion",
+        "en": "discussion",
+        "fa": "بحث",
+        "de": "die Diskussion",
+        "es": "la discusión",
+        "it": "la discussione"
+      },
+      "raw": "diskussionen diskussioner",
+      "parts": [
+        "diskussion",
+        "discussion;discussions",
+        "بحث",
+        "die Diskussion;Diskussionen",
+        "la discusión;discusiones",
+        "la discussione;discussioni",
+        "a"
+      ],
+      "ds": "diskussionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_district",
+      "p": "noun",
+      "e": {
+        "sv": "ett distrikt",
+        "en": "district",
+        "fa": "ناحیه",
+        "de": "der Bezirk",
+        "es": "el distrito",
+        "it": "il distretto"
+      },
+      "raw": "distriktet distrikt distrikten",
+      "parts": [
+        "distrikt",
+        "district;districts",
+        "ناحیه",
+        "der Bezirk;Bezirke",
+        "el distrito;distritos",
+        "il distretto;distretti",
+        "l"
+      ],
+      "ds": "distriktet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_jungle",
+      "p": "noun",
+      "e": {
+        "sv": "en djungel",
+        "en": "jungle",
+        "fa": "جنگل استوایی",
+        "de": "der Dschungel",
+        "es": "la selva",
+        "it": "la giungla"
+      },
+      "raw": "djungeln djungler",
+      "parts": [
+        "djungel",
+        "jungle;jungles",
+        "جنگل استوایی",
+        "der Dschungel;Dschungel",
+        "la selva;selvas",
+        "la giungla;giungle",
+        "l"
+      ],
+      "ds": "djungeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_doll",
+      "p": "noun",
+      "e": {
+        "sv": "en docka",
+        "en": "doll",
+        "fa": "عروسک",
+        "de": "die Puppe",
+        "es": "la muñeca",
+        "it": "la bambola"
+      },
+      "raw": "dockan dockor",
+      "parts": [
+        "docka",
+        "doll;dolls",
+        "عروسک",
+        "die Puppe;Puppen",
+        "la muñeca;muñecas",
+        "la bambola;bambole",
+        "o"
+      ],
+      "ds": "dockan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_scent",
+      "p": "noun",
+      "e": {
+        "sv": "en doft",
+        "en": "scent",
+        "fa": "رایحه",
+        "de": "der Duft",
+        "es": "el aroma",
+        "it": "il profumo"
+      },
+      "raw": "doften dofter",
+      "parts": [
+        "doft",
+        "scent;scents",
+        "رایحه",
+        "der Duft;Düfte",
+        "el aroma;aromas",
+        "il profumo;profumi",
+        "a"
+      ],
+      "ds": "doften",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_document",
+      "p": "noun",
+      "e": {
+        "sv": "ett dokument",
+        "en": "document",
+        "fa": "سند",
+        "de": "das Dokument",
+        "es": "el documento",
+        "it": "il documento"
+      },
+      "raw": "dokumentet dokument dokumenten",
+      "parts": [
+        "dokument",
+        "document;documents",
+        "سند",
+        "das Dokument;Dokumente",
+        "el documento;documentos",
+        "il documento;documenti",
+        "o"
+      ],
+      "ds": "dokumentet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_judge",
+      "p": "noun",
+      "e": {
+        "sv": "en domare",
+        "en": "judge",
+        "fa": "قاضی",
+        "de": "der Richter",
+        "es": "el juez",
+        "it": "il giudice"
+      },
+      "raw": "domar(e)n domare domarna",
+      "parts": [
+        "domare",
+        "judge;judges",
+        "قاضی",
+        "der Richter;Richter",
+        "el juez;jueces",
+        "il giudice;giudici",
+        "p"
+      ],
+      "ds": "domaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_donation",
+      "p": "noun",
+      "e": {
+        "sv": "en donation",
+        "en": "donation",
+        "fa": "اهدا",
+        "de": "die Spende",
+        "es": "la donación",
+        "it": "la donazione"
+      },
+      "raw": "donationen donationer",
+      "parts": [
+        "donation",
+        "donation;donations",
+        "اهدا",
+        "die Spende;Spenden",
+        "la donación;donaciones",
+        "la donazione;donazioni",
+        "a"
+      ],
+      "ds": "donationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dose",
+      "p": "noun",
+      "e": {
+        "sv": "en dos",
+        "en": "dose",
+        "fa": "دوز",
+        "de": "die Dosis",
+        "es": "la dosis",
+        "it": "la dose"
+      },
+      "raw": "dosen doser",
+      "parts": [
+        "dos",
+        "dose;doses",
+        "دوز",
+        "die Dosis;Dosen",
+        "la dosis;dosis",
+        "la dose;dosi",
+        "a"
+      ],
+      "ds": "dosen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_kite",
+      "p": "noun",
+      "e": {
+        "sv": "en drake",
+        "en": "kite",
+        "fa": "بادبادک",
+        "de": "der Drachen",
+        "es": "la cometa",
+        "it": "l'aquilone"
+      },
+      "raw": "draken drakar",
+      "parts": [
+        "drake",
+        "kite;kites",
+        "بادبادک",
+        "der Drachen;Drachen",
+        "la cometa;cometas",
+        "l'aquilone;aquiloni",
+        "o"
+      ],
+      "ds": "draken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_curtain",
+      "p": "noun",
+      "e": {
+        "sv": "ett draperi",
+        "en": "curtain",
+        "fa": "پرده",
+        "de": "der Vorhang",
+        "es": "la cortina",
+        "it": "la tenda"
+      },
+      "raw": "draperi(e)t draperier",
+      "parts": [
+        "draperi",
+        "curtain;curtains",
+        "پرده",
+        "der Vorhang;Vorhänge",
+        "la cortina;cortinas",
+        "la tenda;tende",
+        "o"
+      ],
+      "ds": "draperiet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_tip",
+      "p": "noun",
+      "e": {
+        "sv": "en dricks",
+        "en": "tip",
+        "fa": "انعام",
+        "de": "das Trinkgeld",
+        "es": "la propina",
+        "it": "la mancia"
+      },
+      "raw": "dricksen",
+      "parts": [
+        "dricks",
+        "tip;tips",
+        "انعام",
+        "das Trinkgeld;Trinkgelder",
+        "la propina;propinas",
+        "la mancia;mance",
+        "a"
+      ],
+      "ds": "dricksen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_drop",
+      "p": "noun",
+      "e": {
+        "sv": "en droppe",
+        "en": "drop",
+        "fa": "قطره",
+        "de": "der Tropfen",
+        "es": "la gota",
+        "it": "la goccia"
+      },
+      "raw": "droppen droppar",
+      "parts": [
+        "droppe",
+        "drop;drops",
+        "قطره",
+        "der Tropfen;Tropfen",
+        "la gota;gotas",
+        "la goccia;gocce",
+        "a"
+      ],
+      "ds": "droppen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_queen",
+      "p": "noun",
+      "e": {
+        "sv": "en drottning",
+        "en": "queen",
+        "fa": "ملکه",
+        "de": "die Königin",
+        "es": "la reina",
+        "it": "la regina"
+      },
+      "raw": "drottningen drottningar",
+      "parts": [
+        "drottning",
+        "queen;queens",
+        "ملکه",
+        "die Königin;Königinnen",
+        "la reina;reinas",
+        "la regina;regine",
+        "s"
+      ],
+      "ds": "drottningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_colander",
+      "p": "noun",
+      "e": {
+        "sv": "ett durkslag",
+        "en": "colander",
+        "fa": "آبکش",
+        "de": "das Sieb",
+        "es": "el colador",
+        "it": "lo scolapasta"
+      },
+      "raw": "durkslaget durkslag durkslagen",
+      "parts": [
+        "durkslag",
+        "colander;colanders",
+        "آبکش",
+        "das Sieb;Siebe",
+        "el colador;coladores",
+        "lo scolapasta;scolapasta",
+        "o"
+      ],
+      "ds": "durkslaget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_pigeon",
+      "p": "noun",
+      "e": {
+        "sv": "en duva",
+        "en": "pigeon",
+        "fa": "کبوتر",
+        "de": "die Taube",
+        "es": "la paloma",
+        "it": "il piccione"
+      },
+      "raw": "duvan duvor",
+      "parts": [
+        "duva",
+        "pigeon;pigeons",
+        "کبوتر",
+        "die Taube;Tauben",
+        "la paloma;palomas",
+        "il piccione;piccioni",
+        "s"
+      ],
+      "ds": "duvan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_day_and_night",
+      "p": "noun",
+      "e": {
+        "sv": "ett dygn",
+        "en": "day and night",
+        "fa": "شبانه‌روز",
+        "de": "der volle Tag",
+        "es": "el día completo",
+        "it": "il giorno intero"
+      },
+      "raw": "dygnet dygn dygnen",
+      "parts": [
+        "dygn",
+        "day and night;days and nights",
+        "شبانه‌روز",
+        "der volle Tag;volle Tage",
+        "el día completo;días completos",
+        "il giorno intero;giorni interi",
+        "a"
+      ],
+      "ds": "dygnet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_diver",
+      "p": "noun",
+      "e": {
+        "sv": "en dykare",
+        "en": "diver",
+        "fa": "غواص",
+        "de": "der Taucher",
+        "es": "el buzo",
+        "it": "il subacqueo"
+      },
+      "raw": "dykar(e)n dykare dykarna",
+      "parts": [
+        "dykare",
+        "diver;divers",
+        "غواص",
+        "der Taucher;Taucher",
+        "el buzo;buzos",
+        "il subacqueo;subacquei",
+        "p"
+      ],
+      "ds": "dykaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_effect",
+      "p": "noun",
+      "e": {
+        "sv": "en effekt",
+        "en": "effect",
+        "fa": "اثر",
+        "de": "die Wirkung",
+        "es": "el efecto",
+        "it": "l'effetto"
+      },
+      "raw": "effekten effekter",
+      "parts": [
+        "effekt",
+        "effect;effects",
+        "اثر",
+        "die Wirkung;Wirkungen",
+        "el efecto;efectos",
+        "l'effetto;effetti",
+        "a"
+      ],
+      "ds": "effekten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_surname",
+      "p": "noun",
+      "e": {
+        "sv": "ett efternamn",
+        "en": "surname",
+        "fa": "نام خانوادگی",
+        "de": "der Nachname",
+        "es": "el apellido",
+        "it": "il cognome"
+      },
+      "raw": "efternamnet efternamn efternamnen",
+      "parts": [
+        "efternamn",
+        "surname;surnames",
+        "نام خانوادگی",
+        "der Nachname;Nachnamen",
+        "el apellido;apellidos",
+        "il cognome;cognomi",
+        "a"
+      ],
+      "ds": "efternamnet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_characteristic",
+      "p": "noun",
+      "e": {
+        "sv": "en egenskap",
+        "en": "characteristic",
+        "fa": "ویژگی",
+        "de": "die Eigenschaft",
+        "es": "la característica",
+        "it": "la caratteristica"
+      },
+      "raw": "egenskapen egenskaper",
+      "parts": [
+        "egenskap",
+        "characteristic;characteristics",
+        "ویژگی",
+        "die Eigenschaft;Eigenschaften",
+        "la característica;características",
+        "la caratteristica;caratteristiche",
+        "a"
+      ],
+      "ds": "egenskapen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_equation",
+      "p": "noun",
+      "e": {
+        "sv": "en ekvation",
+        "en": "equation",
+        "fa": "معادله",
+        "de": "die Gleichung",
+        "es": "la ecuación",
+        "it": "l'equazione"
+      },
+      "raw": "ekvationen ekvationer",
+      "parts": [
+        "ekvation",
+        "equation;equations",
+        "معادله",
+        "die Gleichung;Gleichungen",
+        "la ecuación;ecuaciones",
+        "l'equazione;equazioni",
+        "a"
+      ],
+      "ds": "ekvationen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_elephant",
+      "p": "noun",
+      "e": {
+        "sv": "en elefant",
+        "en": "elephant",
+        "fa": "فیل",
+        "de": "der Elefant",
+        "es": "el elefante",
+        "it": "l'elefante"
+      },
+      "raw": "elefanten elefanter",
+      "parts": [
+        "elefant",
+        "elephant;elephants",
+        "فیل",
+        "der Elefant;Elefanten",
+        "el elefante;elefantes",
+        "l'elefante;elefanti",
+        "s"
+      ],
+      "ds": "elefanten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_electrician",
+      "p": "noun",
+      "e": {
+        "sv": "en elektriker",
+        "en": "electrician",
+        "fa": "برق‌کار",
+        "de": "der Elektriker",
+        "es": "el electricista",
+        "it": "l'elettricista"
+      },
+      "raw": "elektrikern elektriker elektrikerna",
+      "parts": [
+        "elektriker",
+        "electrician;electricians",
+        "برق‌کار",
+        "der Elektriker;Elektriker",
+        "el electricista;electricistas",
+        "l'elettricista;elettricisti",
+        "p"
+      ],
+      "ds": "elektrikern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_electron",
+      "p": "noun",
+      "e": {
+        "sv": "en elektron",
+        "en": "electron",
+        "fa": "الکترون",
+        "de": "das Elektron",
+        "es": "el electrón",
+        "it": "l'elettrone"
+      },
+      "raw": "elektronen elektroner",
+      "parts": [
+        "elektron",
+        "electron;electrons",
+        "الکترون",
+        "das Elektron;Elektronen",
+        "el electrón;electrones",
+        "l'elettrone;elettroni",
+        "a"
+      ],
+      "ds": "elektronen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_radiator",
+      "p": "noun",
+      "e": {
+        "sv": "ett element",
+        "en": "radiator",
+        "fa": "رادیاتور",
+        "de": "der Heizkörper",
+        "es": "el radiador",
+        "it": "il radiatore"
+      },
+      "raw": "elementet element elementen",
+      "parts": [
+        "element",
+        "radiator;radiators",
+        "رادیاتور",
+        "der Heizkörper;Heizkörper",
+        "el radiador;radiadores",
+        "il radiatore;radiatori",
+        "o"
+      ],
+      "ds": "elementet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_emigrant",
+      "p": "noun",
+      "e": {
+        "sv": "en emigrant",
+        "en": "emigrant",
+        "fa": "مهاجر از کشور مبدأ",
+        "de": "der Auswanderer",
+        "es": "el emigrante",
+        "it": "l'emigrante"
+      },
+      "raw": "emigranten emigranter",
+      "parts": [
+        "emigrant",
+        "emigrant;emigrants",
+        "مهاجر از کشور مبدأ",
+        "der Auswanderer;Auswanderer",
+        "el emigrante;emigrantes",
+        "l'emigrante;emigranti",
+        "p"
+      ],
+      "ds": "emigranten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_unit",
+      "p": "noun",
+      "e": {
+        "sv": "en enhet",
+        "en": "unit",
+        "fa": "واحد",
+        "de": "die Einheit",
+        "es": "la unidad",
+        "it": "l'unità"
+      },
+      "raw": "enheten enheter",
+      "parts": [
+        "enhet",
+        "unit;units",
+        "واحد",
+        "die Einheit;Einheiten",
+        "la unidad;unidades",
+        "l'unità;unità",
+        "a"
+      ],
+      "ds": "enheten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_survey",
+      "p": "noun",
+      "e": {
+        "sv": "en enkät",
+        "en": "survey",
+        "fa": "پرسش‌نامه",
+        "de": "die Umfrage",
+        "es": "la encuesta",
+        "it": "il sondaggio"
+      },
+      "raw": "enkäten enkäter",
+      "parts": [
+        "enkät",
+        "survey;surveys",
+        "پرسش‌نامه",
+        "die Umfrage;Umfragen",
+        "la encuesta;encuestas",
+        "il sondaggio;sondaggi",
+        "a"
+      ],
+      "ds": "enkäten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_entrance",
+      "p": "noun",
+      "e": {
+        "sv": "en entré",
+        "en": "entrance",
+        "fa": "ورودی",
+        "de": "der Eingang",
+        "es": "la entrada",
+        "it": "l'ingresso"
+      },
+      "raw": "entrén entréer",
+      "parts": [
+        "entré",
+        "entrance;entrances",
+        "ورودی",
+        "der Eingang;Eingänge",
+        "la entrada;entradas",
+        "l'ingresso;ingressi",
+        "l"
+      ],
+      "ds": "entrén",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_entrepreneur",
+      "p": "noun",
+      "e": {
+        "sv": "en entreprenör",
+        "en": "entrepreneur",
+        "fa": "کارآفرین",
+        "de": "der Unternehmer",
+        "es": "el emprendedor",
+        "it": "l'imprenditore"
+      },
+      "raw": "entreprenören entreprenörer",
+      "parts": [
+        "entreprenör",
+        "entrepreneur;entrepreneurs",
+        "کارآفرین",
+        "der Unternehmer;Unternehmer",
+        "el emprendedor;emprendedores",
+        "l'imprenditore;imprenditori",
+        "p"
+      ],
+      "ds": "entreprenören",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_epidemic",
+      "p": "noun",
+      "e": {
+        "sv": "en epidemi",
+        "en": "epidemic",
+        "fa": "همه‌گیری",
+        "de": "die Epidemie",
+        "es": "la epidemia",
+        "it": "l'epidemia"
+      },
+      "raw": "epidemi(e)n epidemier",
+      "parts": [
+        "epidemi",
+        "epidemic;epidemics",
+        "همه‌گیری",
+        "die Epidemie;Epidemien",
+        "la epidemia;epidemias",
+        "l'epidemia;epidemie",
+        "a"
+      ],
+      "ds": "epidemien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_compensation",
+      "p": "noun",
+      "e": {
+        "sv": "en ersättning",
+        "en": "compensation",
+        "fa": "غرامت",
+        "de": "die Entschädigung",
+        "es": "la compensación",
+        "it": "il risarcimento"
+      },
+      "raw": "ersättningen ersättningar",
+      "parts": [
+        "ersättning",
+        "compensation;compensations",
+        "غرامت",
+        "die Entschädigung;Entschädigungen",
+        "la compensación;compensaciones",
+        "il risarcimento;risarcimenti",
+        "a"
+      ],
+      "ds": "ersättningen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_essay",
+      "p": "noun",
+      "e": {
+        "sv": "en essä",
+        "en": "essay",
+        "fa": "جستار",
+        "de": "der Essay",
+        "es": "el ensayo",
+        "it": "il saggio"
+      },
+      "raw": "essän essäer",
+      "parts": [
+        "essä",
+        "essay;essays",
+        "جستار",
+        "der Essay;Essays",
+        "el ensayo;ensayos",
+        "il saggio;saggi",
+        "a"
+      ],
+      "ds": "essän",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_label",
+      "p": "noun",
+      "e": {
+        "sv": "en etikett",
+        "en": "label",
+        "fa": "برچسب",
+        "de": "das Etikett",
+        "es": "la etiqueta",
+        "it": "l'etichetta"
+      },
+      "raw": "etiketten etiketter",
+      "parts": [
+        "etikett",
+        "label;labels",
+        "برچسب",
+        "das Etikett;Etiketten",
+        "la etiqueta;etiquetas",
+        "l'etichetta;etichette",
+        "o"
+      ],
+      "ds": "etiketten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_case",
+      "p": "noun",
+      "e": {
+        "sv": "ett etui",
+        "en": "case",
+        "fa": "جعبهٔ محافظ",
+        "de": "das Etui",
+        "es": "el estuche",
+        "it": "l'astuccio"
+      },
+      "raw": "etui(e)t etuier (el. etuin) etuierna (el. etuina)",
+      "parts": [
+        "etui",
+        "case;cases",
+        "جعبهٔ محافظ",
+        "das Etui;Etuis",
+        "el estuche;estuches",
+        "l'astuccio;astucci",
+        "o"
+      ],
+      "ds": "etuiet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_event",
+      "p": "noun",
+      "e": {
+        "sv": "ett evenemang",
+        "en": "event",
+        "fa": "رویداد برنامه‌ریزی‌شده",
+        "de": "die Veranstaltung",
+        "es": "el evento",
+        "it": "l'evento"
+      },
+      "raw": "evenemanget evenemang evenemangen",
+      "parts": [
+        "evenemang",
+        "event;events",
+        "رویداد برنامه‌ریزی‌شده",
+        "die Veranstaltung;Veranstaltungen",
+        "el evento;eventos",
+        "l'evento;eventi",
+        "a"
+      ],
+      "ds": "evenemanget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_experiment",
+      "p": "noun",
+      "e": {
+        "sv": "ett experiment",
+        "en": "experiment",
+        "fa": "آزمایش",
+        "de": "das Experiment",
+        "es": "el experimento",
+        "it": "l'esperimento"
+      },
+      "raw": "experimentet experiment experimenten",
+      "parts": [
+        "experiment",
+        "experiment;experiments",
+        "آزمایش",
+        "das Experiment;Experimente",
+        "el experimento;experimentos",
+        "l'esperimento;esperimenti",
+        "a"
+      ],
+      "ds": "experimentet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_expert",
+      "p": "noun",
+      "e": {
+        "sv": "en expert",
+        "en": "expert",
+        "fa": "کارشناس",
+        "de": "der Experte",
+        "es": "el experto",
+        "it": "l'esperto"
+      },
+      "raw": "experten experter",
+      "parts": [
+        "expert",
+        "expert;experts",
+        "کارشناس",
+        "der Experte;Experten",
+        "el experto;expertos",
+        "l'esperto;esperti",
+        "p"
+      ],
+      "ds": "experten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_explosion",
+      "p": "noun",
+      "e": {
+        "sv": "en explosion",
+        "en": "explosion",
+        "fa": "انفجار",
+        "de": "die Explosion",
+        "es": "la explosión",
+        "it": "l'esplosione"
+      },
+      "raw": "explosionen explosioner",
+      "parts": [
+        "explosion",
+        "explosion;explosions",
+        "انفجار",
+        "die Explosion;Explosionen",
+        "la explosión;explosiones",
+        "l'esplosione;esplosioni",
+        "a"
+      ],
+      "ds": "explosionen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_factory",
+      "p": "noun",
+      "e": {
+        "sv": "en fabrik",
+        "en": "factory",
+        "fa": "کارخانه",
+        "de": "die Fabrik",
+        "es": "la fábrica",
+        "it": "la fabbrica"
+      },
+      "raw": "fabriken fabriker",
+      "parts": [
+        "fabrik",
+        "factory;factories",
+        "کارخانه",
+        "die Fabrik;Fabriken",
+        "la fábrica;fábricas",
+        "la fabbrica;fabbriche",
+        "l"
+      ],
+      "ds": "fabriken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_torch",
+      "p": "noun",
+      "e": {
+        "sv": "en fackla",
+        "en": "torch",
+        "fa": "مشعل",
+        "de": "die Fackel",
+        "es": "la antorcha",
+        "it": "la fiaccola"
+      },
+      "raw": "facklan facklor",
+      "parts": [
+        "fackla",
+        "torch;torches",
+        "مشعل",
+        "die Fackel;Fackeln",
+        "la antorcha;antorchas",
+        "la fiaccola;fiaccole",
+        "o"
+      ],
+      "ds": "facklan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_factor",
+      "p": "noun",
+      "e": {
+        "sv": "en faktor",
+        "en": "factor",
+        "fa": "عامل",
+        "de": "der Faktor",
+        "es": "el factor",
+        "it": "il fattore"
+      },
+      "raw": "faktorn faktorer",
+      "parts": [
+        "faktor",
+        "factor;factors",
+        "عامل",
+        "der Faktor;Faktoren",
+        "el factor;factores",
+        "il fattore;fattori",
+        "a"
+      ],
+      "ds": "faktorn",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_wheel_rim",
+      "p": "noun",
+      "e": {
+        "sv": "en fälg",
+        "en": "wheel rim",
+        "fa": "رینگ چرخ",
+        "de": "die Felge",
+        "es": "la llanta",
+        "it": "il cerchione"
+      },
+      "raw": "fälgen fälgar",
+      "parts": [
+        "fälg",
+        "wheel rim;wheel rims",
+        "رینگ چرخ",
+        "die Felge;Felgen",
+        "la llanta;llantas",
+        "il cerchione;cerchioni",
+        "o"
+      ],
+      "ds": "fälgen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_falcon",
+      "p": "noun",
+      "e": {
+        "sv": "en falk",
+        "en": "falcon",
+        "fa": "شاهین",
+        "de": "der Falke",
+        "es": "el halcón",
+        "it": "il falco"
+      },
+      "raw": "falken falkar",
+      "parts": [
+        "falk",
+        "falcon;falcons",
+        "شاهین",
+        "der Falke;Falken",
+        "el halcón;halcones",
+        "il falco;falchi",
+        "s"
+      ],
+      "ds": "falken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_trap",
+      "p": "noun",
+      "e": {
+        "sv": "en fälla",
+        "en": "trap",
+        "fa": "تله",
+        "de": "die Falle",
+        "es": "la trampa",
+        "it": "la trappola"
+      },
+      "raw": "fällan fällor",
+      "parts": [
+        "fälla",
+        "trap;traps",
+        "تله",
+        "die Falle;Fallen",
+        "la trampa;trampas",
+        "la trappola;trappole",
+        "o"
+      ],
+      "ds": "fällan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_banner",
+      "p": "noun",
+      "e": {
+        "sv": "en fana",
+        "en": "banner",
+        "fa": "بیرق",
+        "de": "die Fahne",
+        "es": "el estandarte",
+        "it": "lo stendardo"
+      },
+      "raw": "fanan fanor",
+      "parts": [
+        "fana",
+        "banner;banners",
+        "بیرق",
+        "die Fahne;Fahnen",
+        "el estandarte;estandartes",
+        "lo stendardo;stendardi",
+        "o"
+      ],
+      "ds": "fanan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_prisoner",
+      "p": "noun",
+      "e": {
+        "sv": "en fånge",
+        "en": "prisoner",
+        "fa": "زندانی",
+        "de": "der Gefangene",
+        "es": "el prisionero",
+        "it": "il prigioniero"
+      },
+      "raw": "fången fångar",
+      "parts": [
+        "fånge",
+        "prisoner;prisoners",
+        "زندانی",
+        "der Gefangene;Gefangenen",
+        "el prisionero;prisioneros",
+        "il prigioniero;prigionieri",
+        "s"
+      ],
+      "ds": "fången",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_prison",
+      "p": "noun",
+      "e": {
+        "sv": "ett fängelse",
+        "en": "prison",
+        "fa": "زندان",
+        "de": "das Gefängnis",
+        "es": "la cárcel",
+        "it": "il carcere"
+      },
+      "raw": "fängelset fängelser",
+      "parts": [
+        "fängelse",
+        "prison;prisons",
+        "زندان",
+        "das Gefängnis;Gefängnisse",
+        "la cárcel;cárceles",
+        "il carcere;carceri",
+        "l"
+      ],
+      "ds": "fängelset",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_imagination",
+      "p": "noun",
+      "e": {
+        "sv": "en fantasi",
+        "en": "imagination",
+        "fa": "تخیل",
+        "de": "die Fantasie",
+        "es": "la imaginación",
+        "it": "l'immaginazione"
+      },
+      "raw": "fantasi(e)n fantasier",
+      "parts": [
+        "fantasi",
+        "imagination;imaginations",
+        "تخیل",
+        "die Fantasie;Fantasien",
+        "la imaginación;imaginaciones",
+        "l'immaginazione;immaginazioni",
+        "a"
+      ],
+      "ds": "fantasien",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_danger",
+      "p": "noun",
+      "e": {
+        "sv": "en fara",
+        "en": "danger",
+        "fa": "خطر",
+        "de": "die Gefahr",
+        "es": "el peligro",
+        "it": "il pericolo"
+      },
+      "raw": "faran faror",
+      "parts": [
+        "fara",
+        "danger;dangers",
+        "خطر",
+        "die Gefahr;Gefahren",
+        "el peligro;peligros",
+        "il pericolo;pericoli",
+        "a"
+      ],
+      "ds": "faran",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_skill",
+      "p": "noun",
+      "e": {
+        "sv": "en färdighet",
+        "en": "skill",
+        "fa": "مهارت",
+        "de": "die Fertigkeit",
+        "es": "la habilidad",
+        "it": "l'abilità"
+      },
+      "raw": "färdigheten färdigheter",
+      "parts": [
+        "färdighet",
+        "skill;skills",
+        "مهارت",
+        "die Fertigkeit;Fertigkeiten",
+        "la habilidad;habilidades",
+        "l'abilità;abilità",
+        "a"
+      ],
+      "ds": "färdigheten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_vessel",
+      "p": "noun",
+      "e": {
+        "sv": "en farkost",
+        "en": "vessel",
+        "fa": "شناور",
+        "de": "das Wasserfahrzeug",
+        "es": "la embarcación",
+        "it": "l'imbarcazione"
+      },
+      "raw": "farkosten farkoster",
+      "parts": [
+        "farkost",
+        "vessel;vessels",
+        "شناور",
+        "das Wasserfahrzeug;Wasserfahrzeuge",
+        "la embarcación;embarcaciones",
+        "l'imbarcazione;imbarcazioni",
+        "s"
+      ],
+      "ds": "farkosten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_facade",
+      "p": "noun",
+      "e": {
+        "sv": "en fasad",
+        "en": "facade",
+        "fa": "نمای ساختمان",
+        "de": "die Fassade",
+        "es": "la fachada",
+        "it": "la facciata"
+      },
+      "raw": "fasaden fasader",
+      "parts": [
+        "fasad",
+        "facade;facades",
+        "نمای ساختمان",
+        "die Fassade;Fassaden",
+        "la fachada;fachadas",
+        "la facciata;facciate",
+        "s"
+      ],
+      "ds": "fasaden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_paternal_aunt",
+      "p": "noun",
+      "e": {
+        "sv": "en faster",
+        "en": "paternal aunt",
+        "fa": "عمه",
+        "de": "die Tante väterlicherseits",
+        "es": "la tía paterna",
+        "it": "la zia paterna"
+      },
+      "raw": "fastern fastrar",
+      "parts": [
+        "faster",
+        "paternal aunt;paternal aunts",
+        "عمه",
+        "die Tante väterlicherseits;Tanten väterlicherseits",
+        "la tía paterna;tías paternas",
+        "la zia paterna;zie paterne",
+        "p"
+      ],
+      "ds": "fastern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_property",
+      "p": "noun",
+      "e": {
+        "sv": "en fastighet",
+        "en": "property",
+        "fa": "ملک",
+        "de": "die Immobilie",
+        "es": "el inmueble",
+        "it": "l'immobile"
+      },
+      "raw": "fastigheten fastigheter",
+      "parts": [
+        "fastighet",
+        "property;properties",
+        "ملک",
+        "die Immobilie;Immobilien",
+        "el inmueble;inmuebles",
+        "l'immobile;immobili",
+        "a"
+      ],
+      "ds": "fastigheten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_tick",
+      "p": "noun",
+      "e": {
+        "sv": "en fästing",
+        "en": "tick",
+        "fa": "کنه",
+        "de": "die Zecke",
+        "es": "la garrapata",
+        "it": "la zecca"
+      },
+      "raw": "fästingen fästingar",
+      "parts": [
+        "fästing",
+        "tick;ticks",
+        "کنه",
+        "die Zecke;Zecken",
+        "la garrapata;garrapatas",
+        "la zecca;zecche",
+        "s"
+      ],
+      "ds": "fästingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_armchair",
+      "p": "noun",
+      "e": {
+        "sv": "en fåtölj",
+        "en": "armchair",
+        "fa": "مبل تک‌نفره",
+        "de": "der Sessel",
+        "es": "el sillón",
+        "it": "la poltrona"
+      },
+      "raw": "fåtöljen fåtöljer",
+      "parts": [
+        "fåtölj",
+        "armchair;armchairs",
+        "مبل تک‌نفره",
+        "der Sessel;Sessel",
+        "el sillón;sillones",
+        "la poltrona;poltrone",
+        "o"
+      ],
+      "ds": "fåtöljen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_favourite",
+      "p": "noun",
+      "e": {
+        "sv": "en favorit",
+        "en": "favourite",
+        "fa": "گزینهٔ محبوب",
+        "de": "der Favorit",
+        "es": "el favorito",
+        "it": "il preferito"
+      },
+      "raw": "favoriten favoriter",
+      "parts": [
+        "favorit",
+        "favourite;favourites",
+        "گزینهٔ محبوب",
+        "der Favorit;Favoriten",
+        "el favorito;favoritos",
+        "il preferito;preferiti",
+        "a"
+      ],
+      "ds": "favoriten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fin",
+      "p": "noun",
+      "e": {
+        "sv": "en fena",
+        "en": "fin",
+        "fa": "باله",
+        "de": "die Flosse",
+        "es": "la aleta",
+        "it": "la pinna"
+      },
+      "raw": "fenan fenor",
+      "parts": [
+        "fena",
+        "fin;fins",
+        "باله",
+        "die Flosse;Flossen",
+        "la aleta;aletas",
+        "la pinna;pinne",
+        "a"
+      ],
+      "ds": "fenan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_phenomenon",
+      "p": "noun",
+      "e": {
+        "sv": "ett fenomen",
+        "en": "phenomenon",
+        "fa": "پدیده",
+        "de": "das Phänomen",
+        "es": "el fenómeno",
+        "it": "il fenomeno"
+      },
+      "raw": "fenomenet fenomen fenomenen",
+      "parts": [
+        "fenomen",
+        "phenomenon;phenomena",
+        "پدیده",
+        "das Phänomen;Phänomene",
+        "el fenómeno;fenómenos",
+        "il fenomeno;fenomeni",
+        "a"
+      ],
+      "ds": "fenomenet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_festival",
+      "p": "noun",
+      "e": {
+        "sv": "en festival",
+        "en": "festival",
+        "fa": "جشنواره",
+        "de": "das Festival",
+        "es": "el festival",
+        "it": "il festival"
+      },
+      "raw": "festivalen festivaler",
+      "parts": [
+        "festival",
+        "festival;festivals",
+        "جشنواره",
+        "das Festival;Festivals",
+        "el festival;festivales",
+        "il festival;festival",
+        "a"
+      ],
+      "ds": "festivalen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_enemy",
+      "p": "noun",
+      "e": {
+        "sv": "en fiende",
+        "en": "enemy",
+        "fa": "دشمن",
+        "de": "der Feind",
+        "es": "el enemigo",
+        "it": "il nemico"
+      },
+      "raw": "fienden fiender",
+      "parts": [
+        "fiende",
+        "enemy;enemies",
+        "دشمن",
+        "der Feind;Feinde",
+        "el enemigo;enemigos",
+        "il nemico;nemici",
+        "s"
+      ],
+      "ds": "fienden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_figure",
+      "p": "noun",
+      "e": {
+        "sv": "en figur",
+        "en": "figure",
+        "fa": "شکل",
+        "de": "die Figur",
+        "es": "la figura",
+        "it": "la figura"
+      },
+      "raw": "figuren figurer",
+      "parts": [
+        "figur",
+        "figure;figures",
+        "شکل",
+        "die Figur;Figuren",
+        "la figura;figuras",
+        "la figura;figure",
+        "a"
+      ],
+      "ds": "figuren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fig",
+      "p": "noun",
+      "e": {
+        "sv": "ett fikon",
+        "en": "fig",
+        "fa": "انجیر",
+        "de": "die Feige",
+        "es": "el higo",
+        "it": "il fico"
+      },
+      "raw": "fikonet fikon fikonen",
+      "parts": [
+        "fikon",
+        "fig;figs",
+        "انجیر",
+        "die Feige;Feigen",
+        "el higo;higos",
+        "il fico;fichi",
+        "f"
+      ],
+      "ds": "fikonet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_fillet",
+      "p": "noun",
+      "e": {
+        "sv": "en filé",
+        "en": "fillet",
+        "fa": "فیله",
+        "de": "das Filet",
+        "es": "el filete",
+        "it": "il filetto"
+      },
+      "raw": "filén filéer",
+      "parts": [
+        "filé",
+        "fillet;fillets",
+        "فیله",
+        "das Filet;Filets",
+        "el filete;filetes",
+        "il filetto;filetti",
+        "f"
+      ],
+      "ds": "filén",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_branch_office",
+      "p": "noun",
+      "e": {
+        "sv": "en filial",
+        "en": "branch office",
+        "fa": "شعبه",
+        "de": "die Filiale",
+        "es": "la sucursal",
+        "it": "la filiale"
+      },
+      "raw": "filialen filialer",
+      "parts": [
+        "filial",
+        "branch office;branch offices",
+        "شعبه",
+        "die Filiale;Filialen",
+        "la sucursal;sucursales",
+        "la filiale;filiali",
+        "l"
+      ],
+      "ds": "filialen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_philosopher",
+      "p": "noun",
+      "e": {
+        "sv": "en filosof",
+        "en": "philosopher",
+        "fa": "فیلسوف",
+        "de": "der Philosoph",
+        "es": "el filósofo",
+        "it": "il filosofo"
+      },
+      "raw": "filosofen filosofer",
+      "parts": [
+        "filosof",
+        "philosopher;philosophers",
+        "فیلسوف",
+        "der Philosoph;Philosophen",
+        "el filósofo;filósofos",
+        "il filosofo;filosofi",
+        "p"
+      ],
+      "ds": "filosofen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_filter",
+      "p": "noun",
+      "e": {
+        "sv": "ett filter",
+        "en": "filter",
+        "fa": "فیلتر",
+        "de": "der Filter",
+        "es": "el filtro",
+        "it": "il filtro"
+      },
+      "raw": "filtret filter filtren (eller filterna)",
+      "parts": [
+        "filter",
+        "filter;filters",
+        "فیلتر",
+        "der Filter;Filter",
+        "el filtro;filtros",
+        "il filtro;filtri",
+        "o"
+      ],
+      "ds": "filtret",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_violin",
+      "p": "noun",
+      "e": {
+        "sv": "en fiol",
+        "en": "violin",
+        "fa": "ویولن",
+        "de": "die Geige",
+        "es": "el violín",
+        "it": "il violino"
+      },
+      "raw": "fiolen fioler",
+      "parts": [
+        "fiol",
+        "violin;violins",
+        "ویولن",
+        "die Geige;Geigen",
+        "el violín;violines",
+        "il violino;violini",
+        "o"
+      ],
+      "ds": "fiolen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fisherman",
+      "p": "noun",
+      "e": {
+        "sv": "en fiskare",
+        "en": "fisherman",
+        "fa": "ماهیگیر",
+        "de": "der Fischer",
+        "es": "el pescador",
+        "it": "il pescatore"
+      },
+      "raw": "fiskar(e)n fiskare fiskarna",
+      "parts": [
+        "fiskare",
+        "fisherman;fishermen",
+        "ماهیگیر",
+        "der Fischer;Fischer",
+        "el pescador;pescadores",
+        "il pescatore;pescatori",
+        "p"
+      ],
+      "ds": "fiskaren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_feather",
+      "p": "noun",
+      "e": {
+        "sv": "en fjäder",
+        "en": "feather",
+        "fa": "پر پرنده",
+        "de": "die Feder",
+        "es": "la pluma",
+        "it": "la piuma"
+      },
+      "raw": "fjädern fjädrar",
+      "parts": [
+        "fjäder",
+        "feather;feathers",
+        "پر پرنده",
+        "die Feder;Federn",
+        "la pluma;plumas",
+        "la piuma;piume",
+        "o"
+      ],
+      "ds": "fjädern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_stain",
+      "p": "noun",
+      "e": {
+        "sv": "en fläck",
+        "en": "stain",
+        "fa": "لکه",
+        "de": "der Fleck",
+        "es": "la mancha",
+        "it": "la macchia"
+      },
+      "raw": "fläcken fläckar",
+      "parts": [
+        "fläck",
+        "stain;stains",
+        "لکه",
+        "der Fleck;Flecken",
+        "la mancha;manchas",
+        "la macchia;macchie",
+        "a"
+      ],
+      "ds": "fläcken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_flag",
+      "p": "noun",
+      "e": {
+        "sv": "en flagga",
+        "en": "flag",
+        "fa": "پرچم",
+        "de": "die Flagge",
+        "es": "la bandera",
+        "it": "la bandiera"
+      },
+      "raw": "flaggan flaggor",
+      "parts": [
+        "flagga",
+        "flag;flags",
+        "پرچم",
+        "die Flagge;Flaggen",
+        "la bandera;banderas",
+        "la bandiera;bandiere",
+        "o"
+      ],
+      "ds": "flaggan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fan",
+      "p": "noun",
+      "e": {
+        "sv": "en fläkt",
+        "en": "fan",
+        "fa": "پنکه",
+        "de": "der Ventilator",
+        "es": "el ventilador",
+        "it": "il ventilatore"
+      },
+      "raw": "fläkten fläktar",
+      "parts": [
+        "fläkt",
+        "fan;fans",
+        "پنکه",
+        "der Ventilator;Ventilatoren",
+        "el ventilador;ventiladores",
+        "il ventilatore;ventilatori",
+        "o"
+      ],
+      "ds": "fläkten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_braid",
+      "p": "noun",
+      "e": {
+        "sv": "en fläta",
+        "en": "braid",
+        "fa": "بافت مو",
+        "de": "der Zopf",
+        "es": "la trenza",
+        "it": "la treccia"
+      },
+      "raw": "flätan flätor",
+      "parts": [
+        "fläta",
+        "braid;braids",
+        "بافت مو",
+        "der Zopf;Zöpfe",
+        "la trenza;trenzas",
+        "la treccia;trecce",
+        "a"
+      ],
+      "ds": "flätan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_flake",
+      "p": "noun",
+      "e": {
+        "sv": "en flinga",
+        "en": "flake",
+        "fa": "پرک",
+        "de": "die Flocke",
+        "es": "el copo",
+        "it": "il fiocco"
+      },
+      "raw": "flingan flingor",
+      "parts": [
+        "flinga",
+        "flake;flakes",
+        "پرک",
+        "die Flocke;Flocken",
+        "el copo;copos",
+        "il fiocco;fiocchi",
+        "o"
+      ],
+      "ds": "flingan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_flock",
+      "p": "noun",
+      "e": {
+        "sv": "en flock",
+        "en": "flock",
+        "fa": "گلهٔ پرندگان",
+        "de": "der Schwarm",
+        "es": "la bandada",
+        "it": "lo stormo"
+      },
+      "raw": "flocken flockar",
+      "parts": [
+        "flock",
+        "flock;flocks",
+        "گلهٔ پرندگان",
+        "der Schwarm;Schwärme",
+        "la bandada;bandadas",
+        "lo stormo;stormi",
+        "s"
+      ],
+      "ds": "flocken",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_flute",
+      "p": "noun",
+      "e": {
+        "sv": "en flöjt",
+        "en": "flute",
+        "fa": "فلوت",
+        "de": "die Flöte",
+        "es": "la flauta",
+        "it": "il flauto"
+      },
+      "raw": "flöjten flöjter",
+      "parts": [
+        "flöjt",
+        "flute;flutes",
+        "فلوت",
+        "die Flöte;Flöten",
+        "la flauta;flautas",
+        "il flauto;flauti",
+        "o"
+      ],
+      "ds": "flöjten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_raft",
+      "p": "noun",
+      "e": {
+        "sv": "en flotte",
+        "en": "raft",
+        "fa": "کلک",
+        "de": "das Floß",
+        "es": "la balsa",
+        "it": "la zattera"
+      },
+      "raw": "flotten flottar",
+      "parts": [
+        "flotte",
+        "raft;rafts",
+        "کلک",
+        "das Floß;Flöße",
+        "la balsa;balsas",
+        "la zattera;zattere",
+        "s"
+      ],
+      "ds": "flotten",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_fly",
+      "p": "noun",
+      "e": {
+        "sv": "en fluga",
+        "en": "the fly",
+        "fa": "مگس",
+        "de": "die Fliege",
+        "es": "la mosca",
+        "it": "la mosca"
+      },
+      "raw": "flugan flugor",
+      "parts": [
+        "fluga",
+        "fly;flies",
+        "مگس",
+        "die Fliege;Fliegen",
+        "la mosca;moscas",
+        "la mosca;mosche",
+        "s"
+      ],
+      "ds": "flugan",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_grand_piano",
+      "p": "noun",
+      "e": {
+        "sv": "en flygel",
+        "en": "grand piano",
+        "fa": "پیانوی بزرگ",
+        "de": "der Flügel",
+        "es": "el piano de cola",
+        "it": "il pianoforte a coda"
+      },
+      "raw": "flygeln flyglar",
+      "parts": [
+        "flygel",
+        "grand piano;grand pianos",
+        "پیانوی بزرگ",
+        "der Flügel;Flügel",
+        "el piano de cola;pianos de cola",
+        "il pianoforte a coda;pianoforti a coda",
+        "o"
+      ],
+      "ds": "flygeln",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_refugee",
+      "p": "noun",
+      "e": {
+        "sv": "en flykting",
+        "en": "refugee",
+        "fa": "پناهنده",
+        "de": "der Flüchtling",
+        "es": "el refugiado",
+        "it": "il rifugiato"
+      },
+      "raw": "flyktingen flyktingar",
+      "parts": [
+        "flykting",
+        "refugee;refugees",
+        "پناهنده",
+        "der Flüchtling;Flüchtlinge",
+        "el refugiado;refugiados",
+        "il rifugiato;rifugiati",
+        "p"
+      ],
+      "ds": "flyktingen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_cover",
+      "p": "noun",
+      "e": {
+        "sv": "ett fodral",
+        "en": "cover",
+        "fa": "روکش",
+        "de": "die Hülle",
+        "es": "la funda",
+        "it": "la custodia"
+      },
+      "raw": "fodralet fodral fodralen",
+      "parts": [
+        "fodral",
+        "cover;covers",
+        "روکش",
+        "die Hülle;Hüllen",
+        "la funda;fundas",
+        "la custodia;custodie",
+        "o"
+      ],
+      "ds": "fodralet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_foal",
+      "p": "noun",
+      "e": {
+        "sv": "ett föl",
+        "en": "foal",
+        "fa": "کره‌اسب",
+        "de": "das Fohlen",
+        "es": "el potro",
+        "it": "il puledro"
+      },
+      "raw": "fölet föl fölen",
+      "parts": [
+        "föl",
+        "foal;foals",
+        "کره‌اسب",
+        "das Fohlen;Fohlen",
+        "el potro;potros",
+        "il puledro;puledri",
+        "s"
+      ],
+      "ds": "fölet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_leaflet",
+      "p": "noun",
+      "e": {
+        "sv": "en folder",
+        "en": "leaflet",
+        "fa": "جزوهٔ تاشو",
+        "de": "das Faltblatt",
+        "es": "el díptico",
+        "it": "il pieghevole"
+      },
+      "raw": "foldern foldrar (eller folder)",
+      "parts": [
+        "folder",
+        "leaflet;leaflets",
+        "جزوهٔ تاشو",
+        "das Faltblatt;Faltblätter",
+        "el díptico;dípticos",
+        "il pieghevole;pieghevoli",
+        "o"
+      ],
+      "ds": "foldern",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_vehicle_operator",
+      "p": "noun",
+      "e": {
+        "sv": "en förare",
+        "en": "vehicle operator",
+        "fa": "راهبر وسیلهٔ نقلیه",
+        "de": "der Fahrzeugführer",
+        "es": "el operador de vehículos",
+        "it": "il conducente"
+      },
+      "raw": "förar(e)n förare förarna",
+      "parts": [
+        "förare",
+        "vehicle operator;vehicle operators",
+        "راهبر وسیلهٔ نقلیه",
+        "der Fahrzeugführer;Fahrzeugführer",
+        "el operador de vehículos;operadores de vehículos",
+        "il conducente;conducenti",
+        "p"
+      ],
+      "ds": "föraren",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_dressing",
+      "p": "noun",
+      "e": {
+        "sv": "ett förband",
+        "en": "dressing",
+        "fa": "پانسمان",
+        "de": "der Wundverband",
+        "es": "el apósito",
+        "it": "la medicazione"
+      },
+      "raw": "förbandet förband förbanden",
+      "parts": [
+        "förband",
+        "dressing;dressings",
+        "پانسمان",
+        "der Wundverband;Wundverbände",
+        "el apósito;apósitos",
+        "la medicazione;medicazioni",
+        "o"
+      ],
+      "ds": "förbandet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_improvement",
+      "p": "noun",
+      "e": {
+        "sv": "en förbättring",
+        "en": "improvement",
+        "fa": "بهبود",
+        "de": "die Verbesserung",
+        "es": "la mejora",
+        "it": "il miglioramento"
+      },
+      "raw": "förbättringen förbättringar",
+      "parts": [
+        "förbättring",
+        "improvement;improvements",
+        "بهبود",
+        "die Verbesserung;Verbesserungen",
+        "la mejora;mejoras",
+        "il miglioramento;miglioramenti",
+        "a"
+      ],
+      "ds": "förbättringen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_preparation",
+      "p": "noun",
+      "e": {
+        "sv": "en förberedelse",
+        "en": "preparation",
+        "fa": "آماده‌سازی",
+        "de": "die Vorbereitung",
+        "es": "el preparativo",
+        "it": "il preparativo"
+      },
+      "raw": "förberedelsen förberedelser",
+      "parts": [
+        "förberedelse",
+        "preparation;preparations",
+        "آماده‌سازی",
+        "die Vorbereitung;Vorbereitungen",
+        "el preparativo;preparativos",
+        "il preparativo;preparativi",
+        "a"
+      ],
+      "ds": "förberedelsen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_prohibition",
+      "p": "noun",
+      "e": {
+        "sv": "ett förbud",
+        "en": "prohibition",
+        "fa": "ممنوعیت",
+        "de": "das Verbot",
+        "es": "la prohibición",
+        "it": "il divieto"
+      },
+      "raw": "förbudet förbud förbuden",
+      "parts": [
+        "förbud",
+        "prohibition;prohibitions",
+        "ممنوعیت",
+        "das Verbot;Verbote",
+        "la prohibición;prohibiciones",
+        "il divieto;divieti",
+        "a"
+      ],
+      "ds": "förbudet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_advantage",
+      "p": "noun",
+      "e": {
+        "sv": "en fördel",
+        "en": "advantage",
+        "fa": "مزیت",
+        "de": "der Vorteil",
+        "es": "la ventaja",
+        "it": "il vantaggio"
+      },
+      "raw": "fördelen fördelar",
+      "parts": [
+        "fördel",
+        "advantage;advantages",
+        "مزیت",
+        "der Vorteil;Vorteile",
+        "la ventaja;ventajas",
+        "il vantaggio;vantaggi",
+        "a"
+      ],
+      "ds": "fördelen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_prejudice",
+      "p": "noun",
+      "e": {
+        "sv": "en fördom",
+        "en": "prejudice",
+        "fa": "پیش‌داوری",
+        "de": "das Vorurteil",
+        "es": "el prejuicio",
+        "it": "il pregiudizio"
+      },
+      "raw": "fördomen fördomar",
+      "parts": [
+        "fördom",
+        "prejudice;prejudices",
+        "پیش‌داوری",
+        "das Vorurteil;Vorurteile",
+        "el prejuicio;prejuicios",
+        "il pregiudizio;pregiudizi",
+        "a"
+      ],
+      "ds": "fördomen",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_vehicle",
+      "p": "noun",
+      "e": {
+        "sv": "ett fordon",
+        "en": "vehicle",
+        "fa": "وسیلهٔ نقلیه",
+        "de": "das Fahrzeug",
+        "es": "el vehículo",
+        "it": "il veicolo"
+      },
+      "raw": "fordonet fordon fordonen",
+      "parts": [
+        "fordon",
+        "vehicle;vehicles",
+        "وسیلهٔ نقلیه",
+        "das Fahrzeug;Fahrzeuge",
+        "el vehículo;vehículos",
+        "il veicolo;veicoli",
+        "s"
+      ],
+      "ds": "fordonet",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_role_model",
+      "p": "noun",
+      "e": {
+        "sv": "en förebild",
+        "en": "role model",
+        "fa": "الگو",
+        "de": "das Vorbild",
+        "es": "el modelo a seguir",
+        "it": "il modello da seguire"
+      },
+      "raw": "förebilden förebilder",
+      "parts": [
+        "förebild",
+        "role model;role models",
+        "الگو",
+        "das Vorbild;Vorbilder",
+        "el modelo a seguir;modelos a seguir",
+        "il modello da seguire;modelli da seguire",
+        "a"
+      ],
+      "ds": "förebilden",
+      "gender": "en"
+    },
+    {
+      "id": "core.n.lexin350_lecture",
+      "p": "noun",
+      "e": {
+        "sv": "ett föredrag",
+        "en": "lecture",
+        "fa": "سخنرانی",
+        "de": "der Vortrag",
+        "es": "la conferencia",
+        "it": "la conferenza"
+      },
+      "raw": "föredraget föredrag föredragen",
+      "parts": [
+        "föredrag",
+        "lecture;lectures",
+        "سخنرانی",
+        "der Vortrag;Vorträge",
+        "la conferencia;conferencias",
+        "la conferenza;conferenze",
+        "a"
+      ],
+      "ds": "föredraget",
+      "gender": "ett"
+    },
+    {
+      "id": "core.n.lexin350_object",
+      "p": "noun",
+      "e": {
+        "sv": "ett föremål",
+        "en": "object",
+        "fa": "شیء",
+        "de": "der Gegenstand",
+        "es": "el objeto",
+        "it": "l'oggetto"
+      },
+      "raw": "föremålet föremål föremålen",
+      "parts": [
+        "föremål",
+        "object;objects",
+        "شیء",
+        "der Gegenstand;Gegenstände",
+        "el objeto;objetos",
+        "l'oggetto;oggetti",
+        "o"
+      ],
+      "ds": "föremålet",
+      "gender": "ett"
+    }
+  ]
+}

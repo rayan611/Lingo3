@@ -1,0 +1,157 @@
+{
+  "date": "2026-11-02",
+  "before": {
+    "concepts": 1012,
+    "entries": 6068
+  },
+  "after": {
+    "concepts": 1362,
+    "entries": 8168
+  },
+  "batch": {
+    "inserted": 350,
+    "entries": 2100,
+    "alreadyPresentAtInitialImport": 0,
+    "clashes": [],
+    "excludedCandidates": 97,
+    "reserve": 180
+  },
+  "validation": {
+    "morphology": 1750,
+    "expansion": 2100,
+    "authenticatedExplicitSource": 2100,
+    "realResponseParses": 36,
+    "anonSwedishAuto": 350,
+    "duplicates": 0,
+    "emptyExamples": 0,
+    "payloadMismatches": 0
+  },
+  "automaticSource": [
+    {
+      "lang": "sv",
+      "tested": 350,
+      "passed": 350,
+      "failed": null
+    },
+    {
+      "lang": "en",
+      "tested": 350,
+      "passed": 284,
+      "failed": [
+        "accent",
+        "adoption",
+        "adverb",
+        "agent",
+        "aquarium",
+        "alarm",
+        "album",
+        "alphabet",
+        "alibi",
+        "altar",
+        "alternative",
+        "amateur",
+        "ambition",
+        "anorak",
+        "arena",
+        "argument",
+        "astronaut",
+        "atlas",
+        "atom",
+        "dissertation",
+        "avocado",
+        "azalea",
+        "baguette",
+        "bandage",
+        "bandit",
+        "barometer",
+        "sauna",
+        "funeral",
+        "steak",
+        "ball",
+        "bonus",
+        "budget",
+        "buffet",
+        "cell",
+        "cement",
+        "cheque",
+        "clown",
+        "cylinder",
+        "debate",
+        "decimal",
+        "definition",
+        "demonstration",
+        "deodorant",
+        "dessert",
+        "destination",
+        "detail",
+        "detective",
+        "diagram",
+        "diameter",
+        "diet",
+        "diploma",
+        "diplomat",
+        "director",
+        "conductor",
+        "donation",
+        "dose",
+        "emigrant",
+        "essay",
+        "experiment",
+        "expert",
+        "explosion",
+        "factor",
+        "fin",
+        "festival",
+        "filter",
+        "flock"
+      ]
+    },
+    {
+      "lang": "it",
+      "tested": 350,
+      "passed": 342,
+      "failed": [
+        "la baguette",
+        "la pista",
+        "la piscina",
+        "la sauna",
+        "la visita",
+        "la dieta",
+        "la figura",
+        "la mosca"
+      ]
+    },
+    {
+      "lang": "fa",
+      "tested": 350,
+      "passed": 350,
+      "failed": null
+    },
+    {
+      "lang": "es",
+      "tested": 350,
+      "passed": 342,
+      "failed": [
+        "la baguette",
+        "la pista",
+        "la piscina",
+        "la sauna",
+        "la visita",
+        "la dieta",
+        "la figura",
+        "la mosca"
+      ]
+    },
+    {
+      "lang": "de",
+      "tested": 350,
+      "passed": 350,
+      "failed": null
+    }
+  ],
+  "idempotence": {
+    "inserted": 0,
+    "already_present": 350,
+    "clashes": []
+  }
+}
