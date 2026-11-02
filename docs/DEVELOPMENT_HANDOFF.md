@@ -2,9 +2,9 @@
 Owner requested grouping Grammar, Read a story and Review under one Training Center tile, plus a clear scope/status summary.
 
 IMPLEMENTED: one Training Center primary tile; its hub contains Grammar, Read a story, Review and Recall test. Children have compact sibling navigation and a return-to-center button. Existing /grammar, /read, /review and /recall URLs remain supported. The due-word badge is preserved. Five primary tiles, responsive mobile grid. Version 0.7.2.
-TESTED: local TypeScript and production build passed. No database changes. Existing learning screens and sync logic unchanged. CI/preview and production release pending at this commit; final release evidence will be appended after verification.
+TESTED/RELEASED: local TypeScript/build and CI run 41479893646 passed (typecheck, regression checks, production build). Preview succeeded. PR #28 merged as ba2064ca4a8ad9261ad84f1a7952fe5412a62e86. Vercel production dpl_DNWhjjA3CyuQHqHcar75xoagH3ge is READY with that commit and lingo3.com/www.lingo3.com aliases. No database changes. Existing learning screens and sync logic unchanged. Signed-in mobile/desktop visual acceptance was not performed.
 REMAINING PRODUCT SCOPE: section hierarchy/edit/delete UI; example authoring/translation UI; AI improvements and sharing; optional curated library/levels/tags; physical two-device acceptance and full backup/restore verification. These are not included in the navigation change.
-NEXT: CI, merge and production smoke checks. Previous Grammar release evidence follows.
+NEXT: optional signed-in mobile/desktop visual acceptance; prioritize Grammar section management and examples if authorized. Previous Grammar release evidence follows.
 
 ---
 
