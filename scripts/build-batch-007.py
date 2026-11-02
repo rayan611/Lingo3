@@ -151,6 +151,8 @@ def main():
                 entry['f']['plural']=en_h
                 entry['n']='Plural form in this sense.'
             if lang=='fa':entry['n']='اسم؛ جنسیت دستوری ندارد. معنیِ انتخاب‌شده با مثال مشخص شده است.'
+            elif lang=='it' and item['parts'][0]=='eko':
+                entry['n']='Singolare femminile; plurale maschile: gli echi.'
             elif lang=='sv' and 'indefinitePlural' not in forms['sv']:
                 entry['n']='Vanligen utan plural i denna betydelse.'
             elif lang in ('en','de','es','it') and not forms[lang].get('plural') and not entry.get('n'):
