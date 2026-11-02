@@ -1,0 +1,110 @@
+{
+  "format": "lingo3-vocab/1",
+  "langs": [
+    "fa",
+    "en",
+    "sv",
+    "de",
+    "es",
+    "it"
+  ],
+  "n": 2,
+  "concepts": [
+    {
+      "id": "core.d.otherwise",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "در غیر این صورت",
+          "x": "عجله کن، وگرنه دیر می‌رسیم."
+        },
+        "en": {
+          "h": "otherwise",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Hurry up, otherwise we will be late."
+        },
+        "sv": {
+          "h": "annars",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Skynda dig, annars kommer vi för sent."
+        },
+        "de": {
+          "h": "sonst",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Beeil dich, sonst kommen wir zu spät."
+        },
+        "es": {
+          "h": "de lo contrario",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Date prisa, de lo contrario llegaremos tarde."
+        },
+        "it": {
+          "h": "altrimenti",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Sbrigati, altrimenti faremo tardi."
+        }
+      }
+    },
+    {
+      "id": "core.d.quietly",
+      "p": "adverb",
+      "t": [
+        "daily"
+      ],
+      "e": {
+        "fa": {
+          "h": "آرام و بی‌صدا",
+          "x": "بچه‌ها آرام وارد اتاق شدند."
+        },
+        "en": {
+          "h": "quietly",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "The children entered the room quietly."
+        },
+        "sv": {
+          "h": "tyst",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Barnen gick tyst in i rummet."
+        },
+        "de": {
+          "h": "leise",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Die Kinder betraten leise das Zimmer."
+        },
+        "es": {
+          "h": "silenciosamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "Los niños entraron silenciosamente en la habitación."
+        },
+        "it": {
+          "h": "silenziosamente",
+          "f": {
+            "kind": "adverb"
+          },
+          "x": "I bambini sono entrati silenziosamente nella stanza."
+        }
+      }
+    }
+  ]
+}
