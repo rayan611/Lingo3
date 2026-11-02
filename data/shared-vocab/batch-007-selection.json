@@ -1,0 +1,2254 @@
+{
+  "considered": 1233,
+  "selected": 1000,
+  "excluded": [
+    {
+      "line": 119,
+      "candidate": "adressat|addressee|گیرنده نامه|mAdressat;-en|mdestinatario|mdestinatario|a",
+      "reason": "collision es:el destinatario, it:il destinatario"
+    },
+    {
+      "line": 122,
+      "candidate": "affektionsvärde|sentimental value|ارزش عاطفی|mErinnerungswert;-e|mvalor sentimental;valores sentimentales|mvalore affettivo;valori affettivi|a",
+      "reason": "('Review plural', 'affektionsvärde', 'affektionsvärden affektionsvärdena')"
+    },
+    {
+      "line": 130,
+      "candidate": "åhörare|listener|شنونده|mZuhörer;=|moyente|mascoltatore|s",
+      "reason": "collision en:the listener, fa:شنونده, de:der Zuhörer, es:el oyente, it:l'ascoltatore"
+    },
+    {
+      "line": 150,
+      "candidate": "allé|tree-lined avenue|خیابان درخت‌کاری‌شده|fAllee;-n|favenida arbolada;avenidas arboladas|mviale alberato;viali alberati|s",
+      "reason": "collision de:die Allee"
+    },
+    {
+      "line": 156,
+      "candidate": "aluminium|aluminium;|آلومینیوم|nAluminium;|maluminio;|malluminio;|a",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 159,
+      "candidate": "amfiteater|amphitheatre|آمفی‌تئاتر|nAmphitheater;=|manfiteatro|manfiteatro|s",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 166,
+      "candidate": "ampull|ampoule|آمپول شیشه‌ای|fAmpulle;-n|fampolla|ffiala|s",
+      "reason": "collision es:la ampolla"
+    },
+    {
+      "line": 168,
+      "candidate": "anamnes|medical history|سابقه پزشکی|fAnamnese;-n|fhistoria clínica;historias clínicas|fanamnesi|a",
+      "reason": "collision es:la historia clínica"
+    },
+    {
+      "line": 174,
+      "candidate": "andedräkt|breath|نفس|mAtem;Atemzüge|maliento|malito|a",
+      "reason": "collision en:the breath, fa:نفس"
+    },
+    {
+      "line": 175,
+      "candidate": "andning|breathing;|تنفس|fAtmung;|frespiración;|frespirazione;|a",
+      "reason": "collision es:la respiración"
+    },
+    {
+      "line": 179,
+      "candidate": "anestesi|anaesthesia|بیهوشی|fAnästhesie;-n|fanestesia|fanestesia|a",
+      "reason": "collision en:the anaesthesia, es:la anestesia, it:l'anestesia"
+    },
+    {
+      "line": 180,
+      "candidate": "anförande|speech|سخنرانی|fAnsprache;-n|mdiscurso|mdiscorso|a",
+      "reason": "collision fa:سخنرانی"
+    },
+    {
+      "line": 183,
+      "candidate": "ångest|anxiety;|اضطراب|fAngst;Ängste|fansiedad;|fansia;|a",
+      "reason": "collision de:die Angst"
+    },
+    {
+      "line": 184,
+      "candidate": "angrepp|attack|حمله|mAngriff;-e|mataque|mattacco;attacchi|a",
+      "reason": "collision en:the attack, fa:حمله, de:der Angriff, es:el ataque, it:l'attacco"
+    },
+    {
+      "line": 186,
+      "candidate": "anknytning|attachment|دلبستگی|fBindung;-en|mapego|mattaccamento|a",
+      "reason": "collision en:the attachment"
+    },
+    {
+      "line": 188,
+      "candidate": "anledning|reason|دلیل|mGrund;Gründe|frazón;razones|fragione|a",
+      "reason": "collision en:the reason, fa:دلیل, de:der Grund, es:la razón"
+    },
+    {
+      "line": 190,
+      "candidate": "annex|annexe|ساختمان الحاقی|mAnbau;Anbauten|manexo|medificio annesso;edifici annessi|s",
+      "reason": "collision es:el anexo"
+    },
+    {
+      "line": 194,
+      "candidate": "anspråk|claim|ادعا|mAnspruch;Ansprüche|fpretensión;pretensiones|fpretesa|a",
+      "reason": "collision en:the claim, fa:ادعا"
+    },
+    {
+      "line": 197,
+      "candidate": "ansträngning|effort|تلاش|fAnstrengung;-en|mesfuerzo|msforzo|a",
+      "reason": "collision en:the effort, es:el esfuerzo, it:lo sforzo"
+    },
+    {
+      "line": 198,
+      "candidate": "anteckning|note|یادداشت|fNotiz;-en|mapunte|fannotazione|a",
+      "reason": "collision it:l'annotazione"
+    },
+    {
+      "line": 203,
+      "candidate": "antydning|hint|اشاره ضمنی|fAndeutung;-en|findirecta|mallusione|a",
+      "reason": "collision en:the hint, de:die Andeutung"
+    },
+    {
+      "line": 205,
+      "candidate": "aorta|aorta|آئورت|fAorta;Aorten|faorta|faorta|a",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 208,
+      "candidate": "applikation|application|برنامه کاربردی|fApplikation;-en|faplicación;aplicaciones|fapplicazione|a",
+      "reason": "collision en:the application"
+    },
+    {
+      "line": 212,
+      "candidate": "årtionde|decade|دهه|nJahrzehnt;-e|fdécada|mdecennio;decenni|a",
+      "reason": "collision en:the decade, fa:دهه, de:das Jahrzehnt, es:la década, it:il decennio"
+    },
+    {
+      "line": 214,
+      "candidate": "ära|honour|افتخار|fEhre;-n|mhonor;honores|monore|a",
+      "reason": "collision en:the honour, de:die Ehre, es:el honor, it:l'onore"
+    },
+    {
+      "line": 238,
+      "candidate": "ärm|sleeve|آستین|mÄrmel;=|fmanga|fmanica;maniche|s",
+      "reason": "collision en:the sleeve"
+    },
+    {
+      "line": 246,
+      "candidate": "årsdag|anniversary;anniversaries|سالگرد|mJahrestag;-e|maniversario|manniversario|a",
+      "reason": "collision en:the anniversary, fa:سالگرد, es:el aniversario, it:l'anniversario"
+    },
+    {
+      "line": 252,
+      "candidate": "arv|inheritance|ارث|nErbe;|fherencia|feredità|a",
+      "reason": "collision de:das Erbe"
+    },
+    {
+      "line": 253,
+      "candidate": "arvtagare|heir|وارث|mErbe;-n|mheredero|merede|p",
+      "reason": "collision en:the heir, fa:وارث, de:der Erbe, es:el heredero, it:l'erede"
+    },
+    {
+      "line": 273,
+      "candidate": "attack|assault|یورش|mÜberfall;Überfälle|magresión;agresiones|massalto|a",
+      "reason": "collision es:el agresión"
+    },
+    {
+      "line": 277,
+      "candidate": "auktoritet|authority;authorities|مرجع صاحب‌صلاحیت|fAutorität;-en|fautoridad;autoridades|fautorità|a",
+      "reason": "collision en:the authority"
+    },
+    {
+      "line": 281,
+      "candidate": "avfall|waste;|زباله|mAbfall;Abfälle|mresiduo|mrifiuto|a",
+      "reason": "collision it:il rifiuto"
+    },
+    {
+      "line": 282,
+      "candidate": "avföring|stool|مدفوع|mStuhl;Stühle|fheces;heces|ffeci;feci|a",
+      "reason": "collision de:der Stuhl"
+    },
+    {
+      "line": 284,
+      "candidate": "avgift|fee|هزینه خدمات|fGebühr;-en|ftasa|fcommissione|a",
+      "reason": "collision en:the fee, it:la commissione"
+    },
+    {
+      "line": 288,
+      "candidate": "avresa|departure|عزیمت|fAbreise;-n|fpartida|fpartenza|a",
+      "reason": "collision en:the departure, it:la partenza"
+    },
+    {
+      "line": 292,
+      "candidate": "avtal|agreement|توافق‌نامه|mVertrag;Verträge|macuerdo|maccordo|a",
+      "reason": "collision de:der Vertrag, it:l'accordo"
+    },
+    {
+      "line": 306,
+      "candidate": "bakslag|setback|پسرفت|mRückschlag;Rückschläge|mrevés;reveses|fbattuta d'arresto;battute d'arresto|a",
+      "reason": "collision en:the setback, de:der Rückschlag, es:el revés, it:la battuta d'arresto"
+    },
+    {
+      "line": 308,
+      "candidate": "bakverk|pastry;pastries|شیرینی پخته‌شده|nGebäck;Gebäcke|mpastel;pasteles|mdolce da forno;dolci da forno|s",
+      "reason": "collision en:the pastry, es:el pastel"
+    },
+    {
+      "line": 310,
+      "candidate": "balett|ballet|باله|nBallett;-e|mballet;ballets|mballetto|a",
+      "reason": "collision fa:باله"
+    },
+    {
+      "line": 314,
+      "candidate": "banderoll|banner|بنر|nSpruchband;Spruchbänder|fpancarta|mstriscione|s",
+      "reason": "collision en:the banner, es:la pancarta"
+    },
+    {
+      "line": 315,
+      "candidate": "bänk|bench;benches|نیمکت|fBank;Bänke|mbanco|fpanchina|s",
+      "reason": "collision de:die Bank, es:el banco"
+    },
+    {
+      "line": 317,
+      "candidate": "bankrutt|bankruptcy;bankruptcies|ورشکستگی|mBankrott;-e|fbancarrota|fbancarotta|a",
+      "reason": "collision en:the bankruptcy, fa:ورشکستگی"
+    },
+    {
+      "line": 338,
+      "candidate": "begränsning|limitation|محدودیت|fBegrenzung;-en|flimitación;limitaciones|flimitazione|a",
+      "reason": "collision fa:محدودیت"
+    },
+    {
+      "line": 343,
+      "candidate": "bekantskap|acquaintance|آشنایی|fBekanntschaft;-en|frelación de conocidos;relaciones de conocidos|fconoscenza|a",
+      "reason": "collision it:la conoscenza"
+    },
+    {
+      "line": 346,
+      "candidate": "belastning|load|بار تحمیلی|fBelastung;-en|fcarga|mcarico;carichi|a",
+      "reason": "collision es:la carga"
+    },
+    {
+      "line": 348,
+      "candidate": "benbrott|bone fracture|شکستگی استخوان|mKnochenbruch;Knochenbrüche|ffractura ósea;fracturas óseas|ffrattura ossea;fratture ossee|a",
+      "reason": "collision fa:شکستگی استخوان, de:der Knochenbruch"
+    },
+    {
+      "line": 354,
+      "candidate": "beskyllning|accusation|اتهام|fBeschuldigung;-en|facusación;acusaciones|faccusa|a",
+      "reason": "collision en:the accusation, fa:اتهام, es:la acusación, it:l'accusa"
+    },
+    {
+      "line": 355,
+      "candidate": "beståndsdel|constituent|جزء تشکیل‌دهنده|mBestandteil;-e|mcomponente|mcomponente|a",
+      "reason": "collision es:el componente, it:il componente"
+    },
+    {
+      "line": 370,
+      "candidate": "bildskärm|display screen|صفحه‌نمایش|mBildschirm;-e|fpantalla|mschermo|s",
+      "reason": "collision fa:صفحه‌نمایش, de:der Bildschirm, es:la pantalla, it:lo schermo"
+    },
+    {
+      "line": 372,
+      "candidate": "bildning|education;|فرهیختگی|fBildung;|fformación;|fistruzione;|a",
+      "reason": "collision it:l'istruzione"
+    },
+    {
+      "line": 375,
+      "candidate": "bindeord|conjunction|حرف ربط|fKonjunktion;-en|fconjunción;conjunciones|fcongiunzione|a",
+      "reason": "collision en:the conjunction, fa:حرف ربط, de:die Konjunktion, es:la conjunción, it:la congiunzione"
+    },
+    {
+      "line": 381,
+      "candidate": "bjälke|beam|تیر سازه|mBalken;=|fviga|ftrave|s",
+      "reason": "collision en:the beam, de:der Balken, es:la viga, it:la trave"
+    },
+    {
+      "line": 385,
+      "candidate": "blåställ|overalls;overalls|لباس کار یکسره|mBlaumann;Blaumänner|mmono de trabajo;monos de trabajo|ftuta da lavoro;tute da lavoro|s",
+      "reason": "collision en:the overalls"
+    },
+    {
+      "line": 388,
+      "candidate": "blad|leaf;leaves|برگ|nBlatt;Blätter|fhoja|ffoglia|s",
+      "reason": "collision en:the leaf, fa:برگ, de:das Blatt, es:la hoja, it:la foglia"
+    },
+    {
+      "line": 392,
+      "candidate": "blixtlås|zipper|زیپ|mReißverschluss;Reißverschlüsse|fcremallera|fcerniera lampo;cerniere lampo|s",
+      "reason": "collision fa:زیپ, de:der Reißverschluss, es:la cremallera"
+    },
+    {
+      "line": 395,
+      "candidate": "blodbrist|low blood count|کمبود خون|fBlutarmut;|frecuento sanguíneo bajo;recuentos sanguíneos bajos|mcarenza di sangue;carenze di sangue|a",
+      "reason": "semantic duplicate or specialised sense excluded"
+    },
+    {
+      "line": 421,
+      "candidate": "bolag|company;companies|شرکت|nUnternehmen;=|fcompañía|fimpresa|a",
+      "reason": "collision en:the company, fa:شرکت"
+    },
+    {
+      "line": 434,
+      "candidate": "botemedel|remedy;remedies|درمان|nHeilmittel;=|mremedio|mrimedio;rimedi|a",
+      "reason": "collision fa:درمان"
+    },
+    {
+      "line": 448,
+      "candidate": "bröllop|wedding|عروسی|fHochzeit;-en|fboda|mmatrimonio;matrimoni|a",
+      "reason": "collision it:il matrimonio"
+    },
+    {
+      "line": 454,
+      "candidate": "brottslighet|crime;|بزهکاری|fKriminalität;|fdelincuencia;|fcriminalità;|a",
+      "reason": "collision en:the crime"
+    },
+    {
+      "line": 458,
+      "candidate": "brunn|well|چاه|mBrunnen;=|mpozo|mpozzo|s",
+      "reason": "collision de:der Brunnen"
+    },
+    {
+      "line": 462,
+      "candidate": "bubbla|bubble|حباب|fBlase;-n|fburbuja|fbolla|s",
+      "reason": "collision de:die Blase"
+    },
+    {
+      "line": 464,
+      "candidate": "budskap|message|پیام|fBotschaft;-en|mmensaje|mmessaggio;messaggi|a",
+      "reason": "collision en:the message, fa:پیام, de:die Botschaft, es:el mensaje, it:il messaggio"
+    },
+    {
+      "line": 471,
+      "candidate": "burk|jar|شیشه دردار|nGlas;Gläser|mtarro|mbarattolo|s",
+      "reason": "collision de:das Glas"
+    },
+    {
+      "line": 486,
+      "candidate": "ceremoni|ceremony;ceremonies|آیین|fZeremonie;-n|fceremonia|fcerimonia|a",
+      "reason": "collision fa:آیین"
+    },
+    {
+      "line": 489,
+      "candidate": "chassi|chassis;chassis|شاسی|nFahrgestell;-e|mchasis;chasis|mtelaio;telai|a",
+      "reason": "collision it:il telaio"
+    },
+    {
+      "line": 514,
+      "candidate": "datum|date|تاریخ|nDatum;Daten|ffecha|fdata|a",
+      "reason": "collision en:the date"
+    },
+    {
+      "line": 515,
+      "candidate": "deciliter|decilitre|دسی‌لیتر|mDeziliter;=|mdecilitro|mdecilitro|a",
+      "reason": "('Review plural', 'deciliter', 'decilitern deciliterna')"
+    },
+    {
+      "line": 516,
+      "candidate": "decibel|decibel|دسی‌بل|nDezibel;=|mdecibelio|mdecibel;decibel|a",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 517,
+      "candidate": "defekt|defect|عیب|mDefekt;-e|mdefecto|mdifetto|a",
+      "reason": "collision fa:عیب"
+    },
+    {
+      "line": 541,
+      "candidate": "direktiv|directive|دستورالعمل|fRichtlinie;-n|fdirectiva|fdirettiva|a",
+      "reason": "collision fa:دستورالعمل"
+    },
+    {
+      "line": 550,
+      "candidate": "distans|distance|فاصله|fDistanz;-en|fdistancia|fdistanza|a",
+      "reason": "collision en:the distance, fa:فاصله, es:la distancia, it:la distanza"
+    },
+    {
+      "line": 560,
+      "candidate": "dom|judgment|حکم دادگاه|nUrteil;-e|fsentencia|fsentenza|a",
+      "reason": "collision de:das Urteil"
+    },
+    {
+      "line": 568,
+      "candidate": "dråp|manslaughter;|قتل غیرعمد|mTotschlag;Totschläge|mhomicidio involuntario;homicidios involuntarios|momicidio colposo;omicidi colposi|a",
+      "reason": "semantic duplicate or specialised sense excluded"
+    },
+    {
+      "line": 569,
+      "candidate": "drickspeng|tip|انعام|nTrinkgeld;Trinkgelder|fpropina|fmancia;mance|a",
+      "reason": "collision en:the tip, fa:انعام, de:das Trinkgeld, es:la propina, it:la mancia"
+    },
+    {
+      "line": 573,
+      "candidate": "dröjsmål|delay|تأخیر|fVerzögerung;-en|mdemora|mritardo|a",
+      "reason": "collision en:the delay, fa:تأخیر, it:il ritardo"
+    },
+    {
+      "line": 579,
+      "candidate": "dubblett|duplicate|نسخه تکراری|nDuplikat;-e|mduplicado|mduplicato|a",
+      "reason": "collision en:the duplicate"
+    },
+    {
+      "line": 588,
+      "candidate": "dyna|cushion|بالشتک|nKissen;=|mcojín;cojines|mcuscino|s",
+      "reason": "collision de:das Kissen, it:il cuscino"
+    },
+    {
+      "line": 590,
+      "candidate": "efterfrågan|demand|تقاضا|fNachfrage;-n|fdemanda|fdomanda|a",
+      "reason": "collision it:la domanda"
+    },
+    {
+      "line": 592,
+      "candidate": "efterrätt|dessert|دسر|fNachspeise;-n|mpostre|mdessert;dessert|s",
+      "reason": "collision en:the dessert, fa:دسر, es:el postre, it:il dessert"
+    },
+    {
+      "line": 599,
+      "candidate": "egendom|property;properties|دارایی|nBesitztum;Besitztümer|mbien; bienes|mbene;beni|a",
+      "reason": "collision en:the property"
+    },
+    {
+      "line": 616,
+      "candidate": "emballage|packaging;|بسته‌بندی|fVerpackung;-en|membalaje|mimballaggio;imballaggi|a",
+      "reason": "collision en:the packaging, fa:بسته‌بندی, de:die Verpackung, es:el embalaje, it:l'imballaggio"
+    },
+    {
+      "line": 621,
+      "candidate": "engagemang|engagement|مشارکت فعال|nEngagement;-s|mcompromiso activo;compromisos activos|mcoinvolgimento|a",
+      "reason": "collision en:the engagement"
+    },
+    {
+      "line": 630,
+      "candidate": "erbjudande|offer|پیشنهاد|nAngebot;-e|foferta|fofferta|a",
+      "reason": "collision fa:پیشنهاد, de:das Angebot"
+    },
+    {
+      "line": 639,
+      "candidate": "examen|examination|آزمون نهایی|nExamen;Examina|mexamen;exámenes|mesame finale;esami finali|a",
+      "reason": "collision es:el examen"
+    },
+    {
+      "line": 643,
+      "candidate": "expertis|expertise;|تخصص|nFachwissen;|fpericia;|fcompetenza specialistica;competenze specialistiche|a",
+      "reason": "collision en:the expertise, de:das Fachwissen"
+    },
+    {
+      "line": 649,
+      "candidate": "faktura|invoice|فاکتور|fRechnung;-en|ffactura|ffattura|s",
+      "reason": "collision de:die Rechnung"
+    },
+    {
+      "line": 650,
+      "candidate": "fakultet|faculty;faculties|دانشکده|fFakultät;-en|ffacultad;facultades|ffacoltà|a",
+      "reason": "collision es:la facultad"
+    },
+    {
+      "line": 657,
+      "candidate": "fångst|catch;catches|صید|mFang;Fänge|fcaptura|fcattura|a",
+      "reason": "collision en:the catch"
+    },
+    {
+      "line": 661,
+      "candidate": "fartyg|vessel|کشتی|nSchiff;-e|mbuque|mnave|s",
+      "reason": "collision en:the vessel"
+    },
+    {
+      "line": 664,
+      "candidate": "fästmö|fiancée|نامزد زن|fVerlobte;Verlobten|fprometida|ffidanzata|s",
+      "reason": "collision de:die Verlobte"
+    },
+    {
+      "line": 666,
+      "candidate": "fastighetsmäklare|estate agent|مشاور املاک|mImmobilienmakler;=|magente inmobiliario;agentes inmobiliarios|magente immobiliare;agenti immobiliari|p",
+      "reason": "collision en:the estate agent, fa:مشاور املاک, de:der Immobilienmakler, es:el agente inmobiliario, it:l'agente immobiliare"
+    },
+    {
+      "line": 682,
+      "candidate": "final|final|مرحله نهایی|nFinale;-s|ffinal;finales|ffinale|a",
+      "reason": "collision es:la final"
+    },
+    {
+      "line": 685,
+      "candidate": "firma|business firm|بنگاه تجاری|fFirma;Firmen|ffirma comercial;firmas comerciales|fditta|a",
+      "reason": "collision de:die Firma"
+    },
+    {
+      "line": 691,
+      "candidate": "flamma|flame|شعله|fFlamme;-n|fllama|ffiamma|s",
+      "reason": "collision en:the flame, fa:شعله, de:die Flamme, es:la llama, it:la fiamma"
+    },
+    {
+      "line": 697,
+      "candidate": "flöde|flow|جریان|mFluss;Flüsse|mflujo|mflusso|a",
+      "reason": "collision de:der Fluss"
+    },
+    {
+      "line": 702,
+      "candidate": "flygblad|leaflet|اعلامیه|nFlugblatt;Flugblätter|mfolleto|mvolantino|s",
+      "reason": "collision en:the leaflet, es:el folleto"
+    },
+    {
+      "line": 710,
+      "candidate": "följd|consequence|پیامد|fFolge;-n|fconsecuencia|fconseguenza|a",
+      "reason": "collision en:the consequence, fa:پیامد, de:die Folge, es:la consecuencia, it:la conseguenza"
+    },
+    {
+      "line": 711,
+      "candidate": "följeslagare|companion|همراه|mBegleiter;=|macompañante|maccompagnatore|s",
+      "reason": "collision en:the companion"
+    },
+    {
+      "line": 723,
+      "candidate": "förbindelse|connection|ارتباط|fVerbindung;-en|fconexión;conexiones|fconnessione|a",
+      "reason": "collision en:the connection, es:la conexión"
+    },
+    {
+      "line": 727,
+      "candidate": "fordonsskatt|road tax;road taxes|مالیات وسایل نقلیه|fFahrzeugsteuer;-n|mimpuesto sobre vehículos;impuestos sobre vehículos|ftassa automobilistica;tasse automobilistiche|a",
+      "reason": "semantic duplicate or specialised sense excluded"
+    },
+    {
+      "line": 729,
+      "candidate": "föredöme|role model|الگو|nVorbild;-er|mmodelo a seguir;modelos a seguir|mmodello da seguire;modelli da seguire|a",
+      "reason": "collision en:the role model, fa:الگو, de:das Vorbild, es:el modelo a seguir, it:il modello da seguire"
+    },
+    {
+      "line": 731,
+      "candidate": "förekomst|occurrence|وجود و وقوع|nVorkommen;=|fpresencia|fpresenza|a",
+      "reason": "collision es:la presencia, it:la presenza"
+    },
+    {
+      "line": 732,
+      "candidate": "föreskrift|regulation|مقررات|fVorschrift;-en|fdisposición normativa;disposiciones normativas|fdisposizione normativa;disposizioni normative|a",
+      "reason": "collision en:the regulation"
+    },
+    {
+      "line": 735,
+      "candidate": "företrädare|representative|نماینده|mVertreter;=|mrepresentante|mrappresentante|p",
+      "reason": "collision en:the representative, fa:نماینده, de:der Vertreter, es:el representante, it:il rappresentante"
+    },
+    {
+      "line": 742,
+      "candidate": "förhållande|relationship|رابطه|nVerhältnis;Verhältnisse|frelación;relaciones|frelazione|a",
+      "reason": "collision en:the relationship, fa:رابطه, es:la relación, it:la relazione"
+    },
+    {
+      "line": 743,
+      "candidate": "förhinder|impediment|مانع|fVerhinderung;-en|mimpedimento|mimpedimento|a",
+      "reason": "collision fa:مانع"
+    },
+    {
+      "line": 744,
+      "candidate": "förhoppning|hope|امید|fHoffnung;-en|fesperanza|fsperanza|a",
+      "reason": "collision en:the hope, fa:امید, de:die Hoffnung, es:la esperanza, it:la speranza"
+    },
+    {
+      "line": 747,
+      "candidate": "förlikning|settlement agreement|سازش حقوقی|mVergleich;-e|macuerdo conciliatorio;acuerdos conciliatorios|fconciliazione|a",
+      "reason": "collision de:der Vergleich"
+    },
+    {
+      "line": 749,
+      "candidate": "formgivare|designer|طراح|mDesigner;=|mdiseñador;diseñadores|mprogettista;progettisti|p",
+      "reason": "collision en:the designer, es:el diseñador, it:il progettista"
+    },
+    {
+      "line": 750,
+      "candidate": "förmåga|ability;abilities|توانایی|fFähigkeit;-en|fcapacidad;capacidades|fcapacità|a",
+      "reason": "collision es:la capacidad, it:la capacità"
+    },
+    {
+      "line": 761,
+      "candidate": "förpliktelse|obligation|الزام|fVerbindlichkeit;-en|fobligación;obligaciones|mobbligo;obblighi|a",
+      "reason": "collision fa:الزام"
+    },
+    {
+      "line": 764,
+      "candidate": "försäkringspremie|insurance premium|حق بیمه|fVersicherungsprämie;-n|fprima de seguro;primas de seguro|mpremio assicurativo;premi assicurativi|a",
+      "reason": "collision fa:حق بیمه, it:il premio assicurativo"
+    },
+    {
+      "line": 773,
+      "candidate": "försök|attempt|کوشش|mVersuch;-e|mintento|mtentativo|a",
+      "reason": "collision fa:کوشش"
+    },
+    {
+      "line": 776,
+      "candidate": "förståelse|understanding;|درک|nVerständnis;|fcomprensión;|fcomprensione;|a",
+      "reason": "collision es:la comprensión"
+    },
+    {
+      "line": 791,
+      "candidate": "förvaltning|management;|مدیریت اجرایی|fVerwaltungsarbeit;|fgestión;|fgestione;|a",
+      "reason": "collision en:the management"
+    },
+    {
+      "line": 794,
+      "candidate": "förväntan|expectation|انتظار|fErwartung;-en|fexpectativa|faspettativa|a",
+      "reason": "collision en:the expectation, fa:انتظار, de:die Erwartung, es:la expectativa, it:l'aspettativa"
+    },
+    {
+      "line": 804,
+      "candidate": "fotokopia|photocopy;photocopies|فتوکپی|fFotokopie;-n|ffotocopia|ffotocopia|s",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 829,
+      "candidate": "fusk|cheating;|تقلب|mBetrug;|mtrampa;trampas|mimbroglio;imbrogli|a",
+      "reason": "collision de:der Betrug, es:el trampa"
+    },
+    {
+      "line": 837,
+      "candidate": "garderob|wardrobe|کمد لباس|mKleiderschrank;Kleiderschränke|marmario|marmadio;armadi|s",
+      "reason": "collision es:el armario, it:l'armadio"
+    },
+    {
+      "line": 845,
+      "candidate": "gåva|gift|هدیه|nGeschenk;-e|mregalo|mdono|s",
+      "reason": "collision en:the gift, fa:هدیه, de:das Geschenk, es:el regalo"
+    },
+    {
+      "line": 849,
+      "candidate": "gensvar|response|واکنش متقابل|fResonanz;-en|frespuesta|frisposta|a",
+      "reason": "collision es:la respuesta, it:la risposta"
+    },
+    {
+      "line": 855,
+      "candidate": "genväg|shortcut|میان‌بر|fAbkürzung;-en|matajo|fscorciatoia|a",
+      "reason": "collision de:die Abkürzung"
+    },
+    {
+      "line": 860,
+      "candidate": "giftermål|marriage|ازدواج|fEheschließung;-en|mcasamiento|msposalizio;sposalizi|a",
+      "reason": "collision en:the marriage, fa:ازدواج"
+    },
+    {
+      "line": 861,
+      "candidate": "gikt|gout;|نقرس|fGicht;|fgota;|fgotta;|a",
+      "reason": "collision es:la gota"
+    },
+    {
+      "line": 862,
+      "candidate": "gips|plaster;|گچ|mGips;-e|myeso|mgesso|a",
+      "reason": "collision en:the plaster, it:il gesso"
+    },
+    {
+      "line": 875,
+      "candidate": "gräl|quarrel|مشاجره|mStreit;-e|fpelea|mlitigio;litigi|a",
+      "reason": "collision en:the quarrel, de:der Streit, es:la pelea, it:il litigio"
+    },
+    {
+      "line": 883,
+      "candidate": "gräsmatta|lawn|چمن|mRasen;=|mcésped;céspedes|mprato erboso;prati erbosi|s",
+      "reason": "collision fa:چمن"
+    },
+    {
+      "line": 897,
+      "candidate": "gryta|cooking pot|قابلمه|mKochtopf;Kochtöpfe|folla|fpentola|s",
+      "reason": "collision fa:قابلمه, it:la pentola"
+    },
+    {
+      "line": 900,
+      "candidate": "gummi|rubber;|لاستیک|mGummi;-s|mcaucho;|fgomma;|a",
+      "reason": "collision fa:لاستیک, it:la gomma"
+    },
+    {
+      "line": 902,
+      "candidate": "gymnasieskola|upper secondary school|دبیرستان|fGymnasialschule;-n|fescuela secundaria superior;escuelas secundarias superiores|fscuola secondaria superiore;scuole secondarie superiori|a",
+      "reason": "collision en:the upper secondary school, fa:دبیرستان"
+    },
+    {
+      "line": 912,
+      "candidate": "hallucination|hallucination|توهم|fHalluzination;-en|falucinación;alucinaciones|fallucinazione|a",
+      "reason": "collision fa:توهم"
+    },
+    {
+      "line": 927,
+      "candidate": "hänvisning|reference|ارجاع|mVerweis;-e|freferencia|mriferimento|a",
+      "reason": "collision en:the reference, fa:ارجاع, es:la referencia, it:il riferimento"
+    },
+    {
+      "line": 929,
+      "candidate": "handbok|handbook|کتاب راهنما|nHandbuch;Handbücher|mmanual;manuales|mmanuale|s",
+      "reason": "collision de:das Handbuch, es:el manual, it:il manuale"
+    },
+    {
+      "line": 931,
+      "candidate": "handled|wrist|مچ دست|nHandgelenk;-e|fmuñeca|mpolso|a",
+      "reason": "collision es:la muñeca, it:il polso"
+    },
+    {
+      "line": 934,
+      "candidate": "handskrift|manuscript|نسخه خطی|fHandschrift;-en|mmanuscrito|mmanoscritto|a",
+      "reason": "collision en:the manuscript, es:el manuscrito, it:il manoscritto"
+    },
+    {
+      "line": 983,
+      "candidate": "honorar|professional fee|حق‌الزحمه|nHonorar;-e|mhonorario|monorario;onorari|a",
+      "reason": "collision fa:حق‌الزحمه, de:das Honorar, es:el honorario, it:l'onorario"
+    },
+    {
+      "line": 991,
+      "candidate": "humor|humour;|شوخ‌طبعی|mHumor;|mhumor;|mumorismo;|a",
+      "reason": "collision es:el humor"
+    },
+    {
+      "line": 994,
+      "candidate": "husdjur|pet|حیوان خانگی|nHaustier;-e|fmascota|manimale domestico;animali domestici|s",
+      "reason": "collision es:la mascota"
+    },
+    {
+      "line": 998,
+      "candidate": "husvagn|caravan|کاروان مسافرتی|mWohnwagen;=|fcaravana|froulotte;roulotte|s",
+      "reason": "collision en:the caravan, es:la caravana"
+    },
+    {
+      "line": 1004,
+      "candidate": "hydda|hut|کلبه ابتدایی|fHütte;-n|fchoza|fcapanna rudimentale;capanne rudimentali|s",
+      "reason": "collision en:the hut"
+    },
+    {
+      "line": 1007,
+      "candidate": "hypotes|hypothesis;hypotheses|فرضیه|fHypothese;-n|fhipótesis;hipótesis|fipotesi;ipotesi|a",
+      "reason": "collision it:l'ipotesi"
+    },
+    {
+      "line": 1013,
+      "candidate": "iakttagelse|observation|مشاهده|fBeobachtung;-en|fobservación;observaciones|fosservazione|a",
+      "reason": "collision es:la observación, it:l'osservazione"
+    },
+    {
+      "line": 1032,
+      "candidate": "industri|industry;industries|صنعت|fIndustrie;-n|findustria|findustria|a",
+      "reason": "collision en:the industry"
+    },
+    {
+      "line": 1034,
+      "candidate": "inflytande|influence|نفوذ|mEinfluss;Einflüsse|finfluencia|finfluenza|a",
+      "reason": "collision it:l'influenza"
+    },
+    {
+      "line": 1037,
+      "candidate": "ingång|entrance|ورودی|mEingang;Eingänge|fentrada|mingresso|a",
+      "reason": "collision en:the entrance, fa:ورودی, de:der Eingang, es:la entrada, it:l'ingresso"
+    },
+    {
+      "line": 1038,
+      "candidate": "ingripande|intervention|مداخله|nEingreifen;|fintervención;intervenciones|mintervento|a",
+      "reason": "collision en:the intervention"
+    },
+    {
+      "line": 1045,
+      "candidate": "innehav|possession|در اختیار داشتن|mBesitz;|fposesión;posesiones|mpossesso|a",
+      "reason": "collision en:the possession"
+    },
+    {
+      "line": 1051,
+      "candidate": "inställning|attitude|نگرش|fEinstellung;-en|factitud;actitudes|matteggiamento|a",
+      "reason": "collision en:the attitude, fa:نگرش, de:die Einstellung, es:la actitud, it:l'atteggiamento"
+    },
+    {
+      "line": 1052,
+      "candidate": "instruktion|instruction|راهنمای انجام کار|fAnweisung;-en|finstrucción;instrucciones|fistruzione operativa;istruzioni operative|a",
+      "reason": "collision en:the instruction, de:die Anweisung, es:la instrucción"
+    },
+    {
+      "line": 1054,
+      "candidate": "intagning|admission|پذیرش|fAufnahme;-n|fadmisión;admisiones|fammissione|a",
+      "reason": "collision en:the admission, fa:پذیرش, de:die Aufnahme, es:la admisión, it:l'ammissione"
+    },
+    {
+      "line": 1056,
+      "candidate": "interiör|interior|فضای داخلی|mInnenraum;Innenräume|minterior;interiores|minterno|s",
+      "reason": "collision en:the interior"
+    },
+    {
+      "line": 1058,
+      "candidate": "introduktion|introduction|معرفی|fEinführung;-en|fintroducción;introducciones|fintroduzione|a",
+      "reason": "collision en:the introduction, es:la introducción, it:l'introduzione"
+    },
+    {
+      "line": 1059,
+      "candidate": "invandring|inward migration;|ورود مهاجران|fZuwanderung;-en|fllegada de inmigrantes;llegadas de inmigrantes|fimmigrazione in entrata;|a",
+      "reason": "semantic duplicate or specialised sense excluded"
+    },
+    {
+      "line": 1072,
+      "candidate": "jordbrukare|farmer|کشاورز|mLandwirt;-e|magricultor;agricultores|magricoltore|p",
+      "reason": "collision en:the farmer, fa:کشاورز, es:el agricultor, it:l'agricoltore"
+    },
+    {
+      "line": 1077,
+      "candidate": "juridik|law;|حقوق|fRechtswissenschaft;-en|mderecho;|fgiurisprudenza;|a",
+      "reason": "collision en:the law, fa:حقوق, es:el derecho"
+    },
+    {
+      "line": 1078,
+      "candidate": "kabel|cable|کابل|nKabel;=|mcable|mcavo|s",
+      "reason": "collision en:the cable, fa:کابل, de:das Kabel, es:el cable, it:il cavo"
+    },
+    {
+      "line": 1083,
+      "candidate": "kalas|party;parties|مهمانی|nFest;-e|ffiesta|ffesta|a",
+      "reason": "collision en:the party, de:das Fest, es:la fiesta, it:la festa"
+    },
+    {
+      "line": 1084,
+      "candidate": "kalender|calendar|تقویم|mKalender;=|mcalendario|mcalendario;calendari|s",
+      "reason": "collision en:the calendar, fa:تقویم, de:der Kalender, es:el calendario, it:il calendario"
+    },
+    {
+      "line": 1089,
+      "candidate": "källa|source|منبع|fQuelle;-n|ffuente|ffonte|a",
+      "reason": "collision es:la fuente"
+    },
+    {
+      "line": 1091,
+      "candidate": "kamin|stove|بخاری هیزمی|mOfen;Öfen|festufa|fstufa|s",
+      "reason": "collision de:der Ofen"
+    },
+    {
+      "line": 1097,
+      "candidate": "kännetecken|characteristic|ویژگی مشخصه|nMerkmal;-e|fcaracterística|fcaratteristica;caratteristiche|a",
+      "reason": "collision en:the characteristic, es:la característica, it:la caratteristica"
+    },
+    {
+      "line": 1098,
+      "candidate": "kännedom|awareness;|آگاهی|fKenntnis;-se|mconocimiento;|fconsapevolezza;|a",
+      "reason": "collision es:el conocimiento, it:la consapevolezza"
+    },
+    {
+      "line": 1101,
+      "candidate": "kapital|capital;|سرمایه|nKapital;Kapitalien|mcapital;capitales|mcapitale|a",
+      "reason": "collision es:el capital, it:il capitale"
+    },
+    {
+      "line": 1104,
+      "candidate": "kapprum|cloakroom|رخت‌کن|fGarderobe;-n|mguardarropa;guardarropas|mguardaroba;guardaroba|a",
+      "reason": "collision de:die Garderobe"
+    },
+    {
+      "line": 1106,
+      "candidate": "karaff|carafe|پارچ شیشه‌ای|fKaraffe;-n|fjarra de cristal;jarras de cristal|fcaraffa|s",
+      "reason": "collision it:la caraffa"
+    },
+    {
+      "line": 1107,
+      "candidate": "karamell|sweet|آبنبات|nBonbon;-s|mcaramelo|fcaramella|s",
+      "reason": "collision it:la caramella"
+    },
+    {
+      "line": 1113,
+      "candidate": "karosseri|car body;car bodies|بدنه خودرو|fKarosserie;-n|fcarrocería|fcarrozzeria|a",
+      "reason": "collision en:the car body, de:die Karosserie, es:la carrocería, it:la carrozzeria"
+    },
+    {
+      "line": 1114,
+      "candidate": "kartell|cartel|کارتل|nKartell;-e|mcártel;cárteles|mcartello|a",
+      "reason": "collision it:il cartello"
+    },
+    {
+      "line": 1130,
+      "candidate": "klädesplagg|garment|پوشاک|nKleidungsstück;-e|fprenda de vestir;prendas de vestir|mcapo d'abbigliamento;capi d'abbigliamento|s",
+      "reason": "collision en:the garment, de:das Kleidungsstück, es:la prenda de vestir"
+    },
+    {
+      "line": 1131,
+      "candidate": "klagomål|complaint|شکایت|fBeschwerde;-n|fqueja|freclamo;reclami|a",
+      "reason": "collision en:the complaint, it:la reclamo"
+    },
+    {
+      "line": 1132,
+      "candidate": "klämdag|bridge day|روز بین دو تعطیلی|mBrückentag;-e|mdía puente;días puente|mgiorno di ponte;giorni di ponte|a",
+      "reason": "Swedish morphology review"
+    },
+    {
+      "line": 1136,
+      "candidate": "klient|client|مراجع|mKlient;-en|mcliente|mcliente|p",
+      "reason": "collision es:el cliente, it:il cliente"
+    },
+    {
+      "line": 1150,
+      "candidate": "knytnäve|fist|مشت|fFaust;Fäuste|mpuño|mpugno|a",
+      "reason": "collision en:the fist, fa:مشت, de:die Faust, es:el puño, it:il pugno"
+    },
+    {
+      "line": 1153,
+      "candidate": "kofta|cardigan|ژاکت بافتنی|fStrickjacke;-n|fchaqueta de punto;chaquetas de punto|mcardigan;cardigan|s",
+      "reason": "collision fa:ژاکت بافتنی"
+    },
+    {
+      "line": 1156,
+      "candidate": "kokvrå|kitchenette|آشپزخانه کوچک|fKochnische;-n|fcocineta|mangolo cottura;angoli cottura|s",
+      "reason": "collision en:the kitchenette, de:die Kochnische"
+    },
+    {
+      "line": 1167,
+      "candidate": "komet|comet|دنباله‌دار|mKomet;-en|mcometa|fcometa|a",
+      "reason": "collision es:el cometa"
+    },
+    {
+      "line": 1169,
+      "candidate": "kommission|commission|کمیسیون|fKommission;-en|fcomisión;comisiones|fcommissione tecnica;commissioni tecniche|a",
+      "reason": "collision en:the commission, es:la comisión"
+    },
+    {
+      "line": 1173,
+      "candidate": "kompensation|compensation|جبران|fKompensation;-en|fcompensación;compensaciones|fcompensazione|a",
+      "reason": "collision en:the compensation, es:la compensación"
+    },
+    {
+      "line": 1176,
+      "candidate": "koncept|concept|مفهوم|nKonzept;-e|mconcepto|mconcetto|a",
+      "reason": "collision en:the concept, fa:مفهوم, es:el concepto, it:il concetto"
+    },
+    {
+      "line": 1177,
+      "candidate": "kondens|condensation;|میعان|fKondensation;|fcondensación;|fcondensazione;|a",
+      "reason": "collision en:the condensation, es:la condensación"
+    },
+    {
+      "line": 1179,
+      "candidate": "konfrontation|confrontation|رویارویی|fKonfrontation;-en|fconfrontación;confrontaciones|mconfronto|a",
+      "reason": "collision it:il confronto"
+    },
+    {
+      "line": 1181,
+      "candidate": "konkurrens|competition|رقابت|fKonkurrenz;-en|fcompetencia|fconcorrenza|a",
+      "reason": "collision es:la competencia"
+    },
+    {
+      "line": 1187,
+      "candidate": "konsul|consul|کنسول|mKonsul;-n|mcónsul;cónsules|mconsole|p",
+      "reason": "collision fa:کنسول, it:il console"
+    },
+    {
+      "line": 1193,
+      "candidate": "konto|account|حساب|nKonto;Konten|fcuenta|mconto|a",
+      "reason": "collision es:la cuenta, it:il conto"
+    },
+    {
+      "line": 1214,
+      "candidate": "kraftledning|power line|خط انتقال نیرو|fStromleitung;-en|flínea eléctrica;líneas eléctricas|flinea elettrica;linee elettriche|a",
+      "reason": "Swedish morphology review"
+    }
+  ],
+  "reserve": [
+    {
+      "id": "core.n.lexin007_konst_2644a45b",
+      "p": "noun",
+      "e": {
+        "sv": "en konst",
+        "en": "the art",
+        "fa": "هنر",
+        "de": "die Kunst",
+        "es": "el arte",
+        "it": "l'arte"
+      },
+      "raw": "konsten konster",
+      "parts": [
+        "konst",
+        "art;arts",
+        "هنر",
+        "die Kunst;Künste",
+        "el arte;artes",
+        "l'arte;arti",
+        "a"
+      ],
+      "ds": "konsten",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konstakning_1cd74123",
+      "p": "noun",
+      "e": {
+        "sv": "en konståkning",
+        "en": "the figure skating",
+        "fa": "پاتیناژ نمایشی",
+        "de": "das Eiskunstlaufen",
+        "es": "el patinaje artístico",
+        "it": "il pattinaggio artistico"
+      },
+      "raw": "konståkningen",
+      "parts": [
+        "konståkning",
+        "figure skating;",
+        "پاتیناژ نمایشی",
+        "das Eiskunstlaufen;",
+        "el patinaje artístico;",
+        "il pattinaggio artistico;",
+        "a"
+      ],
+      "ds": "konståkningen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konstruktion_c0d42fba",
+      "p": "noun",
+      "e": {
+        "sv": "en konstruktion",
+        "en": "the construction",
+        "fa": "ساختار",
+        "de": "die Konstruktion",
+        "es": "la construcción",
+        "it": "la costruzione"
+      },
+      "raw": "konstruktionen konstruktioner",
+      "parts": [
+        "konstruktion",
+        "construction;constructions",
+        "ساختار",
+        "die Konstruktion;Konstruktionen",
+        "la construcción;construcciones",
+        "la costruzione;costruzioni",
+        "a"
+      ],
+      "ds": "konstruktionen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konsumtion_86a0beba",
+      "p": "noun",
+      "e": {
+        "sv": "en konsumtion",
+        "en": "the consumption of goods",
+        "fa": "مصرف کالا",
+        "de": "der Konsum",
+        "es": "el consumo de bienes",
+        "it": "il consumo di beni"
+      },
+      "raw": "konsumtionen",
+      "parts": [
+        "konsumtion",
+        "consumption of goods;",
+        "مصرف کالا",
+        "der Konsum;",
+        "el consumo de bienes;",
+        "il consumo di beni;",
+        "a"
+      ],
+      "ds": "konsumtionen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konsumtionsvara_03d27d5e",
+      "p": "noun",
+      "e": {
+        "sv": "en konsumtionsvara",
+        "en": "the consumer good",
+        "fa": "کالای مصرفی",
+        "de": "das Konsumgut",
+        "es": "el bien de consumo",
+        "it": "il bene di consumo"
+      },
+      "raw": "konsumtionsvaran konsumtionsvaror",
+      "parts": [
+        "konsumtionsvara",
+        "consumer good;consumer goods",
+        "کالای مصرفی",
+        "das Konsumgut;Konsumgüter",
+        "el bien de consumo;bienes de consumo",
+        "il bene di consumo;beni di consumo",
+        "a"
+      ],
+      "ds": "konsumtionsvaran",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kontaktlins_91f12b93",
+      "p": "noun",
+      "e": {
+        "sv": "en kontaktlins",
+        "en": "the contact lens",
+        "fa": "لنز تماسی",
+        "de": "die Kontaktlinse",
+        "es": "la lente de contacto",
+        "it": "la lente a contatto"
+      },
+      "raw": "kontaktlinsen kontaktlinser",
+      "parts": [
+        "kontaktlins",
+        "contact lens;contact lenses",
+        "لنز تماسی",
+        "die Kontaktlinse;Kontaktlinsen",
+        "la lente de contacto;lentes de contacto",
+        "la lente a contatto;lenti a contatto",
+        "s"
+      ],
+      "ds": "kontaktlinsen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kontaktperson_5613ca5b",
+      "p": "noun",
+      "e": {
+        "sv": "en kontaktperson",
+        "en": "the contact person",
+        "fa": "شخص رابط",
+        "de": "die Kontaktperson",
+        "es": "la persona de contacto",
+        "it": "la persona di riferimento"
+      },
+      "raw": "kontaktpersonen kontaktpersoner",
+      "parts": [
+        "kontaktperson",
+        "contact person;contact people",
+        "شخص رابط",
+        "die Kontaktperson;Kontaktpersonen",
+        "la persona de contacto;personas de contacto",
+        "la persona di riferimento;persone di riferimento",
+        "a"
+      ],
+      "ds": "kontaktpersonen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kontantinsats_9e77e87d",
+      "p": "noun",
+      "e": {
+        "sv": "en kontantinsats",
+        "en": "the down payment",
+        "fa": "پیش‌پرداخت خرید",
+        "de": "die Eigenkapitalanzahlung",
+        "es": "el entrada inicial",
+        "it": "l'anticipo iniziale"
+      },
+      "raw": "kontantinsatsen kontantinsatser",
+      "parts": [
+        "kontantinsats",
+        "down payment;down payments",
+        "پیش‌پرداخت خرید",
+        "die Eigenkapitalanzahlung;Eigenkapitalanzahlungen",
+        "el entrada inicial;entradas iniciales",
+        "l'anticipo iniziale;anticipi iniziali",
+        "a"
+      ],
+      "ds": "kontantinsatsen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kontokort_13e62af5",
+      "p": "noun",
+      "e": {
+        "sv": "ett kontokort",
+        "en": "the bank card",
+        "fa": "کارت بانکی",
+        "de": "die Bankkarte",
+        "es": "la tarjeta bancaria",
+        "it": "la carta bancaria"
+      },
+      "raw": "kontokortet kontokort kontokorten",
+      "parts": [
+        "kontokort",
+        "bank card;bank cards",
+        "کارت بانکی",
+        "die Bankkarte;Bankkarten",
+        "la tarjeta bancaria;tarjetas bancarias",
+        "la carta bancaria;carte bancarie",
+        "a"
+      ],
+      "ds": "kontokortet",
+      "gender": "ett",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kontrovers_146db1c5",
+      "p": "noun",
+      "e": {
+        "sv": "en kontrovers",
+        "en": "the controversy",
+        "fa": "مناقشه",
+        "de": "die Kontroverse",
+        "es": "la controversia",
+        "it": "la controversia"
+      },
+      "raw": "kontroversen kontroverser",
+      "parts": [
+        "kontrovers",
+        "controversy;controversies",
+        "مناقشه",
+        "die Kontroverse;Kontroversen",
+        "la controversia;controversias",
+        "la controversia;controversie",
+        "a"
+      ],
+      "ds": "kontroversen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konvention_71184a55",
+      "p": "noun",
+      "e": {
+        "sv": "en konvention",
+        "en": "the convention",
+        "fa": "کنوانسیون",
+        "de": "die Konvention",
+        "es": "la convención",
+        "it": "la convenzione"
+      },
+      "raw": "konventionen konventioner",
+      "parts": [
+        "konvention",
+        "convention;conventions",
+        "کنوانسیون",
+        "die Konvention;Konventionen",
+        "la convención;convenciones",
+        "la convenzione;convenzioni",
+        "a"
+      ],
+      "ds": "konventionen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_konversation_9e55452e",
+      "p": "noun",
+      "e": {
+        "sv": "en konversation",
+        "en": "the conversation",
+        "fa": "مکالمه",
+        "de": "die Konversation",
+        "es": "la conversación",
+        "it": "la conversazione"
+      },
+      "raw": "konversationen konversationer",
+      "parts": [
+        "konversation",
+        "conversation;conversations",
+        "مکالمه",
+        "die Konversation;Konversationen",
+        "la conversación;conversaciones",
+        "la conversazione;conversazioni",
+        "a"
+      ],
+      "ds": "konversationen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kopkraft_18741145",
+      "p": "noun",
+      "e": {
+        "sv": "en köpkraft",
+        "en": "the purchasing power",
+        "fa": "قدرت خرید",
+        "de": "die Kaufkraft",
+        "es": "el poder adquisitivo",
+        "it": "il potere d'acquisto"
+      },
+      "raw": "köpkraften",
+      "parts": [
+        "köpkraft",
+        "purchasing power;",
+        "قدرت خرید",
+        "die Kaufkraft;",
+        "el poder adquisitivo;",
+        "il potere d'acquisto;",
+        "a"
+      ],
+      "ds": "köpkraften",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kopekontrakt_793b184f",
+      "p": "noun",
+      "e": {
+        "sv": "ett köpekontrakt",
+        "en": "the purchase contract",
+        "fa": "قرارداد خرید",
+        "de": "der Kaufvertrag",
+        "es": "el contrato de compraventa",
+        "it": "il contratto di compravendita"
+      },
+      "raw": "köpekontraktet köpekontrakt köpekontrakten",
+      "parts": [
+        "köpekontrakt",
+        "purchase contract;purchase contracts",
+        "قرارداد خرید",
+        "der Kaufvertrag;Kaufverträge",
+        "el contrato de compraventa;contratos de compraventa",
+        "il contratto di compravendita;contratti di compravendita",
+        "a"
+      ],
+      "ds": "köpekontraktet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_koppar_bcd9b0d7",
+      "p": "noun",
+      "e": {
+        "sv": "en koppar",
+        "en": "the copper",
+        "fa": "مس",
+        "de": "das Kupfer",
+        "es": "el cobre",
+        "it": "il rame"
+      },
+      "raw": "kopparen",
+      "parts": [
+        "koppar",
+        "copper;",
+        "مس",
+        "das Kupfer;",
+        "el cobre;",
+        "il rame;",
+        "a"
+      ],
+      "ds": "kopparen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kor_0131a512",
+      "p": "noun",
+      "e": {
+        "sv": "en kör",
+        "en": "the choir",
+        "fa": "گروه کر",
+        "de": "der Chor",
+        "es": "el coro",
+        "it": "il coro"
+      },
+      "raw": "kören körer",
+      "parts": [
+        "kör",
+        "choir;choirs",
+        "گروه کر",
+        "der Chor;Chöre",
+        "el coro;coros",
+        "il coro;cori",
+        "a"
+      ],
+      "ds": "kören",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korbana_093c74f4",
+      "p": "noun",
+      "e": {
+        "sv": "en körbana",
+        "en": "the carriageway",
+        "fa": "سواره‌رو",
+        "de": "die Fahrbahn",
+        "es": "la calzada",
+        "it": "la carreggiata"
+      },
+      "raw": "körbanan körbanor",
+      "parts": [
+        "körbana",
+        "carriageway;carriageways",
+        "سواره‌رو",
+        "die Fahrbahn;Fahrbahnen",
+        "la calzada;calzadas",
+        "la carreggiata;carreggiate",
+        "s"
+      ],
+      "ds": "körbanan",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korskola_fa6c7cb6",
+      "p": "noun",
+      "e": {
+        "sv": "en körskola",
+        "en": "the driving school",
+        "fa": "آموزشگاه رانندگی",
+        "de": "die Fahrschule",
+        "es": "la autoescuela",
+        "it": "l'autoscuola"
+      },
+      "raw": "körskolan körskolor",
+      "parts": [
+        "körskola",
+        "driving school;driving schools",
+        "آموزشگاه رانندگی",
+        "die Fahrschule;Fahrschulen",
+        "la autoescuela;autoescuelas",
+        "l'autoscuola;autoscuole",
+        "a"
+      ],
+      "ds": "körskolan",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korkskruv_f0dfbb17",
+      "p": "noun",
+      "e": {
+        "sv": "en korkskruv",
+        "en": "the corkscrew",
+        "fa": "چوب‌پنبه‌کش",
+        "de": "der Korkenzieher",
+        "es": "el sacacorchos",
+        "it": "il cavatappi"
+      },
+      "raw": "korkskruven korkskruvar",
+      "parts": [
+        "korkskruv",
+        "corkscrew;corkscrews",
+        "چوب‌پنبه‌کش",
+        "der Korkenzieher;Korkenzieher",
+        "el sacacorchos;sacacorchos",
+        "il cavatappi;cavatappi",
+        "s"
+      ],
+      "ds": "korkskruven",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korrespondens_2eed5dbf",
+      "p": "noun",
+      "e": {
+        "sv": "en korrespondens",
+        "en": "the correspondence",
+        "fa": "مکاتبات",
+        "de": "die Korrespondenz",
+        "es": "la correspondencia",
+        "it": "la corrispondenza"
+      },
+      "raw": "korrespondensen",
+      "parts": [
+        "korrespondens",
+        "correspondence;",
+        "مکاتبات",
+        "die Korrespondenz;Korrespondenzen",
+        "la correspondencia;",
+        "la corrispondenza;",
+        "a"
+      ],
+      "ds": "korrespondensen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korrosion_2f0b2220",
+      "p": "noun",
+      "e": {
+        "sv": "en korrosion",
+        "en": "the corrosion",
+        "fa": "خوردگی",
+        "de": "die Korrosion",
+        "es": "la corrosión",
+        "it": "la corrosione"
+      },
+      "raw": "korrosionen",
+      "parts": [
+        "korrosion",
+        "corrosion;",
+        "خوردگی",
+        "die Korrosion;Korrosionen",
+        "la corrosión;",
+        "la corrosione;",
+        "a"
+      ],
+      "ds": "korrosionen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korruption_98ffeff9",
+      "p": "noun",
+      "e": {
+        "sv": "en korruption",
+        "en": "the corruption",
+        "fa": "فساد اداری",
+        "de": "die Korruption",
+        "es": "la corrupción",
+        "it": "la corruzione"
+      },
+      "raw": "korruptionen",
+      "parts": [
+        "korruption",
+        "corruption;",
+        "فساد اداری",
+        "die Korruption;",
+        "la corrupción;",
+        "la corruzione;",
+        "a"
+      ],
+      "ds": "korruptionen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korsdrag_ec5c865c",
+      "p": "noun",
+      "e": {
+        "sv": "ett korsdrag",
+        "en": "the draught",
+        "fa": "کوران هوا",
+        "de": "der Durchzug",
+        "es": "la corriente de aire",
+        "it": "la corrente d'aria"
+      },
+      "raw": "korsdraget korsdrag korsdragen",
+      "parts": [
+        "korsdrag",
+        "draught;draughts",
+        "کوران هوا",
+        "der Durchzug;Durchzüge",
+        "la corriente de aire;corrientes de aire",
+        "la corrente d'aria;correnti d'aria",
+        "a"
+      ],
+      "ds": "korsdraget",
+      "gender": "ett",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korsforhor_31b4cc9d",
+      "p": "noun",
+      "e": {
+        "sv": "ett korsförhör",
+        "en": "the cross-examination",
+        "fa": "بازپرسی متقابل",
+        "de": "das Kreuzverhör",
+        "es": "el contrainterrogatorio",
+        "it": "il controinterrogatorio"
+      },
+      "raw": "korsförhöret korsförhör korsförhören",
+      "parts": [
+        "korsförhör",
+        "cross-examination;cross-examinations",
+        "بازپرسی متقابل",
+        "das Kreuzverhör;Kreuzverhöre",
+        "el contrainterrogatorio;contrainterrogatorios",
+        "il controinterrogatorio;controinterrogatori",
+        "a"
+      ],
+      "ds": "korsförhöret",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_korsord_89b70fab",
+      "p": "noun",
+      "e": {
+        "sv": "ett korsord",
+        "en": "the crossword",
+        "fa": "جدول کلمات متقاطع",
+        "de": "das Kreuzworträtsel",
+        "es": "el crucigrama",
+        "it": "il cruciverba"
+      },
+      "raw": "korsordet korsord korsorden",
+      "parts": [
+        "korsord",
+        "crossword;crosswords",
+        "جدول کلمات متقاطع",
+        "das Kreuzworträtsel;Kreuzworträtsel",
+        "el crucigrama;crucigramas",
+        "il cruciverba;cruciverba",
+        "s"
+      ],
+      "ds": "korsordet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kortlek_6ea84c1b",
+      "p": "noun",
+      "e": {
+        "sv": "en kortlek",
+        "en": "the deck of cards",
+        "fa": "دسته ورق بازی",
+        "de": "das Kartenspiel",
+        "es": "la baraja",
+        "it": "il mazzo di carte"
+      },
+      "raw": "kortleken kortlekar",
+      "parts": [
+        "kortlek",
+        "deck of cards;decks of cards",
+        "دسته ورق بازی",
+        "das Kartenspiel;Kartenspiele",
+        "la baraja;barajas",
+        "il mazzo di carte;mazzi di carte",
+        "s"
+      ],
+      "ds": "kortleken",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kortslutning_ac9222e4",
+      "p": "noun",
+      "e": {
+        "sv": "en kortslutning",
+        "en": "the short circuit",
+        "fa": "اتصال کوتاه",
+        "de": "der Kurzschluss",
+        "es": "el cortocircuito",
+        "it": "il cortocircuito"
+      },
+      "raw": "kortslutningen kortslutningar",
+      "parts": [
+        "kortslutning",
+        "short circuit;short circuits",
+        "اتصال کوتاه",
+        "der Kurzschluss;Kurzschlüsse",
+        "el cortocircuito;cortocircuitos",
+        "il cortocircuito;cortocircuiti",
+        "a"
+      ],
+      "ds": "kortslutningen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kottfars_bb8b1444",
+      "p": "noun",
+      "e": {
+        "sv": "en köttfärs",
+        "en": "the minced meat",
+        "fa": "گوشت چرخ‌کرده",
+        "de": "das Hackfleisch",
+        "es": "la carne picada",
+        "it": "la carne macinata"
+      },
+      "raw": "köttfärsen",
+      "parts": [
+        "köttfärs",
+        "minced meat;",
+        "گوشت چرخ‌کرده",
+        "das Hackfleisch;",
+        "la carne picada;",
+        "la carne macinata;",
+        "a"
+      ],
+      "ds": "köttfärsen",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kraftverk_55dc8c4c",
+      "p": "noun",
+      "e": {
+        "sv": "ett kraftverk",
+        "en": "the power plant",
+        "fa": "نیروگاه",
+        "de": "das Kraftwerk",
+        "es": "la central eléctrica",
+        "it": "la centrale elettrica"
+      },
+      "raw": "kraftverket kraftverk kraftverken",
+      "parts": [
+        "kraftverk",
+        "power plant;power plants",
+        "نیروگاه",
+        "das Kraftwerk;Kraftwerke",
+        "la central eléctrica;centrales eléctricas",
+        "la centrale elettrica;centrali elettriche",
+        "a"
+      ],
+      "ds": "kraftverket",
+      "gender": "ett",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krage_6741a3be",
+      "p": "noun",
+      "e": {
+        "sv": "en krage",
+        "en": "the collar",
+        "fa": "یقه",
+        "de": "der Kragen",
+        "es": "el cuello de camisa",
+        "it": "il colletto"
+      },
+      "raw": "kragen kragar",
+      "parts": [
+        "krage",
+        "collar;collars",
+        "یقه",
+        "der Kragen;Krägen",
+        "el cuello de camisa;cuellos de camisa",
+        "il colletto;colletti",
+        "s"
+      ],
+      "ds": "kragen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krangel_737d74ce",
+      "p": "noun",
+      "e": {
+        "sv": "ett krångel",
+        "en": "the hassle",
+        "fa": "دردسر",
+        "de": "die Schwierigkeit",
+        "es": "el problema engorroso",
+        "it": "il fastidio"
+      },
+      "raw": "krånglet",
+      "parts": [
+        "krångel",
+        "hassle;hassles",
+        "دردسر",
+        "die Schwierigkeit;Schwierigkeiten",
+        "el problema engorroso;problemas engorrosos",
+        "il fastidio;fastidi",
+        "a"
+      ],
+      "ds": "krånglet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kranium_b32f09c0",
+      "p": "noun",
+      "e": {
+        "sv": "ett kranium",
+        "en": "the skull",
+        "fa": "جمجمه",
+        "de": "der Schädel",
+        "es": "el cráneo",
+        "it": "il cranio"
+      },
+      "raw": "kraniet kranier",
+      "parts": [
+        "kranium",
+        "skull;skulls",
+        "جمجمه",
+        "der Schädel;Schädel",
+        "el cráneo;cráneos",
+        "il cranio;crani",
+        "a"
+      ],
+      "ds": "kraniet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krasch_9c1d89e3",
+      "p": "noun",
+      "e": {
+        "sv": "en krasch",
+        "en": "the crash",
+        "fa": "تصادف شدید",
+        "de": "der Crash",
+        "es": "el accidente grave",
+        "it": "lo schianto"
+      },
+      "raw": "kraschen krascher",
+      "parts": [
+        "krasch",
+        "crash;crashes",
+        "تصادف شدید",
+        "der Crash;Crashs",
+        "el accidente grave;accidentes graves",
+        "lo schianto;schianti",
+        "a"
+      ],
+      "ds": "kraschen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kreatur_ff2f6862",
+      "p": "noun",
+      "e": {
+        "sv": "ett kreatur",
+        "en": "the cattle",
+        "fa": "احشام",
+        "de": "das Rind",
+        "es": "el res",
+        "it": "il bovino"
+      },
+      "raw": "kreaturet kreatur kreaturen",
+      "parts": [
+        "kreatur",
+        "cattle;cattle",
+        "احشام",
+        "das Rind;Rinder",
+        "el res;reses",
+        "il bovino;bovini",
+        "a"
+      ],
+      "ds": "kreaturet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kreditupplysning_df181e38",
+      "p": "noun",
+      "e": {
+        "sv": "en kreditupplysning",
+        "en": "the credit report",
+        "fa": "گزارش اعتبار مالی",
+        "de": "die Kreditauskunft",
+        "es": "el informe crediticio",
+        "it": "il rapporto di credito"
+      },
+      "raw": "kreditupplysningen kreditupplysningar",
+      "parts": [
+        "kreditupplysning",
+        "credit report;credit reports",
+        "گزارش اعتبار مالی",
+        "die Kreditauskunft;Kreditauskünfte",
+        "el informe crediticio;informes crediticios",
+        "il rapporto di credito;rapporti di credito",
+        "a"
+      ],
+      "ds": "kreditupplysningen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krematorium_f816e0ea",
+      "p": "noun",
+      "e": {
+        "sv": "ett krematorium",
+        "en": "the crematorium",
+        "fa": "مرکز سوزاندن اجساد",
+        "de": "das Krematorium",
+        "es": "el crematorio",
+        "it": "il crematorio"
+      },
+      "raw": "krematoriet krematorier",
+      "parts": [
+        "krematorium",
+        "crematorium;crematoriums",
+        "مرکز سوزاندن اجساد",
+        "das Krematorium;Krematorien",
+        "el crematorio;crematorios",
+        "il crematorio;crematori",
+        "a"
+      ],
+      "ds": "krematoriet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kretslopp_803d54d1",
+      "p": "noun",
+      "e": {
+        "sv": "ett kretslopp",
+        "en": "the cycle",
+        "fa": "چرخه",
+        "de": "der Kreislauf",
+        "es": "el ciclo",
+        "it": "il ciclo"
+      },
+      "raw": "kretsloppet kretslopp kretsloppen",
+      "parts": [
+        "kretslopp",
+        "cycle;cycles",
+        "چرخه",
+        "der Kreislauf;Kreisläufe",
+        "el ciclo;ciclos",
+        "il ciclo;cicli",
+        "a"
+      ],
+      "ds": "kretsloppet",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krig_2375bfbf",
+      "p": "noun",
+      "e": {
+        "sv": "ett krig",
+        "en": "the war",
+        "fa": "جنگ",
+        "de": "der Krieg",
+        "es": "la guerra",
+        "it": "la guerra"
+      },
+      "raw": "kriget krig krigen",
+      "parts": [
+        "krig",
+        "war;wars",
+        "جنگ",
+        "der Krieg;Kriege",
+        "la guerra;guerras",
+        "la guerra;guerre",
+        "a"
+      ],
+      "ds": "kriget",
+      "gender": "ett",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kriminalvard_ab39e63d",
+      "p": "noun",
+      "e": {
+        "sv": "en kriminalvård",
+        "en": "the correctional service",
+        "fa": "خدمات اصلاح و تربیت",
+        "de": "der Strafvollzug",
+        "es": "el servicio penitenciario",
+        "it": "il servizio penitenziario"
+      },
+      "raw": "kriminalvården",
+      "parts": [
+        "kriminalvård",
+        "correctional service;correctional services",
+        "خدمات اصلاح و تربیت",
+        "der Strafvollzug;",
+        "el servicio penitenciario;servicios penitenciarios",
+        "il servizio penitenziario;servizi penitenziari",
+        "a"
+      ],
+      "ds": "kriminalvården",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kristendom_5f1911f3",
+      "p": "noun",
+      "e": {
+        "sv": "en kristendom",
+        "en": "the Christianity",
+        "fa": "مسیحیت",
+        "de": "das Christentum",
+        "es": "el cristianismo",
+        "it": "il cristianesimo"
+      },
+      "raw": "kristendomen",
+      "parts": [
+        "kristendom",
+        "Christianity;",
+        "مسیحیت",
+        "das Christentum;",
+        "el cristianismo;",
+        "il cristianesimo;",
+        "a"
+      ],
+      "ds": "kristendomen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kritik_d8af4793",
+      "p": "noun",
+      "e": {
+        "sv": "en kritik",
+        "en": "the criticism",
+        "fa": "انتقاد",
+        "de": "die Kritik",
+        "es": "la crítica",
+        "it": "la critica"
+      },
+      "raw": "kritiken",
+      "parts": [
+        "kritik",
+        "criticism;criticisms",
+        "انتقاد",
+        "die Kritik;Kritiken",
+        "la crítica;críticas",
+        "la critica;critiche",
+        "a"
+      ],
+      "ds": "kritiken",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kromosom_c34fb8f8",
+      "p": "noun",
+      "e": {
+        "sv": "en kromosom",
+        "en": "the chromosome",
+        "fa": "کروموزوم",
+        "de": "das Chromosom",
+        "es": "el cromosoma",
+        "it": "il cromosoma"
+      },
+      "raw": "kromosomen kromosomer",
+      "parts": [
+        "kromosom",
+        "chromosome;chromosomes",
+        "کروموزوم",
+        "das Chromosom;Chromosomen",
+        "el cromosoma;cromosomas",
+        "il cromosoma;cromosomi",
+        "a"
+      ],
+      "ds": "kromosomen",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kronartskocka_a9e3cd29",
+      "p": "noun",
+      "e": {
+        "sv": "en kronärtskocka",
+        "en": "the artichoke",
+        "fa": "کنگر فرنگی",
+        "de": "die Artischocke",
+        "es": "la alcachofa",
+        "it": "il carciofo"
+      },
+      "raw": "kronärtskockan kronärtskockor",
+      "parts": [
+        "kronärtskocka",
+        "artichoke;artichokes",
+        "کنگر فرنگی",
+        "die Artischocke;Artischocken",
+        "la alcachofa;alcachofas",
+        "il carciofo;carciofi",
+        "s"
+      ],
+      "ds": "kronärtskockan",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kronofogde_410c2824",
+      "p": "noun",
+      "e": {
+        "sv": "en kronofogde",
+        "en": "the bailiff",
+        "fa": "مأمور اجرای احکام",
+        "de": "der Gerichtsvollzieher",
+        "es": "el agente judicial",
+        "it": "l'ufficiale giudiziario"
+      },
+      "raw": "kronofogden kronofogdar",
+      "parts": [
+        "kronofogde",
+        "bailiff;bailiffs",
+        "مأمور اجرای احکام",
+        "der Gerichtsvollzieher;Gerichtsvollzieher",
+        "el agente judicial;agentes judiciales",
+        "l'ufficiale giudiziario;ufficiali giudiziari",
+        "p"
+      ],
+      "ds": "kronofogden",
+      "gender": "en",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_kroppssprak_23aeb5b2",
+      "p": "noun",
+      "e": {
+        "sv": "ett kroppsspråk",
+        "en": "the body language",
+        "fa": "زبان بدن",
+        "de": "die Körpersprache",
+        "es": "el lenguaje corporal",
+        "it": "il linguaggio del corpo"
+      },
+      "raw": "kroppsspråket",
+      "parts": [
+        "kroppsspråk",
+        "body language;",
+        "زبان بدن",
+        "die Körpersprache;",
+        "el lenguaje corporal;",
+        "il linguaggio del corpo;",
+        "a"
+      ],
+      "ds": "kroppsspråket",
+      "gender": "ett",
+      "genders": {
+        "it": "il",
+        "es": "el"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krukvaxt_541640d6",
+      "p": "noun",
+      "e": {
+        "sv": "en krukväxt",
+        "en": "the houseplant",
+        "fa": "گیاه آپارتمانی",
+        "de": "die Zimmerpflanze",
+        "es": "la planta de interior",
+        "it": "la pianta d'appartamento"
+      },
+      "raw": "krukväxten krukväxter",
+      "parts": [
+        "krukväxt",
+        "houseplant;houseplants",
+        "گیاه آپارتمانی",
+        "die Zimmerpflanze;Zimmerpflanzen",
+        "la planta de interior;plantas de interior",
+        "la pianta d'appartamento;piante d'appartamento",
+        "s"
+      ],
+      "ds": "krukväxten",
+      "gender": "en",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    },
+    {
+      "id": "core.n.lexin007_krut_796cd167",
+      "p": "noun",
+      "e": {
+        "sv": "ett krut",
+        "en": "the gunpowder",
+        "fa": "باروت",
+        "de": "das Schießpulver",
+        "es": "la pólvora",
+        "it": "la polvere da sparo"
+      },
+      "raw": "krutet",
+      "parts": [
+        "krut",
+        "gunpowder;",
+        "باروت",
+        "das Schießpulver;",
+        "la pólvora;",
+        "la polvere da sparo;",
+        "a"
+      ],
+      "ds": "krutet",
+      "gender": "ett",
+      "genders": {
+        "it": "la",
+        "es": "la"
+      }
+    }
+  ]
+}

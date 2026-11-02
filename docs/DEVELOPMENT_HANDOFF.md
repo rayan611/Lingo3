@@ -1,3 +1,9 @@
+# Vocabulary batch 007 — 2026-11-02
+Owner requested merging #27 and adding the next 1,000 new concepts. PR #27 merged successfully as `3337687ceea100ac407195ad9bcba140c601e89b`; its CI and Vercel checks passed.
+Branch: `data/lexin-1000-batch-007`. Prepared 1,000 new noun concepts / 6,000 cards; import and live verification PENDING. Prior bank data excluded using live six-language lemma keys. No application/schema/auth edits. Preserve existing Grammar/Training Center work below. Next: atomic rollback rehearsal, import and retrieval checks; update this section with verified counts before delivery.
+
+---
+
 # Training Center navigation — 2026-11-02
 Owner requested grouping Grammar, Read a story and Review under one Training Center tile, plus a clear scope/status summary.
 
