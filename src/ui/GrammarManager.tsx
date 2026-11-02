@@ -16,8 +16,8 @@ function RichText({ value }: { value: string }) {
   })}</div>
 }
 
-export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing, onSync, syncError }: {
-  lang: Lang; nativeLang: Lang; userId: string | null; syncing: boolean; onSync: () => Promise<void>; syncError?: string
+export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, userId, syncing, onSync, syncError }: {
+  lang: Lang; learningLangs: Lang[]; nativeLang: Lang; userId: string | null; syncing: boolean; onSync: () => Promise<void>; syncError?: string
 }) {
   const [lang, setLang] = useState<Lang>(initialLang)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -29,11 +29,16 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
   const [search, setSearch] = useState('')
   const [error, setError] = useState('')
   const [preview, setPreview] = useState(false)
+  const [generating, setGenerating] = useState(false)
+  const [aiError, setAiError] = useState('')
+  const [aiRuleId, setAiRuleId] = useState<string | null>(null)
   const textarea = useRef<HTMLTextAreaElement>(null)
   const syncRow = useLiveQuery(() => db.meta.get('grammar.syncStatus'), [])
   const status = typeof syncRow?.value === 'string' ? JSON.parse(syncRow.value) as GrammarSyncStatus : null
   const sections = useLiveQuery(() => db.grammarSections.where('lang').equals(lang).filter(s => !s.deletedAt).toArray(), [lang]) ?? []
   const rules = useLiveQuery(() => db.grammarRules.where('lang').equals(lang).filter(r => !r.deletedAt).toArray(), [lang]) ?? []
+  const availableLangs = learningLangs.filter((value, index) => learningLangs.indexOf(value) === index)
+  useEffect(() => { if (!availableLangs.includes(lang) && availableLangs.length) setLang(availableLangs[0]) }, [learningLangs.join(','), lang])
   const reset = () => { setEditingId(null); setTitle(''); setExplanation(''); setExamples([]); setPreview(false) }
   useEffect(() => { setSectionId(''); setEditingId(null); setTitle(''); setExplanation(''); setExamples([]) }, [lang])
 
@@ -55,8 +60,9 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
     } catch (err) { setError(String(err)) }
   }
 
-  const generateExamples = async (ruleId: string, savedTitle: string, savedExplanation: string, savedLang: Lang) => {
-    if (!userId) return
+  const generateExamples = async (ruleId: string, savedTitle: string, savedExplanation: string, savedLang: Lang, append = false) => {
+    if (!userId || generating) return
+    setGenerating(true); setAiRuleId(ruleId); setAiError('')
     try {
       const { data } = await supabase().auth.getSession()
       const token = data.session?.access_token
@@ -72,16 +78,16 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
       if (!Array.isArray(proposed) || proposed.length < 2) return
       const current = await db.grammarRules.get(ruleId)
       // Never overwrite an edit, deletion, or manually authored examples while AI is running.
-      if (!current || current.deletedAt || current.title !== savedTitle || current.explanation !== savedExplanation || current.examples?.length) return
+      if (!current || current.deletedAt || current.title !== savedTitle || current.explanation !== savedExplanation || (!append && current.examples?.length)) return
       const accepted = proposed.slice(0, 5).filter(e => typeof e.sentence === 'string' && typeof e.translation === 'string' && e.sentence.trim() && e.translation.trim()).map(e => ({
         id: crypto.randomUUID(), sentence: e.sentence.trim(), translation: e.translation.trim(), translationLang: nativeLang,
       }))
       if (accepted.length < 2) return
-      await updateGrammarRule(ruleId, { examples: accepted })
+      await updateGrammarRule(ruleId, { examples: append ? [...(current.examples ?? []), ...accepted] : accepted })
       void onSync().catch(() => {})
     } catch {
-      // AI is an optional enhancement. Saving a rule must never depend on it.
-    }
+      setAiError('AI examples could not be generated. Please retry.')
+    } finally { setGenerating(false); setAiRuleId(null) }
   }
 
   const submitRule = async (e: React.FormEvent) => {
@@ -107,7 +113,7 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
     <h2>Grammar Manager</h2>
     <label>Grammar library — language
       <select style={fieldStyle} value={lang} onChange={event => setLang(event.target.value as Lang)}>
-        {Object.entries(LANG_NAMES).map(([code, name]) => <option key={code} value={code}>{name}</option>)}
+        {availableLangs.map(code => [code, LANG_NAMES[code]] as const).map(([code, name]) => <option key={code} value={code}>{name}</option>)}
       </select>
     </label>
     <p className="muted">Each language has its own sections, rules and examples. Your notes are private and saved offline first.</p>
@@ -115,6 +121,7 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
     {status && status.conflicts > 0 && <p role="alert">Conflicting edits were kept as separate copies.</p>}
     {userId && <button type="button" disabled={syncing} onClick={() => void onSync()}>Sync now</button>}
     {error && <p role="alert">{error}</p>}
+    {aiError && <p role="alert">{aiError}</p>}
     <form onSubmit={submitSection} style={{ margin: '18px 0', padding: 16, border: '1px solid var(--border, #aaa)', borderRadius: 12 }}>
       <h3>Sections in {LANG_NAMES[lang]}</h3>
       <label>New section <input style={fieldStyle} value={sectionTitle} onChange={e => setSectionTitle(e.target.value)} required maxLength={120} placeholder="e.g. Verbs, Sentence structure, Pronouns" /></label>
@@ -151,6 +158,7 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
         <button type="button" onClick={() => setExamples(old => old.filter(x => x.id !== example.id))}>Remove example</button>
       </div>)}
       <button type="button" style={buttonStyle} onClick={() => setExamples(old => [...old, { id: crypto.randomUUID(), sentence: '', translation: '', translationLang: nativeLang }])}>+ Add example</button>
+      {editingId && <button type="button" disabled={generating} onClick={() => { const rule = rules.find(r => r.id === editingId); if (rule) void generateExamples(rule.id, rule.title, rule.explanation, rule.lang, true) }}>{generating && aiRuleId === editingId ? 'Generating…' : 'Generate more with AI'}</button>}
       <div><button type="submit" style={buttonStyle}>{editingId ? 'Save changes' : 'Save rule'}</button>
       {editingId && <button type="button" onClick={reset}>Cancel edit</button>}</div>
     </form>
@@ -158,20 +166,33 @@ export function GrammarManager({ lang: initialLang, nativeLang, userId, syncing,
     <label>Search <input style={fieldStyle} value={search} onChange={e => setSearch(e.target.value)} /></label>
     {sections.map(section => {
       const group = matches.filter(r => r.sectionId === section.id)
-      if (!group.length) return null
-      return <section key={section.id} style={{ marginTop: 18 }}>
-        <h3>{section.title}</h3>
-        {group.map(r => <article key={r.id} style={{ borderBottom: '1px solid var(--border, #aaa)', padding: '12px 0' }}>
-          <h4>{r.title}</h4>
-          <RichText value={r.explanation} />
-          {Boolean(r.examples?.length) && <div style={{ marginTop: 12, padding: 12, borderRadius: 10, background: 'var(--surface, rgba(128,128,128,.08))' }}>
-            <strong>Examples</strong>
-            {(r.examples ?? []).map(e => <div key={e.id} style={{ marginTop: 9 }}><div>{e.sentence}</div><small className="muted">{e.translation}</small></div>)}
-          </div>}
-          <button type="button" style={buttonStyle} onClick={() => { setEditingId(r.id); setSectionId(r.sectionId); setTitle(r.title); setExplanation(r.explanation); setExamples(r.examples ?? []); setPreview(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>Edit</button>
-          <button type="button" style={buttonStyle} onClick={() => void deleteGrammarRule(r.id).then(() => { if (userId) void onSync().catch(() => {}) }).catch(err => setError(String(err)))}>Delete</button>
-        </article>)}
-      </section>
+      if (!group.length && search) return null
+      return <details key={section.id} open={search ? true : undefined} style={{ marginTop: 12, border: '1px solid var(--border, #aaa)', borderRadius: 12, overflow: 'hidden' }}>
+        <summary style={{ cursor: 'pointer', padding: '14px 16px', background: 'var(--surface, rgba(128,128,128,.1))', fontWeight: 700 }}>
+          {section.title} <small className="muted">({group.length} rules)</small>
+        </summary>
+        <div style={{ padding: '8px 12px 14px' }}>
+          {group.length === 0 && <p className="muted">No grammar rules yet.</p>}
+          {group.map(r => <details key={r.id} open={search ? true : undefined} style={{ border: '1px solid var(--border, #aaa)', borderRadius: 10, marginTop: 9, overflow: 'hidden' }}>
+            <summary style={{ cursor: 'pointer', padding: '12px 14px', fontWeight: 600, background: 'var(--surface, rgba(128,128,128,.06))' }}>{r.title}</summary>
+            <div style={{ padding: 14 }}>
+              <div style={{ border: '1px solid var(--border, #aaa)', borderRadius: 9, padding: 12, marginBottom: 12 }}>
+                <strong>Explanation</strong>
+                <RichText value={r.explanation} />
+              </div>
+              <div style={{ border: '1px solid var(--border, #aaa)', borderRadius: 9, padding: 12, marginBottom: 12 }}>
+                <strong>Examples</strong>
+                {(r.examples ?? []).length ? (r.examples ?? []).map(e => <div key={e.id} style={{ marginTop: 10 }}><div>{e.sentence}</div><small className="muted">{e.translation}</small></div>) : <p className="muted">No examples yet.</p>}
+                <div style={{ marginTop: 10 }}>
+                  <button type="button" style={buttonStyle} disabled={generating || !userId} onClick={() => void generateExamples(r.id, r.title, r.explanation, r.lang, true)}>{generating && aiRuleId === r.id ? 'Generating…' : 'Generate examples with AI'}</button>
+                </div>
+              </div>
+              <button type="button" style={buttonStyle} onClick={() => { setEditingId(r.id); setSectionId(r.sectionId); setTitle(r.title); setExplanation(r.explanation); setExamples(r.examples ?? []); setPreview(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>Edit explanation & examples</button>
+              <button type="button" style={buttonStyle} onClick={() => void deleteGrammarRule(r.id).then(() => { if (userId) void onSync().catch(() => {}) }).catch(err => setError(String(err)))}>Delete</button>
+            </div>
+          </details>)}
+        </div>
+      </details>
     })}
     {matches.filter(r => !sections.some(s => s.id === r.sectionId)).map(r => <p key={r.id}>{r.title} — {sectionName(r.sectionId)}</p>)}
   </section>
