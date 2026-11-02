@@ -14,7 +14,7 @@ const missing = (e: { code?: string; message?: string }) =>
   /schema cache|does not exist|could not find the table/i.test(e.message ?? '')
 
 /** Full reconciliation avoids clock-based pull cursors; a paginated read prevents truncation. */
-async function syncTable<T extends { id: string; updatedAt: number }>(
+async function syncTable<T extends GrammarSection | GrammarRule>(
   name: 'grammar_sections' | 'grammar_rules',
   userId: string,
   table: {
