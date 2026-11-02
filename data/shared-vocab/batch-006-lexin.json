@@ -13134,7 +13134,7 @@
       "e": {
         "sv": "en knuff",
         "en": "the push",
-        "fa": "هل دادن",
+        "fa": "هُل",
         "de": "der Stoß",
         "es": "el empujón",
         "it": "la spinta"
@@ -13143,7 +13143,7 @@
       "parts": [
         "knuff",
         "push;pushes",
-        "هل دادن",
+        "هُل",
         "der Stoß;Stöße",
         "el empujón;empujones",
         "la spinta;spinte",
@@ -13153,6 +13153,14 @@
       "gender": "en",
       "genders": {
         "it": "la"
+      },
+      "examples": {
+        "fa": "او با یک هُل مرا کنار زد.",
+        "en": "He moved me aside with a push.",
+        "sv": "Han knuffade undan mig med en knuff.",
+        "de": "Er schob mich mit einem Stoß zur Seite.",
+        "es": "Me apartó con un empujón.",
+        "it": "Mi ha spostato con una spinta."
       }
     },
     {

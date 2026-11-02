@@ -30377,13 +30377,13 @@
       ],
       "e": {
         "fa": {
-          "h": "هل دادن",
-          "x": "امروز دربارهٔ هل دادن صحبت کردیم.",
+          "h": "هُل",
+          "x": "او با یک هُل مرا کنار زد.",
           "n": "اسم؛ جنسیت دستوری ندارد. معنیِ انتخاب‌شده با مثال مشخص شده است."
         },
         "en": {
           "h": "the push",
-          "x": "We talked about the push today.",
+          "x": "He moved me aside with a push.",
           "f": {
             "kind": "noun",
             "plural": "pushes"
@@ -30391,7 +30391,7 @@
         },
         "sv": {
           "h": "en knuff",
-          "x": "Vi pratade om knuffen i dag.",
+          "x": "Han knuffade undan mig med en knuff.",
           "f": {
             "kind": "noun",
             "gender": "en",
@@ -30402,7 +30402,7 @@
         },
         "de": {
           "h": "der Stoß",
-          "x": "Wir haben heute über den Stoß gesprochen.",
+          "x": "Er schob mich mit einem Stoß zur Seite.",
           "f": {
             "kind": "noun",
             "gender": "der",
@@ -30412,7 +30412,7 @@
         },
         "es": {
           "h": "el empujón",
-          "x": "Hoy hablamos sobre el empujón.",
+          "x": "Me apartó con un empujón.",
           "f": {
             "kind": "noun",
             "gender": "el",
@@ -30421,7 +30421,7 @@
         },
         "it": {
           "h": "la spinta",
-          "x": "Oggi abbiamo parlato della spinta.",
+          "x": "Mi ha spostato con una spinta.",
           "f": {
             "kind": "noun",
             "gender": "la",

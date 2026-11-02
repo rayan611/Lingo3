@@ -140,7 +140,7 @@ def main():
         it_feminine = it_first.endswith(('zione','sione','tà','tù')) or bool(it_pl and it_pl.split()[0].endswith('e'))
         it_g = item.get('genders',{}).get('it') or ('la' if it_h.startswith(('la ','le ')) or it_base in IT_FEM or (it_h.startswith("l'") and (it_pl.endswith('e') or it_feminine)) else 'il')
         forms['it'] = {'kind':'noun','gender':it_g,'plural':it_pl}
-        examples=make_examples(heads,forms['sv']['definiteSingular'],frame)
+        examples=item.get('examples') or make_examples(heads,forms['sv']['definiteSingular'],frame)
         entries={}
         for lang in LANGS:
             entry={'h':heads[lang],'x':examples[lang]}
