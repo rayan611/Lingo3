@@ -1,3 +1,4 @@
+import { syncGrammar } from './grammarSync'
 import { db, getMeta, setMeta } from '../db/db'
 import { supabase } from '../auth/supabase'
 import { DEFAULT_SETTINGS, type Card, type Collection, type CollectionKind, type Concept, type Entry, type Lang, type LaterWord, type PlanName, type ReviewLogRow, type Settings, type Story } from '../db/types'
@@ -381,6 +382,9 @@ export async function sync(userId: string): Promise<SyncResult> {
       STEP_TIMEOUT_MS,
       'pull',
     )
+    // Grammar sync is optional during schema rollout; do not block vocabulary sync.
+    try { await withTimeout(syncGrammar(userId), STEP_TIMEOUT_MS, 'grammar sync') }
+    catch (error) { console.warn('Grammar sync unavailable:', error) }
     return { pushed, pulled, at: Date.now() }
   } catch (err) {
     controller.abort()
