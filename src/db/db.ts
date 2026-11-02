@@ -218,7 +218,7 @@ export async function adoptLocalData(): Promise<number> {
   const local = new Lingo3DB(dbNameFor(null))
   try {
     await local.open()
-    const [collections, concepts, entries, cards, reviewLog, pending, later] =
+    const [collections, concepts, entries, cards, reviewLog, pending, later, grammarSections, grammarRules] =
       await Promise.all([
         local.collections.toArray(),
         local.concepts.toArray(),
@@ -227,11 +227,13 @@ export async function adoptLocalData(): Promise<number> {
         local.reviewLog.toArray(),
         local.pending.toArray(),
         local.later.toArray(),
+        local.grammarSections.toArray(),
+        local.grammarRules.toArray(),
       ])
     // Parked words count: signing up with nothing added but a list of words
     // written down in class should not throw that list away. So does an empty
     // list someone made and named before signing up.
-    if (concepts.length === 0 && later.length === 0 && collections.length === 0) {
+    if (concepts.length === 0 && later.length === 0 && collections.length === 0 && grammarSections.length === 0 && grammarRules.length === 0) {
       return 0
     }
 
@@ -240,7 +242,7 @@ export async function adoptLocalData(): Promise<number> {
       // The array form: Dexie's variadic overload stops at five tables.
       [
         db.collections, db.concepts, db.entries, db.cards, db.reviewLog,
-        db.pending, db.later,
+        db.pending, db.later, db.grammarSections, db.grammarRules,
       ],
       async () => {
         // bulkPut, not bulkAdd: re-running this must not explode on rows that
@@ -253,6 +255,8 @@ export async function adoptLocalData(): Promise<number> {
         await db.reviewLog.bulkPut(reviewLog)
         await db.pending.bulkPut(pending)
         await db.later.bulkPut(later)
+        await db.grammarSections.bulkPut(grammarSections)
+        await db.grammarRules.bulkPut(grammarRules)
       },
     )
 
@@ -260,7 +264,7 @@ export async function adoptLocalData(): Promise<number> {
       'rw',
       [
         local.collections, local.concepts, local.entries, local.cards,
-        local.reviewLog, local.pending, local.later,
+        local.reviewLog, local.pending, local.later, local.grammarSections, local.grammarRules,
       ],
       async () => {
         await Promise.all([
@@ -271,6 +275,8 @@ export async function adoptLocalData(): Promise<number> {
           local.reviewLog.clear(),
           local.pending.clear(),
           local.later.clear(),
+          local.grammarSections.clear(),
+          local.grammarRules.clear(),
         ])
       },
     )

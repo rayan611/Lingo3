@@ -1,3 +1,9 @@
+## 0.7.1 — 2026-11-02
+- Added private grammar cloud sync with atomic conditional writes and preserved conflict copies.
+- Added grammar sync status/retry, rule editing and language selection.
+- Included grammar writes in automatic sync and anonymous notes in account adoption.
+- Added two-device regression checks and database isolation/CAS checks.
+
 # Lingo3 — change notes
 
 Newest first. Each block says what changed, where it lives, and what is still open, so the next
