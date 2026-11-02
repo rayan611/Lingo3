@@ -29,6 +29,7 @@ import { AddWord } from './ui/AddWord'
 import { Review } from './ui/Review'
 import {
   IconAdd,
+  IconGrammar,
   IconReading,
   IconReview,
   IconSettings,
@@ -555,7 +556,6 @@ function Workspace({
             small — the Add box has to be visible on a phone without
             scrolling past them. */}
         <HomeTiles set={goTab} due={due} active={tab} />
-        <button type="button" onClick={() => goTab('grammar')} aria-current={tab === 'grammar' ? 'page' : undefined}>Grammar Manager</button>
 
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
@@ -669,6 +669,9 @@ function HomeTiles({
       </Tile>
       <Tile id="translate" set={set} active={active} icon={<IconTranslate />}>
         Translate
+      </Tile>
+      <Tile id="grammar" set={set} active={active} icon={<IconGrammar />}>
+        Grammar
       </Tile>
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings
