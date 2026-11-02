@@ -10,9 +10,9 @@ DONE VERIFIED:
 - Applied Supabase migration grammar_least_privilege on vfximbxcxczntqywdryd: anonymous grants revoked, authenticated limited to SELECT/INSERT/UPDATE/DELETE. Both grammar tables have RLS enabled; unsafe grants count = 0.
 - Numeric-version RPC was rehearsed and rolled back, then discarded after migration confirmation expired twice. Final code needs no RPC/new columns and uses the existing deployed schema.
 
-IN PROGRESS: publish follow-up PR, require CI success, merge and verify production deployment. The original #24 is already merged by concurrent work.
+DONE VERIFIED RELEASE: PR #26 merged as 8cb282fea50497c7f4801d67c2153a64f36e61a3 after CI run 41476380503 succeeded (typecheck, npm test, production build). Vercel production dpl_DBBPjEU668q1ZqSW7uCTSSXyoUXj is READY with lingo3.com/www.lingo3.com aliases and the matching commit. The original #24 was already merged by concurrent work.
 LIMITS: two physical signed-in devices were not available; device behavior was modeled with independent IndexedDB stores, with isolation/CAS also checked on the actual database. Daily backup run 41420511863 skipped dump/encryption/upload; a full backup/restore is NOT verified. No existing vocabulary/auth data was modified. Sharing, AI improvements, curated library and advanced section management remain outside this release.
-NEXT: verify the final deployed commit and /grammar response, then record release evidence.
+NEXT: optional physical-device acceptance check using the same account on phone and laptop; configure and restore-test full daily backups separately. No remaining code or database blocker for this release.
 
 ---
 Previous handoff snapshots (historical; current status above supersedes Grammar statements below):
