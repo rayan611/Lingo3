@@ -1,0 +1,203 @@
+{
+  "date": "2026-11-02",
+  "batch": "006",
+  "dataCommit": "da68557e7fd09262e9a3325ef13ad8c11e550011",
+  "before": {
+    "concepts": 1362,
+    "entries": 8168
+  },
+  "after": {
+    "concepts": 2362,
+    "entries": 14168
+  },
+  "selection": {
+    "drafted": 1734,
+    "inserted": 1000,
+    "languageEntries": 6000,
+    "excluded": 627,
+    "reserve": 107,
+    "skippedAtImport": 0
+  },
+  "health": {
+    "payload_entries": 6000,
+    "mismatches": 0,
+    "ready_concepts": 1000,
+    "duplicates": 0,
+    "empty_examples": 0
+  },
+  "explicitLanguageCardHeaders": [
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "it",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "fa",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "es",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "de",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    }
+  ],
+  "automaticLanguageCardHeaders": [
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "it",
+      "tested": 1000,
+      "passed": 969,
+      "failed": [
+        "la corona",
+        "la pera",
+        "la pistola",
+        "la radio",
+        "la foca",
+        "la vela",
+        "la postura",
+        "la resina",
+        "la canoa",
+        "la caricatura",
+        "la colonia",
+        "la conserva",
+        "la consonante",
+        "la copia",
+        "la cultura",
+        "la curva",
+        "la larva",
+        "la lente",
+        "la lista",
+        "la medusa",
+        "la frase",
+        "la mina terrestre",
+        "la miniatura",
+        "la nuca",
+        "la norma",
+        "la palma",
+        "la pantera",
+        "la perla",
+        "la pipa",
+        "la prima",
+        "la protesta"
+      ]
+    },
+    {
+      "lang": "fa",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "es",
+      "tested": 1000,
+      "passed": 967,
+      "failed": [
+        "la frase",
+        "la palma",
+        "la corona",
+        "la pera",
+        "la pistola",
+        "la radio",
+        "la gamba",
+        "la foca",
+        "la vela",
+        "la postura",
+        "la resina",
+        "la canoa",
+        "la caricatura",
+        "la colonia",
+        "la conserva",
+        "la consonante",
+        "la copia",
+        "la cultura",
+        "la curva",
+        "la larva",
+        "la lente",
+        "la lista",
+        "la medusa",
+        "la mina terrestre",
+        "la miniatura",
+        "la nuca",
+        "la norma",
+        "la pantera",
+        "la perla",
+        "la patente",
+        "la pipa",
+        "la prima",
+        "la protesta"
+      ]
+    },
+    {
+      "lang": "de",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    }
+  ],
+  "automaticLanguageBareLemmas": [
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 758
+    },
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 827
+    }
+  ],
+  "clientSchemas": {
+    "morphologyParses": 5000,
+    "expansionParses": 6000,
+    "realRpcParses": 60,
+    "failures": 0
+  },
+  "anonSwedishHeaders": {
+    "tested": 1000,
+    "passed": 1000
+  },
+  "idempotentReimport": {
+    "inserted": 0,
+    "already_present": 1000,
+    "clashes": []
+  },
+  "localChecks": {
+    "regressionScripts": 8,
+    "typecheck": "pass",
+    "productionBuild": "pass"
+  },
+  "finalPayloadSha256": "901a0f7e0f097868f4d0a39007046fcf9c0832b90482f2b72716b1020c4dc4c1"
+}

@@ -4,6 +4,8 @@ Give this whole file to a new chat. It explains what exists, the rules, and the 
 
 Last updated: 2026-11-01 (after batch 002).
 
+2026-11-02 batch-006 update: another **1,000 new nouns / 6,000 entries** were atomically imported from `data/lexin-1000-batch-006`, bringing verified live totals to **2,362 concepts / 14,168 entries**. All 6,000 explicit-language card-header lookups pass, but automatic bare-lemma lookup still has existing language/POS ambiguity (Swedish 758/1,000, English 827/1,000). See `VOCAB_BATCH_006_REPORT.md`; prior batch counts below are historical. Do not reimport this batch as new vocabulary. PR #25 for the earlier 350 was merged before this batch; the new branch is separate and main app code is untouched.
+
 2026-11-02 batch-005 update: 350 additional Lexin noun concepts / 2,100 language entries were actually imported from branch `data/lexin-350-20261102`, excluding all previous batches. Live totals are now 1,362 concepts / 8,168 entries. See `VOCAB_BATCH_005_REPORT.md` for verified counts, selection exclusions, tests and the existing automatic-language ambiguity limitation (2,018/2,100 automatic lookups; all 2,100 explicit-language lookups pass). Do not count an idempotent reimport as new vocabulary. Main application code was not changed.
 
 ---

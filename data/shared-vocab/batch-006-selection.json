@@ -1,0 +1,3742 @@
+{
+  "drafted": 1734,
+  "selected": 1000,
+  "reserve": [
+    "pudel",
+    "pulka",
+    "puls",
+    "pulver",
+    "pump",
+    "pumpa",
+    "punktering",
+    "pupill",
+    "puppa",
+    "puré",
+    "pussel",
+    "pyramid",
+    "rabarber",
+    "rabatt",
+    "räcke",
+    "racket",
+    "rad",
+    "rädisa",
+    "raffinaderi",
+    "raket",
+    "ram",
+    "ramp",
+    "rån",
+    "rånare",
+    "rand",
+    "ranson",
+    "ränta",
+    "ratt",
+    "råtta",
+    "rättelse",
+    "rättighet",
+    "ravin",
+    "reaktion",
+    "reaktor",
+    "rebell",
+    "recension",
+    "reception",
+    "redaktion",
+    "redaktör",
+    "rede",
+    "referat",
+    "referens",
+    "reflex",
+    "refräng",
+    "refug",
+    "regemente",
+    "region",
+    "regissör",
+    "register",
+    "reglage",
+    "reklamation",
+    "rekord",
+    "rekryt",
+    "rektangel",
+    "rektor",
+    "relä",
+    "relation",
+    "reling",
+    "remiss",
+    "replik",
+    "reportage",
+    "reporter",
+    "repris",
+    "reptil",
+    "republik",
+    "resenär",
+    "reserv",
+    "reservat",
+    "resonemang",
+    "rest",
+    "restriktion",
+    "resurs",
+    "reträtt",
+    "retur",
+    "rev",
+    "revir",
+    "revisor",
+    "revolver",
+    "ribba",
+    "ridå",
+    "riddare",
+    "rike",
+    "riktning",
+    "rim",
+    "risk",
+    "ritning",
+    "ritual",
+    "rival",
+    "roder",
+    "roman",
+    "romb",
+    "rondell",
+    "rör",
+    "ros",
+    "rost",
+    "rubrik",
+    "ruin",
+    "rulle",
+    "rumpa",
+    "runa",
+    "russin",
+    "rustning",
+    "ruta",
+    "rutin",
+    "rutt",
+    "rymling",
+    "ryttare"
+  ],
+  "excluded": [
+    {
+      "sv": "abonnemang",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "abonnent",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "accent",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ackord",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "adjektiv",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "adoption",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "adress",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "adverb",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "advokat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "affisch",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "agent",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "äggula",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ägodel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "akrobat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "äktenskap",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aktie",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aktivist",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aktivitet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "akvarell",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "akvarium",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "alarm",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "album",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ålder",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "alfabet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "alibi",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "allians",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "almanacka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "altan",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "altare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "alternativ",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "amatör",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ambassad",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ambassadör",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ambition",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "amulett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "analys",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ananas",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anbud",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ändamål",
+      "reason": "headword collision",
+      "with": [
+        "fa:هدف"
+      ]
+    },
+    {
+      "sv": "andel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ändelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "andetag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ändring",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anekdot",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anfall",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ängel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "änka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ankare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ankel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anklagelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "änkling",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ankomst",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anledning",
+      "reason": "headword collision",
+      "with": [
+        "en:reason",
+        "fa:دلیل",
+        "de:der Grund",
+        "es:la razón",
+        "it:il motivo"
+      ]
+    },
+    {
+      "sv": "anmärkning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "annons",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anorak",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anpassning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anslutning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ansökning",
+      "reason": "headword collision",
+      "with": [
+        "en:application",
+        "es:la solicitud",
+        "it:la domanda"
+      ]
+    },
+    {
+      "sv": "ansvar",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "antagande",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anteckning",
+      "reason": "headword collision",
+      "with": [
+        "es:la nota"
+      ]
+    },
+    {
+      "sv": "antenn",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "antikvitet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "antydan",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "anvisning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "apparat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "applåd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aprikos",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aptit",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arena",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ärende",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "argument",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arkeolog",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arkitekt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arkiv",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "armé",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "artikel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "artist",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arvinge",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "arvode",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "åsikt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "åsna",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aspekt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "assistent",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "astronaut",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ateljé",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "återbesök",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "återresa",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "åtgärd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "atlas",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "atom",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "attityd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "auktion",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "autograf",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "automat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avbrott",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avdrag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "äventyr",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "aveny",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avfart",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avgång",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avhandling",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avlopp",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avokado",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avsikt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avsked",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avslag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avslutning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avsnitt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avstånd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "avtal",
+      "reason": "headword collision",
+      "with": [
+        "it:l'accordo"
+      ]
+    },
+    {
+      "sv": "avvikelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "azalea",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bäck",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "backe",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bagare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "båge",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bageri",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bagett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bagge",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bakelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bakterie",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "balans",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "balja",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "balk",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ballong",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bana",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bandage",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bandit",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bänk",
+      "reason": "headword collision",
+      "with": [
+        "de:die Bank",
+        "es:el banco"
+      ]
+    },
+    {
+      "sv": "bankomat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "barack",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "barndom",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "barometer",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "barriär",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "basker",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bassäng",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bastu",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "batteri",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bäver",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bedövning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bedrägeri",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "befattning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "befogenhet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "begravning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "begrepp",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "behållare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "behandling",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "behov",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bekräftelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "belöning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "belopp",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "beräkning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "beredskap",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "beröring",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besättning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besiktning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besked",
+      "reason": "headword collision",
+      "with": [
+        "de:die Mitteilung"
+      ]
+    },
+    {
+      "sv": "beskrivning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besök",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besökare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "besparing",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "beställning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bestämmelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "betalning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "beteende",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "betoning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "betydelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bevis",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bibliotekarie",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bidrag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "biff",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bilaga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "biografi",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "biolog",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bit",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "biverkning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "björk",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "björn",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blåbär",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blad",
+      "reason": "headword collision",
+      "with": [
+        "en:leaf",
+        "fa:برگ",
+        "de:das Blatt",
+        "es:la hoja",
+        "it:la foglia"
+      ]
+    },
+    {
+      "sv": "blandning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blankett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blåsa",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blick",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blödning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blöja",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "blus",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "böjning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bokstav",
+      "reason": "headword collision",
+      "with": [
+        "it:la lettera"
+      ]
+    },
+    {
+      "sv": "bolag",
+      "reason": "headword collision",
+      "with": [
+        "en:company",
+        "fa:شرکت",
+        "de:die Firma",
+        "es:la empresa",
+        "it:l'azienda"
+      ]
+    },
+    {
+      "sv": "boll",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "böna",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bonde",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bonus",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "börda",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "borr",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bostad",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "botten",
+      "reason": "headword collision",
+      "with": [
+        "de:der Boden"
+      ]
+    },
+    {
+      "sv": "bräda",
+      "reason": "headword collision",
+      "with": [
+        "fa:تخته"
+      ]
+    },
+    {
+      "sv": "bråk",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brand",
+      "reason": "headword collision",
+      "with": [
+        "en:fire"
+      ]
+    },
+    {
+      "sv": "bransch",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brasa",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bredd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bricka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brist",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bröllop",
+      "reason": "headword collision",
+      "with": [
+        "it:il matrimonio"
+      ]
+    },
+    {
+      "sv": "broms",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brosch",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "broschyr",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brott",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brottsling",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "brunn",
+      "reason": "headword collision",
+      "with": [
+        "de:der Brunnen"
+      ]
+    },
+    {
+      "sv": "bubbla",
+      "reason": "headword collision",
+      "with": [
+        "de:die Blase"
+      ]
+    },
+    {
+      "sv": "budget",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "budskap",
+      "reason": "headword collision",
+      "with": [
+        "en:message",
+        "fa:پیام",
+        "de:die Botschaft",
+        "es:el mensaje",
+        "it:il messaggio"
+      ]
+    },
+    {
+      "sv": "buffé",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bukett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bult",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bunke",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "bunt",
+      "reason": "headword collision",
+      "with": [
+        "es:el paquete"
+      ]
+    },
+    {
+      "sv": "bur",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "byggnad",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "byrå",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cell",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cement",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "centrum",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "certifikat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "champinjon",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "chaufför",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "check",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cigarett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cirkel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cirkus",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "citat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "clown",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cyklist",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "cylinder",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dadel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dans",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dansör",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "datum",
+      "reason": "headword collision",
+      "with": [
+        "en:date"
+      ]
+    },
+    {
+      "sv": "debatt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "decennium",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "decimal",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "deckare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "definition",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "deklaration",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dekoration",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "delfin",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "demonstration",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "deodorant",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dessert",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "destination",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "detalj",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "detektiv",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diagnos",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diagram",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dialekt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dialog",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diamant",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diameter",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dike",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dikt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diplom",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diplomat",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "direktör",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dirigent",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "diskussion",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "distrikt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "djungel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "docka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "doft",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dokument",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "domare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "donation",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dos",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "drake",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "draperi",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dricks",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "droppe",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "drottning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "durkslag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "duva",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dygn",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dykare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "dyna",
+      "reason": "headword collision",
+      "with": [
+        "de:das Kissen",
+        "it:il cuscino"
+      ]
+    },
+    {
+      "sv": "effekt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "efternamn",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "egenskap",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ekvation",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "elefant",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "elektriker",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "elektron",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "element",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "emigrant",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "enhet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "enkät",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "entré",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "entreprenör",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "epidemi",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "episod",
+      "reason": "headword collision",
+      "with": [
+        "it:l'episodio"
+      ]
+    },
+    {
+      "sv": "erbjudande",
+      "reason": "headword collision",
+      "with": [
+        "fa:پیشنهاد",
+        "de:das Angebot"
+      ]
+    },
+    {
+      "sv": "ersättning",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "essä",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "etikett",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "etui",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "evenemang",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "exemplar",
+      "reason": "headword collision",
+      "with": [
+        "fa:نسخه"
+      ]
+    },
+    {
+      "sv": "experiment",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "expert",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "explosion",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fabrik",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fackla",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "faktor",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "faktura",
+      "reason": "headword collision",
+      "with": [
+        "de:die Rechnung"
+      ]
+    },
+    {
+      "sv": "fälg",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "falk",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fälla",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fält",
+      "reason": "headword collision",
+      "with": [
+        "fa:میدان"
+      ]
+    },
+    {
+      "sv": "fana",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fånge",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fängelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fantasi",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fara",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "färdighet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "farkost",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fartyg",
+      "reason": "headword collision",
+      "with": [
+        "es:el barco"
+      ]
+    },
+    {
+      "sv": "fasad",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "faster",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fastighet",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fästing",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fåtölj",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "favorit",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fena",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fenomen",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "festival",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fiende",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "figur",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fikon",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "filé",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "filial",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "filosof",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "filter",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "final",
+      "reason": "headword collision",
+      "with": [
+        "es:la final"
+      ]
+    },
+    {
+      "sv": "fiol",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fiskare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fjäder",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fläck",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flagga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fläkt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fläta",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flinga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flock",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flöjt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flotte",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fluga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flygel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "flykting",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fodral",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "föl",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "folder",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förband",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förbättring",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förberedelse",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förbud",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fördel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fördom",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fordon",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "förebild",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "föredrag",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "föremål",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "fotokopia",
+      "reason": "Swedish morphology review",
+      "raw": "-kopian -kopior"
+    },
+    {
+      "sv": "fyrkant",
+      "reason": "headword collision",
+      "with": [
+        "en:square"
+      ]
+    },
+    {
+      "sv": "garderob",
+      "reason": "headword collision",
+      "with": [
+        "es:el armario",
+        "it:l'armadio"
+      ]
+    },
+    {
+      "sv": "gåva",
+      "reason": "headword collision",
+      "with": [
+        "en:gift",
+        "fa:هدیه",
+        "de:das Geschenk",
+        "es:el regalo",
+        "it:il regalo"
+      ]
+    },
+    {
+      "sv": "glödlampa",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "godkännande",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "gren",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "grind",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "gryta",
+      "reason": "headword collision",
+      "with": [
+        "fa:قابلمه",
+        "it:la pentola"
+      ]
+    },
+    {
+      "sv": "hamn",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "hantverkare",
+      "reason": "Swedish morphology review",
+      "raw": "hantverkar(e)n hantverkare hantverkarna"
+    },
+    {
+      "sv": "häst",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "hammare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "handduk",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "handske",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "hatt",
+      "reason": "headword collision",
+      "with": [
+        "fa:کلاه"
+      ]
+    },
+    {
+      "sv": "hotell",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "hylla",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "insekt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "jacka",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "jordgubbe",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "kabel",
+      "reason": "headword collision",
+      "with": [
+        "en:cable",
+        "fa:کابل",
+        "de:das Kabel",
+        "es:el cable",
+        "it:il cavo"
+      ]
+    },
+    {
+      "sv": "kanin",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "kastrull",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "knapp",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "kollega",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "korv",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "krage",
+      "reason": "headword collision",
+      "with": [
+        "es:el cuello"
+      ]
+    },
+    {
+      "sv": "kran",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "kudde",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "låda",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "läkare",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "lastbil",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "lejon",
+      "reason": "headword collision",
+      "with": [
+        "fa:شیر"
+      ]
+    },
+    {
+      "sv": "lina",
+      "reason": "headword collision",
+      "with": [
+        "en:rope",
+        "fa:طناب",
+        "de:das Seil",
+        "es:la cuerda"
+      ]
+    },
+    {
+      "sv": "linjal",
+      "reason": "headword collision",
+      "with": [
+        "es:la regla"
+      ]
+    },
+    {
+      "sv": "lök",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "matta",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "moln",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "mur",
+      "reason": "headword collision",
+      "with": [
+        "en:wall",
+        "it:il muro"
+      ]
+    },
+    {
+      "sv": "mygga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "nyckel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "orm",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "ost",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "pingvin",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "plånbok",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "polis",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "rep",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "sax",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "skål",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "sked",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "skruv",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "skugga",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "sladd",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "slott",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "solros",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "spegel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "spik",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "spindel",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "staket",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "stege",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "strumpa",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "tä lt",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "väska",
+      "reason": "not unused Lexin noun"
+    },
+    {
+      "sv": "vinge",
+      "reason": "headword collision",
+      "with": [
+        "de:der Flügel"
+      ]
+    },
+    {
+      "sv": "galax",
+      "reason": "headword collision",
+      "with": [
+        "sv:en galax",
+        "en:galaxy",
+        "fa:کهکشان",
+        "de:die Galaxie",
+        "es:la galaxia",
+        "it:la galassia"
+      ]
+    },
+    {
+      "sv": "galge",
+      "reason": "headword collision",
+      "with": [
+        "sv:en galge",
+        "en:coat hanger",
+        "fa:چوب‌لباسی",
+        "de:der Kleiderbügel",
+        "es:la percha",
+        "it:la gruccia"
+      ]
+    },
+    {
+      "sv": "galleri",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett galleri",
+        "en:gallery",
+        "fa:نگارخانه",
+        "de:die Galerie",
+        "es:la galería",
+        "it:la galleria"
+      ]
+    },
+    {
+      "sv": "garage",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett garage",
+        "en:garage",
+        "fa:گاراژ",
+        "de:die Garage",
+        "es:el garaje",
+        "it:il garage"
+      ]
+    },
+    {
+      "sv": "garanti",
+      "reason": "headword collision",
+      "with": [
+        "sv:en garanti",
+        "en:guarantee",
+        "fa:ضمانت",
+        "de:die Garantie",
+        "es:la garantía",
+        "it:la garanzia"
+      ]
+    },
+    {
+      "sv": "gård",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gård",
+        "en:courtyard",
+        "fa:حیاط",
+        "de:der Hof",
+        "es:el patio",
+        "it:il cortile"
+      ]
+    },
+    {
+      "sv": "garderob",
+      "reason": "headword collision",
+      "with": [
+        "es:el armario",
+        "it:l'armadio"
+      ]
+    },
+    {
+      "sv": "gardin",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gardin",
+        "en:window curtain",
+        "fa:پردهٔ پنجره",
+        "de:die Gardine",
+        "es:la cortina de ventana",
+        "it:la tenda da finestra"
+      ]
+    },
+    {
+      "sv": "gåta",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gåta",
+        "en:riddle",
+        "fa:معما",
+        "de:das Rätsel",
+        "es:el acertijo",
+        "it:l'indovinello"
+      ]
+    },
+    {
+      "sv": "gåva",
+      "reason": "headword collision",
+      "with": [
+        "en:gift",
+        "fa:هدیه",
+        "de:das Geschenk",
+        "es:el regalo",
+        "it:il regalo"
+      ]
+    },
+    {
+      "sv": "gem",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett gem",
+        "en:paper clip",
+        "fa:گیرهٔ کاغذ",
+        "de:die Büroklammer",
+        "es:el clip",
+        "it:la graffetta"
+      ]
+    },
+    {
+      "sv": "generation",
+      "reason": "headword collision",
+      "with": [
+        "sv:en generation",
+        "en:generation",
+        "fa:نسل",
+        "de:die Generation",
+        "es:la generación",
+        "it:la generazione"
+      ]
+    },
+    {
+      "sv": "generator",
+      "reason": "headword collision",
+      "with": [
+        "sv:en generator",
+        "en:generator",
+        "fa:ژنراتور",
+        "de:der Generator",
+        "es:el generador",
+        "it:il generatore"
+      ]
+    },
+    {
+      "sv": "geni",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett geni",
+        "en:genius",
+        "fa:نابغه",
+        "de:das Genie",
+        "es:el genio",
+        "it:il genio"
+      ]
+    },
+    {
+      "sv": "genväg",
+      "reason": "headword collision",
+      "with": [
+        "de:die Abkürzung"
+      ]
+    },
+    {
+      "sv": "gevär",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett gevär",
+        "en:rifle",
+        "fa:تفنگ",
+        "de:das Gewehr",
+        "es:el fusil",
+        "it:il fucile"
+      ]
+    },
+    {
+      "sv": "gisslan",
+      "reason": "Swedish morphology review",
+      "raw": ""
+    },
+    {
+      "sv": "gissning",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gissning",
+        "en:guess",
+        "fa:حدس",
+        "de:die Vermutung",
+        "es:la conjetura",
+        "it:la congettura"
+      ]
+    },
+    {
+      "sv": "gitarr",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gitarr",
+        "en:guitar",
+        "fa:گیتار",
+        "de:die Gitarre",
+        "es:la guitarra",
+        "it:la chitarra"
+      ]
+    },
+    {
+      "sv": "gruva",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gruva",
+        "en:mine",
+        "fa:معدن",
+        "de:das Bergwerk",
+        "es:la mina",
+        "it:la miniera"
+      ]
+    },
+    {
+      "sv": "gryta",
+      "reason": "headword collision",
+      "with": [
+        "fa:قابلمه",
+        "it:la pentola"
+      ]
+    },
+    {
+      "sv": "guide",
+      "reason": "headword collision",
+      "with": [
+        "sv:en guide",
+        "fa:راهنمای گردشگری",
+        "de:der Reiseführer",
+        "es:el guía",
+        "it:la guida"
+      ]
+    },
+    {
+      "sv": "gunga",
+      "reason": "headword collision",
+      "with": [
+        "sv:en gunga",
+        "en:swing",
+        "fa:تاب",
+        "de:die Schaukel",
+        "es:el columpio",
+        "it:l'altalena"
+      ]
+    },
+    {
+      "sv": "hacker",
+      "reason": "Swedish plural review",
+      "raw": "hackern hackers"
+    },
+    {
+      "sv": "häl",
+      "reason": "headword collision",
+      "with": [
+        "sv:en häl",
+        "en:heel",
+        "fa:پاشنهٔ پا",
+        "de:die Ferse",
+        "es:el talón",
+        "it:il tallone"
+      ]
+    },
+    {
+      "sv": "handling",
+      "reason": "headword collision",
+      "with": [
+        "it:l'azione"
+      ]
+    },
+    {
+      "sv": "hatt",
+      "reason": "headword collision",
+      "with": [
+        "fa:کلاه"
+      ]
+    },
+    {
+      "sv": "häxa",
+      "reason": "headword collision",
+      "with": [
+        "sv:en häxa",
+        "en:witch",
+        "fa:جادوگر زن",
+        "de:die Hexe",
+        "es:la bruja",
+        "it:la strega"
+      ]
+    },
+    {
+      "sv": "helikopter",
+      "reason": "headword collision",
+      "with": [
+        "sv:en helikopter",
+        "en:helicopter",
+        "fa:بالگرد",
+        "de:der Hubschrauber",
+        "es:el helicóptero",
+        "it:l'elicottero"
+      ]
+    },
+    {
+      "sv": "hjort",
+      "reason": "headword collision",
+      "with": [
+        "sv:en hjort",
+        "en:deer",
+        "fa:گوزن",
+        "de:der Hirsch",
+        "es:el ciervo",
+        "it:il cervo"
+      ]
+    },
+    {
+      "sv": "hjul",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett hjul",
+        "en:wheel",
+        "fa:چرخ",
+        "de:das Rad",
+        "es:la rueda",
+        "it:la ruota"
+      ]
+    },
+    {
+      "sv": "holme",
+      "reason": "headword collision",
+      "with": [
+        "de:die Insel"
+      ]
+    },
+    {
+      "sv": "höna",
+      "reason": "headword collision",
+      "with": [
+        "fa:مرغ"
+      ]
+    },
+    {
+      "sv": "horn",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett horn",
+        "en:horn",
+        "fa:شاخ",
+        "de:das Horn",
+        "es:el cuerno",
+        "it:il corno"
+      ]
+    },
+    {
+      "sv": "hörna",
+      "reason": "headword collision",
+      "with": [
+        "en:corner",
+        "fa:گوشه",
+        "de:die Ecke",
+        "it:l'angolo"
+      ]
+    },
+    {
+      "sv": "hov",
+      "reason": "headword collision",
+      "with": [
+        "es:el casco"
+      ]
+    },
+    {
+      "sv": "huva",
+      "reason": "headword collision",
+      "with": [
+        "en:hood",
+        "es:la capucha",
+        "it:il cappuccio"
+      ]
+    },
+    {
+      "sv": "hydda",
+      "reason": "headword collision",
+      "with": [
+        "en:hut"
+      ]
+    },
+    {
+      "sv": "hyvel",
+      "reason": "headword collision",
+      "with": [
+        "en:plane"
+      ]
+    },
+    {
+      "sv": "iakttagelse",
+      "reason": "headword collision",
+      "with": [
+        "es:la observación",
+        "it:l'osservazione"
+      ]
+    },
+    {
+      "sv": "igelkott",
+      "reason": "headword collision",
+      "with": [
+        "sv:en igelkott",
+        "en:hedgehog",
+        "fa:جوجه‌تیغی",
+        "de:der Igel",
+        "es:el erizo",
+        "it:il riccio"
+      ]
+    },
+    {
+      "sv": "industri",
+      "reason": "headword collision",
+      "with": [
+        "en:industry"
+      ]
+    },
+    {
+      "sv": "inflytande",
+      "reason": "headword collision",
+      "with": [
+        "it:l'influenza"
+      ]
+    },
+    {
+      "sv": "inlägg",
+      "reason": "headword collision",
+      "with": [
+        "de:der Beitrag"
+      ]
+    },
+    {
+      "sv": "inneboende",
+      "reason": "Swedish morphology review",
+      "raw": ""
+    },
+    {
+      "sv": "innehavare",
+      "reason": "headword collision",
+      "with": [
+        "en:holder"
+      ]
+    },
+    {
+      "sv": "inställning",
+      "reason": "headword collision",
+      "with": [
+        "de:die Einstellung"
+      ]
+    },
+    {
+      "sv": "journalist",
+      "reason": "headword collision",
+      "with": [
+        "sv:en journalist",
+        "en:journalist",
+        "fa:روزنامه‌نگار",
+        "de:der Journalist",
+        "es:el periodista",
+        "it:il giornalista"
+      ]
+    },
+    {
+      "sv": "kabel",
+      "reason": "headword collision",
+      "with": [
+        "en:cable",
+        "fa:کابل",
+        "de:das Kabel",
+        "es:el cable",
+        "it:il cavo"
+      ]
+    },
+    {
+      "sv": "kaktus",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kaktus",
+        "en:cactus",
+        "fa:کاکتوس",
+        "de:der Kaktus",
+        "es:el cactus",
+        "it:il cactus"
+      ]
+    },
+    {
+      "sv": "kalkon",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kalkon",
+        "en:turkey",
+        "fa:بوقلمون",
+        "de:der Truthahn",
+        "es:el pavo",
+        "it:il tacchino"
+      ]
+    },
+    {
+      "sv": "källa",
+      "reason": "headword collision",
+      "with": [
+        "es:la fuente"
+      ]
+    },
+    {
+      "sv": "kamin",
+      "reason": "headword collision",
+      "with": [
+        "de:der Ofen"
+      ]
+    },
+    {
+      "sv": "kanal",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kanal",
+        "en:canal",
+        "fa:آبراه",
+        "de:der Kanal",
+        "es:el canal",
+        "it:il canale"
+      ]
+    },
+    {
+      "sv": "kanna",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kanna",
+        "en:jug",
+        "fa:پارچ",
+        "de:die Kanne",
+        "es:la jarra",
+        "it:la caraffa"
+      ]
+    },
+    {
+      "sv": "kapital",
+      "reason": "headword collision",
+      "with": [
+        "es:el capital",
+        "it:il capitale"
+      ]
+    },
+    {
+      "sv": "kapten",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kapten",
+        "en:captain",
+        "fa:کاپیتان",
+        "de:der Kapitän",
+        "es:el capitán",
+        "it:il capitano"
+      ]
+    },
+    {
+      "sv": "karaff",
+      "reason": "headword collision",
+      "with": [
+        "it:la caraffa"
+      ]
+    },
+    {
+      "sv": "karamell",
+      "reason": "headword collision",
+      "with": [
+        "it:la caramella"
+      ]
+    },
+    {
+      "sv": "kärl",
+      "reason": "headword collision",
+      "with": [
+        "en:vessel",
+        "it:il vaso"
+      ]
+    },
+    {
+      "sv": "kassa",
+      "reason": "headword collision",
+      "with": [
+        "es:la caja"
+      ]
+    },
+    {
+      "sv": "kedja",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kedja",
+        "en:chain",
+        "fa:زنجیر",
+        "de:die Kette",
+        "es:la cadena",
+        "it:la catena"
+      ]
+    },
+    {
+      "sv": "keps",
+      "reason": "headword collision",
+      "with": [
+        "en:cap",
+        "it:il berretto"
+      ]
+    },
+    {
+      "sv": "kista",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kista",
+        "en:coffin",
+        "fa:تابوت",
+        "de:der Sarg",
+        "es:el ataúd",
+        "it:la bara"
+      ]
+    },
+    {
+      "sv": "klase",
+      "reason": "headword collision",
+      "with": [
+        "de:die Traube"
+      ]
+    },
+    {
+      "sv": "klient",
+      "reason": "headword collision",
+      "with": [
+        "es:el cliente",
+        "it:il cliente"
+      ]
+    },
+    {
+      "sv": "klippa",
+      "reason": "headword collision",
+      "with": [
+        "sv:en klippa",
+        "en:cliff",
+        "fa:صخره",
+        "de:die Klippe",
+        "es:el acantilado",
+        "it:la scogliera"
+      ]
+    },
+    {
+      "sv": "klister",
+      "reason": "headword collision",
+      "with": [
+        "en:glue",
+        "fa:چسب",
+        "es:el pegamento",
+        "it:la colla"
+      ]
+    },
+    {
+      "sv": "kloster",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett kloster",
+        "en:monastery",
+        "fa:صومعه",
+        "de:das Kloster",
+        "es:el monasterio",
+        "it:il monastero"
+      ]
+    },
+    {
+      "sv": "klot",
+      "reason": "headword collision",
+      "with": [
+        "fa:کره",
+        "de:die Kugel"
+      ]
+    },
+    {
+      "sv": "klyfta",
+      "reason": "headword collision",
+      "with": [
+        "fa:شکاف"
+      ]
+    },
+    {
+      "sv": "knut",
+      "reason": "headword collision",
+      "with": [
+        "sv:en knut",
+        "en:knot",
+        "fa:گره",
+        "de:der Knoten",
+        "es:el nudo",
+        "it:il nodo"
+      ]
+    },
+    {
+      "sv": "kö",
+      "reason": "headword collision",
+      "with": [
+        "es:la cola",
+        "it:la coda"
+      ]
+    },
+    {
+      "sv": "koffert",
+      "reason": "headword collision",
+      "with": [
+        "sv:en koffert",
+        "en:trunk",
+        "fa:صندوق سفر",
+        "de:der Reisekoffer",
+        "es:el baúl",
+        "it:il baule"
+      ]
+    },
+    {
+      "sv": "kofta",
+      "reason": "headword collision",
+      "with": [
+        "fa:ژاکت بافتنی"
+      ]
+    },
+    {
+      "sv": "komet",
+      "reason": "headword collision",
+      "with": [
+        "es:el cometa"
+      ]
+    },
+    {
+      "sv": "konferens",
+      "reason": "headword collision",
+      "with": [
+        "es:la conferencia",
+        "it:la conferenza"
+      ]
+    },
+    {
+      "sv": "konstnär",
+      "reason": "headword collision",
+      "with": [
+        "sv:en konstnär",
+        "fa:هنرمند تجسمی",
+        "it:l'artista visivo"
+      ]
+    },
+    {
+      "sv": "kontakt",
+      "reason": "headword collision",
+      "with": [
+        "es:el contacto"
+      ]
+    },
+    {
+      "sv": "konto",
+      "reason": "headword collision",
+      "with": [
+        "es:la cuenta",
+        "it:il conto"
+      ]
+    },
+    {
+      "sv": "krans",
+      "reason": "headword collision",
+      "with": [
+        "sv:en krans",
+        "en:wreath",
+        "fa:حلقهٔ گل",
+        "de:der Kranz",
+        "es:la corona de flores",
+        "it:la ghirlanda"
+      ]
+    },
+    {
+      "sv": "kratta",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kratta",
+        "en:rake",
+        "fa:شن‌کش",
+        "de:der Rechen",
+        "es:el rastrillo",
+        "it:il rastrello"
+      ]
+    },
+    {
+      "sv": "krok",
+      "reason": "headword collision",
+      "with": [
+        "sv:en krok",
+        "en:hook",
+        "fa:قلاب",
+        "de:der Haken",
+        "es:el gancho",
+        "it:il gancio"
+      ]
+    },
+    {
+      "sv": "krona",
+      "reason": "headword collision",
+      "with": [
+        "sv:en krona",
+        "en:crown",
+        "fa:تاج",
+        "de:die Krone",
+        "es:la corona",
+        "it:la corona"
+      ]
+    },
+    {
+      "sv": "kruka",
+      "reason": "headword collision",
+      "with": [
+        "sv:en kruka",
+        "en:flowerpot",
+        "fa:گلدان",
+        "de:der Blumentopf",
+        "es:la maceta",
+        "it:il vaso da fiori"
+      ]
+    },
+    {
+      "sv": "krus",
+      "reason": "headword collision",
+      "with": [
+        "en:mug"
+      ]
+    },
+    {
+      "sv": "kub",
+      "reason": "headword collision",
+      "with": [
+        "es:el cubo"
+      ]
+    },
+    {
+      "sv": "kupa",
+      "reason": "sense or modern usage needs separate review"
+    },
+    {
+      "sv": "kuvert",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett kuvert",
+        "en:envelope",
+        "fa:پاکت نامه",
+        "de:der Briefumschlag",
+        "es:el sobre",
+        "it:la busta"
+      ]
+    },
+    {
+      "sv": "kvarter",
+      "reason": "headword collision",
+      "with": [
+        "es:la manzana"
+      ]
+    },
+    {
+      "sv": "läcka",
+      "reason": "headword collision",
+      "with": [
+        "it:la perdita"
+      ]
+    },
+    {
+      "sv": "lamm",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett lamm",
+        "en:lamb",
+        "fa:بره",
+        "de:das Lamm",
+        "es:el cordero",
+        "it:l'agnello"
+      ]
+    },
+    {
+      "sv": "länk",
+      "reason": "headword collision",
+      "with": [
+        "it:il collegamento"
+      ]
+    },
+    {
+      "sv": "lärling",
+      "reason": "headword collision",
+      "with": [
+        "sv:en lärling",
+        "en:apprentice",
+        "fa:کارآموز",
+        "de:der Lehrling",
+        "es:el aprendiz",
+        "it:l'apprendista"
+      ]
+    },
+    {
+      "sv": "lås",
+      "reason": "headword collision",
+      "with": [
+        "de:das Schloss"
+      ]
+    },
+    {
+      "sv": "ledare",
+      "reason": "headword collision",
+      "with": [
+        "de:der Leiter"
+      ]
+    },
+    {
+      "sv": "lejon",
+      "reason": "headword collision",
+      "with": [
+        "fa:شیر"
+      ]
+    },
+    {
+      "sv": "liga",
+      "reason": "headword collision",
+      "with": [
+        "it:la lega"
+      ]
+    },
+    {
+      "sv": "linjal",
+      "reason": "headword collision",
+      "with": [
+        "es:la regla"
+      ]
+    },
+    {
+      "sv": "lock",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett lock",
+        "en:lid",
+        "fa:درپوش",
+        "de:der Deckel",
+        "es:la tapa",
+        "it:il coperchio"
+      ]
+    },
+    {
+      "sv": "lönn",
+      "reason": "headword collision",
+      "with": [
+        "sv:en lönn",
+        "en:maple",
+        "fa:درخت افرا",
+        "de:der Ahorn",
+        "es:el arce",
+        "it:l'acero"
+      ]
+    },
+    {
+      "sv": "luva",
+      "reason": "headword collision",
+      "with": [
+        "sv:en luva",
+        "en:hood",
+        "fa:کلاه متصل به لباس",
+        "de:die Kapuze",
+        "es:la capucha",
+        "it:il cappuccio"
+      ]
+    },
+    {
+      "sv": "lykta",
+      "reason": "headword collision",
+      "with": [
+        "sv:en lykta",
+        "en:lantern",
+        "fa:فانوس",
+        "de:die Laterne",
+        "es:el farol",
+        "it:la lanterna"
+      ]
+    },
+    {
+      "sv": "magnet",
+      "reason": "headword collision",
+      "with": [
+        "sv:en magnet",
+        "en:magnet",
+        "fa:آهن‌ربا",
+        "de:der Magnet",
+        "es:el imán",
+        "it:il magnete"
+      ]
+    },
+    {
+      "sv": "mandel",
+      "reason": "headword collision",
+      "with": [
+        "sv:en mandel",
+        "en:almond",
+        "fa:بادام",
+        "de:die Mandel",
+        "es:la almendra",
+        "it:la mandorla"
+      ]
+    },
+    {
+      "sv": "mängd",
+      "reason": "headword collision",
+      "with": [
+        "en:amount",
+        "es:la cantidad",
+        "it:la quantità"
+      ]
+    },
+    {
+      "sv": "manifest",
+      "reason": "headword collision",
+      "with": [
+        "it:il manifesto"
+      ]
+    },
+    {
+      "sv": "mask",
+      "reason": "headword collision",
+      "with": [
+        "sv:en mask",
+        "en:worm",
+        "fa:کرم",
+        "de:der Wurm",
+        "es:el gusano",
+        "it:il verme"
+      ]
+    },
+    {
+      "sv": "maskin",
+      "reason": "headword collision",
+      "with": [
+        "fa:ماشین",
+        "it:la macchina"
+      ]
+    },
+    {
+      "sv": "match",
+      "reason": "headword collision",
+      "with": [
+        "de:das Spiel"
+      ]
+    },
+    {
+      "sv": "mekaniker",
+      "reason": "headword collision",
+      "with": [
+        "sv:en mekaniker",
+        "en:mechanic",
+        "fa:مکانیک",
+        "de:der Mechaniker",
+        "es:el mecánico",
+        "it:il meccanico"
+      ]
+    },
+    {
+      "sv": "midja",
+      "reason": "headword collision",
+      "with": [
+        "it:la vita"
+      ]
+    },
+    {
+      "sv": "mikroskop",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett mikroskop",
+        "en:microscope",
+        "fa:میکروسکوپ",
+        "de:das Mikroskop",
+        "es:el microscopio",
+        "it:il microscopio"
+      ]
+    },
+    {
+      "sv": "modell",
+      "reason": "headword collision",
+      "with": [
+        "it:il modello"
+      ]
+    },
+    {
+      "sv": "modul",
+      "reason": "headword collision",
+      "with": [
+        "it:il modulo"
+      ]
+    },
+    {
+      "sv": "moment",
+      "reason": "sense or modern usage needs separate review"
+    },
+    {
+      "sv": "motor",
+      "reason": "headword collision",
+      "with": [
+        "sv:en motor",
+        "en:engine",
+        "fa:موتور",
+        "de:der Motor",
+        "es:el motor",
+        "it:il motore"
+      ]
+    },
+    {
+      "sv": "muffin",
+      "reason": "sense or modern usage needs separate review"
+    },
+    {
+      "sv": "mur",
+      "reason": "headword collision",
+      "with": [
+        "it:il muro"
+      ]
+    },
+    {
+      "sv": "mutter",
+      "reason": "headword collision",
+      "with": [
+        "en:nut"
+      ]
+    },
+    {
+      "sv": "myra",
+      "reason": "headword collision",
+      "with": [
+        "sv:en myra",
+        "en:ant",
+        "fa:مورچه",
+        "de:die Ameise",
+        "es:la hormiga",
+        "it:la formica"
+      ]
+    },
+    {
+      "sv": "nål",
+      "reason": "headword collision",
+      "with": [
+        "sv:en nål",
+        "en:needle",
+        "fa:سوزن",
+        "de:die Nadel",
+        "es:la aguja",
+        "it:l'ago"
+      ]
+    },
+    {
+      "sv": "näve",
+      "reason": "headword collision",
+      "with": [
+        "sv:en näve",
+        "en:fist",
+        "fa:مشت",
+        "de:die Faust",
+        "es:el puño",
+        "it:il pugno"
+      ]
+    },
+    {
+      "sv": "objektiv",
+      "reason": "headword collision",
+      "with": [
+        "es:el objetivo",
+        "it:l'obiettivo"
+      ]
+    },
+    {
+      "sv": "odling",
+      "reason": "headword collision",
+      "with": [
+        "es:el cultivo"
+      ]
+    },
+    {
+      "sv": "offert",
+      "reason": "headword collision",
+      "with": [
+        "en:quotation",
+        "es:el presupuesto"
+      ]
+    },
+    {
+      "sv": "område",
+      "reason": "headword collision",
+      "with": [
+        "fa:ناحیه"
+      ]
+    },
+    {
+      "sv": "omslag",
+      "reason": "headword collision",
+      "with": [
+        "en:cover"
+      ]
+    },
+    {
+      "sv": "omväg",
+      "reason": "headword collision",
+      "with": [
+        "it:la deviazione"
+      ]
+    },
+    {
+      "sv": "ort",
+      "reason": "headword collision",
+      "with": [
+        "de:der Ort"
+      ]
+    },
+    {
+      "sv": "padda",
+      "reason": "headword collision",
+      "with": [
+        "sv:en padda",
+        "en:toad",
+        "fa:وزغ",
+        "de:die Kröte",
+        "es:el sapo",
+        "it:il rospo"
+      ]
+    },
+    {
+      "sv": "paddel",
+      "reason": "headword collision",
+      "with": [
+        "sv:en paddel",
+        "en:paddle",
+        "fa:پاروی قایق",
+        "de:das Paddel",
+        "es:el remo",
+        "it:la pagaia"
+      ]
+    },
+    {
+      "sv": "palats",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett palats",
+        "en:palace",
+        "fa:کاخ",
+        "de:der Palast",
+        "es:el palacio",
+        "it:il palazzo"
+      ]
+    },
+    {
+      "sv": "panna",
+      "reason": "headword collision",
+      "with": [
+        "sv:en panna",
+        "en:forehead",
+        "fa:پیشانی",
+        "de:die Stirn",
+        "es:la frente",
+        "it:la fronte"
+      ]
+    },
+    {
+      "sv": "papegoja",
+      "reason": "headword collision",
+      "with": [
+        "sv:en papegoja",
+        "en:parrot",
+        "fa:طوطی",
+        "de:der Papagei",
+        "es:el loro",
+        "it:il pappagallo"
+      ]
+    },
+    {
+      "sv": "parentes",
+      "reason": "headword collision",
+      "with": [
+        "de:die Klammer"
+      ]
+    },
+    {
+      "sv": "parfym",
+      "reason": "headword collision",
+      "with": [
+        "it:il profumo"
+      ]
+    },
+    {
+      "sv": "päron",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett päron",
+        "en:pear",
+        "fa:گلابی",
+        "de:die Birne",
+        "es:la pera",
+        "it:la pera"
+      ]
+    },
+    {
+      "sv": "partner",
+      "reason": "Swedish plural review",
+      "raw": "partnern partners (el. partner)"
+    },
+    {
+      "sv": "påse",
+      "reason": "headword collision",
+      "with": [
+        "en:bag",
+        "es:la bolsa"
+      ]
+    },
+    {
+      "sv": "pastill",
+      "reason": "headword collision",
+      "with": [
+        "es:la pastilla",
+        "it:la pastiglia"
+      ]
+    },
+    {
+      "sv": "patron",
+      "reason": "headword collision",
+      "with": [
+        "sv:en patron",
+        "en:cartridge",
+        "fa:کارتریج",
+        "de:die Patrone",
+        "es:el cartucho",
+        "it:la cartuccia"
+      ]
+    },
+    {
+      "sv": "paus",
+      "reason": "headword collision",
+      "with": [
+        "de:die Pause",
+        "it:la pausa"
+      ]
+    },
+    {
+      "sv": "pensel",
+      "reason": "headword collision",
+      "with": [
+        "sv:en pensel",
+        "en:paintbrush",
+        "fa:قلم‌مو",
+        "de:der Pinsel",
+        "es:el pincel",
+        "it:il pennello"
+      ]
+    },
+    {
+      "sv": "piller",
+      "reason": "headword collision",
+      "with": [
+        "en:pill",
+        "fa:قرص"
+      ]
+    },
+    {
+      "sv": "pilot",
+      "reason": "headword collision",
+      "with": [
+        "sv:en pilot",
+        "en:pilot",
+        "fa:خلبان",
+        "de:der Pilot",
+        "es:el piloto",
+        "it:il pilota"
+      ]
+    },
+    {
+      "sv": "pincett",
+      "reason": "headword collision",
+      "with": [
+        "es:la pinza"
+      ]
+    },
+    {
+      "sv": "piska",
+      "reason": "headword collision",
+      "with": [
+        "it:la frusta"
+      ]
+    },
+    {
+      "sv": "pistol",
+      "reason": "headword collision",
+      "with": [
+        "sv:en pistol",
+        "en:pistol",
+        "fa:تپانچه",
+        "de:die Pistole",
+        "es:la pistola",
+        "it:la pistola"
+      ]
+    },
+    {
+      "sv": "pläd",
+      "reason": "headword collision",
+      "with": [
+        "es:la manta"
+      ]
+    },
+    {
+      "sv": "plantering",
+      "reason": "headword collision",
+      "with": [
+        "es:la plantación"
+      ]
+    },
+    {
+      "sv": "plikt",
+      "reason": "headword collision",
+      "with": [
+        "fa:وظیفه"
+      ]
+    },
+    {
+      "sv": "plommon",
+      "reason": "headword collision",
+      "with": [
+        "sv:ett plommon",
+        "en:plum",
+        "fa:آلو",
+        "de:die Pflaume",
+        "es:la ciruela",
+        "it:la prugna"
+      ]
+    },
+    {
+      "sv": "plugg",
+      "reason": "headword collision",
+      "with": [
+        "sv:en plugg",
+        "en:wall plug",
+        "fa:رول‌پلاک",
+        "de:der Dübel",
+        "es:el taco",
+        "it:il tassello"
+      ]
+    },
+    {
+      "sv": "pluton",
+      "reason": "headword collision",
+      "with": [
+        "de:der Zug"
+      ]
+    },
+    {
+      "sv": "podium",
+      "reason": "headword collision",
+      "with": [
+        "fa:سکو"
+      ]
+    },
+    {
+      "sv": "ponny",
+      "reason": "headword collision",
+      "with": [
+        "de:das Pony"
+      ]
+    },
+    {
+      "sv": "position",
+      "reason": "headword collision",
+      "with": [
+        "en:position",
+        "it:la posizione"
+      ]
+    },
+    {
+      "sv": "präst",
+      "reason": "headword collision",
+      "with": [
+        "sv:en präst",
+        "en:priest",
+        "fa:کشیش",
+        "de:der Priester",
+        "es:el sacerdote",
+        "it:il sacerdote"
+      ]
+    },
+    {
+      "sv": "prestation",
+      "reason": "headword collision",
+      "with": [
+        "it:il risultato"
+      ]
+    },
+    {
+      "sv": "prins",
+      "reason": "headword collision",
+      "with": [
+        "sv:en prins",
+        "en:prince",
+        "fa:شاهزادهٔ مرد",
+        "de:der Prinz",
+        "es:el príncipe",
+        "it:il principe"
+      ]
+    },
+    {
+      "sv": "prinsessa",
+      "reason": "headword collision",
+      "with": [
+        "sv:en prinsessa",
+        "en:princess",
+        "fa:شاهزادهٔ زن",
+        "de:die Prinzessin",
+        "es:la princesa",
+        "it:la principessa"
+      ]
+    },
+    {
+      "sv": "professor",
+      "reason": "headword collision",
+      "with": [
+        "it:il professore"
+      ]
+    },
+    {
+      "sv": "promemoria",
+      "reason": "headword collision",
+      "with": [
+        "it:il promemoria"
+      ]
+    },
+    {
+      "sv": "propp",
+      "reason": "headword collision",
+      "with": [
+        "sv:en propp",
+        "en:stopper",
+        "fa:درپوش چوب‌پنبه‌ای",
+        "de:der Stopfen",
+        "es:el tapón",
+        "it:il tappo"
+      ]
+    },
+    {
+      "sv": "provins",
+      "reason": "headword collision",
+      "with": [
+        "es:la provincia"
+      ]
+    },
+    {
+      "sv": "prydnad",
+      "reason": "headword collision",
+      "with": [
+        "en:decoration",
+        "it:la decorazione"
+      ]
+    },
+    {
+      "sv": "pub",
+      "reason": "headword collision",
+      "with": [
+        "en:pub"
+      ]
+    },
+    {
+      "sv": "punkt",
+      "reason": "headword collision",
+      "with": [
+        "en:point",
+        "de:der Stelle",
+        "es:el punto",
+        "it:il punto"
+      ]
+    },
+    {
+      "sv": "råd",
+      "reason": "headword collision",
+      "with": [
+        "it:il consiglio"
+      ]
+    },
+    {
+      "sv": "radie",
+      "reason": "headword collision",
+      "with": [
+        "es:el radio"
+      ]
+    },
+    {
+      "sv": "redskap",
+      "reason": "headword collision",
+      "with": [
+        "fa:ابزار",
+        "de:das Werkzeug"
+      ]
+    },
+    {
+      "sv": "reform",
+      "reason": "headword collision",
+      "with": [
+        "es:la reforma"
+      ]
+    },
+    {
+      "sv": "rem",
+      "reason": "headword collision",
+      "with": [
+        "es:la correa"
+      ]
+    },
+    {
+      "sv": "remsa",
+      "reason": "headword collision",
+      "with": [
+        "it:la striscia"
+      ]
+    },
+    {
+      "sv": "repetition",
+      "reason": "headword collision",
+      "with": [
+        "es:el ensayo",
+        "it:la prova"
+      ]
+    },
+    {
+      "sv": "reservation",
+      "reason": "headword collision",
+      "with": [
+        "es:la reserva"
+      ]
+    },
+    {
+      "sv": "reservoar",
+      "reason": "headword collision",
+      "with": [
+        "es:el depósito"
+      ]
+    },
+    {
+      "sv": "ring",
+      "reason": "headword collision",
+      "with": [
+        "sv:en ring",
+        "en:ring",
+        "fa:انگشتر",
+        "de:der Ring",
+        "es:el anillo",
+        "it:l'anello"
+      ]
+    },
+    {
+      "sv": "robot",
+      "reason": "headword collision",
+      "with": [
+        "sv:en robot",
+        "en:robot",
+        "fa:ربات",
+        "de:der Roboter",
+        "es:el robot",
+        "it:il robot"
+      ]
+    },
+    {
+      "sv": "roll",
+      "reason": "headword collision",
+      "with": [
+        "es:el papel"
+      ]
+    },
+    {
+      "sv": "rosett",
+      "reason": "headword collision",
+      "with": [
+        "en:bow",
+        "it:il fiocco"
+      ]
+    },
+    {
+      "sv": "rova",
+      "reason": "headword collision",
+      "with": [
+        "sv:en rova",
+        "en:turnip",
+        "fa:شلغم",
+        "de:die Speiserübe",
+        "es:el nabo",
+        "it:la rapa"
+      ]
+    },
+    {
+      "sv": "rykte",
+      "reason": "headword collision",
+      "with": [
+        "it:la voce"
+      ]
+    },
+    {
+      "sv": "rynska",
+      "reason": "not unused Lexin noun"
+    }
+  ]
+}
