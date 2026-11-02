@@ -199,3 +199,6 @@ Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `
 3. Clean up duplicates created before the consensus merge (optional).
 4. Lexin licence check before public release.
 5. Batches 004 … of 250 words each, following sections 4 and 5.
+
+
+Batch 007 (2026-11-02): another 1,000 nouns / 6,000 cards imported atomically; bank totals 3,362 concepts / 20,168 cards. See `VOCAB_BATCH_007_REPORT.md`. Do not reimport these as new words.

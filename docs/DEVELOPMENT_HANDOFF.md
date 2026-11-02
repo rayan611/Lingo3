@@ -1,6 +1,13 @@
 # Vocabulary batch 007 — 2026-11-02
-Owner requested merging #27 and adding the next 1,000 new concepts. PR #27 merged successfully as `3337687ceea100ac407195ad9bcba140c601e89b`; its CI and Vercel checks passed.
-Branch: `data/lexin-1000-batch-007`. Prepared 1,000 new noun concepts / 6,000 cards; import and live verification PENDING. Prior bank data excluded using live six-language lemma keys. No application/schema/auth edits. Preserve existing Grammar/Training Center work below. Next: atomic rollback rehearsal, import and retrieval checks; update this section with verified counts before delivery.
+Owner requested merging #27 and adding the next 1,000 new concepts. PR #27 merged successfully as `3337687ceea100ac407195ad9bcba140c601e89b`; CI and Vercel checks passed.
+
+DONE VERIFIED: added exactly **1,000 new nouns / 6,000 six-language cards** in one atomic production import after a rollback rehearsal and six-language duplicate checks. Branch `data/lexin-1000-batch-007`; final data commit `f4c2b3cd9068383ab411548e6bc42c9195353eb2`. New source IDs start `core.n.lexin007_`; no earlier concept was counted again or overwritten.
+
+Live totals: 2,362 concepts / 14,168 cards → **3,362 / 20,168**. Selection: 1,233 candidates → 1,000 inserted, 186 excluded (173 collisions, 9 source/grammar review, 4 semantic review), 47 unused reserve. Zero skips at import. Repeat import: zero inserted, 1,000 already present. Final JSON matches all 6,000 stored payloads; whole-bank duplicate groups and empty examples both zero.
+
+Tests: 5,000 morphology parses; 6,000 expansion parses; **6,000/6,000 anonymous explicit-language live RPC lookups**; 60/60 real RPC parses; nine existing regression scripts and production build pass. Automatic-language exact headers 5,964/6,000; automatic bare Swedish 850/1,000 and English 870/1,000. This is an existing ambiguity limit, not missing cards. All concepts are nouns; most examples use parallel sentence frames. No six-language human proofreading or browser/physical-phone/offline E2E. No application/schema/auth/RLS change or app deployment.
+
+Files: `data/shared-vocab/batch-007*`, `scripts/build-batch-007.py`, `scripts/validate-batch-007.ts`, `docs/VOCAB_BATCH_007_REPORT.md`. Independent data branch remains unmerged; next action: review new PR. Do not reimport as new data. Previous Grammar/Training Center handoffs below remain preserved.
 
 ---
 
