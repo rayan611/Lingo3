@@ -22,5 +22,6 @@ create policy "grammar sections owner" on public.grammar_sections for all to aut
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
 create policy "grammar rules owner" on public.grammar_rules for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+revoke all on public.grammar_sections, public.grammar_rules from anon, authenticated;
 grant select, insert, update, delete on public.grammar_sections to authenticated;
 grant select, insert, update, delete on public.grammar_rules to authenticated;

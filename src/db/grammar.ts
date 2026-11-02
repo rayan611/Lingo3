@@ -2,7 +2,12 @@ import type { Lang } from './langs'
 import { db, newId } from './db'
 
 /** User-authored grammar, stored offline first. Curated rules are separate immutable data. */
-export interface GrammarSection {
+export interface GrammarCloudState {
+  cloudVersion?: number | string
+  cloudSnapshot?: string
+}
+
+export interface GrammarSection extends GrammarCloudState {
   id: string
   lang: Lang
   title: string
@@ -20,7 +25,7 @@ export interface GrammarExample {
   translationLang: Lang
 }
 
-export interface GrammarRule {
+export interface GrammarRule extends GrammarCloudState {
   id: string
   lang: Lang
   sectionId: string

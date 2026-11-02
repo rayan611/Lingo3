@@ -338,11 +338,13 @@ function Workspace({
    */
   const lastWrite =
     useLiveQuery(async () => {
-      const [concept, card] = await Promise.all([
+      const [concept, card, section, rule] = await Promise.all([
         db.concepts.orderBy('updatedAt').last(),
         db.cards.orderBy('updatedAt').last(),
+        db.grammarSections.orderBy('updatedAt').last(),
+        db.grammarRules.orderBy('updatedAt').last(),
       ])
-      return Math.max(concept?.updatedAt ?? 0, card?.updatedAt ?? 0)
+      return Math.max(concept?.updatedAt ?? 0, card?.updatedAt ?? 0, section?.updatedAt ?? 0, rule?.updatedAt ?? 0)
     }, []) ?? 0
 
   useEffect(() => {
@@ -570,7 +572,7 @@ function Workspace({
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
             {tab === 'translate' && <Translate settings={settings} />}
-            {tab === 'grammar' && <GrammarManager lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
+            {tab === 'grammar' && <GrammarManager syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}
