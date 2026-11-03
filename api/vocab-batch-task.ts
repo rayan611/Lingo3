@@ -9,18 +9,18 @@ type Req={method?:string;url?:string}
 type Res={statusCode:number;setHeader:(k:string,v:string)=>void;end:(body:string)=>void}
 function send(res:Res,status:number,value:unknown){res.statusCode=status;res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(value))}
 async function generate(items:Candidate[],start:number){
- const prompt=INSTRUCTIONS+'\nSOURCE NOUNS:\n'+JSON.stringify(items);const errors:string[]=[]
+ const prompt=INSTRUCTIONS+'\nSOURCE NOUNS:\n'+JSON.stringify(items);const errors:string[]=[];let stage='fetch';let finish=''
  for(const provider of ['gemini','groq'] as const){
   const key=provider==='gemini'?process.env.GEMINI_API_KEY:process.env.GROQ_API_KEY;if(!key)continue
   try{
    const signal=AbortSignal.timeout(provider==='gemini'?110000:30000)
    const response=provider==='gemini'?await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODELS.gemini}:generateContent`,{method:'POST',signal,headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.15,maxOutputTokens:32000,thinkingConfig:{thinkingLevel:'low'},responseMimeType:'application/json'}})}):await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',signal,headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:DEFAULT_MODELS.groq,messages:[{role:'user',content:prompt}],response_format:{type:'json_object'},max_completion_tokens:32000,temperature:0.15})})
    if(!response.ok){errors.push(provider+':'+response.status);continue}
-   const data:any=await response.json();const text=provider==='gemini'?data.candidates?.[0]?.content?.parts?.filter((p:{thought?:boolean;text?:string})=>!p.thought).map((p:{text?:string})=>p.text??'').join(''):data.choices?.[0]?.message?.content
-   const parsed=JSON.parse(String(text).replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,''));if(!Array.isArray(parsed.concepts))throw new Error('invalid_shape')
+   stage='read';const data:any=await response.json();finish=String(data.candidates?.[0]?.finishReason??'');const text=provider==='gemini'?data.candidates?.[0]?.content?.parts?.filter((p:{thought?:boolean;text?:string})=>!p.thought).map((p:{text?:string})=>p.text??'').join(''):data.choices?.[0]?.message?.content
+   stage='parse';const parsed=JSON.parse(String(text).replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,''));if(!Array.isArray(parsed.concepts))throw new Error('invalid_shape')
    const ids=new Set(items.map(x=>x.id)),seen=new Set<string>();const concepts=parsed.concepts.filter((x:{id?:string})=>x.id&&ids.has(x.id)&&!seen.has(x.id)&&seen.add(x.id));if(!concepts.length)throw new Error('empty')
    return {provider,start,concepts}
-  }catch{errors.push(provider+':unusable')}
+  }catch(e){errors.push(provider+':'+stage+':'+(e instanceof Error?e.name:'unknown')+':'+finish)}
  }
  return {start,concepts:[],errors}
 }
@@ -31,7 +31,7 @@ export default async function handler(req:Req,res:Res){
  if(url.searchParams.get('mode')==='status')return send(res,200,{pool:POOL.length,gemini:!!process.env.GEMINI_API_KEY,groq:!!process.env.GROQ_API_KEY})
  const start=Number(url.searchParams.get('start')),count=Number(url.searchParams.get('count')??'20')
  if(!Number.isInteger(start)||start<0||!Number.isInteger(count)||count<1||count>160||start>=POOL.length)return send(res,400,{error:'Invalid range'})
- const chunks=[];for(let i=start;i<Math.min(start+count,POOL.length);i+=20)chunks.push({start:i,items:POOL.slice(i,Math.min(i+20,start+count,POOL.length))})
- const groups=await Promise.all(chunks.map(x=>generate(x.items,x.start)));const concepts=groups.flatMap(x=>x.concepts)
+ const chunks=[];for(let i=start;i<Math.min(start+count,POOL.length);i+=10)chunks.push({start:i,items:POOL.slice(i,Math.min(i+10,start+count,POOL.length))})
+ const groups:Awaited<ReturnType<typeof generate>>[]=[];let cursor=0;await Promise.all(Array.from({length:Math.min(8,chunks.length)},async()=>{while(cursor<chunks.length){const x=chunks[cursor++];groups.push(await generate(x.items,x.start))}}));const concepts=groups.flatMap(x=>x.concepts)
  return send(res,concepts.length?200:502,{provider:'gemini',start,requested:count,count:concepts.length,concepts,errors:groups.filter(x=>x.errors).map(x=>({start:x.start,errors:x.errors}))})
 }
