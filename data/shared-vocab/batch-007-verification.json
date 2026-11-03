@@ -1,0 +1,170 @@
+{
+  "date": "2026-11-02",
+  "batch": "007",
+  "previousBatchMerge": "3337687ceea100ac407195ad9bcba140c601e89b",
+  "dataCommit": "f4c2b3cd9068383ab411548e6bc42c9195353eb2",
+  "payloadSha256": "817b7c42b4fd132c4fc2b6002b8bda2ea87ace17edb93d06e3a1a015376223f2",
+  "before": {
+    "concepts": 2362,
+    "cards": 14168
+  },
+  "after": {
+    "concepts": 3362,
+    "cards": 20168
+  },
+  "selection": {
+    "considered": 1233,
+    "newConcepts": 1000,
+    "newCards": 6000,
+    "excluded": 186,
+    "headwordCollisions": 173,
+    "sourceOrGrammarReview": 9,
+    "semanticReview": 4,
+    "unusedReserve": 47,
+    "rejectedAtImport": 0
+  },
+  "precheck": {
+    "status_code": 200,
+    "bytes": 1736176,
+    "sha256": "817b7c42b4fd132c4fc2b6002b8bda2ea87ace17edb93d06e3a1a015376223f2",
+    "concepts": 1000,
+    "entries": 6000,
+    "before_concepts": 2362,
+    "before_entries": 14168,
+    "clashes": [],
+    "in_batch_duplicates": [],
+    "existing_ids": 0
+  },
+  "explicitLanguageAnonymous": [
+    {
+      "lang": "de",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "es",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "fa",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "it",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    },
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 1000,
+      "failed": null
+    }
+  ],
+  "automaticLanguageHeaders": [
+    {
+      "lang": "de",
+      "tested": 1000,
+      "passed": 1000
+    },
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 1000
+    },
+    {
+      "lang": "es",
+      "tested": 1000,
+      "passed": 982
+    },
+    {
+      "lang": "fa",
+      "tested": 1000,
+      "passed": 1000
+    },
+    {
+      "lang": "it",
+      "tested": 1000,
+      "passed": 982
+    },
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 1000
+    }
+  ],
+  "automaticBareLemmas": [
+    {
+      "lang": "en",
+      "tested": 1000,
+      "passed": 870
+    },
+    {
+      "lang": "sv",
+      "tested": 1000,
+      "passed": 850
+    }
+  ],
+  "idempotentReimport": {
+    "clashes": [],
+    "inserted": 0,
+    "already_present": 1000
+  },
+  "health": {
+    "readyConcepts": 1000,
+    "payloadEntries": 6000,
+    "mismatches": 0,
+    "bankDuplicates": 0,
+    "bankEmptyExamples": 0
+  },
+  "clientValidation": {
+    "morphologyParses": 5000,
+    "expansionParses": 6000,
+    "liveRpcParses": 60,
+    "failures": 0
+  },
+  "checks": {
+    "existingRegressionScripts": 9,
+    "productionBuild": "pass",
+    "batchValidator": "pass"
+  },
+  "limits": [
+    "All 1000 concepts are nouns.",
+    "Examples predominantly use parallel practice frames.",
+    "No six-language human proofreading.",
+    "No browser/physical-phone/offline E2E.",
+    "Automatic language ambiguity remains; no lookup-policy changes."
+  ],
+  "originalImportEvidenceIsHistorical": true,
+  "currentAfterCleanup": {
+    "date": "2026-11-03",
+    "readyConceptsInBatch": 740,
+    "readyCardsInBatch": 4440,
+    "quarantinedConcepts": 260,
+    "quarantinedCards": 1560,
+    "bankReadyConcepts": 3102,
+    "bankReadyCards": 18608,
+    "automaticHeaders": {
+      "passed": 4440,
+      "tested": 4440
+    },
+    "automaticBareAllSixLanguages": {
+      "passed": 4440,
+      "tested": 4440
+    },
+    "action": "reversible status=rejected, physical records retained",
+    "evidenceFile": "batch-007-ambiguity-audit.json"
+  }
+}

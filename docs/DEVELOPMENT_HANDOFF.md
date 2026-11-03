@@ -1,3 +1,14 @@
+# Vocabulary batch 007 ambiguity cleanup — 2026-11-03
+Owner authorised repeated checks, correction/removal of ambiguous words and merging PR #31. Final active package is **740 concepts / 4,440 cards**, after reversibly quarantining 260 of the original 1,000 concepts (`status="rejected"`). Physical records retained; user cards and all older batches unchanged. An attempted physical-delete rehearsal required tool confirmation which expired; no physical deletion occurred. Quarantine rollback rehearsal passed before commit.
+
+Four lookup rounds: (1) anonymous exact headers plus bare lemmas in all six languages found 19 header-ambiguous concepts and 260 distinct ambiguous concepts in total; (2) authenticated repeat confirmed the same 260, while explicit-language lookups passed 1,560/1,560; (3) after quarantine, anonymous automatic headers **4,440/4,440** and automatic bare lemmas **4,440/4,440** return the correct concept; (4) authenticated automatic bare lemmas again **4,440/4,440** pass. Full card archive and numerical evidence are committed as `batch-007-quarantined.json` and `batch-007-ambiguity-audit.json`. No invented translations or filler labels were used to hide ambiguity.
+
+Current bank: **3,102 ready concepts / 18,608 ready cards**. Raw records remain 3,362 / 20,168 including the quarantined records. Canonical import JSON and source snapshot contain only the retained 740; do not restore the quarantined file automatically. Client schemas: 3,700 morphology and 4,440 expansion parses pass. Existing CI/regression/build checks to verify before merge. No app source/schema/auth/RLS changes. No physical-phone E2E or independent six-language human proofreading.
+
+Previous PR #27 merged as `3337687ceea100ac407195ad9bcba140c601e89b`. Initial 1,000-concept import evidence remains historical in the verification file and report. Next: verify updated PR #31 CI, merge as authorised, confirm merge SHA. Unrelated handoffs below preserved.
+
+---
+
 2026-11-03 | Lingo3 | fix/grammar-ai-examples-feedback
 Fixed silent grammar AI failures: show API/auth/rate-limit errors, report success, keep editing form in sync with generated examples, and accept short/long notes (bounded prompt). No schema changes. CI, merge and production verification pending. Signed-in end-to-end generation remains to be checked.
 

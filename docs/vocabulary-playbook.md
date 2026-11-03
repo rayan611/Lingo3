@@ -199,3 +199,6 @@ Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `
 3. Clean up duplicates created before the consensus merge (optional).
 4. Lexin licence check before public release.
 5. Batches 004 … of 250 words each, following sections 4 and 5.
+
+
+Batch 007 (2026-11-03 final): originally imported 1,000 concepts; owner authorised ambiguity cleanup. 260 concepts reversibly quarantined; final active batch **740 concepts / 4,440 cards**. Ready bank **3,102 / 18,608**. Automatic exact-header and bare-lemma lookups across all six languages pass for every retained card. See `batch-007-ambiguity-audit.json`; never auto-import `batch-007-quarantined.json`.
