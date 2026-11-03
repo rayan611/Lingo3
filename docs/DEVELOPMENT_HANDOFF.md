@@ -1,3 +1,11 @@
+## 2026-11-03 — Vocabulary batch 008 part 001 imported and verified
+
+Imported **1,079 new concepts / 6,474 cards** atomically after successful rollback rehearsal; zero existing IDs/collisions/skips. Target 2,000 remains incomplete by **921** because Gemini still returns HTTP 402; backup samples failed semantic review and none were accepted. PR #34 / `data/lexin-2000-batch-008`. Payload commit e59902bf442c3b7c99186144d05d2ebe69d69cbf, pg_net request 18, matching SHA-256 8482d0e6c900834fce8adea84677b46095618b779877d8b75fbc07266a6a647a. Stored-card comparison 6,474/6,474 exact; repeat import 0 inserts / 1,079 existing. Active bank now **4,181 concepts / 25,082 cards**, zero duplicate groups/empty examples.
+
+All 6,474 lookups pass in each of five rounds: anonymous automatic headers/database-bare/explicit headers, authenticated automatic headers/database-bare. Correct-concept comparison used; Italian l' retention limitation remains. App schemas: 5,395 morphology / 6,474 expansions / 60 real RPC samples pass. Nine local regression scripts and build pass; CI run 41637538221 passed on preparation commit. Repository delivery and final commit checks are tracked in PR #34. No app/schema/auth/RLS changes, browser/phone/offline E2E or independent human proofreading. See `docs/VOCAB_BATCH_008_REPORT.md` and `batch-008-part-001-verification.json`. Provider scopes restored; isolated temporary ops previews still require deletion. Next: restore usable primary quota and finish remaining 921 without re-counting this imported part. Existing unrelated handoffs preserved below.
+
+---
+
 ## 2026-11-03 — Showcase CSP release follow-up
 
 Fixed same-origin showcase iframe permissions in vercel.json: X-Frame-Options SAMEORIGIN, frame-ancestors 'self', frame-src 'self' plus Cloudflare. Latest source fix 2d685aafb04a846c6d7daf25035107cc83508400 on main. Production deployment dpl_373Shtoromk6UrA1KWwuBSFpM5UA triggered manually because main auto deployment is disabled; BUILDING at last inspection. Previous production bcebc3e READY. No full repository test suite or authenticated browser QA was executed in this session; do not mark functional acceptance. Next: confirm deployment READY, run npm test and npm run build in CI, test language selection, Settings invite, showcase entry and mobile flow.
