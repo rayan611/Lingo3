@@ -300,6 +300,8 @@ export function SettingsPanel({
         </label>
       </div>
 
+      <div className="panel"><h2>About Lingo3</h2><p className="muted small">Explore how Lingo3 works and share it with friends.</p><a href="/showcase.html" target="_blank" rel="noopener noreferrer">Explore Lingo3 — features and benefits</a></div>
+
       <InviteOthers name={settings.displayName} />
 
       <div className="panel">
