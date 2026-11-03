@@ -81,6 +81,7 @@ export function InviteOthers({ name }: { name: string | undefined }) {
   return (
     <div className="panel">
       <h2>Invite others</h2>
+      <p className="muted small"><a href="/showcase.html" target="_blank" rel="noopener noreferrer">Explore the full app introduction and features</a></p>
       <p className="muted small">
         Send a friend a short note with your personal link. You can change the
         words first.
