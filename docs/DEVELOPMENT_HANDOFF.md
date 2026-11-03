@@ -1,3 +1,7 @@
+2026-11-03 | Lingo3 | fix/grammar-ai-examples-feedback
+Fixed silent grammar AI failures: show API/auth/rate-limit errors, report success, keep editing form in sync with generated examples, and accept short/long notes (bounded prompt). No schema changes. CI, merge and production verification pending. Signed-in end-to-end generation remains to be checked.
+
+---
 Date: 2026-11-03 | Project: Lingo3 | Branch: feature/grammar-organized-accordion
 Changes: grammar section/rule nested collapsible cards; separate explanation and examples panels; explicit AI example generation alongside manual edit; grammar language picker limited to active learning languages. No schema changes. Existing examples remain in grammar JSONB sync.
 Checks: CI and preview pending at handoff edit. Production deployment pending merge.
