@@ -101,6 +101,26 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
     onOpen()
   }
 
+  useEffect(() => {
+    const onShowcaseMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin || event.data?.app !== 'Lingo3') return
+      if (event.data?.type === 'showcase-open') open()
+      if (event.data?.type === 'showcase-height' && Number.isFinite(event.data.height)) {
+        const frame = document.getElementById('lingo-showcase') as HTMLIFrameElement | null
+        if (frame) frame.style.height = Math.max(600, event.data.height) + 'px'
+      }
+    }
+    window.addEventListener('message', onShowcaseMessage)
+    return () => window.removeEventListener('message', onShowcaseMessage)
+  }, [onOpen])
+
+  return (
+    <main style={{ minHeight: '100vh', background: '#0c1021' }}>
+      {inviter && <p style={{ margin: 0, padding: '12px 20px', textAlign: 'center', color: 'white', background: '#302447' }}>💌 {fillInvite(INVITE_WELCOME, { name: inviter })}</p>}
+      <iframe id="lingo-showcase" title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: '100vh', minHeight: 700, border: 0 }} />
+    </main>
+  )
+
   return (
     <div className="lx">
       <div className="lx-sky" aria-hidden="true" />
@@ -114,7 +134,7 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
         </a>
         <ul>
           <li><a href="#how">How it works</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="/showcase.html">About · Features</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#feedback">Feedback</a></li>
           <li className="lx-nav-install"><InstallButton /></li>
