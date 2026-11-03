@@ -1,9 +1,29 @@
-# Batch 007 — 1,000 further concepts / 6,000 cards
+# Batch 007 — final 740 active concepts / 4,440 cards
 
-Date: 2026-11-02 (Europe/Stockholm). Project: Lingo3, Supabase `vfximbxcxczntqywdryd`.
-Status: production vocabulary import completed and verified; application code unchanged.
-Branch: `data/lexin-1000-batch-007`.
-Data commit: `f4c2b3cd9068383ab411548e6bc42c9195353eb2`.
+Date: 2026-11-03 (Europe/Stockholm). Supabase `vfximbxcxczntqywdryd`. PR #31.
+
+## Final cleanup outcome
+
+The original package imported 1,000 concepts / 6,000 cards. The owner subsequently authorised repeated checks, correcting/removing ambiguous words and merging the PR. **260 concepts / 1,560 cards were reversibly removed from active lookup** by changing only their shared-concept status from ready to rejected. Physical rows, the full committed card archive, user cards and all older batches are preserved. A physical-delete confirmation expired; no physical deletion was performed.
+
+**Canonical import data now contains 740 active concepts / 4,440 cards.** The original 1,000-import evidence below is historical. Current ready bank: **3,102 concepts / 18,608 cards**; raw stored totals remain 3,362 / 20,168 including quarantined records. Do not automatically import `batch-007-quarantined.json` or report its words as active.
+
+| Round | Result |
+| --- | --- |
+| Anonymous initial audit, full headers and bare lemmas in all six languages | 19 header-ambiguous concepts; 260 concepts ambiguous in at least one query |
+| Authenticated repeat on those 260 concepts | Same 260 confirmed; 1,560/1,560 explicit-language lookups passed |
+| Anonymous after quarantine, automatic full headers | **4,440/4,440 correct concepts** |
+| Anonymous after quarantine, automatic bare lemmas | **4,440/4,440 correct concepts** |
+| Authenticated after quarantine, automatic bare lemmas | **4,440/4,440 correct concepts** |
+| Client schema validation for retained data | 3,700 morphology / 4,440 expansion parses pass |
+
+Correctness checks compare the returned Swedish headword to the expected concept, rather than merely checking that an answer is nonempty. Most ambiguity came from shared spellings between languages or parts of speech, not mistranslations. Useful but ambiguous words were quarantined rather than given invented translations or artificial dictionary labels. The original learning-data quantity was deliberately reduced under the owner's removal authorisation. Lookup policy and application source code are unchanged; this cleanup concerns batch 007 only, not every older bank entry.
+
+Quarantine was first rehearsed and rolled back (all 1,000 stayed active), then committed atomically under a table lock with assertions requiring 260 state changes and 740 remaining ready concepts. Evidence: `batch-007-ambiguity-audit.json`. Archive commit: `a99ee75a243e603ddee1a0ae92c18fc4242ed1a5`; archive SHA-256: `33a20e9586e87ae37be2ad2ebddb8fbfbc5f15e55824008548d66b3678c60068`.
+
+No independent six-language human proofreading, browser or physical-phone/offline E2E. Existing CI/build checks are required before merge. Remaining examples predominantly use parallel practice frames.
+
+## Original import history (superseded active totals)
 
 ## Delivery and accounting
 

@@ -146,5 +146,25 @@
     "No six-language human proofreading.",
     "No browser/physical-phone/offline E2E.",
     "Automatic language ambiguity remains; no lookup-policy changes."
-  ]
+  ],
+  "originalImportEvidenceIsHistorical": true,
+  "currentAfterCleanup": {
+    "date": "2026-11-03",
+    "readyConceptsInBatch": 740,
+    "readyCardsInBatch": 4440,
+    "quarantinedConcepts": 260,
+    "quarantinedCards": 1560,
+    "bankReadyConcepts": 3102,
+    "bankReadyCards": 18608,
+    "automaticHeaders": {
+      "passed": 4440,
+      "tested": 4440
+    },
+    "automaticBareAllSixLanguages": {
+      "passed": 4440,
+      "tested": 4440
+    },
+    "action": "reversible status=rejected, physical records retained",
+    "evidenceFile": "batch-007-ambiguity-audit.json"
+  }
 }

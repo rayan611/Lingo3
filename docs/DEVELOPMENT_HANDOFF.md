@@ -1,16 +1,18 @@
-# Vocabulary batch 007 — 2026-11-02
-Owner requested merging #27 and adding the next 1,000 new concepts. PR #27 merged successfully as `3337687ceea100ac407195ad9bcba140c601e89b`; CI and Vercel checks passed.
+# Vocabulary batch 007 ambiguity cleanup — 2026-11-03
+Owner authorised repeated checks, correction/removal of ambiguous words and merging PR #31. Final active package is **740 concepts / 4,440 cards**, after reversibly quarantining 260 of the original 1,000 concepts (`status="rejected"`). Physical records retained; user cards and all older batches unchanged. An attempted physical-delete rehearsal required tool confirmation which expired; no physical deletion occurred. Quarantine rollback rehearsal passed before commit.
 
-DONE VERIFIED: added exactly **1,000 new nouns / 6,000 six-language cards** in one atomic production import after a rollback rehearsal and six-language duplicate checks. Branch `data/lexin-1000-batch-007`; final data commit `f4c2b3cd9068383ab411548e6bc42c9195353eb2`. New source IDs start `core.n.lexin007_`; no earlier concept was counted again or overwritten.
+Four lookup rounds: (1) anonymous exact headers plus bare lemmas in all six languages found 19 header-ambiguous concepts and 260 distinct ambiguous concepts in total; (2) authenticated repeat confirmed the same 260, while explicit-language lookups passed 1,560/1,560; (3) after quarantine, anonymous automatic headers **4,440/4,440** and automatic bare lemmas **4,440/4,440** return the correct concept; (4) authenticated automatic bare lemmas again **4,440/4,440** pass. Full card archive and numerical evidence are committed as `batch-007-quarantined.json` and `batch-007-ambiguity-audit.json`. No invented translations or filler labels were used to hide ambiguity.
 
-Live totals: 2,362 concepts / 14,168 cards → **3,362 / 20,168**. Selection: 1,233 candidates → 1,000 inserted, 186 excluded (173 collisions, 9 source/grammar review, 4 semantic review), 47 unused reserve. Zero skips at import. Repeat import: zero inserted, 1,000 already present. Final JSON matches all 6,000 stored payloads; whole-bank duplicate groups and empty examples both zero.
+Current bank: **3,102 ready concepts / 18,608 ready cards**. Raw records remain 3,362 / 20,168 including the quarantined records. Canonical import JSON and source snapshot contain only the retained 740; do not restore the quarantined file automatically. Client schemas: 3,700 morphology and 4,440 expansion parses pass. Existing CI/regression/build checks to verify before merge. No app source/schema/auth/RLS changes. No physical-phone E2E or independent six-language human proofreading.
 
-Tests: 5,000 morphology parses; 6,000 expansion parses; **6,000/6,000 anonymous explicit-language live RPC lookups**; 60/60 real RPC parses; nine existing regression scripts and production build pass. Automatic-language exact headers 5,964/6,000; automatic bare Swedish 850/1,000 and English 870/1,000. This is an existing ambiguity limit, not missing cards. All concepts are nouns; most examples use parallel sentence frames. No six-language human proofreading or browser/physical-phone/offline E2E. No application/schema/auth/RLS change or app deployment.
-
-Files: `data/shared-vocab/batch-007*`, `scripts/build-batch-007.py`, `scripts/validate-batch-007.ts`, `docs/VOCAB_BATCH_007_REPORT.md`. Independent data branch remains unmerged; next action: review new PR. Do not reimport as new data. Previous Grammar/Training Center handoffs below remain preserved.
+Previous PR #27 merged as `3337687ceea100ac407195ad9bcba140c601e89b`. Initial 1,000-concept import evidence remains historical in the verification file and report. Next: verify updated PR #31 CI, merge as authorised, confirm merge SHA. Unrelated handoffs below preserved.
 
 ---
 
+2026-11-03 | Lingo3 | fix/grammar-ai-examples-feedback
+Fixed silent grammar AI failures: show API/auth/rate-limit errors, report success, keep editing form in sync with generated examples, and accept short/long notes (bounded prompt). No schema changes. CI, merge and production verification pending. Signed-in end-to-end generation remains to be checked.
+
+---
 Date: 2026-11-03 | Project: Lingo3 | Branch: feature/grammar-organized-accordion
 Changes: grammar section/rule nested collapsible cards; separate explanation and examples panels; explicit AI example generation alongside manual edit; grammar language picker limited to active learning languages. No schema changes. Existing examples remain in grammar JSONB sync.
 Checks: CI and preview pending at handoff edit. Production deployment pending merge.

@@ -6,7 +6,7 @@ import { z } from 'zod'
 export const maxDuration = 60
 const keys = { gemini: process.env.GEMINI_API_KEY, groq: process.env.GROQ_API_KEY, mistral: process.env.MISTRAL_API_KEY, deepseek: process.env.DEEPSEEK_API_KEY, anthropic: process.env.ANTHROPIC_API_KEY }
 const providers = configuredProviders(keys)
-const schema = z.object({ lang: z.enum(['fa','en','sv','de','es','ru','it','fr']), nativeLang: z.enum(['fa','en','sv','de','es','ru','it','fr']), title: z.string().trim().min(2).max(160), explanation: z.string().trim().min(8).max(6000) }).strict()
+const schema = z.object({ lang: z.enum(['fa','en','sv','de','es','ru','it','fr']), nativeLang: z.enum(['fa','en','sv','de','es','ru','it','fr']), title: z.string().trim().min(2).max(160), explanation: z.string().trim().min(3).max(20000) }).strict()
 const resultSchema = z.object({ examples: z.array(z.object({ sentence: z.string().trim().min(2).max(500), translation: z.string().trim().min(2).max(500) })).min(2).max(5) })
 const tool = { name: 'write_grammar_examples', description: 'Generate accurate learner examples for one grammar rule', input_schema: { type: 'object', properties: { examples: { type: 'array', items: { type: 'object', properties: { sentence: { type: 'string' }, translation: { type: 'string' } }, required: ['sentence','translation'] } } }, required: ['examples'] } }
 function json(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } }) }
@@ -22,7 +22,7 @@ async function respond(req: Request): Promise<Response> {
   const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
   if (!rate.allowed) return json({ error: rate.message }, rate.status)
   const { lang, nativeLang, title, explanation } = parsed.data
-  const prompt = `Create 3 to 4 DIFFERENT natural, grammatically accurate examples that demonstrate this grammar rule. Sentences MUST be in ${LANG_PROMPT_NAMES[lang]}; translations MUST be in ${LANG_PROMPT_NAMES[nativeLang]}. Return only tool JSON. Do not invent unsupported grammar. Rule: ${title}\nNotes: ${explanation}`
+  const prompt = `Create 3 to 4 DIFFERENT natural, grammatically accurate examples that demonstrate this grammar rule. Sentences MUST be in ${LANG_PROMPT_NAMES[lang]}; translations MUST be in ${LANG_PROMPT_NAMES[nativeLang]}. Return only tool JSON. Do not invent unsupported grammar. Rule: ${title}\nNotes: ${explanation.slice(0, 10000)}`
   const result = await firstAnswer(providers.map(provider => ({
     provider,
     call: (signal: AbortSignal) => {

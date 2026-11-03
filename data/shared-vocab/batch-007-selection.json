@@ -2250,5 +2250,11 @@
         "es": "la"
       }
     }
-  ]
+  ],
+  "postImportCleanup": {
+    "initialImported": 1000,
+    "quarantinedAfterRepeatedLookupChecks": 260,
+    "retainedActive": 740,
+    "archive": "batch-007-quarantined.json"
+  }
 }

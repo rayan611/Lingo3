@@ -201,4 +201,4 @@ Known, intentional exceptions: plural-only nouns have no morphology (`pengar`, `
 5. Batches 004 … of 250 words each, following sections 4 and 5.
 
 
-Batch 007 (2026-11-02): another 1,000 nouns / 6,000 cards imported atomically; bank totals 3,362 concepts / 20,168 cards. See `VOCAB_BATCH_007_REPORT.md`. Do not reimport these as new words.
+Batch 007 (2026-11-03 final): originally imported 1,000 concepts; owner authorised ambiguity cleanup. 260 concepts reversibly quarantined; final active batch **740 concepts / 4,440 cards**. Ready bank **3,102 / 18,608**. Automatic exact-header and bare-lemma lookups across all six languages pass for every retained card. See `batch-007-ambiguity-audit.json`; never auto-import `batch-007-quarantined.json`.
