@@ -114,7 +114,7 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
         </a>
         <ul>
           <li><a href="#how">How it works</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="/showcase.html">About · Features</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#feedback">Feedback</a></li>
           <li className="lx-nav-install"><InstallButton /></li>
