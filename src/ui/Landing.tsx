@@ -103,7 +103,12 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
 
   useEffect(() => {
     const onShowcaseMessage = (event: MessageEvent) => {
-      if (event.origin === window.location.origin && event.data?.type === 'showcase-open' && event.data?.app === 'Lingo3') open()
+      if (event.origin !== window.location.origin || event.data?.app !== 'Lingo3') return
+      if (event.data?.type === 'showcase-open') open()
+      if (event.data?.type === 'showcase-height' && Number.isFinite(event.data.height)) {
+        const frame = document.getElementById('lingo-showcase') as HTMLIFrameElement | null
+        if (frame) frame.style.height = Math.max(600, event.data.height) + 'px'
+      }
     }
     window.addEventListener('message', onShowcaseMessage)
     return () => window.removeEventListener('message', onShowcaseMessage)
@@ -112,7 +117,7 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
   return (
     <main style={{ minHeight: '100vh', background: '#0c1021' }}>
       {inviter && <p style={{ margin: 0, padding: '12px 20px', textAlign: 'center', color: 'white', background: '#302447' }}>💌 {fillInvite(INVITE_WELCOME, { name: inviter })}</p>}
-      <iframe title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: '100vh', minHeight: 700, border: 0 }} />
+      <iframe id="lingo-showcase" title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: '100vh', minHeight: 700, border: 0 }} />
     </main>
   )
 
