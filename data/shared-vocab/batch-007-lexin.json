@@ -4,34 +4,6 @@
   "url": "https://www.sprakbanken.se/resurser/lexin",
   "selected": [
     {
-      "id": "core.n.lexin007_pudel_715e306e",
-      "p": "noun",
-      "e": {
-        "sv": "en pudel",
-        "en": "the poodle",
-        "fa": "سگ پودل",
-        "de": "der Pudel",
-        "es": "el caniche",
-        "it": "il barboncino"
-      },
-      "raw": "pudeln pudlar",
-      "parts": [
-        "pudel",
-        "poodle;poodles",
-        "سگ پودل",
-        "der Pudel;Pudel",
-        "el caniche;caniches",
-        "il barboncino;barboncini",
-        "s"
-      ],
-      "ds": "pudeln",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_pulka_96a66534",
       "p": "noun",
       "e": {
@@ -57,90 +29,6 @@
       "genders": {
         "it": "la",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_puls_e4a8629e",
-      "p": "noun",
-      "e": {
-        "sv": "en puls",
-        "en": "the pulse",
-        "fa": "نبض",
-        "de": "der Puls",
-        "es": "el pulso",
-        "it": "il polso"
-      },
-      "raw": "pulsen pulsar",
-      "parts": [
-        "puls",
-        "pulse;pulses",
-        "نبض",
-        "der Puls;Pulse",
-        "el pulso;pulsos",
-        "il polso;polsi",
-        "a"
-      ],
-      "ds": "pulsen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_pulver_8d3a90ee",
-      "p": "noun",
-      "e": {
-        "sv": "ett pulver",
-        "en": "the powder",
-        "fa": "پودر",
-        "de": "das Pulver",
-        "es": "el polvo",
-        "it": "la polvere"
-      },
-      "raw": "pulvret pulver pulvren (el. pulverna)",
-      "parts": [
-        "pulver",
-        "powder;powders",
-        "پودر",
-        "das Pulver;Pulver",
-        "el polvo;polvos",
-        "la polvere;polveri",
-        "o"
-      ],
-      "ds": "pulvret",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_pump_0b203c46",
-      "p": "noun",
-      "e": {
-        "sv": "en pump",
-        "en": "the pump",
-        "fa": "پمپ",
-        "de": "die Pumpe",
-        "es": "la bomba",
-        "it": "la pompa"
-      },
-      "raw": "pumpen pumpar",
-      "parts": [
-        "pump",
-        "pump;pumps",
-        "پمپ",
-        "die Pumpe;Pumpen",
-        "la bomba;bombas",
-        "la pompa;pompe",
-        "o"
-      ],
-      "ds": "pumpen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -228,118 +116,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_puppa_7546c536",
-      "p": "noun",
-      "e": {
-        "sv": "en puppa",
-        "en": "the pupa",
-        "fa": "شفیره",
-        "de": "die Insektenpuppe",
-        "es": "la pupa",
-        "it": "la crisalide"
-      },
-      "raw": "puppan puppor",
-      "parts": [
-        "puppa",
-        "pupa;pupae",
-        "شفیره",
-        "die Insektenpuppe;Insektenpuppen",
-        "la pupa;pupas",
-        "la crisalide;crisalidi",
-        "s"
-      ],
-      "ds": "puppan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_pure_541621fe",
-      "p": "noun",
-      "e": {
-        "sv": "en puré",
-        "en": "the purée",
-        "fa": "پوره",
-        "de": "das Püree",
-        "es": "el puré",
-        "it": "il purè"
-      },
-      "raw": "purén puréer",
-      "parts": [
-        "puré",
-        "purée;purées",
-        "پوره",
-        "das Püree;Pürees",
-        "el puré;purés",
-        "il purè;purè",
-        "f"
-      ],
-      "ds": "purén",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_pussel_de3d362e",
-      "p": "noun",
-      "e": {
-        "sv": "ett pussel",
-        "en": "the jigsaw puzzle",
-        "fa": "پازل",
-        "de": "das Puzzle",
-        "es": "el rompecabezas",
-        "it": "il puzzle"
-      },
-      "raw": "pusslet pussel pusslen",
-      "parts": [
-        "pussel",
-        "jigsaw puzzle;jigsaw puzzles",
-        "پازل",
-        "das Puzzle;Puzzles",
-        "el rompecabezas;rompecabezas",
-        "il puzzle;puzzle",
-        "o"
-      ],
-      "ds": "pusslet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_pyramid_22ba2d6f",
-      "p": "noun",
-      "e": {
-        "sv": "en pyramid",
-        "en": "the pyramid",
-        "fa": "هرم",
-        "de": "die Pyramide",
-        "es": "la pirámide",
-        "it": "la piramide"
-      },
-      "raw": "pyramiden pyramider",
-      "parts": [
-        "pyramid",
-        "pyramid;pyramids",
-        "هرم",
-        "die Pyramide;Pyramiden",
-        "la pirámide;pirámides",
-        "la piramide;piramidi",
-        "s"
-      ],
-      "ds": "pyramiden",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_rabarber_ca5ad551",
       "p": "noun",
       "e": {
@@ -361,34 +137,6 @@
         "f"
       ],
       "ds": "rabarbern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rabatt_99044ac0",
-      "p": "noun",
-      "e": {
-        "sv": "en rabatt",
-        "en": "the discount",
-        "fa": "تخفیف",
-        "de": "der Rabatt",
-        "es": "el descuento",
-        "it": "lo sconto"
-      },
-      "raw": "rabatten rabatter",
-      "parts": [
-        "rabatt",
-        "discount;discounts",
-        "تخفیف",
-        "der Rabatt;Rabatte",
-        "el descuento;descuentos",
-        "lo sconto;sconti",
-        "a"
-      ],
-      "ds": "rabatten",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -418,62 +166,6 @@
       ],
       "ds": "räcket",
       "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_racket_b51534ce",
-      "p": "noun",
-      "e": {
-        "sv": "en racket",
-        "en": "the racket",
-        "fa": "راکت",
-        "de": "der Schläger",
-        "es": "la raqueta",
-        "it": "la racchetta"
-      },
-      "raw": "racketen racketar",
-      "parts": [
-        "racket",
-        "racket;rackets",
-        "راکت",
-        "der Schläger;Schläger",
-        "la raqueta;raquetas",
-        "la racchetta;racchette",
-        "o"
-      ],
-      "ds": "racketen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rad_9a07c3e2",
-      "p": "noun",
-      "e": {
-        "sv": "en rad",
-        "en": "the row",
-        "fa": "ردیف",
-        "de": "die Reihe",
-        "es": "la fila",
-        "it": "la fila"
-      },
-      "raw": "raden rader",
-      "parts": [
-        "rad",
-        "row;rows",
-        "ردیف",
-        "die Reihe;Reihen",
-        "la fila;filas",
-        "la fila;file",
-        "a"
-      ],
-      "ds": "raden",
-      "gender": "en",
       "genders": {
         "it": "la",
         "es": "la"
@@ -564,62 +256,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_ram_a631f448",
-      "p": "noun",
-      "e": {
-        "sv": "en ram",
-        "en": "the picture frame",
-        "fa": "قاب عکس",
-        "de": "der Bilderrahmen",
-        "es": "el marco de fotos",
-        "it": "la cornice"
-      },
-      "raw": "ramen ramar",
-      "parts": [
-        "ram",
-        "picture frame;picture frames",
-        "قاب عکس",
-        "der Bilderrahmen;Bilderrahmen",
-        "el marco de fotos;marcos de fotos",
-        "la cornice;cornici",
-        "o"
-      ],
-      "ds": "ramen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ramp_f7d9f5a9",
-      "p": "noun",
-      "e": {
-        "sv": "en ramp",
-        "en": "the ramp",
-        "fa": "سطح شیب‌دار",
-        "de": "die Rampe",
-        "es": "la rampa",
-        "it": "la rampa"
-      },
-      "raw": "rampen ramper",
-      "parts": [
-        "ramp",
-        "ramp;ramps",
-        "سطح شیب‌دار",
-        "die Rampe;Rampen",
-        "la rampa;rampas",
-        "la rampa;rampe",
-        "l"
-      ],
-      "ds": "rampen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_ran_dafd1d2a",
       "p": "noun",
       "e": {
@@ -676,62 +312,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_rand_1c1c65e8",
-      "p": "noun",
-      "e": {
-        "sv": "en rand",
-        "en": "the stripe",
-        "fa": "نوار",
-        "de": "der Streifen",
-        "es": "la raya",
-        "it": "la striscia"
-      },
-      "raw": "randen ränder",
-      "parts": [
-        "rand",
-        "stripe;stripes",
-        "نوار",
-        "der Streifen;Streifen",
-        "la raya;rayas",
-        "la striscia;strisce",
-        "a"
-      ],
-      "ds": "randen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ranson_e5f3275b",
-      "p": "noun",
-      "e": {
-        "sv": "en ranson",
-        "en": "the ration",
-        "fa": "جیره",
-        "de": "die Ration",
-        "es": "la ración",
-        "it": "la razione"
-      },
-      "raw": "ransonen ransoner",
-      "parts": [
-        "ranson",
-        "ration;rations",
-        "جیره",
-        "die Ration;Rationen",
-        "la ración;raciones",
-        "la razione;razioni",
-        "a"
-      ],
-      "ds": "ransonen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_ranta_6195c68b",
       "p": "noun",
       "e": {
@@ -753,34 +333,6 @@
         "a"
       ],
       "ds": "räntan",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ratt_e24b6ebe",
-      "p": "noun",
-      "e": {
-        "sv": "en ratt",
-        "en": "the steering wheel",
-        "fa": "فرمان خودرو",
-        "de": "das Lenkrad",
-        "es": "el volante",
-        "it": "il volante"
-      },
-      "raw": "ratten rattar",
-      "parts": [
-        "ratt",
-        "steering wheel;steering wheels",
-        "فرمان خودرو",
-        "das Lenkrad;Lenkräder",
-        "el volante;volantes",
-        "il volante;volanti",
-        "o"
-      ],
-      "ds": "ratten",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -844,34 +396,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_rattighet_1885f229",
-      "p": "noun",
-      "e": {
-        "sv": "en rättighet",
-        "en": "the right",
-        "fa": "حق",
-        "de": "das Recht",
-        "es": "el derecho",
-        "it": "il diritto"
-      },
-      "raw": "rättigheten rättigheter",
-      "parts": [
-        "rättighet",
-        "right;rights",
-        "حق",
-        "das Recht;Rechte",
-        "el derecho;derechos",
-        "il diritto;diritti",
-        "a"
-      ],
-      "ds": "rättigheten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_ravin_41b6e95f",
       "p": "noun",
       "e": {
@@ -893,90 +417,6 @@
         "l"
       ],
       "ds": "ravinen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reaktion_6a5e3dca",
-      "p": "noun",
-      "e": {
-        "sv": "en reaktion",
-        "en": "the reaction",
-        "fa": "واکنش",
-        "de": "die Reaktion",
-        "es": "la reacción",
-        "it": "la reazione"
-      },
-      "raw": "reaktionen reaktioner",
-      "parts": [
-        "reaktion",
-        "reaction;reactions",
-        "واکنش",
-        "die Reaktion;Reaktionen",
-        "la reacción;reacciones",
-        "la reazione;reazioni",
-        "a"
-      ],
-      "ds": "reaktionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reaktor_a52d4e95",
-      "p": "noun",
-      "e": {
-        "sv": "en reaktor",
-        "en": "the reactor",
-        "fa": "راکتور",
-        "de": "der Reaktor",
-        "es": "el reactor",
-        "it": "il reattore"
-      },
-      "raw": "reaktorn reaktorer",
-      "parts": [
-        "reaktor",
-        "reactor;reactors",
-        "راکتور",
-        "der Reaktor;Reaktoren",
-        "el reactor;reactores",
-        "il reattore;reattori",
-        "o"
-      ],
-      "ds": "reaktorn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rebell_26f466de",
-      "p": "noun",
-      "e": {
-        "sv": "en rebell",
-        "en": "the rebel",
-        "fa": "شورشی",
-        "de": "der Rebell",
-        "es": "el rebelde",
-        "it": "il ribelle"
-      },
-      "raw": "rebellen rebeller",
-      "parts": [
-        "rebell",
-        "rebel;rebels",
-        "شورشی",
-        "der Rebell;Rebellen",
-        "el rebelde;rebeldes",
-        "il ribelle;ribelli",
-        "p"
-      ],
-      "ds": "rebellen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -1009,118 +449,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reception_066a4a70",
-      "p": "noun",
-      "e": {
-        "sv": "en reception",
-        "en": "the reception desk",
-        "fa": "میز پذیرش",
-        "de": "die Rezeption",
-        "es": "la recepción de hotel",
-        "it": "la reception"
-      },
-      "raw": "receptionen receptioner",
-      "parts": [
-        "reception",
-        "reception desk;reception desks",
-        "میز پذیرش",
-        "die Rezeption;Rezeptionen",
-        "la recepción de hotel;recepciones de hotel",
-        "la reception;reception",
-        "l"
-      ],
-      "ds": "receptionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_redaktion_42ec0c71",
-      "p": "noun",
-      "e": {
-        "sv": "en redaktion",
-        "en": "the editorial office",
-        "fa": "دفتر تحریریه",
-        "de": "die Redaktion",
-        "es": "la redacción",
-        "it": "la redazione"
-      },
-      "raw": "redaktionen redaktioner",
-      "parts": [
-        "redaktion",
-        "editorial office;editorial offices",
-        "دفتر تحریریه",
-        "die Redaktion;Redaktionen",
-        "la redacción;redacciones",
-        "la redazione;redazioni",
-        "l"
-      ],
-      "ds": "redaktionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_redaktor_bea9607e",
-      "p": "noun",
-      "e": {
-        "sv": "en redaktör",
-        "en": "the editor",
-        "fa": "ویراستار",
-        "de": "der Redakteur",
-        "es": "el editor",
-        "it": "il redattore"
-      },
-      "raw": "redaktören redaktörer",
-      "parts": [
-        "redaktör",
-        "editor;editors",
-        "ویراستار",
-        "der Redakteur;Redakteure",
-        "el editor;editores",
-        "il redattore;redattori",
-        "p"
-      ],
-      "ds": "redaktören",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rede_672d8512",
-      "p": "noun",
-      "e": {
-        "sv": "ett rede",
-        "en": "the nest",
-        "fa": "لانه",
-        "de": "das Nest",
-        "es": "el nido",
-        "it": "il nido"
-      },
-      "raw": "redet reden redena",
-      "parts": [
-        "rede",
-        "nest;nests",
-        "لانه",
-        "das Nest;Nester",
-        "el nido;nidos",
-        "il nido;nidi",
-        "s"
-      ],
-      "ds": "redet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -1180,34 +508,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_reflex_fcc54d5b",
-      "p": "noun",
-      "e": {
-        "sv": "en reflex",
-        "en": "the reflector",
-        "fa": "شبرنگ",
-        "de": "der Reflektor",
-        "es": "el reflector",
-        "it": "il catarifrangente"
-      },
-      "raw": "reflexen reflexer",
-      "parts": [
-        "reflex",
-        "reflector;reflectors",
-        "شبرنگ",
-        "der Reflektor;Reflektoren",
-        "el reflector;reflectores",
-        "il catarifrangente;catarifrangenti",
-        "o"
-      ],
-      "ds": "reflexen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_refrang_58e67929",
       "p": "noun",
       "e": {
@@ -1264,62 +564,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_regemente_9514f759",
-      "p": "noun",
-      "e": {
-        "sv": "ett regemente",
-        "en": "the regiment",
-        "fa": "هنگ",
-        "de": "das Regiment",
-        "es": "el regimiento",
-        "it": "il reggimento"
-      },
-      "raw": "regementet regementen regementena",
-      "parts": [
-        "regemente",
-        "regiment;regiments",
-        "هنگ",
-        "das Regiment;Regimenter",
-        "el regimiento;regimientos",
-        "il reggimento;reggimenti",
-        "a"
-      ],
-      "ds": "regementet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_region_c697d298",
-      "p": "noun",
-      "e": {
-        "sv": "en region",
-        "en": "the region",
-        "fa": "منطقه",
-        "de": "die Region",
-        "es": "la región",
-        "it": "la regione"
-      },
-      "raw": "regionen regioner",
-      "parts": [
-        "region",
-        "region;regions",
-        "منطقه",
-        "die Region;Regionen",
-        "la región;regiones",
-        "la regione;regioni",
-        "l"
-      ],
-      "ds": "regionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_regissor_cf5d5c17",
       "p": "noun",
       "e": {
@@ -1342,34 +586,6 @@
       ],
       "ds": "regissören",
       "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_register_87780fa5",
-      "p": "noun",
-      "e": {
-        "sv": "ett register",
-        "en": "the register",
-        "fa": "دفتر ثبت",
-        "de": "das Register",
-        "es": "el registro",
-        "it": "il registro"
-      },
-      "raw": "registret register registren (el. registerna)",
-      "parts": [
-        "register",
-        "register;registers",
-        "دفتر ثبت",
-        "das Register;Register",
-        "el registro;registros",
-        "il registro;registri",
-        "o"
-      ],
-      "ds": "registret",
-      "gender": "ett",
       "genders": {
         "it": "il",
         "es": "el"
@@ -1400,90 +616,6 @@
       "gender": "ett",
       "genders": {
         "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reklamation_56133cd7",
-      "p": "noun",
-      "e": {
-        "sv": "en reklamation",
-        "en": "the complaint",
-        "fa": "شکایت از کالا",
-        "de": "die Reklamation",
-        "es": "la reclamación",
-        "it": "il reclamo"
-      },
-      "raw": "reklamationen reklamationer",
-      "parts": [
-        "reklamation",
-        "complaint;complaints",
-        "شکایت از کالا",
-        "die Reklamation;Reklamationen",
-        "la reclamación;reclamaciones",
-        "il reclamo;reclami",
-        "a"
-      ],
-      "ds": "reklamationen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rekord_1a168015",
-      "p": "noun",
-      "e": {
-        "sv": "ett rekord",
-        "en": "the record",
-        "fa": "رکورد",
-        "de": "der Rekord",
-        "es": "el récord",
-        "it": "il record"
-      },
-      "raw": "rekordet rekord rekorden",
-      "parts": [
-        "rekord",
-        "record;records",
-        "رکورد",
-        "der Rekord;Rekorde",
-        "el récord;récords",
-        "il record;record",
-        "a"
-      ],
-      "ds": "rekordet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rekryt_741ed6f2",
-      "p": "noun",
-      "e": {
-        "sv": "en rekryt",
-        "en": "the recruit",
-        "fa": "سرباز تازه‌وارد",
-        "de": "der Rekrut",
-        "es": "el recluta",
-        "it": "la recluta"
-      },
-      "raw": "rekryten rekryter",
-      "parts": [
-        "rekryt",
-        "recruit;recruits",
-        "سرباز تازه‌وارد",
-        "der Rekrut;Rekruten",
-        "el recluta;reclutas",
-        "la recluta;reclute",
-        "p"
-      ],
-      "ds": "rekryten",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "el"
       }
     },
@@ -1600,34 +732,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_reling_4553451c",
-      "p": "noun",
-      "e": {
-        "sv": "en reling",
-        "en": "the guardrail",
-        "fa": "نردهٔ کشتی",
-        "de": "die Reling",
-        "es": "la barandilla del barco",
-        "it": "la battagliola"
-      },
-      "raw": "relingen relingar",
-      "parts": [
-        "reling",
-        "guardrail;guardrails",
-        "نردهٔ کشتی",
-        "die Reling;Relinge",
-        "la barandilla del barco;barandillas del barco",
-        "la battagliola;battagliole",
-        "o"
-      ],
-      "ds": "relingen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_remiss_68eed4f9",
       "p": "noun",
       "e": {
@@ -1684,62 +788,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_reportage_6a0d5407",
-      "p": "noun",
-      "e": {
-        "sv": "ett reportage",
-        "en": "the reportage",
-        "fa": "گزارش میدانی",
-        "de": "die Reportage",
-        "es": "el reportaje",
-        "it": "il reportage"
-      },
-      "raw": "reportaget reportage reportagen",
-      "parts": [
-        "reportage",
-        "reportage;reportages",
-        "گزارش میدانی",
-        "die Reportage;Reportagen",
-        "el reportaje;reportajes",
-        "il reportage;reportage",
-        "a"
-      ],
-      "ds": "reportaget",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reporter_41d6d532",
-      "p": "noun",
-      "e": {
-        "sv": "en reporter",
-        "en": "the reporter",
-        "fa": "خبرنگار",
-        "de": "der Reporter",
-        "es": "el reportero",
-        "it": "il reporter"
-      },
-      "raw": "reportern reportrar",
-      "parts": [
-        "reporter",
-        "reporter;reporters",
-        "خبرنگار",
-        "der Reporter;Reporter",
-        "el reportero;reporteros",
-        "il reporter;reporter",
-        "p"
-      ],
-      "ds": "reportern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_repris_6c9352ac",
       "p": "noun",
       "e": {
@@ -1761,62 +809,6 @@
         "a"
       ],
       "ds": "reprisen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reptil_2073718e",
-      "p": "noun",
-      "e": {
-        "sv": "en reptil",
-        "en": "the reptile",
-        "fa": "خزنده",
-        "de": "das Reptil",
-        "es": "el reptil",
-        "it": "il rettile"
-      },
-      "raw": "reptilen reptiler",
-      "parts": [
-        "reptil",
-        "reptile;reptiles",
-        "خزنده",
-        "das Reptil;Reptilien",
-        "el reptil;reptiles",
-        "il rettile;rettili",
-        "s"
-      ],
-      "ds": "reptilen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_republik_26e5edde",
-      "p": "noun",
-      "e": {
-        "sv": "en republik",
-        "en": "the republic",
-        "fa": "جمهوری",
-        "de": "die Republik",
-        "es": "la república",
-        "it": "la repubblica"
-      },
-      "raw": "republiken republiker",
-      "parts": [
-        "republik",
-        "republic;republics",
-        "جمهوری",
-        "die Republik;Republiken",
-        "la república;repúblicas",
-        "la repubblica;repubbliche",
-        "a"
-      ],
-      "ds": "republiken",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -1849,34 +841,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_reserv_06950bd2",
-      "p": "noun",
-      "e": {
-        "sv": "en reserv",
-        "en": "the reserve",
-        "fa": "ذخیره",
-        "de": "die Reserve",
-        "es": "la reserva",
-        "it": "la riserva"
-      },
-      "raw": "reserven reserver",
-      "parts": [
-        "reserv",
-        "reserve;reserves",
-        "ذخیره",
-        "die Reserve;Reserven",
-        "la reserva;reservas",
-        "la riserva;riserve",
-        "a"
-      ],
-      "ds": "reserven",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -1930,34 +894,6 @@
       ],
       "ds": "resonemanget",
       "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rest_2e09d521",
-      "p": "noun",
-      "e": {
-        "sv": "en rest",
-        "en": "the remainder",
-        "fa": "باقی‌مانده",
-        "de": "der Rest",
-        "es": "el resto",
-        "it": "il resto"
-      },
-      "raw": "resten rester",
-      "parts": [
-        "rest",
-        "remainder;remainders",
-        "باقی‌مانده",
-        "der Rest;Reste",
-        "el resto;restos",
-        "il resto;resti",
-        "a"
-      ],
-      "ds": "resten",
-      "gender": "en",
       "genders": {
         "it": "il",
         "es": "el"
@@ -2048,34 +984,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_retur_add8cc1b",
-      "p": "noun",
-      "e": {
-        "sv": "en retur",
-        "en": "the return",
-        "fa": "مرجوعی",
-        "de": "die Rücksendung",
-        "es": "la devolución",
-        "it": "il reso"
-      },
-      "raw": "returen returer",
-      "parts": [
-        "retur",
-        "return;returns",
-        "مرجوعی",
-        "die Rücksendung;Rücksendungen",
-        "la devolución;devoluciones",
-        "il reso;resi",
-        "a"
-      ],
-      "ds": "returen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_rev_d1e75aca",
       "p": "noun",
       "e": {
@@ -2100,118 +1008,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_revir_1f05543d",
-      "p": "noun",
-      "e": {
-        "sv": "ett revir",
-        "en": "the territory",
-        "fa": "قلمرو جانور",
-        "de": "das Revier",
-        "es": "el territorio",
-        "it": "il territorio"
-      },
-      "raw": "reviret revir reviren",
-      "parts": [
-        "revir",
-        "territory;territories",
-        "قلمرو جانور",
-        "das Revier;Reviere",
-        "el territorio;territorios",
-        "il territorio;territori",
-        "l"
-      ],
-      "ds": "reviret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_revisor_d585bbba",
-      "p": "noun",
-      "e": {
-        "sv": "en revisor",
-        "en": "the auditor",
-        "fa": "حسابرس",
-        "de": "der Wirtschaftsprüfer",
-        "es": "el auditor",
-        "it": "il revisore"
-      },
-      "raw": "revisorn revisorer",
-      "parts": [
-        "revisor",
-        "auditor;auditors",
-        "حسابرس",
-        "der Wirtschaftsprüfer;Wirtschaftsprüfer",
-        "el auditor;auditores",
-        "il revisore;revisori",
-        "p"
-      ],
-      "ds": "revisorn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_revolver_6e98b484",
-      "p": "noun",
-      "e": {
-        "sv": "en revolver",
-        "en": "the revolver",
-        "fa": "هفت‌تیر",
-        "de": "der Revolver",
-        "es": "el revólver",
-        "it": "il revolver"
-      },
-      "raw": "revolvern revolvrar",
-      "parts": [
-        "revolver",
-        "revolver;revolvers",
-        "هفت‌تیر",
-        "der Revolver;Revolver",
-        "el revólver;revólveres",
-        "il revolver;revolver",
-        "o"
-      ],
-      "ds": "revolvern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ribba_2ddb7537",
-      "p": "noun",
-      "e": {
-        "sv": "en ribba",
-        "en": "the slat",
-        "fa": "تیرک باریک",
-        "de": "die Latte",
-        "es": "el listón",
-        "it": "il listello"
-      },
-      "raw": "ribban ribbor",
-      "parts": [
-        "ribba",
-        "slat;slats",
-        "تیرک باریک",
-        "die Latte;Latten",
-        "el listón;listones",
-        "il listello;listelli",
-        "o"
-      ],
-      "ds": "ribban",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -2328,62 +1124,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_rim_1569ec5b",
-      "p": "noun",
-      "e": {
-        "sv": "ett rim",
-        "en": "the rhyme",
-        "fa": "قافیه",
-        "de": "der Reim",
-        "es": "la rima",
-        "it": "la rima"
-      },
-      "raw": "rimmet rim rimmen",
-      "parts": [
-        "rim",
-        "rhyme;rhymes",
-        "قافیه",
-        "der Reim;Reime",
-        "la rima;rimas",
-        "la rima;rime",
-        "a"
-      ],
-      "ds": "rimmet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_risk_2c6ef0f0",
-      "p": "noun",
-      "e": {
-        "sv": "en risk",
-        "en": "the risk",
-        "fa": "ریسک",
-        "de": "das Risiko",
-        "es": "el riesgo",
-        "it": "il rischio"
-      },
-      "raw": "risken risker",
-      "parts": [
-        "risk",
-        "risk;risks",
-        "ریسک",
-        "das Risiko;Risiken",
-        "el riesgo;riesgos",
-        "il rischio;rischi",
-        "a"
-      ],
-      "ds": "risken",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_ritning_48b6fe13",
       "p": "noun",
       "e": {
@@ -2405,62 +1145,6 @@
         "o"
       ],
       "ds": "ritningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ritual_7920fdef",
-      "p": "noun",
-      "e": {
-        "sv": "en ritual",
-        "en": "the ritual",
-        "fa": "آیین",
-        "de": "das Ritual",
-        "es": "el ritual",
-        "it": "il rituale"
-      },
-      "raw": "ritualen ritualer",
-      "parts": [
-        "ritual",
-        "ritual;rituals",
-        "آیین",
-        "das Ritual;Rituale",
-        "el ritual;rituales",
-        "il rituale;rituali",
-        "a"
-      ],
-      "ds": "ritualen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rival_1db147fa",
-      "p": "noun",
-      "e": {
-        "sv": "en rival",
-        "en": "the rival",
-        "fa": "هماورد",
-        "de": "der Rivale",
-        "es": "el rival",
-        "it": "il rivale"
-      },
-      "raw": "rivalen rivaler",
-      "parts": [
-        "rival",
-        "rival;rivals",
-        "هماورد",
-        "der Rivale;Rivalen",
-        "el rival;rivales",
-        "il rivale;rivali",
-        "p"
-      ],
-      "ds": "rivalen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -2496,62 +1180,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_roman_4eaae75f",
-      "p": "noun",
-      "e": {
-        "sv": "en roman",
-        "en": "the novel",
-        "fa": "رمان",
-        "de": "der Roman",
-        "es": "la novela",
-        "it": "il romanzo"
-      },
-      "raw": "romanen romaner",
-      "parts": [
-        "roman",
-        "novel;novels",
-        "رمان",
-        "der Roman;Romane",
-        "la novela;novelas",
-        "il romanzo;romanzi",
-        "a"
-      ],
-      "ds": "romanen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_romb_1caeb35d",
-      "p": "noun",
-      "e": {
-        "sv": "en romb",
-        "en": "the rhombus",
-        "fa": "لوزی",
-        "de": "die Raute",
-        "es": "el rombo",
-        "it": "il rombo"
-      },
-      "raw": "romben romber",
-      "parts": [
-        "romb",
-        "rhombus;rhombi",
-        "لوزی",
-        "die Raute;Rauten",
-        "el rombo;rombos",
-        "il rombo;rombi",
-        "a"
-      ],
-      "ds": "romben",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_rondell_b56c449e",
       "p": "noun",
       "e": {
@@ -2580,90 +1208,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_ror_4695f417",
-      "p": "noun",
-      "e": {
-        "sv": "ett rör",
-        "en": "the tube",
-        "fa": "لوله",
-        "de": "das Rohr",
-        "es": "el tubo",
-        "it": "il tubo"
-      },
-      "raw": "röret rör rören",
-      "parts": [
-        "rör",
-        "tube;tubes",
-        "لوله",
-        "das Rohr;Rohre",
-        "el tubo;tubos",
-        "il tubo;tubi",
-        "o"
-      ],
-      "ds": "röret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ros_1040113a",
-      "p": "noun",
-      "e": {
-        "sv": "en ros",
-        "en": "the rose",
-        "fa": "گل رز",
-        "de": "die Rose",
-        "es": "la rosa",
-        "it": "la rosa"
-      },
-      "raw": "rosen rosor",
-      "parts": [
-        "ros",
-        "rose;roses",
-        "گل رز",
-        "die Rose;Rosen",
-        "la rosa;rosas",
-        "la rosa;rose",
-        "s"
-      ],
-      "ds": "rosen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rost_89ff555c",
-      "p": "noun",
-      "e": {
-        "sv": "en rost",
-        "en": "the rust",
-        "fa": "زنگ‌زدگی",
-        "de": "der Rost",
-        "es": "el óxido",
-        "it": "la ruggine"
-      },
-      "raw": "rosten",
-      "parts": [
-        "rost",
-        "rust;",
-        "زنگ‌زدگی",
-        "der Rost;",
-        "el óxido;óxidos",
-        "la ruggine;ruggini",
-        "a"
-      ],
-      "ds": "rosten",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_rubrik_4094a2b7",
       "p": "noun",
       "e": {
@@ -2689,34 +1233,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ruin_4a38d083",
-      "p": "noun",
-      "e": {
-        "sv": "en ruin",
-        "en": "the ruin",
-        "fa": "ویرانه",
-        "de": "die Ruine",
-        "es": "la ruina",
-        "it": "la rovina"
-      },
-      "raw": "ruinen ruiner",
-      "parts": [
-        "ruin",
-        "ruin;ruins",
-        "ویرانه",
-        "die Ruine;Ruinen",
-        "la ruina;ruinas",
-        "la rovina;rovine",
-        "s"
-      ],
-      "ds": "ruinen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -2776,34 +1292,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_runa_f33c7a4f",
-      "p": "noun",
-      "e": {
-        "sv": "en runa",
-        "en": "the rune",
-        "fa": "حرف رونی",
-        "de": "die Rune",
-        "es": "la runa",
-        "it": "la runa"
-      },
-      "raw": "runan runor",
-      "parts": [
-        "runa",
-        "rune;runes",
-        "حرف رونی",
-        "die Rune;Runen",
-        "la runa;runas",
-        "la runa;rune",
-        "a"
-      ],
-      "ds": "runan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_russin_86f56d5f",
       "p": "noun",
       "e": {
@@ -2856,90 +1344,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ruta_7eb060dc",
-      "p": "noun",
-      "e": {
-        "sv": "en ruta",
-        "en": "the pane",
-        "fa": "شیشهٔ چهارگوش",
-        "de": "die Scheibe",
-        "es": "el cristal de ventana",
-        "it": "il vetro di finestra"
-      },
-      "raw": "rutan rutor",
-      "parts": [
-        "ruta",
-        "pane;panes",
-        "شیشهٔ چهارگوش",
-        "die Scheibe;Scheiben",
-        "el cristal de ventana;cristales de ventana",
-        "il vetro di finestra;vetri di finestra",
-        "o"
-      ],
-      "ds": "rutan",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rutin_92d52f54",
-      "p": "noun",
-      "e": {
-        "sv": "en rutin",
-        "en": "the routine",
-        "fa": "روال",
-        "de": "die Routine",
-        "es": "la rutina",
-        "it": "la routine"
-      },
-      "raw": "rutinen rutiner",
-      "parts": [
-        "rutin",
-        "routine;routines",
-        "روال",
-        "die Routine;Routinen",
-        "la rutina;rutinas",
-        "la routine;routine",
-        "a"
-      ],
-      "ds": "rutinen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_rutt_d1f41f8c",
-      "p": "noun",
-      "e": {
-        "sv": "en rutt",
-        "en": "the route",
-        "fa": "مسیر",
-        "de": "die Route",
-        "es": "la ruta",
-        "it": "l'itinerario"
-      },
-      "raw": "rutten rutter",
-      "parts": [
-        "rutt",
-        "route;routes",
-        "مسیر",
-        "die Route;Routen",
-        "la ruta;rutas",
-        "l'itinerario;itinerari",
-        "a"
-      ],
-      "ds": "rutten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "la"
       }
     },
@@ -3056,62 +1460,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_abstraktion_5a8a18c1",
-      "p": "noun",
-      "e": {
-        "sv": "en abstraktion",
-        "en": "the abstraction",
-        "fa": "انتزاع",
-        "de": "die Abstraktion",
-        "es": "la abstracción",
-        "it": "l'astrazione"
-      },
-      "raw": "abstraktionen abstraktioner",
-      "parts": [
-        "abstraktion",
-        "abstraction;abstractions",
-        "انتزاع",
-        "die Abstraktion;Abstraktionen",
-        "la abstracción;abstracciones",
-        "l'astrazione;astrazioni",
-        "a"
-      ],
-      "ds": "abstraktionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_aceton_2bab81b8",
-      "p": "noun",
-      "e": {
-        "sv": "ett aceton",
-        "en": "the acetone",
-        "fa": "استون",
-        "de": "das Aceton",
-        "es": "la acetona",
-        "it": "l'acetone"
-      },
-      "raw": "acetonet",
-      "parts": [
-        "aceton",
-        "acetone;",
-        "استون",
-        "das Aceton;",
-        "la acetona;",
-        "l'acetone;",
-        "a"
-      ],
-      "ds": "acetonet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_adamsapple_0979c8d4",
       "p": "noun",
       "e": {
@@ -3136,62 +1484,6 @@
       "gender": "ett",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_addition_77f930e4",
-      "p": "noun",
-      "e": {
-        "sv": "en addition",
-        "en": "the addition",
-        "fa": "جمع ریاضی",
-        "de": "die Addition",
-        "es": "la adición",
-        "it": "l'addizione"
-      },
-      "raw": "additionen additioner",
-      "parts": [
-        "addition",
-        "addition;additions",
-        "جمع ریاضی",
-        "die Addition;Additionen",
-        "la adición;adiciones",
-        "l'addizione;addizioni",
-        "a"
-      ],
-      "ds": "additionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_adel_783eef82",
-      "p": "noun",
-      "e": {
-        "sv": "en adel",
-        "en": "the nobility",
-        "fa": "اشراف",
-        "de": "der Adel",
-        "es": "la nobleza",
-        "it": "la nobiltà"
-      },
-      "raw": "adeln",
-      "parts": [
-        "adel",
-        "nobility;",
-        "اشراف",
-        "der Adel;",
-        "la nobleza;",
-        "la nobiltà;",
-        "a"
-      ],
-      "ds": "adeln",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -3246,62 +1538,6 @@
       ],
       "ds": "ädelstenen",
       "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_administration_512afb6c",
-      "p": "noun",
-      "e": {
-        "sv": "en administration",
-        "en": "the administration",
-        "fa": "امور اداری",
-        "de": "die Verwaltung",
-        "es": "la administración",
-        "it": "l'amministrazione"
-      },
-      "raw": "administrationen administrationer",
-      "parts": [
-        "administration",
-        "administration;administrations",
-        "امور اداری",
-        "die Verwaltung;Verwaltungen",
-        "la administración;administraciones",
-        "l'amministrazione;amministrazioni",
-        "a"
-      ],
-      "ds": "administrationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_adrenalin_2b221970",
-      "p": "noun",
-      "e": {
-        "sv": "ett adrenalin",
-        "en": "the adrenaline",
-        "fa": "آدرنالین",
-        "de": "das Adrenalin",
-        "es": "la adrenalina",
-        "it": "l'adrenalina"
-      },
-      "raw": "adrenalinet",
-      "parts": [
-        "adrenalin",
-        "adrenaline;",
-        "آدرنالین",
-        "das Adrenalin;",
-        "la adrenalina;",
-        "l'adrenalina;",
-        "a"
-      ],
-      "ds": "adrenalinet",
-      "gender": "ett",
       "genders": {
         "it": "la",
         "es": "la"
@@ -3448,62 +1684,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_aggregat_cb234b90",
-      "p": "noun",
-      "e": {
-        "sv": "ett aggregat",
-        "en": "the power unit",
-        "fa": "واحد مولد نیرو",
-        "de": "das Aggregat",
-        "es": "el grupo electrógeno",
-        "it": "il gruppo elettrogeno"
-      },
-      "raw": "aggregatet aggregat aggregaten",
-      "parts": [
-        "aggregat",
-        "power unit;power units",
-        "واحد مولد نیرو",
-        "das Aggregat;Aggregate",
-        "el grupo electrógeno;grupos electrógenos",
-        "il gruppo elettrogeno;gruppi elettrogeni",
-        "a"
-      ],
-      "ds": "aggregatet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_aggression_9b5e95e8",
-      "p": "noun",
-      "e": {
-        "sv": "en aggression",
-        "en": "the aggression",
-        "fa": "پرخاشگری",
-        "de": "die Aggression",
-        "es": "la agresión",
-        "it": "l'aggressione"
-      },
-      "raw": "aggressionen aggressioner",
-      "parts": [
-        "aggression",
-        "aggression;aggressions",
-        "پرخاشگری",
-        "die Aggression;Aggressionen",
-        "la agresión;agresiones",
-        "l'aggressione;aggressioni",
-        "a"
-      ],
-      "ds": "aggressionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_agn_dc377193",
       "p": "noun",
       "e": {
@@ -3528,34 +1708,6 @@
       "gender": "ett",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_agronom_7cedbc62",
-      "p": "noun",
-      "e": {
-        "sv": "en agronom",
-        "en": "the agronomist",
-        "fa": "کارشناس کشاورزی",
-        "de": "der Agronom",
-        "es": "el agrónomo",
-        "it": "l'agronomo"
-      },
-      "raw": "agronomen agronomer",
-      "parts": [
-        "agronom",
-        "agronomist;agronomists",
-        "کارشناس کشاورزی",
-        "der Agronom;Agronomen",
-        "el agrónomo;agrónomos",
-        "l'agronomo;agronomi",
-        "p"
-      ],
-      "ds": "agronomen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -3784,90 +1936,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_aktor_263330f0",
-      "p": "noun",
-      "e": {
-        "sv": "en aktör",
-        "en": "the actor",
-        "fa": "بازیگر",
-        "de": "der Schauspieler",
-        "es": "el actor",
-        "it": "l'attore"
-      },
-      "raw": "aktören aktörer",
-      "parts": [
-        "aktör",
-        "actor;actors",
-        "بازیگر",
-        "der Schauspieler;Schauspieler",
-        "el actor;actores",
-        "l'attore;attori",
-        "p"
-      ],
-      "ds": "aktören",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_akupunktur_9879dee2",
-      "p": "noun",
-      "e": {
-        "sv": "en akupunktur",
-        "en": "the acupuncture",
-        "fa": "طب سوزنی",
-        "de": "die Akupunktur",
-        "es": "la acupuntura",
-        "it": "l'agopuntura"
-      },
-      "raw": "akupunkturen",
-      "parts": [
-        "akupunktur",
-        "acupuncture;",
-        "طب سوزنی",
-        "die Akupunktur;",
-        "la acupuntura;",
-        "l'agopuntura;",
-        "a"
-      ],
-      "ds": "akupunkturen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_akustik_b64cf86d",
-      "p": "noun",
-      "e": {
-        "sv": "en akustik",
-        "en": "the acoustics",
-        "fa": "آکوستیک",
-        "de": "die Akustik",
-        "es": "la acústica",
-        "it": "l'acustica"
-      },
-      "raw": "akustiken",
-      "parts": [
-        "akustik",
-        "acoustics;acoustics",
-        "آکوستیک",
-        "die Akustik;",
-        "la acústica;",
-        "l'acustica;",
-        "a"
-      ],
-      "ds": "akustiken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_akutmottagning_f528f39c",
       "p": "noun",
       "e": {
@@ -3973,34 +2041,6 @@
         "a"
       ],
       "ds": "äldreomsorgen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_alg_3c5eb225",
-      "p": "noun",
-      "e": {
-        "sv": "en alg",
-        "en": "the alga",
-        "fa": "جلبک",
-        "de": "die Alge",
-        "es": "el alga",
-        "it": "l'alga"
-      },
-      "raw": "algen alger",
-      "parts": [
-        "alg",
-        "alga;algae",
-        "جلبک",
-        "die Alge;Algen",
-        "el alga;algas",
-        "l'alga;alghe",
-        "s"
-      ],
-      "ds": "algen",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -4204,62 +2244,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_allvar_d9ca3a2f",
-      "p": "noun",
-      "e": {
-        "sv": "ett allvar",
-        "en": "the seriousness",
-        "fa": "جدیت",
-        "de": "der Ernst",
-        "es": "la seriedad",
-        "it": "la serietà"
-      },
-      "raw": "allvaret",
-      "parts": [
-        "allvar",
-        "seriousness;",
-        "جدیت",
-        "der Ernst;",
-        "la seriedad;",
-        "la serietà;",
-        "a"
-      ],
-      "ds": "allvaret",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_alva_c2a69d7d",
-      "p": "noun",
-      "e": {
-        "sv": "en älva",
-        "en": "the fairy",
-        "fa": "پری",
-        "de": "die Fee",
-        "es": "el hada",
-        "it": "la fata"
-      },
-      "raw": "älvan or",
-      "parts": [
-        "älva",
-        "fairy;fairies",
-        "پری",
-        "die Fee;Feen",
-        "el hada;hadas",
-        "la fata;fate",
-        "a"
-      ],
-      "ds": "älvan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_ambete_eaa32ae2",
       "p": "noun",
       "e": {
@@ -4284,90 +2268,6 @@
       "gender": "ett",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_amiral_b41d4938",
-      "p": "noun",
-      "e": {
-        "sv": "en amiral",
-        "en": "the admiral",
-        "fa": "دریاسالار",
-        "de": "der Admiral",
-        "es": "el almirante",
-        "it": "l'ammiraglio"
-      },
-      "raw": "amiralen amiraler",
-      "parts": [
-        "amiral",
-        "admiral;admirals",
-        "دریاسالار",
-        "der Admiral;Admirale",
-        "el almirante;almirantes",
-        "l'ammiraglio;ammiragli",
-        "a"
-      ],
-      "ds": "amiralen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ammunition_ff0f6692",
-      "p": "noun",
-      "e": {
-        "sv": "en ammunition",
-        "en": "the ammunition",
-        "fa": "مهمات",
-        "de": "die Munition",
-        "es": "la munición",
-        "it": "la munizione"
-      },
-      "raw": "ammunitionen",
-      "parts": [
-        "ammunition",
-        "ammunition;",
-        "مهمات",
-        "die Munition;",
-        "la munición;",
-        "la munizione;",
-        "a"
-      ],
-      "ds": "ammunitionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_amnesomsattning_b4740e59",
-      "p": "noun",
-      "e": {
-        "sv": "en ämnesomsättning",
-        "en": "the metabolism",
-        "fa": "سوخت‌وساز",
-        "de": "der Stoffwechsel",
-        "es": "el metabolismo",
-        "it": "il metabolismo"
-      },
-      "raw": "ämnesomsättningen",
-      "parts": [
-        "ämnesomsättning",
-        "metabolism;metabolisms",
-        "سوخت‌وساز",
-        "der Stoffwechsel;Stoffwechsel",
-        "el metabolismo;metabolismos",
-        "il metabolismo;metabolismi",
-        "a"
-      ],
-      "ds": "ämnesomsättningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -4596,34 +2496,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_andtarm_21b3887a",
-      "p": "noun",
-      "e": {
-        "sv": "en ändtarm",
-        "en": "the rectum",
-        "fa": "راست‌روده",
-        "de": "der Mastdarm",
-        "es": "el recto",
-        "it": "il retto"
-      },
-      "raw": "ändtarmen",
-      "parts": [
-        "ändtarm",
-        "rectum;rectums",
-        "راست‌روده",
-        "der Mastdarm;Mastdärme",
-        "el recto;rectos",
-        "il retto;retti",
-        "a"
-      ],
-      "ds": "ändtarmen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_andningsorgan_8f718041",
       "p": "noun",
       "e": {
@@ -4764,34 +2636,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_anis_84fe5cc6",
-      "p": "noun",
-      "e": {
-        "sv": "en anis",
-        "en": "the anise",
-        "fa": "انیسون",
-        "de": "der Anis",
-        "es": "el anís",
-        "it": "l'anice"
-      },
-      "raw": "anisen",
-      "parts": [
-        "anis",
-        "anise;",
-        "انیسون",
-        "der Anis;",
-        "el anís;",
-        "l'anice;",
-        "a"
-      ],
-      "ds": "anisen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_anlaggning_ae148d94",
       "p": "noun",
       "e": {
@@ -4841,34 +2685,6 @@
         "a"
       ],
       "ds": "anmälan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_anorexi_da7ef542",
-      "p": "noun",
-      "e": {
-        "sv": "en anorexi",
-        "en": "the anorexia",
-        "fa": "بی‌اشتهایی عصبی",
-        "de": "die Magersucht",
-        "es": "la anorexia",
-        "it": "l'anoressia"
-      },
-      "raw": "anorexien",
-      "parts": [
-        "anorexi",
-        "anorexia;",
-        "بی‌اشتهایی عصبی",
-        "die Magersucht;",
-        "la anorexia;",
-        "l'anoressia;",
-        "a"
-      ],
-      "ds": "anorexien",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -5100,34 +2916,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_anvandning_60acdf84",
-      "p": "noun",
-      "e": {
-        "sv": "en användning",
-        "en": "the use",
-        "fa": "استفاده",
-        "de": "die Verwendung",
-        "es": "el uso",
-        "it": "l'utilizzo"
-      },
-      "raw": "användningen användningar",
-      "parts": [
-        "användning",
-        "use;uses",
-        "استفاده",
-        "die Verwendung;Verwendungen",
-        "el uso;usos",
-        "l'utilizzo;utilizzi",
-        "a"
-      ],
-      "ds": "användningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_apati_a1ac2d9d",
       "p": "noun",
       "e": {
@@ -5349,34 +3137,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_arbetare_2967fbe1",
-      "p": "noun",
-      "e": {
-        "sv": "en arbetare",
-        "en": "the worker",
-        "fa": "کارگر",
-        "de": "der Arbeiter",
-        "es": "el trabajador",
-        "it": "il lavoratore"
-      },
-      "raw": "arbetaren arbetare arbetarna",
-      "parts": [
-        "arbetare",
-        "worker;workers",
-        "کارگر",
-        "der Arbeiter;Arbeiter",
-        "el trabajador;trabajadores",
-        "il lavoratore;lavoratori",
-        "p"
-      ],
-      "ds": "arbetaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -6024,34 +3784,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_arrangemang_b9959a0f",
-      "p": "noun",
-      "e": {
-        "sv": "ett arrangemang",
-        "en": "the arrangement",
-        "fa": "ترتیبات",
-        "de": "das Arrangement",
-        "es": "el arreglo",
-        "it": "l'organizzazione"
-      },
-      "raw": "arrangemanget arrangemang arrangemangen",
-      "parts": [
-        "arrangemang",
-        "arrangement;arrangements",
-        "ترتیبات",
-        "das Arrangement;Arrangements",
-        "el arreglo;arreglos",
-        "l'organizzazione;organizzazioni",
-        "a"
-      ],
-      "ds": "arrangemanget",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_arrangor_e5f4cb5f",
       "p": "noun",
       "e": {
@@ -6276,62 +4008,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_asbest_c5079453",
-      "p": "noun",
-      "e": {
-        "sv": "en asbest",
-        "en": "the asbestos",
-        "fa": "آزبست",
-        "de": "der Asbest",
-        "es": "el amianto",
-        "it": "l'amianto"
-      },
-      "raw": "asbesten",
-      "parts": [
-        "asbest",
-        "asbestos;",
-        "آزبست",
-        "der Asbest;",
-        "el amianto;",
-        "l'amianto;",
-        "a"
-      ],
-      "ds": "asbesten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_asfalt_bfb4d6d0",
-      "p": "noun",
-      "e": {
-        "sv": "en asfalt",
-        "en": "the asphalt",
-        "fa": "آسفالت",
-        "de": "der Asphalt",
-        "es": "el asfalto",
-        "it": "l'asfalto"
-      },
-      "raw": "asfalten",
-      "parts": [
-        "asfalt",
-        "asphalt;",
-        "آسفالت",
-        "der Asphalt;",
-        "el asfalto;",
-        "l'asfalto;",
-        "a"
-      ],
-      "ds": "asfalten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_askfat_c77939b9",
       "p": "noun",
       "e": {
@@ -6416,34 +4092,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_astma_5f15d96d",
-      "p": "noun",
-      "e": {
-        "sv": "en astma",
-        "en": "the asthma",
-        "fa": "آسم",
-        "de": "das Asthma",
-        "es": "el asma",
-        "it": "l'asma"
-      },
-      "raw": "astman",
-      "parts": [
-        "astma",
-        "asthma;",
-        "آسم",
-        "das Asthma;",
-        "el asma;",
-        "l'asma;",
-        "a"
-      ],
-      "ds": "astman",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_astronomi_a315111c",
       "p": "noun",
       "e": {
@@ -6469,34 +4117,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_asyl_345a7ceb",
-      "p": "noun",
-      "e": {
-        "sv": "en asyl",
-        "en": "the asylum",
-        "fa": "پناهندگی",
-        "de": "das Asyl",
-        "es": "el asilo",
-        "it": "l'asilo"
-      },
-      "raw": "asylen asyler",
-      "parts": [
-        "asyl",
-        "asylum;",
-        "پناهندگی",
-        "das Asyl;",
-        "el asilo;",
-        "l'asilo;",
-        "a"
-      ],
-      "ds": "asylen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -6752,34 +4372,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_atervinning_1a90691a",
-      "p": "noun",
-      "e": {
-        "sv": "en återvinning",
-        "en": "the recycling",
-        "fa": "بازیافت",
-        "de": "das Recycling",
-        "es": "el reciclaje",
-        "it": "il riciclaggio"
-      },
-      "raw": "återvinningen",
-      "parts": [
-        "återvinning",
-        "recycling;",
-        "بازیافت",
-        "das Recycling;",
-        "el reciclaje;",
-        "il riciclaggio;",
-        "a"
-      ],
-      "ds": "återvinningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_atstramning_762ee087",
       "p": "noun",
       "e": {
@@ -6805,34 +4397,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_attentat_8cf02000",
-      "p": "noun",
-      "e": {
-        "sv": "ett attentat",
-        "en": "the assassination attempt",
-        "fa": "سوءقصد",
-        "de": "das Attentat",
-        "es": "el atentado",
-        "it": "l'attentato"
-      },
-      "raw": "attentatet attentat attentaten",
-      "parts": [
-        "attentat",
-        "assassination attempt;assassination attempts",
-        "سوءقصد",
-        "das Attentat;Attentate",
-        "el atentado;atentados",
-        "l'attentato;attentati",
-        "a"
-      ],
-      "ds": "attentatet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -7224,62 +4788,6 @@
       "gender": "en",
       "genders": {
         "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_backen_dff83f97",
-      "p": "noun",
-      "e": {
-        "sv": "ett bäcken",
-        "en": "the pelvis",
-        "fa": "لگن خاصره",
-        "de": "das Becken",
-        "es": "la pelvis",
-        "it": "il bacino"
-      },
-      "raw": "bäckenet bäcken bäckenen",
-      "parts": [
-        "bäcken",
-        "pelvis;pelvises",
-        "لگن خاصره",
-        "das Becken;Becken",
-        "la pelvis;pelvis",
-        "il bacino;bacini",
-        "a"
-      ],
-      "ds": "bäckenet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bacon_9cca0703",
-      "p": "noun",
-      "e": {
-        "sv": "ett bacon",
-        "en": "the bacon",
-        "fa": "بیکن",
-        "de": "der Speck",
-        "es": "el beicon",
-        "it": "la pancetta"
-      },
-      "raw": "baconet (el. baconen)",
-      "parts": [
-        "bacon",
-        "bacon;",
-        "بیکن",
-        "der Speck;",
-        "el beicon;",
-        "la pancetta;",
-        "a"
-      ],
-      "ds": "baconet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
         "es": "el"
       }
     },
@@ -7760,34 +5268,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_bartender_a177ad74",
-      "p": "noun",
-      "e": {
-        "sv": "en bartender",
-        "en": "the bartender",
-        "fa": "متصدی بار",
-        "de": "der Barkeeper",
-        "es": "el camarero de bar",
-        "it": "il barista"
-      },
-      "raw": "bartendern bartendrar",
-      "parts": [
-        "bartender",
-        "bartender;bartenders",
-        "متصدی بار",
-        "der Barkeeper;Barkeeper",
-        "el camarero de bar;camareros de bar",
-        "il barista;baristi",
-        "p"
-      ],
-      "ds": "bartendern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_bargningsbil_f0a804f9",
       "p": "noun",
       "e": {
@@ -7956,34 +5436,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_barnvakt_0c0ed34c",
-      "p": "noun",
-      "e": {
-        "sv": "en barnvakt",
-        "en": "the babysitter",
-        "fa": "پرستار کودک",
-        "de": "der Babysitter",
-        "es": "el niñero",
-        "it": "il babysitter"
-      },
-      "raw": "barnvakten barnvakter",
-      "parts": [
-        "barnvakt",
-        "babysitter;babysitters",
-        "پرستار کودک",
-        "der Babysitter;Babysitter",
-        "el niñero;niñeros",
-        "il babysitter;babysitter",
-        "p"
-      ],
-      "ds": "barnvakten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_barnavardscentral_a14ad7b9",
       "p": "noun",
       "e": {
@@ -8065,62 +5517,6 @@
       "genders": {
         "it": "il",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_basketboll_9d05d355",
-      "p": "noun",
-      "e": {
-        "sv": "en basketboll",
-        "en": "the basketball",
-        "fa": "توپ بسکتبال",
-        "de": "der Basketball",
-        "es": "el balón de baloncesto",
-        "it": "il pallone da basket"
-      },
-      "raw": "basketbollen",
-      "parts": [
-        "basketboll",
-        "basketball;basketballs",
-        "توپ بسکتبال",
-        "der Basketball;Basketbälle",
-        "el balón de baloncesto;balones de baloncesto",
-        "il pallone da basket;palloni da basket",
-        "s"
-      ],
-      "ds": "basketbollen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bastsaljare_8bbaf3fa",
-      "p": "noun",
-      "e": {
-        "sv": "en bästsäljare",
-        "en": "the bestseller",
-        "fa": "کتاب پرفروش",
-        "de": "der Bestseller",
-        "es": "el superventas",
-        "it": "il bestseller"
-      },
-      "raw": "bästsäljaren bästsäljare bästsäljarna",
-      "parts": [
-        "bästsäljare",
-        "bestseller;bestsellers",
-        "کتاب پرفروش",
-        "der Bestseller;Bestseller",
-        "el superventas;superventas",
-        "il bestseller;bestseller",
-        "a"
-      ],
-      "ds": "bästsäljaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -8236,34 +5632,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_begavning_9cf855ce",
-      "p": "noun",
-      "e": {
-        "sv": "en begåvning",
-        "en": "the talent",
-        "fa": "استعداد",
-        "de": "die Begabung",
-        "es": "el talento",
-        "it": "il talento"
-      },
-      "raw": "begåvningen begåvningar",
-      "parts": [
-        "begåvning",
-        "talent;talents",
-        "استعداد",
-        "die Begabung;Begabungen",
-        "el talento;talentos",
-        "il talento;talenti",
-        "a"
-      ],
-      "ds": "begåvningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_begravningsbyra_fbd95ce0",
       "p": "noun",
       "e": {
@@ -8320,34 +5688,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_bekampningsmedel_c4d79af8",
-      "p": "noun",
-      "e": {
-        "sv": "ett bekämpningsmedel",
-        "en": "the pesticide",
-        "fa": "آفت‌کش",
-        "de": "das Pestizid",
-        "es": "el pesticida",
-        "it": "il pesticida"
-      },
-      "raw": "bekämpningsmedlet bekämpningsmedel bekämpningsmedlen",
-      "parts": [
-        "bekämpningsmedel",
-        "pesticide;pesticides",
-        "آفت‌کش",
-        "das Pestizid;Pestizide",
-        "el pesticida;pesticidas",
-        "il pesticida;pesticidi",
-        "a"
-      ],
-      "ds": "bekämpningsmedlet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_bekannelse_e60734a4",
       "p": "noun",
       "e": {
@@ -8398,34 +5738,6 @@
       ],
       "ds": "bekvämligheten",
       "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bekymmer_a3efa11f",
-      "p": "noun",
-      "e": {
-        "sv": "ett bekymmer",
-        "en": "the worry",
-        "fa": "نگرانی",
-        "de": "die Sorge",
-        "es": "la preocupación",
-        "it": "la preoccupazione"
-      },
-      "raw": "bekymret bekymmer bekymren (el. bekymmerna)",
-      "parts": [
-        "bekymmer",
-        "worry;worries",
-        "نگرانی",
-        "die Sorge;Sorgen",
-        "la preocupación;preocupaciones",
-        "la preoccupazione;preoccupazioni",
-        "a"
-      ],
-      "ds": "bekymret",
-      "gender": "ett",
       "genders": {
         "it": "la",
         "es": "la"
@@ -8768,34 +6080,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_bett_dd70e05f",
-      "p": "noun",
-      "e": {
-        "sv": "ett bett",
-        "en": "the bite",
-        "fa": "گازگرفتگی",
-        "de": "der Biss",
-        "es": "la mordedura",
-        "it": "il morso"
-      },
-      "raw": "bettet bett betten",
-      "parts": [
-        "bett",
-        "bite;bites",
-        "گازگرفتگی",
-        "der Biss;Bisse",
-        "la mordedura;mordeduras",
-        "il morso;morsi",
-        "a"
-      ],
-      "ds": "bettet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_bevisborda_91ff122d",
       "p": "noun",
       "e": {
@@ -8902,34 +6186,6 @@
       ],
       "ds": "bihålan",
       "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bikarbonat_234cfabb",
-      "p": "noun",
-      "e": {
-        "sv": "ett bikarbonat",
-        "en": "the bicarbonate",
-        "fa": "بی‌کربنات",
-        "de": "das Bikarbonat",
-        "es": "el bicarbonato",
-        "it": "il bicarbonato"
-      },
-      "raw": "bikarbonatet (el. bikarbonaten)",
-      "parts": [
-        "bikarbonat",
-        "bicarbonate;bicarbonates",
-        "بی‌کربنات",
-        "das Bikarbonat;Bikarbonate",
-        "el bicarbonato;bicarbonatos",
-        "il bicarbonato;bicarbonati",
-        "a"
-      ],
-      "ds": "bikarbonatet",
-      "gender": "ett",
       "genders": {
         "it": "il",
         "es": "el"
@@ -9104,34 +6360,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_biomassa_af704bf6",
-      "p": "noun",
-      "e": {
-        "sv": "en biomassa",
-        "en": "the biomass",
-        "fa": "زیست‌توده",
-        "de": "die Biomasse",
-        "es": "la biomasa",
-        "it": "la biomassa"
-      },
-      "raw": "biomassan biomassor",
-      "parts": [
-        "biomassa",
-        "biomass;",
-        "زیست‌توده",
-        "die Biomasse;",
-        "la biomasa;",
-        "la biomassa;",
-        "a"
-      ],
-      "ds": "biomassan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_biologi_87465411",
       "p": "noun",
       "e": {
@@ -9241,34 +6469,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bjornbar_b4496d0c",
-      "p": "noun",
-      "e": {
-        "sv": "ett björnbär",
-        "en": "the blackberry",
-        "fa": "تمشک سیاه",
-        "de": "die Brombeere",
-        "es": "la mora",
-        "it": "la mora"
-      },
-      "raw": "björnbäret björnbär björnbären",
-      "parts": [
-        "björnbär",
-        "blackberry;blackberries",
-        "تمشک سیاه",
-        "die Brombeere;Brombeeren",
-        "la mora;moras",
-        "la mora;more",
-        "s"
-      ],
-      "ds": "björnbäret",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -9384,62 +6584,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_blindskrift_18343968",
-      "p": "noun",
-      "e": {
-        "sv": "en blindskrift",
-        "en": "the Braille",
-        "fa": "خط بریل",
-        "de": "die Blindenschrift",
-        "es": "el braille",
-        "it": "il braille"
-      },
-      "raw": "blindskriften",
-      "parts": [
-        "blindskrift",
-        "Braille;",
-        "خط بریل",
-        "die Blindenschrift;Blindenschriften",
-        "el braille;",
-        "il braille;",
-        "a"
-      ],
-      "ds": "blindskriften",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_blindtarm_812b7707",
-      "p": "noun",
-      "e": {
-        "sv": "en blindtarm",
-        "en": "the caecum",
-        "fa": "سکوم",
-        "de": "der Blinddarm",
-        "es": "el ciego",
-        "it": "il cieco"
-      },
-      "raw": "blindtarmen",
-      "parts": [
-        "blindtarm",
-        "caecum;caeca",
-        "سکوم",
-        "der Blinddarm;Blinddärme",
-        "el ciego;ciegos",
-        "il cieco;ciechi",
-        "a"
-      ],
-      "ds": "blindtarmen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_blockflojt_581b3551",
       "p": "noun",
       "e": {
@@ -9464,62 +6608,6 @@
       "gender": "en",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_blockad_795e9776",
-      "p": "noun",
-      "e": {
-        "sv": "en blockad",
-        "en": "the blockade",
-        "fa": "محاصره",
-        "de": "die Blockade",
-        "es": "el bloqueo",
-        "it": "il blocco"
-      },
-      "raw": "blockaden blockader",
-      "parts": [
-        "blockad",
-        "blockade;blockades",
-        "محاصره",
-        "die Blockade;Blockaden",
-        "el bloqueo;bloqueos",
-        "il blocco;blocchi",
-        "a"
-      ],
-      "ds": "blockaden",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_blodforgiftning_f84a9476",
-      "p": "noun",
-      "e": {
-        "sv": "en blodförgiftning",
-        "en": "the sepsis",
-        "fa": "عفونت خون",
-        "de": "die Blutvergiftung",
-        "es": "la sepsis",
-        "it": "la sepsi"
-      },
-      "raw": "blodförgiftningen blodförgiftningar",
-      "parts": [
-        "blodförgiftning",
-        "sepsis;",
-        "عفونت خون",
-        "die Blutvergiftung;Blutvergiftungen",
-        "la sepsis;",
-        "la sepsi;",
-        "a"
-      ],
-      "ds": "blodförgiftningen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -9968,34 +7056,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_boende_e8b19a23",
-      "p": "noun",
-      "e": {
-        "sv": "ett boende",
-        "en": "the housing",
-        "fa": "سکونت",
-        "de": "das Wohnen",
-        "es": "el alojamiento",
-        "it": "l'abitare"
-      },
-      "raw": "boendet",
-      "parts": [
-        "boende",
-        "housing;",
-        "سکونت",
-        "das Wohnen;",
-        "el alojamiento;",
-        "l'abitare;",
-        "a"
-      ],
-      "ds": "boendet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -10504,34 +7564,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_botanik_fc7e102f",
-      "p": "noun",
-      "e": {
-        "sv": "en botanik",
-        "en": "the botany",
-        "fa": "گیاه‌شناسی",
-        "de": "die Botanik",
-        "es": "la botánica",
-        "it": "la botanica"
-      },
-      "raw": "botaniken",
-      "parts": [
-        "botanik",
-        "botany;",
-        "گیاه‌شناسی",
-        "die Botanik;",
-        "la botánica;",
-        "la botanica;",
-        "a"
-      ],
-      "ds": "botaniken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_bovete_0de72cc1",
       "p": "noun",
       "e": {
@@ -10557,34 +7589,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_brack_aa080d58",
-      "p": "noun",
-      "e": {
-        "sv": "ett bråck",
-        "en": "the hernia",
-        "fa": "فتق",
-        "de": "der Bruch",
-        "es": "la hernia",
-        "it": "l'ernia"
-      },
-      "raw": "bråcket bråck bråcken",
-      "parts": [
-        "bråck",
-        "hernia;hernias",
-        "فتق",
-        "der Bruch;Brüche",
-        "la hernia;hernias",
-        "l'ernia;ernie",
-        "a"
-      ],
-      "ds": "bråcket",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -10837,118 +7841,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_broccoli_067d8364",
-      "p": "noun",
-      "e": {
-        "sv": "en broccoli",
-        "en": "the broccoli",
-        "fa": "کلم بروکلی",
-        "de": "der Brokkoli",
-        "es": "el brócoli",
-        "it": "il broccolo"
-      },
-      "raw": "broccolin",
-      "parts": [
-        "broccoli",
-        "broccoli;",
-        "کلم بروکلی",
-        "der Brokkoli;",
-        "el brócoli;",
-        "il broccolo;broccoli",
-        "a"
-      ],
-      "ds": "broccolin",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_brodrost_73ddbc6b",
-      "p": "noun",
-      "e": {
-        "sv": "en brödrost",
-        "en": "the toaster",
-        "fa": "توستر",
-        "de": "der Toaster",
-        "es": "el tostador",
-        "it": "il tostapane"
-      },
-      "raw": "brödrosten brödrostar",
-      "parts": [
-        "brödrost",
-        "toaster;toasters",
-        "توستر",
-        "der Toaster;Toaster",
-        "el tostador;tostadores",
-        "il tostapane;tostapane",
-        "s"
-      ],
-      "ds": "brödrosten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_bronkit_27311be6",
-      "p": "noun",
-      "e": {
-        "sv": "en bronkit",
-        "en": "the bronchitis",
-        "fa": "برونشیت",
-        "de": "die Bronchitis",
-        "es": "la bronquitis",
-        "it": "la bronchite"
-      },
-      "raw": "bronkiten bronkiter",
-      "parts": [
-        "bronkit",
-        "bronchitis;",
-        "برونشیت",
-        "die Bronchitis;",
-        "la bronquitis;",
-        "la bronchite;",
-        "a"
-      ],
-      "ds": "bronkiten",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_brons_bd472003",
-      "p": "noun",
-      "e": {
-        "sv": "en brons",
-        "en": "the bronze",
-        "fa": "برنز",
-        "de": "die Bronze",
-        "es": "el bronce",
-        "it": "il bronzo"
-      },
-      "raw": "bronsen",
-      "parts": [
-        "brons",
-        "bronze;",
-        "برنز",
-        "die Bronze;",
-        "el bronce;",
-        "il bronzo;",
-        "a"
-      ],
-      "ds": "bronsen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -11260,34 +8152,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_bukspottkortel_0d07abdf",
-      "p": "noun",
-      "e": {
-        "sv": "en bukspottkörtel",
-        "en": "the pancreas",
-        "fa": "لوزالمعده",
-        "de": "die Bauchspeicheldrüse",
-        "es": "el páncreas",
-        "it": "il pancreas"
-      },
-      "raw": "bukspottkörteln bukspottkörtlar",
-      "parts": [
-        "bukspottkörtel",
-        "pancreas;pancreases",
-        "لوزالمعده",
-        "die Bauchspeicheldrüse;Bauchspeicheldrüsen",
-        "el páncreas;páncreas",
-        "il pancreas;pancreas",
-        "a"
-      ],
-      "ds": "bukspottkörteln",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_bukt_05bb151d",
       "p": "noun",
       "e": {
@@ -11313,34 +8177,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_buljong_c6df0646",
-      "p": "noun",
-      "e": {
-        "sv": "en buljong",
-        "en": "the broth",
-        "fa": "آب گوشت",
-        "de": "die Brühe",
-        "es": "el caldo",
-        "it": "il brodo"
-      },
-      "raw": "buljongen buljonger",
-      "parts": [
-        "buljong",
-        "broth;broths",
-        "آب گوشت",
-        "die Brühe;Brühen",
-        "el caldo;caldos",
-        "il brodo;brodi",
-        "a"
-      ],
-      "ds": "buljongen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -11484,146 +8320,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_cafeteria_41d6f409",
-      "p": "noun",
-      "e": {
-        "sv": "en cafeteria",
-        "en": "the cafeteria",
-        "fa": "کافه‌تریا",
-        "de": "die Cafeteria",
-        "es": "la cafetería",
-        "it": "la caffetteria"
-      },
-      "raw": "cafeterian cafeterior",
-      "parts": [
-        "cafeteria",
-        "cafeteria;cafeterias",
-        "کافه‌تریا",
-        "die Cafeteria;Cafeterien",
-        "la cafetería;cafeterías",
-        "la caffetteria;caffetterie",
-        "s"
-      ],
-      "ds": "cafeterian",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_camping_349cffd6",
-      "p": "noun",
-      "e": {
-        "sv": "en camping",
-        "en": "the camping",
-        "fa": "چادرزنی",
-        "de": "das Camping",
-        "es": "la acampada",
-        "it": "il campeggio"
-      },
-      "raw": "campingen",
-      "parts": [
-        "camping",
-        "camping;",
-        "چادرزنی",
-        "das Camping;",
-        "la acampada;",
-        "il campeggio;campeggi",
-        "a"
-      ],
-      "ds": "campingen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_cancer_5600ae99",
-      "p": "noun",
-      "e": {
-        "sv": "en cancer",
-        "en": "the cancer",
-        "fa": "سرطان",
-        "de": "der Krebs",
-        "es": "el cáncer",
-        "it": "il cancro"
-      },
-      "raw": "cancern cancrar",
-      "parts": [
-        "cancer",
-        "cancer;cancers",
-        "سرطان",
-        "der Krebs;Krebserkrankungen",
-        "el cáncer;cánceres",
-        "il cancro;cancri",
-        "a"
-      ],
-      "ds": "cancern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_cappuccino_d1ca0d19",
-      "p": "noun",
-      "e": {
-        "sv": "en cappuccino",
-        "en": "the cappuccino",
-        "fa": "کاپوچینو",
-        "de": "der Cappuccino",
-        "es": "el capuchino",
-        "it": "il cappuccino"
-      },
-      "raw": "cappuccinon cappuccinor",
-      "parts": [
-        "cappuccino",
-        "cappuccino;cappuccinos",
-        "کاپوچینو",
-        "der Cappuccino;Cappuccinos",
-        "el capuchino;capuchinos",
-        "il cappuccino;cappuccini",
-        "s"
-      ],
-      "ds": "cappuccinon",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_carport_241cba1e",
-      "p": "noun",
-      "e": {
-        "sv": "en carport",
-        "en": "the carport",
-        "fa": "سایبان خودرو",
-        "de": "der Carport",
-        "es": "la cochera abierta",
-        "it": "la tettoia per auto"
-      },
-      "raw": "carporten carportar",
-      "parts": [
-        "carport",
-        "carport;carports",
-        "سایبان خودرو",
-        "der Carport;Carports",
-        "la cochera abierta;cocheras abiertas",
-        "la tettoia per auto;tettoie per auto",
-        "s"
-      ],
-      "ds": "carporten",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_cellgift_8781bac6",
       "p": "noun",
       "e": {
@@ -11646,90 +8342,6 @@
       ],
       "ds": "cellgiftet",
       "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_cellulosa_bff73c78",
-      "p": "noun",
-      "e": {
-        "sv": "en cellulosa",
-        "en": "the cellulose",
-        "fa": "سلولز",
-        "de": "die Zellulose",
-        "es": "la celulosa",
-        "it": "la cellulosa"
-      },
-      "raw": "cellulosan",
-      "parts": [
-        "cellulosa",
-        "cellulose;",
-        "سلولز",
-        "die Zellulose;",
-        "la celulosa;",
-        "la cellulosa;",
-        "a"
-      ],
-      "ds": "cellulosan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_censur_baad1ae5",
-      "p": "noun",
-      "e": {
-        "sv": "en censur",
-        "en": "the censorship",
-        "fa": "سانسور",
-        "de": "die Zensur",
-        "es": "la censura",
-        "it": "la censura"
-      },
-      "raw": "censuren",
-      "parts": [
-        "censur",
-        "censorship;",
-        "سانسور",
-        "die Zensur;",
-        "la censura;",
-        "la censura;",
-        "a"
-      ],
-      "ds": "censuren",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_centiliter_c18e3acb",
-      "p": "noun",
-      "e": {
-        "sv": "en centiliter",
-        "en": "the centilitre",
-        "fa": "سانتی‌لیتر",
-        "de": "der Zentiliter",
-        "es": "el centilitro",
-        "it": "il centilitro"
-      },
-      "raw": "centilitern centiliter (el. centilitrar) centilitrar)na",
-      "parts": [
-        "centiliter",
-        "centilitre;centilitres",
-        "سانتی‌لیتر",
-        "der Zentiliter;Zentiliter",
-        "el centilitro;centilitros",
-        "il centilitro;centilitri",
-        "a"
-      ],
-      "ds": "centilitern",
-      "gender": "en",
       "genders": {
         "it": "il",
         "es": "el"
@@ -11785,118 +8397,6 @@
         "a"
       ],
       "ds": "centralvärmen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_champagne_7b5105d8",
-      "p": "noun",
-      "e": {
-        "sv": "en champagne",
-        "en": "the champagne",
-        "fa": "شامپاین",
-        "de": "der Champagner",
-        "es": "el champán",
-        "it": "il champagne"
-      },
-      "raw": "champagnen",
-      "parts": [
-        "champagne",
-        "champagne;",
-        "شامپاین",
-        "der Champagner;Champagner",
-        "el champán;",
-        "il champagne;champagne",
-        "a"
-      ],
-      "ds": "champagnen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_charm_b3a927cf",
-      "p": "noun",
-      "e": {
-        "sv": "en charm",
-        "en": "the charm",
-        "fa": "جذابیت",
-        "de": "der Charme",
-        "es": "el encanto",
-        "it": "il fascino"
-      },
-      "raw": "charmen",
-      "parts": [
-        "charm",
-        "charm;charms",
-        "جذابیت",
-        "der Charme;",
-        "el encanto;encantos",
-        "il fascino;fascini",
-        "a"
-      ],
-      "ds": "charmen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_chock_888f5085",
-      "p": "noun",
-      "e": {
-        "sv": "en chock",
-        "en": "the shock",
-        "fa": "شوک",
-        "de": "der Schock",
-        "es": "el choque",
-        "it": "lo shock"
-      },
-      "raw": "chocken chocker",
-      "parts": [
-        "chock",
-        "shock;shocks",
-        "شوک",
-        "der Schock;Schocks",
-        "el choque;choques",
-        "lo shock;shock",
-        "a"
-      ],
-      "ds": "chocken",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_cider_fa09ff01",
-      "p": "noun",
-      "e": {
-        "sv": "en cider",
-        "en": "the cider",
-        "fa": "سایدر",
-        "de": "der Apfelwein",
-        "es": "la sidra",
-        "it": "il sidro"
-      },
-      "raw": "cidern",
-      "parts": [
-        "cider",
-        "cider;ciders",
-        "سایدر",
-        "der Apfelwein;Apfelweine",
-        "la sidra;sidras",
-        "il sidro;sidri",
-        "a"
-      ],
-      "ds": "cidern",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -12044,146 +8544,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_civilisation_bf487e25",
-      "p": "noun",
-      "e": {
-        "sv": "en civilisation",
-        "en": "the civilisation",
-        "fa": "تمدن",
-        "de": "die Zivilisation",
-        "es": "la civilización",
-        "it": "la civiltà"
-      },
-      "raw": "civilisationen civilisationer",
-      "parts": [
-        "civilisation",
-        "civilisation;civilisations",
-        "تمدن",
-        "die Zivilisation;Zivilisationen",
-        "la civilización;civilizaciones",
-        "la civiltà;civiltà",
-        "a"
-      ],
-      "ds": "civilisationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_container_a42d5197",
-      "p": "noun",
-      "e": {
-        "sv": "en container",
-        "en": "the shipping container",
-        "fa": "کانتینر",
-        "de": "der Container",
-        "es": "el contenedor",
-        "it": "il container"
-      },
-      "raw": "containern containrar",
-      "parts": [
-        "container",
-        "shipping container;shipping containers",
-        "کانتینر",
-        "der Container;Container",
-        "el contenedor;contenedores",
-        "il container;container",
-        "s"
-      ],
-      "ds": "containern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_copyright_c2fca2aa",
-      "p": "noun",
-      "e": {
-        "sv": "en copyright",
-        "en": "the copyright",
-        "fa": "حق نشر",
-        "de": "das Urheberrecht",
-        "es": "el derecho de autor",
-        "it": "il diritto d'autore"
-      },
-      "raw": "copyrighten",
-      "parts": [
-        "copyright",
-        "copyright;copyrights",
-        "حق نشر",
-        "das Urheberrecht;Urheberrechte",
-        "el derecho de autor;derechos de autor",
-        "il diritto d'autore;diritti d'autore",
-        "a"
-      ],
-      "ds": "copyrighten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_croissant_fbb1eeb8",
-      "p": "noun",
-      "e": {
-        "sv": "en croissant",
-        "en": "the croissant",
-        "fa": "کروسان",
-        "de": "das Croissant",
-        "es": "el cruasán",
-        "it": "il croissant"
-      },
-      "raw": "croissanten croissanter",
-      "parts": [
-        "croissant",
-        "croissant;croissants",
-        "کروسان",
-        "das Croissant;Croissants",
-        "el cruasán;cruasanes",
-        "il croissant;croissant",
-        "s"
-      ],
-      "ds": "croissanten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_curry_0b8e0d9b",
-      "p": "noun",
-      "e": {
-        "sv": "en curry",
-        "en": "the curry",
-        "fa": "کاری",
-        "de": "das Curry",
-        "es": "el curri",
-        "it": "il curry"
-      },
-      "raw": "curryn",
-      "parts": [
-        "curry",
-        "curry;curries",
-        "کاری",
-        "das Curry;Currys",
-        "el curri;curris",
-        "il curry;curry",
-        "a"
-      ],
-      "ds": "curryn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_cykelbana_bf12a98a",
       "p": "noun",
       "e": {
@@ -12236,34 +8596,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dagbok_263a096f",
-      "p": "noun",
-      "e": {
-        "sv": "en dagbok",
-        "en": "the diary",
-        "fa": "دفتر خاطرات",
-        "de": "das Tagebuch",
-        "es": "el diario",
-        "it": "il diario"
-      },
-      "raw": "dagboken dagböcker",
-      "parts": [
-        "dagbok",
-        "diary;diaries",
-        "دفتر خاطرات",
-        "das Tagebuch;Tagebücher",
-        "el diario;diarios",
-        "il diario;diari",
-        "s"
-      ],
-      "ds": "dagboken",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -12576,34 +8908,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_deklination_fdf36ff3",
-      "p": "noun",
-      "e": {
-        "sv": "en deklination",
-        "en": "the declension",
-        "fa": "صرف اسم",
-        "de": "die Deklination",
-        "es": "la declinación",
-        "it": "la declinazione"
-      },
-      "raw": "deklinationen deklinationer",
-      "parts": [
-        "deklination",
-        "declension;declensions",
-        "صرف اسم",
-        "die Deklination;Deklinationen",
-        "la declinación;declinaciones",
-        "la declinazione;declinazioni",
-        "a"
-      ],
-      "ds": "deklinationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_delagare_fbc0130c",
       "p": "noun",
       "e": {
@@ -12772,34 +9076,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_demonstrant_16672626",
-      "p": "noun",
-      "e": {
-        "sv": "en demonstrant",
-        "en": "the protester",
-        "fa": "معترض",
-        "de": "der Demonstrant",
-        "es": "el manifestante",
-        "it": "il manifestante"
-      },
-      "raw": "demonstranten demonstranter",
-      "parts": [
-        "demonstrant",
-        "protester;protesters",
-        "معترض",
-        "der Demonstrant;Demonstranten",
-        "el manifestante;manifestantes",
-        "il manifestante;manifestanti",
-        "s"
-      ],
-      "ds": "demonstranten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_departement_2de88057",
       "p": "noun",
       "e": {
@@ -12825,90 +9101,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_depression_74fd2e75",
-      "p": "noun",
-      "e": {
-        "sv": "en depression",
-        "en": "the depression",
-        "fa": "افسردگی",
-        "de": "die Depression",
-        "es": "la depresión",
-        "it": "la depressione"
-      },
-      "raw": "depressionen depressioner",
-      "parts": [
-        "depression",
-        "depression;depressions",
-        "افسردگی",
-        "die Depression;Depressionen",
-        "la depresión;depresiones",
-        "la depressione;depressioni",
-        "a"
-      ],
-      "ds": "depressionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_desinformation_70b2efa5",
-      "p": "noun",
-      "e": {
-        "sv": "en desinformation",
-        "en": "the disinformation",
-        "fa": "اطلاعات گمراه‌کننده",
-        "de": "die Desinformation",
-        "es": "la desinformación",
-        "it": "la disinformazione"
-      },
-      "raw": "desinformationen desinformationer",
-      "parts": [
-        "desinformation",
-        "disinformation;",
-        "اطلاعات گمراه‌کننده",
-        "die Desinformation;",
-        "la desinformación;",
-        "la disinformazione;",
-        "a"
-      ],
-      "ds": "desinformationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_destillation_c5e77077",
-      "p": "noun",
-      "e": {
-        "sv": "en destillation",
-        "en": "the distillation",
-        "fa": "تقطیر",
-        "de": "die Destillation",
-        "es": "la destilación",
-        "it": "la distillazione"
-      },
-      "raw": "destillationen destillationer",
-      "parts": [
-        "destillation",
-        "distillation;distillations",
-        "تقطیر",
-        "die Destillation;Destillationen",
-        "la destilación;destilaciones",
-        "la distillazione;distillazioni",
-        "a"
-      ],
-      "ds": "destillationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -12940,174 +9132,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_diarre_27b162ae",
-      "p": "noun",
-      "e": {
-        "sv": "en diarré",
-        "en": "the diarrhoea",
-        "fa": "اسهال",
-        "de": "der Durchfall",
-        "es": "la diarrea",
-        "it": "la diarrea"
-      },
-      "raw": "diarrén diarréer",
-      "parts": [
-        "diarré",
-        "diarrhoea;",
-        "اسهال",
-        "der Durchfall;Durchfälle",
-        "la diarrea;",
-        "la diarrea;",
-        "a"
-      ],
-      "ds": "diarrén",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dieselmotor_c63f7391",
-      "p": "noun",
-      "e": {
-        "sv": "en dieselmotor",
-        "en": "the diesel engine",
-        "fa": "موتور دیزل",
-        "de": "der Dieselmotor",
-        "es": "el motor diésel",
-        "it": "il motore diesel"
-      },
-      "raw": "dieselmotorn dieselmotorer",
-      "parts": [
-        "dieselmotor",
-        "diesel engine;diesel engines",
-        "موتور دیزل",
-        "der Dieselmotor;Dieselmotoren",
-        "el motor diésel;motores diésel",
-        "il motore diesel;motori diesel",
-        "a"
-      ],
-      "ds": "dieselmotorn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_diktator_a4e4220d",
-      "p": "noun",
-      "e": {
-        "sv": "en diktator",
-        "en": "the dictator",
-        "fa": "دیکتاتور",
-        "de": "der Diktator",
-        "es": "el dictador",
-        "it": "il dittatore"
-      },
-      "raw": "diktatorn diktatorer",
-      "parts": [
-        "diktator",
-        "dictator;dictators",
-        "دیکتاتور",
-        "der Diktator;Diktatoren",
-        "el dictador;dictadores",
-        "il dittatore;dittatori",
-        "a"
-      ],
-      "ds": "diktatorn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_diktatur_021911fc",
-      "p": "noun",
-      "e": {
-        "sv": "en diktatur",
-        "en": "the dictatorship",
-        "fa": "دیکتاتوری",
-        "de": "die Diktatur",
-        "es": "la dictadura",
-        "it": "la dittatura"
-      },
-      "raw": "diktaturen diktaturer",
-      "parts": [
-        "diktatur",
-        "dictatorship;dictatorships",
-        "دیکتاتوری",
-        "die Diktatur;Diktaturen",
-        "la dictadura;dictaduras",
-        "la dittatura;dittature",
-        "a"
-      ],
-      "ds": "diktaturen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dilemma_6ea607f9",
-      "p": "noun",
-      "e": {
-        "sv": "ett dilemma",
-        "en": "the dilemma",
-        "fa": "دوراهی",
-        "de": "das Dilemma",
-        "es": "el dilema",
-        "it": "il dilemma"
-      },
-      "raw": "dilemmat dilemman dilemmana",
-      "parts": [
-        "dilemma",
-        "dilemma;dilemmas",
-        "دوراهی",
-        "das Dilemma;Dilemmata",
-        "el dilema;dilemas",
-        "il dilemma;dilemmi",
-        "a"
-      ],
-      "ds": "dilemmat",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dill_22b3cf52",
-      "p": "noun",
-      "e": {
-        "sv": "en dill",
-        "en": "the dill",
-        "fa": "شوید",
-        "de": "der Dill",
-        "es": "el eneldo",
-        "it": "l'aneto"
-      },
-      "raw": "dillen",
-      "parts": [
-        "dill",
-        "dill;",
-        "شوید",
-        "der Dill;",
-        "el eneldo;",
-        "l'aneto;",
-        "a"
-      ],
-      "ds": "dillen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_dimljus_73084b7b",
       "p": "noun",
       "e": {
@@ -13132,62 +9156,6 @@
       "gender": "ett",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dimension_48eb632f",
-      "p": "noun",
-      "e": {
-        "sv": "en dimension",
-        "en": "the dimension",
-        "fa": "بُعد",
-        "de": "die Dimension",
-        "es": "la dimensión",
-        "it": "la dimensione"
-      },
-      "raw": "dimensionen dimensioner",
-      "parts": [
-        "dimension",
-        "dimension;dimensions",
-        "بُعد",
-        "die Dimension;Dimensionen",
-        "la dimensión;dimensiones",
-        "la dimensione;dimensioni",
-        "a"
-      ],
-      "ds": "dimensionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_disciplin_283d450e",
-      "p": "noun",
-      "e": {
-        "sv": "en disciplin",
-        "en": "the discipline",
-        "fa": "انضباط",
-        "de": "die Disziplin",
-        "es": "la disciplina",
-        "it": "la disciplina"
-      },
-      "raw": "disciplinen",
-      "parts": [
-        "disciplin",
-        "discipline;disciplines",
-        "انضباط",
-        "die Disziplin;Disziplinen",
-        "la disciplina;disciplinas",
-        "la disciplina;discipline",
-        "a"
-      ],
-      "ds": "disciplinen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -13381,34 +9349,6 @@
         "a"
       ],
       "ds": "dispensen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_distribution_93354845",
-      "p": "noun",
-      "e": {
-        "sv": "en distribution",
-        "en": "the distribution",
-        "fa": "توزیع",
-        "de": "die Verteilung",
-        "es": "la distribución",
-        "it": "la distribuzione"
-      },
-      "raw": "distributionen",
-      "parts": [
-        "distribution",
-        "distribution;distributions",
-        "توزیع",
-        "die Verteilung;Verteilungen",
-        "la distribución;distribuciones",
-        "la distribuzione;distribuzioni",
-        "a"
-      ],
-      "ds": "distributionen",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -13612,34 +9552,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_dokumentation_955c36f4",
-      "p": "noun",
-      "e": {
-        "sv": "en dokumentation",
-        "en": "the documentation",
-        "fa": "مستندات",
-        "de": "die Dokumentation",
-        "es": "la documentación",
-        "it": "la documentazione"
-      },
-      "raw": "dokumentationen",
-      "parts": [
-        "dokumentation",
-        "documentation;documentations",
-        "مستندات",
-        "die Dokumentation;Dokumentationen",
-        "la documentación;",
-        "la documentazione;",
-        "a"
-      ],
-      "ds": "dokumentationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_domkraft_30621634",
       "p": "noun",
       "e": {
@@ -13690,34 +9602,6 @@
       ],
       "ds": "domslutet",
       "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_doman_3aa5cdaa",
-      "p": "noun",
-      "e": {
-        "sv": "en domän",
-        "en": "the domain",
-        "fa": "دامنه",
-        "de": "die Domäne",
-        "es": "el dominio",
-        "it": "il dominio"
-      },
-      "raw": "domänen domäner",
-      "parts": [
-        "domän",
-        "domain;domains",
-        "دامنه",
-        "die Domäne;Domänen",
-        "el dominio;dominios",
-        "il dominio;domini",
-        "a"
-      ],
-      "ds": "domänen",
-      "gender": "en",
       "genders": {
         "it": "il",
         "es": "el"
@@ -13892,62 +9776,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_drivmedel_3bee95d7",
-      "p": "noun",
-      "e": {
-        "sv": "ett drivmedel",
-        "en": "the motor fuel",
-        "fa": "سوخت موتور",
-        "de": "der Kraftstoff",
-        "es": "el carburante",
-        "it": "il carburante"
-      },
-      "raw": "drivmedlet drivmedel drivmedlen",
-      "parts": [
-        "drivmedel",
-        "motor fuel;motor fuels",
-        "سوخت موتور",
-        "der Kraftstoff;Kraftstoffe",
-        "el carburante;carburantes",
-        "il carburante;carburanti",
-        "a"
-      ],
-      "ds": "drivmedlet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_dronare_8ed2283d",
-      "p": "noun",
-      "e": {
-        "sv": "en drönare",
-        "en": "the drone",
-        "fa": "پهپاد",
-        "de": "die Drohne",
-        "es": "el dron",
-        "it": "il drone"
-      },
-      "raw": "drönaren drönare drönarna",
-      "parts": [
-        "drönare",
-        "drone;drones",
-        "پهپاد",
-        "die Drohne;Drohnen",
-        "el dron;drones",
-        "il drone;droni",
-        "s"
-      ],
-      "ds": "drönaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_drunkning_8780d1a9",
       "p": "noun",
       "e": {
@@ -14053,62 +9881,6 @@
         "a"
       ],
       "ds": "dubbelgångaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_duell_989d4bcf",
-      "p": "noun",
-      "e": {
-        "sv": "en duell",
-        "en": "the duel",
-        "fa": "دوئل",
-        "de": "das Duell",
-        "es": "el duelo",
-        "it": "il duello"
-      },
-      "raw": "duellen dueller",
-      "parts": [
-        "duell",
-        "duel;duels",
-        "دوئل",
-        "das Duell;Duelle",
-        "el duelo;duelos",
-        "il duello;duelli",
-        "a"
-      ],
-      "ds": "duellen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_duett_360c9885",
-      "p": "noun",
-      "e": {
-        "sv": "en duett",
-        "en": "the duet",
-        "fa": "دونوازی",
-        "de": "das Duett",
-        "es": "el dúo",
-        "it": "il duetto"
-      },
-      "raw": "duetten duetter",
-      "parts": [
-        "duett",
-        "duet;duets",
-        "دونوازی",
-        "das Duett;Duette",
-        "el dúo;dúos",
-        "il duetto;duetti",
-        "a"
-      ],
-      "ds": "duetten",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -14564,34 +10336,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_eko_d6e472bc",
-      "p": "noun",
-      "e": {
-        "sv": "ett eko",
-        "en": "the echo",
-        "fa": "پژواک",
-        "de": "das Echo",
-        "es": "el eco",
-        "it": "l'eco"
-      },
-      "raw": "ekot ekon",
-      "parts": [
-        "eko",
-        "echo;echoes",
-        "پژواک",
-        "das Echo;Echos",
-        "el eco;ecos",
-        "l'eco;echi",
-        "a"
-      ],
-      "ds": "ekot",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_ekologi_0017f772",
       "p": "noun",
       "e": {
@@ -14701,34 +10445,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_eksem_a6b4f6e3",
-      "p": "noun",
-      "e": {
-        "sv": "ett eksem",
-        "en": "the eczema",
-        "fa": "اگزما",
-        "de": "das Ekzem",
-        "es": "el eczema",
-        "it": "l'eczema"
-      },
-      "raw": "eksemet eksem eksemen",
-      "parts": [
-        "eksem",
-        "eczema;",
-        "اگزما",
-        "das Ekzem;Ekzeme",
-        "el eczema;eczemas",
-        "l'eczema;eczemi",
-        "a"
-      ],
-      "ds": "eksemet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -14844,34 +10560,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_elektronik_e105e99b",
-      "p": "noun",
-      "e": {
-        "sv": "en elektronik",
-        "en": "the electronics",
-        "fa": "الکترونیک",
-        "de": "die Elektronik",
-        "es": "la electrónica",
-        "it": "l'elettronica"
-      },
-      "raw": "elektroniken",
-      "parts": [
-        "elektronik",
-        "electronics;electronics",
-        "الکترونیک",
-        "die Elektronik;",
-        "la electrónica;",
-        "l'elettronica;",
-        "a"
-      ],
-      "ds": "elektroniken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_elevrad_5ce3ba97",
       "p": "noun",
       "e": {
@@ -14925,118 +10613,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_ellips_91eaf424",
-      "p": "noun",
-      "e": {
-        "sv": "en ellips",
-        "en": "the ellipse",
-        "fa": "بیضی",
-        "de": "die Ellipse",
-        "es": "la elipse",
-        "it": "l'ellisse"
-      },
-      "raw": "ellipsen ellipser",
-      "parts": [
-        "ellips",
-        "ellipse;ellipses",
-        "بیضی",
-        "die Ellipse;Ellipsen",
-        "la elipse;elipses",
-        "l'ellisse;ellissi",
-        "a"
-      ],
-      "ds": "ellipsen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_embargo_9fc073e6",
-      "p": "noun",
-      "e": {
-        "sv": "ett embargo",
-        "en": "the embargo",
-        "fa": "ممنوعیت تجاری",
-        "de": "das Embargo",
-        "es": "el embargo",
-        "it": "l'embargo"
-      },
-      "raw": "embargot embargon",
-      "parts": [
-        "embargo",
-        "embargo;embargoes",
-        "ممنوعیت تجاری",
-        "das Embargo;Embargos",
-        "el embargo;embargos",
-        "l'embargo;embarghi",
-        "a"
-      ],
-      "ds": "embargot",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_embryo_21625322",
-      "p": "noun",
-      "e": {
-        "sv": "ett embryo",
-        "en": "the embryo",
-        "fa": "رویان",
-        "de": "der Embryo",
-        "es": "el embrión",
-        "it": "l'embrione"
-      },
-      "raw": "embryot embryon",
-      "parts": [
-        "embryo",
-        "embryo;embryos",
-        "رویان",
-        "der Embryo;Embryonen",
-        "el embrión;embriones",
-        "l'embrione;embrioni",
-        "a"
-      ],
-      "ds": "embryot",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_emigration_184dff82",
-      "p": "noun",
-      "e": {
-        "sv": "en emigration",
-        "en": "the emigration",
-        "fa": "مهاجرت به خارج",
-        "de": "die Auswanderung",
-        "es": "la emigración",
-        "it": "l'emigrazione"
-      },
-      "raw": "emigrationen",
-      "parts": [
-        "emigration",
-        "emigration;",
-        "مهاجرت به خارج",
-        "die Auswanderung;Auswanderungen",
-        "la emigración;",
-        "l'emigrazione;",
-        "a"
-      ],
-      "ds": "emigrationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -15208,34 +10784,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_enzym_ea93c1db",
-      "p": "noun",
-      "e": {
-        "sv": "ett enzym",
-        "en": "the enzyme",
-        "fa": "آنزیم",
-        "de": "das Enzym",
-        "es": "la enzima",
-        "it": "l'enzima"
-      },
-      "raw": "enzymet enzym enzymen (el. enzymer enzymerna)",
-      "parts": [
-        "enzym",
-        "enzyme;enzymes",
-        "آنزیم",
-        "das Enzym;Enzyme",
-        "la enzima;enzimas",
-        "l'enzima;enzimi",
-        "a"
-      ],
-      "ds": "enzymet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_epilepsi_3e3ff7c0",
       "p": "noun",
       "e": {
@@ -15376,34 +10924,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_espresso_3c4ef966",
-      "p": "noun",
-      "e": {
-        "sv": "en espresso",
-        "en": "the espresso",
-        "fa": "اسپرسو",
-        "de": "der Espresso",
-        "es": "el café expreso",
-        "it": "l'espresso"
-      },
-      "raw": "espresson",
-      "parts": [
-        "espresso",
-        "espresso;espressos",
-        "اسپرسو",
-        "der Espresso;Espressos",
-        "el café expreso;cafés expresos",
-        "l'espresso;espressi",
-        "s"
-      ],
-      "ds": "espresson",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_etik_92b21634",
       "p": "noun",
       "e": {
@@ -15488,62 +11008,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_evolution_970eaf0d",
-      "p": "noun",
-      "e": {
-        "sv": "en evolution",
-        "en": "the evolution",
-        "fa": "فرگشت",
-        "de": "die Evolution",
-        "es": "la evolución",
-        "it": "l'evoluzione"
-      },
-      "raw": "evolutionen evolutioner",
-      "parts": [
-        "evolution",
-        "evolution;evolutions",
-        "فرگشت",
-        "die Evolution;Evolutionen",
-        "la evolución;evoluciones",
-        "l'evoluzione;evoluzioni",
-        "a"
-      ],
-      "ds": "evolutionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_exil_ee9fd0a2",
-      "p": "noun",
-      "e": {
-        "sv": "en exil",
-        "en": "the exile",
-        "fa": "تبعید",
-        "de": "das Exil",
-        "es": "el exilio",
-        "it": "l'esilio"
-      },
-      "raw": "exilen",
-      "parts": [
-        "exil",
-        "exile;exiles",
-        "تبعید",
-        "das Exil;Exile",
-        "el exilio;exilios",
-        "l'esilio;esili",
-        "a"
-      ],
-      "ds": "exilen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_existens_19081cb7",
       "p": "noun",
       "e": {
@@ -15569,90 +11033,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_expansion_167f448f",
-      "p": "noun",
-      "e": {
-        "sv": "en expansion",
-        "en": "the expansion",
-        "fa": "گسترش",
-        "de": "die Expansion",
-        "es": "la expansión",
-        "it": "l'espansione"
-      },
-      "raw": "expansionen",
-      "parts": [
-        "expansion",
-        "expansion;expansions",
-        "گسترش",
-        "die Expansion;Expansionen",
-        "la expansión;expansiones",
-        "l'espansione;espansioni",
-        "a"
-      ],
-      "ds": "expansionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_export_d46aee08",
-      "p": "noun",
-      "e": {
-        "sv": "en export",
-        "en": "the export",
-        "fa": "صادرات",
-        "de": "der Export",
-        "es": "la exportación",
-        "it": "l'esportazione"
-      },
-      "raw": "exporten exporter",
-      "parts": [
-        "export",
-        "export;exports",
-        "صادرات",
-        "der Export;Exporte",
-        "la exportación;exportaciones",
-        "l'esportazione;esportazioni",
-        "a"
-      ],
-      "ds": "exporten",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_extrakt_17191e9b",
-      "p": "noun",
-      "e": {
-        "sv": "ett extrakt",
-        "en": "the extract",
-        "fa": "عصاره",
-        "de": "der Extrakt",
-        "es": "el extracto",
-        "it": "l'estratto"
-      },
-      "raw": "extraktet extrakt extrakten",
-      "parts": [
-        "extrakt",
-        "extract;extracts",
-        "عصاره",
-        "der Extrakt;Extrakte",
-        "el extracto;extractos",
-        "l'estratto;estratti",
-        "a"
-      ],
-      "ds": "extraktet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -15845,34 +11225,6 @@
         "p"
       ],
       "ds": "familjerådgivaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fanatism_fd686090",
-      "p": "noun",
-      "e": {
-        "sv": "en fanatism",
-        "en": "the fanaticism",
-        "fa": "تعصب افراطی",
-        "de": "der Fanatismus",
-        "es": "el fanatismo",
-        "it": "il fanatismo"
-      },
-      "raw": "fanatismen",
-      "parts": [
-        "fanatism",
-        "fanaticism;",
-        "تعصب افراطی",
-        "der Fanatismus;",
-        "el fanatismo;",
-        "il fanatismo;",
-        "a"
-      ],
-      "ds": "fanatismen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -16104,62 +11456,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_fauna_0d9214fb",
-      "p": "noun",
-      "e": {
-        "sv": "en fauna",
-        "en": "the fauna",
-        "fa": "جانورگان",
-        "de": "die Fauna",
-        "es": "la fauna",
-        "it": "la fauna"
-      },
-      "raw": "faunan faunor",
-      "parts": [
-        "fauna",
-        "fauna;faunas",
-        "جانورگان",
-        "die Fauna;Faunen",
-        "la fauna;faunas",
-        "la fauna;faune",
-        "a"
-      ],
-      "ds": "faunan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_federation_8ce333c5",
-      "p": "noun",
-      "e": {
-        "sv": "en federation",
-        "en": "the federation",
-        "fa": "فدراسیون",
-        "de": "die Föderation",
-        "es": "la federación",
-        "it": "la federazione"
-      },
-      "raw": "federationen federationer",
-      "parts": [
-        "federation",
-        "federation;federations",
-        "فدراسیون",
-        "die Föderation;Föderationen",
-        "la federación;federaciones",
-        "la federazione;federazioni",
-        "a"
-      ],
-      "ds": "federationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_feghet_2961c647",
       "p": "noun",
       "e": {
@@ -16185,62 +11481,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_femkamp_7e776e59",
-      "p": "noun",
-      "e": {
-        "sv": "en femkamp",
-        "en": "the pentathlon",
-        "fa": "پنج‌گانه ورزشی",
-        "de": "der Fünfkampf",
-        "es": "el pentatlón",
-        "it": "il pentathlon"
-      },
-      "raw": "femkampen femkamper",
-      "parts": [
-        "femkamp",
-        "pentathlon;pentathlons",
-        "پنج‌گانه ورزشی",
-        "der Fünfkampf;Fünfkämpfe",
-        "el pentatlón;pentatlones",
-        "il pentathlon;pentathlon",
-        "a"
-      ],
-      "ds": "femkampen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_feminism_8b33ac7a",
-      "p": "noun",
-      "e": {
-        "sv": "en feminism",
-        "en": "the feminism",
-        "fa": "فمینیسم",
-        "de": "der Feminismus",
-        "es": "el feminismo",
-        "it": "il femminismo"
-      },
-      "raw": "feminismen",
-      "parts": [
-        "feminism",
-        "feminism;",
-        "فمینیسم",
-        "der Feminismus;",
-        "el feminismo;",
-        "il femminismo;",
-        "a"
-      ],
-      "ds": "feminismen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -16293,90 +11533,6 @@
         "a"
       ],
       "ds": "fetman",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fett_75e1186a",
-      "p": "noun",
-      "e": {
-        "sv": "ett fett",
-        "en": "the fat",
-        "fa": "چربی",
-        "de": "das Fett",
-        "es": "la grasa",
-        "it": "il grasso"
-      },
-      "raw": "fettet fetter",
-      "parts": [
-        "fett",
-        "fat;fats",
-        "چربی",
-        "das Fett;Fette",
-        "la grasa;grasas",
-        "il grasso;grassi",
-        "a"
-      ],
-      "ds": "fettet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fiasko_98719d5a",
-      "p": "noun",
-      "e": {
-        "sv": "ett fiasko",
-        "en": "the fiasco",
-        "fa": "شکست مفتضحانه",
-        "de": "das Fiasko",
-        "es": "el fracaso",
-        "it": "il fiasco"
-      },
-      "raw": "fiaskot fiaskon fiaskona",
-      "parts": [
-        "fiasko",
-        "fiasco;fiascos",
-        "شکست مفتضحانه",
-        "das Fiasko;Fiaskos",
-        "el fracaso;fracasos",
-        "il fiasco;fiaschi",
-        "a"
-      ],
-      "ds": "fiaskot",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fiber_77c3e615",
-      "p": "noun",
-      "e": {
-        "sv": "en fiber",
-        "en": "the fibre",
-        "fa": "الیاف",
-        "de": "die Faser",
-        "es": "la fibra",
-        "it": "la fibra"
-      },
-      "raw": "fibern fibrer",
-      "parts": [
-        "fiber",
-        "fibre;fibres",
-        "الیاف",
-        "die Faser;Fasern",
-        "la fibra;fibras",
-        "la fibra;fibre",
-        "a"
-      ],
-      "ds": "fibern",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -16437,34 +11593,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fiktion_36645944",
-      "p": "noun",
-      "e": {
-        "sv": "en fiktion",
-        "en": "the fiction",
-        "fa": "داستان تخیلی",
-        "de": "die Fiktion",
-        "es": "la ficción",
-        "it": "la narrativa"
-      },
-      "raw": "fiktionen fiktioner",
-      "parts": [
-        "fiktion",
-        "fiction;",
-        "داستان تخیلی",
-        "die Fiktion;Fiktionen",
-        "la ficción;",
-        "la narrativa;",
-        "a"
-      ],
-      "ds": "fiktionen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -16577,34 +11705,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fjall_f0af15a5",
-      "p": "noun",
-      "e": {
-        "sv": "ett fjäll",
-        "en": "the mountain fell",
-        "fa": "کوهستان اسکاندیناوی",
-        "de": "das Fjäll",
-        "es": "el macizo escandinavo",
-        "it": "il massiccio scandinavo"
-      },
-      "raw": "fjället fjäll fjällen",
-      "parts": [
-        "fjäll",
-        "mountain fell;mountain fells",
-        "کوهستان اسکاندیناوی",
-        "das Fjäll;Fjälls",
-        "el macizo escandinavo;macizos escandinavos",
-        "il massiccio scandinavo;massicci scandinavi",
-        "a"
-      ],
-      "ds": "fjället",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -16860,62 +11960,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_flora_35d0a1b4",
-      "p": "noun",
-      "e": {
-        "sv": "en flora",
-        "en": "the flora",
-        "fa": "گیاهگان",
-        "de": "die Flora",
-        "es": "la flora",
-        "it": "la flora"
-      },
-      "raw": "floran floror",
-      "parts": [
-        "flora",
-        "flora;floras",
-        "گیاهگان",
-        "die Flora;Floren",
-        "la flora;floras",
-        "la flora;flore",
-        "a"
-      ],
-      "ds": "floran",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_flote_84312b8b",
-      "p": "noun",
-      "e": {
-        "sv": "ett flöte",
-        "en": "the fishing float",
-        "fa": "شناور ماهیگیری",
-        "de": "der Schwimmer",
-        "es": "el flotador de pesca",
-        "it": "il galleggiante da pesca"
-      },
-      "raw": "flötet flöten flötena",
-      "parts": [
-        "flöte",
-        "fishing float;fishing floats",
-        "شناور ماهیگیری",
-        "der Schwimmer;Schwimmer",
-        "el flotador de pesca;flotadores de pesca",
-        "il galleggiante da pesca;galleggianti da pesca",
-        "s"
-      ],
-      "ds": "flötet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_flugsmalla_2555f202",
       "p": "noun",
       "e": {
@@ -17024,34 +12068,6 @@
       "gender": "en",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fobi_ac62512c",
-      "p": "noun",
-      "e": {
-        "sv": "en fobi",
-        "en": "the phobia",
-        "fa": "هراس بیمارگونه",
-        "de": "die Phobie",
-        "es": "la fobia",
-        "it": "la fobia"
-      },
-      "raw": "fobien fobier",
-      "parts": [
-        "fobi",
-        "phobia;phobias",
-        "هراس بیمارگونه",
-        "die Phobie;Phobien",
-        "la fobia;fobias",
-        "la fobia;fobie",
-        "a"
-      ],
-      "ds": "fobien",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -17189,34 +12205,6 @@
         "a"
       ],
       "ds": "folkgruppen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_folkomrostning_90db69f6",
-      "p": "noun",
-      "e": {
-        "sv": "en folkomröstning",
-        "en": "the referendum",
-        "fa": "همه‌پرسی",
-        "de": "die Volksabstimmung",
-        "es": "el referéndum",
-        "it": "il referendum"
-      },
-      "raw": "folkomröstningen folkomröstningar",
-      "parts": [
-        "folkomröstning",
-        "referendum;referendums",
-        "همه‌پرسی",
-        "die Volksabstimmung;Volksabstimmungen",
-        "el referéndum;referendos",
-        "il referendum;referendum",
-        "a"
-      ],
-      "ds": "folkomröstningen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -17364,34 +12352,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_forandring_fbf58136",
-      "p": "noun",
-      "e": {
-        "sv": "en förändring",
-        "en": "the change",
-        "fa": "تغییر",
-        "de": "die Veränderung",
-        "es": "el cambio",
-        "it": "il cambiamento"
-      },
-      "raw": "förändringen förändringar",
-      "parts": [
-        "förändring",
-        "change;changes",
-        "تغییر",
-        "die Veränderung;Veränderungen",
-        "el cambio;cambios",
-        "il cambiamento;cambiamenti",
-        "a"
-      ],
-      "ds": "förändringen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_forankring_3c175deb",
       "p": "noun",
       "e": {
@@ -17469,62 +12429,6 @@
         "a"
       ],
       "ds": "förbränningen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_forbrukning_8c0805d7",
-      "p": "noun",
-      "e": {
-        "sv": "en förbrukning",
-        "en": "the consumption",
-        "fa": "مصرف",
-        "de": "der Verbrauch",
-        "es": "el consumo",
-        "it": "il consumo"
-      },
-      "raw": "förbrukningen",
-      "parts": [
-        "förbrukning",
-        "consumption;consumptions",
-        "مصرف",
-        "der Verbrauch;Verbräuche",
-        "el consumo;consumos",
-        "il consumo;consumi",
-        "a"
-      ],
-      "ds": "förbrukningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_fordamning_6114a611",
-      "p": "noun",
-      "e": {
-        "sv": "en fördämning",
-        "en": "the dam",
-        "fa": "سد",
-        "de": "der Staudamm",
-        "es": "la presa",
-        "it": "la diga"
-      },
-      "raw": "fördämningen fördämningar",
-      "parts": [
-        "fördämning",
-        "dam;dams",
-        "سد",
-        "der Staudamm;Staudämme",
-        "la presa;presas",
-        "la diga;dighe",
-        "s"
-      ],
-      "ds": "fördämningen",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -17728,34 +12632,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_forfattare_a8a1a57a",
-      "p": "noun",
-      "e": {
-        "sv": "en författare",
-        "en": "the author",
-        "fa": "نویسنده",
-        "de": "der Autor",
-        "es": "el autor",
-        "it": "l'autore"
-      },
-      "raw": "författaren författare författarna",
-      "parts": [
-        "författare",
-        "author;authors",
-        "نویسنده",
-        "der Autor;Autoren",
-        "el autor;autores",
-        "l'autore;autori",
-        "p"
-      ],
-      "ds": "författaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_forfoljelse_a81d413f",
       "p": "noun",
       "e": {
@@ -17861,34 +12737,6 @@
         "a"
       ],
       "ds": "förlåtelsen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_forlossning_48c4f56c",
-      "p": "noun",
-      "e": {
-        "sv": "en förlossning",
-        "en": "the childbirth",
-        "fa": "زایمان",
-        "de": "die Entbindung",
-        "es": "el parto",
-        "it": "il parto"
-      },
-      "raw": "förlossningen förlossningar",
-      "parts": [
-        "förlossning",
-        "childbirth;childbirths",
-        "زایمان",
-        "die Entbindung;Entbindungen",
-        "el parto;partos",
-        "il parto;parti",
-        "a"
-      ],
-      "ds": "förlossningen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -18176,34 +13024,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_forsakring_26f26150",
-      "p": "noun",
-      "e": {
-        "sv": "en försäkring",
-        "en": "the insurance",
-        "fa": "بیمه",
-        "de": "die Versicherung",
-        "es": "el seguro",
-        "it": "l'assicurazione"
-      },
-      "raw": "försäkringen försäkringar",
-      "parts": [
-        "försäkring",
-        "insurance;",
-        "بیمه",
-        "die Versicherung;Versicherungen",
-        "el seguro;seguros",
-        "l'assicurazione;assicurazioni",
-        "a"
-      ],
-      "ds": "försäkringen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_forsakringsbolag_59511fa4",
       "p": "noun",
       "e": {
@@ -18226,34 +13046,6 @@
       ],
       "ds": "försäkringsbolaget",
       "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_forsaljning_1b710b1d",
-      "p": "noun",
-      "e": {
-        "sv": "en försäljning",
-        "en": "the sale",
-        "fa": "فروش",
-        "de": "der Verkauf",
-        "es": "la venta",
-        "it": "la vendita"
-      },
-      "raw": "försäljningen försäljningar",
-      "parts": [
-        "försäljning",
-        "sale;sales",
-        "فروش",
-        "der Verkauf;Verkäufe",
-        "la venta;ventas",
-        "la vendita;vendite",
-        "a"
-      ],
-      "ds": "försäljningen",
-      "gender": "en",
       "genders": {
         "it": "la",
         "es": "la"
@@ -18932,34 +13724,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_forvaning_c9f8629b",
-      "p": "noun",
-      "e": {
-        "sv": "en förvåning",
-        "en": "the surprise",
-        "fa": "شگفتی",
-        "de": "die Verwunderung",
-        "es": "la sorpresa",
-        "it": "la sorpresa"
-      },
-      "raw": "förvåningen",
-      "parts": [
-        "förvåning",
-        "surprise;surprises",
-        "شگفتی",
-        "die Verwunderung;",
-        "la sorpresa;sorpresas",
-        "la sorpresa;sorprese",
-        "a"
-      ],
-      "ds": "förvåningen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_forvaring_2dd823ba",
       "p": "noun",
       "e": {
@@ -19069,34 +13833,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_foster_17c3a324",
-      "p": "noun",
-      "e": {
-        "sv": "ett foster",
-        "en": "the foetus",
-        "fa": "جنین",
-        "de": "der Fötus",
-        "es": "el feto",
-        "it": "il feto"
-      },
-      "raw": "fostret foster fostren (eller fosterna)",
-      "parts": [
-        "foster",
-        "foetus;foetuses",
-        "جنین",
-        "der Fötus;Föten",
-        "el feto;fetos",
-        "il feto;feti",
-        "a"
-      ],
-      "ds": "fostret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -19744,62 +14480,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_frost_d7bf0c9e",
-      "p": "noun",
-      "e": {
-        "sv": "en frost",
-        "en": "the frost",
-        "fa": "یخبندان",
-        "de": "der Frost",
-        "es": "la helada",
-        "it": "il gelo"
-      },
-      "raw": "frosten",
-      "parts": [
-        "frost",
-        "frost;frosts",
-        "یخبندان",
-        "der Frost;Fröste",
-        "la helada;heladas",
-        "il gelo;geli",
-        "a"
-      ],
-      "ds": "frosten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_frustration_1748ba31",
-      "p": "noun",
-      "e": {
-        "sv": "en frustration",
-        "en": "the frustration",
-        "fa": "سرخوردگی",
-        "de": "die Frustration",
-        "es": "la frustración",
-        "it": "la frustrazione"
-      },
-      "raw": "frustrationen frustrationer",
-      "parts": [
-        "frustration",
-        "frustration;frustrations",
-        "سرخوردگی",
-        "die Frustration;Frustrationen",
-        "la frustración;frustraciones",
-        "la frustrazione;frustrazioni",
-        "a"
-      ],
-      "ds": "frustrationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_fukt_28e10832",
       "p": "noun",
       "e": {
@@ -20304,34 +14984,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_gele_e9e0a558",
-      "p": "noun",
-      "e": {
-        "sv": "ett gelé",
-        "en": "the jelly",
-        "fa": "ژله",
-        "de": "das Gelee",
-        "es": "la gelatina",
-        "it": "la gelatina"
-      },
-      "raw": "geléet (el. gelén) geléer",
-      "parts": [
-        "gelé",
-        "jelly;jellies",
-        "ژله",
-        "das Gelee;Gelees",
-        "la gelatina;gelatinas",
-        "la gelatina;gelatine",
-        "s"
-      ],
-      "ds": "geléet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_genrep_35a90634",
       "p": "noun",
       "e": {
@@ -20640,34 +15292,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_glitter_ce2bf1f4",
-      "p": "noun",
-      "e": {
-        "sv": "ett glitter",
-        "en": "the glitter",
-        "fa": "اکلیل",
-        "de": "der Glitzer",
-        "es": "la purpurina",
-        "it": "il brillantino"
-      },
-      "raw": "glittret",
-      "parts": [
-        "glitter",
-        "glitter;",
-        "اکلیل",
-        "der Glitzer;",
-        "la purpurina;",
-        "il brillantino;brillantini",
-        "a"
-      ],
-      "ds": "glittret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_glogg_a7e32f40",
       "p": "noun",
       "e": {
@@ -20720,34 +15344,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_glykol_5ae368a1",
-      "p": "noun",
-      "e": {
-        "sv": "en glykol",
-        "en": "the glycol",
-        "fa": "گلیکول",
-        "de": "das Glykol",
-        "es": "el glicol",
-        "it": "il glicole"
-      },
-      "raw": "glykolen",
-      "parts": [
-        "glykol",
-        "glycol;glycols",
-        "گلیکول",
-        "das Glykol;Glykole",
-        "el glicol;glicoles",
-        "il glicole;glicoli",
-        "a"
-      ],
-      "ds": "glykolen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -20864,146 +15460,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_gradde_9f3c0eef",
-      "p": "noun",
-      "e": {
-        "sv": "en grädde",
-        "en": "the cream",
-        "fa": "خامه",
-        "de": "die Sahne",
-        "es": "la nata",
-        "it": "la panna"
-      },
-      "raw": "grädden",
-      "parts": [
-        "grädde",
-        "cream;",
-        "خامه",
-        "die Sahne;",
-        "la nata;",
-        "la panna;",
-        "a"
-      ],
-      "ds": "grädden",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_graffiti_8a61a6f6",
-      "p": "noun",
-      "e": {
-        "sv": "en graffiti",
-        "en": "the graffiti",
-        "fa": "نقاشی دیواری خیابانی",
-        "de": "das Graffiti",
-        "es": "el grafiti",
-        "it": "il graffito"
-      },
-      "raw": "graffitin",
-      "parts": [
-        "graffiti",
-        "graffiti;graffiti",
-        "نقاشی دیواری خیابانی",
-        "das Graffiti;Graffiti",
-        "el grafiti;grafitis",
-        "il graffito;graffiti",
-        "a"
-      ],
-      "ds": "graffitin",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_grafik_97133300",
-      "p": "noun",
-      "e": {
-        "sv": "en grafik",
-        "en": "the graphic art",
-        "fa": "هنر گرافیک",
-        "de": "die Grafik",
-        "es": "el arte gráfico",
-        "it": "l'arte grafica"
-      },
-      "raw": "grafiken",
-      "parts": [
-        "grafik",
-        "graphic art;",
-        "هنر گرافیک",
-        "die Grafik;Grafiken",
-        "el arte gráfico;artes gráficas",
-        "l'arte grafica;arti grafiche",
-        "a"
-      ],
-      "ds": "grafiken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_grammatik_fc7a941b",
-      "p": "noun",
-      "e": {
-        "sv": "en grammatik",
-        "en": "the grammar",
-        "fa": "دستور زبان",
-        "de": "die Grammatik",
-        "es": "la gramática",
-        "it": "la grammatica"
-      },
-      "raw": "grammatiken grammatiker",
-      "parts": [
-        "grammatik",
-        "grammar;grammars",
-        "دستور زبان",
-        "die Grammatik;Grammatiken",
-        "la gramática;gramáticas",
-        "la grammatica;grammatiche",
-        "a"
-      ],
-      "ds": "grammatiken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_granit_b114cb8d",
-      "p": "noun",
-      "e": {
-        "sv": "en granit",
-        "en": "the granite",
-        "fa": "گرانیت",
-        "de": "der Granit",
-        "es": "el granito",
-        "it": "il granito"
-      },
-      "raw": "graniten graniter",
-      "parts": [
-        "granit",
-        "granite;",
-        "گرانیت",
-        "der Granit;Granite",
-        "el granito;granitos",
-        "il granito;graniti",
-        "a"
-      ],
-      "ds": "graniten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_gransvarde_9e3d9bbe",
       "p": "noun",
       "e": {
@@ -21026,34 +15482,6 @@
       ],
       "ds": "gränsvärdet",
       "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_grapefrukt_8374c5a6",
-      "p": "noun",
-      "e": {
-        "sv": "en grapefrukt",
-        "en": "the grapefruit",
-        "fa": "گریپ‌فروت",
-        "de": "die Grapefruit",
-        "es": "el pomelo",
-        "it": "il pompelmo"
-      },
-      "raw": "grapefrukten grapefrukter",
-      "parts": [
-        "grapefrukt",
-        "grapefruit;grapefruits",
-        "گریپ‌فروت",
-        "die Grapefruit;Grapefruits",
-        "el pomelo;pomelos",
-        "il pompelmo;pompelmi",
-        "s"
-      ],
-      "ds": "grapefrukten",
-      "gender": "en",
       "genders": {
         "it": "il",
         "es": "el"
@@ -21144,34 +15572,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_grat_89cdcf91",
-      "p": "noun",
-      "e": {
-        "sv": "en gråt",
-        "en": "the crying",
-        "fa": "گریه",
-        "de": "das Weinen",
-        "es": "el llanto",
-        "it": "il pianto"
-      },
-      "raw": "gråten",
-      "parts": [
-        "gråt",
-        "crying;",
-        "گریه",
-        "das Weinen;",
-        "el llanto;llantos",
-        "il pianto;pianti",
-        "a"
-      ],
-      "ds": "gråten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_graviditetstest_29cc6d79",
       "p": "noun",
       "e": {
@@ -21196,34 +15596,6 @@
       "gender": "ett",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_gravitation_653583c5",
-      "p": "noun",
-      "e": {
-        "sv": "en gravitation",
-        "en": "the gravitation",
-        "fa": "گرانش",
-        "de": "die Gravitation",
-        "es": "la gravitación",
-        "it": "la gravitazione"
-      },
-      "raw": "gravitationen gravitationer",
-      "parts": [
-        "gravitation",
-        "gravitation;",
-        "گرانش",
-        "die Gravitation;",
-        "la gravitación;",
-        "la gravitazione;",
-        "a"
-      ],
-      "ds": "gravitationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -21253,34 +15625,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_grundamne_413dcb9e",
-      "p": "noun",
-      "e": {
-        "sv": "ett grundämne",
-        "en": "the chemical element",
-        "fa": "عنصر شیمیایی",
-        "de": "das Element",
-        "es": "el elemento químico",
-        "it": "l'elemento chimico"
-      },
-      "raw": "grundämnet grundämnen grundämnena",
-      "parts": [
-        "grundämne",
-        "chemical element;chemical elements",
-        "عنصر شیمیایی",
-        "das Element;Elemente",
-        "el elemento químico;elementos químicos",
-        "l'elemento chimico;elementi chimici",
-        "a"
-      ],
-      "ds": "grundämnet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -21592,34 +15936,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_gymnastik_3466c87d",
-      "p": "noun",
-      "e": {
-        "sv": "en gymnastik",
-        "en": "the gymnastics",
-        "fa": "ژیمناستیک",
-        "de": "die Gymnastik",
-        "es": "la gimnasia",
-        "it": "la ginnastica"
-      },
-      "raw": "gymnastiken",
-      "parts": [
-        "gymnastik",
-        "gymnastics;gymnastics",
-        "ژیمناستیک",
-        "die Gymnastik;",
-        "la gimnasia;",
-        "la ginnastica;",
-        "a"
-      ],
-      "ds": "gymnastiken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_hackspett_8318e28b",
       "p": "noun",
       "e": {
@@ -21673,34 +15989,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hagel_45c8d28c",
-      "p": "noun",
-      "e": {
-        "sv": "ett hagel",
-        "en": "the hail",
-        "fa": "تگرگ",
-        "de": "der Hagel",
-        "es": "el granizo",
-        "it": "la grandine"
-      },
-      "raw": "haglet",
-      "parts": [
-        "hagel",
-        "hail;",
-        "تگرگ",
-        "der Hagel;",
-        "el granizo;",
-        "la grandine;",
-        "a"
-      ],
-      "ds": "haglet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "el"
       }
     },
     {
@@ -21984,34 +16272,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_halvar_0abc32ea",
-      "p": "noun",
-      "e": {
-        "sv": "ett halvår",
-        "en": "the half-year",
-        "fa": "نیم‌سال",
-        "de": "das Halbjahr",
-        "es": "el semestre",
-        "it": "il semestre"
-      },
-      "raw": "halvåret halvår halvåren",
-      "parts": [
-        "halvår",
-        "half-year;half-years",
-        "نیم‌سال",
-        "das Halbjahr;Halbjahre",
-        "el semestre;semestres",
-        "il semestre;semestri",
-        "a"
-      ],
-      "ds": "halvåret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_halvbror_4632a760",
       "p": "noun",
       "e": {
@@ -22292,34 +16552,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_handledare_e32cc8da",
-      "p": "noun",
-      "e": {
-        "sv": "en handledare",
-        "en": "the supervisor",
-        "fa": "سرپرست آموزشی",
-        "de": "der Betreuer",
-        "es": "el supervisor",
-        "it": "il supervisore"
-      },
-      "raw": "handledaren handledare handledarna",
-      "parts": [
-        "handledare",
-        "supervisor;supervisors",
-        "سرپرست آموزشی",
-        "der Betreuer;Betreuer",
-        "el supervisor;supervisores",
-        "il supervisore;supervisori",
-        "p"
-      ],
-      "ds": "handledaren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_handpenning_8646c569",
       "p": "noun",
       "e": {
@@ -22373,34 +16605,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_handelsregister_7f00f4dd",
-      "p": "noun",
-      "e": {
-        "sv": "ett handelsregister",
-        "en": "the commercial register",
-        "fa": "دفتر ثبت تجاری",
-        "de": "das Handelsregister",
-        "es": "el registro mercantil",
-        "it": "il registro delle imprese"
-      },
-      "raw": "handelsregistret",
-      "parts": [
-        "handelsregister",
-        "commercial register;commercial registers",
-        "دفتر ثبت تجاری",
-        "das Handelsregister;Handelsregister",
-        "el registro mercantil;registros mercantiles",
-        "il registro delle imprese;registri delle imprese",
-        "a"
-      ],
-      "ds": "handelsregistret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -22572,34 +16776,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_hardvara_b7c425d5",
-      "p": "noun",
-      "e": {
-        "sv": "en hårdvara",
-        "en": "the hardware",
-        "fa": "سخت‌افزار",
-        "de": "die Hardware",
-        "es": "el hardware",
-        "it": "il hardware"
-      },
-      "raw": "hårdvaran hårdvaror",
-      "parts": [
-        "hårdvara",
-        "hardware;",
-        "سخت‌افزار",
-        "die Hardware;",
-        "el hardware;",
-        "il hardware;",
-        "a"
-      ],
-      "ds": "hårdvaran",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_hasselnot_73761ae7",
       "p": "noun",
       "e": {
@@ -22656,62 +16832,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_hat_18e1dd39",
-      "p": "noun",
-      "e": {
-        "sv": "ett hat",
-        "en": "the hatred",
-        "fa": "نفرت",
-        "de": "der Hass",
-        "es": "el odio",
-        "it": "l'odio"
-      },
-      "raw": "hatet",
-      "parts": [
-        "hat",
-        "hatred;",
-        "نفرت",
-        "der Hass;",
-        "el odio;",
-        "l'odio;",
-        "a"
-      ],
-      "ds": "hatet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hatt_cd678631",
-      "p": "noun",
-      "e": {
-        "sv": "en hatt",
-        "en": "the hat",
-        "fa": "کلاه لبه‌دار",
-        "de": "der Hut",
-        "es": "el sombrero",
-        "it": "il cappello"
-      },
-      "raw": "hatten hattar",
-      "parts": [
-        "hatt",
-        "hat;hats",
-        "کلاه لبه‌دار",
-        "der Hut;Hüte",
-        "el sombrero;sombreros",
-        "il cappello;cappelli",
-        "s"
-      ],
-      "ds": "hatten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_havre_bb2d818f",
       "p": "noun",
       "e": {
@@ -22765,34 +16885,6 @@
       "genders": {
         "it": "il",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hektar_8ace5370",
-      "p": "noun",
-      "e": {
-        "sv": "ett hektar",
-        "en": "the hectare",
-        "fa": "هکتار",
-        "de": "das Hektar",
-        "es": "la hectárea",
-        "it": "l'ettaro"
-      },
-      "raw": "hektaret hektar hektaren",
-      "parts": [
-        "hektar",
-        "hectare;hectares",
-        "هکتار",
-        "das Hektar;Hektar",
-        "la hectárea;hectáreas",
-        "l'ettaro;ettari",
-        "a"
-      ],
-      "ds": "hektaret",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "la"
       }
     },
     {
@@ -22961,34 +17053,6 @@
       "genders": {
         "it": "la",
         "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hemgift_1730e143",
-      "p": "noun",
-      "e": {
-        "sv": "en hemgift",
-        "en": "the dowry",
-        "fa": "جهیزیه",
-        "de": "die Mitgift",
-        "es": "la dote",
-        "it": "la dote"
-      },
-      "raw": "hemgiften hemgifter",
-      "parts": [
-        "hemgift",
-        "dowry;dowries",
-        "جهیزیه",
-        "die Mitgift;Mitgiften",
-        "la dote;dotes",
-        "la dote;doti",
-        "a"
-      ],
-      "ds": "hemgiften",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
       }
     },
     {
@@ -23241,34 +17305,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hinduism_de071092",
-      "p": "noun",
-      "e": {
-        "sv": "en hinduism",
-        "en": "the Hinduism",
-        "fa": "هندوئیسم",
-        "de": "der Hinduismus",
-        "es": "el hinduismo",
-        "it": "l'induismo"
-      },
-      "raw": "hinduismen",
-      "parts": [
-        "hinduism",
-        "Hinduism;",
-        "هندوئیسم",
-        "der Hinduismus;",
-        "el hinduismo;",
-        "l'induismo;",
-        "a"
-      ],
-      "ds": "hinduismen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -23664,34 +17700,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_hojdpunkt_3b07c9f6",
-      "p": "noun",
-      "e": {
-        "sv": "en höjdpunkt",
-        "en": "the highlight",
-        "fa": "نقطه اوج",
-        "de": "der Höhepunkt",
-        "es": "el momento culminante",
-        "it": "il momento culminante"
-      },
-      "raw": "höjdpunkten höjdpunkter",
-      "parts": [
-        "höjdpunkt",
-        "highlight;highlights",
-        "نقطه اوج",
-        "der Höhepunkt;Höhepunkte",
-        "el momento culminante;momentos culminantes",
-        "il momento culminante;momenti culminanti",
-        "a"
-      ],
-      "ds": "höjdpunkten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_honung_146b02df",
       "p": "noun",
       "e": {
@@ -23804,34 +17812,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_horoskop_8628bb8e",
-      "p": "noun",
-      "e": {
-        "sv": "ett horoskop",
-        "en": "the horoscope",
-        "fa": "طالع‌بینی",
-        "de": "das Horoskop",
-        "es": "el horóscopo",
-        "it": "l'oroscopo"
-      },
-      "raw": "horoskopet horoskop horoskopen",
-      "parts": [
-        "horoskop",
-        "horoscope;horoscopes",
-        "طالع‌بینی",
-        "das Horoskop;Horoskope",
-        "el horóscopo;horóscopos",
-        "l'oroscopo;oroscopi",
-        "a"
-      ],
-      "ds": "horoskopet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_hovratt_96941ccc",
       "p": "noun",
       "e": {
@@ -23912,34 +17892,6 @@
       "gender": "en",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hunger_5baba4fb",
-      "p": "noun",
-      "e": {
-        "sv": "en hunger",
-        "en": "the hunger",
-        "fa": "گرسنگی",
-        "de": "der Hunger",
-        "es": "el hambre",
-        "it": "la fame"
-      },
-      "raw": "hungern",
-      "parts": [
-        "hunger",
-        "hunger;",
-        "گرسنگی",
-        "der Hunger;",
-        "el hambre;",
-        "la fame;",
-        "a"
-      ],
-      "ds": "hungern",
-      "gender": "en",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -24137,34 +18089,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_hybrid_0deac0a2",
-      "p": "noun",
-      "e": {
-        "sv": "en hybrid",
-        "en": "the hybrid",
-        "fa": "دورگه",
-        "de": "der Hybrid",
-        "es": "el híbrido",
-        "it": "l'ibrido"
-      },
-      "raw": "hybriden hybrider",
-      "parts": [
-        "hybrid",
-        "hybrid;hybrids",
-        "دورگه",
-        "der Hybrid;Hybride",
-        "el híbrido;híbridos",
-        "l'ibrido;ibridi",
-        "a"
-      ],
-      "ds": "hybriden",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -24448,90 +18372,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_idrott_3e89acad",
-      "p": "noun",
-      "e": {
-        "sv": "en idrott",
-        "en": "the sport",
-        "fa": "ورزش",
-        "de": "der Sport",
-        "es": "el deporte",
-        "it": "lo sport"
-      },
-      "raw": "idrotten idrotter",
-      "parts": [
-        "idrott",
-        "sport;sports",
-        "ورزش",
-        "der Sport;Sportarten",
-        "el deporte;deportes",
-        "lo sport;sport",
-        "a"
-      ],
-      "ds": "idrotten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_illamaende_443c0660",
-      "p": "noun",
-      "e": {
-        "sv": "ett illamående",
-        "en": "the nausea",
-        "fa": "حالت تهوع",
-        "de": "die Übelkeit",
-        "es": "la náusea",
-        "it": "la nausea"
-      },
-      "raw": "illamåendet",
-      "parts": [
-        "illamående",
-        "nausea;",
-        "حالت تهوع",
-        "die Übelkeit;",
-        "la náusea;náuseas",
-        "la nausea;",
-        "a"
-      ],
-      "ds": "illamåendet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_illustration_498cc84b",
-      "p": "noun",
-      "e": {
-        "sv": "en illustration",
-        "en": "the illustration",
-        "fa": "تصویرسازی",
-        "de": "die Illustration",
-        "es": "la ilustración",
-        "it": "l'illustrazione"
-      },
-      "raw": "illustrationen illustrationer",
-      "parts": [
-        "illustration",
-        "illustration;illustrations",
-        "تصویرسازی",
-        "die Illustration;Illustrationen",
-        "la ilustración;ilustraciones",
-        "l'illustrazione;illustrazioni",
-        "a"
-      ],
-      "ds": "illustrationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_ilska_3dd27921",
       "p": "noun",
       "e": {
@@ -24553,62 +18393,6 @@
         "a"
       ],
       "ds": "ilskan",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_immigration_9ecfc652",
-      "p": "noun",
-      "e": {
-        "sv": "en immigration",
-        "en": "the immigration",
-        "fa": "مهاجرت به داخل",
-        "de": "die Einwanderung",
-        "es": "la inmigración",
-        "it": "l'immigrazione"
-      },
-      "raw": "immigrationen",
-      "parts": [
-        "immigration",
-        "immigration;",
-        "مهاجرت به داخل",
-        "die Einwanderung;Einwanderungen",
-        "la inmigración;",
-        "l'immigrazione;",
-        "a"
-      ],
-      "ds": "immigrationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_import_d942f648",
-      "p": "noun",
-      "e": {
-        "sv": "en import",
-        "en": "the import",
-        "fa": "واردات",
-        "de": "der Import",
-        "es": "la importación",
-        "it": "l'importazione"
-      },
-      "raw": "importen",
-      "parts": [
-        "import",
-        "import;imports",
-        "واردات",
-        "der Import;Importe",
-        "la importación;importaciones",
-        "l'importazione;importazioni",
-        "a"
-      ],
-      "ds": "importen",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -24641,34 +18425,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_incheckning_d91ed943",
-      "p": "noun",
-      "e": {
-        "sv": "en incheckning",
-        "en": "the check-in",
-        "fa": "پذیرش مسافر",
-        "de": "das Einchecken",
-        "es": "el registro de entrada",
-        "it": "il check-in"
-      },
-      "raw": "incheckningen incheckningar",
-      "parts": [
-        "incheckning",
-        "check-in;check-ins",
-        "پذیرش مسافر",
-        "das Einchecken;",
-        "el registro de entrada;registros de entrada",
-        "il check-in;check-in",
-        "a"
-      ],
-      "ds": "incheckningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -24812,34 +18568,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_indikation_144dad84",
-      "p": "noun",
-      "e": {
-        "sv": "en indikation",
-        "en": "the indication",
-        "fa": "نشانه پزشکی",
-        "de": "die Indikation",
-        "es": "la indicación",
-        "it": "l'indicazione"
-      },
-      "raw": "indikationen indikationer",
-      "parts": [
-        "indikation",
-        "indication;indications",
-        "نشانه پزشکی",
-        "die Indikation;Indikationen",
-        "la indicación;indicaciones",
-        "l'indicazione;indicazioni",
-        "a"
-      ],
-      "ds": "indikationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_indrivning_1bdc3c75",
       "p": "noun",
       "e": {
@@ -24868,34 +18596,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_inflammation_68235db6",
-      "p": "noun",
-      "e": {
-        "sv": "en inflammation",
-        "en": "the inflammation",
-        "fa": "التهاب",
-        "de": "die Entzündung",
-        "es": "la inflamación",
-        "it": "l'infiammazione"
-      },
-      "raw": "inflammationen inflammationer",
-      "parts": [
-        "inflammation",
-        "inflammation;inflammations",
-        "التهاب",
-        "die Entzündung;Entzündungen",
-        "la inflamación;inflamaciones",
-        "l'infiammazione;infiammazioni",
-        "a"
-      ],
-      "ds": "inflammationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_inflyttning_cf26be83",
       "p": "noun",
       "e": {
@@ -24921,90 +18621,6 @@
       "genders": {
         "it": "il",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_infrastruktur_161374a4",
-      "p": "noun",
-      "e": {
-        "sv": "en infrastruktur",
-        "en": "the infrastructure",
-        "fa": "زیرساخت",
-        "de": "die Infrastruktur",
-        "es": "la infraestructura",
-        "it": "l'infrastruttura"
-      },
-      "raw": "infrastrukturen infrastrukturer",
-      "parts": [
-        "infrastruktur",
-        "infrastructure;infrastructures",
-        "زیرساخت",
-        "die Infrastruktur;Infrastrukturen",
-        "la infraestructura;infraestructuras",
-        "l'infrastruttura;infrastrutture",
-        "a"
-      ],
-      "ds": "infrastrukturen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_inhagnad_45b07e21",
-      "p": "noun",
-      "e": {
-        "sv": "en inhägnad",
-        "en": "the enclosure",
-        "fa": "محوطه محصور",
-        "de": "das Gehege",
-        "es": "el recinto",
-        "it": "il recinto"
-      },
-      "raw": "inhägnaden inhägnader",
-      "parts": [
-        "inhägnad",
-        "enclosure;enclosures",
-        "محوطه محصور",
-        "das Gehege;Gehege",
-        "el recinto;recintos",
-        "il recinto;recinti",
-        "s"
-      ],
-      "ds": "inhägnaden",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_inkasso_12bc86a1",
-      "p": "noun",
-      "e": {
-        "sv": "ett inkasso",
-        "en": "the debt recovery",
-        "fa": "پیگیری وصول طلب",
-        "de": "das Inkasso",
-        "es": "el recobro de deudas",
-        "it": "la riscossione dei crediti"
-      },
-      "raw": "inkassot",
-      "parts": [
-        "inkasso",
-        "debt recovery;",
-        "پیگیری وصول طلب",
-        "das Inkasso;",
-        "el recobro de deudas;",
-        "la riscossione dei crediti;",
-        "a"
-      ],
-      "ds": "inkassot",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "el"
       }
     },
     {
@@ -25232,34 +18848,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_installation_561f0a3d",
-      "p": "noun",
-      "e": {
-        "sv": "en installation",
-        "en": "the installation",
-        "fa": "نصب",
-        "de": "die Installation",
-        "es": "la instalación técnica",
-        "it": "l'installazione"
-      },
-      "raw": "installationen installationer",
-      "parts": [
-        "installation",
-        "installation;installations",
-        "نصب",
-        "die Installation;Installationen",
-        "la instalación técnica;instalaciones técnicas",
-        "l'installazione;installazioni",
-        "a"
-      ],
-      "ds": "installationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_insyn_f4366794",
       "p": "noun",
       "e": {
@@ -25285,34 +18873,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_intellekt_2c6f7de1",
-      "p": "noun",
-      "e": {
-        "sv": "ett intellekt",
-        "en": "the intellect",
-        "fa": "قوه عقل",
-        "de": "der Intellekt",
-        "es": "el intelecto",
-        "it": "l'intelletto"
-      },
-      "raw": "intellektet",
-      "parts": [
-        "intellekt",
-        "intellect;intellects",
-        "قوه عقل",
-        "der Intellekt;Intellekte",
-        "el intelecto;intelectos",
-        "l'intelletto;intelletti",
-        "a"
-      ],
-      "ds": "intellektet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -25366,34 +18926,6 @@
       ],
       "ds": "inverkan",
       "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_isberg_ca5ff29d",
-      "p": "noun",
-      "e": {
-        "sv": "ett isberg",
-        "en": "the iceberg",
-        "fa": "کوه یخ",
-        "de": "der Eisberg",
-        "es": "el iceberg",
-        "it": "l'iceberg"
-      },
-      "raw": "isberget isberg isbergen",
-      "parts": [
-        "isberg",
-        "iceberg;icebergs",
-        "کوه یخ",
-        "der Eisberg;Eisberge",
-        "el iceberg;icebergs",
-        "l'iceberg;iceberg",
-        "s"
-      ],
-      "ds": "isberget",
-      "gender": "ett",
       "genders": {
         "it": "il",
         "es": "el"
@@ -25484,34 +19016,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_ischias_d9f41093",
-      "p": "noun",
-      "e": {
-        "sv": "en ischias",
-        "en": "the sciatica",
-        "fa": "سیاتیک",
-        "de": "die Ischialgie",
-        "es": "la ciática",
-        "it": "la sciatica"
-      },
-      "raw": "ischiasen",
-      "parts": [
-        "ischias",
-        "sciatica;",
-        "سیاتیک",
-        "die Ischialgie;Ischialgien",
-        "la ciática;",
-        "la sciatica;",
-        "a"
-      ],
-      "ds": "ischiasen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_jamforpris_a56b9698",
       "p": "noun",
       "e": {
@@ -25568,34 +19072,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_jarn_ea6d1fae",
-      "p": "noun",
-      "e": {
-        "sv": "ett järn",
-        "en": "the iron",
-        "fa": "آهن",
-        "de": "das Eisen",
-        "es": "el hierro",
-        "it": "il ferro"
-      },
-      "raw": "järnet",
-      "parts": [
-        "järn",
-        "iron;",
-        "آهن",
-        "das Eisen;",
-        "el hierro;",
-        "il ferro;",
-        "a"
-      ],
-      "ds": "järnet",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_jarnvag_ae6618c7",
       "p": "noun",
       "e": {
@@ -25620,34 +19096,6 @@
       "gender": "en",
       "genders": {
         "it": "la",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_jordbavning_a9f1d9fa",
-      "p": "noun",
-      "e": {
-        "sv": "en jordbävning",
-        "en": "the earthquake",
-        "fa": "زمین‌لرزه",
-        "de": "das Erdbeben",
-        "es": "el terremoto",
-        "it": "il terremoto"
-      },
-      "raw": "jordbävningen jordbävningar",
-      "parts": [
-        "jordbävning",
-        "earthquake;earthquakes",
-        "زمین‌لرزه",
-        "das Erdbeben;Erdbeben",
-        "el terremoto;terremotos",
-        "il terremoto;terremoti",
-        "a"
-      ],
-      "ds": "jordbävningen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
         "es": "el"
       }
     },
@@ -25820,34 +19268,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kakao_30cd4a85",
-      "p": "noun",
-      "e": {
-        "sv": "en kakao",
-        "en": "the cocoa",
-        "fa": "کاکائو",
-        "de": "der Kakao",
-        "es": "el cacao",
-        "it": "il cacao"
-      },
-      "raw": "kakaon",
-      "parts": [
-        "kakao",
-        "cocoa;",
-        "کاکائو",
-        "der Kakao;Kakaos",
-        "el cacao;",
-        "il cacao;",
-        "a"
-      ],
-      "ds": "kakaon",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_kal_5ba0c505",
       "p": "noun",
       "e": {
@@ -25904,34 +19324,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kalk_20dff424",
-      "p": "noun",
-      "e": {
-        "sv": "en kalk",
-        "en": "the lime",
-        "fa": "آهک",
-        "de": "der Kalk",
-        "es": "la cal",
-        "it": "la calce"
-      },
-      "raw": "kalken",
-      "parts": [
-        "kalk",
-        "lime;",
-        "آهک",
-        "der Kalk;Kalke",
-        "la cal;",
-        "la calce;",
-        "a"
-      ],
-      "ds": "kalken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_kalkylator_2f54355c",
       "p": "noun",
       "e": {
@@ -25953,34 +19345,6 @@
         "s"
       ],
       "ds": "kalkylatorn",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kallbrand_d307c106",
-      "p": "noun",
-      "e": {
-        "sv": "en kallbrand",
-        "en": "the gangrene",
-        "fa": "قانقاریا",
-        "de": "der Wundbrand",
-        "es": "la gangrena",
-        "it": "la gangrena"
-      },
-      "raw": "kallbranden",
-      "parts": [
-        "kallbrand",
-        "gangrene;",
-        "قانقاریا",
-        "der Wundbrand;",
-        "la gangrena;",
-        "la gangrena;",
-        "a"
-      ],
-      "ds": "kallbranden",
       "gender": "en",
       "genders": {
         "it": "la",
@@ -26212,34 +19576,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kaos_9a9364c5",
-      "p": "noun",
-      "e": {
-        "sv": "ett kaos",
-        "en": "the chaos",
-        "fa": "آشوب",
-        "de": "das Chaos",
-        "es": "el caos",
-        "it": "il caos"
-      },
-      "raw": "kaoset",
-      "parts": [
-        "kaos",
-        "chaos;",
-        "آشوب",
-        "das Chaos;",
-        "el caos;",
-        "il caos;",
-        "a"
-      ],
-      "ds": "kaoset",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_kapitalvara_8c751585",
       "p": "noun",
       "e": {
@@ -26261,34 +19597,6 @@
         "a"
       ],
       "ds": "kapitalvaran",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kapitalism_eaac02a1",
-      "p": "noun",
-      "e": {
-        "sv": "en kapitalism",
-        "en": "the capitalism",
-        "fa": "سرمایه‌داری",
-        "de": "der Kapitalismus",
-        "es": "el capitalismo",
-        "it": "il capitalismo"
-      },
-      "raw": "kapitalismen",
-      "parts": [
-        "kapitalism",
-        "capitalism;",
-        "سرمایه‌داری",
-        "der Kapitalismus;",
-        "el capitalismo;",
-        "il capitalismo;",
-        "a"
-      ],
-      "ds": "kapitalismen",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -26324,34 +19632,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kardemumma_125d6939",
-      "p": "noun",
-      "e": {
-        "sv": "en kardemumma",
-        "en": "the cardamom",
-        "fa": "هل",
-        "de": "der Kardamom",
-        "es": "el cardamomo",
-        "it": "il cardamomo"
-      },
-      "raw": "kardemumman",
-      "parts": [
-        "kardemumma",
-        "cardamom;",
-        "هل",
-        "der Kardamom;",
-        "el cardamomo;",
-        "il cardamomo;",
-        "a"
-      ],
-      "ds": "kardemumman",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_karenstid_e4ab7727",
       "p": "noun",
       "e": {
@@ -26373,34 +19653,6 @@
         "a"
       ],
       "ds": "karenstiden",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_karisma_1389b58e",
-      "p": "noun",
-      "e": {
-        "sv": "en karisma",
-        "en": "the charisma",
-        "fa": "کاریزما",
-        "de": "das Charisma",
-        "es": "el carisma",
-        "it": "il carisma"
-      },
-      "raw": "karisman",
-      "parts": [
-        "karisma",
-        "charisma;",
-        "کاریزما",
-        "das Charisma;",
-        "el carisma;",
-        "il carisma;",
-        "a"
-      ],
-      "ds": "karisman",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -26461,62 +19713,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kassaskap_5955c2ef",
-      "p": "noun",
-      "e": {
-        "sv": "ett kassaskåp",
-        "en": "the safe",
-        "fa": "گاوصندوق",
-        "de": "der Tresor",
-        "es": "la caja fuerte",
-        "it": "la cassaforte"
-      },
-      "raw": "kassaskåpet kassaskåp kassaskåpen",
-      "parts": [
-        "kassaskåp",
-        "safe;safes",
-        "گاوصندوق",
-        "der Tresor;Tresore",
-        "la caja fuerte;cajas fuertes",
-        "la cassaforte;casseforti",
-        "s"
-      ],
-      "ds": "kassaskåpet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_katalysator_0f7cc992",
-      "p": "noun",
-      "e": {
-        "sv": "en katalysator",
-        "en": "the catalyst",
-        "fa": "کاتالیزور",
-        "de": "der Katalysator",
-        "es": "el catalizador",
-        "it": "il catalizzatore"
-      },
-      "raw": "katalysatorn katalysatorer",
-      "parts": [
-        "katalysator",
-        "catalyst;catalysts",
-        "کاتالیزور",
-        "der Katalysator;Katalysatoren",
-        "el catalizador;catalizadores",
-        "il catalizzatore;catalizzatori",
-        "a"
-      ],
-      "ds": "katalysatorn",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -26604,34 +19800,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_keramik_8507f517",
-      "p": "noun",
-      "e": {
-        "sv": "en keramik",
-        "en": "the ceramics",
-        "fa": "سرامیک",
-        "de": "die Keramik",
-        "es": "la cerámica",
-        "it": "la ceramica"
-      },
-      "raw": "keramiken",
-      "parts": [
-        "keramik",
-        "ceramics;ceramics",
-        "سرامیک",
-        "die Keramik;Keramiken",
-        "la cerámica;cerámicas",
-        "la ceramica;ceramiche",
-        "a"
-      ],
-      "ds": "keramiken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_kikhosta_0dbb4058",
       "p": "noun",
       "e": {
@@ -26657,90 +19825,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kilometer_c9d9454d",
-      "p": "noun",
-      "e": {
-        "sv": "en kilometer",
-        "en": "the kilometre",
-        "fa": "کیلومتر",
-        "de": "der Kilometer",
-        "es": "el kilómetro",
-        "it": "il chilometro"
-      },
-      "raw": "kilometern kilometer (el. kilometrar) kilometerna",
-      "parts": [
-        "kilometer",
-        "kilometre;kilometres",
-        "کیلومتر",
-        "der Kilometer;Kilometer",
-        "el kilómetro;kilómetros",
-        "il chilometro;chilometri",
-        "a"
-      ],
-      "ds": "kilometern",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kilowatt_de99afdf",
-      "p": "noun",
-      "e": {
-        "sv": "en kilowatt",
-        "en": "the kilowatt",
-        "fa": "کیلووات",
-        "de": "das Kilowatt",
-        "es": "el kilovatio",
-        "it": "il chilowatt"
-      },
-      "raw": "kilowatten kilowatt kilowatten",
-      "parts": [
-        "kilowatt",
-        "kilowatt;kilowatts",
-        "کیلووات",
-        "das Kilowatt;Kilowatt",
-        "el kilovatio;kilovatios",
-        "il chilowatt;chilowatt",
-        "a"
-      ],
-      "ds": "kilowatten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kindtand_f637f4a4",
-      "p": "noun",
-      "e": {
-        "sv": "en kindtand",
-        "en": "the molar",
-        "fa": "دندان آسیاب",
-        "de": "der Backenzahn",
-        "es": "el molar",
-        "it": "il molare"
-      },
-      "raw": "kindtanden kindtänder",
-      "parts": [
-        "kindtand",
-        "molar;molars",
-        "دندان آسیاب",
-        "der Backenzahn;Backenzähne",
-        "el molar;molares",
-        "il molare;molari",
-        "a"
-      ],
-      "ds": "kindtanden",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -26797,34 +19881,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kisel_389fa173",
-      "p": "noun",
-      "e": {
-        "sv": "en kisel",
-        "en": "the silicon",
-        "fa": "سیلیسیم",
-        "de": "das Silizium",
-        "es": "el silicio",
-        "it": "il silicio"
-      },
-      "raw": "kiseln (el. kislet)",
-      "parts": [
-        "kisel",
-        "silicon;",
-        "سیلیسیم",
-        "das Silizium;",
-        "el silicio;",
-        "il silicio;",
-        "a"
-      ],
-      "ds": "kiseln",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
@@ -26968,34 +20024,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_klimakterium_0a30cfdb",
-      "p": "noun",
-      "e": {
-        "sv": "ett klimakterium",
-        "en": "the menopause",
-        "fa": "یائسگی",
-        "de": "das Klimakterium",
-        "es": "la menopausia",
-        "it": "la menopausa"
-      },
-      "raw": "klimakteriet",
-      "parts": [
-        "klimakterium",
-        "menopause;",
-        "یائسگی",
-        "das Klimakterium;Klimakterien",
-        "la menopausia;",
-        "la menopausa;",
-        "a"
-      ],
-      "ds": "klimakteriet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_klister_dbce11eb",
       "p": "noun",
       "e": {
@@ -27076,62 +20104,6 @@
       "gender": "ett",
       "genders": {
         "it": "il",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_klor_23448ea2",
-      "p": "noun",
-      "e": {
-        "sv": "en klor",
-        "en": "the chlorine",
-        "fa": "کلر",
-        "de": "das Chlor",
-        "es": "el cloro",
-        "it": "il cloro"
-      },
-      "raw": "kloren",
-      "parts": [
-        "klor",
-        "chlorine;",
-        "کلر",
-        "das Chlor;",
-        "el cloro;",
-        "il cloro;",
-        "a"
-      ],
-      "ds": "kloren",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_klorofyll_ea3f7573",
-      "p": "noun",
-      "e": {
-        "sv": "ett klorofyll",
-        "en": "the chlorophyll",
-        "fa": "کلروفیل",
-        "de": "das Chlorophyll",
-        "es": "la clorofila",
-        "it": "la clorofilla"
-      },
-      "raw": "klorofyllet (el. klorofyllen)",
-      "parts": [
-        "klorofyll",
-        "chlorophyll;",
-        "کلروفیل",
-        "das Chlorophyll;",
-        "la clorofila;",
-        "la clorofilla;",
-        "a"
-      ],
-      "ds": "klorofyllet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
         "es": "la"
       }
     },
@@ -27360,34 +20332,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_koffein_994f14b6",
-      "p": "noun",
-      "e": {
-        "sv": "ett koffein",
-        "en": "the caffeine",
-        "fa": "کافئین",
-        "de": "das Koffein",
-        "es": "la cafeína",
-        "it": "la caffeina"
-      },
-      "raw": "koffeinet",
-      "parts": [
-        "koffein",
-        "caffeine;",
-        "کافئین",
-        "das Koffein;",
-        "la cafeína;",
-        "la caffeina;",
-        "a"
-      ],
-      "ds": "koffeinet",
-      "gender": "ett",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_kokbok_bd3d124c",
       "p": "noun",
       "e": {
@@ -27584,62 +20528,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kolera_ead98edf",
-      "p": "noun",
-      "e": {
-        "sv": "en kolera",
-        "en": "the cholera",
-        "fa": "وبا",
-        "de": "die Cholera",
-        "es": "el cólera",
-        "it": "il colera"
-      },
-      "raw": "koleran",
-      "parts": [
-        "kolera",
-        "cholera;",
-        "وبا",
-        "die Cholera;",
-        "el cólera;",
-        "il colera;",
-        "a"
-      ],
-      "ds": "koleran",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_kolik_4d586f87",
-      "p": "noun",
-      "e": {
-        "sv": "en kolik",
-        "en": "the colic",
-        "fa": "قولنج",
-        "de": "die Kolik",
-        "es": "el cólico",
-        "it": "la colica"
-      },
-      "raw": "koliken",
-      "parts": [
-        "kolik",
-        "colic;",
-        "قولنج",
-        "die Kolik;Koliken",
-        "el cólico;cólicos",
-        "la colica;coliche",
-        "a"
-      ],
-      "ds": "koliken",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "el"
-      }
-    },
-    {
       "id": "core.n.lexin007_kollektivavtal_2b6dffbb",
       "p": "noun",
       "e": {
@@ -27689,62 +20577,6 @@
         "a"
       ],
       "ds": "kolonilotten",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_koma_054ee856",
-      "p": "noun",
-      "e": {
-        "sv": "ett koma",
-        "en": "the coma",
-        "fa": "کما",
-        "de": "das Koma",
-        "es": "el coma",
-        "it": "il coma"
-      },
-      "raw": "komat (el. koman)",
-      "parts": [
-        "koma",
-        "coma;comas",
-        "کما",
-        "das Koma;Komata",
-        "el coma;comas",
-        "il coma;coma",
-        "a"
-      ],
-      "ds": "komat",
-      "gender": "ett",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_komfort_22751892",
-      "p": "noun",
-      "e": {
-        "sv": "en komfort",
-        "en": "the comfort",
-        "fa": "آسایش",
-        "de": "der Komfort",
-        "es": "el confort",
-        "it": "il comfort"
-      },
-      "raw": "komforten",
-      "parts": [
-        "komfort",
-        "comfort;",
-        "آسایش",
-        "der Komfort;",
-        "el confort;",
-        "il comfort;",
-        "a"
-      ],
-      "ds": "komforten",
       "gender": "en",
       "genders": {
         "it": "il",
@@ -27808,62 +20640,6 @@
       }
     },
     {
-      "id": "core.n.lexin007_kommunikation_b7637398",
-      "p": "noun",
-      "e": {
-        "sv": "en kommunikation",
-        "en": "the communication",
-        "fa": "ارتباطات",
-        "de": "die Kommunikation",
-        "es": "la comunicación",
-        "it": "la comunicazione interpersonale"
-      },
-      "raw": "kommunikationen kommunikationer",
-      "parts": [
-        "kommunikation",
-        "communication;communications",
-        "ارتباطات",
-        "die Kommunikation;Kommunikationen",
-        "la comunicación;comunicaciones",
-        "la comunicazione interpersonale;comunicazioni interpersonali",
-        "a"
-      ],
-      "ds": "kommunikationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_komplikation_430a7533",
-      "p": "noun",
-      "e": {
-        "sv": "en komplikation",
-        "en": "the complication",
-        "fa": "عارضه پیچیده",
-        "de": "die Komplikation",
-        "es": "la complicación",
-        "it": "la complicazione"
-      },
-      "raw": "komplikationen komplikationer",
-      "parts": [
-        "komplikation",
-        "complication;complications",
-        "عارضه پیچیده",
-        "die Komplikation;Komplikationen",
-        "la complicación;complicaciones",
-        "la complicazione;complicazioni",
-        "a"
-      ],
-      "ds": "komplikationen",
-      "gender": "en",
-      "genders": {
-        "it": "la",
-        "es": "la"
-      }
-    },
-    {
       "id": "core.n.lexin007_koncentration_9133f512",
       "p": "noun",
       "e": {
@@ -27889,62 +20665,6 @@
       "genders": {
         "it": "la",
         "es": "la"
-      }
-    },
-    {
-      "id": "core.n.lexin007_konfetti_c43958b0",
-      "p": "noun",
-      "e": {
-        "sv": "en konfetti",
-        "en": "the confetti",
-        "fa": "کاغذرنگی جشن",
-        "de": "das Konfetti",
-        "es": "el confeti",
-        "it": "i coriandoli"
-      },
-      "raw": "konfettin",
-      "parts": [
-        "konfetti",
-        "confetti;confetti",
-        "کاغذرنگی جشن",
-        "das Konfetti;Konfetti",
-        "el confeti;",
-        "i coriandoli;coriandoli",
-        "a"
-      ],
-      "ds": "konfettin",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
-      }
-    },
-    {
-      "id": "core.n.lexin007_konjunktur_04caf2ac",
-      "p": "noun",
-      "e": {
-        "sv": "en konjunktur",
-        "en": "the economic cycle",
-        "fa": "چرخه اقتصادی",
-        "de": "die Konjunktur",
-        "es": "el ciclo económico",
-        "it": "il ciclo economico"
-      },
-      "raw": "konjunkturen konjunkturer",
-      "parts": [
-        "konjunktur",
-        "economic cycle;economic cycles",
-        "چرخه اقتصادی",
-        "die Konjunktur;Konjunkturen",
-        "el ciclo económico;ciclos económicos",
-        "il ciclo economico;cicli economici",
-        "a"
-      ],
-      "ds": "konjunkturen",
-      "gender": "en",
-      "genders": {
-        "it": "il",
-        "es": "el"
       }
     },
     {
