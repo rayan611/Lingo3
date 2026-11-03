@@ -1,3 +1,31 @@
+## 2026-11-03 — Cross-app Showcase / Settings / Invitation review
+
+Scope: Concordia360, Lingo3 and Glowis. GitHub main is canonical. This is a status and verification record, not a claim of browser QA.
+
+Delivered:
+- Public multilingual product showcase for each app, connected to homepage and/or welcome entry.
+- Showcase link integrated into Settings invitation area in all three apps.
+- Personal invitation links remain distinct from public showcase URLs; invitation sharing supports messaging channels.
+- Localized feature descriptions and sharing copy added; Concordia360 invite JSON includes en/fa/sv/de/es/ar.
+- Showcase pull requests merged to main: Concordia #21 (f49cfb7), Lingo3 #33 (5306dde), Glowis #32 (131b641).
+- Follow-up Concordia main commits: d6d564a (Settings link), 2d125ef (localized invitation templates).
+- Vercel production deployment check on 2026-11-03: Concordia 2d125ef READY, Lingo3 5306dde READY, Glowis 131b641 READY.
+
+Verification boundaries and open work:
+1. READY means deployment/build status only; signed-in functional QA on mobile and desktop has NOT been completed.
+2. Verify homepage/welcome open-app CTA, navigation, invitation deep links and greeting, Settings links, clipboard and social share flows.
+3. Check all selected languages for untranslated prompts, installation guidance and metadata; full localization audit not verified.
+4. Check mobile sizing, iframe scrolling, accessibility and CSP/PWA/offline behavior; automated browser/device test not verified.
+5. Validate production domains and custom-domain routing independently; READY preview/production URL alone does not establish full end-to-end health.
+6. Concordia invitation localization was updated in data/invite.json; check language-specific greeting rendering on the actual landing page.
+7. Confirm there are no regressions in authenticated flows, and record actual QA results before marking release fully accepted.
+
+Status: MERGED / PRODUCTION BUILDS READY; FUNCTIONAL ACCEPTANCE PENDING.
+Rollback: revert the respective main commits or redeploy the preceding known-good production deployment if regression is observed. No database changes were made as part of this showcase review.
+Next: targeted browser QA, fix only observed defects, update this handoff with tested URLs, devices and outcomes.
+
+---
+
 # Vocabulary batch 007 ambiguity cleanup — 2026-11-03
 Owner authorised repeated checks, correction/removal of ambiguous words and merging PR #31. Final active package is **740 concepts / 4,440 cards**, after reversibly quarantining 260 of the original 1,000 concepts (`status="rejected"`). Physical records retained; user cards and all older batches unchanged. An attempted physical-delete rehearsal required tool confirmation which expired; no physical deletion occurred. Quarantine rollback rehearsal passed before commit.
 
