@@ -1,6 +1,6 @@
-## 2026-11-03 — Vocabulary batch 008 checkpoint (INCOMPLETE)
+## 2026-11-03 — Vocabulary batch 008 part 001 preparation
 
-Branch `data/lexin-2000-batch-008`. Saved draft 1,061 concepts / 6,366 six-language cards; target 2,000 remains incomplete. 5,305 morphology and 6,366 expansion schema parses pass, zero failures. No batch-008 database writes, merge or production app deployment. Gemini HTTP 402; Groq rate/size limits; Mistral sample rejected for semantic errors. See `docs/VOCAB_BATCH_008_REPORT.md` and `data/shared-vocab/staging/batch-008/`. Need provider quota restoration, remaining 939 concepts, semantic review, fresh live duplicate check and atomic final import. Temporary ops-preview deployment cleanup remains pending; never merge its API helper. Existing handoffs preserved below.
+Prepared 1,079 reviewed concepts / 6,474 cards; original target 2,000 remains incomplete by 921. Branch `data/lexin-2000-batch-008`, PR #34. Zero schema failures (5,395 morphology / 6,474 expansion parses), byte-identical offline rebuild, focused vocabulary regression checks pass. Live import/lookup verification and merge pending in this commit. Primary Gemini HTTP 402; all backup samples failed semantic quality review; none accepted. No app-source/schema/auth/RLS changes. See `docs/VOCAB_BATCH_008_REPORT.md`. Temporary ops previews remain isolated; deletion pending, provider scopes restored. Existing handoffs preserved below.
 
 ---
 

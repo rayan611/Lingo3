@@ -1,20 +1,29 @@
 {
-  "requestedConcepts": 2000,
-  "draftConcepts": 1061,
-  "draftCards": 6366,
+  "date": "2026-11-03",
+  "candidatePool": 7273,
   "generatedDistinct": 2612,
-  "excluded": 1551,
-  "imported": 0,
-  "morphologyParses": 5305,
-  "expansionParses": 6366,
-  "schemaFailures": 0,
-  "existingSnapshotSha256": "16e53f7897691c46f8ce5bdc30626003ef7d80f824628fd1c2d766eb10415647",
-  "normalizationLimit": "Italian elided l apostrophe retained by current database key convention; no true bare-Italian lookup claim",
-  "rejections": [
+  "requestedTotal": 2000,
+  "selected": 1079,
+  "cards": 6474,
+  "rejectedBeforeImport": [
     {
       "id": "core.n.lexin008_22f3abbceea4f810",
       "word": "abrakadabra",
       "reason": "editor rejected: interjection/colloquial nonsense term rather than standard noun",
+      "provider": "gemini",
+      "file": "000000.json"
+    },
+    {
+      "id": "core.n.lexin008_7c10c9c1114eff41",
+      "word": "absolutism",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "000000.json"
+    },
+    {
+      "id": "core.n.lexin008_9477b7255f643ec2",
+      "word": "acklamation",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "000000.json"
     },
@@ -64,6 +73,13 @@
       "id": "core.n.lexin008_0039ff865682681e",
       "word": "aktning",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "000000.json"
+    },
+    {
+      "id": "core.n.lexin008_da0a31b78ed7471e",
+      "word": "aktualitet",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "000000.json"
     },
@@ -1041,6 +1057,13 @@
       "file": "000260.json"
     },
     {
+      "id": "core.n.lexin008_efde27ab8d2e6eec",
+      "word": "bisittare",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "000260.json"
+    },
+    {
       "id": "core.n.lexin008_d1aacabb2b941428",
       "word": "biskopsstol",
       "reason": "editor rejected: specialised beyond ordinary adult life (ecclesiastical furniture)",
@@ -1051,13 +1074,6 @@
       "id": "core.n.lexin008_99b8d49a2e992608",
       "word": "biträde",
       "reason": "existing or in-batch headword/automatic-language collision",
-      "provider": "gemini",
-      "file": "000260.json"
-    },
-    {
-      "id": "core.n.lexin008_19458ea1cf4e24a5",
-      "word": "bitsocker",
-      "reason": "Italian article/gender conflict",
       "provider": "gemini",
       "file": "000260.json"
     },
@@ -1090,13 +1106,6 @@
       "file": "000260.json"
     },
     {
-      "id": "core.n.lexin008_54d4b0716fdb98c2",
-      "word": "blindskär",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "000260.json"
-    },
-    {
       "id": "core.n.lexin008_2fa26f5ddc680392",
       "word": "blinker",
       "reason": "cross-language ambiguity within concept",
@@ -1114,13 +1123,6 @@
       "id": "core.n.lexin008_9469d27841222a2a",
       "word": "blodbrist",
       "reason": "existing or in-batch headword/automatic-language collision",
-      "provider": "gemini",
-      "file": "000260.json"
-    },
-    {
-      "id": "core.n.lexin008_aa2072645a68f02f",
-      "word": "blodsutgjutelse",
-      "reason": "Italian article/gender conflict",
       "provider": "gemini",
       "file": "000260.json"
     },
@@ -1307,6 +1309,13 @@
       "file": "000420.json"
     },
     {
+      "id": "core.n.lexin008_9da5e8a093b81194",
+      "word": "brännvin",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "000420.json"
+    },
+    {
       "id": "core.n.lexin008_27445c35ca8a920f",
       "word": "bråddjup",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -1415,6 +1424,13 @@
       "id": "core.n.lexin008_e90b98ca1fbbfaac",
       "word": "bålverk",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "000420.json"
+    },
+    {
+      "id": "core.n.lexin008_25e1834473fe8d56",
+      "word": "böckling",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "000420.json"
     },
@@ -1708,7 +1724,7 @@
     {
       "id": "core.n.lexin008_8023d3a0c99d775b",
       "word": "dödläge",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000580.json"
     },
@@ -2618,70 +2634,56 @@
     {
       "id": "core.n.lexin008_2426a108e38c161c",
       "word": "företagsamhet",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "000900.json"
-    },
-    {
-      "id": "core.n.lexin008_b1c7cb3f84bec856",
-      "word": "företal",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_1e4b5ca10c35f187",
       "word": "företeelse",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_db1a4f2a72f0bbb8",
       "word": "företrädare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_b9ee79b070dbccf8",
       "word": "företräde",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_e3b1539879e61457",
       "word": "förfader",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_6d37b395bb94af94",
       "word": "förfall",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_c72acb5d56e26c7c",
       "word": "förfarande",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_94c1de3f948adb4f",
       "word": "författning",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "000900.json"
-    },
-    {
-      "id": "core.n.lexin008_34499e3c1c6ad262",
-      "word": "förfining",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
@@ -2814,14 +2816,14 @@
     {
       "id": "core.n.lexin008_b2c24a06cf5023cc",
       "word": "garderob",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_292f5e5ca047dcaf",
       "word": "garnison",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
@@ -2842,14 +2844,7 @@
     {
       "id": "core.n.lexin008_a253d4114d36488a",
       "word": "generalrepetition",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "000900.json"
-    },
-    {
-      "id": "core.n.lexin008_233d7cd41edf2c5b",
-      "word": "gengångare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
@@ -2870,14 +2865,14 @@
     {
       "id": "core.n.lexin008_d96f4998f247a34a",
       "word": "genomklappning",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "000900.json"
     },
     {
       "id": "core.n.lexin008_5cb3eedce81f1d9d",
       "word": "genomkörare",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "000900.json"
     },
@@ -3029,6 +3024,13 @@
       "file": "000900.json"
     },
     {
+      "id": "core.n.lexin008_7a322a8820b9e9ef",
+      "word": "grävskopa",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "000900.json"
+    },
+    {
       "id": "core.n.lexin008_2d8f21e70787daa5",
       "word": "grönska",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -3074,13 +3076,6 @@
       "id": "core.n.lexin008_18cc8fae2a585b36",
       "word": "handskrift",
       "reason": "existing or in-batch headword/automatic-language collision",
-      "provider": "gemini",
-      "file": "001060.json"
-    },
-    {
-      "id": "core.n.lexin008_6394de402d3217cf",
-      "word": "hantlangare",
-      "reason": "Italian article/gender conflict",
       "provider": "gemini",
       "file": "001060.json"
     },
@@ -3302,13 +3297,6 @@
       "file": "001060.json"
     },
     {
-      "id": "core.n.lexin008_f52efe7a3c7cc576",
-      "word": "gäststuderande",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "001060.json"
-    },
-    {
       "id": "core.n.lexin008_d496ffeebe924f94",
       "word": "herrskap",
       "reason": "editor rejected: archaic or dated form of address/designation",
@@ -3463,6 +3451,13 @@
       "file": "001060.json"
     },
     {
+      "id": "core.n.lexin008_8ed0f657334930e9",
+      "word": "hållpunkt",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001060.json"
+    },
+    {
       "id": "core.n.lexin008_6832f0b16c30d198",
       "word": "hårsmån",
       "reason": "editor rejected: Idiomatic expression component used almost exclusively in fixed phrase 'på en hårsmån'",
@@ -3561,6 +3556,13 @@
       "file": "001060.json"
     },
     {
+      "id": "core.n.lexin008_0c2fd43fb27b23e9",
+      "word": "imperfekt",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001060.json"
+    },
+    {
       "id": "core.n.lexin008_e5f7cc874883f498",
       "word": "imperialism",
       "reason": "cross-language ambiguity within concept",
@@ -3596,16 +3598,9 @@
       "file": "001060.json"
     },
     {
-      "id": "core.n.lexin008_f8390b16b1b200c3",
-      "word": "jordfästning",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
       "id": "core.n.lexin008_3b0a5a4f1d8da65c",
       "word": "jordskalv",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001220.json"
     },
@@ -3619,7 +3614,7 @@
     {
       "id": "core.n.lexin008_4fc6832f0a9193aa",
       "word": "jukebox",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001220.json"
     },
@@ -4079,20 +4074,6 @@
       "file": "001220.json"
     },
     {
-      "id": "core.n.lexin008_66cd58de1625a6e3",
-      "word": "kartotek",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
-      "id": "core.n.lexin008_5b922c263139ce1e",
-      "word": "kassarabatt",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
       "id": "core.n.lexin008_d0eac378387d3ee8",
       "word": "klassmamma",
       "reason": "editor rejected: culture-specific role without direct equivalent in common adult vocabulary",
@@ -4149,13 +4130,6 @@
       "file": "001220.json"
     },
     {
-      "id": "core.n.lexin008_b641714a77b4014a",
-      "word": "kansler",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
       "id": "core.n.lexin008_e74aba1b715b9378",
       "word": "kanslisvenska",
       "reason": "editor rejected: Language-specific concept referring strictly to bureaucratic Swedish bureaucratic jargon.",
@@ -4165,56 +4139,35 @@
     {
       "id": "core.n.lexin008_934ee9011ac71573",
       "word": "kapital",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001220.json"
     },
     {
       "id": "core.n.lexin008_1e7c7461e3a095ad",
       "word": "kapitalist",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
-      "id": "core.n.lexin008_3473f44bb60afda8",
-      "word": "kapning",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001220.json"
     },
     {
       "id": "core.n.lexin008_bbc69b7aa0c8e6d5",
       "word": "kapprum",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
-      "id": "core.n.lexin008_02ec7bceb14e32ca",
-      "word": "kaprifol",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001220.json"
     },
     {
       "id": "core.n.lexin008_6cb25e24d3069dbd",
       "word": "kapuschong",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001220.json"
     },
     {
-      "id": "core.n.lexin008_7c6f43314adfd54b",
-      "word": "karaktärsroll",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001220.json"
-    },
-    {
-      "id": "core.n.lexin008_bd6e34404f49ca1c",
-      "word": "karaktärsskådespelare",
-      "reason": "Persian format",
+      "id": "core.n.lexin008_956bc68fc06c0ffb",
+      "word": "kedjehus",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001220.json"
     },
@@ -4548,6 +4501,13 @@
       "file": "001380.json"
     },
     {
+      "id": "core.n.lexin008_a8e0518da7114728",
+      "word": "kommunikationsmedel",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001380.json"
+    },
+    {
       "id": "core.n.lexin008_689e2788ff6536fe",
       "word": "kommunism",
       "reason": "cross-language ambiguity within concept",
@@ -4744,6 +4704,13 @@
       "file": "001380.json"
     },
     {
+      "id": "core.n.lexin008_6dc0e130a875b899",
+      "word": "krigsmakt",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001380.json"
+    },
+    {
       "id": "core.n.lexin008_a9f4dffaf8972fed",
       "word": "kriminalitet",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -4768,6 +4735,13 @@
       "id": "core.n.lexin008_98ffeff94e412fae",
       "word": "korruption",
       "reason": "cross-language ambiguity within concept",
+      "provider": "gemini",
+      "file": "001380.json"
+    },
+    {
+      "id": "core.n.lexin008_ec5c865c031a881c",
+      "word": "korsdrag",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001380.json"
     },
@@ -4837,7 +4811,7 @@
     {
       "id": "core.n.lexin008_1018a1ff1b1c71d8",
       "word": "krumelur",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001380.json"
     },
@@ -4915,6 +4889,13 @@
       "id": "core.n.lexin008_24fc4528bcfa0287",
       "word": "kverulans",
       "reason": "editor rejected: specialised/rare",
+      "provider": "gemini",
+      "file": "001540.json"
+    },
+    {
+      "id": "core.n.lexin008_cf0b64a8bc0e78f6",
+      "word": "kverulant",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001540.json"
     },
@@ -5024,6 +5005,13 @@
       "file": "001540.json"
     },
     {
+      "id": "core.n.lexin008_4b5a212fad12adc0",
+      "word": "lagerkrans",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001540.json"
+    },
+    {
       "id": "core.n.lexin008_49dc70ed68d0a940",
       "word": "kännetecken",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -5041,6 +5029,13 @@
       "id": "core.n.lexin008_c2ecd56e8fab17f6",
       "word": "kärande",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "001540.json"
+    },
+    {
+      "id": "core.n.lexin008_f9c7b9a31b73b919",
+      "word": "kärnmjölk",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001540.json"
     },
@@ -5157,6 +5152,13 @@
       "file": "001540.json"
     },
     {
+      "id": "core.n.lexin008_93124176844f93c3",
+      "word": "lantmäteri",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001540.json"
+    },
+    {
       "id": "core.n.lexin008_5e63eaa0213b765c",
       "word": "lappsjuka",
       "reason": "missing plural or mass note",
@@ -5199,72 +5201,44 @@
       "file": "001540.json"
     },
     {
-      "id": "core.n.lexin008_5cbb0b1f9b95b618",
-      "word": "lekplats",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
       "id": "core.n.lexin008_dd0deec10b760fbe",
       "word": "lekskola",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_e660a0bd46b7805f",
-      "word": "lektion",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_6ceb13b616a8bf75",
       "word": "lergods",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_2f810cf055d6371d",
       "word": "levebröd",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_d89515cbe7c8b86d",
       "word": "libanes",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_d1778697e0659c6a",
       "word": "liberalism",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_3a7e82584e9dc2ef",
       "word": "lidande",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_3a047ec4af9e868b",
-      "word": "lidelse",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_4c35b45331f64d60",
-      "word": "liggvagn",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001540.json"
     },
@@ -5297,72 +5271,37 @@
       "file": "001540.json"
     },
     {
-      "id": "core.n.lexin008_e7a63f4e3a167b1d",
-      "word": "loggbok",
-      "reason": "Persian format",
+      "id": "core.n.lexin008_ca014b3b5823c85e",
+      "word": "lipsill",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_51680635ee2772fa",
       "word": "logotyp",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_00314b4aa3e402ab",
-      "word": "lojalitet",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_fd9aa1fad481c419",
-      "word": "lokalbedövning",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_f99b402963b0ceda",
       "word": "lokalradio",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_9a0eeb05b5ccf190",
-      "word": "lokalsamtal",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_9835dd60fef99aa6",
-      "word": "lokalvårdare",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001540.json"
-    },
-    {
-      "id": "core.n.lexin008_1303d42eff1241eb",
-      "word": "loppmarknad",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_3017da064de2ea35",
       "word": "lossning",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001540.json"
     },
     {
       "id": "core.n.lexin008_e8cb96128bbae016",
       "word": "lottsedel",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001540.json"
     },
@@ -5433,6 +5372,13 @@
       "id": "core.n.lexin008_9d0aeb189b32767a",
       "word": "länsskolnämnd",
       "reason": "editor rejected: obsolete Swedish regional school board (disbanded 1991)",
+      "provider": "gemini",
+      "file": "001700.json"
+    },
+    {
+      "id": "core.n.lexin008_41550325b5fa6dd5",
+      "word": "länsstyrelse",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001700.json"
     },
@@ -5640,13 +5586,6 @@
       "file": "001700.json"
     },
     {
-      "id": "core.n.lexin008_dbfd8795795a3fb3",
-      "word": "lutfisk",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "001700.json"
-    },
-    {
       "id": "core.n.lexin008_cafee96f68c1d511",
       "word": "lyckokast",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -5748,6 +5687,13 @@
       "id": "core.n.lexin008_1000bbe62cf7087c",
       "word": "mankemang",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "001700.json"
+    },
+    {
+      "id": "core.n.lexin008_1e5a4fdae3f44a6c",
+      "word": "mannagryn",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001700.json"
     },
@@ -5920,6 +5866,13 @@
       "file": "001700.json"
     },
     {
+      "id": "core.n.lexin008_96be83833bf8d573",
+      "word": "majstång",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001700.json"
+    },
+    {
       "id": "core.n.lexin008_449e48fda7218ed2",
       "word": "makadam",
       "reason": "cross-language ambiguity within concept",
@@ -5955,6 +5908,13 @@
       "file": "001700.json"
     },
     {
+      "id": "core.n.lexin008_0850097d60dac1f6",
+      "word": "matvägrare",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001700.json"
+    },
+    {
       "id": "core.n.lexin008_8a64ff09886cc35f",
       "word": "maximum",
       "reason": "cross-language ambiguity within concept",
@@ -5972,13 +5932,6 @@
       "id": "core.n.lexin008_9d7f3929635281e2",
       "word": "millimeterrättvisa",
       "reason": "editor rejected: idiomatic Swedish compound without standard one-to-one equivalent",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_15281282de9d1039",
-      "word": "milstolpe",
-      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6018,72 +5971,44 @@
       "file": "001860.json"
     },
     {
-      "id": "core.n.lexin008_6897040927fa8fdd",
-      "word": "mellanhand",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
       "id": "core.n.lexin008_edaf735cc0725d75",
       "word": "mellanhavande",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_8c5daf3047a05d6d",
-      "word": "mellanmål",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_ab2fbee4fe0f1ebb",
       "word": "mellanrum",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_e6bbcf60247c53e8",
       "word": "mellanskillnad",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_256ad5084a6f23e0",
-      "word": "mellanslag",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_85ef6ebe35347c3c",
-      "word": "mellanspel",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_04f101418eb62055",
       "word": "mellanstadium",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_b6017e13e6edf9d8",
       "word": "mellanting",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_016646b57e5bcd13",
       "word": "meningit",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6112,6 +6037,13 @@
       "id": "core.n.lexin008_2ecc5c0688fb331a",
       "word": "militärtjänst",
       "reason": "missing plural or mass note",
+      "provider": "gemini",
+      "file": "001860.json"
+    },
+    {
+      "id": "core.n.lexin008_dc522bf84465e6a3",
+      "word": "miljard",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6242,44 +6174,23 @@
       "file": "001860.json"
     },
     {
-      "id": "core.n.lexin008_f27dbcc9dd7c41af",
-      "word": "medelålder",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
       "id": "core.n.lexin008_0f1a74f13afd2e61",
       "word": "medgång",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_3e0374dc260290e7",
       "word": "medhjälpare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_29e899f7b4bad103",
       "word": "medhåll",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_769856ad82b6e718",
-      "word": "medicinare",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_38094dd994051b87",
-      "word": "medinflytande",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6293,21 +6204,7 @@
     {
       "id": "core.n.lexin008_6d19d7f84196d56a",
       "word": "meditation",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_a6ff0c5b3308adbe",
-      "word": "medkänsla",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_3fe2ba453ce51d37",
-      "word": "medlidande",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6473,72 +6370,44 @@
       "file": "001860.json"
     },
     {
-      "id": "core.n.lexin008_fb19b3f127fe8764",
-      "word": "motbild",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
       "id": "core.n.lexin008_4594d493f0fdacdc",
       "word": "motivation",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_67ec7aea76b0430c",
       "word": "motorfordon",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_b5a82f281ff1120d",
       "word": "motorförare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_55a52b98f3bc6030",
       "word": "motortrafikled",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_ad8214ce6021b46d",
-      "word": "motstycke",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_db59b031a37f7eeb",
-      "word": "motstånd",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_44009e21e86cdd94",
       "word": "motståndskraft",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
     {
       "id": "core.n.lexin008_f0bbbe5d2f2aafa0",
       "word": "motsvarighet",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "001860.json"
-    },
-    {
-      "id": "core.n.lexin008_73a06102ad5a54b1",
-      "word": "motsägelse",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6580,7 +6449,7 @@
     {
       "id": "core.n.lexin008_087b1f548df35725",
       "word": "morbror",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6588,6 +6457,13 @@
       "id": "core.n.lexin008_16a5786b9b794e9a",
       "word": "morgondag",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "001860.json"
+    },
+    {
+      "id": "core.n.lexin008_f81a611d7e5dface",
+      "word": "morgonsamling",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6627,9 +6503,23 @@
       "file": "001860.json"
     },
     {
+      "id": "core.n.lexin008_bfb1788835c31bf9",
+      "word": "mässling",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "001860.json"
+    },
+    {
       "id": "core.n.lexin008_f08a6c7edd042c08",
       "word": "mästerverk",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "001860.json"
+    },
+    {
+      "id": "core.n.lexin008_78416db8aec43d74",
+      "word": "målbrott",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "001860.json"
     },
@@ -6706,14 +6596,14 @@
     {
       "id": "core.n.lexin008_320a84cc53deb4a7",
       "word": "njutning",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_293df749e900dbe6",
       "word": "nobelpris",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -6727,7 +6617,7 @@
     {
       "id": "core.n.lexin008_3b519ea4d1b31e80",
       "word": "nonchalans",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -6739,30 +6629,16 @@
       "file": "002020.json"
     },
     {
-      "id": "core.n.lexin008_300937003138a535",
-      "word": "norrman",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_488cd7bc430101d7",
-      "word": "norrsken",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
       "id": "core.n.lexin008_6a4cc2bf1f80d947",
       "word": "noshörning",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_8b5c5ae1d1569e02",
       "word": "nostalgi",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -6826,13 +6702,6 @@
       "id": "core.n.lexin008_46bd538eae07cb18",
       "word": "nykterhet",
       "reason": "existing or in-batch headword/automatic-language collision",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_bad1d1ad830f9afa",
-      "word": "narkotika",
-      "reason": "Italian article/gender conflict",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -6977,20 +6846,6 @@
       "file": "002020.json"
     },
     {
-      "id": "core.n.lexin008_d02ec05dad58e15d",
-      "word": "närmande",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_a409d999ce69f717",
-      "word": "näsborre",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
       "id": "core.n.lexin008_7dac4bd685f207ef",
       "word": "näsbränna",
       "reason": "editor rejected: idiomatic or figurative expression meaning rebuff or set-down",
@@ -7000,42 +6855,14 @@
     {
       "id": "core.n.lexin008_34ec7bf6da8baf84",
       "word": "näthinna",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_7fe623aa8320dc28",
       "word": "nätverk",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_cc4e1c72f49baf1f",
-      "word": "nådastöt",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_ba37160d0b2765e4",
-      "word": "nålsöga",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_324b1da92e5b9833",
-      "word": "nödbroms",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_6e5eddd77da426a1",
-      "word": "nödläge",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -7098,35 +6925,28 @@
     {
       "id": "core.n.lexin008_60a6fdb83bd0e584",
       "word": "obestånd",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_44d2f5def6116f99",
       "word": "objektiv",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_3378fd712a8dbfa4",
       "word": "observatorium",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_9769ef78572e91e4",
       "word": "obstruktion",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
-      "id": "core.n.lexin008_e26aeb6bd916d671",
-      "word": "ockupant",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -7138,30 +6958,23 @@
       "file": "002020.json"
     },
     {
-      "id": "core.n.lexin008_eb70748828896b44",
-      "word": "oegentlighet",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002020.json"
-    },
-    {
       "id": "core.n.lexin008_ed6c6376f0509361",
       "word": "offensiv",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_9789904fb95355d3",
       "word": "offentlighet",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
     {
       "id": "core.n.lexin008_9e438952b8a0c7e4",
       "word": "officerare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -7253,6 +7066,13 @@
       "id": "core.n.lexin008_a63a1794020d7de2",
       "word": "olikhet",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002020.json"
+    },
+    {
+      "id": "core.n.lexin008_9e4b446d2235780d",
+      "word": "olycksbarn",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002020.json"
     },
@@ -7357,7 +7177,7 @@
     {
       "id": "core.n.lexin008_45066dd976d8bf0c",
       "word": "paradox",
-      "reason": "cross-language ambiguity within concept",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002180.json"
     },
@@ -7483,7 +7303,7 @@
     {
       "id": "core.n.lexin008_76b1ee582dbd709c",
       "word": "passion",
-      "reason": "cross-language ambiguity within concept",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002180.json"
     },
@@ -7533,6 +7353,13 @@
       "id": "core.n.lexin008_63069f3a638de9fb",
       "word": "palisander",
       "reason": "cross-language ambiguity within concept",
+      "provider": "gemini",
+      "file": "002180.json"
+    },
+    {
+      "id": "core.n.lexin008_96248593377d22e1",
+      "word": "palsternacka",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002180.json"
     },
@@ -7803,6 +7630,13 @@
       "file": "002180.json"
     },
     {
+      "id": "core.n.lexin008_f0b68888f292099a",
+      "word": "persedel",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002180.json"
+    },
+    {
       "id": "core.n.lexin008_857689a99bb12c62",
       "word": "persian",
       "reason": "editor rejected: specialised, obsolete term for Persian lamb fur / karakul",
@@ -7988,6 +7822,13 @@
       "id": "core.n.lexin008_81b6b2c874b78764",
       "word": "potential",
       "reason": "cross-language ambiguity within concept",
+      "provider": "gemini",
+      "file": "002340.json"
+    },
+    {
+      "id": "core.n.lexin008_78f948aab6cbfb76",
+      "word": "potpurri",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002340.json"
     },
@@ -8323,70 +8164,56 @@
     {
       "id": "core.n.lexin008_3fb7d1e9ffeb4e48",
       "word": "proposition",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_4fd004517cde1c0c",
       "word": "prospekt",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_8b7d3c2eff1cbd43",
       "word": "prostata",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_c91d7a2081dc6d69",
       "word": "prostitution",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002340.json"
-    },
-    {
-      "id": "core.n.lexin008_6a3080dfd4fd2c2a",
-      "word": "protegé",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_ec871480d85b1756",
       "word": "protein",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002340.json"
-    },
-    {
-      "id": "core.n.lexin008_edeb7dc764d97cbe",
-      "word": "protektionism",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_27add1fbd61300b8",
       "word": "protestant",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_85ff87adcab02819",
       "word": "protestantism",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002340.json"
     },
     {
       "id": "core.n.lexin008_6c53731c33f0794a",
       "word": "provhytt",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002340.json"
     },
@@ -8443,6 +8270,13 @@
       "id": "core.n.lexin008_1694ff5a356402fd",
       "word": "påsklilja",
       "reason": "cross-language ambiguity within concept",
+      "provider": "gemini",
+      "file": "002340.json"
+    },
+    {
+      "id": "core.n.lexin008_d6fc396b3a179636",
+      "word": "påskrift",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002340.json"
     },
@@ -8573,6 +8407,13 @@
       "file": "002340.json"
     },
     {
+      "id": "core.n.lexin008_5fa10d0b5a780b00",
+      "word": "punktskatt",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002340.json"
+    },
+    {
       "id": "core.n.lexin008_10e3c472f051bb86",
       "word": "punktskrift",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -8610,7 +8451,7 @@
     {
       "id": "core.n.lexin008_be0fb687ec0fce36",
       "word": "påfrestning",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002340.json"
     },
@@ -8650,6 +8491,13 @@
       "file": "002500.json"
     },
     {
+      "id": "core.n.lexin008_1c9acecd9dce91cd",
+      "word": "raffinemang",
+      "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002500.json"
+    },
+    {
       "id": "core.n.lexin008_be37a0acec00a3b8",
       "word": "raggare",
       "reason": "editor rejected: Culture-specific Swedish subculture term without clear equivalents in other languages.",
@@ -8673,7 +8521,7 @@
     {
       "id": "core.n.lexin008_ab039025b72e7a9a",
       "word": "relevans",
-      "reason": "existing or in-batch headword/automatic-language collision",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002500.json"
     },
@@ -8951,6 +8799,13 @@
       "file": "002500.json"
     },
     {
+      "id": "core.n.lexin008_26c91eff01ba54bd",
+      "word": "rappakalja",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002500.json"
+    },
+    {
       "id": "core.n.lexin008_1dd2c7f871f29262",
       "word": "rapping",
       "reason": "editor rejected: variant spelling of rap/rapping, superseded by standard musical loanword",
@@ -9049,15 +8904,15 @@
       "file": "002500.json"
     },
     {
-      "id": "core.n.lexin008_39093ab674798b1b",
-      "word": "riksvapen",
-      "reason": "Italian article/gender conflict",
+      "id": "core.n.lexin008_fde244abf20f89b9",
+      "word": "residens",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002500.json"
     },
     {
-      "id": "core.n.lexin008_fde244abf20f89b9",
-      "word": "residens",
+      "id": "core.n.lexin008_4984ca1eaa2ee898",
+      "word": "resistens",
       "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002500.json"
@@ -9114,42 +8969,21 @@
     {
       "id": "core.n.lexin008_6b643668d8cce9f7",
       "word": "ringfinger",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002500.json"
-    },
-    {
-      "id": "core.n.lexin008_fc8b448bb34e790e",
-      "word": "ringklocka",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002500.json"
     },
     {
       "id": "core.n.lexin008_ff20f5b87aff3827",
       "word": "ringled",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002500.json"
-    },
-    {
-      "id": "core.n.lexin008_a2e2314975a959ca",
-      "word": "ringlek",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002500.json"
-    },
-    {
-      "id": "core.n.lexin008_beaee660bf1053bd",
-      "word": "ringmur",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002500.json"
     },
     {
       "id": "core.n.lexin008_692d8e5d5900db76",
       "word": "ringning",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002500.json"
     },
@@ -9164,20 +8998,6 @@
       "id": "core.n.lexin008_e45f07d1329a8e67",
       "word": "ringtryck",
       "reason": "editor rejected: obsolete or rare compound variant of däcktryck",
-      "provider": "gemini",
-      "file": "002500.json"
-    },
-    {
-      "id": "core.n.lexin008_b65a6cce524958cd",
-      "word": "risgryn",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002500.json"
-    },
-    {
-      "id": "core.n.lexin008_44b4a8f67cb7b2de",
-      "word": "riskgrupp",
-      "reason": "Persian format",
       "provider": "gemini",
       "file": "002500.json"
     },
@@ -9254,6 +9074,20 @@
     {
       "id": "core.n.lexin008_712428e7e51e0e4d",
       "word": "riktnummer",
+      "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002500.json"
+    },
+    {
+      "id": "core.n.lexin008_9d49b5dc95012f62",
+      "word": "rimfrost",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002500.json"
+    },
+    {
+      "id": "core.n.lexin008_1f22016440612a6c",
+      "word": "ringdans",
       "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002500.json"
@@ -9359,28 +9193,28 @@
     {
       "id": "core.n.lexin008_e59d861ff271b76c",
       "word": "rumänska",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_cd18bb2d1425aad5",
       "word": "rundfråga",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_6b76327183885867",
       "word": "rundresa",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_684b71ced8384720",
       "word": "rundskrivelse",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9401,7 +9235,7 @@
     {
       "id": "core.n.lexin008_35249b36b1165f08",
       "word": "rundtur",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9590,7 +9424,7 @@
     {
       "id": "core.n.lexin008_1b04bcea2d9d292e",
       "word": "rutschbana",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9598,13 +9432,6 @@
       "id": "core.n.lexin008_405d6029c17ad24a",
       "word": "ryggskott",
       "reason": "cross-language ambiguity within concept",
-      "provider": "gemini",
-      "file": "002660.json"
-    },
-    {
-      "id": "core.n.lexin008_b3f4c02c5e6086fe",
-      "word": "ryggstöd",
-      "reason": "Italian article/gender conflict",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9618,28 +9445,14 @@
     {
       "id": "core.n.lexin008_5870ac963e9bfe1f",
       "word": "röstning",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002660.json"
-    },
-    {
-      "id": "core.n.lexin008_afbabf760dea1913",
-      "word": "rösträtt",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002660.json"
-    },
-    {
-      "id": "core.n.lexin008_e9cbac99fe80522a",
-      "word": "röstsedel",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_f538976dc08dd365",
       "word": "rötmånad",
-      "reason": "Persian format",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9863,7 +9676,7 @@
     {
       "id": "core.n.lexin008_2afbda04675c8739",
       "word": "sammanstötning",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -9891,70 +9704,56 @@
     {
       "id": "core.n.lexin008_720dbb1759462064",
       "word": "samklang",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_add1d2af921b3680",
       "word": "samkväm",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002660.json"
-    },
-    {
-      "id": "core.n.lexin008_1295aeccf8fb0459",
-      "word": "samkörning",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_4a4dceb3e3e76161",
       "word": "samlevnad",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_ee1b53b3298979ab",
       "word": "samling",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002660.json"
-    },
-    {
-      "id": "core.n.lexin008_d19c4962ea8b967f",
-      "word": "samlingsregering",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_feafeb275d194a17",
       "word": "sammanblandning",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_98ee370a23792204",
       "word": "sammanbrott",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_52fc78e736d9b2d5",
       "word": "sammandrabbning",
-      "reason": "Italian article/gender conflict",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
     {
       "id": "core.n.lexin008_2e8f1a40538940d7",
       "word": "sammandrag",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002660.json"
     },
@@ -10106,6 +9905,13 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_58c203b8efb9df70",
+      "word": "servering",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_2083b9c8f1799ff5",
       "word": "satslära",
       "reason": "editor rejected: Specialised grammatical term not common in daily life",
@@ -10115,42 +9921,28 @@
     {
       "id": "core.n.lexin008_90cdce5cec917dec",
       "word": "satsning",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002820.json"
     },
     {
       "id": "core.n.lexin008_8507ea3e3c883025",
       "word": "saxofon",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002820.json"
     },
     {
       "id": "core.n.lexin008_ee26f4137f88e240",
       "word": "scenario",
-      "reason": "Italian article/gender conflict",
-      "provider": "gemini",
-      "file": "002820.json"
-    },
-    {
-      "id": "core.n.lexin008_cf7c85b2570f5984",
-      "word": "scenografi",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002820.json"
-    },
-    {
-      "id": "core.n.lexin008_56f6256107515055",
-      "word": "scenskola",
-      "reason": "Persian format",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002820.json"
     },
     {
       "id": "core.n.lexin008_3414dd651751d55b",
       "word": "schablon",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002820.json"
     },
@@ -10158,13 +9950,6 @@
       "id": "core.n.lexin008_8b0ba2b4088ff703",
       "word": "schablonavdrag",
       "reason": "editor rejected: Specialised Swedish tax term",
-      "provider": "gemini",
-      "file": "002820.json"
-    },
-    {
-      "id": "core.n.lexin008_4102712d72671bcb",
-      "word": "schabrak",
-      "reason": "Persian format",
       "provider": "gemini",
       "file": "002820.json"
     },
@@ -10204,6 +9989,20 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_40fdab9e5244d328",
+      "word": "schvung",
+      "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
+      "id": "core.n.lexin008_2c43dcd8d59a7558",
+      "word": "schäfer",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_4eba3cb90f31abc3",
       "word": "sediment",
       "reason": "cross-language ambiguity within concept",
@@ -10234,7 +10033,7 @@
     {
       "id": "core.n.lexin008_7c05112240adc48c",
       "word": "sheriff",
-      "reason": "Italian article/gender conflict",
+      "reason": "cross-language ambiguity within concept",
       "provider": "gemini",
       "file": "002820.json"
     },
@@ -10281,6 +10080,13 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_c36cf029c772d94e",
+      "word": "segelflyg",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_d38c2e456748e40d",
       "word": "seglare",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -10323,6 +10129,13 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_18473fd896025b65",
+      "word": "semesterlön",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_66d92f43d75718d1",
       "word": "semifinal",
       "reason": "cross-language ambiguity within concept",
@@ -10354,6 +10167,13 @@
       "id": "core.n.lexin008_c9299285d6a43892",
       "word": "segregation",
       "reason": "missing plural or mass note",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
+      "id": "core.n.lexin008_fb0ff1a61f1e1c1d",
+      "word": "sekelskifte",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002820.json"
     },
@@ -10410,6 +10230,13 @@
       "id": "core.n.lexin008_7dabb2ee9fd2e67c",
       "word": "sjukvård",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
+      "id": "core.n.lexin008_e08f3eb2a0129e23",
+      "word": "sjukvårdare",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002820.json"
     },
@@ -10540,6 +10367,13 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_032f4b8ef4e9cedc",
+      "word": "sittning",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_ee765dee7f65afc0",
       "word": "sittstrejk",
       "reason": "cross-language ambiguity within concept",
@@ -10561,6 +10395,13 @@
       "file": "002820.json"
     },
     {
+      "id": "core.n.lexin008_1d9c0105a5467ab5",
+      "word": "sjukbidrag",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002820.json"
+    },
+    {
       "id": "core.n.lexin008_b519b2f6dce86762",
       "word": "skäggstubb",
       "reason": "Unprocessed German morphology",
@@ -10570,14 +10411,14 @@
     {
       "id": "core.n.lexin008_389182cefa2f0be5",
       "word": "skådespel",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002980.json"
     },
     {
       "id": "core.n.lexin008_48623f4a8125979f",
       "word": "skådespelare",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002980.json"
     },
@@ -10589,23 +10430,16 @@
       "file": "002980.json"
     },
     {
-      "id": "core.n.lexin008_f36dbdd28a6384a5",
-      "word": "skåpbil",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002980.json"
-    },
-    {
       "id": "core.n.lexin008_e2bf3a4d2525ed1a",
       "word": "skönhet",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002980.json"
     },
     {
       "id": "core.n.lexin008_0d73da1bdf0612a9",
       "word": "skönlitteratur",
-      "reason": "Persian format",
+      "reason": "missing plural or mass note",
       "provider": "gemini",
       "file": "002980.json"
     },
@@ -10617,23 +10451,9 @@
       "file": "002980.json"
     },
     {
-      "id": "core.n.lexin008_943a583fb69cf047",
-      "word": "skördetröska",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002980.json"
-    },
-    {
-      "id": "core.n.lexin008_e84f09d37f123d83",
-      "word": "skötare",
-      "reason": "Persian format",
-      "provider": "gemini",
-      "file": "002980.json"
-    },
-    {
       "id": "core.n.lexin008_e07508e77ab746b6",
       "word": "sköterska",
-      "reason": "Persian format",
+      "reason": "existing or in-batch headword/automatic-language collision",
       "provider": "gemini",
       "file": "002980.json"
     },
@@ -10659,9 +10479,23 @@
       "file": "002980.json"
     },
     {
+      "id": "core.n.lexin008_f441cadc3ebf3356",
+      "word": "skohorn",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002980.json"
+    },
+    {
       "id": "core.n.lexin008_2be4e7916f51c4df",
       "word": "skojare",
       "reason": "existing or in-batch headword/automatic-language collision",
+      "provider": "gemini",
+      "file": "002980.json"
+    },
+    {
+      "id": "core.n.lexin008_6f8a4d281fecd127",
+      "word": "skoltermin",
+      "reason": "semantic review: sense mismatch or uncertain translation",
       "provider": "gemini",
       "file": "002980.json"
     },
@@ -10722,6 +10556,13 @@
       "file": "002980.json"
     },
     {
+      "id": "core.n.lexin008_96677d75dd31cef3",
+      "word": "skripta",
+      "reason": "semantic review: sense mismatch or uncertain translation",
+      "provider": "gemini",
+      "file": "002980.json"
+    },
+    {
       "id": "core.n.lexin008_31f0d60738e82de7",
       "word": "småpotatis",
       "reason": "existing or in-batch headword/automatic-language collision",
@@ -10752,121 +10593,151 @@
     {
       "id": "core.n.lexin008_e3e3af93c9f692b4",
       "word": "spagetti",
-      "reason": "cross-language ambiguity within concept",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003300.json"
     },
     {
       "id": "core.n.lexin008_45249c2a14558b14",
       "word": "spektakel",
-      "reason": "Italian article/gender conflict",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_ef620a1876f3e9d8",
       "word": "spekulant",
-      "reason": "cross-language ambiguity within concept",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_ebe9d7bd72b8e97d",
       "word": "spekulation",
-      "reason": "existing or in-batch headword/automatic-language collision",
+      "reason": "provider sample failed semantic quality review",
+      "provider": "groq",
+      "file": "003310.json"
+    },
+    {
+      "id": "core.n.lexin008_bf662bf22611bda1",
+      "word": "spelare",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_bb6abacb669774e5",
       "word": "spelevink",
-      "reason": "existing or in-batch headword/automatic-language collision",
+      "reason": "provider sample failed semantic quality review",
+      "provider": "groq",
+      "file": "003310.json"
+    },
+    {
+      "id": "core.n.lexin008_53f4a02e056cdefb",
+      "word": "spelman",
+      "reason": "provider sample failed semantic quality review",
+      "provider": "groq",
+      "file": "003310.json"
+    },
+    {
+      "id": "core.n.lexin008_a7587f2807fd58e5",
+      "word": "spelregel",
+      "reason": "provider sample failed semantic quality review",
+      "provider": "groq",
+      "file": "003310.json"
+    },
+    {
+      "id": "core.n.lexin008_df22638066f8535e",
+      "word": "spelrum",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_5c9500bdbc7a1f67",
       "word": "spermie",
-      "reason": "Italian article/gender conflict",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_b8dde8397a41c498",
       "word": "spettkaka",
-      "reason": "editor rejected: obscure specialized pastry",
+      "reason": "provider sample failed semantic quality review",
       "provider": "groq",
       "file": "003310.json"
     },
     {
       "id": "core.n.lexin008_eaf20aeaa6597936",
       "word": "strålskydd",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_84457225258fd843",
       "word": "ströbröd",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_be05cafad6ac9f7e",
       "word": "strömbrytare",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_35e6ff16708dcede",
       "word": "strömming",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_c34dea07769c6001",
       "word": "strömning",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_b2148184f5d99028",
       "word": "strösocker",
-      "reason": "Italian article/gender conflict",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_0a591a59e1b7e856",
       "word": "strössel",
-      "reason": "editor rejected: archaic/obsolete",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_2b9ca8688905cde5",
       "word": "strövtåg",
-      "reason": "Persian format",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_cdcb4ff4d29ae306",
       "word": "stuckatur",
-      "reason": "editor rejected: specialized beyond ordinary adult life",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     },
     {
       "id": "core.n.lexin008_e0147566d44c36fd",
       "word": "studentbetyg",
-      "reason": "editor rejected: specialized beyond ordinary adult life",
+      "reason": "provider sample failed semantic quality review",
       "provider": "mistral",
       "file": "003470.json"
     }
-  ]
+  ],
+  "unusedGeneratedReserve": 0,
+  "quarantinedPreviousBatchReused": false
 }

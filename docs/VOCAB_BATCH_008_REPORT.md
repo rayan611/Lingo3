@@ -1,29 +1,33 @@
-# Vocabulary batch 008 — incomplete draft, 2026-11-03
+# Vocabulary batch 008 — part 001, 2026-11-03
 
-Requested: 2,000 additional concepts / 12,000 six-language cards, without duplicates or incomplete entries.
-Status: **NOT IMPORTED, NOT MERGED**. Draft currently contains **1,061 concepts / 6,366 cards**; 939 concepts remain.
+## Scope and status
+Original target: 2,000 additional concepts / 12,000 six-language cards.
+Prepared part 001: **1,079 concepts / 6,474 cards**. Remaining target: **921 concepts**.
+This is an explicitly partial delivery; it does not satisfy the full 2,000-concept target.
+Import, live lookup verification and merge are pending in this preparation commit.
 
-## Evidence
-- 7,273 unused Lexin noun candidates; 2,612 distinct generated proposals; 1,551 excluded.
-- Draft keys checked across every language and part of speech against the earlier bank snapshot, including rejected concepts. Snapshot hash is in staging/batch-008/review.json; the old bank snapshot is deliberately not republished.
-- Swedish forms come from the Lexin source. Italian phonetic articles normalized; article/gender contradictions rejected. Conservative German genitive derivation was applied where absent and requires semantic review.
-- 5,305 morphology and 6,366 expansion schema parses passed, zero failures.
-- Sample review rejected a Spanish small-town headword/example mismatch. The final Mistral sample had serious sense/translation errors and zero accepted concepts; no Mistral drafts entered this checkpoint.
-- Schema validation and duplicate filters do not establish correct meanings or six-language human proofreading. Live collision checks and per-concept lookup verification remain pending.
-- Current database normalization retains Italian l' elision. No claim that every truly article-free Italian query works.
+## Preparation and review
+- 7,273 unused Lexin noun candidates; 2,612 distinct generated proposals, 1,533 excluded.
+- Selected original proposals/source attribution retained in batch-008-part-001-lexin.json. Canonical payload is batch-008-part-001.json; all are nouns in fa/en/sv/de/es/it.
+- All six-language headwords reviewed for sense consistency. Uncertain/mismatched cases were excluded, including billion/trillion, butchered compounds, false-friend translations and several culture-specific terms. This is assistant review, not independent human proofreading.
+- Duplicate/automatic-language collision filtering covers all languages/POS/statuses in the old bank snapshot, including the 260 previously quarantined concepts. A fresh live precheck is required before writing.
+- Swedish inflections come from the Lexin snapshot. Persian irrelevant morphology fields removed. Italian lo mapped to masculine gender il without changing the phonetic article; obvious article/gender contradictions rejected. Missing German genitives use conservative declension rules with reviewed weak-noun and compound-See corrections.
+- 5,395 morphology and 6,474 expansion schema parses pass with zero failures.
+- Standalone rebuild produces byte-identical SHA-256: 8482d0e6c900834fce8adea84677b46095618b779877d8b75fbc07266a6a647a.
+- Focused shared-vocabulary regression checks passed. Exact final commit CI remains pending.
 
-## Blocker
-Gemini generation began returning HTTP 402. Existing Groq backup returned partial output and HTTP 413/429; its request size and concurrency were subsequently reduced. The configured Mistral fallback answered but its quality sample was unacceptable. No credit purchases or top-ups were made.
+## Provider limitation
+Gemini still returns HTTP 402. Smaller sequential GPT-OSS and Qwen requests on the configured Groq backup answered, but sample translations were unacceptable. Mistral samples also failed semantic review. No backup-provider proposals are accepted and no credit purchase/top-up occurred. New generation stopped; do not populate the remaining 921 with poor translations to meet the count.
 
-## Reproduce/check
-`node --import tsx scripts/validate-batch-008.ts data/shared-vocab/staging/batch-008/draft.json /tmp/batch008-failures.json`
+## Verify/rebuild
+`python3 scripts/build-batch-008-part-001.py`
+`node --import tsx scripts/validate-batch-008.ts data/shared-vocab/batch-008-part-001.json /tmp/batch008-failures.json`
 
-The third argument explicitly permits partial-draft validation; final validation without that argument requires exactly 2,000 concepts.
-Selected original proposals and Lexin attribution are retained in source.json; normalized draft in draft.json; exclusions/evidence in review.json.
+Part validation explicitly permits a partial package through the third argument. Final batch validation without it still requires 2,000.
 
-## Production and operations
-No batch-008 database writes, app-source changes, auth/schema/RLS changes, main merge or production deployment were performed. Existing ready-bank baseline was 3,102 concepts / 18,608 cards; it was not remeasured for this checkpoint.
+## Limits and operations
+No app-source/schema/auth/RLS/lookup-policy change. No browser, physical-phone or offline E2E. The existing database key function retains Italian l' elision; tests using shared_bare_word must not be described as truly article-free Italian tests. Source snapshots with missing Swedish plural forms carry a note rather than an invented plural.
 
-Generation used a separate preview-only ops branch. Provider environment targets were restored to production-only after deployment snapshots. No provider values were read or exposed. These preview deployments retain their snapshotted credentials; newest helpers expire 2026-11-04, but older helper versions may not have the expiry. Deleting those temporary deployments is still pending because the available Vercel connector does not expose deployment deletion; do not delete the project or production deployments. Temporary helper source must never merge into main or this data PR.
+Generation helpers live only on ops/vocab-batch008-generator, never on this data branch/main. Provider environment targets were restored to production-only after each preview snapshot, with no provider values read or exposed. Preview snapshots retain credentials. Latest helpers expire 2026-11-04; older helper deployments may lack expiry. Deletion of our temporary preview deployments remains pending: the available connector has no deployment-delete tool. Never delete the project or production deployments.
 
-Next: restore the main provider's usable quota, finish at least 2,000 acceptable concepts, review meaning consistency, recheck against the live bank, dry-run and atomically import the final package, then verify live lookups and report actual totals.
+Next: fetch/hash immutable part JSON, fresh live collision checks, atomic rollback rehearsal, actual import, stored-payload comparison, anonymous/authenticated lookup verification, idempotency, CI and data PR merge. Restore usable primary-provider quota before completing the remaining 921 concepts.
