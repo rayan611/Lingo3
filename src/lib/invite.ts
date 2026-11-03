@@ -10,8 +10,7 @@
 export const INVITE_ORIGIN = 'https://lingo3.com'
 
 /** The default message. {name} is the inviter, {link} their personal link. */
-export const INVITE_TEMPLATE =
-  "Hi! 👋 I've been learning languages with Lingo3. You type one word and it comes back in every language you study, with the article, the forms and an example sentence, then it helps you remember it with smart reviews. It's free, works offline and I think you'd like it.\n\nHere's my personal invite: {link}\n\n— {name}"
+export const INVITE_TEMPLATE =\n  "Hi! 👋 Discover Lingo3 — learn up to 3 languages in your way, with your own vocabulary, grammar notes, stories and smart reviews. Take a look at the showcase: https://lingo3.com/showcase.html\n\nMy personal invitation: {link}\n\n— {name}"
 
 export const INVITE_SUBJECT = '{name} invited you to Lingo3'
 export const INVITE_WELCOME = '{name} invited you to Lingo3'
