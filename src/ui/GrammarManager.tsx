@@ -31,6 +31,7 @@ export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, u
   const [preview, setPreview] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [aiError, setAiError] = useState('')
+  const [aiSuccess, setAiSuccess] = useState('')
   const [aiRuleId, setAiRuleId] = useState<string | null>(null)
   const textarea = useRef<HTMLTextAreaElement>(null)
   const syncRow = useLiveQuery(() => db.meta.get('grammar.syncStatus'), [])
@@ -61,32 +62,38 @@ export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, u
   }
 
   const generateExamples = async (ruleId: string, savedTitle: string, savedExplanation: string, savedLang: Lang, append = false) => {
-    if (!userId || generating) return
-    setGenerating(true); setAiRuleId(ruleId); setAiError('')
+    if (generating) return
+    setGenerating(true); setAiRuleId(ruleId); setAiError(''); setAiSuccess('')
     try {
       const { data } = await supabase().auth.getSession()
       const token = data.session?.access_token
-      if (!token) return
+      if (!token) throw new Error('Please sign in again to generate AI examples.')
       const response = await fetch('/api/grammar-examples', {
         method: 'POST',
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
         body: JSON.stringify({ lang: savedLang, nativeLang, title: savedTitle, explanation: savedExplanation }),
       })
-      if (!response.ok) return
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null) as { error?: string } | null
+        throw new Error(payload?.error || `AI request failed (HTTP ${response.status}).`)
+      }
       const dataJson: unknown = await response.json()
       const proposed = (dataJson as { examples?: Array<{ sentence: string; translation: string }> }).examples
-      if (!Array.isArray(proposed) || proposed.length < 2) return
+      if (!Array.isArray(proposed) || proposed.length < 2) throw new Error('AI returned no usable examples. Please retry.')
       const current = await db.grammarRules.get(ruleId)
       // Never overwrite an edit, deletion, or manually authored examples while AI is running.
-      if (!current || current.deletedAt || current.title !== savedTitle || current.explanation !== savedExplanation || (!append && current.examples?.length)) return
+      if (!current || current.deletedAt) throw new Error('The grammar rule no longer exists.')
+      if (current.title !== savedTitle || current.explanation !== savedExplanation) throw new Error('The rule changed while AI was generating. Please retry.')
+      if (!append && current.examples?.length) return
       const accepted = proposed.slice(0, 5).filter(e => typeof e.sentence === 'string' && typeof e.translation === 'string' && e.sentence.trim() && e.translation.trim()).map(e => ({
         id: crypto.randomUUID(), sentence: e.sentence.trim(), translation: e.translation.trim(), translationLang: nativeLang,
       }))
-      if (accepted.length < 2) return
+      if (accepted.length < 2) throw new Error('AI returned incomplete examples. Please retry.')
       await updateGrammarRule(ruleId, { examples: append ? [...(current.examples ?? []), ...accepted] : accepted })
+      setAiSuccess(`${accepted.length} examples added to ${current.title}.`)
       void onSync().catch(() => {})
-    } catch {
-      setAiError('AI examples could not be generated. Please retry.')
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : 'AI examples could not be generated. Please retry.')
     } finally { setGenerating(false); setAiRuleId(null) }
   }
 
@@ -121,7 +128,8 @@ export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, u
     {status && status.conflicts > 0 && <p role="alert">Conflicting edits were kept as separate copies.</p>}
     {userId && <button type="button" disabled={syncing} onClick={() => void onSync()}>Sync now</button>}
     {error && <p role="alert">{error}</p>}
-    {aiError && <p role="alert">{aiError}</p>}
+    {aiError && <p role="alert" style={{ color: 'var(--danger, #b42318)' }}>{aiError}</p>}
+    {aiSuccess && <p role="status">{aiSuccess}</p>}
     <form onSubmit={submitSection} style={{ margin: '18px 0', padding: 16, border: '1px solid var(--border, #aaa)', borderRadius: 12 }}>
       <h3>Sections in {LANG_NAMES[lang]}</h3>
       <label>New section <input style={fieldStyle} value={sectionTitle} onChange={e => setSectionTitle(e.target.value)} required maxLength={120} placeholder="e.g. Verbs, Sentence structure, Pronouns" /></label>
@@ -158,7 +166,7 @@ export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, u
         <button type="button" onClick={() => setExamples(old => old.filter(x => x.id !== example.id))}>Remove example</button>
       </div>)}
       <button type="button" style={buttonStyle} onClick={() => setExamples(old => [...old, { id: crypto.randomUUID(), sentence: '', translation: '', translationLang: nativeLang }])}>+ Add example</button>
-      {editingId && <button type="button" disabled={generating} onClick={() => { const rule = rules.find(r => r.id === editingId); if (rule) void generateExamples(rule.id, rule.title, rule.explanation, rule.lang, true) }}>{generating && aiRuleId === editingId ? 'Generating…' : 'Generate more with AI'}</button>}
+      {editingId && <button type="button" disabled={generating || !userId} onClick={() => { const rule = rules.find(r => r.id === editingId); if (rule) void generateExamples(rule.id, rule.title, rule.explanation, rule.lang, true) }}>{generating && aiRuleId === editingId ? 'Generating…' : 'Generate more with AI'}</button>}
       <div><button type="submit" style={buttonStyle}>{editingId ? 'Save changes' : 'Save rule'}</button>
       {editingId && <button type="button" onClick={reset}>Cancel edit</button>}</div>
     </form>
