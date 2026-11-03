@@ -3835,3 +3835,7 @@ input[type='radio']:focus { box-shadow: none; }
 @media (max-width: 340px) {
   .training-center-activities { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Persian and Arabic readability: scoped to RTL language content. */
+:where([lang="fa"],[lang="ar"],[dir="rtl"]) {font-family:"Vazirmatn","Noto Naskh Arabic",Tahoma,sans-serif;line-height:1.85;}
+:where([lang="fa"],[lang="ar"],[dir="rtl"]) :is(input,textarea,select,button){font-family:inherit;}
