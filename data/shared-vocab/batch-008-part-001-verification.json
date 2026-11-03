@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-03",
+  "project": "Lingo3",
+  "databaseProject": "vfximbxcxczntqywdryd",
+  "requestedConcepts": 2000,
+  "deliveredPart001": {
+    "concepts": 1079,
+    "cards": 6474,
+    "remainingConcepts": 921
+  },
+  "payload": {
+    "commit": "e59902bf442c3b7c99186144d05d2ebe69d69cbf",
+    "file": "data/shared-vocab/batch-008-part-001.json",
+    "requestId": 18,
+    "httpStatus": 200,
+    "sha256": "8482d0e6c900834fce8adea84677b46095618b779877d8b75fbc07266a6a647a",
+    "offlineRebuildIdentical": true
+  },
+  "precheck": {
+    "existingIds": 0,
+    "crossLanguageOldCollisions": 0,
+    "inBatchCollisions": 0
+  },
+  "rollbackRehearsal": {
+    "inserted": 1079,
+    "cards": 6474,
+    "rolledBack": true,
+    "batchConceptsAfterRollback": 0,
+    "readyConceptsAfterRollback": 3102
+  },
+  "committedImport": {
+    "inserted": 1079,
+    "alreadyPresent": 0,
+    "clashes": [],
+    "comparedCards": 6474,
+    "payloadMismatches": 0
+  },
+  "idempotency": {
+    "inserted": 0,
+    "alreadyPresent": 1079,
+    "clashes": []
+  },
+  "bank": {
+    "beforeReadyConcepts": 3102,
+    "beforeReadyCards": 18608,
+    "afterReadyConcepts": 4181,
+    "afterReadyCards": 25082,
+    "duplicateGroups": 0,
+    "emptyExamples": 0
+  },
+  "schemaValidation": {
+    "morphology": 5395,
+    "expansions": 6474,
+    "failures": 0,
+    "liveRpcSampleParses": 60,
+    "liveRpcSampleFailures": 0
+  },
+  "lookupRounds": [
+    {
+      "role": "anon",
+      "mode": "automatic full headers",
+      "tested": 6474,
+      "passed": 6474,
+      "failed": 0
+    },
+    {
+      "role": "anon",
+      "mode": "automatic shared_bare_word",
+      "tested": 6474,
+      "passed": 6474,
+      "failed": 0
+    },
+    {
+      "role": "anon",
+      "mode": "explicit-language full headers",
+      "tested": 6474,
+      "passed": 6474,
+      "failed": 0
+    },
+    {
+      "role": "authenticated",
+      "mode": "automatic full headers",
+      "tested": 6474,
+      "passed": 6474,
+      "failed": 0
+    },
+    {
+      "role": "authenticated",
+      "mode": "automatic shared_bare_word",
+      "tested": 6474,
+      "passed": 6474,
+      "failed": 0
+    }
+  ],
+  "lookupCorrectness": "Six returned entries and returned Swedish headword equals expected concept; 1,079 tests per language per round.",
+  "localRegressionScripts": {
+    "passed": 9,
+    "failed": 0
+  },
+  "ci": {
+    "preparationCommit": "e59902bf442c3b7c99186144d05d2ebe69d69cbf",
+    "run": 41637538221,
+    "conclusion": "success",
+    "finalDocumentationCommit": "See PR #34 final checks"
+  },
+  "limits": [
+    "Original 2,000-concept target remains incomplete by 921 because primary provider returns HTTP 402 and backup samples failed semantic quality review.",
+    "Not independent six-language human proofreading.",
+    "shared_bare_word retains Italian l' elision; no claim all truly article-free Italian lookups pass.",
+    "No browser/physical-phone/offline E2E or app-source/schema/auth/RLS changes.",
+    "Temporary ops preview deployment deletion remains pending; all provider targets restored production-only."
+  ]
+}
