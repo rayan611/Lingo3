@@ -101,6 +101,21 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
     onOpen()
   }
 
+  useEffect(() => {
+    const onShowcaseMessage = (event: MessageEvent) => {
+      if (event.origin === window.location.origin && event.data?.type === 'showcase-open' && event.data?.app === 'Lingo3') open()
+    }
+    window.addEventListener('message', onShowcaseMessage)
+    return () => window.removeEventListener('message', onShowcaseMessage)
+  }, [onOpen])
+
+  return (
+    <main style={{ minHeight: '100vh', background: '#0c1021' }}>
+      {inviter && <p style={{ margin: 0, padding: '12px 20px', textAlign: 'center', color: 'white', background: '#302447' }}>💌 {fillInvite(INVITE_WELCOME, { name: inviter })}</p>}
+      <iframe title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: '100vh', minHeight: 700, border: 0 }} />
+    </main>
+  )
+
   return (
     <div className="lx">
       <div className="lx-sky" aria-hidden="true" />
