@@ -1,3 +1,9 @@
+## 2026-11-03 — Vocabulary batch 008 checkpoint (INCOMPLETE)
+
+Branch `data/lexin-2000-batch-008`. Saved draft 1,061 concepts / 6,366 six-language cards; target 2,000 remains incomplete. 5,305 morphology and 6,366 expansion schema parses pass, zero failures. No batch-008 database writes, merge or production app deployment. Gemini HTTP 402; Groq rate/size limits; Mistral sample rejected for semantic errors. See `docs/VOCAB_BATCH_008_REPORT.md` and `data/shared-vocab/staging/batch-008/`. Need provider quota restoration, remaining 939 concepts, semantic review, fresh live duplicate check and atomic final import. Temporary ops-preview deployment cleanup remains pending; never merge its API helper. Existing handoffs preserved below.
+
+---
+
 ## 2026-11-03 — Showcase CSP release follow-up
 
 Fixed same-origin showcase iframe permissions in vercel.json: X-Frame-Options SAMEORIGIN, frame-ancestors 'self', frame-src 'self' plus Cloudflare. Latest source fix 2d685aafb04a846c6d7daf25035107cc83508400 on main. Production deployment dpl_373Shtoromk6UrA1KWwuBSFpM5UA triggered manually because main auto deployment is disabled; BUILDING at last inspection. Previous production bcebc3e READY. No full repository test suite or authenticated browser QA was executed in this session; do not mark functional acceptance. Next: confirm deployment READY, run npm test and npm run build in CI, test language selection, Settings invite, showcase entry and mobile flow.
