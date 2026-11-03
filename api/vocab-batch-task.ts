@@ -11,11 +11,11 @@ type Res={statusCode:number;setHeader:(k:string,v:string)=>void;end:(body:string
 function send(res:Res,status:number,value:unknown){res.statusCode=status;res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(value))}
 async function generate(items:Candidate[],start:number){
  const prompt=INSTRUCTIONS+'\nSOURCE NOUNS:\n'+JSON.stringify(items);const errors:string[]=[];let stage='fetch';let finish=''
- for(const provider of ['gemini','groq'] as const){
-  const key=provider==='gemini'?process.env.GEMINI_API_KEY:process.env.GROQ_API_KEY;if(!key)continue
+ for(const provider of ['gemini','groq','mistral'] as const){
+  const key=provider==='gemini'?process.env.GEMINI_API_KEY:provider==='groq'?process.env.GROQ_API_KEY:process.env.MISTRAL_API_KEY;if(!key)continue
   try{
-   const signal=AbortSignal.timeout(provider==='gemini'?110000:30000)
-   const response=provider==='gemini'?await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODELS.gemini}:generateContent`,{method:'POST',signal,headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.15,maxOutputTokens:32000,thinkingConfig:{thinkingLevel:'low'},responseMimeType:'application/json',responseSchema:OUTPUT_SCHEMA}})}):await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',signal,headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:DEFAULT_MODELS.groq,messages:[{role:'user',content:prompt}],response_format:{type:'json_object'},max_completion_tokens:32000,temperature:0.15})})
+   const signal=AbortSignal.timeout(provider==='gemini'?110000:90000)
+   const response=provider==='gemini'?await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODELS.gemini}:generateContent`,{method:'POST',signal,headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.15,maxOutputTokens:32000,thinkingConfig:{thinkingLevel:'low'},responseMimeType:'application/json',responseSchema:OUTPUT_SCHEMA}})}):await fetch(provider==='groq'?'https://api.groq.com/openai/v1/chat/completions':'https://api.mistral.ai/v1/chat/completions',{method:'POST',signal,headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:provider==='groq'?DEFAULT_MODELS.groq:(process.env.MISTRAL_MODEL??'ministral-14b-latest'),messages:[{role:'user',content:prompt}],response_format:{type:'json_object'},...(provider==='groq'?{max_completion_tokens:8000,reasoning_effort:'low'}:{max_tokens:16000}),temperature:0.15})})
    if(!response.ok){errors.push(provider+':'+response.status);continue}
    stage='read';const data:any=await response.json();finish=String(data.candidates?.[0]?.finishReason??'');const text=provider==='gemini'?data.candidates?.[0]?.content?.parts?.filter((p:{thought?:boolean;text?:string})=>!p.thought).map((p:{text?:string})=>p.text??'').join(''):data.choices?.[0]?.message?.content
    stage='parse';let candidate=String(text).trim().replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,'').trim();const first=candidate.indexOf('{'),last=candidate.lastIndexOf('}');if(first>=0&&last>=first)candidate=candidate.slice(first,last+1);const parsed=JSON.parse(candidate);if(!Array.isArray(parsed.concepts))throw new Error('invalid_shape')
@@ -29,10 +29,10 @@ export default async function handler(req:Req,res:Res){
  if(process.env.VERCEL_ENV!=='preview'||req.method!=='GET'||Date.now()>1793779200000)return send(res,404,{error:'Not found'})
  const url=new URL(req.url??'','https://local');const token=url.searchParams.get('t')??''
  if(!timingSafeEqual(createHash('sha256').update(token).digest(),Buffer.from(AUTH_DIGEST,'hex')))return send(res,404,{error:'Not found'})
- if(url.searchParams.get('mode')==='status')return send(res,200,{pool:POOL.length,gemini:!!process.env.GEMINI_API_KEY,groq:!!process.env.GROQ_API_KEY})
+ if(url.searchParams.get('mode')==='status')return send(res,200,{pool:POOL.length,gemini:!!process.env.GEMINI_API_KEY,groq:!!process.env.GROQ_API_KEY,mistral:!!process.env.MISTRAL_API_KEY})
  const start=Number(url.searchParams.get('start')),count=Number(url.searchParams.get('count')??'20')
  if(!Number.isInteger(start)||start<0||!Number.isInteger(count)||count<1||count>160||start>=POOL.length)return send(res,400,{error:'Invalid range'})
  const chunks:Array<{start:number;items:Candidate[]}>=[];for(let i=start;i<Math.min(start+count,POOL.length);i+=10)chunks.push({start:i,items:POOL.slice(i,Math.min(i+10,start+count,POOL.length))})
- const groups:Awaited<ReturnType<typeof generate>>[]=[];let cursor=0;await Promise.all(Array.from({length:Math.min(8,chunks.length)},async()=>{while(cursor<chunks.length){const x=chunks[cursor++];groups.push(await generate(x.items,x.start))}}));const concepts=groups.flatMap(x=>x.concepts)
- return send(res,concepts.length?200:502,{provider:'gemini',start,requested:count,count:concepts.length,concepts,errors:groups.filter(x=>x.errors).map(x=>({start:x.start,errors:x.errors}))})
+ const groups:Awaited<ReturnType<typeof generate>>[]=[];let cursor=0;await Promise.all(Array.from({length:Math.min(2,chunks.length)},async()=>{while(cursor<chunks.length){const x=chunks[cursor++];groups.push(await generate(x.items,x.start))}}));const concepts=groups.flatMap(x=>x.concepts)
+ return send(res,concepts.length?200:502,{provider:process.env.GEMINI_API_KEY?'gemini':process.env.GROQ_API_KEY?'groq':'mistral',start,requested:count,count:concepts.length,concepts,errors:groups.filter(x=>x.errors).map(x=>({start:x.start,errors:x.errors}))})
 }
