@@ -89,7 +89,9 @@ export function GrammarManager({ lang: initialLang, learningLangs, nativeLang, u
         id: crypto.randomUUID(), sentence: e.sentence.trim(), translation: e.translation.trim(), translationLang: nativeLang,
       }))
       if (accepted.length < 2) throw new Error('AI returned incomplete examples. Please retry.')
-      await updateGrammarRule(ruleId, { examples: append ? [...(current.examples ?? []), ...accepted] : accepted })
+      const merged = append ? [...(current.examples ?? []), ...accepted] : accepted
+      await updateGrammarRule(ruleId, { examples: merged })
+      if (editingId === ruleId) setExamples(merged)
       setAiSuccess(`${accepted.length} examples added to ${current.title}.`)
       void onSync().catch(() => {})
     } catch (err) {
