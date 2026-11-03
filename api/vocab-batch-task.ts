@@ -31,7 +31,7 @@ export default async function handler(req:Req,res:Res){
  if(url.searchParams.get('mode')==='status')return send(res,200,{pool:POOL.length,gemini:!!process.env.GEMINI_API_KEY,groq:!!process.env.GROQ_API_KEY})
  const start=Number(url.searchParams.get('start')),count=Number(url.searchParams.get('count')??'20')
  if(!Number.isInteger(start)||start<0||!Number.isInteger(count)||count<1||count>160||start>=POOL.length)return send(res,400,{error:'Invalid range'})
- const chunks=[];for(let i=start;i<Math.min(start+count,POOL.length);i+=10)chunks.push({start:i,items:POOL.slice(i,Math.min(i+10,start+count,POOL.length))})
+ const chunks:Array<{start:number;items:Candidate[]}>=[];for(let i=start;i<Math.min(start+count,POOL.length);i+=10)chunks.push({start:i,items:POOL.slice(i,Math.min(i+10,start+count,POOL.length))})
  const groups:Awaited<ReturnType<typeof generate>>[]=[];let cursor=0;await Promise.all(Array.from({length:Math.min(8,chunks.length)},async()=>{while(cursor<chunks.length){const x=chunks[cursor++];groups.push(await generate(x.items,x.start))}}));const concepts=groups.flatMap(x=>x.concepts)
  return send(res,concepts.length?200:502,{provider:'gemini',start,requested:count,count:concepts.length,concepts,errors:groups.filter(x=>x.errors).map(x=>({start:x.start,errors:x.errors}))})
 }
