@@ -193,7 +193,7 @@ export function Browse({ settings }: Props) {
       <WordLists settings={settings} />
 
       <div className="panel">
-        <h2>Your words</h2>
+        <h2>My Word List</h2>
         {/* Which lists to show, as a row of chips rather than a menu: the
             words below used to carry their list's name on every row, which
             pushed redo/pause/delete out of line. The name now lives here,
