@@ -1,8 +1,8 @@
 ## 2026-11-04 — Training Center word list and readability
 
 Small UI update on main: moved My words from primary navigation into Training Center as My Word List; /words remains supported, with Training Center active state, return link and sibling navigation. Increased activity title text to 1.1rem, descriptions to 0.9rem and sibling buttons to 1rem. No data, auth or API changes.
-Checks: production build (TypeScript + Vite/PWA) and git diff --check; see deployment follow-up for final release evidence. Signed-in visual/device QA not performed.
-Next: deploy this main commit and verify deployment SHA/status.
+Checks: production build (TypeScript + Vite/PWA), git diff --check and focused navigation assertions passed. Signed-in visual/device QA not performed.
+Released main commit f47b8a05b33ecc4bcdf26e158e69ddae6850affd. Production deployment dpl_EiBtqkJfvzS427Bmfjt58yQqSHof is READY with matching SHA and lingo3.com/www aliases; live entry returns HTTP 200. No remaining implementation. Optional signed-in visual/device acceptance.
 
 ---
 
