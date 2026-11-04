@@ -1,7 +1,7 @@
 ## 2026-11-04 — Showcase navigation links
 
-Branch: `fix/showcase-navigation`. Added same-tab Home / Showcase anchors to the sign-in intro and Settings → Help & About → About, both targeting `/showcase.html`. Existing first-visit/session/installed-app entry behavior unchanged. No auth, database or routing changes.
-Checks: `npm run build` (TypeScript + production/PWA build) and `git diff --check` pass. Reviewed both anchors and existing standalone showcase Open app return to `/`. Signed-in browser/device QA not performed. Merge and production release pending; next: merge this small navigation change, deploy main and verify deployed commit/assets.
+Implemented from `fix/showcase-navigation`; released main commit `23ddb01039f773763b454174f8e0ab78ec962e09`. Added same-tab Home / Showcase anchors to the sign-in intro and Settings → Help & About → About, both targeting `/showcase.html`. Existing first-visit/session/installed-app entry behavior unchanged. No auth, database or routing changes.
+Checks: `npm run build` (TypeScript + production/PWA build) and `git diff --check` pass. Reviewed both anchors and existing standalone showcase Open app return to `/`. Signed-in browser/device QA not performed. Production deployment `dpl_4bjVzGz6gynr4q2EvWpyAdHMi2LD` is READY with matching commit and lingo3.com/www aliases. HTTP retrieval of the live entry and Settings JS confirms both Home / Showcase links; showcase.html returns HTTP 200. No remaining implementation; optional signed-in visual/device acceptance.
 
 ---
 
