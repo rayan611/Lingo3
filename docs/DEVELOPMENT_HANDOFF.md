@@ -1,3 +1,10 @@
+## 2026-11-04 — Showcase navigation links
+
+Branch: `fix/showcase-navigation`. Added same-tab Home / Showcase anchors to the sign-in intro and Settings → Help & About → About, both targeting `/showcase.html`. Existing first-visit/session/installed-app entry behavior unchanged. No auth, database or routing changes.
+Checks: `npm run build` (TypeScript + production/PWA build) and `git diff --check` pass. Reviewed both anchors and existing standalone showcase Open app return to `/`. Signed-in browser/device QA not performed. Merge and production release pending; next: merge this small navigation change, deploy main and verify deployed commit/assets.
+
+---
+
 ## 2026-11-03 — Vocabulary batch 008 part 001 imported and verified
 
 Imported **1,079 new concepts / 6,474 cards** atomically after successful rollback rehearsal; zero existing IDs/collisions/skips. Target 2,000 remains incomplete by **921** because Gemini still returns HTTP 402; backup samples failed semantic review and none were accepted. PR #34 / `data/lexin-2000-batch-008`. Payload commit e59902bf442c3b7c99186144d05d2ebe69d69cbf, pg_net request 18, matching SHA-256 8482d0e6c900834fce8adea84677b46095618b779877d8b75fbc07266a6a647a. Stored-card comparison 6,474/6,474 exact; repeat import 0 inserts / 1,079 existing. Active bank now **4,181 concepts / 25,082 cards**, zero duplicate groups/empty examples.

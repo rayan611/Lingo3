@@ -64,6 +64,9 @@ export function SignIn() {
     <div className="app">
       <div className="signin">
         <header className="signin-intro">
+          <p>
+            <a className="link" href="/showcase.html">Home / Showcase</a>
+          </p>
           <h1 className="signin-brand">Lingo3</h1>
           <p className="signin-tagline">
             A place to make your own learning material and study up to three

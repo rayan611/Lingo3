@@ -636,6 +636,9 @@ export function SettingsPanel({
         <h3>All of it, step by step</h3>
         <HowTo />
         <h3>About</h3>
+        <p>
+          <a className="link" href="/showcase.html">Home / Showcase</a>
+        </p>
         <p className="muted small">
           Lingo3 is built and run by one person learning Swedish and German in
           Sweden. Your vocabulary is yours: nothing is sold, there are no
