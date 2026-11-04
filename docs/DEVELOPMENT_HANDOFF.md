@@ -1,3 +1,11 @@
+## 2026-11-04 — Training clarity and mobile navigation
+
+Renamed free Review to Word Practice with explicit schedule-neutral description; retained /review. Due badge now appears only on Recall test. Home wording/add-word entry retained; Word Practice Home now opens the actual add-word home. Mobile sibling navigation uses two columns with 44px minimum button height and wrapping; activity spacing tightened without reducing label size. No schema/auth/scheduling changes.
+Checks: TypeScript + production/PWA build, scheduling and query regressions (node --import tsx), git diff --check pass. Signed-in mobile/device/AI E2E unavailable because browser session is signed out; no production auth bypass attempted.
+Deployment: pending exact source commit publication; follow-up will record deployment evidence.
+
+---
+
 ## 2026-11-04 — Training Center word list and readability
 
 Small UI update on main: moved My words from primary navigation into Training Center as My Word List; /words remains supported, with Training Center active state, return link and sibling navigation. Increased activity title text to 1.1rem, descriptions to 0.9rem and sibling buttons to 1rem. No data, auth or API changes.

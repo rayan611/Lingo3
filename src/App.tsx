@@ -78,7 +78,7 @@ function isTab(value: unknown): value is Tab {
 /**
  * Each screen's address, named after the tile the learner sees — so the
  * `review` tab (tile "Recall test") lives at /recall and the `training` tab
- * (tile "Review") at /review. A refresh stays on the screen, and a screen can
+ * (tile "Word Practice") at /review. A refresh stays on the screen, and a screen can
  * be bookmarked or linked. Every path is served index.html already.
  */
 const TAB_PATHS: Record<Tab, string> = {
@@ -561,7 +561,7 @@ function Workspace({
             scrolling past them. */}
         <HomeTiles set={goTab} due={due} active={tab} />
 
-        {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} due={due} />}
+        {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
 
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
@@ -571,7 +571,7 @@ function Workspace({
               <ReviewTab settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'training' && (
-              <Training settings={settings} onExit={() => goTab('training-center')} />
+              <Training settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'read' && <StoryMode settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} />}
@@ -661,7 +661,7 @@ function HomeTiles({
       <Tile id="add" set={set} active={active} icon={<IconAdd />}>
         Add a word
       </Tile>
-      <Tile id="training-center" set={set} active={isTrainingArea(active) ? 'training-center' : active} badge={due} icon={<IconTraining />}>
+      <Tile id="training-center" set={set} active={isTrainingArea(active) ? 'training-center' : active} icon={<IconTraining />}>
         Training Center
       </Tile>
       <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
@@ -686,10 +686,10 @@ const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React
   { id: 'browse', title: 'My Word List', detail: 'Manage your saved words and lists.', icon: <IconWords /> },
   { id: 'grammar', title: 'Grammar', detail: 'Organize your grammar notes and rules.', icon: <IconGrammar /> },
   { id: 'read', title: 'Read a story', detail: 'Practice vocabulary through stories.', icon: <IconReading /> },
-  { id: 'training', title: 'Review', detail: 'Browse and practice your words.', icon: <IconTraining /> },
+  { id: 'training', title: 'Word Practice', detail: 'Explore words without changing your review schedule.', icon: <IconTraining /> },
 ]
 
-function TrainingCenter({ set, active }: { set: (tab: Tab) => void; active: Tab; due: number }) {
+function TrainingCenter({ set, active }: { set: (tab: Tab) => void; active: Tab }) {
   if (active !== 'training-center') return (
     <div className="training-center-navigation">
       <button type="button" className="link" onClick={() => set('training-center')}>← Training Center</button>
