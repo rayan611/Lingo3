@@ -130,7 +130,7 @@ export function StoryMode({ settings }: { settings: Settings }) {
   return (
     <div className="stack">
       <div className="panel">
-        <h2>Reading</h2>
+        <h2>Read a story</h2>
         <p className="muted small">
           A short text written from words you have already studied. You have{' '}
           {wordCount} in {LANG_NAMES[lang]}

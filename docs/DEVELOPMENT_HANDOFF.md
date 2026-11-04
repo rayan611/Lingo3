@@ -1,3 +1,12 @@
+## 2026-11-04 — Readability and grammar authoring fixes
+
+Branch: fix/readability-grammar-drafts. All five review items implemented: Word Practice instructional text now 15.2–16px, labels >=12px, mobile primary labels 14px; incomplete examples produce numbered validation errors rather than disappearing; account/language-scoped tab drafts restore across navigation/reload; sections support rename and protected empty-only soft deletion; My Word List/Read a story/Grammar headings and grammar theme tokens aligned. Rule creation and section deletion share an atomic transaction to prevent orphan rules. Nonempty sections/child sections are never cascaded. Drafts are tab-local, not cloud-synced; unavailable tab storage falls back to memory. No database migration, auth/RLS or review schedule changes.
+
+Verification: production TypeScript/Vite/PWA build passes; all ten regression scripts pass via node --import tsx, including new grammar-authoring coverage (partial examples retained/rejected, atomic failed update, section rename/protected deletion, soft deletion, tab reload and account/language draft isolation). git diff --check passes. Signed-in browser, mobile and real provider E2E remain unverified.
+Release: awaiting PR/merge and exact-SHA production deployment. Rollback: revert application commit; no rows are deleted by this release itself.
+
+---
+
 ## 2026-11-04 — Training clarity and mobile navigation
 
 Renamed free Review to Word Practice with explicit schedule-neutral description; retained /review. Due badge now appears only on Recall test. Home wording/add-word entry retained; Word Practice Home now opens the actual add-word home. Mobile sibling navigation uses two columns with 44px minimum button height and wrapping; activity spacing tightened without reducing label size. No schema/auth/scheduling changes.
