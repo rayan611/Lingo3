@@ -46,17 +46,20 @@ const required = (s: string, field: string) => {
 }
 
 export async function addGrammarSection(lang: Lang, title: string, parentId?: string) {
-  if (parentId) {
-    const parent = await db.grammarSections.get(parentId)
-    if (!parent || parent.deletedAt || parent.lang !== lang) throw new Error('Invalid parent section')
-  }
-  const now = Date.now()
-  const section: GrammarSection = {
-    id: newId(), lang, title: required(title, 'Title'), parentId,
-    sortOrder: now, createdAt: now, updatedAt: now,
-  }
-  await db.grammarSections.add(section)
-  return section
+  const database = db
+  return database.transaction('rw', database.grammarSections, async () => {
+    if (parentId) {
+      const parent = await database.grammarSections.get(parentId)
+      if (!parent || parent.deletedAt || parent.lang !== lang) throw new Error('Invalid parent section')
+    }
+    const now = Date.now()
+    const section: GrammarSection = {
+      id: newId(), lang, title: required(title, 'Title'), parentId,
+      sortOrder: now, createdAt: now, updatedAt: now,
+    }
+    await database.grammarSections.add(section)
+    return section
+  })
 }
 
 /** Empty-only soft deletion avoids hiding rules or child sections. */
