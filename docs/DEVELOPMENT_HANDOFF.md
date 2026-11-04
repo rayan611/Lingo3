@@ -2,7 +2,7 @@
 
 Renamed free Review to Word Practice with explicit schedule-neutral description; retained /review. Due badge now appears only on Recall test. Home wording/add-word entry retained; Word Practice Home now opens the actual add-word home. Mobile sibling navigation uses two columns with 44px minimum button height and wrapping; activity spacing tightened without reducing label size. No schema/auth/scheduling changes.
 Checks: TypeScript + production/PWA build, scheduling and query regressions (node --import tsx), git diff --check pass. Signed-in mobile/device/AI E2E unavailable because browser session is signed out; no production auth bypass attempted.
-Deployment: pending exact source commit publication; follow-up will record deployment evidence.
+Released main commit aa0c97617a7c4e80fd0d28375ace93cbcc40097d. Production deployment dpl_BgNn4t3yxHPz9XjxedcfkpwZxqXw is READY with matching SHA and lingo3.com/www aliases. Remaining verification: signed-in visual mobile/device and real AI flows require an authenticated session.
 
 ---
 
