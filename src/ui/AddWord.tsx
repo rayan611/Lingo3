@@ -98,6 +98,10 @@ interface Props {
 
 export function AddWord({ settings }: Props) {
   const [lemma, setLemma] = useState('')
+  const inputLanguages = [...new Set([settings.nativeLang, ...activeTargets(settings)])]
+  const [inputLanguage, setInputLanguage] = useState<Lang | ''>('')
+  const [detectedInputLanguage, setDetectedInputLanguage] = useState<Lang | null>(null)
+  const selectedLanguage = inputLanguages.includes(inputLanguage as Lang) ? inputLanguage as Lang : undefined
   /**
    * The word this one collided with, when it did.
    *
@@ -219,12 +223,13 @@ export function AddWord({ settings }: Props) {
     [],
   )
 
-  async function run(which: 'check' | 'add', sourceLang?: Lang, word?: string) {
+  async function run(which: 'check' | 'add', sourceLang: Lang | undefined = selectedLanguage, word?: string) {
     // The word is passed in when the list filled the box: a `setLemma` in the
     // same tick has not reached this closure yet, and reading stale state
     // here would look up whatever was in the box before.
     const term = (word ?? lemma).trim()
     if (!term || busy || (!sourceLang && term === doneWord)) return
+    if (sourceLang) setInputLanguage(sourceLang)
     setMode(which)
     setBusy(true)
     setStatus(null)
@@ -233,13 +238,13 @@ export function AddWord({ settings }: Props) {
     setCollision(null)
     setRelated([])
     try {
-      const pair = !sourceLang ? linkedPair(term) : null
+      const pair = linkedPair(term)
       if (pair && which === 'add') {
         // Two words entered together: both are expanded with the other as
         // partner, so every example uses both, then saved and linked.
         const results = await Promise.all([
-          previewWord({ lemma: pair[0], partner: pair[1], settings }),
-          previewWord({ lemma: pair[1], partner: pair[0], settings }),
+          previewWord({ lemma: pair[0], partner: pair[1], sourceLang, settings }),
+          previewWord({ lemma: pair[1], partner: pair[0], sourceLang, settings }),
         ])
         const ids: string[] = []
         let duplicates = 0
@@ -281,13 +286,14 @@ export function AddWord({ settings }: Props) {
         // Check on a pair: the first word, built with the second as its
         // partner, so its examples use both and the second is offered under
         // Linked words, ready to add.
-        const result = await previewWord({ lemma: pair[0], partner: pair[1], settings })
+        const result = await previewWord({ lemma: pair[0], partner: pair[1], sourceLang, settings })
         setDoneWord(term)
         if (result.status === 'duplicate') {
           setLastId(result.conceptId)
           setCollision(result)
           return
         }
+        setDetectedInputLanguage(result.preview.expansion.detectedLang ?? null)
         setRelated(result.preview.expansion.related ?? [])
         setDraftTags(normaliseTags(result.preview.expansion.tags))
         setPreview(result.preview)
@@ -297,12 +303,7 @@ export function AddWord({ settings }: Props) {
       // Always expand first and look at it. The only difference quick add
       // makes is that it does not stop to ask.
       //
-      // No source language and no sense hint: the model reads both off the
-      // word itself, and what it decided is on the preview card before
-      // anything is saved. `sourceLang` is set only by answering the
-      // collision dialog — "no, mine is the English one" — and it both
-      // narrows the duplicate lookup and tells the model which reading to
-      // build.
+      // The selected input language constrains both bank lookup and AI.
       const result = await previewWord({ lemma: term, sourceLang, settings })
 
       setDoneWord(term)
@@ -312,6 +313,7 @@ export function AddWord({ settings }: Props) {
         return
       }
 
+      setDetectedInputLanguage(result.preview.expansion.detectedLang ?? null)
       setRelated(result.preview.expansion.related ?? [])
       const suggested = normaliseTags(result.preview.expansion.tags)
       if (which === 'add') {
@@ -382,6 +384,8 @@ export function AddWord({ settings }: Props) {
    */
   function startNewWord() {
     setLemma('')
+    setInputLanguage('')
+    setDetectedInputLanguage(null)
     setLaterId(null)
     setCollision(null)
     setStatus(null)
@@ -468,16 +472,14 @@ export function AddWord({ settings }: Props) {
 
         {/* The word box gets the whole width: it is the one field this
             screen exists for. */}
-        {/* The round + at the end of the box starts the next word: it clears
-            the box, the preview and the card below it. The Categories pill
-            under here used to carry a + of its own for "open"; it is a caret
-            now, so the only + on the screen means one thing. */}
+        {/* Reset clears the current word and its displayed result. */}
         <div className="word-input-wrap">
           <input
             className="word-input"
             value={lemma}
             onChange={(e) => {
               setLemma(e.target.value)
+              setDetectedInputLanguage(null)
               setLaterId(null)
             }}
             ref={wordRef}
@@ -489,10 +491,10 @@ export function AddWord({ settings }: Props) {
             className="word-input-new"
             onClick={startNewWord}
             disabled={busy || (!lemma.trim() && !showing)}
-            aria-label="Start a new word"
-            title="Start a new word"
+            aria-label="Reset word"
+            title="Reset word"
           >
-            +
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.6 7.4M3 4v7h7" /></svg>
           </button>
         </div>
 
@@ -563,6 +565,24 @@ export function AddWord({ settings }: Props) {
             <IconLater />
             <span>Save for later</span>
           </button>
+          <label className="add-pill list-pick language-pick" title="Language of the entered word">
+            <select aria-label="Word language" value={selectedLanguage ?? ''} disabled={busy}
+              onChange={(e) => {
+                setInputLanguage(e.target.value as Lang | '')
+                setDetectedInputLanguage(null)
+                setDoneWord(null)
+                setPreview(null)
+                setLastId(null)
+                setCollision(null)
+                setRelated([])
+                setStatus(null)
+              }}>
+              <option value="">{detectedInputLanguage ? LANG_NAMES[detectedInputLanguage] + ' (auto)' : 'Auto language'}</option>
+              {inputLanguages.map((lang) => <option key={lang} value={lang}>{LANG_NAMES[lang]}</option>)}
+            </select>
+            <span className="add-pill-value" aria-hidden="true">{selectedLanguage ? LANG_NAMES[selectedLanguage] : detectedInputLanguage ? LANG_NAMES[detectedInputLanguage] + ' (auto)' : 'Auto language'}</span>
+            <span className="add-pill-caret" aria-hidden="true">▾</span>
+          </label>
         </div>
         {!showing && categoriesOpen && (
           <div className="add-categories">

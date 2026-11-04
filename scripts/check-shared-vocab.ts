@@ -1,4 +1,4 @@
-import { bareWord, serviceHeaders, sharedCachePayload, stripNulls } from '../src/server/sharedVocab'
+import { wordFormKeys, bareWord, serviceHeaders, sharedCachePayload, stripNulls } from '../src/server/sharedVocab'
 import { ExpansionSchema } from '../src/db/types'
 
 /**
@@ -58,6 +58,13 @@ const bankAnswer = {
 }
 check('raw nulls are rejected by the schema (why they are stripped)', !ExpansionSchema.safeParse(bankAnswer).success)
 check('stripNulls makes a bank answer valid', ExpansionSchema.safeParse(stripNulls(bankAnswer)).success)
+
+const sitForms = wordFormKeys('sitta', 'sv', { kind: 'verb', infinitiv: 'sitta', presens: 'sitter', preteritum: 'satt', supinum: 'suttit' })
+check('matches Swedish verb forms', ['sitta', 'sitter', 'satt', 'suttit'].every((w) => sitForms.includes(w)))
+check('does not index metadata', !sitForms.includes('verb'))
+check('matches noun alternatives and strips articles', wordFormKeys('ett hus', 'sv', { kind: 'noun', indefinitePlural: 'hus / husen', gender: 'ett' }).includes('husen'))
+check('keeps accents distinct', !wordFormKeys('sätta', 'sv', { presens: 'sätter' }).includes('satter'))
+check('does not match substrings', !sitForms.includes('sit'))
 
 if (failures) {
   console.error(`\n${failures} check(s) failed`)

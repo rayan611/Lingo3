@@ -102,3 +102,18 @@ export function stripNulls(value: unknown): unknown {
   }
   return value
 }
+
+/** Exact headword and inflection keys, matching shared_form_keys in SQL. */
+export function wordFormKeys(headword: string, lang: string, morphology?: unknown): string[] {
+  const metadata = new Set(['kind', 'gender', 'auxiliary', 'ausiliare', 'auxiliaire',
+    'aspect', 'particle', 'prefix', 'separable', 'reflexivo', 'riflessivo', 'pronominal', 'animate'])
+  const values = [headword]
+  if (morphology && typeof morphology === 'object' && !Array.isArray(morphology)) {
+    for (const [key, value] of Object.entries(morphology)) {
+      if (!metadata.has(key) && typeof value === 'string' && value !== 'true' && value !== 'false') {
+        values.push(...value.split(/\s*[,;/]\s*/))
+      }
+    }
+  }
+  return [...new Set(values.filter((v) => v.trim()).map((v) => bareWord(v, lang).toLowerCase()))]
+}

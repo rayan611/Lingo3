@@ -1,3 +1,8 @@
+## 0.7.3 — 2026-11-04
+- Choose the input word language beside Save for later, using native and active learning languages.
+- Reset the input and result with a red reset arrow.
+- Find saved/shared words by conjugations, plurals and other stored lexical forms before calling AI; keep language boundaries and ambiguity checks.
+
 ## 0.7.2 — 2026-11-02
 - Grouped Grammar, Read a story, Review and Recall test under one Training Center home tile.
 - Added a learning hub and compact navigation between its activities; existing deep links remain valid.
