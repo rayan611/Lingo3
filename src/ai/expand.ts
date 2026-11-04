@@ -3,7 +3,7 @@ import { defaultTargetCollection, roomIn } from '../db/collections'
 import { aiDownStatus } from './unavailable'
 import { detectLang } from '../lib/detectLang'
 import { authConfigured, supabase } from '../auth/supabase'
-import { stripNulls } from '../server/sharedVocab'
+import { stripNulls, wordFormKeys } from '../server/sharedVocab'
 import { makeCard } from '../fsrs/scheduler'
 import {
   ExpansionSchema,
@@ -244,10 +244,18 @@ async function findExisting(lemma: string, langs: readonly Lang[]) {
       strippedKeys.has(lemmaKey(stripArticle(e.headword, e.lang), e.lang)),
     )
     .first()
-  if (!match) return undefined
-
-  const concept = await db.concepts.get(match.conceptId)
-  return concept && !concept.deletedAt ? concept : undefined
+  if (match) {
+    const concept = await db.concepts.get(match.conceptId)
+    if (concept && !concept.deletedAt) return concept
+  }
+  // A conjugation/plural belongs to the same saved word; ambiguity is not a duplicate.
+  const forms = await db.entries.where('lang').anyOf(langs as string[]).filter((e) =>
+    wordFormKeys(e.headword, e.lang, e.morphology)
+      .some((form) => strippedKeys.has(lemmaKey(form, e.lang))),
+  ).toArray()
+  const concepts = (await db.concepts.bulkGet([...new Set(forms.map((e) => e.conceptId))]))
+    .filter((c) => c && !c.deletedAt)
+  return concepts.length === 1 ? concepts[0] : undefined
 }
 
 /**

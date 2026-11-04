@@ -1,3 +1,15 @@
+## 2026-11-04 — Input language, reset and inflected vocabulary lookup (v0.7.3)
+
+Starting main eb17085; branch fix/source-language-inflected-lookup. Owner authorized implementation and release. Added Word language picker beside Save for later, limited to native + active learning languages, with automatic result language display; explicit language reaches single/pair requests and changing it clears stale results. Replaced + with red reset arrow. Pills wrap on mobile. Reset clears word/result/language.
+
+Shared bank now checks exact headwords and every lexical morphology field, with article-aware keys, accent preservation and comma/semicolon/slash alternatives. Metadata, notes and example sentences are excluded to avoid false matches. GIN expression index supports the lookup. Existing core preference and ambiguous-result refusal remain; no vocabulary/user rows deleted or overwritten. Local saved-word duplicate detection also checks forms and refuses ambiguous form-only matches. Existing saved corrupt AI cards are not automatically repaired; shared Swedish sitter now resolves to the correct core sitta record.
+
+DONE VERIFIED: all ten regression scripts; focused saved sitter/suttit duplicate regression; shared form tests; transactional SQL migration rehearsal and rollback; live migration shared_inflected_lookup applied to vfximbxcxczntqywdryd; live sitter → sitta with Persian نشستن, suttit, partial completeness, language isolation, accents/metadata/alternatives tests pass; anonymous lookup works. Security advisor findings unchanged from baseline (legacy functions/hub/password settings). Production build and final release status recorded below when complete. No auth/RLS/review scheduling changes. No authenticated browser/physical-device E2E performed.
+
+Rollback: restore the two *_raw lookup definitions from migrations 20261101004000 and 20261101040000 (renaming definitions to *_raw); remove shared_entries_form_keys_idx and then shared_form_keys; revert application commit. No data restoration required. Next: verify CI and production SHA/aliases; optional signed-in device acceptance.
+
+---
+
 ## 2026-11-04 — Readability and grammar authoring fixes
 
 Branch: fix/readability-grammar-drafts. All five review items implemented: Word Practice instructional text now 15.2–16px, labels >=12px, mobile primary labels 14px; incomplete examples produce numbered validation errors rather than disappearing; account/language-scoped tab drafts restore across navigation/reload; sections support rename and protected empty-only soft deletion; My Word List/Read a story/Grammar headings and grammar theme tokens aligned. Rule creation and section deletion share an atomic transaction to prevent orphan rules. Nonempty sections/child sections are never cascaded. Drafts are tab-local, not cloud-synced; unavailable tab storage falls back to memory. No database migration, auth/RLS or review schedule changes.

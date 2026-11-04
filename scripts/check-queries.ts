@@ -1254,6 +1254,19 @@ async function main() {
     if (res.status !== 'duplicate') throw new Error(`got ${res.status}`)
   })
 
+  await check('a saved inflected Swedish form is found without an AI call', async () => {
+    const { previewWord } = await import('../src/ai/expand')
+    const id = newId()
+    const now = Date.now()
+    await db.concepts.add({ id, lemma: 'sitta', sourceLang: 'sv', pos: 'verb', category: 'daily', createdAt: now, updatedAt: now })
+    await db.entries.put({ id: compositeId(id, 'sv'), conceptId: id, lang: 'sv', headword: 'sitta', meaning: 'sit', morphology: { kind: 'verb', infinitiv: 'sitta', presens: 'sitter', preteritum: 'satt', supinum: 'suttit' }, updatedAt: now })
+    const settings = await ensureSettings()
+    for (const lemma of ['sitter', 'suttit']) {
+      const res = await previewWord({ lemma, sourceLang: 'sv', settings })
+      if (res.status !== 'duplicate' || res.conceptId !== id) throw new Error('inflection missed its original concept')
+    }
+  })
+
   // Reading sends the words whose review is nearest first, because the
   // endpoint keeps only the first 400 and the model leans on what comes
   // early. Older words must still be in the list, or a text would be a
