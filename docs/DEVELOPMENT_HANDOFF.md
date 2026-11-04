@@ -3,7 +3,7 @@
 Branch: fix/readability-grammar-drafts. All five review items implemented: Word Practice instructional text now 15.2–16px, labels >=12px, mobile primary labels 14px; incomplete examples produce numbered validation errors rather than disappearing; account/language-scoped tab drafts restore across navigation/reload; sections support rename and protected empty-only soft deletion; My Word List/Read a story/Grammar headings and grammar theme tokens aligned. Rule creation and section deletion share an atomic transaction to prevent orphan rules. Nonempty sections/child sections are never cascaded. Drafts are tab-local, not cloud-synced; unavailable tab storage falls back to memory. No database migration, auth/RLS or review schedule changes.
 
 Verification: production TypeScript/Vite/PWA build passes; all ten regression scripts pass via node --import tsx, including new grammar-authoring coverage (partial examples retained/rejected, atomic failed update, section rename/protected deletion, soft deletion, tab reload and account/language draft isolation). git diff --check passes. Signed-in browser, mobile and real provider E2E remain unverified.
-Release: awaiting PR/merge and exact-SHA production deployment. Rollback: revert application commit; no rows are deleted by this release itself.
+Release: PR #35 merged as 8ea5b85a6dcf31366361594344e353110d78380d after CI run 41896833741 succeeded on head 5a4a20065fd9d0cf1a261690d98d7b2f30d406b1. Production deployment dpl_EtqBbJgKURRNDQ9gxUtqpvj9p5hM is READY with matching SHA and lingo3.com/www aliases. Rollback: revert application commit; no rows are deleted by this release itself.
 
 ---
 
