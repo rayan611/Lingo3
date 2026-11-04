@@ -1,3 +1,11 @@
+## 2026-11-04 — Training Center word list and readability
+
+Small UI update on main: moved My words from primary navigation into Training Center as My Word List; /words remains supported, with Training Center active state, return link and sibling navigation. Increased activity title text to 1.1rem, descriptions to 0.9rem and sibling buttons to 1rem. No data, auth or API changes.
+Checks: production build (TypeScript + Vite/PWA) and git diff --check; see deployment follow-up for final release evidence. Signed-in visual/device QA not performed.
+Next: deploy this main commit and verify deployment SHA/status.
+
+---
+
 ## 2026-11-04 — Showcase navigation links
 
 Implemented from `fix/showcase-navigation`; released main commit `23ddb01039f773763b454174f8e0ab78ec962e09`. Added same-tab Home / Showcase anchors to the sign-in intro and Settings → Help & About → About, both targeting `/showcase.html`. Existing first-visit/session/installed-app entry behavior unchanged. No auth, database or routing changes.

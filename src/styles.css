@@ -3823,10 +3823,11 @@ input[type='radio']:focus { box-shadow: none; }
 .training-center h2 { margin-bottom: 6px; }
 .training-center-activities { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .training-center-activities .tile { min-height: 130px; padding: 18px 12px; }
-.training-center-activities small { font-weight: 400; line-height: 1.5; }
+.training-center-activities strong { display: block; font-size: 1.1rem; line-height: 1.35; }
+.training-center-activities small { display: block; margin-top: 6px; font-size: 0.9rem; font-weight: 400; line-height: 1.5; }
 .training-center-navigation { margin: 12px 0 18px; }
 .training-center-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.training-center-tabs button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
+.training-center-tabs button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; font-size: 1rem; }
 .training-center-tabs .is-active { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
 @media (max-width: 560px) {
   .primary-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }

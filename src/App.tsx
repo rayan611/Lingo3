@@ -667,9 +667,6 @@ function HomeTiles({
       <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
         Recall test
       </Tile>
-      <Tile id="browse" set={set} active={active} icon={<IconWords />}>
-        My words
-      </Tile>
       <Tile id="translate" set={set} active={active} icon={<IconTranslate />}>
         Translate
       </Tile>
@@ -682,10 +679,11 @@ function HomeTiles({
 
 /** Existing child routes stay bookmarkable; the home navigation groups them here. */
 function isTrainingArea(tab: Tab): boolean {
-  return ['training-center', 'grammar', 'read', 'training'].includes(tab)
+  return ['training-center', 'grammar', 'read', 'training', 'browse'].includes(tab)
 }
 
 const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React.ReactNode }[] = [
+  { id: 'browse', title: 'My Word List', detail: 'Manage your saved words and lists.', icon: <IconWords /> },
   { id: 'grammar', title: 'Grammar', detail: 'Organize your grammar notes and rules.', icon: <IconGrammar /> },
   { id: 'read', title: 'Read a story', detail: 'Practice vocabulary through stories.', icon: <IconReading /> },
   { id: 'training', title: 'Review', detail: 'Browse and practice your words.', icon: <IconTraining /> },
