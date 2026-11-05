@@ -1,7 +1,7 @@
 ## 2026-11-05 — Showcase header/footer navigation
 
 Owner requested highlighted App Login controls and complete showcase menus on all three apps. Header and footer now include Home, Features, How it works, Benefits, Install, Share and highlighted App Login. Existing hero/closing entry controls remain. New labels localized for each page's offered languages; login uses the existing app entry route and iframe bridge. Standalone Glowis/Lingo3 entry marks the existing welcome flag so visitors do not loop through the showcase.
-Checks: JavaScript syntax, both menu link sets, unique IDs, highlighted login and all install handlers PASS. Responsive flex-wrap and visible keyboard focus retained. Production deployment pending; visual device QA not performed. No auth/API/database changes. Rollback: revert showcase files only.
+Checks: JavaScript syntax, both menu link sets, unique IDs, highlighted login and all install handlers PASS. Responsive flex-wrap and visible keyboard focus retained. Production dpl_CHMo7EbdrTqpMttnvSJmRoZiPKq2 READY on 2637fc6045fd84a1bf6770c67aaf6f550515f357; https://lingo3.com/showcase.html HTTP 200 verified with highlighted login and Footer navigation present. TypeScript/Vite production build passed. Visual device QA not performed. No auth/API/database changes. Rollback: revert showcase files only.
 
 ---
 
