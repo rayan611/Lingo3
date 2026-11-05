@@ -1,3 +1,10 @@
+## 2026-11-05 — Showcase header/footer navigation
+
+Owner requested highlighted App Login controls and complete showcase menus on all three apps. Header and footer now include Home, Features, How it works, Benefits, Install, Share and highlighted App Login. Existing hero/closing entry controls remain. New labels localized for each page's offered languages; login uses the existing app entry route and iframe bridge. Standalone Glowis/Lingo3 entry marks the existing welcome flag so visitors do not loop through the showcase.
+Checks: JavaScript syntax, both menu link sets, unique IDs, highlighted login and all install handlers PASS. Responsive flex-wrap and visible keyboard focus retained. Production deployment pending; visual device QA not performed. No auth/API/database changes. Rollback: revert showcase files only.
+
+---
+
 ## 2026-11-04 — Input language, reset and inflected vocabulary lookup (v0.7.3)
 
 Starting main eb17085; branch fix/source-language-inflected-lookup. Owner authorized implementation and release. Added Word language picker beside Save for later, limited to native + active learning languages, with automatic result language display; explicit language reaches single/pair requests and changing it clears stale results. Replaced + with red reset arrow. Pills wrap on mobile. Reset clears word/result/language.
