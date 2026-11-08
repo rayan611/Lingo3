@@ -89,5 +89,17 @@
     "everyPossibleCompoundTense": false,
     "independentEightLanguageProofreading": false,
     "exampleStyle": "parallel grammar-practice frames"
+  },
+  "release": {
+    "pr": 38,
+    "ciRun": 42484015283,
+    "testedHead": "5f6f2329b52af27fd8b0c2123af3a2e92014f89a",
+    "mainCodeCommit": "72e67705487bddf4f3094cc618169c594127a9b3",
+    "deployment": "dpl_Eib5QQ2tsEC2dpGKDGBKX6PPXkGd",
+    "state": "READY",
+    "domain": "https://lingo3.com",
+    "publicVersion": "0.7.4",
+    "servedAdditionalForms": true,
+    "observedErrorLogs": 0
   }
 }

@@ -37,7 +37,7 @@ Eight real anonymous HTTPS requests for stulit / stole / gestohlen / robaste / r
 - Local focused checker: **200 concepts, 1,600 entries/morphology parses, 36,211 searchable entry/form keys** (includes repeated keys across concepts/languages).
 - SQL regression fixtures pass: draft/rejected rows hidden, ready forms returned, ambiguous forms refused, metadata/example text/substrings not matched, existing sitter/suttit preserved, generated aliases refreshed after morphology updates. Transaction rolled back; **0 fixture concepts remain**.
 - All ten existing local regression scripts passed through node --import tsx. The normal npm test entry failed only because this runtime forbids tsx CLI's IPC pipe; the same test files were run directly. The expanded API suite proves a complete inflected bank hit returns origin=bank without provider or AI-usage-counter calls.
-- Typecheck and production/PWA build passed; final CI/deployment status is recorded in DEVELOPMENT_HANDOFF.md.
+- Typecheck and production/PWA build passed; CI 42484015283 passed; PR #38 merged as 72e67705487bddf4f3094cc618169c594127a9b3. Production dpl_Eib5QQ2tsEC2dpGKDGBKX6PPXkGd is READY with that code commit and lingo3.com/www aliases; public version is 0.7.4. Final payload comparison is 1,600/1,600 exact.
 - Security advisor findings are unchanged from baseline; no new finding introduced by this migration.
 - No physical signed-in phone/browser or offline end-to-end acceptance, exhaustive check of every grammatical paradigm, or independent human proofreading in eight languages was performed.
 
