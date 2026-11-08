@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-08",
+  "version": "0.7.4",
+  "migration": {
+    "name": "stored_lexical_form_keys",
+    "version": "20261108123714",
+    "rlsOrPermissionsChanged": false
+  },
+  "batch": {
+    "concepts": 200,
+    "entries": 1600,
+    "languages": [
+      "fa",
+      "en",
+      "sv",
+      "de",
+      "es",
+      "it",
+      "fr",
+      "ru"
+    ],
+    "sha256": "b37ac48124ebddb0edd0dc4b67ccb399a1eb6b322ce9417cdecb15a09ddfd253",
+    "sourceCommit": "41085362e34da801b1ea0360989fe9720a8ae068",
+    "pgNetFinalRequest": 20
+  },
+  "live": {
+    "readyConcepts": 4483,
+    "readyEntries": 27290,
+    "readyVerbs": 471,
+    "duplicateGroups": 0,
+    "fullHeaderLookup": {
+      "role": "postgres",
+      "total": 1600,
+      "correct": 1600
+    },
+    "payloadComparison": {
+      "total": 1600,
+      "exact": 1600
+    },
+    "roleHeaderSamples": {
+      "anon": {
+        "total": 16,
+        "correct": 16
+      },
+      "authenticated": {
+        "total": 16,
+        "correct": 16
+      }
+    },
+    "oldConceptHash": "ae24acb2366adcdaca0604aaa53e2a68",
+    "oldEntryHashExcludingGeneratedColumn": "86a031714d75101b45893e713030a16f",
+    "repeatImport": {
+      "inserted": 0,
+      "already_present": 200,
+      "clashes": []
+    },
+    "sqlRegression": "passed; rollback; zero leftover fixtures",
+    "securityAdvisors": "unchanged from baseline"
+  },
+  "local": {
+    "concepts": 200,
+    "morphologyParses": 1600,
+    "searchableEntryKeys": 36211,
+    "existingRegressionFiles": 10,
+    "typecheck": "pass",
+    "build": "pass",
+    "apiBankHitSkipsAI": "pass"
+  },
+  "timing": {
+    "anonDatabaseMs": [
+      68.234,
+      13.345
+    ],
+    "previousSampleDatabaseMs": 3158.67,
+    "realHttpsMs": [
+      7228,
+      383,
+      415,
+      163,
+      184,
+      163,
+      357,
+      155
+    ],
+    "clientWaitMs": 1800
+  },
+  "limits": {
+    "physicalSignedInBrowserQA": false,
+    "everyPossibleCompoundTense": false,
+    "independentEightLanguageProofreading": false,
+    "exampleStyle": "parallel grammar-practice frames"
+  }
+}
