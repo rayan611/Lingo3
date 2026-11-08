@@ -1,0 +1,5168 @@
+{
+  "format": "lingo3-vocab/1",
+  "date": "2026-11-08",
+  "langs": [
+    "fa",
+    "en",
+    "sv",
+    "de",
+    "es",
+    "it"
+  ],
+  "n": 100,
+  "concepts": [
+    {
+      "id": "core.a.responsible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "مسئولیت‌پذیر",
+          "x": "او مسئولیت‌پذیر است.",
+          "n": "متضاد: بی‌مسئولیت."
+        },
+        "en": {
+          "h": "responsible",
+          "x": "He is responsible.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more responsible",
+            "superlative": "most responsible"
+          },
+          "n": "Opposite: irresponsible."
+        },
+        "sv": {
+          "h": "ansvarsfull",
+          "x": "Han är ansvarsfull.",
+          "f": {
+            "kind": "adjective",
+            "common": "ansvarsfull",
+            "neuter": "ansvarsfullt",
+            "plural": "ansvarsfulla",
+            "definite": "ansvarsfulla",
+            "comparative": "ansvarsfullare",
+            "superlative": "ansvarsfullast"
+          },
+          "n": "Motsats: oansvarig."
+        },
+        "de": {
+          "h": "verantwortungsbewusst",
+          "x": "Er ist verantwortungsbewusst.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "verantwortungsbewusster",
+            "superlative": "am verantwortungsbewusstesten"
+          },
+          "n": "Gegenteil: verantwortungslos."
+        },
+        "es": {
+          "h": "responsable",
+          "x": "Él es responsable.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "responsable",
+            "feminine": "responsable",
+            "plural": "responsables"
+          },
+          "n": "Antónimo: irresponsable."
+        },
+        "it": {
+          "h": "responsabile",
+          "x": "Lui è responsabile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "responsabile",
+            "feminine": "responsabile",
+            "plural": "responsabili"
+          },
+          "n": "Contrario: irresponsabile."
+        }
+      }
+    },
+    {
+      "id": "core.a.irresponsible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌مسئولیت",
+          "x": "این رفتار بی‌مسئولیت است.",
+          "n": "متضاد: مسئولیت‌پذیر."
+        },
+        "en": {
+          "h": "irresponsible",
+          "x": "This behaviour is irresponsible.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more irresponsible",
+            "superlative": "most irresponsible"
+          },
+          "n": "Opposite: responsible."
+        },
+        "sv": {
+          "h": "oansvarig",
+          "x": "Det här beteendet är oansvarigt.",
+          "f": {
+            "kind": "adjective",
+            "common": "oansvarig",
+            "neuter": "oansvarigt",
+            "plural": "oansvariga",
+            "definite": "oansvariga",
+            "comparative": "oansvarigare",
+            "superlative": "oansvarigast"
+          },
+          "n": "Motsats: ansvarsfull."
+        },
+        "de": {
+          "h": "verantwortungslos",
+          "x": "Dieses Verhalten ist verantwortungslos.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "verantwortungsloser",
+            "superlative": "am verantwortungslosesten"
+          },
+          "n": "Gegenteil: verantwortungsbewusst."
+        },
+        "es": {
+          "h": "irresponsable",
+          "x": "Este comportamiento es irresponsable.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irresponsable",
+            "feminine": "irresponsable",
+            "plural": "irresponsables"
+          },
+          "n": "Antónimo: responsable."
+        },
+        "it": {
+          "h": "irresponsabile",
+          "x": "Questo comportamento è irresponsabile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irresponsabile",
+            "feminine": "irresponsabile",
+            "plural": "irresponsabili"
+          },
+          "n": "Contrario: responsabile."
+        }
+      }
+    },
+    {
+      "id": "core.a.reliable.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "قابل‌اعتماد",
+          "x": "این اطلاعات قابل‌اعتماد است.",
+          "n": "متضاد: غیرقابل‌اعتماد."
+        },
+        "en": {
+          "h": "reliable",
+          "x": "This information is reliable.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more reliable",
+            "superlative": "most reliable"
+          },
+          "n": "Opposite: unreliable."
+        },
+        "sv": {
+          "h": "pålitlig",
+          "x": "Den här informationen är pålitlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "pålitlig",
+            "neuter": "pålitligt",
+            "plural": "pålitliga",
+            "definite": "pålitliga",
+            "comparative": "pålitligare",
+            "superlative": "pålitligast"
+          },
+          "n": "Motsats: opålitlig."
+        },
+        "de": {
+          "h": "zuverlässig",
+          "x": "Diese Information ist zuverlässig.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "zuverlässiger",
+            "superlative": "am zuverlässigsten"
+          },
+          "n": "Gegenteil: unzuverlässig."
+        },
+        "es": {
+          "h": "fiable",
+          "x": "Esta información es fiable.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "fiable",
+            "feminine": "fiable",
+            "plural": "fiables"
+          },
+          "n": "Antónimo: poco fiable."
+        },
+        "it": {
+          "h": "affidabile",
+          "x": "Questa informazione è affidabile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "affidabile",
+            "feminine": "affidabile",
+            "plural": "affidabili"
+          },
+          "n": "Contrario: inaffidabile."
+        }
+      }
+    },
+    {
+      "id": "core.a.unreliable.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "غیرقابل‌اعتماد",
+          "x": "این اطلاعات غیرقابل‌اعتماد است.",
+          "n": "متضاد: قابل‌اعتماد."
+        },
+        "en": {
+          "h": "unreliable",
+          "x": "This information is unreliable.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more unreliable",
+            "superlative": "most unreliable"
+          },
+          "n": "Opposite: reliable."
+        },
+        "sv": {
+          "h": "opålitlig",
+          "x": "Den här informationen är opålitlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "opålitlig",
+            "neuter": "opålitligt",
+            "plural": "opålitliga",
+            "definite": "opålitliga",
+            "comparative": "opålitligare",
+            "superlative": "opålitligast"
+          },
+          "n": "Motsats: pålitlig."
+        },
+        "de": {
+          "h": "unzuverlässig",
+          "x": "Diese Information ist unzuverlässig.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unzuverlässiger",
+            "superlative": "am unzuverlässigsten"
+          },
+          "n": "Gegenteil: zuverlässig."
+        },
+        "es": {
+          "h": "poco fiable",
+          "x": "Esta información es poco fiable.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco fiable",
+            "feminine": "poco fiable",
+            "plural": "poco fiables"
+          },
+          "n": "Antónimo: fiable."
+        },
+        "it": {
+          "h": "inaffidabile",
+          "x": "Questa informazione è inaffidabile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inaffidabile",
+            "feminine": "inaffidabile",
+            "plural": "inaffidabili"
+          },
+          "n": "Contrario: affidabile."
+        }
+      }
+    },
+    {
+      "id": "core.a.legal.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "قانونی",
+          "x": "این کار قانونی است.",
+          "n": "متضاد: غیرقانونی."
+        },
+        "en": {
+          "h": "legal",
+          "x": "This is legal.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: illegal."
+        },
+        "sv": {
+          "h": "laglig",
+          "x": "Det här är lagligt.",
+          "f": {
+            "kind": "adjective",
+            "common": "laglig",
+            "neuter": "lagligt",
+            "plural": "lagliga",
+            "definite": "lagliga"
+          },
+          "n": "Motsats: olaglig."
+        },
+        "de": {
+          "h": "legal",
+          "x": "Das ist legal.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: illegal."
+        },
+        "es": {
+          "h": "legal",
+          "x": "Esto es legal.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "legal",
+            "feminine": "legal",
+            "plural": "legales"
+          },
+          "n": "Antónimo: ilegal."
+        },
+        "it": {
+          "h": "legale",
+          "x": "Questo è legale.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "legale",
+            "feminine": "legale",
+            "plural": "legali"
+          },
+          "n": "Contrario: illegale."
+        }
+      }
+    },
+    {
+      "id": "core.a.illegal.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "غیرقانونی",
+          "x": "این کار غیرقانونی است.",
+          "n": "متضاد: قانونی."
+        },
+        "en": {
+          "h": "illegal",
+          "x": "This is illegal.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: legal."
+        },
+        "sv": {
+          "h": "olaglig",
+          "x": "Det här är olagligt.",
+          "f": {
+            "kind": "adjective",
+            "common": "olaglig",
+            "neuter": "olagligt",
+            "plural": "olagliga",
+            "definite": "olagliga"
+          },
+          "n": "Motsats: laglig."
+        },
+        "de": {
+          "h": "illegal",
+          "x": "Das ist illegal.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: legal."
+        },
+        "es": {
+          "h": "ilegal",
+          "x": "Esto es ilegal.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "ilegal",
+            "feminine": "ilegal",
+            "plural": "ilegales"
+          },
+          "n": "Antónimo: legal."
+        },
+        "it": {
+          "h": "illegale",
+          "x": "Questo è illegale.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "illegale",
+            "feminine": "illegale",
+            "plural": "illegali"
+          },
+          "n": "Contrario: legale."
+        }
+      }
+    },
+    {
+      "id": "core.a.visible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "قابل‌مشاهده",
+          "x": "تابلو از اینجا قابل‌مشاهده است.",
+          "n": "متضاد: نامرئی."
+        },
+        "en": {
+          "h": "visible",
+          "x": "The sign is visible from here.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more visible",
+            "superlative": "most visible"
+          },
+          "n": "Opposite: invisible."
+        },
+        "sv": {
+          "h": "synlig",
+          "x": "Skylten är synlig härifrån.",
+          "f": {
+            "kind": "adjective",
+            "common": "synlig",
+            "neuter": "synligt",
+            "plural": "synliga",
+            "definite": "synliga",
+            "comparative": "synligare",
+            "superlative": "synligast"
+          },
+          "n": "Motsats: osynlig."
+        },
+        "de": {
+          "h": "sichtbar",
+          "x": "Das Schild ist von hier aus sichtbar.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "sichtbarer",
+            "superlative": "am sichtbarsten"
+          },
+          "n": "Gegenteil: unsichtbar."
+        },
+        "es": {
+          "h": "visible",
+          "x": "El cartel es visible desde aquí.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "visible",
+            "feminine": "visible",
+            "plural": "visibles"
+          },
+          "n": "Antónimo: invisible."
+        },
+        "it": {
+          "h": "visibile",
+          "x": "Il cartello è visibile da qui.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "visibile",
+            "feminine": "visibile",
+            "plural": "visibili"
+          },
+          "n": "Contrario: invisibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.invisible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نامرئی",
+          "x": "آن علامت در تاریکی نامرئی است.",
+          "n": "متضاد: قابل‌مشاهده."
+        },
+        "en": {
+          "h": "invisible",
+          "x": "That mark is invisible in the dark.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: visible."
+        },
+        "sv": {
+          "h": "osynlig",
+          "x": "Det märket är osynligt i mörkret.",
+          "f": {
+            "kind": "adjective",
+            "common": "osynlig",
+            "neuter": "osynligt",
+            "plural": "osynliga",
+            "definite": "osynliga"
+          },
+          "n": "Motsats: synlig."
+        },
+        "de": {
+          "h": "unsichtbar",
+          "x": "Diese Markierung ist im Dunkeln unsichtbar.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: sichtbar."
+        },
+        "es": {
+          "h": "invisible",
+          "x": "Esa marca es invisible en la oscuridad.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "invisible",
+            "feminine": "invisible",
+            "plural": "invisibles"
+          },
+          "n": "Antónimo: visible."
+        },
+        "it": {
+          "h": "invisibile",
+          "x": "Quel segno è invisibile al buio.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "invisibile",
+            "feminine": "invisibile",
+            "plural": "invisibili"
+          },
+          "n": "Contrario: visibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.available.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "دسترس‌پذیر",
+          "x": "این ساختمان برای همه دسترس‌پذیر است.",
+          "n": "متضاد: دسترس‌ناپذیر."
+        },
+        "en": {
+          "h": "accessible",
+          "x": "This building is accessible to everyone.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more accessible",
+            "superlative": "most accessible"
+          },
+          "n": "Opposite: inaccessible."
+        },
+        "sv": {
+          "h": "tillgänglig",
+          "x": "Den här byggnaden är tillgänglig för alla.",
+          "f": {
+            "kind": "adjective",
+            "common": "tillgänglig",
+            "neuter": "tillgängligt",
+            "plural": "tillgängliga",
+            "definite": "tillgängliga",
+            "comparative": "tillgängligare",
+            "superlative": "tillgängligast"
+          },
+          "n": "Motsats: otillgänglig."
+        },
+        "de": {
+          "h": "zugänglich",
+          "x": "Dieses Gebäude ist für alle zugänglich.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "zugänglicher",
+            "superlative": "am zugänglichsten"
+          },
+          "n": "Gegenteil: unzugänglich."
+        },
+        "es": {
+          "h": "accesible",
+          "x": "Este edificio es accesible para todos.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "accesible",
+            "feminine": "accesible",
+            "plural": "accesibles"
+          },
+          "n": "Antónimo: inaccesible."
+        },
+        "it": {
+          "h": "accessibile",
+          "x": "Questo edificio è accessibile a tutti.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "accessibile",
+            "feminine": "accessibile",
+            "plural": "accessibili"
+          },
+          "n": "Contrario: inaccessibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.unavailable.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "دسترس‌ناپذیر",
+          "x": "این ساختمان برای ما دسترس‌ناپذیر است.",
+          "n": "متضاد: دسترس‌پذیر."
+        },
+        "en": {
+          "h": "inaccessible",
+          "x": "This building is inaccessible to us.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more inaccessible",
+            "superlative": "most inaccessible"
+          },
+          "n": "Opposite: accessible."
+        },
+        "sv": {
+          "h": "otillgänglig",
+          "x": "Den här byggnaden är otillgänglig för oss.",
+          "f": {
+            "kind": "adjective",
+            "common": "otillgänglig",
+            "neuter": "otillgängligt",
+            "plural": "otillgängliga",
+            "definite": "otillgängliga",
+            "comparative": "otillgängligare",
+            "superlative": "otillgängligast"
+          },
+          "n": "Motsats: tillgänglig."
+        },
+        "de": {
+          "h": "unzugänglich",
+          "x": "Dieses Gebäude ist für uns unzugänglich.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unzugänglicher",
+            "superlative": "am unzugänglichsten"
+          },
+          "n": "Gegenteil: zugänglich."
+        },
+        "es": {
+          "h": "inaccesible",
+          "x": "Este edificio es inaccesible para nosotros.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inaccesible",
+            "feminine": "inaccesible",
+            "plural": "inaccesibles"
+          },
+          "n": "Antónimo: accesible."
+        },
+        "it": {
+          "h": "inaccessibile",
+          "x": "Questo edificio è inaccessibile per noi.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inaccessibile",
+            "feminine": "inaccessibile",
+            "plural": "inaccessibili"
+          },
+          "n": "Contrario: accessibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.suitable.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "مناسب",
+          "x": "این روش مناسب است.",
+          "n": "متضاد: نامناسب."
+        },
+        "en": {
+          "h": "suitable",
+          "x": "This method is suitable.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more suitable",
+            "superlative": "most suitable"
+          },
+          "n": "Opposite: unsuitable."
+        },
+        "sv": {
+          "h": "lämplig",
+          "x": "Den här metoden är lämplig.",
+          "f": {
+            "kind": "adjective",
+            "common": "lämplig",
+            "neuter": "lämpligt",
+            "plural": "lämpliga",
+            "definite": "lämpliga",
+            "comparative": "lämpligare",
+            "superlative": "lämpligast"
+          },
+          "n": "Motsats: olämplig."
+        },
+        "de": {
+          "h": "geeignet",
+          "x": "Diese Methode ist geeignet.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "geeigneter",
+            "superlative": "am geeignetesten"
+          },
+          "n": "Gegenteil: ungeeignet."
+        },
+        "es": {
+          "h": "adecuado",
+          "x": "Este método es adecuado.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "adecuado",
+            "feminine": "adecuada",
+            "plural": "adecuados"
+          },
+          "n": "Antónimo: inadecuado."
+        },
+        "it": {
+          "h": "adatto",
+          "x": "Questo metodo è adatto.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "adatto",
+            "feminine": "adatta",
+            "plural": "adatti"
+          },
+          "n": "Contrario: inadatto."
+        }
+      }
+    },
+    {
+      "id": "core.a.unsuitable.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نامناسب",
+          "x": "این روش نامناسب است.",
+          "n": "متضاد: مناسب."
+        },
+        "en": {
+          "h": "unsuitable",
+          "x": "This method is unsuitable.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more unsuitable",
+            "superlative": "most unsuitable"
+          },
+          "n": "Opposite: suitable."
+        },
+        "sv": {
+          "h": "olämplig",
+          "x": "Den här metoden är olämplig.",
+          "f": {
+            "kind": "adjective",
+            "common": "olämplig",
+            "neuter": "olämpligt",
+            "plural": "olämpliga",
+            "definite": "olämpliga",
+            "comparative": "olämpligare",
+            "superlative": "olämpligast"
+          },
+          "n": "Motsats: lämplig."
+        },
+        "de": {
+          "h": "ungeeignet",
+          "x": "Diese Methode ist ungeeignet.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "ungeeigneter",
+            "superlative": "am ungeeignetesten"
+          },
+          "n": "Gegenteil: geeignet."
+        },
+        "es": {
+          "h": "inadecuado",
+          "x": "Este método es inadecuado.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inadecuado",
+            "feminine": "inadecuada",
+            "plural": "inadecuados"
+          },
+          "n": "Antónimo: adecuado."
+        },
+        "it": {
+          "h": "inadatto",
+          "x": "Questo metodo è inadatto.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inadatto",
+            "feminine": "inadatta",
+            "plural": "inadatti"
+          },
+          "n": "Contrario: adatto."
+        }
+      }
+    },
+    {
+      "id": "core.a.effective.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "مؤثر",
+          "x": "این درمان مؤثر است.",
+          "n": "متضاد: بی‌اثر."
+        },
+        "en": {
+          "h": "effective",
+          "x": "This treatment is effective.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more effective",
+            "superlative": "most effective"
+          },
+          "n": "Opposite: ineffective."
+        },
+        "sv": {
+          "h": "effektiv",
+          "x": "Den här behandlingen är effektiv.",
+          "f": {
+            "kind": "adjective",
+            "common": "effektiv",
+            "neuter": "effektivt",
+            "plural": "effektiva",
+            "definite": "effektiva",
+            "comparative": "effektivare",
+            "superlative": "effektivast"
+          },
+          "n": "Motsats: ineffektiv."
+        },
+        "de": {
+          "h": "wirksam",
+          "x": "Diese Behandlung ist wirksam.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "wirksamer",
+            "superlative": "am wirksamsten"
+          },
+          "n": "Gegenteil: unwirksam."
+        },
+        "es": {
+          "h": "eficaz",
+          "x": "Este tratamiento es eficaz.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "eficaz",
+            "feminine": "eficaz",
+            "plural": "eficaces"
+          },
+          "n": "Antónimo: ineficaz."
+        },
+        "it": {
+          "h": "efficace",
+          "x": "Questo trattamento è efficace.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "efficace",
+            "feminine": "efficace",
+            "plural": "efficaci"
+          },
+          "n": "Contrario: inefficace."
+        }
+      }
+    },
+    {
+      "id": "core.a.ineffective.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌اثر",
+          "x": "این درمان بی‌اثر است.",
+          "n": "متضاد: مؤثر."
+        },
+        "en": {
+          "h": "ineffective",
+          "x": "This treatment is ineffective.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more ineffective",
+            "superlative": "most ineffective"
+          },
+          "n": "Opposite: effective."
+        },
+        "sv": {
+          "h": "ineffektiv",
+          "x": "Den här behandlingen är ineffektiv.",
+          "f": {
+            "kind": "adjective",
+            "common": "ineffektiv",
+            "neuter": "ineffektivt",
+            "plural": "ineffektiva",
+            "definite": "ineffektiva",
+            "comparative": "ineffektivare",
+            "superlative": "ineffektivast"
+          },
+          "n": "Motsats: effektiv."
+        },
+        "de": {
+          "h": "unwirksam",
+          "x": "Diese Behandlung ist unwirksam.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unwirksamer",
+            "superlative": "am unwirksamsten"
+          },
+          "n": "Gegenteil: wirksam."
+        },
+        "es": {
+          "h": "ineficaz",
+          "x": "Este tratamiento es ineficaz.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "ineficaz",
+            "feminine": "ineficaz",
+            "plural": "ineficaces"
+          },
+          "n": "Antónimo: eficaz."
+        },
+        "it": {
+          "h": "inefficace",
+          "x": "Questo trattamento è inefficace.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inefficace",
+            "feminine": "inefficace",
+            "plural": "inefficaci"
+          },
+          "n": "Contrario: efficace."
+        }
+      }
+    },
+    {
+      "id": "core.a.active.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "فعال",
+          "x": "او هر روز فعال است.",
+          "n": "متضاد: غیرفعال."
+        },
+        "en": {
+          "h": "active",
+          "x": "He is active every day.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more active",
+            "superlative": "most active"
+          },
+          "n": "Opposite: inactive."
+        },
+        "sv": {
+          "h": "aktiv",
+          "x": "Han är aktiv varje dag.",
+          "f": {
+            "kind": "adjective",
+            "common": "aktiv",
+            "neuter": "aktivt",
+            "plural": "aktiva",
+            "definite": "aktiva",
+            "comparative": "aktivare",
+            "superlative": "aktivast"
+          },
+          "n": "Motsats: inaktiv."
+        },
+        "de": {
+          "h": "aktiv",
+          "x": "Er ist jeden Tag aktiv.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "aktiver",
+            "superlative": "am aktivsten"
+          },
+          "n": "Gegenteil: inaktiv."
+        },
+        "es": {
+          "h": "activo",
+          "x": "Él está activo cada día.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "activo",
+            "feminine": "activa",
+            "plural": "activos"
+          },
+          "n": "Antónimo: inactivo."
+        },
+        "it": {
+          "h": "attivo",
+          "x": "Lui è attivo ogni giorno.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "attivo",
+            "feminine": "attiva",
+            "plural": "attivi"
+          },
+          "n": "Contrario: inattivo."
+        }
+      }
+    },
+    {
+      "id": "core.a.inactive.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "غیرفعال",
+          "x": "این حساب غیرفعال است.",
+          "n": "متضاد: فعال."
+        },
+        "en": {
+          "h": "inactive",
+          "x": "This account is inactive.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: active."
+        },
+        "sv": {
+          "h": "inaktiv",
+          "x": "Det här kontot är inaktivt.",
+          "f": {
+            "kind": "adjective",
+            "common": "inaktiv",
+            "neuter": "inaktivt",
+            "plural": "inaktiva",
+            "definite": "inaktiva"
+          },
+          "n": "Motsats: aktiv."
+        },
+        "de": {
+          "h": "inaktiv",
+          "x": "Dieses Konto ist inaktiv.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: aktiv."
+        },
+        "es": {
+          "h": "inactivo",
+          "x": "Esta cuenta está inactiva.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inactivo",
+            "feminine": "inactiva",
+            "plural": "inactivos"
+          },
+          "n": "Antónimo: activo."
+        },
+        "it": {
+          "h": "inattivo",
+          "x": "Questo account è inattivo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inattivo",
+            "feminine": "inattiva",
+            "plural": "inattivi"
+          },
+          "n": "Contrario: attivo."
+        }
+      }
+    },
+    {
+      "id": "core.a.flexible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "انعطاف‌پذیر",
+          "x": "برنامهٔ ما انعطاف‌پذیر است.",
+          "n": "متضاد: انعطاف‌ناپذیر."
+        },
+        "en": {
+          "h": "flexible",
+          "x": "Our schedule is flexible.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more flexible",
+            "superlative": "most flexible"
+          },
+          "n": "Opposite: inflexible."
+        },
+        "sv": {
+          "h": "flexibel",
+          "x": "Vårt schema är flexibelt.",
+          "f": {
+            "kind": "adjective",
+            "common": "flexibel",
+            "neuter": "flexibelt",
+            "plural": "flexibla",
+            "definite": "flexibla",
+            "comparative": "flexiblare",
+            "superlative": "flexiblast"
+          },
+          "n": "Motsats: oflexibel."
+        },
+        "de": {
+          "h": "flexibel",
+          "x": "Unser Zeitplan ist flexibel.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "flexibler",
+            "superlative": "am flexibelsten"
+          },
+          "n": "Gegenteil: unflexibel."
+        },
+        "es": {
+          "h": "flexible",
+          "x": "Nuestro horario es flexible.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "flexible",
+            "feminine": "flexible",
+            "plural": "flexibles"
+          },
+          "n": "Antónimo: inflexible."
+        },
+        "it": {
+          "h": "flessibile",
+          "x": "Il nostro orario è flessibile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "flessibile",
+            "feminine": "flessibile",
+            "plural": "flessibili"
+          },
+          "n": "Contrario: inflessibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.inflexible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "انعطاف‌ناپذیر",
+          "x": "برنامهٔ ما انعطاف‌ناپذیر است.",
+          "n": "متضاد: انعطاف‌پذیر."
+        },
+        "en": {
+          "h": "inflexible",
+          "x": "Our schedule is inflexible.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more inflexible",
+            "superlative": "most inflexible"
+          },
+          "n": "Opposite: flexible."
+        },
+        "sv": {
+          "h": "oflexibel",
+          "x": "Vårt schema är oflexibelt.",
+          "f": {
+            "kind": "adjective",
+            "common": "oflexibel",
+            "neuter": "oflexibelt",
+            "plural": "oflexibla",
+            "definite": "oflexibla",
+            "comparative": "mer oflexibel",
+            "superlative": "mest oflexibel"
+          },
+          "n": "Motsats: flexibel."
+        },
+        "de": {
+          "h": "unflexibel",
+          "x": "Unser Zeitplan ist unflexibel.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unflexibler",
+            "superlative": "am unflexibelsten"
+          },
+          "n": "Gegenteil: flexibel."
+        },
+        "es": {
+          "h": "inflexible",
+          "x": "Nuestro horario es inflexible.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inflexible",
+            "feminine": "inflexible",
+            "plural": "inflexibles"
+          },
+          "n": "Antónimo: flexible."
+        },
+        "it": {
+          "h": "inflessibile",
+          "x": "Il nostro orario è inflessibile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inflessibile",
+            "feminine": "inflessibile",
+            "plural": "inflessibili"
+          },
+          "n": "Contrario: flessibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.temporary.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "موقتی",
+          "x": "این راه‌حل موقتی است.",
+          "n": "متضاد: دائمی."
+        },
+        "en": {
+          "h": "temporary",
+          "x": "This solution is temporary.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: permanent."
+        },
+        "sv": {
+          "h": "tillfällig",
+          "x": "Den här lösningen är tillfällig.",
+          "f": {
+            "kind": "adjective",
+            "common": "tillfällig",
+            "neuter": "tillfälligt",
+            "plural": "tillfälliga",
+            "definite": "tillfälliga"
+          },
+          "n": "Motsats: permanent."
+        },
+        "de": {
+          "h": "temporär",
+          "x": "Diese Lösung ist temporär.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: dauerhaft."
+        },
+        "es": {
+          "h": "temporal",
+          "x": "Esta solución es temporal.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "temporal",
+            "feminine": "temporal",
+            "plural": "temporales"
+          },
+          "n": "Antónimo: permanente."
+        },
+        "it": {
+          "h": "temporaneo",
+          "x": "Questa soluzione è temporanea.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "temporaneo",
+            "feminine": "temporanea",
+            "plural": "temporanei"
+          },
+          "n": "Contrario: permanente."
+        }
+      }
+    },
+    {
+      "id": "core.a.permanent.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "دائمی",
+          "x": "این تغییر دائمی است.",
+          "n": "متضاد: موقتی."
+        },
+        "en": {
+          "h": "permanent",
+          "x": "This change is permanent.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: temporary."
+        },
+        "sv": {
+          "h": "permanent",
+          "x": "Den här förändringen är permanent.",
+          "f": {
+            "kind": "adjective",
+            "common": "permanent",
+            "neuter": "permanent",
+            "plural": "permanenta",
+            "definite": "permanenta"
+          },
+          "n": "Motsats: tillfällig."
+        },
+        "de": {
+          "h": "dauerhaft",
+          "x": "Diese Änderung ist dauerhaft.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: temporär."
+        },
+        "es": {
+          "h": "permanente",
+          "x": "Este cambio es permanente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "permanente",
+            "feminine": "permanente",
+            "plural": "permanentes"
+          },
+          "n": "Antónimo: temporal."
+        },
+        "it": {
+          "h": "permanente",
+          "x": "Questo cambiamento è permanente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "permanente",
+            "feminine": "permanente",
+            "plural": "permanenti"
+          },
+          "n": "Contrario: temporaneo."
+        }
+      }
+    },
+    {
+      "id": "core.a.equal.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "برابر",
+          "x": "همهٔ مردم از نظر حقوقی برابرند.",
+          "n": "متضاد: نابرابر."
+        },
+        "en": {
+          "h": "equal",
+          "x": "All people are equal in rights.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: unequal."
+        },
+        "sv": {
+          "h": "jämlik",
+          "x": "Alla människor är jämlika när det gäller rättigheter.",
+          "f": {
+            "kind": "adjective",
+            "common": "jämlik",
+            "neuter": "jämlikt",
+            "plural": "jämlika",
+            "definite": "jämlika"
+          },
+          "n": "Motsats: ojämlik."
+        },
+        "de": {
+          "h": "gleichberechtigt",
+          "x": "Alle Menschen sind gleichberechtigt.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: nicht gleichberechtigt."
+        },
+        "es": {
+          "h": "igual",
+          "x": "Todas las personas son iguales en derechos.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "igual",
+            "feminine": "igual",
+            "plural": "iguales"
+          },
+          "n": "Antónimo: desigual."
+        },
+        "it": {
+          "h": "uguale",
+          "x": "Tutte le persone sono uguali nei diritti.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "uguale",
+            "feminine": "uguale",
+            "plural": "uguali"
+          },
+          "n": "Contrario: disuguale."
+        }
+      }
+    },
+    {
+      "id": "core.a.unequal.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نابرابر",
+          "x": "در این جامعه مردم از نظر حقوقی نابرابرند.",
+          "n": "متضاد: برابر."
+        },
+        "en": {
+          "h": "unequal",
+          "x": "In this society, people are unequal in rights.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: equal."
+        },
+        "sv": {
+          "h": "ojämlik",
+          "x": "I det här samhället är människor ojämlika när det gäller rättigheter.",
+          "f": {
+            "kind": "adjective",
+            "common": "ojämlik",
+            "neuter": "ojämlikt",
+            "plural": "ojämlika",
+            "definite": "ojämlika"
+          },
+          "n": "Motsats: jämlik."
+        },
+        "de": {
+          "h": "nicht gleichberechtigt",
+          "x": "In dieser Gesellschaft sind Menschen nicht gleichberechtigt.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: gleichberechtigt."
+        },
+        "es": {
+          "h": "desigual",
+          "x": "En esta sociedad, las personas son desiguales en derechos.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "desigual",
+            "feminine": "desigual",
+            "plural": "desiguales"
+          },
+          "n": "Antónimo: igual."
+        },
+        "it": {
+          "h": "disuguale",
+          "x": "In questa società, le persone sono disuguali nei diritti.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "disuguale",
+            "feminine": "disuguale",
+            "plural": "disuguali"
+          },
+          "n": "Contrario: uguale."
+        }
+      }
+    },
+    {
+      "id": "core.a.fair.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "منصفانه",
+          "x": "این تصمیم منصفانه است.",
+          "n": "متضاد: ناعادلانه."
+        },
+        "en": {
+          "h": "fair",
+          "x": "This decision is fair.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more fair",
+            "superlative": "most fair"
+          },
+          "n": "Opposite: unfair."
+        },
+        "sv": {
+          "h": "rättvis",
+          "x": "Det här beslutet är rättvist.",
+          "f": {
+            "kind": "adjective",
+            "common": "rättvis",
+            "neuter": "rättvist",
+            "plural": "rättvisa",
+            "definite": "rättvisa",
+            "comparative": "rättvisare",
+            "superlative": "rättvisast"
+          },
+          "n": "Motsats: orättvis."
+        },
+        "de": {
+          "h": "gerecht",
+          "x": "Diese Entscheidung ist gerecht.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "gerechter",
+            "superlative": "am gerechtesten"
+          },
+          "n": "Gegenteil: ungerecht."
+        },
+        "es": {
+          "h": "justo",
+          "x": "Esta decisión es justa.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "justo",
+            "feminine": "justa",
+            "plural": "justos"
+          },
+          "n": "Antónimo: injusto."
+        },
+        "it": {
+          "h": "equo",
+          "x": "Questa decisione è equa.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "equo",
+            "feminine": "equa",
+            "plural": "equi"
+          },
+          "n": "Contrario: ingiusto."
+        }
+      }
+    },
+    {
+      "id": "core.a.unfair.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "ناعادلانه",
+          "x": "این تصمیم ناعادلانه است.",
+          "n": "متضاد: منصفانه."
+        },
+        "en": {
+          "h": "unfair",
+          "x": "This decision is unfair.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more unfair",
+            "superlative": "most unfair"
+          },
+          "n": "Opposite: fair."
+        },
+        "sv": {
+          "h": "orättvis",
+          "x": "Det här beslutet är orättvist.",
+          "f": {
+            "kind": "adjective",
+            "common": "orättvis",
+            "neuter": "orättvist",
+            "plural": "orättvisa",
+            "definite": "orättvisa",
+            "comparative": "orättvisare",
+            "superlative": "orättvisast"
+          },
+          "n": "Motsats: rättvis."
+        },
+        "de": {
+          "h": "ungerecht",
+          "x": "Diese Entscheidung ist ungerecht.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "ungerechter",
+            "superlative": "am ungerechtesten"
+          },
+          "n": "Gegenteil: gerecht."
+        },
+        "es": {
+          "h": "injusto",
+          "x": "Esta decisión es injusta.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "injusto",
+            "feminine": "injusta",
+            "plural": "injustos"
+          },
+          "n": "Antónimo: justo."
+        },
+        "it": {
+          "h": "ingiusto",
+          "x": "Questa decisione è ingiusta.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "ingiusto",
+            "feminine": "ingiusta",
+            "plural": "ingiusti"
+          },
+          "n": "Contrario: equo."
+        }
+      }
+    },
+    {
+      "id": "core.a.regular.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "منظم",
+          "x": "اتوبوس‌ها در فاصله‌های منظم می‌آیند.",
+          "n": "متضاد: نامنظم."
+        },
+        "en": {
+          "h": "regular",
+          "x": "The buses arrive at regular intervals.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: irregular."
+        },
+        "sv": {
+          "h": "regelbunden",
+          "x": "Bussarna kommer med regelbundna mellanrum.",
+          "f": {
+            "kind": "adjective",
+            "common": "regelbunden",
+            "neuter": "regelbundet",
+            "plural": "regelbundna",
+            "definite": "regelbundna"
+          },
+          "n": "Motsats: oregelbunden."
+        },
+        "de": {
+          "h": "regelmäßig",
+          "x": "Die Busse kommen in regelmäßigen Abständen.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: unregelmäßig."
+        },
+        "es": {
+          "h": "regular",
+          "x": "Los autobuses llegan a intervalos regulares.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "regular",
+            "feminine": "regular",
+            "plural": "regulares"
+          },
+          "n": "Antónimo: irregular."
+        },
+        "it": {
+          "h": "regolare",
+          "x": "Gli autobus arrivano a intervalli regolari.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "regolare",
+            "feminine": "regolare",
+            "plural": "regolari"
+          },
+          "n": "Contrario: irregolare."
+        }
+      }
+    },
+    {
+      "id": "core.a.irregular.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نامنظم",
+          "x": "اتوبوس‌ها در فاصله‌های نامنظم می‌آیند.",
+          "n": "متضاد: منظم."
+        },
+        "en": {
+          "h": "irregular",
+          "x": "The buses arrive at irregular intervals.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: regular."
+        },
+        "sv": {
+          "h": "oregelbunden",
+          "x": "Bussarna kommer med oregelbundna mellanrum.",
+          "f": {
+            "kind": "adjective",
+            "common": "oregelbunden",
+            "neuter": "oregelbundet",
+            "plural": "oregelbundna",
+            "definite": "oregelbundna"
+          },
+          "n": "Motsats: regelbunden."
+        },
+        "de": {
+          "h": "unregelmäßig",
+          "x": "Die Busse kommen in unregelmäßigen Abständen.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: regelmäßig."
+        },
+        "es": {
+          "h": "irregular",
+          "x": "Los autobuses llegan a intervalos irregulares.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irregular",
+            "feminine": "irregular",
+            "plural": "irregulares"
+          },
+          "n": "Antónimo: regular."
+        },
+        "it": {
+          "h": "irregolare",
+          "x": "Gli autobus arrivano a intervalli irregolari.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irregolare",
+            "feminine": "irregolare",
+            "plural": "irregolari"
+          },
+          "n": "Contrario: regolare."
+        }
+      }
+    },
+    {
+      "id": "core.a.obedient.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "فرمان‌بردار",
+          "x": "سگ ما فرمان‌بردار است.",
+          "n": "متضاد: نافرمان."
+        },
+        "en": {
+          "h": "obedient",
+          "x": "Our dog is obedient.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: disobedient."
+        },
+        "sv": {
+          "h": "lydig",
+          "x": "Vår hund är lydig.",
+          "f": {
+            "kind": "adjective",
+            "common": "lydig",
+            "neuter": "lydigt",
+            "plural": "lydiga",
+            "definite": "lydiga"
+          },
+          "n": "Motsats: olydig."
+        },
+        "de": {
+          "h": "gehorsam",
+          "x": "Unser Hund ist gehorsam.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: ungehorsam."
+        },
+        "es": {
+          "h": "obediente",
+          "x": "Nuestro perro es obediente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "obediente",
+            "feminine": "obediente",
+            "plural": "obedientes"
+          },
+          "n": "Antónimo: desobediente."
+        },
+        "it": {
+          "h": "obbediente",
+          "x": "Il nostro cane è obbediente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "obbediente",
+            "feminine": "obbediente",
+            "plural": "obbedienti"
+          },
+          "n": "Contrario: disobbediente."
+        }
+      }
+    },
+    {
+      "id": "core.a.disobedient.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نافرمان",
+          "x": "سگ ما امروز نافرمان است.",
+          "n": "متضاد: فرمان‌بردار."
+        },
+        "en": {
+          "h": "disobedient",
+          "x": "Our dog is disobedient today.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: obedient."
+        },
+        "sv": {
+          "h": "olydig",
+          "x": "Vår hund är olydig idag.",
+          "f": {
+            "kind": "adjective",
+            "common": "olydig",
+            "neuter": "olydigt",
+            "plural": "olydiga",
+            "definite": "olydiga"
+          },
+          "n": "Motsats: lydig."
+        },
+        "de": {
+          "h": "ungehorsam",
+          "x": "Unser Hund ist heute ungehorsam.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: gehorsam."
+        },
+        "es": {
+          "h": "desobediente",
+          "x": "Nuestro perro está desobediente hoy.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "desobediente",
+            "feminine": "desobediente",
+            "plural": "desobedientes"
+          },
+          "n": "Antónimo: obediente."
+        },
+        "it": {
+          "h": "disobbediente",
+          "x": "Il nostro cane è disobbediente oggi.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "disobbediente",
+            "feminine": "disobbediente",
+            "plural": "disobbedienti"
+          },
+          "n": "Contrario: obbediente."
+        }
+      }
+    },
+    {
+      "id": "core.a.mature.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بالغ",
+          "x": "او برای سنش بالغ است.",
+          "n": "متضاد: نابالغ."
+        },
+        "en": {
+          "h": "mature",
+          "x": "He is mature for his age.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more mature",
+            "superlative": "most mature"
+          },
+          "n": "Opposite: immature."
+        },
+        "sv": {
+          "h": "mogen",
+          "x": "Han är mogen för sin ålder.",
+          "f": {
+            "kind": "adjective",
+            "common": "mogen",
+            "neuter": "moget",
+            "plural": "mogna",
+            "definite": "mogna",
+            "comparative": "mognare",
+            "superlative": "mognast"
+          },
+          "n": "Motsats: omogen."
+        },
+        "de": {
+          "h": "reif",
+          "x": "Er ist reif für sein Alter.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "reifer",
+            "superlative": "am reifsten"
+          },
+          "n": "Gegenteil: unreif."
+        },
+        "es": {
+          "h": "maduro",
+          "x": "Él es maduro para su edad.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "maduro",
+            "feminine": "madura",
+            "plural": "maduros"
+          },
+          "n": "Antónimo: inmaduro."
+        },
+        "it": {
+          "h": "maturo",
+          "x": "Lui è maturo per la sua età.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "maturo",
+            "feminine": "matura",
+            "plural": "maturi"
+          },
+          "n": "Contrario: immaturo."
+        }
+      }
+    },
+    {
+      "id": "core.a.immature.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نابالغ",
+          "x": "رفتار او نابالغ است.",
+          "n": "متضاد: بالغ."
+        },
+        "en": {
+          "h": "immature",
+          "x": "His behaviour is immature.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more immature",
+            "superlative": "most immature"
+          },
+          "n": "Opposite: mature."
+        },
+        "sv": {
+          "h": "omogen",
+          "x": "Hans beteende är omoget.",
+          "f": {
+            "kind": "adjective",
+            "common": "omogen",
+            "neuter": "omoget",
+            "plural": "omogna",
+            "definite": "omogna",
+            "comparative": "omognare",
+            "superlative": "omognast"
+          },
+          "n": "Motsats: mogen."
+        },
+        "de": {
+          "h": "unreif",
+          "x": "Sein Verhalten ist unreif.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unreifer",
+            "superlative": "am unreifsten"
+          },
+          "n": "Gegenteil: reif."
+        },
+        "es": {
+          "h": "inmaduro",
+          "x": "Su comportamiento es inmaduro.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "inmaduro",
+            "feminine": "inmadura",
+            "plural": "inmaduros"
+          },
+          "n": "Antónimo: maduro."
+        },
+        "it": {
+          "h": "immaturo",
+          "x": "Il suo comportamento è immaturo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "immaturo",
+            "feminine": "immatura",
+            "plural": "immaturi"
+          },
+          "n": "Contrario: maturo."
+        }
+      }
+    },
+    {
+      "id": "core.a.edible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "خوردنی",
+          "x": "این قارچ خوردنی است.",
+          "n": "متضاد: غیرخوراکی."
+        },
+        "en": {
+          "h": "edible",
+          "x": "This mushroom is edible.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: inedible."
+        },
+        "sv": {
+          "h": "ätlig",
+          "x": "Den här svampen är ätlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "ätlig",
+            "neuter": "ätligt",
+            "plural": "ätliga",
+            "definite": "ätliga"
+          },
+          "n": "Motsats: oätlig."
+        },
+        "de": {
+          "h": "essbar",
+          "x": "Dieser Pilz ist essbar.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: ungenießbar."
+        },
+        "es": {
+          "h": "comestible",
+          "x": "Esta seta es comestible.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "comestible",
+            "feminine": "comestible",
+            "plural": "comestibles"
+          },
+          "n": "Antónimo: no comestible."
+        },
+        "it": {
+          "h": "commestibile",
+          "x": "Questo fungo è commestibile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "commestibile",
+            "feminine": "commestibile",
+            "plural": "commestibili"
+          },
+          "n": "Contrario: non commestibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.inedible.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "غیرخوراکی",
+          "x": "این قارچ غیرخوراکی است.",
+          "n": "متضاد: خوردنی."
+        },
+        "en": {
+          "h": "inedible",
+          "x": "This mushroom is inedible.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: edible."
+        },
+        "sv": {
+          "h": "oätlig",
+          "x": "Den här svampen är oätlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "oätlig",
+            "neuter": "oätligt",
+            "plural": "oätliga",
+            "definite": "oätliga"
+          },
+          "n": "Motsats: ätlig."
+        },
+        "de": {
+          "h": "ungenießbar",
+          "x": "Dieser Pilz ist ungenießbar.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: essbar."
+        },
+        "es": {
+          "h": "no comestible",
+          "x": "Esta seta no es comestible.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "no comestible",
+            "feminine": "no comestible",
+            "plural": "no comestibles"
+          },
+          "n": "Antónimo: comestible."
+        },
+        "it": {
+          "h": "non commestibile",
+          "x": "Questo fungo non è commestibile.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "non commestibile",
+            "feminine": "non commestibile",
+            "plural": "non commestibili"
+          },
+          "n": "Contrario: commestibile."
+        }
+      }
+    },
+    {
+      "id": "core.a.tolerant.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بردبار",
+          "x": "او نسبت به نظرهای دیگر بردبار است.",
+          "n": "متضاد: نابردبار."
+        },
+        "en": {
+          "h": "tolerant",
+          "x": "He is tolerant of other opinions.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more tolerant",
+            "superlative": "most tolerant"
+          },
+          "n": "Opposite: intolerant."
+        },
+        "sv": {
+          "h": "tolerant",
+          "x": "Han är tolerant mot andra åsikter.",
+          "f": {
+            "kind": "adjective",
+            "common": "tolerant",
+            "neuter": "tolerant",
+            "plural": "toleranta",
+            "definite": "toleranta",
+            "comparative": "tolerantare",
+            "superlative": "tolerantast"
+          },
+          "n": "Motsats: intolerant."
+        },
+        "de": {
+          "h": "tolerant",
+          "x": "Er ist tolerant gegenüber anderen Meinungen.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "toleranter",
+            "superlative": "am tolerantesten"
+          },
+          "n": "Gegenteil: intolerant."
+        },
+        "es": {
+          "h": "tolerante",
+          "x": "Él es tolerante con otras opiniones.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "tolerante",
+            "feminine": "tolerante",
+            "plural": "tolerantes"
+          },
+          "n": "Antónimo: intolerante."
+        },
+        "it": {
+          "h": "tollerante",
+          "x": "Lui è tollerante verso le altre opinioni.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "tollerante",
+            "feminine": "tollerante",
+            "plural": "tolleranti"
+          },
+          "n": "Contrario: intollerante."
+        }
+      }
+    },
+    {
+      "id": "core.a.intolerant.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نابردبار",
+          "x": "او نسبت به نظرهای دیگر نابردبار است.",
+          "n": "متضاد: بردبار."
+        },
+        "en": {
+          "h": "intolerant",
+          "x": "He is intolerant of other opinions.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more intolerant",
+            "superlative": "most intolerant"
+          },
+          "n": "Opposite: tolerant."
+        },
+        "sv": {
+          "h": "intolerant",
+          "x": "Han är intolerant mot andra åsikter.",
+          "f": {
+            "kind": "adjective",
+            "common": "intolerant",
+            "neuter": "intolerant",
+            "plural": "intoleranta",
+            "definite": "intoleranta",
+            "comparative": "intolerantare",
+            "superlative": "intolerantast"
+          },
+          "n": "Motsats: tolerant."
+        },
+        "de": {
+          "h": "intolerant",
+          "x": "Er ist intolerant gegenüber anderen Meinungen.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "intoleranter",
+            "superlative": "am intolerantesten"
+          },
+          "n": "Gegenteil: tolerant."
+        },
+        "es": {
+          "h": "intolerante",
+          "x": "Él es intolerante con otras opiniones.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "intolerante",
+            "feminine": "intolerante",
+            "plural": "intolerantes"
+          },
+          "n": "Antónimo: tolerante."
+        },
+        "it": {
+          "h": "intollerante",
+          "x": "Lui è intollerante verso le altre opinioni.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "intollerante",
+            "feminine": "intollerante",
+            "plural": "intolleranti"
+          },
+          "n": "Contrario: tollerante."
+        }
+      }
+    },
+    {
+      "id": "core.a.rational.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "عقلانی",
+          "x": "این تصمیم عقلانی است.",
+          "n": "متضاد: غیرعقلانی."
+        },
+        "en": {
+          "h": "rational",
+          "x": "This decision is rational.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more rational",
+            "superlative": "most rational"
+          },
+          "n": "Opposite: irrational."
+        },
+        "sv": {
+          "h": "rationell",
+          "x": "Det här beslutet är rationellt.",
+          "f": {
+            "kind": "adjective",
+            "common": "rationell",
+            "neuter": "rationellt",
+            "plural": "rationella",
+            "definite": "rationella",
+            "comparative": "mer rationell",
+            "superlative": "mest rationell"
+          },
+          "n": "Motsats: irrationell."
+        },
+        "de": {
+          "h": "rational",
+          "x": "Diese Entscheidung ist rational.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "rationaler",
+            "superlative": "am rationalsten"
+          },
+          "n": "Gegenteil: irrational."
+        },
+        "es": {
+          "h": "racional",
+          "x": "Esta decisión es racional.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "racional",
+            "feminine": "racional",
+            "plural": "racionales"
+          },
+          "n": "Antónimo: irracional."
+        },
+        "it": {
+          "h": "razionale",
+          "x": "Questa decisione è razionale.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "razionale",
+            "feminine": "razionale",
+            "plural": "razionali"
+          },
+          "n": "Contrario: irrazionale."
+        }
+      }
+    },
+    {
+      "id": "core.a.irrational.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "غیرعقلانی",
+          "x": "این تصمیم غیرعقلانی است.",
+          "n": "متضاد: عقلانی."
+        },
+        "en": {
+          "h": "irrational",
+          "x": "This decision is irrational.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more irrational",
+            "superlative": "most irrational"
+          },
+          "n": "Opposite: rational."
+        },
+        "sv": {
+          "h": "irrationell",
+          "x": "Det här beslutet är irrationellt.",
+          "f": {
+            "kind": "adjective",
+            "common": "irrationell",
+            "neuter": "irrationellt",
+            "plural": "irrationella",
+            "definite": "irrationella",
+            "comparative": "mer irrationell",
+            "superlative": "mest irrationell"
+          },
+          "n": "Motsats: rationell."
+        },
+        "de": {
+          "h": "irrational",
+          "x": "Diese Entscheidung ist irrational.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "irrationaler",
+            "superlative": "am irrationalsten"
+          },
+          "n": "Gegenteil: rational."
+        },
+        "es": {
+          "h": "irracional",
+          "x": "Esta decisión es irracional.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irracional",
+            "feminine": "irracional",
+            "plural": "irracionales"
+          },
+          "n": "Antónimo: racional."
+        },
+        "it": {
+          "h": "irrazionale",
+          "x": "Questa decisione è irrazionale.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "irrazionale",
+            "feminine": "irrazionale",
+            "plural": "irrazionali"
+          },
+          "n": "Contrario: razionale."
+        }
+      }
+    },
+    {
+      "id": "core.a.cooperative.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "اهل همکاری",
+          "x": "همکار جدید اهل همکاری است.",
+          "n": "متضاد: ناهمکار."
+        },
+        "en": {
+          "h": "cooperative",
+          "x": "The new colleague is cooperative.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more cooperative",
+            "superlative": "most cooperative"
+          },
+          "n": "Opposite: uncooperative."
+        },
+        "sv": {
+          "h": "samarbetsvillig",
+          "x": "Den nya kollegan är samarbetsvillig.",
+          "f": {
+            "kind": "adjective",
+            "common": "samarbetsvillig",
+            "neuter": "samarbetsvilligt",
+            "plural": "samarbetsvilliga",
+            "definite": "samarbetsvilliga",
+            "comparative": "samarbetsvilligare",
+            "superlative": "samarbetsvilligast"
+          },
+          "n": "Motsats: ovillig att samarbeta."
+        },
+        "de": {
+          "h": "kooperativ",
+          "x": "Der neue Kollege ist kooperativ.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "kooperativer",
+            "superlative": "am kooperativsten"
+          },
+          "n": "Gegenteil: unkooperativ."
+        },
+        "es": {
+          "h": "cooperativo",
+          "x": "El nuevo compañero es cooperativo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "cooperativo",
+            "feminine": "cooperativa",
+            "plural": "cooperativos"
+          },
+          "n": "Antónimo: poco cooperativo."
+        },
+        "it": {
+          "h": "collaborativo",
+          "x": "Il nuovo collega è collaborativo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "collaborativo",
+            "feminine": "collaborativa",
+            "plural": "collaborativi"
+          },
+          "n": "Contrario: poco collaborativo."
+        }
+      }
+    },
+    {
+      "id": "core.a.uncooperative.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "ناهمکار",
+          "x": "همکار جدید ناهمکار است.",
+          "n": "متضاد: اهل همکاری."
+        },
+        "en": {
+          "h": "uncooperative",
+          "x": "The new colleague is uncooperative.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more uncooperative",
+            "superlative": "most uncooperative"
+          },
+          "n": "Opposite: cooperative."
+        },
+        "sv": {
+          "h": "ovillig att samarbeta",
+          "x": "Den nya kollegan är ovillig att samarbeta.",
+          "f": {
+            "kind": "adjective",
+            "common": "ovillig att samarbeta",
+            "neuter": "ovilligt att samarbeta",
+            "plural": "ovilliga att samarbeta",
+            "definite": "ovilliga att samarbeta",
+            "comparative": "mer ovillig att samarbeta",
+            "superlative": "mest ovillig att samarbeta"
+          },
+          "n": "Motsats: samarbetsvillig."
+        },
+        "de": {
+          "h": "unkooperativ",
+          "x": "Der neue Kollege ist unkooperativ.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unkooperativer",
+            "superlative": "am unkooperativsten"
+          },
+          "n": "Gegenteil: kooperativ."
+        },
+        "es": {
+          "h": "poco cooperativo",
+          "x": "El nuevo compañero es poco cooperativo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco cooperativo",
+            "feminine": "poco cooperativa",
+            "plural": "poco cooperativos"
+          },
+          "n": "Antónimo: cooperativo."
+        },
+        "it": {
+          "h": "poco collaborativo",
+          "x": "Il nuovo collega è poco collaborativo.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco collaborativo",
+            "feminine": "poco collaborativa",
+            "plural": "poco collaborativi"
+          },
+          "n": "Contrario: collaborativo."
+        }
+      }
+    },
+    {
+      "id": "core.a.attentive.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بادقت",
+          "x": "او شنونده‌ای بادقت است.",
+          "n": "متضاد: بی‌توجه."
+        },
+        "en": {
+          "h": "attentive",
+          "x": "He is an attentive listener.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more attentive",
+            "superlative": "most attentive"
+          },
+          "n": "Opposite: inattentive."
+        },
+        "sv": {
+          "h": "uppmärksam",
+          "x": "Han är en uppmärksam lyssnare.",
+          "f": {
+            "kind": "adjective",
+            "common": "uppmärksam",
+            "neuter": "uppmärksamt",
+            "plural": "uppmärksamma",
+            "definite": "uppmärksamma",
+            "comparative": "uppmärksammare",
+            "superlative": "uppmärksammast"
+          },
+          "n": "Motsats: ouppmärksam."
+        },
+        "de": {
+          "h": "aufmerksam",
+          "x": "Er ist ein aufmerksamer Zuhörer.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "aufmerksamer",
+            "superlative": "am aufmerksamsten"
+          },
+          "n": "Gegenteil: unaufmerksam."
+        },
+        "es": {
+          "h": "atento",
+          "x": "Él es un oyente atento.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "atento",
+            "feminine": "atenta",
+            "plural": "atentos"
+          },
+          "n": "Antónimo: desatento."
+        },
+        "it": {
+          "h": "attento",
+          "x": "Lui è un ascoltatore attento.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "attento",
+            "feminine": "attenta",
+            "plural": "attenti"
+          },
+          "n": "Contrario: disattento."
+        }
+      }
+    },
+    {
+      "id": "core.a.inattentive.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌توجه",
+          "x": "او امروز بی‌توجه است.",
+          "n": "متضاد: بادقت."
+        },
+        "en": {
+          "h": "inattentive",
+          "x": "He is inattentive today.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more inattentive",
+            "superlative": "most inattentive"
+          },
+          "n": "Opposite: attentive."
+        },
+        "sv": {
+          "h": "ouppmärksam",
+          "x": "Han är ouppmärksam idag.",
+          "f": {
+            "kind": "adjective",
+            "common": "ouppmärksam",
+            "neuter": "ouppmärksamt",
+            "plural": "ouppmärksamma",
+            "definite": "ouppmärksamma",
+            "comparative": "ouppmärksammare",
+            "superlative": "ouppmärksammast"
+          },
+          "n": "Motsats: uppmärksam."
+        },
+        "de": {
+          "h": "unaufmerksam",
+          "x": "Er ist heute unaufmerksam.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unaufmerksamer",
+            "superlative": "am unaufmerksamsten"
+          },
+          "n": "Gegenteil: aufmerksam."
+        },
+        "es": {
+          "h": "desatento",
+          "x": "Él está desatento hoy.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "desatento",
+            "feminine": "desatenta",
+            "plural": "desatentos"
+          },
+          "n": "Antónimo: atento."
+        },
+        "it": {
+          "h": "disattento",
+          "x": "Lui è disattento oggi.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "disattento",
+            "feminine": "disattenta",
+            "plural": "disattenti"
+          },
+          "n": "Contrario: attento."
+        }
+      }
+    },
+    {
+      "id": "core.a.shallow.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "کم‌عمق",
+          "x": "آب اینجا کم‌عمق است.",
+          "n": "متضاد: عمیق."
+        },
+        "en": {
+          "h": "shallow",
+          "x": "The water is shallow here.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "shallower",
+            "superlative": "shallowest"
+          },
+          "n": "Opposite: deep."
+        },
+        "sv": {
+          "h": "grund",
+          "x": "Vattnet är grunt här.",
+          "f": {
+            "kind": "adjective",
+            "common": "grund",
+            "neuter": "grunt",
+            "plural": "grunda",
+            "definite": "grunda",
+            "comparative": "grundare",
+            "superlative": "grundast"
+          },
+          "n": "Motsats: djup."
+        },
+        "de": {
+          "h": "seicht",
+          "x": "Das Wasser ist hier seicht.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "seichter",
+            "superlative": "am seichtesten"
+          },
+          "n": "Gegenteil: tief."
+        },
+        "es": {
+          "h": "poco profundo",
+          "x": "El agua es poco profunda aquí.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco profundo",
+            "feminine": "poco profunda",
+            "plural": "poco profundos"
+          },
+          "n": "Antónimo: profundo."
+        },
+        "it": {
+          "h": "poco profondo",
+          "x": "L'acqua è poco profonda qui.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco profondo",
+            "feminine": "poco profonda",
+            "plural": "poco profondi"
+          },
+          "n": "Contrario: profondo."
+        }
+      }
+    },
+    {
+      "id": "core.a.crooked.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "کج",
+          "x": "این خط کج است.",
+          "n": "متضاد: صاف."
+        },
+        "en": {
+          "h": "crooked",
+          "x": "This line is crooked.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more crooked",
+            "superlative": "most crooked"
+          },
+          "n": "Opposite: straight."
+        },
+        "sv": {
+          "h": "krokig",
+          "x": "Den här linjen är krokig.",
+          "f": {
+            "kind": "adjective",
+            "common": "krokig",
+            "neuter": "krokigt",
+            "plural": "krokiga",
+            "definite": "krokiga",
+            "comparative": "krokigare",
+            "superlative": "krokigast"
+          },
+          "n": "Motsats: rak."
+        },
+        "de": {
+          "h": "krumm",
+          "x": "Diese Linie ist krumm.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "krümmer",
+            "superlative": "am krümmsten"
+          },
+          "n": "Gegenteil: gerade."
+        },
+        "es": {
+          "h": "torcido",
+          "x": "Esta línea está torcida.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "torcido",
+            "feminine": "torcida",
+            "plural": "torcidos"
+          },
+          "n": "Antónimo: recto."
+        },
+        "it": {
+          "h": "storto",
+          "x": "Questa linea è storta.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "storto",
+            "feminine": "storta",
+            "plural": "storti"
+          },
+          "n": "Contrario: dritto."
+        }
+      }
+    },
+    {
+      "id": "core.a.opaque.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "مات",
+          "x": "این شیشه مات است.",
+          "n": "متضاد: شفاف."
+        },
+        "en": {
+          "h": "opaque",
+          "x": "This glass is opaque.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more opaque",
+            "superlative": "most opaque"
+          },
+          "n": "Opposite: transparent."
+        },
+        "sv": {
+          "h": "ogenomskinlig",
+          "x": "Det här glaset är ogenomskinligt.",
+          "f": {
+            "kind": "adjective",
+            "common": "ogenomskinlig",
+            "neuter": "ogenomskinligt",
+            "plural": "ogenomskinliga",
+            "definite": "ogenomskinliga",
+            "comparative": "ogenomskinligare",
+            "superlative": "ogenomskinligast"
+          },
+          "n": "Motsats: genomskinlig."
+        },
+        "de": {
+          "h": "undurchsichtig",
+          "x": "Dieses Glas ist undurchsichtig.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "undurchsichtiger",
+            "superlative": "am undurchsichtigsten"
+          },
+          "n": "Gegenteil: durchsichtig."
+        },
+        "es": {
+          "h": "opaco",
+          "x": "Este vidrio es opaco.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "opaco",
+            "feminine": "opaca",
+            "plural": "opacos"
+          },
+          "n": "Antónimo: transparente."
+        },
+        "it": {
+          "h": "opaco",
+          "x": "Questo vetro è opaco.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "opaco",
+            "feminine": "opaca",
+            "plural": "opachi"
+          },
+          "n": "Contrario: trasparente."
+        }
+      }
+    },
+    {
+      "id": "core.a.dishonest.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "نادرستکار",
+          "x": "او نادرستکار بود.",
+          "n": "متضاد: درستکار."
+        },
+        "en": {
+          "h": "dishonest",
+          "x": "He was dishonest.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more dishonest",
+            "superlative": "most dishonest"
+          },
+          "n": "Opposite: honest."
+        },
+        "sv": {
+          "h": "oärlig",
+          "x": "Han var oärlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "oärlig",
+            "neuter": "oärligt",
+            "plural": "oärliga",
+            "definite": "oärliga",
+            "comparative": "oärligare",
+            "superlative": "oärligast"
+          },
+          "n": "Motsats: ärlig."
+        },
+        "de": {
+          "h": "unehrlich",
+          "x": "Er war unehrlich.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unehrlicher",
+            "superlative": "am unehrlichsten"
+          },
+          "n": "Gegenteil: ehrlich."
+        },
+        "es": {
+          "h": "deshonesto",
+          "x": "Él fue deshonesto.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "deshonesto",
+            "feminine": "deshonesta",
+            "plural": "deshonestos"
+          },
+          "n": "Antónimo: honesto."
+        },
+        "it": {
+          "h": "disonesto",
+          "x": "Lui è stato disonesto.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "disonesto",
+            "feminine": "disonesta",
+            "plural": "disonesti"
+          },
+          "n": "Contrario: onesto."
+        }
+      }
+    },
+    {
+      "id": "core.a.imperfect.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "ناقص",
+          "x": "این راه‌حل هنوز ناقص است.",
+          "n": "متضاد: کامل."
+        },
+        "en": {
+          "h": "imperfect",
+          "x": "This solution is still imperfect.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more imperfect",
+            "superlative": "most imperfect"
+          },
+          "n": "Opposite: perfect."
+        },
+        "sv": {
+          "h": "ofullkomlig",
+          "x": "Den här lösningen är fortfarande ofullkomlig.",
+          "f": {
+            "kind": "adjective",
+            "common": "ofullkomlig",
+            "neuter": "ofullkomligt",
+            "plural": "ofullkomliga",
+            "definite": "ofullkomliga",
+            "comparative": "ofullkomligare",
+            "superlative": "ofullkomligast"
+          },
+          "n": "Motsats: perfekt."
+        },
+        "de": {
+          "h": "unvollkommen",
+          "x": "Diese Lösung ist noch unvollkommen.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unvollkommener",
+            "superlative": "am unvollkommensten"
+          },
+          "n": "Gegenteil: perfekt."
+        },
+        "es": {
+          "h": "imperfecto",
+          "x": "Esta solución todavía es imperfecta.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "imperfecto",
+            "feminine": "imperfecta",
+            "plural": "imperfectos"
+          },
+          "n": "Antónimo: perfecto."
+        },
+        "it": {
+          "h": "imperfetto",
+          "x": "Questa soluzione è ancora imperfetta.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "imperfetto",
+            "feminine": "imperfetta",
+            "plural": "imperfetti"
+          },
+          "n": "Contrario: perfetto."
+        }
+      }
+    },
+    {
+      "id": "core.a.unimportant.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌اهمیت",
+          "x": "این جزئیات بی‌اهمیت است.",
+          "n": "متضاد: مهم."
+        },
+        "en": {
+          "h": "unimportant",
+          "x": "This detail is unimportant.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more unimportant",
+            "superlative": "most unimportant"
+          },
+          "n": "Opposite: important."
+        },
+        "sv": {
+          "h": "oviktig",
+          "x": "Den här detaljen är oviktig.",
+          "f": {
+            "kind": "adjective",
+            "common": "oviktig",
+            "neuter": "oviktigt",
+            "plural": "oviktiga",
+            "definite": "oviktiga",
+            "comparative": "oviktigare",
+            "superlative": "oviktigast"
+          },
+          "n": "Motsats: viktig."
+        },
+        "de": {
+          "h": "unwichtig",
+          "x": "Dieses Detail ist unwichtig.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unwichtiger",
+            "superlative": "am unwichtigsten"
+          },
+          "n": "Gegenteil: wichtig."
+        },
+        "es": {
+          "h": "sin importancia",
+          "x": "Este detalle no tiene importancia.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "sin importancia",
+            "feminine": "sin importancia",
+            "plural": "sin importancia"
+          },
+          "n": "Antónimo: importante."
+        },
+        "it": {
+          "h": "poco importante",
+          "x": "Questo dettaglio è poco importante.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "poco importante",
+            "feminine": "poco importante",
+            "plural": "poco importanti"
+          },
+          "n": "Contrario: importante."
+        }
+      }
+    },
+    {
+      "id": "core.a.ungrateful.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "ناسپاس",
+          "x": "او نمی‌خواهد ناسپاس باشد.",
+          "n": "متضاد: سپاسگزار."
+        },
+        "en": {
+          "h": "ungrateful",
+          "x": "He does not want to be ungrateful.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more ungrateful",
+            "superlative": "most ungrateful"
+          },
+          "n": "Opposite: grateful."
+        },
+        "sv": {
+          "h": "otacksam",
+          "x": "Han vill inte vara otacksam.",
+          "f": {
+            "kind": "adjective",
+            "common": "otacksam",
+            "neuter": "otacksamt",
+            "plural": "otacksamma",
+            "definite": "otacksamma",
+            "comparative": "otacksammare",
+            "superlative": "otacksammast"
+          },
+          "n": "Motsats: tacksam."
+        },
+        "de": {
+          "h": "undankbar",
+          "x": "Er möchte nicht undankbar sein.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "undankbarer",
+            "superlative": "am undankbarsten"
+          },
+          "n": "Gegenteil: dankbar."
+        },
+        "es": {
+          "h": "desagradecido",
+          "x": "Él no quiere ser desagradecido.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "desagradecido",
+            "feminine": "desagradecida",
+            "plural": "desagradecidos"
+          },
+          "n": "Antónimo: agradecido."
+        },
+        "it": {
+          "h": "ingrato",
+          "x": "Lui non vuole essere ingrato.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "ingrato",
+            "feminine": "ingrata",
+            "plural": "ingrati"
+          },
+          "n": "Contrario: grato."
+        }
+      }
+    },
+    {
+      "id": "core.a.insufficient.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "ناکافی",
+          "x": "این مقدار ناکافی است.",
+          "n": "متضاد: کافی."
+        },
+        "en": {
+          "h": "insufficient",
+          "x": "This amount is insufficient.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "more insufficient",
+            "superlative": "most insufficient"
+          },
+          "n": "Opposite: sufficient."
+        },
+        "sv": {
+          "h": "otillräcklig",
+          "x": "Den här mängden är otillräcklig.",
+          "f": {
+            "kind": "adjective",
+            "common": "otillräcklig",
+            "neuter": "otillräckligt",
+            "plural": "otillräckliga",
+            "definite": "otillräckliga",
+            "comparative": "mer otillräcklig",
+            "superlative": "mest otillräcklig"
+          },
+          "n": "Motsats: tillräcklig."
+        },
+        "de": {
+          "h": "unzureichend",
+          "x": "Diese Menge ist unzureichend.",
+          "f": {
+            "kind": "adjective",
+            "comparative": "unzureichender",
+            "superlative": "am unzureichendesten"
+          },
+          "n": "Gegenteil: ausreichend."
+        },
+        "es": {
+          "h": "insuficiente",
+          "x": "Esta cantidad es insuficiente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "insuficiente",
+            "feminine": "insuficiente",
+            "plural": "insuficientes"
+          },
+          "n": "Antónimo: suficiente."
+        },
+        "it": {
+          "h": "insufficiente",
+          "x": "Questa quantità è insufficiente.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "insufficiente",
+            "feminine": "insufficiente",
+            "plural": "insufficienti"
+          },
+          "n": "Contrario: sufficiente."
+        }
+      }
+    },
+    {
+      "id": "core.a.worthless.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌ارزش",
+          "x": "این بلیت دیگر بی‌ارزش است.",
+          "n": "متضاد: باارزش."
+        },
+        "en": {
+          "h": "worthless",
+          "x": "This ticket is now worthless.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: valuable."
+        },
+        "sv": {
+          "h": "värdelös",
+          "x": "Den här biljetten är värdelös nu.",
+          "f": {
+            "kind": "adjective",
+            "common": "värdelös",
+            "neuter": "värdelöst",
+            "plural": "värdelösa",
+            "definite": "värdelösa"
+          },
+          "n": "Motsats: värdefull."
+        },
+        "de": {
+          "h": "wertlos",
+          "x": "Diese Fahrkarte ist jetzt wertlos.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: wertvoll."
+        },
+        "es": {
+          "h": "sin valor",
+          "x": "Este billete ya no tiene valor.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "sin valor",
+            "feminine": "sin valor",
+            "plural": "sin valor"
+          },
+          "n": "Antónimo: valioso."
+        },
+        "it": {
+          "h": "senza valore",
+          "x": "Questo biglietto ora è senza valore.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "senza valore",
+            "feminine": "senza valore",
+            "plural": "senza valore"
+          },
+          "n": "Contrario: prezioso."
+        }
+      }
+    },
+    {
+      "id": "core.a.fearless.20261108",
+      "p": "adjective",
+      "t": [
+        "daily",
+        "opposites"
+      ],
+      "e": {
+        "fa": {
+          "h": "بی‌باک",
+          "x": "آن کاوشگر بی‌باک است.",
+          "n": "متضاد: ترسیده."
+        },
+        "en": {
+          "h": "fearless",
+          "x": "That explorer is fearless.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Opposite: afraid."
+        },
+        "sv": {
+          "h": "orädd",
+          "x": "Den där upptäcktsresanden är orädd.",
+          "f": {
+            "kind": "adjective",
+            "common": "orädd",
+            "plural": "orädda",
+            "definite": "orädda"
+          },
+          "n": "Motsats: rädd."
+        },
+        "de": {
+          "h": "furchtlos",
+          "x": "Dieser Entdecker ist furchtlos.",
+          "f": {
+            "kind": "adjective"
+          },
+          "n": "Gegenteil: ängstlich."
+        },
+        "es": {
+          "h": "intrépido",
+          "x": "Ese explorador es intrépido.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "intrépido",
+            "feminine": "intrépida",
+            "plural": "intrépidos"
+          },
+          "n": "Antónimo: asustado."
+        },
+        "it": {
+          "h": "impavido",
+          "x": "Quell'esploratore è impavido.",
+          "f": {
+            "kind": "adjective",
+            "masculine": "impavido",
+            "feminine": "impavida",
+            "plural": "impavidi"
+          },
+          "n": "Contrario: spaventato."
+        }
+      }
+    },
+    {
+      "id": "core.d.after_lunch.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "بعد از ناهار",
+          "x": "بعد از ناهار قدم می‌زنیم."
+        },
+        "en": {
+          "h": "after lunch",
+          "x": "We walk after lunch."
+        },
+        "sv": {
+          "h": "efter lunch",
+          "x": "Vi promenerar efter lunch."
+        },
+        "de": {
+          "h": "nach dem Mittagessen",
+          "x": "Wir gehen nach dem Mittagessen spazieren."
+        },
+        "es": {
+          "h": "después de comer",
+          "x": "Paseamos después de comer."
+        },
+        "it": {
+          "h": "dopo pranzo",
+          "x": "Passeggiamo dopo pranzo."
+        }
+      }
+    },
+    {
+      "id": "core.d.shortly_afterwards.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "کمی بعد",
+          "x": "کمی بعد اتوبوس رسید."
+        },
+        "en": {
+          "h": "shortly afterwards",
+          "x": "The bus arrived shortly afterwards."
+        },
+        "sv": {
+          "h": "strax därefter",
+          "x": "Bussen kom strax därefter."
+        },
+        "de": {
+          "h": "kurz danach",
+          "x": "Der Bus kam kurz danach."
+        },
+        "es": {
+          "h": "poco después",
+          "x": "El autobús llegó poco después."
+        },
+        "it": {
+          "h": "poco dopo",
+          "x": "L'autobus è arrivato poco dopo."
+        }
+      }
+    },
+    {
+      "id": "core.d.beforehand.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "از پیش",
+          "x": "باید از پیش رزرو کنی."
+        },
+        "en": {
+          "h": "beforehand",
+          "x": "You need to book beforehand."
+        },
+        "sv": {
+          "h": "i förväg",
+          "x": "Du måste boka i förväg."
+        },
+        "de": {
+          "h": "im Voraus",
+          "x": "Du musst im Voraus buchen."
+        },
+        "es": {
+          "h": "de antemano",
+          "x": "Tienes que reservar de antemano."
+        },
+        "it": {
+          "h": "in anticipo",
+          "x": "Devi prenotare in anticipo."
+        }
+      }
+    },
+    {
+      "id": "core.d.afterwards.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "پس از آن",
+          "x": "پس از آن به خانه رفتیم."
+        },
+        "en": {
+          "h": "afterwards",
+          "x": "We went home afterwards."
+        },
+        "sv": {
+          "h": "efteråt",
+          "x": "Vi gick hem efteråt."
+        },
+        "de": {
+          "h": "danach",
+          "x": "Wir gingen danach nach Hause."
+        },
+        "es": {
+          "h": "después",
+          "x": "Fuimos a casa después."
+        },
+        "it": {
+          "h": "in seguito",
+          "x": "Siamo andati a casa in seguito."
+        }
+      }
+    },
+    {
+      "id": "core.d.in_the_past.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "در گذشته",
+          "x": "در گذشته اینجا زندگی می‌کردم."
+        },
+        "en": {
+          "h": "in the past",
+          "x": "I lived here in the past."
+        },
+        "sv": {
+          "h": "förr i tiden",
+          "x": "Jag bodde här förr i tiden."
+        },
+        "de": {
+          "h": "in der Vergangenheit",
+          "x": "Ich habe in der Vergangenheit hier gewohnt."
+        },
+        "es": {
+          "h": "en el pasado",
+          "x": "Vivía aquí en el pasado."
+        },
+        "it": {
+          "h": "in passato",
+          "x": "Abitavo qui in passato."
+        }
+      }
+    },
+    {
+      "id": "core.d.tonight.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "امشب",
+          "x": "امشب خانه می‌مانم."
+        },
+        "en": {
+          "h": "tonight",
+          "x": "I am staying at home tonight."
+        },
+        "sv": {
+          "h": "ikväll",
+          "x": "Jag stannar hemma ikväll."
+        },
+        "de": {
+          "h": "heute Abend",
+          "x": "Ich bleibe heute Abend zu Hause."
+        },
+        "es": {
+          "h": "esta noche",
+          "x": "Me quedo en casa esta noche."
+        },
+        "it": {
+          "h": "stasera",
+          "x": "Resto a casa stasera."
+        }
+      }
+    },
+    {
+      "id": "core.d.last_night.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "دیشب",
+          "x": "دیشب فیلم دیدیم."
+        },
+        "en": {
+          "h": "last night",
+          "x": "We watched a film last night."
+        },
+        "sv": {
+          "h": "igår kväll",
+          "x": "Vi såg en film igår kväll."
+        },
+        "de": {
+          "h": "gestern Abend",
+          "x": "Wir haben gestern Abend einen Film gesehen."
+        },
+        "es": {
+          "h": "anoche",
+          "x": "Vimos una película anoche."
+        },
+        "it": {
+          "h": "ieri sera",
+          "x": "Abbiamo visto un film ieri sera."
+        }
+      }
+    },
+    {
+      "id": "core.d.day_before_yesterday.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "پریروز",
+          "x": "پریروز رسیدم."
+        },
+        "en": {
+          "h": "the day before yesterday",
+          "x": "I arrived the day before yesterday."
+        },
+        "sv": {
+          "h": "i förrgår",
+          "x": "Jag kom i förrgår."
+        },
+        "de": {
+          "h": "vorgestern",
+          "x": "Ich bin vorgestern angekommen."
+        },
+        "es": {
+          "h": "anteayer",
+          "x": "Llegué anteayer."
+        },
+        "it": {
+          "h": "l'altro ieri",
+          "x": "Sono arrivato l'altro ieri."
+        }
+      }
+    },
+    {
+      "id": "core.d.day_after_tomorrow.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "پس‌فردا",
+          "x": "پس‌فردا می‌رویم."
+        },
+        "en": {
+          "h": "the day after tomorrow",
+          "x": "We are leaving the day after tomorrow."
+        },
+        "sv": {
+          "h": "i övermorgon",
+          "x": "Vi åker i övermorgon."
+        },
+        "de": {
+          "h": "übermorgen",
+          "x": "Wir fahren übermorgen ab."
+        },
+        "es": {
+          "h": "pasado mañana",
+          "x": "Nos vamos pasado mañana."
+        },
+        "it": {
+          "h": "dopodomani",
+          "x": "Partiamo dopodomani."
+        }
+      }
+    },
+    {
+      "id": "core.d.this_morning.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "امروز صبح",
+          "x": "امروز صبح قهوه نوشیدم."
+        },
+        "en": {
+          "h": "this morning",
+          "x": "I drank coffee this morning."
+        },
+        "sv": {
+          "h": "i morse",
+          "x": "Jag drack kaffe i morse."
+        },
+        "de": {
+          "h": "heute Morgen",
+          "x": "Ich habe heute Morgen Kaffee getrunken."
+        },
+        "es": {
+          "h": "esta mañana",
+          "x": "Tomé café esta mañana."
+        },
+        "it": {
+          "h": "stamattina",
+          "x": "Ho bevuto un caffè stamattina."
+        }
+      }
+    },
+    {
+      "id": "core.d.tomorrow_morning.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "فردا صبح",
+          "x": "فردا صبح می‌بینمت."
+        },
+        "en": {
+          "h": "tomorrow morning",
+          "x": "I will see you tomorrow morning."
+        },
+        "sv": {
+          "h": "imorgon bitti",
+          "x": "Vi ses imorgon bitti."
+        },
+        "de": {
+          "h": "morgen früh",
+          "x": "Wir sehen uns morgen früh."
+        },
+        "es": {
+          "h": "mañana por la mañana",
+          "x": "Nos vemos mañana por la mañana."
+        },
+        "it": {
+          "h": "domani mattina",
+          "x": "Ci vediamo domani mattina."
+        }
+      }
+    },
+    {
+      "id": "core.d.last_week.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هفتهٔ گذشته",
+          "x": "هفتهٔ گذشته کار کردم."
+        },
+        "en": {
+          "h": "last week",
+          "x": "I worked last week."
+        },
+        "sv": {
+          "h": "förra veckan",
+          "x": "Jag arbetade förra veckan."
+        },
+        "de": {
+          "h": "letzte Woche",
+          "x": "Ich habe letzte Woche gearbeitet."
+        },
+        "es": {
+          "h": "la semana pasada",
+          "x": "Trabajé la semana pasada."
+        },
+        "it": {
+          "h": "la settimana scorsa",
+          "x": "Ho lavorato la settimana scorsa."
+        }
+      }
+    },
+    {
+      "id": "core.d.next_week.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هفتهٔ آینده",
+          "x": "هفتهٔ آینده سفر می‌کنیم."
+        },
+        "en": {
+          "h": "next week",
+          "x": "We are travelling next week."
+        },
+        "sv": {
+          "h": "nästa vecka",
+          "x": "Vi reser nästa vecka."
+        },
+        "de": {
+          "h": "nächste Woche",
+          "x": "Wir verreisen nächste Woche."
+        },
+        "es": {
+          "h": "la próxima semana",
+          "x": "Viajamos la próxima semana."
+        },
+        "it": {
+          "h": "la prossima settimana",
+          "x": "Viaggiamo la prossima settimana."
+        }
+      }
+    },
+    {
+      "id": "core.d.this_week.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "این هفته",
+          "x": "این هفته وقت دارم."
+        },
+        "en": {
+          "h": "this week",
+          "x": "I have time this week."
+        },
+        "sv": {
+          "h": "den här veckan",
+          "x": "Jag har tid den här veckan."
+        },
+        "de": {
+          "h": "diese Woche",
+          "x": "Ich habe diese Woche Zeit."
+        },
+        "es": {
+          "h": "esta semana",
+          "x": "Tengo tiempo esta semana."
+        },
+        "it": {
+          "h": "questa settimana",
+          "x": "Ho tempo questa settimana."
+        }
+      }
+    },
+    {
+      "id": "core.d.last_month.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "ماه گذشته",
+          "x": "ماه گذشته اسباب‌کشی کردیم."
+        },
+        "en": {
+          "h": "last month",
+          "x": "We moved last month."
+        },
+        "sv": {
+          "h": "förra månaden",
+          "x": "Vi flyttade förra månaden."
+        },
+        "de": {
+          "h": "letzten Monat",
+          "x": "Wir sind letzten Monat umgezogen."
+        },
+        "es": {
+          "h": "el mes pasado",
+          "x": "Nos mudamos el mes pasado."
+        },
+        "it": {
+          "h": "il mese scorso",
+          "x": "Abbiamo traslocato il mese scorso."
+        }
+      }
+    },
+    {
+      "id": "core.d.next_month.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "ماه آینده",
+          "x": "ماه آینده دوره شروع می‌شود."
+        },
+        "en": {
+          "h": "next month",
+          "x": "The course starts next month."
+        },
+        "sv": {
+          "h": "nästa månad",
+          "x": "Kursen börjar nästa månad."
+        },
+        "de": {
+          "h": "nächsten Monat",
+          "x": "Der Kurs beginnt nächsten Monat."
+        },
+        "es": {
+          "h": "el próximo mes",
+          "x": "El curso empieza el próximo mes."
+        },
+        "it": {
+          "h": "il prossimo mese",
+          "x": "Il corso inizia il prossimo mese."
+        }
+      }
+    },
+    {
+      "id": "core.d.this_month.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "این ماه",
+          "x": "این ماه پول پس‌انداز می‌کنم."
+        },
+        "en": {
+          "h": "this month",
+          "x": "I am saving money this month."
+        },
+        "sv": {
+          "h": "den här månaden",
+          "x": "Jag sparar pengar den här månaden."
+        },
+        "de": {
+          "h": "diesen Monat",
+          "x": "Ich spare diesen Monat Geld."
+        },
+        "es": {
+          "h": "este mes",
+          "x": "Estoy ahorrando dinero este mes."
+        },
+        "it": {
+          "h": "questo mese",
+          "x": "Sto risparmiando denaro questo mese."
+        }
+      }
+    },
+    {
+      "id": "core.d.last_year.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "سال گذشته",
+          "x": "سال گذشته اینجا بودیم."
+        },
+        "en": {
+          "h": "last year",
+          "x": "We were here last year."
+        },
+        "sv": {
+          "h": "förra året",
+          "x": "Vi var här förra året."
+        },
+        "de": {
+          "h": "letztes Jahr",
+          "x": "Wir waren letztes Jahr hier."
+        },
+        "es": {
+          "h": "el año pasado",
+          "x": "Estuvimos aquí el año pasado."
+        },
+        "it": {
+          "h": "l'anno scorso",
+          "x": "Eravamo qui l'anno scorso."
+        }
+      }
+    },
+    {
+      "id": "core.d.next_year.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "سال آینده",
+          "x": "سال آینده دوباره می‌آیم."
+        },
+        "en": {
+          "h": "next year",
+          "x": "I will come again next year."
+        },
+        "sv": {
+          "h": "nästa år",
+          "x": "Jag kommer igen nästa år."
+        },
+        "de": {
+          "h": "nächstes Jahr",
+          "x": "Ich komme nächstes Jahr wieder."
+        },
+        "es": {
+          "h": "el próximo año",
+          "x": "Volveré el próximo año."
+        },
+        "it": {
+          "h": "l'anno prossimo",
+          "x": "Tornerò l'anno prossimo."
+        }
+      }
+    },
+    {
+      "id": "core.d.this_year.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "امسال",
+          "x": "امسال سوئدی یاد می‌گیرم."
+        },
+        "en": {
+          "h": "this year",
+          "x": "I am learning Swedish this year."
+        },
+        "sv": {
+          "h": "i år",
+          "x": "Jag lär mig svenska i år."
+        },
+        "de": {
+          "h": "dieses Jahr",
+          "x": "Ich lerne dieses Jahr Schwedisch."
+        },
+        "es": {
+          "h": "este año",
+          "x": "Estoy aprendiendo sueco este año."
+        },
+        "it": {
+          "h": "quest'anno",
+          "x": "Sto imparando lo svedese quest'anno."
+        }
+      }
+    },
+    {
+      "id": "core.d.every_day.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هر روز",
+          "x": "هر روز پیاده‌روی می‌کنم."
+        },
+        "en": {
+          "h": "every day",
+          "x": "I walk every day."
+        },
+        "sv": {
+          "h": "varje dag",
+          "x": "Jag promenerar varje dag."
+        },
+        "de": {
+          "h": "jeden Tag",
+          "x": "Ich gehe jeden Tag spazieren."
+        },
+        "es": {
+          "h": "cada día",
+          "x": "Camino cada día."
+        },
+        "it": {
+          "h": "ogni giorno",
+          "x": "Cammino ogni giorno."
+        }
+      }
+    },
+    {
+      "id": "core.d.every_week.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هر هفته",
+          "x": "هر هفته همدیگر را می‌بینیم."
+        },
+        "en": {
+          "h": "every week",
+          "x": "We meet every week."
+        },
+        "sv": {
+          "h": "varje vecka",
+          "x": "Vi träffas varje vecka."
+        },
+        "de": {
+          "h": "jede Woche",
+          "x": "Wir treffen uns jede Woche."
+        },
+        "es": {
+          "h": "cada semana",
+          "x": "Nos vemos cada semana."
+        },
+        "it": {
+          "h": "ogni settimana",
+          "x": "Ci vediamo ogni settimana."
+        }
+      }
+    },
+    {
+      "id": "core.d.every_month.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هر ماه",
+          "x": "هر ماه اجاره می‌پردازم."
+        },
+        "en": {
+          "h": "every month",
+          "x": "I pay rent every month."
+        },
+        "sv": {
+          "h": "varje månad",
+          "x": "Jag betalar hyra varje månad."
+        },
+        "de": {
+          "h": "jeden Monat",
+          "x": "Ich zahle jeden Monat Miete."
+        },
+        "es": {
+          "h": "cada mes",
+          "x": "Pago el alquiler cada mes."
+        },
+        "it": {
+          "h": "ogni mese",
+          "x": "Pago l'affitto ogni mese."
+        }
+      }
+    },
+    {
+      "id": "core.d.every_year.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هر سال",
+          "x": "هر سال به آنجا می‌رویم."
+        },
+        "en": {
+          "h": "every year",
+          "x": "We go there every year."
+        },
+        "sv": {
+          "h": "varje år",
+          "x": "Vi åker dit varje år."
+        },
+        "de": {
+          "h": "jedes Jahr",
+          "x": "Wir fahren jedes Jahr dorthin."
+        },
+        "es": {
+          "h": "cada año",
+          "x": "Vamos allí cada año."
+        },
+        "it": {
+          "h": "ogni anno",
+          "x": "Ci andiamo ogni anno."
+        }
+      }
+    },
+    {
+      "id": "core.d.all_day.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "تمام روز",
+          "x": "تمام روز کار کردم."
+        },
+        "en": {
+          "h": "all day",
+          "x": "I worked all day."
+        },
+        "sv": {
+          "h": "hela dagen",
+          "x": "Jag arbetade hela dagen."
+        },
+        "de": {
+          "h": "den ganzen Tag",
+          "x": "Ich habe den ganzen Tag gearbeitet."
+        },
+        "es": {
+          "h": "todo el día",
+          "x": "Trabajé todo el día."
+        },
+        "it": {
+          "h": "tutto il giorno",
+          "x": "Ho lavorato tutto il giorno."
+        }
+      }
+    },
+    {
+      "id": "core.d.all_night.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "تمام شب",
+          "x": "تمام شب باران بارید."
+        },
+        "en": {
+          "h": "all night",
+          "x": "It rained all night."
+        },
+        "sv": {
+          "h": "hela natten",
+          "x": "Det regnade hela natten."
+        },
+        "de": {
+          "h": "die ganze Nacht",
+          "x": "Es hat die ganze Nacht geregnet."
+        },
+        "es": {
+          "h": "toda la noche",
+          "x": "Llovió toda la noche."
+        },
+        "it": {
+          "h": "tutta la notte",
+          "x": "Ha piovuto tutta la notte."
+        }
+      }
+    },
+    {
+      "id": "core.d.at_night.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "شب‌ها",
+          "x": "شب‌ها اینجا ساکت است."
+        },
+        "en": {
+          "h": "at night",
+          "x": "It is quiet here at night."
+        },
+        "sv": {
+          "h": "på natten",
+          "x": "Det är tyst här på natten."
+        },
+        "de": {
+          "h": "nachts",
+          "x": "Nachts ist es hier ruhig."
+        },
+        "es": {
+          "h": "por la noche",
+          "x": "Aquí hay silencio por la noche."
+        },
+        "it": {
+          "h": "di notte",
+          "x": "Qui è tranquillo di notte."
+        }
+      }
+    },
+    {
+      "id": "core.d.before_lunch.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "قبل از ناهار",
+          "x": "قبل از ناهار تماس بگیر."
+        },
+        "en": {
+          "h": "before lunch",
+          "x": "Call before lunch."
+        },
+        "sv": {
+          "h": "före lunch",
+          "x": "Ring före lunch."
+        },
+        "de": {
+          "h": "vor dem Mittagessen",
+          "x": "Ruf vor dem Mittagessen an."
+        },
+        "es": {
+          "h": "antes de comer",
+          "x": "Llama antes de comer."
+        },
+        "it": {
+          "h": "prima di pranzo",
+          "x": "Chiama prima di pranzo."
+        }
+      }
+    },
+    {
+      "id": "core.d.after_work.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "بعد از کار",
+          "x": "بعد از کار خرید می‌کنم."
+        },
+        "en": {
+          "h": "after work",
+          "x": "I shop after work."
+        },
+        "sv": {
+          "h": "efter jobbet",
+          "x": "Jag handlar efter jobbet."
+        },
+        "de": {
+          "h": "nach der Arbeit",
+          "x": "Ich kaufe nach der Arbeit ein."
+        },
+        "es": {
+          "h": "después del trabajo",
+          "x": "Hago la compra después del trabajo."
+        },
+        "it": {
+          "h": "dopo il lavoro",
+          "x": "Faccio la spesa dopo il lavoro."
+        }
+      }
+    },
+    {
+      "id": "core.d.at_dusk.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هنگام غروب",
+          "x": "هنگام غروب به خانه برگشتیم."
+        },
+        "en": {
+          "h": "at dusk",
+          "x": "We returned home at dusk."
+        },
+        "sv": {
+          "h": "i skymningen",
+          "x": "Vi kom hem i skymningen."
+        },
+        "de": {
+          "h": "in der Abenddämmerung",
+          "x": "Wir kamen in der Abenddämmerung nach Hause."
+        },
+        "es": {
+          "h": "al anochecer",
+          "x": "Volvimos a casa al anochecer."
+        },
+        "it": {
+          "h": "al crepuscolo",
+          "x": "Siamo tornati a casa al crepuscolo."
+        }
+      }
+    },
+    {
+      "id": "core.d.on_time.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "سر وقت",
+          "x": "قطار سر وقت رسید."
+        },
+        "en": {
+          "h": "on time",
+          "x": "The train arrived on time."
+        },
+        "sv": {
+          "h": "i tid",
+          "x": "Tåget kom i tid."
+        },
+        "de": {
+          "h": "pünktlich",
+          "x": "Der Zug kam pünktlich."
+        },
+        "es": {
+          "h": "a tiempo",
+          "x": "El tren llegó a tiempo."
+        },
+        "it": {
+          "h": "in orario",
+          "x": "Il treno è arrivato in orario."
+        }
+      }
+    },
+    {
+      "id": "core.d.at_the_same_time.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "هم‌زمان",
+          "x": "هر دو هم‌زمان رسیدند."
+        },
+        "en": {
+          "h": "at the same time",
+          "x": "They both arrived at the same time."
+        },
+        "sv": {
+          "h": "samtidigt",
+          "x": "Båda kom samtidigt."
+        },
+        "de": {
+          "h": "gleichzeitig",
+          "x": "Beide kamen gleichzeitig an."
+        },
+        "es": {
+          "h": "al mismo tiempo",
+          "x": "Los dos llegaron al mismo tiempo."
+        },
+        "it": {
+          "h": "allo stesso tempo",
+          "x": "Sono arrivati entrambi allo stesso tempo."
+        }
+      }
+    },
+    {
+      "id": "core.d.from_now_on.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "از این به بعد",
+          "x": "از این به بعد پیاده می‌روم."
+        },
+        "en": {
+          "h": "from now on",
+          "x": "I will walk from now on."
+        },
+        "sv": {
+          "h": "från och med nu",
+          "x": "Från och med nu går jag till fots."
+        },
+        "de": {
+          "h": "von jetzt an",
+          "x": "Von jetzt an gehe ich zu Fuß."
+        },
+        "es": {
+          "h": "de ahora en adelante",
+          "x": "De ahora en adelante iré a pie."
+        },
+        "it": {
+          "h": "d'ora in poi",
+          "x": "D'ora in poi andrò a piedi."
+        }
+      }
+    },
+    {
+      "id": "core.d.since_then.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "از آن زمان",
+          "x": "از آن زمان اینجا کار می‌کنم."
+        },
+        "en": {
+          "h": "since then",
+          "x": "I have worked here since then."
+        },
+        "sv": {
+          "h": "sedan dess",
+          "x": "Jag har arbetat här sedan dess."
+        },
+        "de": {
+          "h": "seitdem",
+          "x": "Ich arbeite seitdem hier."
+        },
+        "es": {
+          "h": "desde entonces",
+          "x": "Trabajo aquí desde entonces."
+        },
+        "it": {
+          "h": "da allora",
+          "x": "Lavoro qui da allora."
+        }
+      }
+    },
+    {
+      "id": "core.d.eventually.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "سرانجام",
+          "x": "سرانجام شغلی پیدا خواهد کرد."
+        },
+        "en": {
+          "h": "eventually",
+          "x": "He will eventually find a job."
+        },
+        "sv": {
+          "h": "så småningom",
+          "x": "Han kommer så småningom att hitta ett jobb."
+        },
+        "de": {
+          "h": "irgendwann",
+          "x": "Er wird irgendwann eine Arbeit finden."
+        },
+        "es": {
+          "h": "con el tiempo",
+          "x": "Con el tiempo encontrará trabajo."
+        },
+        "it": {
+          "h": "prima o poi",
+          "x": "Prima o poi troverà lavoro."
+        }
+      }
+    },
+    {
+      "id": "core.d.forever.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "time"
+      ],
+      "e": {
+        "fa": {
+          "h": "برای همیشه",
+          "x": "برای همیشه اینجا می‌مانم."
+        },
+        "en": {
+          "h": "forever",
+          "x": "I will stay here forever."
+        },
+        "sv": {
+          "h": "för alltid",
+          "x": "Jag stannar här för alltid."
+        },
+        "de": {
+          "h": "für immer",
+          "x": "Ich bleibe für immer hier."
+        },
+        "es": {
+          "h": "para siempre",
+          "x": "Me quedaré aquí para siempre."
+        },
+        "it": {
+          "h": "per sempre",
+          "x": "Resterò qui per sempre."
+        }
+      }
+    },
+    {
+      "id": "core.d.eastward.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "به سمت شرق",
+          "x": "به سمت شرق می‌رویم."
+        },
+        "en": {
+          "h": "eastward",
+          "x": "We are travelling eastward."
+        },
+        "sv": {
+          "h": "österut",
+          "x": "Vi reser österut."
+        },
+        "de": {
+          "h": "ostwärts",
+          "x": "Wir reisen ostwärts."
+        },
+        "es": {
+          "h": "hacia el este",
+          "x": "Viajamos hacia el este."
+        },
+        "it": {
+          "h": "verso est",
+          "x": "Viaggiamo verso est."
+        }
+      }
+    },
+    {
+      "id": "core.d.westward.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "به سمت غرب",
+          "x": "به سمت غرب می‌رویم."
+        },
+        "en": {
+          "h": "westward",
+          "x": "We are travelling westward."
+        },
+        "sv": {
+          "h": "västerut",
+          "x": "Vi reser västerut."
+        },
+        "de": {
+          "h": "westwärts",
+          "x": "Wir reisen westwärts."
+        },
+        "es": {
+          "h": "hacia el oeste",
+          "x": "Viajamos hacia el oeste."
+        },
+        "it": {
+          "h": "verso ovest",
+          "x": "Viaggiamo verso ovest."
+        }
+      }
+    },
+    {
+      "id": "core.d.northward.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "به سمت شمال",
+          "x": "به سمت شمال می‌رویم."
+        },
+        "en": {
+          "h": "northward",
+          "x": "We are travelling northward."
+        },
+        "sv": {
+          "h": "norrut",
+          "x": "Vi reser norrut."
+        },
+        "de": {
+          "h": "nordwärts",
+          "x": "Wir reisen nordwärts."
+        },
+        "es": {
+          "h": "hacia el norte",
+          "x": "Viajamos hacia el norte."
+        },
+        "it": {
+          "h": "verso nord",
+          "x": "Viaggiamo verso nord."
+        }
+      }
+    },
+    {
+      "id": "core.d.southward.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "به سمت جنوب",
+          "x": "به سمت جنوب می‌رویم."
+        },
+        "en": {
+          "h": "southward",
+          "x": "We are travelling southward."
+        },
+        "sv": {
+          "h": "söderut",
+          "x": "Vi reser söderut."
+        },
+        "de": {
+          "h": "südwärts",
+          "x": "Wir reisen südwärts."
+        },
+        "es": {
+          "h": "hacia el sur",
+          "x": "Viajamos hacia el sur."
+        },
+        "it": {
+          "h": "verso sud",
+          "x": "Viaggiamo verso sud."
+        }
+      }
+    },
+    {
+      "id": "core.d.somewhere_else.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "جای دیگر",
+          "x": "جای دیگر همدیگر را ببینیم."
+        },
+        "en": {
+          "h": "somewhere else",
+          "x": "Let's meet somewhere else."
+        },
+        "sv": {
+          "h": "någon annanstans",
+          "x": "Vi kan träffas någon annanstans."
+        },
+        "de": {
+          "h": "woanders",
+          "x": "Treffen wir uns woanders."
+        },
+        "es": {
+          "h": "en otro lugar",
+          "x": "Veámonos en otro lugar."
+        },
+        "it": {
+          "h": "altrove",
+          "x": "Vediamoci altrove."
+        }
+      }
+    },
+    {
+      "id": "core.d.over_there.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "آن طرف",
+          "x": "ایستگاه آن طرف است."
+        },
+        "en": {
+          "h": "over there",
+          "x": "The station is over there."
+        },
+        "sv": {
+          "h": "där borta",
+          "x": "Stationen ligger där borta."
+        },
+        "de": {
+          "h": "dort drüben",
+          "x": "Der Bahnhof ist dort drüben."
+        },
+        "es": {
+          "h": "por allí",
+          "x": "La estación está por allí."
+        },
+        "it": {
+          "h": "laggiù",
+          "x": "La stazione è laggiù."
+        }
+      }
+    },
+    {
+      "id": "core.d.over_here.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "این طرف",
+          "x": "این طرف منتظر بمان."
+        },
+        "en": {
+          "h": "over here",
+          "x": "Wait over here."
+        },
+        "sv": {
+          "h": "här borta",
+          "x": "Vänta här borta."
+        },
+        "de": {
+          "h": "hier drüben",
+          "x": "Warte hier drüben."
+        },
+        "es": {
+          "h": "por aquí",
+          "x": "Espera por aquí."
+        },
+        "it": {
+          "h": "da questa parte",
+          "x": "Aspetta da questa parte."
+        }
+      }
+    },
+    {
+      "id": "core.d.to_the_left.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "سمت چپ",
+          "x": "سمت چپ بپیچ."
+        },
+        "en": {
+          "h": "to the left",
+          "x": "Turn to the left."
+        },
+        "sv": {
+          "h": "till vänster",
+          "x": "Sväng till vänster."
+        },
+        "de": {
+          "h": "links",
+          "x": "Biege links ab."
+        },
+        "es": {
+          "h": "a la izquierda",
+          "x": "Gira a la izquierda."
+        },
+        "it": {
+          "h": "a sinistra",
+          "x": "Gira a sinistra."
+        }
+      }
+    },
+    {
+      "id": "core.d.to_the_right.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "سمت راست",
+          "x": "سمت راست بپیچ."
+        },
+        "en": {
+          "h": "to the right",
+          "x": "Turn to the right."
+        },
+        "sv": {
+          "h": "till höger",
+          "x": "Sväng till höger."
+        },
+        "de": {
+          "h": "rechts",
+          "x": "Biege rechts ab."
+        },
+        "es": {
+          "h": "a la derecha",
+          "x": "Gira a la derecha."
+        },
+        "it": {
+          "h": "a destra",
+          "x": "Gira a destra."
+        }
+      }
+    },
+    {
+      "id": "core.d.straight_ahead.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "مستقیم به جلو",
+          "x": "مستقیم به جلو برو."
+        },
+        "en": {
+          "h": "straight ahead",
+          "x": "Go straight ahead."
+        },
+        "sv": {
+          "h": "rakt fram",
+          "x": "Gå rakt fram."
+        },
+        "de": {
+          "h": "geradeaus",
+          "x": "Geh geradeaus."
+        },
+        "es": {
+          "h": "todo recto",
+          "x": "Sigue todo recto."
+        },
+        "it": {
+          "h": "sempre dritto",
+          "x": "Vai sempre dritto."
+        }
+      }
+    },
+    {
+      "id": "core.d.in_the_middle.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "در وسط",
+          "x": "در وسط بمان."
+        },
+        "en": {
+          "h": "in the middle",
+          "x": "Stay in the middle."
+        },
+        "sv": {
+          "h": "i mitten",
+          "x": "Stanna i mitten."
+        },
+        "de": {
+          "h": "in der Mitte",
+          "x": "Bleib in der Mitte."
+        },
+        "es": {
+          "h": "en el medio",
+          "x": "Quédate en el medio."
+        },
+        "it": {
+          "h": "nel mezzo",
+          "x": "Resta nel mezzo."
+        }
+      }
+    },
+    {
+      "id": "core.d.indoors.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "در فضای بسته",
+          "x": "امروز در فضای بسته بازی می‌کنیم."
+        },
+        "en": {
+          "h": "indoors",
+          "x": "We are playing indoors today."
+        },
+        "sv": {
+          "h": "inomhus",
+          "x": "Vi leker inomhus idag."
+        },
+        "de": {
+          "h": "in Innenräumen",
+          "x": "Wir spielen heute in Innenräumen."
+        },
+        "es": {
+          "h": "en interiores",
+          "x": "Hoy jugamos en interiores."
+        },
+        "it": {
+          "h": "al chiuso",
+          "x": "Oggi giochiamo al chiuso."
+        }
+      }
+    },
+    {
+      "id": "core.d.outdoors.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "در فضای باز",
+          "x": "امروز در فضای باز غذا می‌خوریم."
+        },
+        "en": {
+          "h": "outdoors",
+          "x": "We are eating outdoors today."
+        },
+        "sv": {
+          "h": "utomhus",
+          "x": "Vi äter utomhus idag."
+        },
+        "de": {
+          "h": "im Freien",
+          "x": "Wir essen heute im Freien."
+        },
+        "es": {
+          "h": "al aire libre",
+          "x": "Hoy comemos al aire libre."
+        },
+        "it": {
+          "h": "all'aperto",
+          "x": "Oggi mangiamo all'aperto."
+        }
+      }
+    },
+    {
+      "id": "core.d.far_away.20261108",
+      "p": "adverb",
+      "t": [
+        "daily",
+        "place"
+      ],
+      "e": {
+        "fa": {
+          "h": "در دوردست",
+          "x": "آن کوه در دوردست است."
+        },
+        "en": {
+          "h": "far away",
+          "x": "That mountain is far away."
+        },
+        "sv": {
+          "h": "långt borta",
+          "x": "Det där berget ligger långt borta."
+        },
+        "de": {
+          "h": "weit weg",
+          "x": "Dieser Berg ist weit weg."
+        },
+        "es": {
+          "h": "a lo lejos",
+          "x": "Esa montaña está a lo lejos."
+        },
+        "it": {
+          "h": "lontano da qui",
+          "x": "Quella montagna è lontano da qui."
+        }
+      }
+    }
+  ]
+}
