@@ -1,0 +1,602 @@
+[
+  {
+    "left": "core.a.responsible.20261108",
+    "right": "core.a.irresponsible.20261108",
+    "leftWords": {
+      "fa": "مسئولیت‌پذیر",
+      "en": "responsible",
+      "sv": "ansvarsfull",
+      "de": "verantwortungsbewusst",
+      "es": "responsable",
+      "it": "responsabile"
+    },
+    "rightWords": {
+      "fa": "بی‌مسئولیت",
+      "en": "irresponsible",
+      "sv": "oansvarig",
+      "de": "verantwortungslos",
+      "es": "irresponsable",
+      "it": "irresponsabile"
+    }
+  },
+  {
+    "left": "core.a.reliable.20261108",
+    "right": "core.a.unreliable.20261108",
+    "leftWords": {
+      "fa": "قابل‌اعتماد",
+      "en": "reliable",
+      "sv": "pålitlig",
+      "de": "zuverlässig",
+      "es": "fiable",
+      "it": "affidabile"
+    },
+    "rightWords": {
+      "fa": "غیرقابل‌اعتماد",
+      "en": "unreliable",
+      "sv": "opålitlig",
+      "de": "unzuverlässig",
+      "es": "poco fiable",
+      "it": "inaffidabile"
+    }
+  },
+  {
+    "left": "core.a.legal.20261108",
+    "right": "core.a.illegal.20261108",
+    "leftWords": {
+      "fa": "قانونی",
+      "en": "legal",
+      "sv": "laglig",
+      "de": "legal",
+      "es": "legal",
+      "it": "legale"
+    },
+    "rightWords": {
+      "fa": "غیرقانونی",
+      "en": "illegal",
+      "sv": "olaglig",
+      "de": "illegal",
+      "es": "ilegal",
+      "it": "illegale"
+    }
+  },
+  {
+    "left": "core.a.visible.20261108",
+    "right": "core.a.invisible.20261108",
+    "leftWords": {
+      "fa": "قابل‌مشاهده",
+      "en": "visible",
+      "sv": "synlig",
+      "de": "sichtbar",
+      "es": "visible",
+      "it": "visibile"
+    },
+    "rightWords": {
+      "fa": "نامرئی",
+      "en": "invisible",
+      "sv": "osynlig",
+      "de": "unsichtbar",
+      "es": "invisible",
+      "it": "invisibile"
+    }
+  },
+  {
+    "left": "core.a.available.20261108",
+    "right": "core.a.unavailable.20261108",
+    "leftWords": {
+      "fa": "دسترس‌پذیر",
+      "en": "accessible",
+      "sv": "tillgänglig",
+      "de": "zugänglich",
+      "es": "accesible",
+      "it": "accessibile"
+    },
+    "rightWords": {
+      "fa": "دسترس‌ناپذیر",
+      "en": "inaccessible",
+      "sv": "otillgänglig",
+      "de": "unzugänglich",
+      "es": "inaccesible",
+      "it": "inaccessibile"
+    }
+  },
+  {
+    "left": "core.a.suitable.20261108",
+    "right": "core.a.unsuitable.20261108",
+    "leftWords": {
+      "fa": "مناسب",
+      "en": "suitable",
+      "sv": "lämplig",
+      "de": "geeignet",
+      "es": "adecuado",
+      "it": "adatto"
+    },
+    "rightWords": {
+      "fa": "نامناسب",
+      "en": "unsuitable",
+      "sv": "olämplig",
+      "de": "ungeeignet",
+      "es": "inadecuado",
+      "it": "inadatto"
+    }
+  },
+  {
+    "left": "core.a.effective.20261108",
+    "right": "core.a.ineffective.20261108",
+    "leftWords": {
+      "fa": "مؤثر",
+      "en": "effective",
+      "sv": "effektiv",
+      "de": "wirksam",
+      "es": "eficaz",
+      "it": "efficace"
+    },
+    "rightWords": {
+      "fa": "بی‌اثر",
+      "en": "ineffective",
+      "sv": "ineffektiv",
+      "de": "unwirksam",
+      "es": "ineficaz",
+      "it": "inefficace"
+    }
+  },
+  {
+    "left": "core.a.active.20261108",
+    "right": "core.a.inactive.20261108",
+    "leftWords": {
+      "fa": "فعال",
+      "en": "active",
+      "sv": "aktiv",
+      "de": "aktiv",
+      "es": "activo",
+      "it": "attivo"
+    },
+    "rightWords": {
+      "fa": "غیرفعال",
+      "en": "inactive",
+      "sv": "inaktiv",
+      "de": "inaktiv",
+      "es": "inactivo",
+      "it": "inattivo"
+    }
+  },
+  {
+    "left": "core.a.flexible.20261108",
+    "right": "core.a.inflexible.20261108",
+    "leftWords": {
+      "fa": "انعطاف‌پذیر",
+      "en": "flexible",
+      "sv": "flexibel",
+      "de": "flexibel",
+      "es": "flexible",
+      "it": "flessibile"
+    },
+    "rightWords": {
+      "fa": "انعطاف‌ناپذیر",
+      "en": "inflexible",
+      "sv": "oflexibel",
+      "de": "unflexibel",
+      "es": "inflexible",
+      "it": "inflessibile"
+    }
+  },
+  {
+    "left": "core.a.temporary.20261108",
+    "right": "core.a.permanent.20261108",
+    "leftWords": {
+      "fa": "موقتی",
+      "en": "temporary",
+      "sv": "tillfällig",
+      "de": "temporär",
+      "es": "temporal",
+      "it": "temporaneo"
+    },
+    "rightWords": {
+      "fa": "دائمی",
+      "en": "permanent",
+      "sv": "permanent",
+      "de": "dauerhaft",
+      "es": "permanente",
+      "it": "permanente"
+    }
+  },
+  {
+    "left": "core.a.equal.20261108",
+    "right": "core.a.unequal.20261108",
+    "leftWords": {
+      "fa": "برابر",
+      "en": "equal",
+      "sv": "jämlik",
+      "de": "gleichberechtigt",
+      "es": "igual",
+      "it": "uguale"
+    },
+    "rightWords": {
+      "fa": "نابرابر",
+      "en": "unequal",
+      "sv": "ojämlik",
+      "de": "nicht gleichberechtigt",
+      "es": "desigual",
+      "it": "disuguale"
+    }
+  },
+  {
+    "left": "core.a.fair.20261108",
+    "right": "core.a.unfair.20261108",
+    "leftWords": {
+      "fa": "منصفانه",
+      "en": "fair",
+      "sv": "rättvis",
+      "de": "gerecht",
+      "es": "justo",
+      "it": "equo"
+    },
+    "rightWords": {
+      "fa": "ناعادلانه",
+      "en": "unfair",
+      "sv": "orättvis",
+      "de": "ungerecht",
+      "es": "injusto",
+      "it": "ingiusto"
+    }
+  },
+  {
+    "left": "core.a.regular.20261108",
+    "right": "core.a.irregular.20261108",
+    "leftWords": {
+      "fa": "منظم",
+      "en": "regular",
+      "sv": "regelbunden",
+      "de": "regelmäßig",
+      "es": "regular",
+      "it": "regolare"
+    },
+    "rightWords": {
+      "fa": "نامنظم",
+      "en": "irregular",
+      "sv": "oregelbunden",
+      "de": "unregelmäßig",
+      "es": "irregular",
+      "it": "irregolare"
+    }
+  },
+  {
+    "left": "core.a.obedient.20261108",
+    "right": "core.a.disobedient.20261108",
+    "leftWords": {
+      "fa": "فرمان‌بردار",
+      "en": "obedient",
+      "sv": "lydig",
+      "de": "gehorsam",
+      "es": "obediente",
+      "it": "obbediente"
+    },
+    "rightWords": {
+      "fa": "نافرمان",
+      "en": "disobedient",
+      "sv": "olydig",
+      "de": "ungehorsam",
+      "es": "desobediente",
+      "it": "disobbediente"
+    }
+  },
+  {
+    "left": "core.a.mature.20261108",
+    "right": "core.a.immature.20261108",
+    "leftWords": {
+      "fa": "بالغ",
+      "en": "mature",
+      "sv": "mogen",
+      "de": "reif",
+      "es": "maduro",
+      "it": "maturo"
+    },
+    "rightWords": {
+      "fa": "نابالغ",
+      "en": "immature",
+      "sv": "omogen",
+      "de": "unreif",
+      "es": "inmaduro",
+      "it": "immaturo"
+    }
+  },
+  {
+    "left": "core.a.edible.20261108",
+    "right": "core.a.inedible.20261108",
+    "leftWords": {
+      "fa": "خوردنی",
+      "en": "edible",
+      "sv": "ätlig",
+      "de": "essbar",
+      "es": "comestible",
+      "it": "commestibile"
+    },
+    "rightWords": {
+      "fa": "غیرخوراکی",
+      "en": "inedible",
+      "sv": "oätlig",
+      "de": "ungenießbar",
+      "es": "no comestible",
+      "it": "non commestibile"
+    }
+  },
+  {
+    "left": "core.a.tolerant.20261108",
+    "right": "core.a.intolerant.20261108",
+    "leftWords": {
+      "fa": "بردبار",
+      "en": "tolerant",
+      "sv": "tolerant",
+      "de": "tolerant",
+      "es": "tolerante",
+      "it": "tollerante"
+    },
+    "rightWords": {
+      "fa": "نابردبار",
+      "en": "intolerant",
+      "sv": "intolerant",
+      "de": "intolerant",
+      "es": "intolerante",
+      "it": "intollerante"
+    }
+  },
+  {
+    "left": "core.a.rational.20261108",
+    "right": "core.a.irrational.20261108",
+    "leftWords": {
+      "fa": "عقلانی",
+      "en": "rational",
+      "sv": "rationell",
+      "de": "rational",
+      "es": "racional",
+      "it": "razionale"
+    },
+    "rightWords": {
+      "fa": "غیرعقلانی",
+      "en": "irrational",
+      "sv": "irrationell",
+      "de": "irrational",
+      "es": "irracional",
+      "it": "irrazionale"
+    }
+  },
+  {
+    "left": "core.a.cooperative.20261108",
+    "right": "core.a.uncooperative.20261108",
+    "leftWords": {
+      "fa": "اهل همکاری",
+      "en": "cooperative",
+      "sv": "samarbetsvillig",
+      "de": "kooperativ",
+      "es": "cooperativo",
+      "it": "collaborativo"
+    },
+    "rightWords": {
+      "fa": "ناهمکار",
+      "en": "uncooperative",
+      "sv": "ovillig att samarbeta",
+      "de": "unkooperativ",
+      "es": "poco cooperativo",
+      "it": "poco collaborativo"
+    }
+  },
+  {
+    "left": "core.a.attentive.20261108",
+    "right": "core.a.inattentive.20261108",
+    "leftWords": {
+      "fa": "بادقت",
+      "en": "attentive",
+      "sv": "uppmärksam",
+      "de": "aufmerksam",
+      "es": "atento",
+      "it": "attento"
+    },
+    "rightWords": {
+      "fa": "بی‌توجه",
+      "en": "inattentive",
+      "sv": "ouppmärksam",
+      "de": "unaufmerksam",
+      "es": "desatento",
+      "it": "disattento"
+    }
+  },
+  {
+    "left": "core.a.shallow.20261108",
+    "right": "core.a.deep",
+    "leftWords": {
+      "fa": "کم‌عمق",
+      "en": "shallow",
+      "sv": "grund",
+      "de": "seicht",
+      "es": "poco profundo",
+      "it": "poco profondo"
+    },
+    "rightWords": {
+      "de": "tief",
+      "en": "deep",
+      "es": "profundo",
+      "fa": "عمیق",
+      "it": "profondo",
+      "sv": "djup"
+    }
+  },
+  {
+    "left": "core.a.crooked.20261108",
+    "right": "core.a.straight",
+    "leftWords": {
+      "fa": "کج",
+      "en": "crooked",
+      "sv": "krokig",
+      "de": "krumm",
+      "es": "torcido",
+      "it": "storto"
+    },
+    "rightWords": {
+      "de": "gerade",
+      "en": "straight",
+      "es": "recto",
+      "fa": "صاف",
+      "it": "dritto",
+      "sv": "rak"
+    }
+  },
+  {
+    "left": "core.a.opaque.20261108",
+    "right": "core.a.transparent",
+    "leftWords": {
+      "fa": "مات",
+      "en": "opaque",
+      "sv": "ogenomskinlig",
+      "de": "undurchsichtig",
+      "es": "opaco",
+      "it": "opaco"
+    },
+    "rightWords": {
+      "de": "durchsichtig",
+      "en": "transparent",
+      "es": "transparente",
+      "fa": "شفاف",
+      "it": "trasparente",
+      "sv": "genomskinlig"
+    }
+  },
+  {
+    "left": "core.a.dishonest.20261108",
+    "right": "core.a.honest",
+    "leftWords": {
+      "fa": "نادرستکار",
+      "en": "dishonest",
+      "sv": "oärlig",
+      "de": "unehrlich",
+      "es": "deshonesto",
+      "it": "disonesto"
+    },
+    "rightWords": {
+      "de": "ehrlich",
+      "en": "honest",
+      "es": "honesto",
+      "fa": "درستکار",
+      "it": "onesto",
+      "sv": "ärlig"
+    }
+  },
+  {
+    "left": "core.a.imperfect.20261108",
+    "right": "core.a.perfect",
+    "leftWords": {
+      "fa": "ناقص",
+      "en": "imperfect",
+      "sv": "ofullkomlig",
+      "de": "unvollkommen",
+      "es": "imperfecto",
+      "it": "imperfetto"
+    },
+    "rightWords": {
+      "de": "perfekt",
+      "en": "perfect",
+      "es": "perfecto",
+      "fa": "کامل",
+      "it": "perfetto",
+      "sv": "perfekt"
+    }
+  },
+  {
+    "left": "core.a.unimportant.20261108",
+    "right": "core.a.important",
+    "leftWords": {
+      "fa": "بی‌اهمیت",
+      "en": "unimportant",
+      "sv": "oviktig",
+      "de": "unwichtig",
+      "es": "sin importancia",
+      "it": "poco importante"
+    },
+    "rightWords": {
+      "de": "wichtig",
+      "en": "important",
+      "es": "importante",
+      "fa": "مهم",
+      "it": "importante",
+      "sv": "viktig"
+    }
+  },
+  {
+    "left": "core.a.ungrateful.20261108",
+    "right": "core.a.grateful",
+    "leftWords": {
+      "fa": "ناسپاس",
+      "en": "ungrateful",
+      "sv": "otacksam",
+      "de": "undankbar",
+      "es": "desagradecido",
+      "it": "ingrato"
+    },
+    "rightWords": {
+      "de": "dankbar",
+      "en": "grateful",
+      "es": "agradecido",
+      "fa": "سپاسگزار",
+      "it": "grato",
+      "sv": "tacksam"
+    }
+  },
+  {
+    "left": "core.a.insufficient.20261108",
+    "right": "core.a.sufficient",
+    "leftWords": {
+      "fa": "ناکافی",
+      "en": "insufficient",
+      "sv": "otillräcklig",
+      "de": "unzureichend",
+      "es": "insuficiente",
+      "it": "insufficiente"
+    },
+    "rightWords": {
+      "de": "ausreichend",
+      "en": "sufficient",
+      "es": "suficiente",
+      "fa": "کافی",
+      "it": "sufficiente",
+      "sv": "tillräcklig"
+    }
+  },
+  {
+    "left": "core.a.worthless.20261108",
+    "right": "core.a.valuable",
+    "leftWords": {
+      "fa": "بی‌ارزش",
+      "en": "worthless",
+      "sv": "värdelös",
+      "de": "wertlos",
+      "es": "sin valor",
+      "it": "senza valore"
+    },
+    "rightWords": {
+      "de": "wertvoll",
+      "en": "valuable",
+      "es": "valioso",
+      "fa": "باارزش",
+      "it": "prezioso",
+      "sv": "värdefull"
+    }
+  },
+  {
+    "left": "core.a.fearless.20261108",
+    "right": "core.a.afraid",
+    "leftWords": {
+      "fa": "بی‌باک",
+      "en": "fearless",
+      "sv": "orädd",
+      "de": "furchtlos",
+      "es": "intrépido",
+      "it": "impavido"
+    },
+    "rightWords": {
+      "de": "ängstlich",
+      "en": "afraid",
+      "es": "asustado",
+      "fa": "ترسیده",
+      "it": "spaventato",
+      "sv": "rädd"
+    }
+  }
+]
