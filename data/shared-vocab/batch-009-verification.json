@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-08",
+  "payloadCommit": "f260213b1dd66f0b7cb34fc0753d530c563bfbb5",
+  "payloadSHA256": "cdf49eaa61002dcfd948a2ec9777e8b726273fe3b60e18c6ac9d7d7fb6e15d16",
+  "import": {
+    "newConcepts": 100,
+    "newAdjectives": 50,
+    "newAdverbs": 50,
+    "newEntries": 600
+  },
+  "before": {
+    "readyConcepts": 4183,
+    "readyEntries": 25090
+  },
+  "after": {
+    "readyConcepts": 4283,
+    "readyEntries": 25690,
+    "duplicateGroups": 0
+  },
+  "checks": {
+    "liveExplicitLanguage": {
+      "role": "postgres",
+      "total": 600,
+      "correct": 600
+    },
+    "livePayloadComparison": {
+      "total": 600,
+      "exact": 600
+    },
+    "anonymousSamples": {
+      "total": 6,
+      "correct": 6
+    },
+    "authenticatedSamples": {
+      "total": 1,
+      "correct": 1
+    },
+    "repeatImport": {
+      "inserted": 0,
+      "already_present": 100,
+      "clashes": []
+    },
+    "local": {
+      "concepts": 100,
+      "entries": 600,
+      "morphologies": 250,
+      "oppositeNotes": 300,
+      "antonymPairs": 30
+    },
+    "oldConceptsHashUnchanged": "4f19e7e5783437009ea2246b4fb7ddda",
+    "oldEntriesHashUnchanged": "6cbf50e584fa9f4beddb2adfeed874ea"
+  },
+  "limits": {
+    "anonymousQueryMs": 3158.67,
+    "clientBankTimeoutMs": 1800,
+    "allCardRLSAggregate": "timed out; transaction rolled back",
+    "browserE2E": false,
+    "appBuild": "not run; no app source changes",
+    "deployment": "not required for live shared-bank data",
+    "structuredAntonymLinks": false
+  }
+}

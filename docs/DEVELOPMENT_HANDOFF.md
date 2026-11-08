@@ -1,3 +1,19 @@
+## 2026-11-08 — Adjectives, opposites and time/place vocabulary (batch 009)
+
+Branch: `data/adjectives-time-place-20261108`; payload commit `f260213b1dd66f0b7cb34fc0753d530c563bfbb5`; reviewed application main `8e42f3261dc6992a728985290c58ea946f401719` (0.7.3). Owner authorized additive shared-bank data.
+
+LIVE DATA COMPLETE: inserted exactly **50 new adjectives with opposites + 50 time/place adverbs/adverbial expressions = 100 concepts / 600 six-language entries** into Supabase vfximbxcxczntqywdryd. All 50 adjectives have localized opposite notes: 20 new pairs plus 10 references to already-existing opposites. No old entries, personal words, auth/RLS, functions or app source changed. Ready totals 4,183/25,090 → **4,283/25,690**; normalized headword/POS duplicate groups remain 0. Before/after old-record checksums match.
+
+Verification: final locked rollback rehearsal passed; import precheck/assertions passed; live explicit-language full-bank lookups **600/600 correct**; stored headwords/examples/forms/notes **600/600 exact**. Anonymous six-language samples 6/6 correct; authenticated real expansion sample correct. Repeat import 0 inserts / 100 existing / no clashes. Focused `node scripts/check-vocab-009.mjs` passed (100 concepts, 600 entries, 250 morphology objects, 300 opposite notes, 30 pairs). No app build required for this data-only change. No browser/phone E2E or independent six-language proofreading.
+
+SPEED GOAL PARTIAL: anonymous EXPLAIN ANALYZE for `efter lunch` measured **3158.670 ms**, exceeding the current **1800 ms** client bank timeout in src/ai/expand.ts. Do not claim the UI always avoids AI or is fast. A full all-card RLS aggregate attempt timed out and rolled back; full RLS coverage remains unverified. Automatic-language ambiguity, hints/paired inputs and unsupported batch languages can still reach AI. No security bypass or timeout change was introduced.
+
+Navigation: reviewed App.tsx route map, Training Center entry/siblings/Back behavior, Settings headings, public showcase and invite parser. Added previously absent **docs/SITEMAP.md** and **docs/ROUTE_INDEX.md**, dated/versioned against the reviewed code; no route or menu change. Active/conditional/compatibility/planned paths distinguished.
+
+See docs/VOCAB_BATCH_009_REPORT.md and data/shared-vocab/batch-009*.json. Data is already live and needs no Vercel app deploy. GitHub data/docs branch is separate from main; merge not performed in this task. Recovery: idempotent reimport; withdraw only exact batch IDs via separately authorized quarantine if necessary, never blanket-delete. Next action: focused bank-query performance profiling under RLS and signed-in UI verification within the client's time budget; preserve data and lookup safety.
+
+---
+
 ## 2026-11-05 — Showcase header/footer navigation
 
 Owner requested highlighted App Login controls and complete showcase menus on all three apps. Header and footer now include Home, Features, How it works, Benefits, Install, Share and highlighted App Login. Existing hero/closing entry controls remain. New labels localized for each page's offered languages; login uses the existing app entry route and iframe bridge. Standalone Glowis/Lingo3 entry marks the existing welcome flag so visitors do not loop through the showcase.
