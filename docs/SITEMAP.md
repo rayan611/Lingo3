@@ -1,8 +1,8 @@
 # Lingo3 — page and section map
 
-Reviewed: 2026-11-08. App version: 0.7.3.
-Code reference: main `8e42f3261dc6992a728985290c58ea946f401719`; sources `src/App.tsx`, `src/ui/SettingsPanel.tsx`, `public/showcase.html`.
-Review scope: existing navigation for vocabulary batch 009; no route/UI changes.
+Reviewed: 2026-11-08. App version: 0.7.4.
+Code reference: navigation main `8e42f3261dc6992a728985290c58ea946f401719`; vocabulary/lookup branch `feat/verb-bank-fast-lookup-20261108`; sources `src/App.tsx`, `src/ui/SettingsPanel.tsx`, `public/showcase.html`.
+Review scope: existing navigation for vocabulary batch 010; no route/UI changes.
 
 ## Active workspace
 
@@ -48,4 +48,4 @@ Settings subsections observed in source: Account (Sync), Your progress, You, Lan
 
 Existing child URLs /words, /grammar, /read and /review remain direct-linkable after grouping under Training Center. /review intentionally means Word Practice, while /recall means scheduled Recall test; these are not swapped links.
 
-Bank latency optimization, complete RLS/browser acceptance, and an optional shared-vocabulary administration UI are **not delivered** by batch 009. No new page, feature tile, deleted page or role permission was introduced. Technical route details and Back behavior are in ROUTE_INDEX.md.
+Stored-form bank optimization is active in batch 010. RLS regression fixtures passed; physical signed-in browser acceptance and the optional shared-vocabulary administration UI remain pending. No new page, feature tile, deleted page or role permission was introduced. Technical route details and Back behavior are in ROUTE_INDEX.md.

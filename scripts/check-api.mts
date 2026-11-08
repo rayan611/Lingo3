@@ -771,6 +771,30 @@ console.log('\n/api/tts')
   }
 }
 
+console.log('\nShared-bank hits return before AI and its usage counter')
+{
+  const realFetch = globalThis.fetch
+  const calls: string[] = []
+  try {
+    globalThis.fetch = (async (input: RequestInfo | URL) => {
+      const url = String(input); calls.push(url)
+      if (url.endsWith('/auth/v1/user')) return Response.json({id:'bank-test-user'})
+      if (url.endsWith('/rpc/lookup_shared_partial')) return Response.json({
+        pos:'verb', detectedLang:'sv', normalisedLemma:'stjäla', missing:[],
+        entries:[{lang:'en',headword:'to steal',meaning:'دزدیدن',example:'They must not steal.'}],
+      })
+      throw new Error('Unexpected provider or usage request: ' + url)
+    }) as typeof fetch
+    const response = await asWeb('POST', {'content-type':'application/json',authorization:'Bearer test'}, {
+      lemma:'stulit',sourceLang:'sv',nativeLang:'fa',langs:['en'],
+    })
+    const card = JSON.parse(response.text)
+    check('inflected bank result returns as bank', response.status===200 && card.origin==='bank' && card.normalisedLemma==='stjäla', response.text)
+    check('bank is checked before AI usage is counted', calls.some(u=>u.endsWith('/rpc/lookup_shared_partial')) && !calls.some(u=>u.includes('consume_ai_rate_limit')), calls.join(','))
+    check('a complete bank hit makes no provider request', calls.every(u=>u.endsWith('/auth/v1/user') || u.endsWith('/rpc/lookup_shared_partial')), calls.join(','))
+  } finally { globalThis.fetch = realFetch }
+}
+
 // The summary used to be an unconditional "passed" with no exit code, so a
 // failing endpoint check printed FAIL and the build went green anyway. It is
 // the only suite that did this; the other three already exit non-zero.

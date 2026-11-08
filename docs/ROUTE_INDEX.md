@@ -1,8 +1,8 @@
 # Lingo3 — route index
 
-Reviewed: 2026-11-08. App version: 0.7.3.
-Code reference: main `8e42f3261dc6992a728985290c58ea946f401719`, especially `src/App.tsx` TAB_PATHS / tabFromPath / HomeTiles / TrainingCenter.
-No route implementation changed in vocabulary batch 009.
+Reviewed: 2026-11-08. App version: 0.7.4.
+Code reference: navigation main `8e42f3261dc6992a728985290c58ea946f401719`; vocabulary/lookup branch `feat/verb-bank-fast-lookup-20261108`, especially `src/App.tsx` TAB_PATHS / tabFromPath / HomeTiles / TrainingCenter.
+No route implementation changed in vocabulary batch 010.
 
 ## Workspace routes
 
@@ -37,8 +37,8 @@ Public aliases/first-visit behavior remain subject to existing service-worker/se
 
 Existing handlers, verified by repository paths: /api/expand, /api/translate, /api/story, /api/tts, /api/grammar-examples, /api/ai-status. Authentication, rate limiting and provider behavior are governed by their existing handlers; this review does not certify all endpoint behavior.
 
-Shared-bank RPC `lookup_shared_expansion` is called before AI by src/ai/expand.ts when no hint/partner is supplied. Six-language data-only additions are immediately available from Supabase and do not require a new navigation entry. A 3.159-second anonymous DB query exceeded the current 1.8-second client wait in verification; fast UI bank acceptance remains open.
+Shared-bank RPC `lookup_shared_expansion` is called before AI by src/ai/expand.ts when no hint/partner is supplied. The new 200-concept batch covers all eight supported languages. Stored form keys removed repeated morphology parsing: anonymous database samples measured 13–68 ms; eight real HTTPS inflection lookups parsed correctly. Network timing is separate (one initial cold HTTPS request took 7.228 seconds; the seven warm requests took 155–415 ms). The client still waits 1.8 seconds before its server fallback; hints/paired words intentionally request custom context. No new navigation entry is required.
 
 ## Status
 
-All listed workspace/public entries are implemented in reviewed source. No new planned feature is represented as an active route. The bank admin UI and performance follow-up have no new route in this change. Existing compatibility paths are retained intentionally; no links or pages were removed. Signed-in visual/browser Back testing was not performed in this data-only task.
+All listed workspace/public entries are implemented in reviewed source. No new planned feature is represented as an active route. The bank admin UI has no new route in this change; query performance was improved within the existing RPCs. Existing compatibility paths are retained intentionally; no links or pages were removed. Signed-in visual/browser Back testing was not performed in this data-only task.
