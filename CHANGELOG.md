@@ -1,3 +1,8 @@
+## 0.7.4 — 2026-11-08
+- Added 200 new shared-bank verb concepts in all eight supported languages, with searchable stored inflections.
+- Store normalized lexical keys once in Postgres to keep RLS-protected lookups fast; preserve ambiguity checks and access rules.
+- Keep additional conjugations when saving a shared-bank card on the device.
+
 ## 0.7.3 — 2026-11-04
 - Choose the input word language beside Save for later, using native and active learning languages.
 - Reset the input and result with a red reset arrow.

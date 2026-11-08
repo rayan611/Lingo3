@@ -1,3 +1,19 @@
+## 2026-11-08 — 200 verbs in eight languages and stored-form speed fix (0.7.4)
+
+Owner authorized adding 200 nonduplicate verbs and fast bank-first inflection lookup. Branch feat/verb-bank-fast-lookup-20261108; reviewed app main 8e42f3261dc6992a728985290c58ea946f401719. Prior batch-009 archive PR #37 merged after successful CI 42477041674 as 11a2595b6a2d40c53a5b7b4ed5e0a6a59c37ccf4; its already-live vocabulary was not reimported.
+
+LIVE DATA: exactly **200 new concepts / 1,600 entries**, all supported languages fa/en/sv/de/es/it/fr/ru. Ready bank **4,483 concepts / 27,290 entries**, **471 verbs**, **0 duplicate groups**. Old shared-record checksums unchanged. Corrected only newly imported aliases; final SHA-256 b37ac48124ebddb0edd0dc4b67ccb399a1eb6b322ce9417cdecb15a09ddfd253. Never reimport the preparatory historical payload as fresh data.
+
+LIVE DATABASE: applied stored_lexical_form_keys migration. Generated form_keys + GIN index and once-per-language query normalization remove repeated parsing under RLS; existing status/ambiguity/core preference/grants/roles unchanged. Anonymous DB samples **13.345–68.234 ms**; previous slow sample 3158.670 ms. Additional conjugations retained by optional typed additionalForms; no new UI route. App code release/CI/deployment pending below until finalized.
+
+VERIFIED: 1,600/1,600 correct live explicit-language header lookups; local 1,600 morphology/expansion parses and 36,211 entry/form keys; RLS samples anon 16/16 and authenticated 16/16; eight real public HTTPS inflection results (all eight entries each) parse with ExpansionSchema; API unit test proves bank hit skips provider/counter. SQL RLS/ambiguity/metadata/generated-update fixtures pass, rolled back with zero leftovers. Repeat import inserts 0 / 200 existing. Ten existing regression files pass via node --import tsx; npm test CLI itself is blocked by runtime IPC EPERM. Typecheck and production/PWA build pass. Security advisor findings unchanged.
+
+LIMITS: real HTTP first cold request 7.228s; seven warm requests 155–415ms. Server DB time is separate from connection/network latency. Client 1.8s wait and server fallback remain; hints/paired context, missing languages or genuine ambiguity can still use AI. No physical signed-in browser/phone/offline E2E or independent eight-language proofreading. Examples are parallel original grammar-practice frames, not individually contextualized scenes; not every possible compound tense is populated.
+
+NAVIGATION: reviewed and updated docs/SITEMAP.md and ROUTE_INDEX.md to 0.7.4; no path/menu/Back changes. Report/sources: docs/VOCAB_BATCH_010_REPORT.md, batch-010*.json. Rollback restores only old raw lookup definitions via scripts/rollback-stored-forms.sql; additive storage and user data remain. Next: finish final archive comparison, CI/main release and production commit verification; optional signed-in acceptance afterward.
+
+---
+
 ## 2026-11-08 — Adjectives, opposites and time/place vocabulary (batch 009)
 
 Branch: `data/adjectives-time-place-20261108`; payload commit `f260213b1dd66f0b7cb34fc0753d530c563bfbb5`; reviewed application main `8e42f3261dc6992a728985290c58ea946f401719` (0.7.3). Owner authorized additive shared-bank data.

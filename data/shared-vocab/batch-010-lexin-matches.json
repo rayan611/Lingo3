@@ -1,0 +1,1322 @@
+[
+  {
+    "term": "accelerera",
+    "lemma": "accelererar",
+    "pos": "verb",
+    "inflection_raw": "accelererade accelererat accelerera(!)"
+  },
+  {
+    "term": "analysera",
+    "lemma": "analyserar",
+    "pos": "verb",
+    "inflection_raw": "analyserade analyserat analysera(!)"
+  },
+  {
+    "term": "andas",
+    "lemma": "andas",
+    "pos": "verb",
+    "inflection_raw": "andades andats andas(!)"
+  },
+  {
+    "term": "ångra",
+    "lemma": "ångrar",
+    "pos": "verb",
+    "inflection_raw": "ångrade ångrat ångra(!)"
+  },
+  {
+    "term": "anpassa",
+    "lemma": "anpassar",
+    "pos": "verb",
+    "inflection_raw": "anpassade anpassat anpassa(!)"
+  },
+  {
+    "term": "ansluta",
+    "lemma": "ansluter",
+    "pos": "verb",
+    "inflection_raw": "anslöt anslutit anslut! ansluta"
+  },
+  {
+    "term": "arrestera",
+    "lemma": "arresterar",
+    "pos": "verb",
+    "inflection_raw": "arresterade arresterat arrestera(!)"
+  },
+  {
+    "term": "återställa",
+    "lemma": "återställer",
+    "pos": "verb",
+    "inflection_raw": "återställde återställt återställ! återställa"
+  },
+  {
+    "term": "återvinna",
+    "lemma": "återvinner",
+    "pos": "verb",
+    "inflection_raw": "återvann återvunnit återvinn! återvinna"
+  },
+  {
+    "term": "attackera",
+    "lemma": "attackerar",
+    "pos": "verb",
+    "inflection_raw": "attackerade attackerat attackera(!)"
+  },
+  {
+    "term": "avbryta",
+    "lemma": "avbryter",
+    "pos": "verb",
+    "inflection_raw": "avbröt avbrutit avbryt! avbryta"
+  },
+  {
+    "term": "avskeda",
+    "lemma": "avskedar",
+    "pos": "verb",
+    "inflection_raw": "avskedade avskedat avskeda(!)"
+  },
+  {
+    "term": "avundas",
+    "lemma": "avundas",
+    "pos": "verb",
+    "inflection_raw": "avundades avundats avundas(!)"
+  },
+  {
+    "term": "avvisa",
+    "lemma": "avvisar",
+    "pos": "verb",
+    "inflection_raw": "avvisade avvisat avvisa(!)"
+  },
+  {
+    "term": "balansera",
+    "lemma": "balanserar",
+    "pos": "verb",
+    "inflection_raw": "balanserade balanserat balansera(!)"
+  },
+  {
+    "term": "behandla",
+    "lemma": "behandlar",
+    "pos": "verb",
+    "inflection_raw": "behandlade behandlat behandla(!)"
+  },
+  {
+    "term": "bekänna",
+    "lemma": "bekänner",
+    "pos": "verb",
+    "inflection_raw": "bekände bekänt bekänn! bekänna"
+  },
+  {
+    "term": "bekräfta",
+    "lemma": "bekräftar",
+    "pos": "verb",
+    "inflection_raw": "bekräftade bekräftat bekräfta(!)"
+  },
+  {
+    "term": "beräkna",
+    "lemma": "beräknar",
+    "pos": "verb",
+    "inflection_raw": "beräknade beräknat beräkna(!)"
+  },
+  {
+    "term": "bero",
+    "lemma": "bero",
+    "pos": "verb",
+    "inflection_raw": ""
+  },
+  {
+    "term": "bero",
+    "lemma": "beror på",
+    "pos": "verb",
+    "inflection_raw": "berodde berott bero"
+  },
+  {
+    "term": "berömma",
+    "lemma": "berömmer",
+    "pos": "verb",
+    "inflection_raw": "berömde berömt beröm! berömma"
+  },
+  {
+    "term": "besegra",
+    "lemma": "besegrar",
+    "pos": "verb",
+    "inflection_raw": "besegrade besegrat besegra(!)"
+  },
+  {
+    "term": "beskära",
+    "lemma": "beskär",
+    "pos": "verb",
+    "inflection_raw": "beskar beskurit beskär! beskära"
+  },
+  {
+    "term": "beskriva",
+    "lemma": "beskriver",
+    "pos": "verb",
+    "inflection_raw": "beskrev beskrivit beskriv! beskriva"
+  },
+  {
+    "term": "bestå",
+    "lemma": "består",
+    "pos": "verb",
+    "inflection_raw": "bestod bestått bestå"
+  },
+  {
+    "term": "beundra",
+    "lemma": "beundrar",
+    "pos": "verb",
+    "inflection_raw": "beundrade beundrat beundra(!)"
+  },
+  {
+    "term": "bevara",
+    "lemma": "bevarar",
+    "pos": "verb",
+    "inflection_raw": "bevarade bevarat bevara(!)"
+  },
+  {
+    "term": "bevisa",
+    "lemma": "bevisar",
+    "pos": "verb",
+    "inflection_raw": "bevisade bevisat bevisa(!)"
+  },
+  {
+    "term": "bläddra",
+    "lemma": "bläddrar",
+    "pos": "verb",
+    "inflection_raw": "bläddrade bläddrat bläddra(!)"
+  },
+  {
+    "term": "blomma",
+    "lemma": "blommar",
+    "pos": "verb",
+    "inflection_raw": "blommade blommat blomma(!)"
+  },
+  {
+    "term": "böja",
+    "lemma": "böjer",
+    "pos": "verb",
+    "inflection_raw": "böjde böjt böj! böja"
+  },
+  {
+    "term": "bryta",
+    "lemma": "bryter ut",
+    "pos": "verb",
+    "inflection_raw": "bröt brutit bryta"
+  },
+  {
+    "term": "bryta",
+    "lemma": "bryter samman",
+    "pos": "verb",
+    "inflection_raw": "bröt brutit bryta"
+  },
+  {
+    "term": "bryta",
+    "lemma": "bryter",
+    "pos": "verb",
+    "inflection_raw": "bröt brutit bryt! bryta"
+  },
+  {
+    "term": "bryta",
+    "lemma": "bryter ned",
+    "pos": "verb",
+    "inflection_raw": "bröt brutit bryt! bryta"
+  },
+  {
+    "term": "bryta",
+    "lemma": "bryter upp",
+    "pos": "verb",
+    "inflection_raw": "bröt brutit bryt! bryta"
+  },
+  {
+    "term": "citera",
+    "lemma": "citerar",
+    "pos": "verb",
+    "inflection_raw": "citerade citerat citera(!)"
+  },
+  {
+    "term": "definiera",
+    "lemma": "definierar",
+    "pos": "verb",
+    "inflection_raw": "definierade definierat definiera(!)"
+  },
+  {
+    "term": "delegera",
+    "lemma": "delegerar",
+    "pos": "verb",
+    "inflection_raw": "delegerade delegerat delegera(!)"
+  },
+  {
+    "term": "desinficera",
+    "lemma": "desinficerar",
+    "pos": "verb",
+    "inflection_raw": "desinficerade desinficerat desinficera(!)"
+  },
+  {
+    "term": "distribuera",
+    "lemma": "distribuerar",
+    "pos": "verb",
+    "inflection_raw": "distribuerade distribuerat distribuera(!)"
+  },
+  {
+    "term": "dividera",
+    "lemma": "dividerar",
+    "pos": "verb",
+    "inflection_raw": "dividerade dividerat dividera(!)"
+  },
+  {
+    "term": "döda",
+    "lemma": "dödar",
+    "pos": "verb",
+    "inflection_raw": "dödade dödat döda(!)"
+  },
+  {
+    "term": "dyka",
+    "lemma": "dyker upp",
+    "pos": "verb",
+    "inflection_raw": "dök dykt dyk! dyka"
+  },
+  {
+    "term": "dyka",
+    "lemma": "dyker",
+    "pos": "verb",
+    "inflection_raw": "dök (el. dykte) dykt dyk! dyka"
+  },
+  {
+    "term": "erkänna",
+    "lemma": "erkänner",
+    "pos": "verb",
+    "inflection_raw": "erkände erkänt erkänn! erkänna"
+  },
+  {
+    "term": "exportera",
+    "lemma": "exporterar",
+    "pos": "verb",
+    "inflection_raw": "exporterade exporterat exportera(!)"
+  },
+  {
+    "term": "fästa",
+    "lemma": "fäster",
+    "pos": "verb",
+    "inflection_raw": "fäste fäst fäst! fästa"
+  },
+  {
+    "term": "filtrera",
+    "lemma": "filtrerar",
+    "pos": "verb",
+    "inflection_raw": "filtrerade filtrerat filtrera(!)"
+  },
+  {
+    "term": "finnas",
+    "lemma": "finns",
+    "pos": "verb",
+    "inflection_raw": "fanns funnits finnas"
+  },
+  {
+    "term": "fly",
+    "lemma": "flyr",
+    "pos": "verb",
+    "inflection_raw": "flydde flytt fly(!)"
+  },
+  {
+    "term": "förenkla",
+    "lemma": "förenklar",
+    "pos": "verb",
+    "inflection_raw": "förenklade förenklat förenkla(!)"
+  },
+  {
+    "term": "förhindra",
+    "lemma": "förhindrar",
+    "pos": "verb",
+    "inflection_raw": "förhindrade förhindrat förhindra(!)"
+  },
+  {
+    "term": "förlåta",
+    "lemma": "förlåter",
+    "pos": "verb",
+    "inflection_raw": "förlät förlåtit förlåt! förlåta"
+  },
+  {
+    "term": "förneka",
+    "lemma": "förnekar",
+    "pos": "verb",
+    "inflection_raw": "förnekade förnekat förneka(!)"
+  },
+  {
+    "term": "förorena",
+    "lemma": "förorenar",
+    "pos": "verb",
+    "inflection_raw": "förorenade förorenat förorena(!)"
+  },
+  {
+    "term": "försäkra",
+    "lemma": "försäkrar",
+    "pos": "verb",
+    "inflection_raw": "försäkrade försäkrat försäkra(!)"
+  },
+  {
+    "term": "förstöra",
+    "lemma": "förstör",
+    "pos": "verb",
+    "inflection_raw": "förstörde förstört förstör! förstöra"
+  },
+  {
+    "term": "försvara",
+    "lemma": "försvarar",
+    "pos": "verb",
+    "inflection_raw": "försvarade försvarat försvara(!)"
+  },
+  {
+    "term": "försvinna",
+    "lemma": "försvinner",
+    "pos": "verb",
+    "inflection_raw": "försvann försvunnit försvinn! försvinna"
+  },
+  {
+    "term": "förtjäna",
+    "lemma": "förtjänar",
+    "pos": "verb",
+    "inflection_raw": "förtjänade förtjänat förtjäna"
+  },
+  {
+    "term": "förtydliga",
+    "lemma": "förtydligar",
+    "pos": "verb",
+    "inflection_raw": "förtydligade förtydligat förtydliga(!)"
+  },
+  {
+    "term": "förutsäga",
+    "lemma": "förutsäger",
+    "pos": "verb",
+    "inflection_raw": "förutsade förutsagt förutsäg! förutsäga"
+  },
+  {
+    "term": "förvara",
+    "lemma": "förvarar",
+    "pos": "verb",
+    "inflection_raw": "förvarade förvarat förvara(!)"
+  },
+  {
+    "term": "glida",
+    "lemma": "glider",
+    "pos": "verb",
+    "inflection_raw": "gled glidit glid! glida"
+  },
+  {
+    "term": "gnugga",
+    "lemma": "gnuggar",
+    "pos": "verb",
+    "inflection_raw": "gnuggade gnuggat gnugga(!)"
+  },
+  {
+    "term": "gödsla",
+    "lemma": "gödslar",
+    "pos": "verb",
+    "inflection_raw": "gödslade gödslat gödsla(!)"
+  },
+  {
+    "term": "gro",
+    "lemma": "gror",
+    "pos": "verb",
+    "inflection_raw": "grodde grott gro"
+  },
+  {
+    "term": "hacka",
+    "lemma": "hackar",
+    "pos": "verb",
+    "inflection_raw": "hackade hackat hacka(!)"
+  },
+  {
+    "term": "hänga",
+    "lemma": "hänger med",
+    "pos": "verb",
+    "inflection_raw": "hängde hängt häng! hänga"
+  },
+  {
+    "term": "hänga",
+    "lemma": "hänger",
+    "pos": "verb",
+    "inflection_raw": "hängde hängt häng! hänga"
+  },
+  {
+    "term": "hänga",
+    "lemma": "hänger efter",
+    "pos": "verb",
+    "inflection_raw": "hängde hängt häng! hänga"
+  },
+  {
+    "term": "hänga",
+    "lemma": "hänger sig",
+    "pos": "verb",
+    "inflection_raw": "hängde hängt häng! hänga"
+  },
+  {
+    "term": "hänga",
+    "lemma": "hänger på",
+    "pos": "verb",
+    "inflection_raw": "hängde hängt hänga"
+  },
+  {
+    "term": "hantera",
+    "lemma": "hanterar",
+    "pos": "verb",
+    "inflection_raw": "hanterade hanterat hantera(!)"
+  },
+  {
+    "term": "hota",
+    "lemma": "hotar",
+    "pos": "verb",
+    "inflection_raw": "hotade hotat hota(!)"
+  },
+  {
+    "term": "identifiera",
+    "lemma": "identifierar",
+    "pos": "verb",
+    "inflection_raw": "identifierade identifierat identifiera(!)"
+  },
+  {
+    "term": "imponera",
+    "lemma": "imponerar",
+    "pos": "verb",
+    "inflection_raw": "imponerade imponerat imponera(!)"
+  },
+  {
+    "term": "importera",
+    "lemma": "importerar",
+    "pos": "verb",
+    "inflection_raw": "importerade importerat importera(!)"
+  },
+  {
+    "term": "inkludera",
+    "lemma": "inkluderar",
+    "pos": "verb",
+    "inflection_raw": "inkluderade inkluderat inkludera(!)"
+  },
+  {
+    "term": "innehålla",
+    "lemma": "innehåller",
+    "pos": "verb",
+    "inflection_raw": "innehöll innehållit innehåll! innehålla"
+  },
+  {
+    "term": "inrätta",
+    "lemma": "inrättar",
+    "pos": "verb",
+    "inflection_raw": "inrättade inrättat inrätta(!)"
+  },
+  {
+    "term": "inspirera",
+    "lemma": "inspirerar",
+    "pos": "verb",
+    "inflection_raw": "inspirerade inspirerat inspirera(!)"
+  },
+  {
+    "term": "installera",
+    "lemma": "installerar",
+    "pos": "verb",
+    "inflection_raw": "installerade installerat installera(!)"
+  },
+  {
+    "term": "installera",
+    "lemma": "installerar sig",
+    "pos": "verb",
+    "inflection_raw": "installerade installerat installera(!)"
+  },
+  {
+    "term": "investera",
+    "lemma": "investerar",
+    "pos": "verb",
+    "inflection_raw": "investerade investerat investera(!)"
+  },
+  {
+    "term": "irritera",
+    "lemma": "irriterar",
+    "pos": "verb",
+    "inflection_raw": "irriterade irriterat irritera(!)"
+  },
+  {
+    "term": "justera",
+    "lemma": "justerar",
+    "pos": "verb",
+    "inflection_raw": "justerade justerat justera(!)"
+  },
+  {
+    "term": "klaga",
+    "lemma": "klagar",
+    "pos": "verb",
+    "inflection_raw": "klagade klagat klaga(!)"
+  },
+  {
+    "term": "klämma",
+    "lemma": "klämmer åt",
+    "pos": "verb",
+    "inflection_raw": "klämde klämt kläm! klämma"
+  },
+  {
+    "term": "klämma",
+    "lemma": "klämmer till",
+    "pos": "verb",
+    "inflection_raw": "klämde klämt kläm! klämma"
+  },
+  {
+    "term": "klämma",
+    "lemma": "klämmer",
+    "pos": "verb",
+    "inflection_raw": "klämde klämt kläm! klämma"
+  },
+  {
+    "term": "klämma",
+    "lemma": "klämmer i",
+    "pos": "verb",
+    "inflection_raw": "klämde klämt kläm! klämma"
+  },
+  {
+    "term": "klia",
+    "lemma": "kliar",
+    "pos": "verb",
+    "inflection_raw": "kliade kliat klia"
+  },
+  {
+    "term": "knåda",
+    "lemma": "knådar",
+    "pos": "verb",
+    "inflection_raw": "knådade knådat knåda(!)"
+  },
+  {
+    "term": "knyta",
+    "lemma": "knyter",
+    "pos": "verb",
+    "inflection_raw": "knöt knutit knyt! knyta"
+  },
+  {
+    "term": "kombinera",
+    "lemma": "kombinerar",
+    "pos": "verb",
+    "inflection_raw": "kombinerade kombinerat kombinera(!)"
+  },
+  {
+    "term": "kommunicera",
+    "lemma": "kommunicerar",
+    "pos": "verb",
+    "inflection_raw": "kommunicerade kommunicerat kommunicera(!)"
+  },
+  {
+    "term": "komplicera",
+    "lemma": "komplicerar",
+    "pos": "verb",
+    "inflection_raw": "komplicerade komplicerat komplicera"
+  },
+  {
+    "term": "koncentrera",
+    "lemma": "koncentrerar",
+    "pos": "verb",
+    "inflection_raw": "koncentrerade koncentrerat koncentrera(!)"
+  },
+  {
+    "term": "koncentrera",
+    "lemma": "koncentrerar sig",
+    "pos": "verb",
+    "inflection_raw": "koncentrerade koncentrerat koncentrera(!)"
+  },
+  {
+    "term": "kopiera",
+    "lemma": "kopierar",
+    "pos": "verb",
+    "inflection_raw": "kopierade kopierat kopiera(!)"
+  },
+  {
+    "term": "kritisera",
+    "lemma": "kritiserar",
+    "pos": "verb",
+    "inflection_raw": "kritiserade kritiserat kritisera(!)"
+  },
+  {
+    "term": "krossa",
+    "lemma": "krossar",
+    "pos": "verb",
+    "inflection_raw": "krossade krossat krossa(!)"
+  },
+  {
+    "term": "krydda",
+    "lemma": "kryddar",
+    "pos": "verb",
+    "inflection_raw": "kryddade kryddat krydda(!)"
+  },
+  {
+    "term": "krypa",
+    "lemma": "kryper",
+    "pos": "verb",
+    "inflection_raw": "kröp krupit kryp! krypa"
+  },
+  {
+    "term": "kvittra",
+    "lemma": "kvittrar",
+    "pos": "verb",
+    "inflection_raw": "kvittrade kvittrat kvittra(!)"
+  },
+  {
+    "term": "ladda",
+    "lemma": "laddar",
+    "pos": "verb",
+    "inflection_raw": "laddade laddat ladda(!)"
+  },
+  {
+    "term": "ladda",
+    "lemma": "laddar upp",
+    "pos": "verb",
+    "inflection_raw": "laddade laddat ladda(!)"
+  },
+  {
+    "term": "läka",
+    "lemma": "läker",
+    "pos": "verb",
+    "inflection_raw": "läkte läkt läk! läka"
+  },
+  {
+    "term": "lida",
+    "lemma": "lider",
+    "pos": "verb",
+    "inflection_raw": "led lidit lid! lida"
+  },
+  {
+    "term": "limma",
+    "lemma": "limmar",
+    "pos": "verb",
+    "inflection_raw": "limmade limmat limma(!)"
+  },
+  {
+    "term": "ljuga",
+    "lemma": "ljuger",
+    "pos": "verb",
+    "inflection_raw": "ljög ljugit ljug! ljuga"
+  },
+  {
+    "term": "lossa",
+    "lemma": "lossar",
+    "pos": "verb",
+    "inflection_raw": "lossade lossat lossa(!)"
+  },
+  {
+    "term": "lugna",
+    "lemma": "lugnar",
+    "pos": "verb",
+    "inflection_raw": "lugnade lugnat lugna(!)"
+  },
+  {
+    "term": "lyda",
+    "lemma": "lyder",
+    "pos": "verb",
+    "inflection_raw": "lydde (el. löd) lytt lyd! lyda"
+  },
+  {
+    "term": "märka",
+    "lemma": "märker",
+    "pos": "verb",
+    "inflection_raw": "märkte märkt märk! märka"
+  },
+  {
+    "term": "mata",
+    "lemma": "matar",
+    "pos": "verb",
+    "inflection_raw": "matade matat mata(!)"
+  },
+  {
+    "term": "meddela",
+    "lemma": "meddelar",
+    "pos": "verb",
+    "inflection_raw": "meddelade meddelat meddela(!)"
+  },
+  {
+    "term": "meditera",
+    "lemma": "mediterar",
+    "pos": "verb",
+    "inflection_raw": "mediterade mediterat meditera(!)"
+  },
+  {
+    "term": "motivera",
+    "lemma": "motiverar",
+    "pos": "verb",
+    "inflection_raw": "motiverade motiverat motivera(!)"
+  },
+  {
+    "term": "multiplicera",
+    "lemma": "multiplicerar",
+    "pos": "verb",
+    "inflection_raw": "multiplicerade multiplicerat multiplicera(!)"
+  },
+  {
+    "term": "nämna",
+    "lemma": "nämner",
+    "pos": "verb",
+    "inflection_raw": "nämnde nämnt nämn! nämna"
+  },
+  {
+    "term": "nypa",
+    "lemma": "nyper",
+    "pos": "verb",
+    "inflection_raw": "nöp nypt (el. nupit) nyp! nypa"
+  },
+  {
+    "term": "observera",
+    "lemma": "observerar",
+    "pos": "verb",
+    "inflection_raw": "observerade observerat observera(!)"
+  },
+  {
+    "term": "operera",
+    "lemma": "opererar",
+    "pos": "verb",
+    "inflection_raw": "opererade opererat operera(!)"
+  },
+  {
+    "term": "optimera",
+    "lemma": "optimerar",
+    "pos": "verb",
+    "inflection_raw": "optimerade optimerat optimera(!)"
+  },
+  {
+    "term": "ordna",
+    "lemma": "ordnar",
+    "pos": "verb",
+    "inflection_raw": "ordnade ordnat ordna(!)"
+  },
+  {
+    "term": "överleva",
+    "lemma": "överlever",
+    "pos": "verb",
+    "inflection_raw": "överlevde överlevt överleva"
+  },
+  {
+    "term": "överraska",
+    "lemma": "överraskar",
+    "pos": "verb",
+    "inflection_raw": "överraskade överraskat överraska(!)"
+  },
+  {
+    "term": "övertala",
+    "lemma": "övertalar",
+    "pos": "verb",
+    "inflection_raw": "övertalade övertalat övertala(!)"
+  },
+  {
+    "term": "övertyga",
+    "lemma": "övertygar",
+    "pos": "verb",
+    "inflection_raw": "övertygade övertygat övertyga(!)"
+  },
+  {
+    "term": "övervaka",
+    "lemma": "övervakar",
+    "pos": "verb",
+    "inflection_raw": "övervakade övervakat övervaka(!)"
+  },
+  {
+    "term": "polera",
+    "lemma": "polerar",
+    "pos": "verb",
+    "inflection_raw": "polerade polerat polera(!)"
+  },
+  {
+    "term": "producera",
+    "lemma": "producerar",
+    "pos": "verb",
+    "inflection_raw": "producerade producerat producera(!)"
+  },
+  {
+    "term": "publicera",
+    "lemma": "publicerar",
+    "pos": "verb",
+    "inflection_raw": "publicerade publicerat publicera(!)"
+  },
+  {
+    "term": "rädda",
+    "lemma": "räddar",
+    "pos": "verb",
+    "inflection_raw": "räddade räddat rädda(!)"
+  },
+  {
+    "term": "reagera",
+    "lemma": "reagerar",
+    "pos": "verb",
+    "inflection_raw": "reagerade reagerat reagera(!)"
+  },
+  {
+    "term": "reducera",
+    "lemma": "reducerar",
+    "pos": "verb",
+    "inflection_raw": "reducerade reducerat reducera(!)"
+  },
+  {
+    "term": "rekommendera",
+    "lemma": "rekommenderar",
+    "pos": "verb",
+    "inflection_raw": "rekommenderade rekommenderat rekommendera(!)"
+  },
+  {
+    "term": "renovera",
+    "lemma": "renoverar",
+    "pos": "verb",
+    "inflection_raw": "renoverade renoverat renovera(!)"
+  },
+  {
+    "term": "respektera",
+    "lemma": "respekterar",
+    "pos": "verb",
+    "inflection_raw": "respekterade respekterat respektera(!)"
+  },
+  {
+    "term": "revidera",
+    "lemma": "reviderar",
+    "pos": "verb",
+    "inflection_raw": "reviderade reviderat revidera(!)"
+  },
+  {
+    "term": "riskera",
+    "lemma": "riskerar",
+    "pos": "verb",
+    "inflection_raw": "riskerade riskerat riskera(!)"
+  },
+  {
+    "term": "rulla",
+    "lemma": "rullar",
+    "pos": "verb",
+    "inflection_raw": "rullade rullat rulla"
+  },
+  {
+    "term": "ryta",
+    "lemma": "ryter",
+    "pos": "verb",
+    "inflection_raw": "röt rutit ryt! ryta"
+  },
+  {
+    "term": "såga",
+    "lemma": "sågar",
+    "pos": "verb",
+    "inflection_raw": "sågade sågat såga(!)"
+  },
+  {
+    "term": "sammanfatta",
+    "lemma": "sammanfattar",
+    "pos": "verb",
+    "inflection_raw": "sammanfattade sammanfattat sammanfatta(!)"
+  },
+  {
+    "term": "samordna",
+    "lemma": "samordnar",
+    "pos": "verb",
+    "inflection_raw": "samordnade samordnat samordna(!)"
+  },
+  {
+    "term": "sända",
+    "lemma": "sänder",
+    "pos": "verb",
+    "inflection_raw": "sände sänt sänd! sända"
+  },
+  {
+    "term": "sänka",
+    "lemma": "sänker",
+    "pos": "verb",
+    "inflection_raw": "sänkte sänkt sänk! sänka"
+  },
+  {
+    "term": "separera",
+    "lemma": "separerar",
+    "pos": "verb",
+    "inflection_raw": "separerade separerat separera(!)"
+  },
+  {
+    "term": "servera",
+    "lemma": "serverar",
+    "pos": "verb",
+    "inflection_raw": "serverade serverat servera(!)"
+  },
+  {
+    "term": "skada",
+    "lemma": "skadar",
+    "pos": "verb",
+    "inflection_raw": "skadade skadat skada(!)"
+  },
+  {
+    "term": "skälla",
+    "lemma": "skäller",
+    "pos": "verb",
+    "inflection_raw": "skällde skällt skäll! skälla"
+  },
+  {
+    "term": "skapa",
+    "lemma": "skapar",
+    "pos": "verb",
+    "inflection_raw": "skapade skapat skapa(!)"
+  },
+  {
+    "term": "skjuta",
+    "lemma": "skjuter till",
+    "pos": "verb",
+    "inflection_raw": "sköt skjutit skjut! skjuta"
+  },
+  {
+    "term": "skjuta",
+    "lemma": "skjuter ut",
+    "pos": "verb",
+    "inflection_raw": "sköt skjutit skjuta"
+  },
+  {
+    "term": "skjuta",
+    "lemma": "skjuter",
+    "pos": "verb",
+    "inflection_raw": "sköt skjutit skjut! skjuta"
+  },
+  {
+    "term": "skölja",
+    "lemma": "sköljer",
+    "pos": "verb",
+    "inflection_raw": "sköljde sköljt skölj! skölja"
+  },
+  {
+    "term": "skrämma",
+    "lemma": "skrämmer",
+    "pos": "verb",
+    "inflection_raw": "skrämde skrämt skräm! skrämma"
+  },
+  {
+    "term": "skvallra",
+    "lemma": "skvallrar",
+    "pos": "verb",
+    "inflection_raw": "skvallrade skvallrat skvallra(!)"
+  },
+  {
+    "term": "skydda",
+    "lemma": "skyddar",
+    "pos": "verb",
+    "inflection_raw": "skyddade skyddat skydda(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår sig ner",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår fast",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår igen",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår igenom",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår in",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår runt",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår sig",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår till",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "slå",
+    "lemma": "slår upp",
+    "pos": "verb",
+    "inflection_raw": "slog slagit slå(!)"
+  },
+  {
+    "term": "släpa",
+    "lemma": "släpar efter",
+    "pos": "verb",
+    "inflection_raw": "släpade släpat släpa"
+  },
+  {
+    "term": "släpa",
+    "lemma": "släpar",
+    "pos": "verb",
+    "inflection_raw": "släpade släpat släpa(!)"
+  },
+  {
+    "term": "sniffa",
+    "lemma": "sniffar",
+    "pos": "verb",
+    "inflection_raw": "sniffade sniffat sniffa(!)"
+  },
+  {
+    "term": "specificera",
+    "lemma": "specificerar",
+    "pos": "verb",
+    "inflection_raw": "specificerade specificerat specificera(!)"
+  },
+  {
+    "term": "stjäla",
+    "lemma": "stjäl",
+    "pos": "verb",
+    "inflection_raw": "stal stulit stjäl! stjäla"
+  },
+  {
+    "term": "stödja",
+    "lemma": "stöder",
+    "pos": "verb",
+    "inflection_raw": "stödde stött stöd! stöda (el. stödja)"
+  },
+  {
+    "term": "sträcka",
+    "lemma": "sträcker",
+    "pos": "verb",
+    "inflection_raw": "sträckte sträckt sträck! sträcka"
+  },
+  {
+    "term": "straffa",
+    "lemma": "straffar",
+    "pos": "verb",
+    "inflection_raw": "straffade straffat straffa(!)"
+  },
+  {
+    "term": "strömma",
+    "lemma": "strömmar",
+    "pos": "verb",
+    "inflection_raw": "strömmade strömmat strömma"
+  },
+  {
+    "term": "styra",
+    "lemma": "styr",
+    "pos": "verb",
+    "inflection_raw": "styrde styrt styr! styra"
+  },
+  {
+    "term": "subtrahera",
+    "lemma": "subtraherar",
+    "pos": "verb",
+    "inflection_raw": "subtraherade subtraherat subtrahera(!)"
+  },
+  {
+    "term": "sucka",
+    "lemma": "suckar",
+    "pos": "verb",
+    "inflection_raw": "suckade suckat sucka(!)"
+  },
+  {
+    "term": "surra",
+    "lemma": "surrar",
+    "pos": "verb",
+    "inflection_raw": "surrade surrat surra(!)"
+  },
+  {
+    "term": "svetsa",
+    "lemma": "svetsar",
+    "pos": "verb",
+    "inflection_raw": "svetsade svetsat svetsa(!)"
+  },
+  {
+    "term": "synkronisera",
+    "lemma": "synkroniserar",
+    "pos": "verb",
+    "inflection_raw": "synkroniserade synkroniserat synkronisera(!)"
+  },
+  {
+    "term": "tävla",
+    "lemma": "tävlar",
+    "pos": "verb",
+    "inflection_raw": "tävlade tävlat tävla(!)"
+  },
+  {
+    "term": "tilldela",
+    "lemma": "tilldelar",
+    "pos": "verb",
+    "inflection_raw": "tilldelade tilldelat tilldela(!)"
+  },
+  {
+    "term": "tillhöra",
+    "lemma": "tillhör",
+    "pos": "verb",
+    "inflection_raw": "tillhörde tillhört tillhöra"
+  },
+  {
+    "term": "tillverka",
+    "lemma": "tillverkar",
+    "pos": "verb",
+    "inflection_raw": "tillverkade tillverkat tillverka(!)"
+  },
+  {
+    "term": "tolerera",
+    "lemma": "tolererar",
+    "pos": "verb",
+    "inflection_raw": "tolererade tolererat tolerera(!)"
+  },
+  {
+    "term": "transportera",
+    "lemma": "transporterar",
+    "pos": "verb",
+    "inflection_raw": "transporterade transporterat transportera(!)"
+  },
+  {
+    "term": "underhålla",
+    "lemma": "underhåller",
+    "pos": "verb",
+    "inflection_raw": "underhöll underhållit underhåll! underhålla"
+  },
+  {
+    "term": "undersöka",
+    "lemma": "undersöker",
+    "pos": "verb",
+    "inflection_raw": "undersökte undersökt undersök! undersöka"
+  },
+  {
+    "term": "undvika",
+    "lemma": "undviker",
+    "pos": "verb",
+    "inflection_raw": "undvek undvikit undvik! undvika"
+  },
+  {
+    "term": "uppfinna",
+    "lemma": "uppfinner",
+    "pos": "verb",
+    "inflection_raw": "uppfann uppfunnit uppfinn! uppfinna"
+  },
+  {
+    "term": "uppmuntra",
+    "lemma": "uppmuntrar",
+    "pos": "verb",
+    "inflection_raw": "uppmuntrade uppmuntrat uppmuntra(!)"
+  },
+  {
+    "term": "upptäcka",
+    "lemma": "upptäcker",
+    "pos": "verb",
+    "inflection_raw": "upptäckte upptäckt upptäck! upptäcka"
+  },
+  {
+    "term": "utesluta",
+    "lemma": "utesluter",
+    "pos": "verb",
+    "inflection_raw": "uteslöt uteslutit uteslut! utesluta"
+  },
+  {
+    "term": "utforma",
+    "lemma": "utformar",
+    "pos": "verb",
+    "inflection_raw": "utformade utformat utforma(!)"
+  },
+  {
+    "term": "uthärda",
+    "lemma": "uthärdar",
+    "pos": "verb",
+    "inflection_raw": "uthärdade uthärdat uthärda(!)"
+  },
+  {
+    "term": "utreda",
+    "lemma": "utreder",
+    "pos": "verb",
+    "inflection_raw": "utredde utrett utred! utreda"
+  },
+  {
+    "term": "uttala",
+    "lemma": "uttalar sig",
+    "pos": "verb",
+    "inflection_raw": "uttalade uttalat uttala(!)"
+  },
+  {
+    "term": "uttala",
+    "lemma": "uttalar",
+    "pos": "verb",
+    "inflection_raw": "uttalade uttalat uttala(!)"
+  },
+  {
+    "term": "uttrycka",
+    "lemma": "uttrycker",
+    "pos": "verb",
+    "inflection_raw": "uttryckte uttryckt uttryck! uttrycka"
+  },
+  {
+    "term": "utvärdera",
+    "lemma": "utvärderar",
+    "pos": "verb",
+    "inflection_raw": "utvärderade utvärderat utvärdera(!)"
+  },
+  {
+    "term": "utveckla",
+    "lemma": "utvecklar",
+    "pos": "verb",
+    "inflection_raw": "utvecklade utvecklat utveckla(!)"
+  },
+  {
+    "term": "utvidga",
+    "lemma": "utvidgar",
+    "pos": "verb",
+    "inflection_raw": "utvidgade utvidgat utvidga(!)"
+  },
+  {
+    "term": "våga",
+    "lemma": "vågar",
+    "pos": "verb",
+    "inflection_raw": "vågade vågat våga(!)"
+  },
+  {
+    "term": "vägra",
+    "lemma": "vägrar",
+    "pos": "verb",
+    "inflection_raw": "vägrade vägrat vägra(!)"
+  },
+  {
+    "term": "vända",
+    "lemma": "vänder",
+    "pos": "verb",
+    "inflection_raw": "vände vänt vänd! vända"
+  },
+  {
+    "term": "vända",
+    "lemma": "vänder sig",
+    "pos": "verb",
+    "inflection_raw": "vände vänt vänd! vända"
+  },
+  {
+    "term": "varna",
+    "lemma": "varnar",
+    "pos": "verb",
+    "inflection_raw": "varnade varnat varna(!)"
+  },
+  {
+    "term": "vässa",
+    "lemma": "vässar",
+    "pos": "verb",
+    "inflection_raw": "vässade vässat vässa(!)"
+  },
+  {
+    "term": "verifiera",
+    "lemma": "verifierar",
+    "pos": "verb",
+    "inflection_raw": "verifierade verifierat verifiera(!)"
+  },
+  {
+    "term": "vissla",
+    "lemma": "visslar",
+    "pos": "verb",
+    "inflection_raw": "visslade visslat vissla(!)"
+  },
+  {
+    "term": "vissna",
+    "lemma": "vissnar",
+    "pos": "verb",
+    "inflection_raw": "vissnade vissnat vissna(!)"
+  }
+]
