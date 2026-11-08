@@ -1,0 +1,2802 @@
+[
+  {
+    "id": "core.v.steal.20261108",
+    "p": "verb",
+    "e": {
+      "en": "steal",
+      "fa": "دزدیدن",
+      "sv": "stjäla",
+      "de": "stehlen",
+      "es": "robar",
+      "it": "rubare",
+      "fr": "voler",
+      "ru": "красть"
+    }
+  },
+  {
+    "id": "core.v.kill.20261108",
+    "p": "verb",
+    "e": {
+      "en": "kill",
+      "fa": "کشتن",
+      "sv": "döda",
+      "de": "töten",
+      "es": "matar",
+      "it": "uccidere",
+      "fr": "tuer",
+      "ru": "убивать"
+    }
+  },
+  {
+    "id": "core.v.shoot.20261108",
+    "p": "verb",
+    "e": {
+      "en": "shoot",
+      "fa": "شلیک کردن",
+      "sv": "skjuta",
+      "de": "schießen",
+      "es": "disparar",
+      "it": "sparare",
+      "fr": "tirer",
+      "ru": "стрелять"
+    }
+  },
+  {
+    "id": "core.v.escape.20261108",
+    "p": "verb",
+    "e": {
+      "en": "escape",
+      "fa": "گریختن",
+      "sv": "fly",
+      "de": "fliehen",
+      "es": "escapar",
+      "it": "fuggire",
+      "fr": "s'échapper",
+      "ru": "убегать"
+    }
+  },
+  {
+    "id": "core.v.threaten.20261108",
+    "p": "verb",
+    "e": {
+      "en": "threaten",
+      "fa": "تهدید کردن",
+      "sv": "hota",
+      "de": "drohen",
+      "es": "amenazar",
+      "it": "minacciare",
+      "fr": "menacer",
+      "ru": "угрожать"
+    }
+  },
+  {
+    "id": "core.v.protect.20261108",
+    "p": "verb",
+    "e": {
+      "en": "protect",
+      "fa": "محافظت کردن",
+      "sv": "skydda",
+      "de": "schützen",
+      "es": "proteger",
+      "it": "proteggere",
+      "fr": "protéger",
+      "ru": "защищать"
+    }
+  },
+  {
+    "id": "core.v.defend.20261108",
+    "p": "verb",
+    "e": {
+      "en": "defend",
+      "fa": "دفاع کردن",
+      "sv": "försvara",
+      "de": "verteidigen",
+      "es": "defender",
+      "it": "difendere",
+      "fr": "défendre",
+      "ru": "оборонять"
+    }
+  },
+  {
+    "id": "core.v.attack.20261108",
+    "p": "verb",
+    "e": {
+      "en": "attack",
+      "fa": "حمله کردن",
+      "sv": "attackera",
+      "de": "angreifen",
+      "es": "atacar",
+      "it": "attaccare",
+      "fr": "attaquer",
+      "ru": "нападать"
+    }
+  },
+  {
+    "id": "core.v.punish.20261108",
+    "p": "verb",
+    "e": {
+      "en": "punish",
+      "fa": "تنبیه کردن",
+      "sv": "straffa",
+      "de": "bestrafen",
+      "es": "castigar",
+      "it": "punire",
+      "fr": "punir",
+      "ru": "наказывать"
+    }
+  },
+  {
+    "id": "core.v.arrest.20261108",
+    "p": "verb",
+    "e": {
+      "en": "arrest",
+      "fa": "بازداشت کردن",
+      "sv": "arrestera",
+      "de": "verhaften",
+      "es": "arrestar",
+      "it": "arrestare",
+      "fr": "arrêter",
+      "ru": "арестовывать"
+    }
+  },
+  {
+    "id": "core.v.rescue.20261108",
+    "p": "verb",
+    "e": {
+      "en": "rescue",
+      "fa": "نجات دادن",
+      "sv": "rädda",
+      "de": "retten",
+      "es": "rescatar",
+      "it": "salvare",
+      "fr": "sauver",
+      "ru": "спасать"
+    }
+  },
+  {
+    "id": "core.v.survive.20261108",
+    "p": "verb",
+    "e": {
+      "en": "survive",
+      "fa": "زنده ماندن",
+      "sv": "överleva",
+      "de": "überleben",
+      "es": "sobrevivir",
+      "it": "sopravvivere",
+      "fr": "survivre",
+      "ru": "выживать"
+    }
+  },
+  {
+    "id": "core.v.suffer.20261108",
+    "p": "verb",
+    "e": {
+      "en": "suffer",
+      "fa": "رنج بردن",
+      "sv": "lida",
+      "de": "leiden",
+      "es": "sufrir",
+      "it": "soffrire",
+      "fr": "souffrir",
+      "ru": "страдать"
+    }
+  },
+  {
+    "id": "core.v.injure.20261108",
+    "p": "verb",
+    "e": {
+      "en": "injure",
+      "fa": "مجروح کردن",
+      "sv": "skada",
+      "de": "verletzen",
+      "es": "lesionar",
+      "it": "ferire",
+      "fr": "blesser",
+      "ru": "ранить"
+    }
+  },
+  {
+    "id": "core.v.heal.20261108",
+    "p": "verb",
+    "e": {
+      "en": "heal",
+      "fa": "التیام یافتن",
+      "sv": "läka",
+      "de": "heilen",
+      "es": "sanar",
+      "it": "guarire",
+      "fr": "guérir",
+      "ru": "заживать"
+    }
+  },
+  {
+    "id": "core.v.treat.20261108",
+    "p": "verb",
+    "e": {
+      "en": "treat",
+      "fa": "درمان کردن",
+      "sv": "behandla",
+      "de": "behandeln",
+      "es": "tratar",
+      "it": "curare",
+      "fr": "soigner",
+      "ru": "лечить"
+    }
+  },
+  {
+    "id": "core.v.examine.20261108",
+    "p": "verb",
+    "e": {
+      "en": "examine",
+      "fa": "معاینه کردن",
+      "sv": "undersöka",
+      "de": "untersuchen",
+      "es": "examinar",
+      "it": "esaminare",
+      "fr": "examiner",
+      "ru": "осматривать"
+    }
+  },
+  {
+    "id": "core.v.operate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "operate",
+      "fa": "جراحی کردن",
+      "sv": "operera",
+      "de": "operieren",
+      "es": "operar",
+      "it": "operare",
+      "fr": "opérer",
+      "ru": "оперировать"
+    }
+  },
+  {
+    "id": "core.v.breathe.20261108",
+    "p": "verb",
+    "e": {
+      "en": "breathe",
+      "fa": "نفس کشیدن",
+      "sv": "andas",
+      "de": "atmen",
+      "es": "respirar",
+      "it": "respirare",
+      "fr": "respirer",
+      "ru": "дышать"
+    }
+  },
+  {
+    "id": "core.v.meditate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "meditate",
+      "fa": "مراقبه کردن",
+      "sv": "meditera",
+      "de": "meditieren",
+      "es": "meditar",
+      "it": "meditare",
+      "fr": "méditer",
+      "ru": "медитировать"
+    }
+  },
+  {
+    "id": "core.v.stretch.20261108",
+    "p": "verb",
+    "e": {
+      "en": "stretch",
+      "fa": "کشش دادن",
+      "sv": "sträcka",
+      "de": "dehnen",
+      "es": "estirar",
+      "it": "allungare",
+      "fr": "étirer",
+      "ru": "растягивать"
+    }
+  },
+  {
+    "id": "core.v.bend.20261108",
+    "p": "verb",
+    "e": {
+      "en": "bend",
+      "fa": "خم کردن",
+      "sv": "böja",
+      "de": "biegen",
+      "es": "doblar",
+      "it": "piegare",
+      "fr": "plier",
+      "ru": "сгибать"
+    }
+  },
+  {
+    "id": "core.v.crawl.20261108",
+    "p": "verb",
+    "e": {
+      "en": "crawl",
+      "fa": "خزیدن",
+      "sv": "krypa",
+      "de": "kriechen",
+      "es": "gatear",
+      "it": "gattonare",
+      "fr": "ramper",
+      "ru": "ползать"
+    }
+  },
+  {
+    "id": "core.v.dive.20261108",
+    "p": "verb",
+    "e": {
+      "en": "dive",
+      "fa": "شیرجه زدن",
+      "sv": "dyka",
+      "de": "tauchen",
+      "es": "bucear",
+      "it": "immergersi",
+      "fr": "plonger",
+      "ru": "нырять"
+    }
+  },
+  {
+    "id": "core.v.compete.20261108",
+    "p": "verb",
+    "e": {
+      "en": "compete",
+      "fa": "رقابت کردن",
+      "sv": "tävla",
+      "de": "konkurrieren",
+      "es": "competir",
+      "it": "competere",
+      "fr": "concourir",
+      "ru": "соревноваться"
+    }
+  },
+  {
+    "id": "core.v.participate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "participate",
+      "fa": "شرکت کردن",
+      "sv": "delta",
+      "de": "teilnehmen",
+      "es": "participar",
+      "it": "partecipare",
+      "fr": "participer",
+      "ru": "участвовать"
+    }
+  },
+  {
+    "id": "core.v.beat.20261108",
+    "p": "verb",
+    "e": {
+      "en": "beat",
+      "fa": "شکست دادن",
+      "sv": "besegra",
+      "de": "besiegen",
+      "es": "derrotar",
+      "it": "sconfiggere",
+      "fr": "vaincre",
+      "ru": "побеждать"
+    }
+  },
+  {
+    "id": "core.v.admire.20261108",
+    "p": "verb",
+    "e": {
+      "en": "admire",
+      "fa": "تحسین کردن",
+      "sv": "beundra",
+      "de": "bewundern",
+      "es": "admirar",
+      "it": "ammirare",
+      "fr": "admirer",
+      "ru": "восхищаться"
+    }
+  },
+  {
+    "id": "core.v.respect.20261108",
+    "p": "verb",
+    "e": {
+      "en": "respect",
+      "fa": "احترام گذاشتن",
+      "sv": "respektera",
+      "de": "respektieren",
+      "es": "respetar",
+      "it": "rispettare",
+      "fr": "respecter",
+      "ru": "уважать"
+    }
+  },
+  {
+    "id": "core.v.forgive.20261108",
+    "p": "verb",
+    "e": {
+      "en": "forgive",
+      "fa": "بخشیدن",
+      "sv": "förlåta",
+      "de": "verzeihen",
+      "es": "perdonar",
+      "it": "perdonare",
+      "fr": "pardonner",
+      "ru": "прощать"
+    }
+  },
+  {
+    "id": "core.v.regret.20261108",
+    "p": "verb",
+    "e": {
+      "en": "regret",
+      "fa": "پشیمان بودن",
+      "sv": "ångra",
+      "de": "bereuen",
+      "es": "lamentar",
+      "it": "rimpiangere",
+      "fr": "regretter",
+      "ru": "сожалеть"
+    }
+  },
+  {
+    "id": "core.v.complain.20261108",
+    "p": "verb",
+    "e": {
+      "en": "complain",
+      "fa": "شکایت کردن",
+      "sv": "klaga",
+      "de": "sich beschweren",
+      "es": "quejarse",
+      "it": "lamentarsi",
+      "fr": "se plaindre",
+      "ru": "жаловаться"
+    }
+  },
+  {
+    "id": "core.v.criticize.20261108",
+    "p": "verb",
+    "e": {
+      "en": "criticize",
+      "fa": "انتقاد کردن",
+      "sv": "kritisera",
+      "de": "kritisieren",
+      "es": "criticar",
+      "it": "criticare",
+      "fr": "critiquer",
+      "ru": "критиковать"
+    }
+  },
+  {
+    "id": "core.v.praise.20261108",
+    "p": "verb",
+    "e": {
+      "en": "praise",
+      "fa": "ستایش کردن",
+      "sv": "berömma",
+      "de": "loben",
+      "es": "elogiar",
+      "it": "lodare",
+      "fr": "féliciter",
+      "ru": "хвалить"
+    }
+  },
+  {
+    "id": "core.v.encourage.20261108",
+    "p": "verb",
+    "e": {
+      "en": "encourage",
+      "fa": "دلگرم کردن",
+      "sv": "uppmuntra",
+      "de": "ermutigen",
+      "es": "animar",
+      "it": "incoraggiare",
+      "fr": "encourager",
+      "ru": "ободрять"
+    }
+  },
+  {
+    "id": "core.v.support.20261108",
+    "p": "verb",
+    "e": {
+      "en": "support",
+      "fa": "حمایت کردن",
+      "sv": "stödja",
+      "de": "unterstützen",
+      "es": "apoyar",
+      "it": "sostenere",
+      "fr": "soutenir",
+      "ru": "поддерживать"
+    }
+  },
+  {
+    "id": "core.v.motivate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "motivate",
+      "fa": "انگیزه دادن",
+      "sv": "motivera",
+      "de": "motivieren",
+      "es": "motivar",
+      "it": "motivare",
+      "fr": "motiver",
+      "ru": "мотивировать"
+    }
+  },
+  {
+    "id": "core.v.inspire.20261108",
+    "p": "verb",
+    "e": {
+      "en": "inspire",
+      "fa": "الهام بخشیدن",
+      "sv": "inspirera",
+      "de": "inspirieren",
+      "es": "inspirar",
+      "it": "ispirare",
+      "fr": "inspirer",
+      "ru": "вдохновлять"
+    }
+  },
+  {
+    "id": "core.v.impress.20261108",
+    "p": "verb",
+    "e": {
+      "en": "impress",
+      "fa": "تحت تأثیر قرار دادن",
+      "sv": "imponera",
+      "de": "beeindrucken",
+      "es": "impresionar",
+      "it": "impressionare",
+      "fr": "impressionner",
+      "ru": "впечатлять"
+    }
+  },
+  {
+    "id": "core.v.annoy.20261108",
+    "p": "verb",
+    "e": {
+      "en": "annoy",
+      "fa": "کلافه کردن",
+      "sv": "irritera",
+      "de": "nerven",
+      "es": "molestar",
+      "it": "infastidire",
+      "fr": "agacer",
+      "ru": "раздражать"
+    }
+  },
+  {
+    "id": "core.v.surprise.20261108",
+    "p": "verb",
+    "e": {
+      "en": "surprise",
+      "fa": "غافلگیر کردن",
+      "sv": "överraska",
+      "de": "überraschen",
+      "es": "sorprender",
+      "it": "sorprendere",
+      "fr": "surprendre",
+      "ru": "удивлять"
+    }
+  },
+  {
+    "id": "core.v.frighten.20261108",
+    "p": "verb",
+    "e": {
+      "en": "frighten",
+      "fa": "ترساندن",
+      "sv": "skrämma",
+      "de": "erschrecken",
+      "es": "asustar",
+      "it": "spaventare",
+      "fr": "effrayer",
+      "ru": "пугать"
+    }
+  },
+  {
+    "id": "core.v.calm.20261108",
+    "p": "verb",
+    "e": {
+      "en": "calm",
+      "fa": "آرام کردن",
+      "sv": "lugna",
+      "de": "beruhigen",
+      "es": "calmar",
+      "it": "calmare",
+      "fr": "calmer",
+      "ru": "успокаивать"
+    }
+  },
+  {
+    "id": "core.v.entertain.20261108",
+    "p": "verb",
+    "e": {
+      "en": "entertain",
+      "fa": "سرگرم کردن",
+      "sv": "underhålla",
+      "de": "unterhalten",
+      "es": "entretener",
+      "it": "intrattenere",
+      "fr": "divertir",
+      "ru": "развлекать"
+    }
+  },
+  {
+    "id": "core.v.envy.20261108",
+    "p": "verb",
+    "e": {
+      "en": "envy",
+      "fa": "حسادت کردن",
+      "sv": "avundas",
+      "de": "beneiden",
+      "es": "envidiar",
+      "it": "invidiare",
+      "fr": "envier",
+      "ru": "завидовать"
+    }
+  },
+  {
+    "id": "core.v.admit.20261108",
+    "p": "verb",
+    "e": {
+      "en": "admit",
+      "fa": "اعتراف کردن",
+      "sv": "erkänna",
+      "de": "zugeben",
+      "es": "admitir",
+      "it": "ammettere",
+      "fr": "avouer",
+      "ru": "признавать"
+    }
+  },
+  {
+    "id": "core.v.deny.20261108",
+    "p": "verb",
+    "e": {
+      "en": "deny",
+      "fa": "انکار کردن",
+      "sv": "förneka",
+      "de": "leugnen",
+      "es": "negar",
+      "it": "negare",
+      "fr": "nier",
+      "ru": "отрицать"
+    }
+  },
+  {
+    "id": "core.v.confess.20261108",
+    "p": "verb",
+    "e": {
+      "en": "confess",
+      "fa": "اقرار کردن",
+      "sv": "bekänna",
+      "de": "gestehen",
+      "es": "confesar",
+      "it": "confessare",
+      "fr": "confesser",
+      "ru": "признаваться"
+    }
+  },
+  {
+    "id": "core.v.lie.20261108",
+    "p": "verb",
+    "e": {
+      "en": "lie",
+      "fa": "دروغ گفتن",
+      "sv": "ljuga",
+      "de": "lügen",
+      "es": "mentir",
+      "it": "mentire",
+      "fr": "mentir",
+      "ru": "лгать"
+    }
+  },
+  {
+    "id": "core.v.obey.20261108",
+    "p": "verb",
+    "e": {
+      "en": "obey",
+      "fa": "اطاعت کردن",
+      "sv": "lyda",
+      "de": "gehorchen",
+      "es": "obedecer",
+      "it": "obbedire",
+      "fr": "obéir",
+      "ru": "слушаться"
+    }
+  },
+  {
+    "id": "core.v.refuse.20261108",
+    "p": "verb",
+    "e": {
+      "en": "refuse",
+      "fa": "امتناع کردن",
+      "sv": "vägra",
+      "de": "sich weigern",
+      "es": "negarse",
+      "it": "rifiutarsi",
+      "fr": "refuser",
+      "ru": "отказываться"
+    }
+  },
+  {
+    "id": "core.v.approve.20261108",
+    "p": "verb",
+    "e": {
+      "en": "approve",
+      "fa": "تصویب کردن",
+      "sv": "godkänna",
+      "de": "genehmigen",
+      "es": "aprobar",
+      "it": "approvare",
+      "fr": "approuver",
+      "ru": "одобрять"
+    }
+  },
+  {
+    "id": "core.v.reject.20261108",
+    "p": "verb",
+    "e": {
+      "en": "reject",
+      "fa": "رد کردن",
+      "sv": "avvisa",
+      "de": "ablehnen",
+      "es": "rechazar",
+      "it": "respingere",
+      "fr": "rejeter",
+      "ru": "отвергать"
+    }
+  },
+  {
+    "id": "core.v.prevent.20261108",
+    "p": "verb",
+    "e": {
+      "en": "prevent",
+      "fa": "جلوگیری کردن",
+      "sv": "förhindra",
+      "de": "verhindern",
+      "es": "prevenir",
+      "it": "prevenire",
+      "fr": "empêcher",
+      "ru": "предотвращать"
+    }
+  },
+  {
+    "id": "core.v.avoid.20261108",
+    "p": "verb",
+    "e": {
+      "en": "avoid",
+      "fa": "اجتناب کردن",
+      "sv": "undvika",
+      "de": "vermeiden",
+      "es": "evitar",
+      "it": "evitare",
+      "fr": "éviter",
+      "ru": "избегать"
+    }
+  },
+  {
+    "id": "core.v.risk.20261108",
+    "p": "verb",
+    "e": {
+      "en": "risk",
+      "fa": "به خطر انداختن",
+      "sv": "riskera",
+      "de": "riskieren",
+      "es": "arriesgar",
+      "it": "rischiare",
+      "fr": "risquer",
+      "ru": "рисковать"
+    }
+  },
+  {
+    "id": "core.v.dare.20261108",
+    "p": "verb",
+    "e": {
+      "en": "dare",
+      "fa": "جرئت کردن",
+      "sv": "våga",
+      "de": "wagen",
+      "es": "atreverse",
+      "it": "osare",
+      "fr": "oser",
+      "ru": "осмеливаться"
+    }
+  },
+  {
+    "id": "core.v.deserve.20261108",
+    "p": "verb",
+    "e": {
+      "en": "deserve",
+      "fa": "سزاوار بودن",
+      "sv": "förtjäna",
+      "de": "verdienen",
+      "es": "merecer",
+      "it": "meritare",
+      "fr": "mériter",
+      "ru": "заслуживать"
+    }
+  },
+  {
+    "id": "core.v.depend.20261108",
+    "p": "verb",
+    "e": {
+      "en": "depend",
+      "fa": "بستگی داشتن",
+      "sv": "bero",
+      "de": "abhängen",
+      "es": "depender",
+      "it": "dipendere",
+      "fr": "dépendre",
+      "ru": "зависеть"
+    }
+  },
+  {
+    "id": "core.v.belong.20261108",
+    "p": "verb",
+    "e": {
+      "en": "belong",
+      "fa": "تعلق داشتن",
+      "sv": "tillhöra",
+      "de": "gehören",
+      "es": "pertenecer",
+      "it": "appartenere",
+      "fr": "appartenir",
+      "ru": "принадлежать"
+    }
+  },
+  {
+    "id": "core.v.include.20261108",
+    "p": "verb",
+    "e": {
+      "en": "include",
+      "fa": "شامل بودن",
+      "sv": "inkludera",
+      "de": "einschließen",
+      "es": "incluir",
+      "it": "includere",
+      "fr": "inclure",
+      "ru": "включать"
+    }
+  },
+  {
+    "id": "core.v.exclude.20261108",
+    "p": "verb",
+    "e": {
+      "en": "exclude",
+      "fa": "مستثنا کردن",
+      "sv": "utesluta",
+      "de": "ausschließen",
+      "es": "excluir",
+      "it": "escludere",
+      "fr": "exclure",
+      "ru": "исключать"
+    }
+  },
+  {
+    "id": "core.v.contain.20261108",
+    "p": "verb",
+    "e": {
+      "en": "contain",
+      "fa": "در بر داشتن",
+      "sv": "innehålla",
+      "de": "enthalten",
+      "es": "contener",
+      "it": "contenere",
+      "fr": "contenir",
+      "ru": "содержать"
+    }
+  },
+  {
+    "id": "core.v.consist.20261108",
+    "p": "verb",
+    "e": {
+      "en": "consist",
+      "fa": "تشکیل شدن",
+      "sv": "bestå",
+      "de": "bestehen",
+      "es": "consistir",
+      "it": "consistere",
+      "fr": "consister",
+      "ru": "состоять"
+    }
+  },
+  {
+    "id": "core.v.exist.20261108",
+    "p": "verb",
+    "e": {
+      "en": "exist",
+      "fa": "وجود داشتن",
+      "sv": "finnas",
+      "de": "existieren",
+      "es": "existir",
+      "it": "esistere",
+      "fr": "exister",
+      "ru": "существовать"
+    }
+  },
+  {
+    "id": "core.v.disappear.20261108",
+    "p": "verb",
+    "e": {
+      "en": "disappear",
+      "fa": "ناپدید شدن",
+      "sv": "försvinna",
+      "de": "verschwinden",
+      "es": "desaparecer",
+      "it": "scomparire",
+      "fr": "disparaître",
+      "ru": "исчезать"
+    }
+  },
+  {
+    "id": "core.v.endure.20261108",
+    "p": "verb",
+    "e": {
+      "en": "endure",
+      "fa": "تاب آوردن",
+      "sv": "uthärda",
+      "de": "ertragen",
+      "es": "aguantar",
+      "it": "sopportare",
+      "fr": "endurer",
+      "ru": "терпеть"
+    }
+  },
+  {
+    "id": "core.v.tolerate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "tolerate",
+      "fa": "تحمل کردن",
+      "sv": "tolerera",
+      "de": "tolerieren",
+      "es": "tolerar",
+      "it": "tollerare",
+      "fr": "tolérer",
+      "ru": "допускать"
+    }
+  },
+  {
+    "id": "core.v.adapt.20261108",
+    "p": "verb",
+    "e": {
+      "en": "adapt",
+      "fa": "سازگار کردن",
+      "sv": "anpassa",
+      "de": "anpassen",
+      "es": "adaptar",
+      "it": "adattare",
+      "fr": "adapter",
+      "ru": "приспосабливать"
+    }
+  },
+  {
+    "id": "core.v.adjust.20261108",
+    "p": "verb",
+    "e": {
+      "en": "adjust",
+      "fa": "تنظیم کردن",
+      "sv": "justera",
+      "de": "justieren",
+      "es": "ajustar",
+      "it": "regolare",
+      "fr": "ajuster",
+      "ru": "регулировать"
+    }
+  },
+  {
+    "id": "core.v.develop.20261108",
+    "p": "verb",
+    "e": {
+      "en": "develop",
+      "fa": "توسعه دادن",
+      "sv": "utveckla",
+      "de": "entwickeln",
+      "es": "desarrollar",
+      "it": "sviluppare",
+      "fr": "développer",
+      "ru": "развивать"
+    }
+  },
+  {
+    "id": "core.v.expand.20261108",
+    "p": "verb",
+    "e": {
+      "en": "expand",
+      "fa": "گسترش دادن",
+      "sv": "utvidga",
+      "de": "erweitern",
+      "es": "expandir",
+      "it": "espandere",
+      "fr": "élargir",
+      "ru": "расширять"
+    }
+  },
+  {
+    "id": "core.v.reduce.20261108",
+    "p": "verb",
+    "e": {
+      "en": "reduce",
+      "fa": "کاهش دادن",
+      "sv": "reducera",
+      "de": "reduzieren",
+      "es": "reducir",
+      "it": "ridurre",
+      "fr": "réduire",
+      "ru": "сокращать"
+    }
+  },
+  {
+    "id": "core.v.multiply.20261108",
+    "p": "verb",
+    "e": {
+      "en": "multiply",
+      "fa": "ضرب کردن",
+      "sv": "multiplicera",
+      "de": "multiplizieren",
+      "es": "multiplicar",
+      "it": "moltiplicare",
+      "fr": "multiplier",
+      "ru": "умножать"
+    }
+  },
+  {
+    "id": "core.v.divide.20261108",
+    "p": "verb",
+    "e": {
+      "en": "divide",
+      "fa": "تقسیم کردن",
+      "sv": "dividera",
+      "de": "dividieren",
+      "es": "dividir",
+      "it": "dividere",
+      "fr": "diviser",
+      "ru": "делить"
+    }
+  },
+  {
+    "id": "core.v.subtract.20261108",
+    "p": "verb",
+    "e": {
+      "en": "subtract",
+      "fa": "تفریق کردن",
+      "sv": "subtrahera",
+      "de": "subtrahieren",
+      "es": "restar",
+      "it": "sottrarre",
+      "fr": "soustraire",
+      "ru": "вычитать"
+    }
+  },
+  {
+    "id": "core.v.calculate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "calculate",
+      "fa": "محاسبه کردن",
+      "sv": "beräkna",
+      "de": "berechnen",
+      "es": "calcular",
+      "it": "calcolare",
+      "fr": "calculer",
+      "ru": "вычислять"
+    }
+  },
+  {
+    "id": "core.v.predict.20261108",
+    "p": "verb",
+    "e": {
+      "en": "predict",
+      "fa": "پیش‌بینی کردن",
+      "sv": "förutsäga",
+      "de": "vorhersagen",
+      "es": "predecir",
+      "it": "prevedere",
+      "fr": "prédire",
+      "ru": "предсказывать"
+    }
+  },
+  {
+    "id": "core.v.prove.20261108",
+    "p": "verb",
+    "e": {
+      "en": "prove",
+      "fa": "اثبات کردن",
+      "sv": "bevisa",
+      "de": "beweisen",
+      "es": "demostrar",
+      "it": "dimostrare",
+      "fr": "prouver",
+      "ru": "доказывать"
+    }
+  },
+  {
+    "id": "core.v.confirm.20261108",
+    "p": "verb",
+    "e": {
+      "en": "confirm",
+      "fa": "تأیید کردن",
+      "sv": "bekräfta",
+      "de": "bestätigen",
+      "es": "confirmar",
+      "it": "confermare",
+      "fr": "confirmer",
+      "ru": "подтверждать"
+    }
+  },
+  {
+    "id": "core.v.verify.20261108",
+    "p": "verb",
+    "e": {
+      "en": "verify",
+      "fa": "راستی‌آزمایی کردن",
+      "sv": "verifiera",
+      "de": "überprüfen",
+      "es": "verificar",
+      "it": "verificare",
+      "fr": "vérifier",
+      "ru": "проверять"
+    }
+  },
+  {
+    "id": "core.v.identify.20261108",
+    "p": "verb",
+    "e": {
+      "en": "identify",
+      "fa": "شناسایی کردن",
+      "sv": "identifiera",
+      "de": "identifizieren",
+      "es": "identificar",
+      "it": "identificare",
+      "fr": "identifier",
+      "ru": "идентифицировать"
+    }
+  },
+  {
+    "id": "core.v.discover.20261108",
+    "p": "verb",
+    "e": {
+      "en": "discover",
+      "fa": "کشف کردن",
+      "sv": "upptäcka",
+      "de": "entdecken",
+      "es": "descubrir",
+      "it": "scoprire",
+      "fr": "découvrir",
+      "ru": "обнаруживать"
+    }
+  },
+  {
+    "id": "core.v.invent.20261108",
+    "p": "verb",
+    "e": {
+      "en": "invent",
+      "fa": "اختراع کردن",
+      "sv": "uppfinna",
+      "de": "erfinden",
+      "es": "inventar",
+      "it": "inventare",
+      "fr": "inventer",
+      "ru": "изобретать"
+    }
+  },
+  {
+    "id": "core.v.create.20261108",
+    "p": "verb",
+    "e": {
+      "en": "create",
+      "fa": "خلق کردن",
+      "sv": "skapa",
+      "de": "erschaffen",
+      "es": "crear",
+      "it": "creare",
+      "fr": "créer",
+      "ru": "создавать"
+    }
+  },
+  {
+    "id": "core.v.design.20261108",
+    "p": "verb",
+    "e": {
+      "en": "design",
+      "fa": "طراحی کردن",
+      "sv": "utforma",
+      "de": "gestalten",
+      "es": "diseñar",
+      "it": "progettare",
+      "fr": "concevoir",
+      "ru": "проектировать"
+    }
+  },
+  {
+    "id": "core.v.produce.20261108",
+    "p": "verb",
+    "e": {
+      "en": "produce",
+      "fa": "تولید کردن",
+      "sv": "producera",
+      "de": "produzieren",
+      "es": "producir",
+      "it": "produrre",
+      "fr": "produire",
+      "ru": "производить"
+    }
+  },
+  {
+    "id": "core.v.manufacture.20261108",
+    "p": "verb",
+    "e": {
+      "en": "manufacture",
+      "fa": "تولید صنعتی کردن",
+      "sv": "tillverka",
+      "de": "herstellen",
+      "es": "fabricar",
+      "it": "fabbricare",
+      "fr": "fabriquer",
+      "ru": "изготавливать"
+    }
+  },
+  {
+    "id": "core.v.install.20261108",
+    "p": "verb",
+    "e": {
+      "en": "install",
+      "fa": "نصب کردن",
+      "sv": "installera",
+      "de": "installieren",
+      "es": "instalar",
+      "it": "installare",
+      "fr": "installer",
+      "ru": "устанавливать"
+    }
+  },
+  {
+    "id": "core.v.connect.20261108",
+    "p": "verb",
+    "e": {
+      "en": "connect",
+      "fa": "متصل کردن",
+      "sv": "ansluta",
+      "de": "verbinden",
+      "es": "conectar",
+      "it": "collegare",
+      "fr": "connecter",
+      "ru": "соединять"
+    }
+  },
+  {
+    "id": "core.v.charge.20261108",
+    "p": "verb",
+    "e": {
+      "en": "charge",
+      "fa": "شارژ کردن",
+      "sv": "ladda",
+      "de": "aufladen",
+      "es": "cargar",
+      "it": "caricare",
+      "fr": "recharger",
+      "ru": "заряжать"
+    }
+  },
+  {
+    "id": "core.v.copy.20261108",
+    "p": "verb",
+    "e": {
+      "en": "copy",
+      "fa": "کپی کردن",
+      "sv": "kopiera",
+      "de": "kopieren",
+      "es": "copiar",
+      "it": "copiare",
+      "fr": "copier",
+      "ru": "копировать"
+    }
+  },
+  {
+    "id": "core.v.browse.20261108",
+    "p": "verb",
+    "e": {
+      "en": "browse",
+      "fa": "مرور کردن",
+      "sv": "bläddra",
+      "de": "durchblättern",
+      "es": "hojear",
+      "it": "sfogliare",
+      "fr": "feuilleter",
+      "ru": "листать"
+    }
+  },
+  {
+    "id": "core.v.scan.20261108",
+    "p": "verb",
+    "e": {
+      "en": "scan",
+      "fa": "اسکن کردن",
+      "sv": "skanna",
+      "de": "scannen",
+      "es": "escanear",
+      "it": "scannerizzare",
+      "fr": "numériser",
+      "ru": "сканировать"
+    }
+  },
+  {
+    "id": "core.v.broadcast.20261108",
+    "p": "verb",
+    "e": {
+      "en": "broadcast",
+      "fa": "پخش کردن",
+      "sv": "sända",
+      "de": "ausstrahlen",
+      "es": "transmitir",
+      "it": "trasmettere",
+      "fr": "diffuser",
+      "ru": "транслировать"
+    }
+  },
+  {
+    "id": "core.v.publish.20261108",
+    "p": "verb",
+    "e": {
+      "en": "publish",
+      "fa": "منتشر کردن",
+      "sv": "publicera",
+      "de": "veröffentlichen",
+      "es": "publicar",
+      "it": "pubblicare",
+      "fr": "publier",
+      "ru": "публиковать"
+    }
+  },
+  {
+    "id": "core.v.filter.20261108",
+    "p": "verb",
+    "e": {
+      "en": "filter",
+      "fa": "فیلتر کردن",
+      "sv": "filtrera",
+      "de": "filtern",
+      "es": "filtrar",
+      "it": "filtrare",
+      "fr": "filtrer",
+      "ru": "фильтровать"
+    }
+  },
+  {
+    "id": "core.v.encrypt.20261108",
+    "p": "verb",
+    "e": {
+      "en": "encrypt",
+      "fa": "رمزگذاری کردن",
+      "sv": "kryptera",
+      "de": "verschlüsseln",
+      "es": "cifrar",
+      "it": "cifrare",
+      "fr": "chiffrer",
+      "ru": "шифровать"
+    }
+  },
+  {
+    "id": "core.v.decrypt.20261108",
+    "p": "verb",
+    "e": {
+      "en": "decrypt",
+      "fa": "رمزگشایی کردن",
+      "sv": "dekryptera",
+      "de": "entschlüsseln",
+      "es": "descifrar",
+      "it": "decifrare",
+      "fr": "déchiffrer",
+      "ru": "расшифровывать"
+    }
+  },
+  {
+    "id": "core.v.synchronize.20261108",
+    "p": "verb",
+    "e": {
+      "en": "synchronize",
+      "fa": "همگام‌سازی کردن",
+      "sv": "synkronisera",
+      "de": "synchronisieren",
+      "es": "sincronizar",
+      "it": "sincronizzare",
+      "fr": "synchroniser",
+      "ru": "синхронизировать"
+    }
+  },
+  {
+    "id": "core.v.analyze.20261108",
+    "p": "verb",
+    "e": {
+      "en": "analyze",
+      "fa": "تحلیل کردن",
+      "sv": "analysera",
+      "de": "analysieren",
+      "es": "analizar",
+      "it": "analizzare",
+      "fr": "analyser",
+      "ru": "анализировать"
+    }
+  },
+  {
+    "id": "core.v.evaluate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "evaluate",
+      "fa": "ارزیابی کردن",
+      "sv": "utvärdera",
+      "de": "bewerten",
+      "es": "evaluar",
+      "it": "valutare",
+      "fr": "évaluer",
+      "ru": "оценивать"
+    }
+  },
+  {
+    "id": "core.v.investigate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "investigate",
+      "fa": "تحقیق کردن",
+      "sv": "utreda",
+      "de": "ermitteln",
+      "es": "investigar",
+      "it": "indagare",
+      "fr": "enquêter",
+      "ru": "расследовать"
+    }
+  },
+  {
+    "id": "core.v.observe.20261108",
+    "p": "verb",
+    "e": {
+      "en": "observe",
+      "fa": "مشاهده کردن",
+      "sv": "observera",
+      "de": "beobachten",
+      "es": "observar",
+      "it": "osservare",
+      "fr": "observer",
+      "ru": "наблюдать"
+    }
+  },
+  {
+    "id": "core.v.notice.20261108",
+    "p": "verb",
+    "e": {
+      "en": "notice",
+      "fa": "متوجه شدن",
+      "sv": "märka",
+      "de": "bemerken",
+      "es": "notar",
+      "it": "notare",
+      "fr": "remarquer",
+      "ru": "замечать"
+    }
+  },
+  {
+    "id": "core.v.focus.20261108",
+    "p": "verb",
+    "e": {
+      "en": "focus",
+      "fa": "تمرکز کردن",
+      "sv": "fokusera",
+      "de": "fokussieren",
+      "es": "enfocar",
+      "it": "concentrarsi",
+      "fr": "se concentrer",
+      "ru": "сосредоточиваться"
+    }
+  },
+  {
+    "id": "core.v.concentrate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "concentrate",
+      "fa": "متمرکز کردن",
+      "sv": "koncentrera",
+      "de": "konzentrieren",
+      "es": "concentrar",
+      "it": "concentrare",
+      "fr": "concentrer",
+      "ru": "концентрировать"
+    }
+  },
+  {
+    "id": "core.v.revise.20261108",
+    "p": "verb",
+    "e": {
+      "en": "revise",
+      "fa": "بازنگری کردن",
+      "sv": "revidera",
+      "de": "überarbeiten",
+      "es": "revisar",
+      "it": "rivedere",
+      "fr": "réviser",
+      "ru": "пересматривать"
+    }
+  },
+  {
+    "id": "core.v.summarize.20261108",
+    "p": "verb",
+    "e": {
+      "en": "summarize",
+      "fa": "خلاصه کردن",
+      "sv": "sammanfatta",
+      "de": "zusammenfassen",
+      "es": "resumir",
+      "it": "riassumere",
+      "fr": "résumer",
+      "ru": "обобщать"
+    }
+  },
+  {
+    "id": "core.v.describe.20261108",
+    "p": "verb",
+    "e": {
+      "en": "describe",
+      "fa": "توصیف کردن",
+      "sv": "beskriva",
+      "de": "beschreiben",
+      "es": "describir",
+      "it": "descrivere",
+      "fr": "décrire",
+      "ru": "описывать"
+    }
+  },
+  {
+    "id": "core.v.define.20261108",
+    "p": "verb",
+    "e": {
+      "en": "define",
+      "fa": "تعریف کردن",
+      "sv": "definiera",
+      "de": "definieren",
+      "es": "definir",
+      "it": "definire",
+      "fr": "définir",
+      "ru": "определять"
+    }
+  },
+  {
+    "id": "core.v.clarify.20261108",
+    "p": "verb",
+    "e": {
+      "en": "clarify",
+      "fa": "روشن کردن موضوع",
+      "sv": "förtydliga",
+      "de": "klarstellen",
+      "es": "aclarar",
+      "it": "chiarire",
+      "fr": "clarifier",
+      "ru": "прояснять"
+    }
+  },
+  {
+    "id": "core.v.specify.20261108",
+    "p": "verb",
+    "e": {
+      "en": "specify",
+      "fa": "مشخص کردن",
+      "sv": "specificera",
+      "de": "angeben",
+      "es": "especificar",
+      "it": "specificare",
+      "fr": "préciser",
+      "ru": "уточнять"
+    }
+  },
+  {
+    "id": "core.v.mention.20261108",
+    "p": "verb",
+    "e": {
+      "en": "mention",
+      "fa": "ذکر کردن",
+      "sv": "nämna",
+      "de": "erwähnen",
+      "es": "mencionar",
+      "it": "menzionare",
+      "fr": "mentionner",
+      "ru": "упоминать"
+    }
+  },
+  {
+    "id": "core.v.announce.20261108",
+    "p": "verb",
+    "e": {
+      "en": "announce",
+      "fa": "اعلام کردن",
+      "sv": "meddela",
+      "de": "ankündigen",
+      "es": "anunciar",
+      "it": "annunciare",
+      "fr": "annoncer",
+      "ru": "объявлять"
+    }
+  },
+  {
+    "id": "core.v.warn.20261108",
+    "p": "verb",
+    "e": {
+      "en": "warn",
+      "fa": "هشدار دادن",
+      "sv": "varna",
+      "de": "warnen",
+      "es": "advertir",
+      "it": "avvertire",
+      "fr": "avertir",
+      "ru": "предупреждать"
+    }
+  },
+  {
+    "id": "core.v.persuade.20261108",
+    "p": "verb",
+    "e": {
+      "en": "persuade",
+      "fa": "متقاعد کردن",
+      "sv": "övertala",
+      "de": "überreden",
+      "es": "persuadir",
+      "it": "persuadere",
+      "fr": "persuader",
+      "ru": "уговаривать"
+    }
+  },
+  {
+    "id": "core.v.convince.20261108",
+    "p": "verb",
+    "e": {
+      "en": "convince",
+      "fa": "قانع کردن",
+      "sv": "övertyga",
+      "de": "überzeugen",
+      "es": "convencer",
+      "it": "convincere",
+      "fr": "convaincre",
+      "ru": "убеждать"
+    }
+  },
+  {
+    "id": "core.v.recommend.20261108",
+    "p": "verb",
+    "e": {
+      "en": "recommend",
+      "fa": "توصیه کردن",
+      "sv": "rekommendera",
+      "de": "empfehlen",
+      "es": "recomendar",
+      "it": "raccomandare",
+      "fr": "recommander",
+      "ru": "рекомендовать"
+    }
+  },
+  {
+    "id": "core.v.consult.20261108",
+    "p": "verb",
+    "e": {
+      "en": "consult",
+      "fa": "مشورت کردن",
+      "sv": "rådgöra",
+      "de": "sich beraten",
+      "es": "consultar",
+      "it": "consultare",
+      "fr": "consulter",
+      "ru": "консультироваться"
+    }
+  },
+  {
+    "id": "core.v.interrupt.20261108",
+    "p": "verb",
+    "e": {
+      "en": "interrupt",
+      "fa": "قطع کردن صحبت",
+      "sv": "avbryta",
+      "de": "unterbrechen",
+      "es": "interrumpir",
+      "it": "interrompere",
+      "fr": "interrompre",
+      "ru": "перебивать"
+    }
+  },
+  {
+    "id": "core.v.respond.20261108",
+    "p": "verb",
+    "e": {
+      "en": "respond",
+      "fa": "واکنش نشان دادن",
+      "sv": "reagera",
+      "de": "reagieren",
+      "es": "reaccionar",
+      "it": "reagire",
+      "fr": "réagir",
+      "ru": "реагировать"
+    }
+  },
+  {
+    "id": "core.v.express.20261108",
+    "p": "verb",
+    "e": {
+      "en": "express",
+      "fa": "بیان کردن",
+      "sv": "uttrycka",
+      "de": "ausdrücken",
+      "es": "expresar",
+      "it": "esprimere",
+      "fr": "exprimer",
+      "ru": "выражать"
+    }
+  },
+  {
+    "id": "core.v.communicate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "communicate",
+      "fa": "ارتباط برقرار کردن",
+      "sv": "kommunicera",
+      "de": "kommunizieren",
+      "es": "comunicar",
+      "it": "comunicare",
+      "fr": "communiquer",
+      "ru": "общаться"
+    }
+  },
+  {
+    "id": "core.v.gossip.20261108",
+    "p": "verb",
+    "e": {
+      "en": "gossip",
+      "fa": "غیبت کردن",
+      "sv": "skvallra",
+      "de": "tratschen",
+      "es": "cotillear",
+      "it": "spettegolare",
+      "fr": "commérer",
+      "ru": "сплетничать"
+    }
+  },
+  {
+    "id": "core.v.chat.20261108",
+    "p": "verb",
+    "e": {
+      "en": "chat",
+      "fa": "گپ زدن",
+      "sv": "chatta",
+      "de": "chatten",
+      "es": "charlar",
+      "it": "chiacchierare",
+      "fr": "bavarder",
+      "ru": "болтать"
+    }
+  },
+  {
+    "id": "core.v.whistle.20261108",
+    "p": "verb",
+    "e": {
+      "en": "whistle",
+      "fa": "سوت زدن",
+      "sv": "vissla",
+      "de": "pfeifen",
+      "es": "silbar",
+      "it": "fischiare",
+      "fr": "siffler",
+      "ru": "свистеть"
+    }
+  },
+  {
+    "id": "core.v.sigh.20261108",
+    "p": "verb",
+    "e": {
+      "en": "sigh",
+      "fa": "آه کشیدن",
+      "sv": "sucka",
+      "de": "seufzen",
+      "es": "suspirar",
+      "it": "sospirare",
+      "fr": "soupirer",
+      "ru": "вздыхать"
+    }
+  },
+  {
+    "id": "core.v.roar.20261108",
+    "p": "verb",
+    "e": {
+      "en": "roar",
+      "fa": "غریدن",
+      "sv": "ryta",
+      "de": "brüllen",
+      "es": "rugir",
+      "it": "ruggire",
+      "fr": "rugir",
+      "ru": "рычать"
+    }
+  },
+  {
+    "id": "core.v.bark.20261108",
+    "p": "verb",
+    "e": {
+      "en": "bark",
+      "fa": "پارس کردن",
+      "sv": "skälla",
+      "de": "bellen",
+      "es": "ladrar",
+      "it": "abbaiare",
+      "fr": "aboyer",
+      "ru": "лаять"
+    }
+  },
+  {
+    "id": "core.v.meow.20261108",
+    "p": "verb",
+    "e": {
+      "en": "meow",
+      "fa": "میو کردن",
+      "sv": "mjaua",
+      "de": "miauen",
+      "es": "maullar",
+      "it": "miagolare",
+      "fr": "miauler",
+      "ru": "мяукать"
+    }
+  },
+  {
+    "id": "core.v.chirp.20261108",
+    "p": "verb",
+    "e": {
+      "en": "chirp",
+      "fa": "جیک‌جیک کردن",
+      "sv": "kvittra",
+      "de": "zwitschern",
+      "es": "piar",
+      "it": "cinguettare",
+      "fr": "gazouiller",
+      "ru": "щебетать"
+    }
+  },
+  {
+    "id": "core.v.buzz.20261108",
+    "p": "verb",
+    "e": {
+      "en": "buzz",
+      "fa": "وزوز کردن",
+      "sv": "surra",
+      "de": "summen",
+      "es": "zumbar",
+      "it": "ronzare",
+      "fr": "bourdonner",
+      "ru": "жужжать"
+    }
+  },
+  {
+    "id": "core.v.sniff.20261108",
+    "p": "verb",
+    "e": {
+      "en": "sniff",
+      "fa": "بو کشیدن",
+      "sv": "sniffa",
+      "de": "schnüffeln",
+      "es": "olfatear",
+      "it": "annusare",
+      "fr": "renifler",
+      "ru": "нюхать"
+    }
+  },
+  {
+    "id": "core.v.scratch.20261108",
+    "p": "verb",
+    "e": {
+      "en": "scratch",
+      "fa": "خاراندن",
+      "sv": "klia",
+      "de": "kratzen",
+      "es": "rascar",
+      "it": "grattare",
+      "fr": "gratter",
+      "ru": "чесать"
+    }
+  },
+  {
+    "id": "core.v.rub.20261108",
+    "p": "verb",
+    "e": {
+      "en": "rub",
+      "fa": "مالیدن",
+      "sv": "gnugga",
+      "de": "reiben",
+      "es": "frotar",
+      "it": "strofinare",
+      "fr": "frotter",
+      "ru": "тереть"
+    }
+  },
+  {
+    "id": "core.v.squeeze.20261108",
+    "p": "verb",
+    "e": {
+      "en": "squeeze",
+      "fa": "فشردن",
+      "sv": "klämma",
+      "de": "quetschen",
+      "es": "apretar",
+      "it": "spremere",
+      "fr": "presser",
+      "ru": "сжимать"
+    }
+  },
+  {
+    "id": "core.v.pinch.20261108",
+    "p": "verb",
+    "e": {
+      "en": "pinch",
+      "fa": "نیشگون گرفتن",
+      "sv": "nypa",
+      "de": "kneifen",
+      "es": "pellizcar",
+      "it": "pizzicare",
+      "fr": "pincer",
+      "ru": "щипать"
+    }
+  },
+  {
+    "id": "core.v.hit.20261108",
+    "p": "verb",
+    "e": {
+      "en": "hit",
+      "fa": "زدن",
+      "sv": "slå",
+      "de": "schlagen",
+      "es": "golpear",
+      "it": "colpire",
+      "fr": "frapper",
+      "ru": "бить"
+    }
+  },
+  {
+    "id": "core.v.break.20261108",
+    "p": "verb",
+    "e": {
+      "en": "break",
+      "fa": "شکستن",
+      "sv": "bryta",
+      "de": "brechen",
+      "es": "romper",
+      "it": "rompere",
+      "fr": "casser",
+      "ru": "ломать"
+    }
+  },
+  {
+    "id": "core.v.crush.20261108",
+    "p": "verb",
+    "e": {
+      "en": "crush",
+      "fa": "خرد کردن",
+      "sv": "krossa",
+      "de": "zerdrücken",
+      "es": "triturar",
+      "it": "frantumare",
+      "fr": "écraser",
+      "ru": "дробить"
+    }
+  },
+  {
+    "id": "core.v.tie.20261108",
+    "p": "verb",
+    "e": {
+      "en": "tie",
+      "fa": "گره زدن",
+      "sv": "knyta",
+      "de": "binden",
+      "es": "atar",
+      "it": "legare",
+      "fr": "nouer",
+      "ru": "завязывать"
+    }
+  },
+  {
+    "id": "core.v.hang.20261108",
+    "p": "verb",
+    "e": {
+      "en": "hang",
+      "fa": "آویزان کردن",
+      "sv": "hänga",
+      "de": "aufhängen",
+      "es": "colgar",
+      "it": "appendere",
+      "fr": "accrocher",
+      "ru": "вешать"
+    }
+  },
+  {
+    "id": "core.v.attach.20261108",
+    "p": "verb",
+    "e": {
+      "en": "attach",
+      "fa": "وصل کردن",
+      "sv": "fästa",
+      "de": "befestigen",
+      "es": "adjuntar",
+      "it": "allegare",
+      "fr": "joindre",
+      "ru": "прикреплять"
+    }
+  },
+  {
+    "id": "core.v.detach.20261108",
+    "p": "verb",
+    "e": {
+      "en": "detach",
+      "fa": "جدا کردن",
+      "sv": "lossa",
+      "de": "ablösen",
+      "es": "desprender",
+      "it": "staccare",
+      "fr": "détacher",
+      "ru": "откреплять"
+    }
+  },
+  {
+    "id": "core.v.arrange.20261108",
+    "p": "verb",
+    "e": {
+      "en": "arrange",
+      "fa": "چیدن",
+      "sv": "ordna",
+      "de": "anordnen",
+      "es": "disponer",
+      "it": "disporre",
+      "fr": "disposer",
+      "ru": "расставлять"
+    }
+  },
+  {
+    "id": "core.v.decorate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "decorate",
+      "fa": "تزئین کردن",
+      "sv": "dekorera",
+      "de": "dekorieren",
+      "es": "decorar",
+      "it": "decorare",
+      "fr": "décorer",
+      "ru": "украшать"
+    }
+  },
+  {
+    "id": "core.v.renovate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "renovate",
+      "fa": "بازسازی کردن",
+      "sv": "renovera",
+      "de": "renovieren",
+      "es": "renovar",
+      "it": "ristrutturare",
+      "fr": "rénover",
+      "ru": "ремонтировать"
+    }
+  },
+  {
+    "id": "core.v.restore.20261108",
+    "p": "verb",
+    "e": {
+      "en": "restore",
+      "fa": "بازگرداندن",
+      "sv": "återställa",
+      "de": "wiederherstellen",
+      "es": "restaurar",
+      "it": "ripristinare",
+      "fr": "restaurer",
+      "ru": "восстанавливать"
+    }
+  },
+  {
+    "id": "core.v.polish.20261108",
+    "p": "verb",
+    "e": {
+      "en": "polish",
+      "fa": "صیقل دادن",
+      "sv": "polera",
+      "de": "polieren",
+      "es": "pulir",
+      "it": "lucidare",
+      "fr": "polir",
+      "ru": "полировать"
+    }
+  },
+  {
+    "id": "core.v.sharpen.20261108",
+    "p": "verb",
+    "e": {
+      "en": "sharpen",
+      "fa": "تیز کردن",
+      "sv": "vässa",
+      "de": "schärfen",
+      "es": "afilar",
+      "it": "affilare",
+      "fr": "aiguiser",
+      "ru": "точить"
+    }
+  },
+  {
+    "id": "core.v.saw.20261108",
+    "p": "verb",
+    "e": {
+      "en": "saw",
+      "fa": "اره کردن",
+      "sv": "såga",
+      "de": "sägen",
+      "es": "serrar",
+      "it": "segare",
+      "fr": "scier",
+      "ru": "пилить"
+    }
+  },
+  {
+    "id": "core.v.weld.20261108",
+    "p": "verb",
+    "e": {
+      "en": "weld",
+      "fa": "جوش دادن",
+      "sv": "svetsa",
+      "de": "schweißen",
+      "es": "soldar",
+      "it": "saldare",
+      "fr": "souder",
+      "ru": "сваривать"
+    }
+  },
+  {
+    "id": "core.v.glue.20261108",
+    "p": "verb",
+    "e": {
+      "en": "glue",
+      "fa": "چسب زدن",
+      "sv": "limma",
+      "de": "kleben",
+      "es": "encolar",
+      "it": "incollare",
+      "fr": "encoller",
+      "ru": "клеить"
+    }
+  },
+  {
+    "id": "core.v.turn.20261108",
+    "p": "verb",
+    "e": {
+      "en": "turn",
+      "fa": "برگرداندن",
+      "sv": "vända",
+      "de": "wenden",
+      "es": "girar",
+      "it": "girare",
+      "fr": "tourner",
+      "ru": "поворачивать"
+    }
+  },
+  {
+    "id": "core.v.roll.20261108",
+    "p": "verb",
+    "e": {
+      "en": "roll",
+      "fa": "غلتاندن",
+      "sv": "rulla",
+      "de": "rollen",
+      "es": "rodar",
+      "it": "rotolare",
+      "fr": "rouler",
+      "ru": "катить"
+    }
+  },
+  {
+    "id": "core.v.slide.20261108",
+    "p": "verb",
+    "e": {
+      "en": "slide",
+      "fa": "سر خوردن",
+      "sv": "glida",
+      "de": "gleiten",
+      "es": "deslizarse",
+      "it": "scivolare",
+      "fr": "glisser",
+      "ru": "скользить"
+    }
+  },
+  {
+    "id": "core.v.drag.20261108",
+    "p": "verb",
+    "e": {
+      "en": "drag",
+      "fa": "کشاندن",
+      "sv": "släpa",
+      "de": "schleppen",
+      "es": "arrastrar",
+      "it": "trascinare",
+      "fr": "traîner",
+      "ru": "тащить"
+    }
+  },
+  {
+    "id": "core.v.lower.20261108",
+    "p": "verb",
+    "e": {
+      "en": "lower",
+      "fa": "پایین آوردن",
+      "sv": "sänka",
+      "de": "senken",
+      "es": "bajar",
+      "it": "abbassare",
+      "fr": "abaisser",
+      "ru": "опускать"
+    }
+  },
+  {
+    "id": "core.v.balance.20261108",
+    "p": "verb",
+    "e": {
+      "en": "balance",
+      "fa": "متعادل کردن",
+      "sv": "balansera",
+      "de": "balancieren",
+      "es": "equilibrar",
+      "it": "equilibrare",
+      "fr": "équilibrer",
+      "ru": "уравновешивать"
+    }
+  },
+  {
+    "id": "core.v.accelerate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "accelerate",
+      "fa": "شتاب دادن",
+      "sv": "accelerera",
+      "de": "beschleunigen",
+      "es": "acelerar",
+      "it": "accelerare",
+      "fr": "accélérer",
+      "ru": "ускорять"
+    }
+  },
+  {
+    "id": "core.v.steer.20261108",
+    "p": "verb",
+    "e": {
+      "en": "steer",
+      "fa": "هدایت کردن فرمان",
+      "sv": "styra",
+      "de": "lenken",
+      "es": "dirigir",
+      "it": "sterzare",
+      "fr": "diriger",
+      "ru": "рулить"
+    }
+  },
+  {
+    "id": "core.v.flow.20261108",
+    "p": "verb",
+    "e": {
+      "en": "flow",
+      "fa": "جریان داشتن",
+      "sv": "strömma",
+      "de": "strömen",
+      "es": "fluir",
+      "it": "fluire",
+      "fr": "couler",
+      "ru": "течь"
+    }
+  },
+  {
+    "id": "core.v.chop.20261108",
+    "p": "verb",
+    "e": {
+      "en": "chop",
+      "fa": "خردخرد کردن",
+      "sv": "hacka",
+      "de": "hacken",
+      "es": "picar",
+      "it": "tritare",
+      "fr": "hacher",
+      "ru": "рубить"
+    }
+  },
+  {
+    "id": "core.v.knead.20261108",
+    "p": "verb",
+    "e": {
+      "en": "knead",
+      "fa": "ورز دادن",
+      "sv": "knåda",
+      "de": "kneten",
+      "es": "amasar",
+      "it": "impastare",
+      "fr": "pétrir",
+      "ru": "месить"
+    }
+  },
+  {
+    "id": "core.v.season.20261108",
+    "p": "verb",
+    "e": {
+      "en": "season",
+      "fa": "چاشنی زدن",
+      "sv": "krydda",
+      "de": "würzen",
+      "es": "sazonar",
+      "it": "condire",
+      "fr": "assaisonner",
+      "ru": "приправлять"
+    }
+  },
+  {
+    "id": "core.v.serve.20261108",
+    "p": "verb",
+    "e": {
+      "en": "serve",
+      "fa": "سرو کردن",
+      "sv": "servera",
+      "de": "servieren",
+      "es": "servir",
+      "it": "servire",
+      "fr": "servir",
+      "ru": "подавать"
+    }
+  },
+  {
+    "id": "core.v.feed.20261108",
+    "p": "verb",
+    "e": {
+      "en": "feed",
+      "fa": "غذا دادن",
+      "sv": "mata",
+      "de": "füttern",
+      "es": "alimentar",
+      "it": "nutrire",
+      "fr": "nourrir",
+      "ru": "кормить"
+    }
+  },
+  {
+    "id": "core.v.fertilize.20261108",
+    "p": "verb",
+    "e": {
+      "en": "fertilize",
+      "fa": "کود دادن",
+      "sv": "gödsla",
+      "de": "düngen",
+      "es": "abonar",
+      "it": "concimare",
+      "fr": "fertiliser",
+      "ru": "удобрять"
+    }
+  },
+  {
+    "id": "core.v.prune.20261108",
+    "p": "verb",
+    "e": {
+      "en": "prune",
+      "fa": "هرس کردن",
+      "sv": "beskära",
+      "de": "beschneiden",
+      "es": "podar",
+      "it": "potare",
+      "fr": "tailler",
+      "ru": "обрезать"
+    }
+  },
+  {
+    "id": "core.v.bloom.20261108",
+    "p": "verb",
+    "e": {
+      "en": "bloom",
+      "fa": "شکوفه دادن",
+      "sv": "blomma",
+      "de": "blühen",
+      "es": "florecer",
+      "it": "fiorire",
+      "fr": "fleurir",
+      "ru": "цвести"
+    }
+  },
+  {
+    "id": "core.v.wither.20261108",
+    "p": "verb",
+    "e": {
+      "en": "wither",
+      "fa": "پژمرده شدن",
+      "sv": "vissna",
+      "de": "verwelken",
+      "es": "marchitarse",
+      "it": "appassire",
+      "fr": "se faner",
+      "ru": "увядать"
+    }
+  },
+  {
+    "id": "core.v.sprout.20261108",
+    "p": "verb",
+    "e": {
+      "en": "sprout",
+      "fa": "جوانه زدن",
+      "sv": "gro",
+      "de": "keimen",
+      "es": "brotar",
+      "it": "germogliare",
+      "fr": "germer",
+      "ru": "прорастать"
+    }
+  },
+  {
+    "id": "core.v.recycle.20261108",
+    "p": "verb",
+    "e": {
+      "en": "recycle",
+      "fa": "بازیافت کردن",
+      "sv": "återvinna",
+      "de": "recyceln",
+      "es": "reciclar",
+      "it": "riciclare",
+      "fr": "recycler",
+      "ru": "перерабатывать"
+    }
+  },
+  {
+    "id": "core.v.conserve.20261108",
+    "p": "verb",
+    "e": {
+      "en": "conserve",
+      "fa": "حفظ منابع کردن",
+      "sv": "bevara",
+      "de": "bewahren",
+      "es": "conservar",
+      "it": "conservare",
+      "fr": "préserver",
+      "ru": "сберегать"
+    }
+  },
+  {
+    "id": "core.v.pollute.20261108",
+    "p": "verb",
+    "e": {
+      "en": "pollute",
+      "fa": "آلوده کردن",
+      "sv": "förorena",
+      "de": "verschmutzen",
+      "es": "contaminar",
+      "it": "inquinare",
+      "fr": "polluer",
+      "ru": "загрязнять"
+    }
+  },
+  {
+    "id": "core.v.destroy.20261108",
+    "p": "verb",
+    "e": {
+      "en": "destroy",
+      "fa": "ویران کردن",
+      "sv": "förstöra",
+      "de": "zerstören",
+      "es": "destruir",
+      "it": "distruggere",
+      "fr": "détruire",
+      "ru": "уничтожать"
+    }
+  },
+  {
+    "id": "core.v.rinse.20261108",
+    "p": "verb",
+    "e": {
+      "en": "rinse",
+      "fa": "آبکشی کردن",
+      "sv": "skölja",
+      "de": "spülen",
+      "es": "enjuagar",
+      "it": "risciacquare",
+      "fr": "rincer",
+      "ru": "ополаскивать"
+    }
+  },
+  {
+    "id": "core.v.disinfect.20261108",
+    "p": "verb",
+    "e": {
+      "en": "disinfect",
+      "fa": "ضدعفونی کردن",
+      "sv": "desinficera",
+      "de": "desinfizieren",
+      "es": "desinfectar",
+      "it": "disinfettare",
+      "fr": "désinfecter",
+      "ru": "дезинфицировать"
+    }
+  },
+  {
+    "id": "core.v.separate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "separate",
+      "fa": "جدا ساختن",
+      "sv": "separera",
+      "de": "separieren",
+      "es": "separar",
+      "it": "separare",
+      "fr": "séparer",
+      "ru": "разделять"
+    }
+  },
+  {
+    "id": "core.v.combine.20261108",
+    "p": "verb",
+    "e": {
+      "en": "combine",
+      "fa": "ترکیب کردن",
+      "sv": "kombinera",
+      "de": "kombinieren",
+      "es": "combinar",
+      "it": "combinare",
+      "fr": "combiner",
+      "ru": "комбинировать"
+    }
+  },
+  {
+    "id": "core.v.invest.20261108",
+    "p": "verb",
+    "e": {
+      "en": "invest",
+      "fa": "سرمایه‌گذاری کردن",
+      "sv": "investera",
+      "de": "investieren",
+      "es": "invertir",
+      "it": "investire",
+      "fr": "investir",
+      "ru": "инвестировать"
+    }
+  },
+  {
+    "id": "core.v.insure.20261108",
+    "p": "verb",
+    "e": {
+      "en": "insure",
+      "fa": "بیمه کردن",
+      "sv": "försäkra",
+      "de": "versichern",
+      "es": "asegurar",
+      "it": "assicurare",
+      "fr": "assurer",
+      "ru": "страховать"
+    }
+  },
+  {
+    "id": "core.v.import.20261108",
+    "p": "verb",
+    "e": {
+      "en": "import",
+      "fa": "واردات کردن",
+      "sv": "importera",
+      "de": "importieren",
+      "es": "importar",
+      "it": "importare",
+      "fr": "importer",
+      "ru": "импортировать"
+    }
+  },
+  {
+    "id": "core.v.export.20261108",
+    "p": "verb",
+    "e": {
+      "en": "export",
+      "fa": "صادرات کردن",
+      "sv": "exportera",
+      "de": "exportieren",
+      "es": "exportar",
+      "it": "esportare",
+      "fr": "exporter",
+      "ru": "экспортировать"
+    }
+  },
+  {
+    "id": "core.v.transport.20261108",
+    "p": "verb",
+    "e": {
+      "en": "transport",
+      "fa": "حمل‌ونقل کردن",
+      "sv": "transportera",
+      "de": "transportieren",
+      "es": "transportar",
+      "it": "trasportare",
+      "fr": "transporter",
+      "ru": "транспортировать"
+    }
+  },
+  {
+    "id": "core.v.store.20261108",
+    "p": "verb",
+    "e": {
+      "en": "store",
+      "fa": "انبار کردن",
+      "sv": "förvara",
+      "de": "lagern",
+      "es": "almacenar",
+      "it": "immagazzinare",
+      "fr": "stocker",
+      "ru": "хранить"
+    }
+  },
+  {
+    "id": "core.v.distribute.20261108",
+    "p": "verb",
+    "e": {
+      "en": "distribute",
+      "fa": "توزیع کردن",
+      "sv": "distribuera",
+      "de": "verteilen",
+      "es": "distribuir",
+      "it": "distribuire",
+      "fr": "distribuer",
+      "ru": "распределять"
+    }
+  },
+  {
+    "id": "core.v.manage.20261108",
+    "p": "verb",
+    "e": {
+      "en": "manage",
+      "fa": "مدیریت کردن",
+      "sv": "hantera",
+      "de": "managen",
+      "es": "gestionar",
+      "it": "gestire",
+      "fr": "gérer",
+      "ru": "управлять"
+    }
+  },
+  {
+    "id": "core.v.supervise.20261108",
+    "p": "verb",
+    "e": {
+      "en": "supervise",
+      "fa": "نظارت کردن",
+      "sv": "övervaka",
+      "de": "überwachen",
+      "es": "supervisar",
+      "it": "supervisionare",
+      "fr": "superviser",
+      "ru": "контролировать"
+    }
+  },
+  {
+    "id": "core.v.delegate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "delegate",
+      "fa": "واگذار کردن",
+      "sv": "delegera",
+      "de": "delegieren",
+      "es": "delegar",
+      "it": "delegare",
+      "fr": "déléguer",
+      "ru": "делегировать"
+    }
+  },
+  {
+    "id": "core.v.assign.20261108",
+    "p": "verb",
+    "e": {
+      "en": "assign",
+      "fa": "تخصیص دادن",
+      "sv": "tilldela",
+      "de": "zuweisen",
+      "es": "asignar",
+      "it": "assegnare",
+      "fr": "attribuer",
+      "ru": "назначать"
+    }
+  },
+  {
+    "id": "core.v.simplify.20261108",
+    "p": "verb",
+    "e": {
+      "en": "simplify",
+      "fa": "ساده کردن",
+      "sv": "förenkla",
+      "de": "vereinfachen",
+      "es": "simplificar",
+      "it": "semplificare",
+      "fr": "simplifier",
+      "ru": "упрощать"
+    }
+  },
+  {
+    "id": "core.v.complicate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "complicate",
+      "fa": "پیچیده کردن",
+      "sv": "komplicera",
+      "de": "verkomplizieren",
+      "es": "complicar",
+      "it": "complicare",
+      "fr": "compliquer",
+      "ru": "усложнять"
+    }
+  },
+  {
+    "id": "core.v.optimize.20261108",
+    "p": "verb",
+    "e": {
+      "en": "optimize",
+      "fa": "بهینه کردن",
+      "sv": "optimera",
+      "de": "optimieren",
+      "es": "optimizar",
+      "it": "ottimizzare",
+      "fr": "optimiser",
+      "ru": "оптимизировать"
+    }
+  },
+  {
+    "id": "core.v.coordinate.20261108",
+    "p": "verb",
+    "e": {
+      "en": "coordinate",
+      "fa": "هماهنگ کردن",
+      "sv": "samordna",
+      "de": "koordinieren",
+      "es": "coordinar",
+      "it": "coordinare",
+      "fr": "coordonner",
+      "ru": "координировать"
+    }
+  },
+  {
+    "id": "core.v.establish.20261108",
+    "p": "verb",
+    "e": {
+      "en": "establish",
+      "fa": "بنیان گذاشتن",
+      "sv": "inrätta",
+      "de": "einrichten",
+      "es": "establecer",
+      "it": "istituire",
+      "fr": "établir",
+      "ru": "учреждать"
+    }
+  },
+  {
+    "id": "core.v.fire.20261108",
+    "p": "verb",
+    "e": {
+      "en": "fire",
+      "fa": "اخراج کردن",
+      "sv": "avskeda",
+      "de": "entlassen",
+      "es": "despedir",
+      "it": "licenziare",
+      "fr": "licencier",
+      "ru": "увольнять"
+    }
+  },
+  {
+    "id": "core.v.pronounce.20261108",
+    "p": "verb",
+    "e": {
+      "en": "pronounce",
+      "fa": "تلفظ کردن",
+      "sv": "uttala",
+      "de": "aussprechen",
+      "es": "pronunciar",
+      "it": "pronunciare",
+      "fr": "prononcer",
+      "ru": "произносить"
+    }
+  },
+  {
+    "id": "core.v.quote.20261108",
+    "p": "verb",
+    "e": {
+      "en": "quote",
+      "fa": "نقل‌قول کردن",
+      "sv": "citera",
+      "de": "zitieren",
+      "es": "citar",
+      "it": "citare",
+      "fr": "citer",
+      "ru": "цитировать"
+    }
+  }
+]

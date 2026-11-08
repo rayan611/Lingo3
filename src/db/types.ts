@@ -90,6 +90,8 @@ const svVerb = z.object({
   imperativ: z.string().optional(),
   /** e.g. "gå upp" — particle verbs behave like German separables. */
   particle: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 const deNoun = z.object({
@@ -114,6 +116,8 @@ const deVerb = z.object({
   separable: z.boolean(),
   /** The detached prefix, if separable: "aufstehen" -> "auf". */
   prefix: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 /**
@@ -155,6 +159,8 @@ const itVerb = z.object({
   riflessivo: z.boolean().optional(),
   /** tu-form imperative. */
   imperativo: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 /** French. Gender as the article it takes, like Italian; le/la even before a
@@ -177,6 +183,8 @@ const frVerb = z.object({
   pronominal: z.boolean().optional(),
   /** tu-form imperative. */
   imperatif: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 const esVerb = z.object({
@@ -191,6 +199,8 @@ const esVerb = z.object({
   reflexivo: z.boolean().optional(),
   /** tú-form imperative. */
   imperativo: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 /**
@@ -232,6 +242,8 @@ const ruVerb = z.object({
   past: z.string().optional(),
   /** ты-form imperative. */
   imperative: z.string().optional(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 const enNoun = z.object({
@@ -245,6 +257,8 @@ const enVerb = z.object({
   thirdPerson: z.string(),
   past: z.string(),
   pastParticiple: z.string(),
+  /** Extra dictionary conjugations, separated by semicolons; also searchable. */
+  additionalForms: z.string().max(12000).optional(),
 })
 
 /**
@@ -264,7 +278,7 @@ const adjective = z.object({
   superlative: z.string().optional(),
 })
 
-const faSimple = z.object({ kind: z.literal('simple') })
+const faSimple = z.object({ kind: z.literal('simple'), additionalForms: z.string().max(12000).optional() })
 const simple = z.object({ kind: z.literal('simple') })
 
 // Exported so display code can narrow to one language's form. `kind` alone is
