@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
+import { changeWordAccess } from '../db/wordActions'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../db/db'
 import { LANG_NAMES, activeTargets, collectionOf, type Settings } from '../db/types'
@@ -18,13 +19,35 @@ export function WordCard({
   settings,
   flash = false,
   between,
+  onRemoved,
 }: {
   conceptId: string
   settings: Settings
   /** Review's flashcard layout — see `WordStack`. */
   flash?: boolean
   between?: ReactNode
+  onRemoved?: () => void
 }) {
+  const [removing, setRemoving] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const cards = useLiveQuery(() => db.cards.where('conceptId').equals(conceptId).toArray(), [conceptId], [])
+  const paused = cards.length > 0 && cards.every((c) => c.suspended)
+
+  async function act(action: 'pause' | 'resume' | 'remove') {
+    setBusy(true)
+    setError('')
+    try {
+      await changeWordAccess(conceptId, action)
+      setRemoving(false)
+      if (action !== 'resume') onRemoved?.()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not update this word. Try again.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   /** Topics already in use elsewhere, offered as one-tap additions. */
   const suggestions = useLiveQuery(
     async () => {
@@ -46,7 +69,7 @@ export function WordCard({
 
   const data = useLiveQuery(async () => {
     const concept = await db.concepts.get(conceptId)
-    if (!concept) return null
+    if (!concept || concept.deletedAt) return null
     const entries = await db.entries.where('conceptId').equals(conceptId).toArray()
     return { concept, entries }
   }, [conceptId])
@@ -116,6 +139,7 @@ export function WordCard({
   )
 
   return (
+    <>
     <WordStack
       entries={sorted.map((e) => ({ ...e, form: e.morphology }))}
       settings={settings}
@@ -123,5 +147,19 @@ export function WordCard({
       flash={flash}
       between={between}
     />
+    {!flash && <section className="panel word-removal" aria-label="Manage this word">
+      {paused && <p className="muted small">Removed from tests. Still available in Word Practice.</p>}
+      {paused && <button disabled={busy} onClick={() => void act('resume')}>Restore to tests</button>}
+      {!removing ? <button className="danger" disabled={busy} onClick={() => setRemoving(true)}>Remove…</button> : <div className="stack">
+        <strong>Remove “{concept.lemma}”</strong>
+        <p className="muted small">The shared vocabulary bank is kept in both cases.</p>
+        <button disabled={busy || paused} onClick={() => void act('pause')}>Remove from tests only — keep in Word Practice</button>
+        <button className="danger" disabled={busy} onClick={() => void act('remove')}>Remove from my word list</button>
+        <p className="muted small">Removing from your list also hides the word from your tests and manual practice.</p>
+        <button disabled={busy} onClick={() => setRemoving(false)}>Cancel</button>
+      </div>}
+      {error && <p role="alert">{error}</p>}
+    </section>}
+    </>
   )
 }

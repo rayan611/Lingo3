@@ -103,6 +103,16 @@ export function Training({
   settings: Settings
   onExit: () => void
 }) {
+  const [detail, setDetail] = useState(false)
+  useEffect(() => {
+    const onPop = (e: PopStateEvent) => { if (!e.state?.lingo3Detail) setDetail(false) }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+  function closeDetail() {
+    setDetail(false)
+    if (window.history.state?.lingo3Detail) window.history.back()
+  }
   const [list, setList] = useState('all')
   const [kind, setKind] = useState('all')
   const [sort, setSort] = useState<Sort>('added')
@@ -245,6 +255,7 @@ export function Training({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (detail) return
       if (e.target instanceof HTMLInputElement) return
       if (e.target instanceof HTMLSelectElement) return
       if (e.key === 'ArrowRight' || e.code === 'Space') {
@@ -257,7 +268,7 @@ export function Training({
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [ordered.length])
+  }, [ordered.length, detail])
 
   /** Swipe left for the next word, right for the previous one. */
   const touch = useRef<{ x: number; y: number } | null>(null)
@@ -350,6 +361,11 @@ export function Training({
     </div>
   )
 
+  if (detail && current) return <div className="review">
+    <button className="link" onClick={closeDetail}>← Word Practice</button>
+    <WordCard key={current.id} conceptId={current.id} settings={settings} onRemoved={closeDetail} />
+  </div>
+
   if (ordered.length === 0) {
     return (
       <div className="flash">
@@ -418,7 +434,14 @@ export function Training({
         ))}
       </div>
       {current && (
-        <WordCard conceptId={current.id} settings={settings} flash between={nav} />
+        <div className="practice-card-wrap">
+          <button className="prompt-info" aria-label="Open the full word page" title="Full word page" onClick={() => {
+            window.history.pushState({ ...(window.history.state ?? {}), lingo3Detail: true }, '')
+            setDetail(true)
+            window.scrollTo({ top: 0 })
+          }}>ⓘ</button>
+          <WordCard conceptId={current.id} settings={settings} flash between={nav} />
+        </div>
       )}
       <p className="muted small flash-note">
         Reading only — nothing here changes your review schedule.

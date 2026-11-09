@@ -1,3 +1,13 @@
+## 2026-11-09 — Highlighted info and personal word removal (0.7.5)
+
+Branch: `feat/review-card-removal`; base `dfa536ed7197aa7de6aa3698859f79cb5adcbb56`. Highlighted accessible info control in Recall and Word Practice opens full native/active-target details. Bottom Remove chooser offers tests-only suspension or personal-list soft removal; shared bank, entries, review history and scheduler parameters are retained. Suspended words stay in manual practice with Restore to tests. Atomic personal Dexie transaction reuses existing synced suspended/deletedAt/updatedAt fields; no migration or shared-bank mutation. Recall skips removed words without grading/incrementing session count; auto-advance pauses while details are open. Practice details support browser Back; keyboard navigation cannot change the underlying word while details are open.
+
+Navigation: reviewed App route map and updated docs/SITEMAP.md + ROUTE_INDEX.md for 0.7.5. No new route/primary menu; info/detail/Back paths and removal behavior documented.
+
+Validation: production TypeScript/Vite/PWA build passes; word-actions fixture covers due queue/count removal, manual-store retention, restoration preserving scheduler state, soft removal and refusal to restore a deleted word. Existing query/scheduling/sync checks pass. All 12 regression scripts pass via node --import tsx. Release evidence recorded below when available. Browser attempt blocked: no installed Chromium; Playwright browser download returned truncated non-ZIP content. No signed-in phone/browser or live cross-device sync acceptance claimed. npm test CLI hits environment IPC EPERM; run same scripts using node --import tsx instead. Rollback: revert app commit; existing personal suspension/deletion state remains synced by design. No production vocabulary changed by development tests. Deployment pending.
+
+---
+
 ## 2026-11-08 — 200 verbs in eight languages and stored-form speed fix (0.7.4)
 
 Owner authorized adding 200 nonduplicate verbs and fast bank-first inflection lookup. Branch feat/verb-bank-fast-lookup-20261108; reviewed app main 8e42f3261dc6992a728985290c58ea946f401719. Prior batch-009 archive PR #37 merged after successful CI 42477041674 as 11a2595b6a2d40c53a5b7b4ed5e0a6a59c37ccf4; its already-live vocabulary was not reimported.

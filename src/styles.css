@@ -2864,15 +2864,22 @@ details.help h3 { margin: 22px 0 6px; }
   position: absolute;
   top: 6px;
   right: 6px;
-  min-height: 0;
+  min-height: 36px;
+  min-width: 36px;
   padding: 6px 8px;
-  background: none;
-  border: none;
-  color: var(--ink-faint);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+  z-index: 1;
   font-size: 1.15rem;
   line-height: 1;
 }
-.prompt-info:hover { color: var(--accent); }
+.prompt-info:hover { filter: brightness(1.15); }
+.prompt-info:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.practice-card-wrap { position: relative; }
+.practice-card-wrap .native .lang-row-head { padding-inline-end: 40px; }
+.word-removal { margin-block: 20px; }
+.word-removal > button { margin: 4px; }
 
 .review .answer { padding: 14px 16px; }
 .review .answer.upcoming { padding: 10px 14px; }
