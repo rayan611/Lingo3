@@ -67,6 +67,7 @@ export function Review({ settings, onExit }: Props) {
     setDetail(true)
   }
   function closeDetail() {
+    setDetail(false)
     if (window.history.state?.lingo3Detail) window.history.back()
     else setDetail(false)
   }
@@ -252,10 +253,10 @@ export function Review({ settings, onExit }: Props) {
    */
   const autoAdvance = settings.autoAdvance ?? false
   useEffect(() => {
-    if (!autoAdvance || !allGraded || !item) return
+    if (detail || !autoAdvance || !allGraded || !item) return
     const t = setTimeout(advance, 750)
     return () => clearTimeout(t)
-  }, [autoAdvance, allGraded, item, advance])
+  }, [detail, autoAdvance, allGraded, item, advance])
 
   const sessionGradeRows = Object.values(sessionGrades)
   const recalledCount = sessionGradeRows.filter((entry) => Number(entry.grade) >= 3).length
@@ -361,7 +362,15 @@ export function Review({ settings, onExit }: Props) {
     return (
       <div className="review">
         {bar}
-        <WordCard conceptId={item.concept.id} settings={settings} />
+        <WordCard key={item.concept.id} conceptId={item.concept.id} settings={settings} onRemoved={() => {
+          closeDetail()
+          setRevealed(false)
+          setGraded({})
+          setTyped('')
+          setTypedVerdict(null)
+          setExtra([])
+          setQueue((q) => q?.filter((row) => row.concept.id !== item.concept.id) ?? null)
+        }} />
       </div>
     )
   }

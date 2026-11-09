@@ -1,8 +1,9 @@
 # Lingo3 — page and section map
 
-Reviewed: 2026-11-08. App version: 0.7.4.
-Code reference: navigation main `8e42f3261dc6992a728985290c58ea946f401719`; vocabulary/lookup branch `feat/verb-bank-fast-lookup-20261108`; sources `src/App.tsx`, `src/ui/SettingsPanel.tsx`, `public/showcase.html`.
-Review scope: existing navigation for vocabulary batch 010; no route/UI changes.
+Reviewed: 2026-11-09. App version: 0.7.5.
+Code reference: base main `dfa536ed7197aa7de6aa3698859f79cb5adcbb56`; branch `feat/review-card-removal`; `src/ui/Training.tsx`, `Review.tsx`, `WordCard.tsx`, `src/App.tsx`.
+Review scope: highlighted information button opens full native/active-learning-language details from Word Practice and Recall. Bottom Remove offers tests-only suspension (manual practice retained) or personal-list soft removal; shared bank retained. Restore to tests available for suspended words. Detail Back returns to the current activity; recall removal skips the word without grading/counting it. Paths/primary menus unchanged.
+
 
 ## Active workspace
 
