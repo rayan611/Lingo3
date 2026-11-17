@@ -1,3 +1,6 @@
+## 2026-11-17 — Academy public route
+Reviewed 0.7.5, branch feat/academy-foundation-20261117. /showcase.html now links to /academy.html and existing / app. /academy.html is a static, responsive public page; internal anchors #match, #courses, #resources, #contact; Welcome links back to /showcase.html; Lingo3 Login links to existing / app auth gate. Language selectors are local-only; they do not save profile data or assign a trainer. Course cards and resources are explicitly planned, not active. Existing workspace routes and Back behavior unchanged.
+
 # Lingo3 — route index
 
 Reviewed: 2026-11-09. App version: 0.7.5.
