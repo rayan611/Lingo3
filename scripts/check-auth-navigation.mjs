@@ -16,7 +16,7 @@ const checks = [
   ['Auth callback stays synchronous', session.includes('onAuthStateChange((event, next) => {') && !session.includes('onAuthStateChange(async')],
   ['App and Academy receive the same SessionState', app.includes('sessionState={sessionState}') && app.includes('<LingoApp sessionState={sessionState} />')],
   ['Product navigation uses history without document reload', nav.includes('history.pushState') && nav.includes("dispatchEvent(new PopStateEvent('popstate'") && !nav.includes('location.href')],
-  ['App Home exposes Academy entry', app.includes('className="academy-entry-card"') && app.includes("navigateProduct('/academy')")],
+  ['App Home exposes Academy entry', app.includes('tile tile-academy') && app.includes("onAcademy={() => navigateProduct('/academy')}")],
   ['Academy menu exposes App entry via SPA navigation', academy.includes("navigateProduct('/',{directApp:true})")],
   ['Academy login back closes modal without reload', academy.includes('onBack={()=>setLoginOpen(false)}') && signIn.includes('onBack?: () => void')],
   ['Google OAuth uses root callback and remembers Academy return', session.includes("OAUTH_RETURN_PATH_KEY = 'lingo3.oauthReturnPath'") && session.includes("options: { redirectTo: \`\${window.location.origin}/\` }") && session.includes("saved.path === '/academy'")],
