@@ -20,7 +20,7 @@ const overlapMigration = read('supabase/migrations/20261117165000_academy_double
 const dashboardMigration = read('supabase/migrations/20261117211500_academy_role_dashboards.sql')
 
 const checks = [
-  ['Responsive Academy uses tablet hamburger and mobile touch targets', academyCss.includes('@media(max-width:860px)') && academyCss.includes('.academy-mobile-toggle{display:flex}') && academyCss.includes('min-height:46px')],
+  ['Responsive Academy uses tablet hamburger and mobile touch targets', css.includes('@media(max-width:860px)') && css.includes('.academy-mobile-toggle{display:flex}') && css.includes('min-height:46px')],
   ['Academy forms provide example placeholders', academy.includes('e.g. Swedish A1') && portal.includes('Write your own lesson note here') && portal.includes('e.g. A1 quiz')],
   ['Academy route is split before LingoApp', app.includes("cleanEntryPath.startsWith('/academy/')") && app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
   ['LingoApp owns Dexie init', app.includes('function LingoApp({ sessionState }') && app.includes('await openForUser(userId)') && app.indexOf('await openForUser(userId)') > app.indexOf('function LingoApp({ sessionState }')],
