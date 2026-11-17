@@ -1,5 +1,8 @@
 # Lingo3 AI Development Context
 
+2026-11-17 auth/navigation invariant: Lingo3 App and Academy share exactly one browser Supabase SessionState owned by root App(). Do not mount separate useSession() hooks per product. Product switching inside lingo3.com must use src/lib/productNavigation.ts (same-document history navigation) rather than full-page href/location reload; OAuth itself remains an external redirect. The same Supabase auth user/account backs both products, while App Dexie remains App-only.
+
+
 Reviewed: 2026-11-17  
 Repository: `rayan611/Lingo3`  
 Production: `https://lingo3.com`
