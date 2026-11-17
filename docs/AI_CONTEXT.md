@@ -21,6 +21,12 @@ This file is the fast-start memory for future AI development sessions.
 
 Do not reconstruct project history from memory when these files are available.
 
+## Main ahead of production
+
+- PR #49 auth/session navigation fix is merged in main as `6f55443bc7da5a62957175d1b1e27ebaf6fbdc50`.
+- It is NOT live yet because Vercel rejected a new deployment with daily deployment quota `api-deployments-free-per-day`.
+- Do not treat this fix as production until a later deployment is READY and lingo3.com aliases are verified.
+
 ## Current production baseline
 
 Production code release:
