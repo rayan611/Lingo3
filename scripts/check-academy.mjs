@@ -63,7 +63,7 @@ const checks = [
   ['Teacher can generate recurring weekly availability', portal.includes('async function addWeeklySlots()') && portal.includes('weeklyDays') && portal.includes('Create weekly times')],
   ['Teacher resources support lesson grammar and useful links', ['lesson','grammar','link'].every(x=>dashboardMigration.includes("'"+x+"'")) && portal.includes('<option value="lesson">') && portal.includes('<option value="grammar">') && portal.includes('<option value="link">')],
   ['Role-dashboard migration has one canonical language table definition', (dashboardMigration.match(/create table if not exists public\.academy_languages/g)||[]).length===1 && !dashboardMigration.includes('lesson_note')],
-  ['Test-result writes are scoped to matching learning space', dashboardMigration.includes('ls.id=learning_space_id and ls.student_id=student_id and ls.teacher_id=teacher_id')],
+  ['Test-result writes are scoped to matching learning space', /ls\.id=learning_space_id\s+and ls\.student_id=student_id\s+and ls\.teacher_id=teacher_id/.test(dashboardMigration)],
   ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
