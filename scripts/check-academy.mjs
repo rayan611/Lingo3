@@ -18,8 +18,8 @@ const advisorMigration = read('supabase/migrations/20261117164000_academy_adviso
 const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
 
 const checks = [
-  ['Academy route is split before LingoApp', app.includes('return <AcademyEntry />') && app.indexOf('return <AcademyEntry />') < app.indexOf('function LingoApp()')],
-  ['LingoApp owns Dexie init', app.includes('function LingoApp()') && app.includes('await openForUser(userId)')],
+  ['Academy route is split before LingoApp', app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
+  ['LingoApp owns Dexie init', app.includes('function LingoApp({ sessionState }') && app.includes('await openForUser(userId)') && app.indexOf('await openForUser(userId)') > app.indexOf('function LingoApp({ sessionState }')],
   ['Academy source does not import App Dexie', !/from ['"]\.\.\/db\//.test(academy) && !academy.includes('dexie')],
   ['Academy grouped menus close on mouse leave', (academy.match(/onMouseLeave={closeMenuOnLeave}/g) || []).length === 3],
   ['Academy grouped menus coordinate open state', (academy.match(/onToggle={onMenuToggle}/g) || []).length === 3],

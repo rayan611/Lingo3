@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { SEEN_KEY } from './landingSeen'
 import { INVITE_WELCOME, fillInvite } from '../lib/invite'
+import { navigateProduct } from '../lib/productNavigation'
 
 /**
  * Shared front door for the two Lingo3 products.
@@ -32,6 +33,11 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
 
       if (event.data?.type === 'showcase-open') {
         open()
+        return
+      }
+
+      if (event.data?.type === 'showcase-academy') {
+        navigateProduct('/academy')
         return
       }
 
@@ -87,8 +93,9 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
           <span style={{ display: 'block', marginTop: 12, fontWeight: 800, color: '#8ee8ff' }}>Enter App →</span>
         </button>
 
-        <a
-          href="/academy"
+        <button
+          type="button"
+          onClick={() => navigateProduct('/academy')}
           style={{
             minHeight: 118,
             padding: 20,
@@ -96,13 +103,14 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
             border: '1px solid rgba(181,156,255,.65)',
             background: 'linear-gradient(135deg,rgba(167,139,250,.24),rgba(56,189,248,.12))',
             color: 'white',
-            textDecoration: 'none',
+            textAlign: 'left',
+            cursor: 'pointer',
           }}
         >
           <strong style={{ display: 'block', fontSize: 21, marginBottom: 6 }}>Lingo3 Academy</strong>
           <span style={{ color: '#d7d5e7' }}>Human trainers, courses, booking, learning space and resources.</span>
           <span style={{ display: 'block', marginTop: 12, fontWeight: 800, color: '#d7caff' }}>Enter Academy →</span>
-        </a>
+        </button>
       </section>
 
       <iframe

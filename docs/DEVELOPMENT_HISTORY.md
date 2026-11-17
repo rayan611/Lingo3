@@ -9,6 +9,11 @@ This is not the live handoff and not the backlog.
 
 Only append meaningful completed milestones. Do not copy every small commit.
 
+## 2026-11-17 — Shared App/Academy Auth Lifecycle Hardening
+
+Investigated repeated hangs around Academy login and App↔Academy re-entry. Supabase production logs showed a real stale refresh-token failure, while OAuth itself succeeded. Refactored the SPA so root App owns one shared Supabase session lifecycle for both product surfaces; removed parallel getSession initialization; converted internal product switches to same-document history navigation; added App Home → Academy and retained Academy → App; embedded showcase switches now bridge to the parent SPA; added auth-navigation regression checks. No user/database schema change.
+
+
 ## 2026-11-17 — Academy Real Teacher/Student MVP
 
 Released via PR #47. Runtime production commit:

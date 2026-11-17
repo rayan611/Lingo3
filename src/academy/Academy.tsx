@@ -3,6 +3,7 @@ import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
 import { AcademyPortal } from './AcademyPortal'
+import { navigateProduct } from '../lib/productNavigation'
 import './academy.css'
 
 type Locale = 'en' | 'sv' | 'fa'
@@ -130,11 +131,11 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  async function saveTeacher(e:React.FormEvent){e.preventDefault();const csv=(v:string)=>v.split(',').map(x=>x.trim()).filter(Boolean),payload={user_id:teacherForm.user_id.trim()||null,display_name:teacherForm.display_name.trim(),photo_url:teacherForm.photo_url.trim()||null,intro_i18n:{en:teacherForm.intro_en,sv:teacherForm.intro_sv,fa:teacherForm.intro_fa},teaching_languages:csv(teacherForm.teaching_languages),spoken_languages:csv(teacherForm.spoken_languages),levels:csv(teacherForm.levels),specialties:csv(teacherForm.specialties),email:teacherForm.email.trim()||null,phone:teacherForm.phone.trim()||null,teams_chat_url:teacherForm.teams_chat_url.trim()||null,teams_call_url:teacherForm.teams_call_url.trim()||null,telegram_url:teacherForm.telegram_url.trim()||null,status:teacherForm.status,updated_at:new Date().toISOString(),...(teacherForm.id?{}:{created_by:userId})};const q=teacherForm.id?supabase().from('academy_teachers').update(payload).eq('id',teacherForm.id).select('id').single():supabase().from('academy_teachers').insert(payload).select('id').single();const {data,error}=await q;setNotice(error ? t.failed + ' ' + error.message : t.saved);if(!error){const teacherId=teacherForm.id||(data?.id as string);await supabase().from('academy_teacher_courses').delete().eq('teacher_id',teacherId);if(teacherAssigned.length)await supabase().from('academy_teacher_courses').insert(teacherAssigned.map(course_id=>({teacher_id:teacherId,course_id})));setTeacherForm(blankTeacher);setTeacherAssigned([]);await refresh()}}
 
  return <div className="academy" dir={dir}>
-  <header className={'academy-top '+(compact?'is-compact':'')}><a className="academy-brand" href="/academy">Lingo3 <span>Academy</span></a>
+  <header className={'academy-top '+(compact?'is-compact':'')}><button className="academy-brand" type="button" onClick={()=>{closeMenus();go('academy-home')}}>Lingo3 <span>Academy</span></button>
    <nav className="academy-nav" ref={navRef}>
     <button onClick={()=>go('academy-home')}>{t.home}</button>
     <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('learning-path')}>{t.path}</button><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('levels')}>{t.levels}</button></div></details>
-    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal-space')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin-studio')}>{t.admin}</button>}<a href="/">{t.app}</a>{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
+    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal-space')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin-studio')}>{t.admin}</button>}<button onClick={()=>{closeMenus();navigateProduct('/',{directApp:true})}}>{t.app}</button>{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
     <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('how')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
     <select className="academy-language" value={locale} onChange={e=>{closeMenus();setLocale(e.target.value as Locale)}}><option value="en">EN</option><option value="sv">SV</option><option value="fa">FA</option></select>
     {userId?<button className="academy-user" onClick={()=>go('personal-space')}>{t.hello} {displayName||email}</button>:<button className="academy-login" onClick={()=>setLoginOpen(true)}>{t.login}</button>}
@@ -179,7 +180,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
     onClose={()=>setBookingTeacher(null)}
     onSuccess={(message)=>{setNotice(message);setBookingTeacher(null);void refresh();jump('personal-space')}}
   />}
-    {loginOpen&&!userId&&<div className="academy-modal"><div className="academy-modal-inner"><button className="modal-close" onClick={()=>setLoginOpen(false)}>×</button><SignIn context="academy"/></div></div>}
+    {loginOpen&&!userId&&<div className="academy-modal"><div className="academy-modal-inner"><button className="modal-close" onClick={()=>setLoginOpen(false)}>×</button><SignIn context="academy" onBack={()=>setLoginOpen(false)}/></div></div>}
   {sessionLoading&&<div className="academy-session-check">{t.loading}</div>}
  </div>
 }

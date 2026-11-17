@@ -80,26 +80,33 @@ export function useSession(): SessionState {
     if (!authConfigured) return
     let cancelled = false
 
-    // getSession reads from storage first, so this resolves offline too.
-    supabase()
-      .auth.getSession()
-      .then(({ data }) => {
-        if (!cancelled) setSession(data.session)
-      })
-      .catch(() => {
-        if (!cancelled) setSession(null)
-      })
-
-    const { data: sub } = supabase().auth.onAuthStateChange((event, next) => {
+    /**
+     * Use one auth source of truth.
+     *
+     * Supabase emits INITIAL_SESSION after it has loaded the browser session
+     * from storage. Calling getSession() in parallel with that initialization
+     * is redundant and can create competing auth work around a token refresh.
+     * The callback stays deliberately synchronous: do not await Supabase/API
+     * calls from onAuthStateChange.
+     */
+    const client = supabase()
+    const { data: sub } = client.auth.onAuthStateChange((event, next) => {
+      if (cancelled) return
       setSession(next)
       if (event === 'PASSWORD_RECOVERY') setRecovery(true)
-      // Signing out ends a half-finished reset, or the screen would be
-      // waiting for a password on an account nobody is signed into.
       if (event === 'SIGNED_OUT') setRecovery(false)
     })
 
+    // Initial session loading is local/fast in normal browser operation.
+    // Never leave the UI on "Checking your session…" forever if a browser
+    // lifecycle edge case prevents INITIAL_SESSION from reaching this hook.
+    const watchdog = window.setTimeout(() => {
+      if (!cancelled) setSession((current) => current === undefined ? null : current)
+    }, 12000)
+
     return () => {
       cancelled = true
+      window.clearTimeout(watchdog)
       sub.subscription.unsubscribe()
     }
   }, [])
