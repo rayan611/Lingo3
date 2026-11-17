@@ -115,9 +115,55 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
   }, [onOpen])
 
   return (
-    <main style={{ minHeight: '100vh', background: '#0c1021' }}>
+    <main style={{ minHeight: '100vh', background: '#0c1021', color: 'white' }}>
       {inviter && <p style={{ margin: 0, padding: '12px 20px', textAlign: 'center', color: 'white', background: '#302447' }}>💌 {fillInvite(INVITE_WELCOME, { name: inviter })}</p>}
-      <iframe id="lingo-showcase" title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: '100vh', minHeight: 700, border: 0 }} />
+      <section
+        aria-label="Choose Lingo3 App or Lingo3 Academy"
+        style={{
+          maxWidth: 1120,
+          margin: '0 auto',
+          padding: '20px 20px 8px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+          gap: 14,
+        }}
+      >
+        <button
+          type="button"
+          onClick={open}
+          style={{
+            minHeight: 118,
+            textAlign: 'left',
+            padding: 20,
+            borderRadius: 20,
+            border: '1px solid rgba(255,255,255,.22)',
+            background: 'linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.05))',
+            color: 'white',
+            cursor: 'pointer',
+          }}
+        >
+          <strong style={{ display: 'block', fontSize: 22, marginBottom: 6 }}>Lingo3 App</strong>
+          <span style={{ color: '#d7d5e7' }}>Vocabulary, grammar, review and self-practice.</span>
+          <span style={{ display: 'block', marginTop: 12, fontWeight: 800, color: '#8ee8ff' }}>Enter App →</span>
+        </button>
+        <a
+          href="/academy.html"
+          style={{
+            minHeight: 118,
+            padding: 20,
+            borderRadius: 20,
+            border: '1px solid rgba(181,156,255,.65)',
+            background: 'linear-gradient(135deg,rgba(167,139,250,.24),rgba(56,189,248,.12))',
+            color: 'white',
+            textDecoration: 'none',
+          }}
+        >
+          <strong style={{ display: 'block', fontSize: 22, marginBottom: 6 }}>Lingo3 Academy</strong>
+          <span style={{ color: '#d7d5e7' }}>Human trainers, courses, booking, learning space and resources.</span>
+          <span style={{ display: 'block', marginTop: 12, fontWeight: 800, color: '#d7caff' }}>Enter Academy →</span>
+        </a>
+      </section>
+      <iframe id="lingo-showcase" title="Lingo3 — discover and enter" src="/showcase.html" style={{ display: 'block', width: '100%', height: 'calc(100vh - 150px)', minHeight: 700, border: 0 }} />
     </main>
   )
 
