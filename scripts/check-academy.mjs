@@ -14,6 +14,8 @@ const mvpMigration = read('supabase/migrations/20261117160000_academy_real_mvp.s
 const labelMigration = read('supabase/migrations/20261117161000_academy_student_labels.sql')
 const hardeningMigration = read('supabase/migrations/20261117162000_academy_mvp_hardening.sql')
 const cancelMigration = read('supabase/migrations/20261117163000_academy_slot_cancel_fix.sql')
+const advisorMigration = read('supabase/migrations/20261117164000_academy_advisor_cleanup.sql')
+const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
 
 const checks = [
   ['Academy route is split before LingoApp', app.includes('return <AcademyEntry />') && app.indexOf('return <AcademyEntry />') < app.indexOf('function LingoApp()')],
@@ -40,6 +42,9 @@ const checks = [
   ['Student labels are added for teacher workflows', labelMigration.includes('student_display_name')],
   ['Booking and note hardening migration exists', hardeningMigration.includes('academy_guard_note_update') && hardeningMigration.includes('Confirmed bookings may only be cancelled')],
   ['Student cancellation releases booked slots', cancelMigration.includes('security definer') && cancelMigration.includes("status = 'available'")],
+  ['Academy booking policies are consolidated', advisorMigration.includes('academy bookings member update') && advisorMigration.includes('academy_messages_sender_idx')],
+  ['Database prevents teacher double-booking', overlapMigration.includes('academy_guard_availability_overlap') && overlapMigration.includes('Teacher already has a confirmed session at this time')],
+  ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
 
