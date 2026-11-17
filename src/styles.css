@@ -295,6 +295,7 @@ p { margin: 0.4rem 0; }
 .tile-review { --tile-hue: var(--tab-review); }
 .tile-browse { --tile-hue: var(--tab-browse); }
 .tile-settings { --tile-hue: var(--tab-settings); }
+.tile-academy { --tile-hue: #7b63e8; }
 
 /* 600, not 700: the tiles are the first thing on the home screen and the
    labels were reading as caption text beside their icons. */
@@ -3823,7 +3824,7 @@ input[type='radio']:focus { box-shadow: none; }
 .update-check button { margin: 0; }
 
 /* Training Center groups learning activities while keeping primary navigation compact. */
-.primary-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.primary-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .tile-training-center { --tile-hue: var(--tab-training); }
 .tile-grammar { --tile-hue: var(--tab-read); }
 .training-center { padding: 12px 0; }
@@ -3877,12 +3878,3 @@ input[type='radio']:focus { box-shadow: none; }
 .grammar-section-actions { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; margin: 8px 0 12px; }
 .grammar-section-actions label { flex: 1 1 180px; min-width: 0; }
 
-/* App Home → Academy bridge. Keep it visually secondary to the core self-study
-   tools but always available at the bottom of Home. Product switching stays
-   inside the SPA so the shared Supabase session is not recreated. */
-.academy-entry-card{margin:28px 0 8px;padding:16px 18px;border:1px solid color-mix(in srgb,var(--accent,#7c6cff) 42%,transparent);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:color-mix(in srgb,var(--panel,#171a2b) 92%,var(--accent,#7c6cff) 8%)}
-.academy-entry-card>div{display:grid;gap:4px;min-width:0}
-.academy-entry-card strong{font-size:1rem}
-.academy-entry-card span{font-size:.88rem;color:var(--muted,#9ba0b4);line-height:1.4}
-.academy-entry-card button{white-space:nowrap;font-weight:700}
-@media(max-width:620px){.academy-entry-card{align-items:stretch;flex-direction:column}.academy-entry-card button{width:100%}}
