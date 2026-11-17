@@ -161,13 +161,14 @@ begin
     from (
       select t.id,t.user_id,t.display_name,t.email,t.phone,t.teaching_languages,t.levels,t.status,
              (select count(*) from public.academy_learning_spaces ls where ls.teacher_id=t.id) as students,
-             (select count(*) from public.academy_teacher_courses tc where tc.teacher_id=t.id) as courses
+             (select count(*) from public.academy_teacher_courses tc where tc.teacher_id=t.id) as courses,
+             coalesce((select jsonb_agg(tc.course_id) from public.academy_teacher_courses tc where tc.teacher_id=t.id),'[]'::jsonb) as course_ids
       from public.academy_teachers t where t.status<>'archived'
     ) x; return r;
   elsif p_op='academy-courses' then
     select jsonb_build_object('items',coalesce(jsonb_agg(x order by x.sort_order,x.subject_code,x.level_code),'[]'::jsonb)) into r
     from (
-      select c.id,c.subject_code,c.level_code,c.title_i18n,c.status,c.sort_order,
+      select c.id,c.subject_code,c.level_code,c.title_i18n,c.status,c.sort_order,c.price_sek,c.duration_minutes,
              (select count(*) from public.academy_enrollments e where e.course_id=c.id and e.status='active') as students
       from public.academy_courses c where c.status<>'archived'
     ) x; return r;
@@ -295,7 +296,6 @@ create table if not exists public.academy_session_summaries (
  updated_at timestamptz not null default now()
 );
 create index if not exists academy_session_summaries_space_created_idx on public.academy_session_summaries(learning_space_id,created_at desc);
-create unique index if not exists academy_session_summaries_booking_uidx on public.academy_session_summaries(booking_id) where booking_id is not null;
 alter table public.academy_session_summaries enable row level security;
 grant select,insert,update,delete on public.academy_session_summaries to authenticated;
 create policy "academy summaries members read" on public.academy_session_summaries
