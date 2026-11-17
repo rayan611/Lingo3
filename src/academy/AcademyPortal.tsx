@@ -509,7 +509,7 @@ export function AcademyPortal({
    <article className="academy-card">
     <h3>{t.materials}</h3>
     {resources.length===0?<p>{t.noResources}</p>:resources.map(r=><div className="academy-resource" key={r.id}>
-     <div className="academy-card-top"><span className="academy-badge">{r.kind==='homework'?t.homework:r.kind==='grammar'?'Grammar':r.kind==='lesson_note'?'Lesson note':r.kind==='link'?'Link':t.material}</span><span>{r.student_status}</span></div>
+     <div className="academy-card-top"><span className="academy-badge">{r.kind==='homework'?t.homework:r.kind==='grammar'?'Grammar':r.kind==='lesson'?'Lesson':r.kind==='link'?'Link':t.material}</span><span>{r.student_status}</span></div>
      <strong>{r.title}</strong>{r.description&&<p>{r.description}</p>}{r.url&&<a href={r.url} target="_blank" rel="noreferrer">{r.url}</a>}{r.due_at&&<small>{t.due}: {dt(r.due_at)}</small>}
      {r.kind==='homework'&&selected.student_id===userId&&r.student_status!=='completed'&&<><textarea placeholder={t.response} value={resourceResponse[r.id]??r.student_response??''} onChange={e=>setResourceResponse({...resourceResponse,[r.id]:e.target.value})}/><button className="small-link" onClick={()=>submitHomework(r)}>{t.submit}</button></>}
      {r.teacher_feedback&&<p><b>{t.feedback}:</b> {r.teacher_feedback}</p>}
