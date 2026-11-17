@@ -31,7 +31,9 @@ The App owns Dexie. Do not initialize/open the App Dexie store from Academy.
 Purpose: human-led learning with courses, teachers, trial requests and private Learning Spaces.
 
 Main code:
-- `src/academy/Academy.tsx` → Academy public UI, personal space and admin studio
+- `src/academy/Academy.tsx` → Academy public catalogue, navigation and admin studio
+- `src/academy/AcademyBookingDialog.tsx` → trial booking request flow
+- `src/academy/AcademyPortal.tsx` → Student and Teacher operational workspace
 - `src/academy/academy.css` → Academy-only styling
 - `supabase/migrations/*academy*` → Academy database/RLS
 - `public/academy.html` → compatibility redirect only; interactive Academy is `/academy`
@@ -74,7 +76,7 @@ Inside `src/academy/Academy.tsx`:
 - `#levels` → level guide
 - `#how` → how Academy works
 - `#pricing` → pricing summary
-- `#personal-space` → student courses / teacher courses / Learning Space
+- `#personal-space` → operational Student/Teacher Academy area: enrollments, bookings, Learning Spaces, internal calendar, resources/homework and messages
 - `#admin-studio` → admin-only course/teacher/enrolment management
 - `#resources` → learning resources explanation
 - `#contact` → Academy contact
@@ -113,10 +115,34 @@ Private/member data:
 - `academy_bookings`
 - `academy_learning_spaces`
 - `academy_notes`
+- `academy_resources` → material/homework metadata, student submission text/status and teacher feedback
+- `academy_messages` → immutable Student↔Teacher messages; recipient may mark read
+
+Calendar/availability:
+- `academy_availability` → teacher-owned internal availability slots
+
+Important invariants:
+- enrollment activation uses `academy_activate_enrollment(...)` so enrollment + Learning Space are atomic
+- students may update only their own goal/submission/message/cancellation fields allowed by guards
+- teachers may update only their assigned students/session/plan fields allowed by guards
+- a teacher cannot self-publish their teacher profile
+- overlapping availability slots and overlapping confirmed teacher sessions are rejected in the database
+- anonymous catalogue reads do not include internal `created_by` or teacher `user_id` columns
 
 RLS is mandatory for every Academy private table. Student A must never be able to read Student B's private Learning Space.
 
 ## Current external-integration boundary
+
+Active without external providers:
+- internal teacher availability/calendar slots
+- trial/session requests with requested time and student message
+- teacher confirmation/cancellation/completion/no-show
+- manual meeting URL
+- Learning Space progress/goals/next-session topics
+- material/homework links and text
+- student homework response + teacher feedback
+- private Student↔Teacher messaging
+- notes
 
 Fields/links exist for Teams and Telegram, but these are not automatic provider integrations.
 
@@ -125,7 +151,7 @@ Not currently claimed active:
 - Google/Microsoft calendar synchronization
 - Stripe/Swish payment processing
 - hosted live video classroom
-- file/homework upload engine
+- binary file upload/storage for homework/materials
 - test/placement engine
 - realtime collaborative notebook
 
@@ -138,6 +164,6 @@ Not currently claimed active:
 5. Test EN/SV/FA and Persian RTL.
 6. Verify public course/teacher reads.
 7. For authenticated changes, test Student/Teacher/Admin visibility separately.
-8. For DB/RLS changes, verify cross-user isolation.
+8. For DB/RLS changes, verify cross-user isolation, update-column guards and double-book prevention.
 9. Run `npm run check:academy`, `npm run typecheck`, and production build.
 10. Update `docs/SITEMAP.md`, `docs/ROUTE_INDEX.md`, and `docs/DEVELOPMENT_HANDOFF.md`.
