@@ -425,7 +425,6 @@ export function AcademyPortal({
 
  const courseTitle=(id:string|null)=>id?(courseById.get(id)?i18n(courseById.get(id)!.title_i18n,locale):id):'—'
  const teacherTitle=(id:string)=>teacherById.get(id)?.display_name??'Teacher'
- const resourceKindLabel=(kind:Resource['kind'])=>kind==='homework'?t.homework:kind==='grammar'?'Grammar':kind==='lesson'?(locale==='fa'?'درس':'Lesson'):kind==='link'?(locale==='fa'?'لینک کاربردی':'Useful link'):t.material
 
  return <div className="academy-portal">
   {!teacherOnly&&<section className="academy-dashboard-summary">
