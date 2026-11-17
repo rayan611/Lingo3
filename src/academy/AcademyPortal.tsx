@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../auth/supabase'
+import { navigateProduct } from '../lib/productNavigation'
 
 type Locale = 'en' | 'sv' | 'fa' | 'de'
-type Course = { id:string; level_code:string; title_i18n:Record<string,string> }
-type Teacher = { id:string; user_id:string|null; display_name:string }
+type Course = { id:string; subject_code:string; level_code:string; title_i18n:Record<string,string> }
+type Teacher = { id:string; user_id:string|null; display_name:string; email?:string|null; phone?:string|null; teams_chat_url?:string|null; telegram_url?:string|null }
 type Enrollment = { id:string; student_id:string; course_id:string; teacher_id:string|null; status:string }
 type Space = {
   id:string
@@ -64,6 +65,7 @@ type Note = {
   visibility:'private'|'shared'
   created_at:string
 }
+type TestResult = { id:string; learning_space_id:string; title:string; score:number|null; max_score:number|null; percent:number|null; teacher_summary:string|null; taken_at:string }
 type Message = {
   id:string
   learning_space_id:string
@@ -110,6 +112,9 @@ export function AcademyPortal({
  const [teacherSpaces,setTeacherSpaces]=useState<Space[]>([])
  const [bookings,setBookings]=useState<Booking[]>([])
  const [availability,setAvailability]=useState<Availability[]>([])
+ const [dashboardResources,setDashboardResources]=useState<Resource[]>([])
+ const [dashboardNotes,setDashboardNotes]=useState<Note[]>([])
+ const [testResults,setTestResults]=useState<TestResult[]>([])
  const [selectedSpace,setSelectedSpace]=useState('')
  const [notes,setNotes]=useState<Note[]>([])
  const [resources,setResources]=useState<Resource[]>([])
@@ -133,6 +138,9 @@ export function AcademyPortal({
  const teacherBookings=selfTeacher?bookings.filter(x=>x.teacher_id===selfTeacher.id):[]
  const selected=[...studentSpaces,...teacherSpaces].find(x=>x.id===selectedSpace)
  const selectedIsTeacher=Boolean(selected&&selfTeacher&&selected.teacher_id===selfTeacher.id&&selected.student_id!==userId)
+ const teacherOnly=Boolean(selfTeacher&&!isAdmin)
+ const bookingByAvailability=useMemo(()=>new Map(teacherBookings.filter(b=>b.availability_id).map(b=>[b.availability_id!,b])),[teacherBookings])
+ const subjectName=(code:string)=>({sv:{en:'Swedish',sv:'Svenska',de:'Schwedisch',fa:'سوئدی'},en:{en:'English',sv:'Engelska',de:'Englisch',fa:'انگلیسی'},de:{en:'German',sv:'Tyska',de:'Deutsch',fa:'آلمانی'},fa:{en:'Persian',sv:'Persiska',de:'Persisch',fa:'فارسی'}} as any)[code]?.[locale]??code.toUpperCase()
 
  async function refresh(){
   const client=supabase()
@@ -150,6 +158,17 @@ export function AcademyPortal({
   const ownSpaces=(results[1].data??[]) as Space[]
   setStudentSpaces(ownSpaces)
   setBookings((results[2].data??[]) as Booking[])
+  if(ownSpaces.length){
+   const ids=ownSpaces.map(x=>x.id)
+   const [rr,nn,tr]=await Promise.all([
+    client.from('academy_resources').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(300),
+    client.from('academy_notes').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(300),
+    client.from('academy_test_results').select('*').in('learning_space_id',ids).order('taken_at',{ascending:false}).limit(200),
+   ])
+   setDashboardResources((rr.data??[]) as Resource[])
+   setDashboardNotes((nn.data??[]) as Note[])
+   setTestResults(tr.error?[]:((tr.data??[]) as TestResult[]))
+  }else{setDashboardResources([]);setDashboardNotes([]);setTestResults([])}
   const taughtSpaces=selfTeacher?((results[3].data??[]) as Space[]):[]
   const slots=selfTeacher?((results[4].data??[]) as Availability[]):[]
   setTeacherSpaces(taughtSpaces.filter(x=>x.student_id!==userId))
@@ -323,7 +342,40 @@ export function AcademyPortal({
  const teacherTitle=(id:string)=>teacherById.get(id)?.display_name??'Teacher'
 
  return <div className="academy-portal">
-  <div className="academy-personal-grid">
+  {!teacherOnly&&<section className="academy-dashboard-summary">
+   <div className="academy-section-head"><p>{locale==='fa'?'زبان‌های من':locale==='sv'?'Mina språk':locale==='de'?'Meine Sprachen':'My languages'}</p><h3>{locale==='fa'?'وضعیت یادگیری':locale==='sv'?'Din läröversikt':locale==='de'?'Dein Lernüberblick':'Your learning overview'}</h3></div>
+   <div className="academy-language-dashboard">
+    {studentSpaces.length===0?<div className="academy-empty">{t.noSpace}</div>:studentSpaces.map(sp=>{
+      const c=courseById.get(sp.course_id)
+      const bs=ownBookings.filter(b=>b.course_id===sp.course_id)
+      const now=Date.now()
+      const past=bs.filter(b=>['completed','confirmed'].includes(b.status)&&new Date(b.confirmed_start??b.preferred_start??0).getTime()<now).sort((a,b)=>new Date(b.confirmed_start??b.preferred_start??0).getTime()-new Date(a.confirmed_start??a.preferred_start??0).getTime())[0]
+      const next=bs.filter(b=>['confirmed','requested'].includes(b.status)&&new Date(b.confirmed_start??b.preferred_start??0).getTime()>=now).sort((a,b)=>new Date(a.confirmed_start??a.preferred_start??0).getTime()-new Date(b.confirmed_start??b.preferred_start??0).getTime())[0]
+      const hw=dashboardResources.filter(r=>r.learning_space_id===sp.id&&r.kind==='homework')
+      const open=hw.filter(r=>r.student_status!=='completed').length
+      const lastTest=testResults.find(r=>r.learning_space_id===sp.id)
+      const ownNoteCount=dashboardNotes.filter(n=>n.learning_space_id===sp.id&&n.author_id===userId).length
+      return <article className={'academy-card academy-language-card '+(selectedSpace===sp.id?'is-selected':'')} key={sp.id} onClick={()=>setSelectedSpace(sp.id)}>
+       <div className="academy-card-top"><span className="academy-badge">{subjectName(c?.subject_code??'')}</span><span>{c?.level_code??sp.current_level??'—'}</span></div>
+       <h3>{c?i18n(c.title_i18n,locale):sp.current_level??t.learning}</h3>
+       <div className="space-progress"><span>{t.progress}</span><b>{sp.progress}%</b></div><div className="progress-bar"><i style={{width:String(sp.progress)+'%'}}/></div>
+       <dl className="academy-dashboard-facts">
+        <div><dt>{locale==='fa'?'آخرین جلسه':locale==='sv'?'Senaste lektion':'Last session'}</dt><dd>{past?dt(past.confirmed_start??past.preferred_start):'—'}</dd></div>
+        <div><dt>{locale==='fa'?'جلسه بعد':locale==='sv'?'Nästa lektion':'Next session'}</dt><dd>{next?dt(next.confirmed_start??next.preferred_start):'—'}</dd></div>
+        <div><dt>{locale==='fa'?'جمع‌بندی استاد':locale==='sv'?'Lärarens senaste notering':'Latest teacher summary'}</dt><dd>{past?.teacher_note||'—'}</dd></div>
+        <div><dt>{t.homework}</dt><dd>{open} {locale==='fa'?'باز':'open'}</dd></div>
+        <div><dt>{t.notes}</dt><dd>{ownNoteCount}</dd></div>
+        <div><dt>{locale==='fa'?'آخرین تست':'Latest test'}</dt><dd>{lastTest?(lastTest.percent!=null?Math.round(lastTest.percent)+'%':lastTest.title):'—'}</dd></div>
+       </dl>
+       <div className="academy-card-actions" onClick={e=>e.stopPropagation()}>
+        <button className="small-link" onClick={()=>navigateProduct('/words',{directApp:true})}>{locale==='fa'?'لغات':'Words ↗'}</button>
+        <button className="small-link" onClick={()=>navigateProduct('/grammar',{directApp:true})}>{locale==='fa'?'گرامر':'Grammar ↗'}</button>
+       </div>
+      </article>
+    })}
+   </div>
+  </section>}
+  {!teacherOnly&&<div className="academy-personal-grid">
    <article className="academy-card">
     <h3>{t.myCourses}</h3>
     {enrollments.length===0?<p>—</p>:enrollments.map(e=><div className="personal-row" key={e.id}><span>{courseTitle(e.course_id)}</span><b>{e.status}</b></div>)}
@@ -349,10 +401,10 @@ export function AcademyPortal({
     </>}
    </article>
 
-   {isAdmin&&<article className="academy-card"><h3>Admin</h3><p>Course, teacher and enrollment administration remains in Admin Studio below.</p></article>}
-  </div>
+   {isAdmin&&<article className="academy-card"><h3>Admin</h3><p>Course, teacher and enrollment administration remains in Admin Studio.</p></article>}
+  </div>}
 
-  {selected&&<div className="academy-learning-columns">
+  {!teacherOnly&&selected&&<div className="academy-learning-columns">
    <article className="academy-card">
     <h3>{t.notes}</h3>
     <textarea value={noteBody} onChange={e=>setNoteBody(e.target.value)} />
@@ -381,14 +433,18 @@ export function AcademyPortal({
   </div>}
 
   {selfTeacher&&<section className="academy-teacher-desk">
-   <div className="academy-section-head"><p>{t.teacherDesk}</p><h3>{selfTeacher.display_name}</h3></div>
+   <div className="academy-teacher-summary">
+    <div><p className="academy-kicker">{t.teacherDesk}</p><h2>{selfTeacher.display_name}</h2><p>{[selfTeacher.email,selfTeacher.phone].filter(Boolean).join(' · ')||'—'}</p></div>
+    <div className="academy-tags">{Array.from(new Set(teacherSpaces.map(sp=>courseById.get(sp.course_id)?.subject_code).filter(Boolean))).map(code=><span key={code}>{subjectName(code as string)}</span>)}</div>
+    <div className="academy-card-actions">{selfTeacher.email&&<a className="small-link" href={'mailto:'+selfTeacher.email}>Email</a>}{selfTeacher.teams_chat_url&&<a className="small-link" href={selfTeacher.teams_chat_url} target="_blank" rel="noreferrer">Teams</a>}{selfTeacher.telegram_url&&<a className="small-link" href={selfTeacher.telegram_url} target="_blank" rel="noreferrer">Telegram</a>}<button className="small-link" onClick={()=>navigateProduct('/grammar',{directApp:true})}>Grammar ↗</button></div>
+   </div>
    <div className="academy-learning-columns">
     <article className="academy-card">
      <h3>{t.availability}</h3>
      <label>{t.start}<input type="datetime-local" value={slotStart} onChange={e=>setSlotStart(e.target.value)}/></label>
      <div className="editor-two"><label>{t.duration}<input type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label></div>
      <button className="academy-primary small" onClick={addSlot}>{t.addSlot}</button>
-     <div className="academy-slot-list">{availability.map(a=><div className="personal-row" key={a.id}><span>{dt(a.starts_at)} · {a.delivery_mode}</span><span>{a.status}</span>{a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>)}</div>
+     <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);return <div className={'academy-week-slot '+(booked?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(a.status==='available'?'Free':a.status)}</small>{!booked&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
     </article>
 
     <article className="academy-card">
