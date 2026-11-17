@@ -57,7 +57,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
         const { needsConfirmation } = await signUp(email.trim(), password, token)
         if (needsConfirmation) {
           setNotice(
-            'Account created. Check your email for a confirmation link, then sign in.',
+            context === 'academy' ? academyT.createdNotice : 'Account created. Check your email for a confirmation link, then sign in.',
           )
           setMode('in')
         }
@@ -77,7 +77,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
           <p>
             {context === 'academy' && onBack
               ? <button type="button" className="link" onClick={onBack}>{academyT.back}</button>
-              : <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? 'Back to Academy' : 'Home / Showcase'}</a>}
+              : <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? academyT.back : 'Home / Showcase'}</a>}
           </p>
           <h1 className="signin-brand">{context === 'academy' ? 'Lingo3 Academy' : 'Lingo3'}</h1>
           <p className="signin-tagline">
@@ -155,7 +155,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
                   setNotice(null)
                 }}
               >
-                Forgot your password?
+                {context === 'academy' ? academyT.forgot : 'Forgot your password?'}
               </button>
             </div>
           )}
@@ -202,7 +202,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
                   <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z" />
                   <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z" />
                 </svg>
-                Continue with Google
+                {context === 'academy' ? academyT.google : 'Continue with Google'}
               </button>
             </>
           )}
@@ -213,12 +213,12 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
           <div className="signin-switch">
             {mode === 'in' && (
               <button type="button" className="link" onClick={() => setMode('up')}>
-                No account yet? Create one
+                {context === 'academy' ? academyT.noAccount : 'No account yet? Create one'}
               </button>
             )}
             {mode === 'up' && (
               <button type="button" className="link" onClick={() => setMode('in')}>
-                Already have an account? Sign in
+                {context === 'academy' ? academyT.already : 'Already have an account? Sign in'}
               </button>
             )}
             {mode === 'forgot' && (
@@ -231,7 +231,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
                   setNotice(null)
                 }}
               >
-                Back to sign in
+                {context === 'academy' ? academyT.backSignIn : 'Back to sign in'}
               </button>
             )}
           </div>
