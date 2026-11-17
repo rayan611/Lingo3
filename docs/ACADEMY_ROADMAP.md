@@ -13,7 +13,7 @@ Status legend:
 
 | Capability | Status | Current reality |
 |---|---|---|
-| Public Academy route | ✅ | `/academy`, shared Lingo3 auth |
+| Public Academy route | ✅ | `/academy` Home + routed Academy sub-pages, shared Lingo3 auth |
 | Multilingual Academy UI | ✅ | EN/SV/DE/FA; Persian RTL, others LTR |
 | Course catalogue | ✅ | DB-backed, multilingual topics/formats |
 | Teacher Directory | ✅ infrastructure | Only real active teachers are shown; currently no real teacher seeded |
