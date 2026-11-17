@@ -5,6 +5,14 @@ alter table public.academy_resources drop constraint if exists academy_resources
 alter table public.academy_resources add constraint academy_resources_kind_check
   check (kind in ('material','homework','lesson_note','grammar','link'));
 
+-- Extend teacher-authored Learning Space content without creating parallel tables.
+-- Homework keeps the existing submission/feedback workflow; lesson/grammar/link are read-only course resources.
+alter table public.academy_resources
+  drop constraint if exists academy_resources_kind_check;
+alter table public.academy_resources
+  add constraint academy_resources_kind_check
+  check (kind in ('material','homework','lesson','grammar','link'));
+
 create table if not exists public.academy_test_results (
   id uuid primary key default gen_random_uuid(),
   learning_space_id uuid not null references public.academy_learning_spaces(id) on delete cascade,
