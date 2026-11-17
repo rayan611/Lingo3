@@ -82,8 +82,8 @@ export function Academy({userId,email,sessionLoading=false}:Props){
    setDisplayName((settingsRes.data?.display_name as string|null)||email?.split('@')[0]||'');setIsAdmin(adminFlag)
    const [enrollmentRes,spaceRes,adminEnrollmentRes]=await Promise.all([
     c.from('academy_enrollments').select('*').eq('student_id',userId).order('created_at',{ascending:false}),
-    c.from('academy_learning_spaces').select('*').order('created_at',{ascending:false}),
-    adminFlag?c.from('academy_enrollments').select('*').order('created_at',{ascending:false}):Promise.resolve({data:[]} as {data:unknown[]})
+    c.from('academy_learning_spaces').select('*').eq('student_id',userId).order('created_at',{ascending:false}),
+    adminFlag?c.from('academy_enrollments').select('*').eq('status','interested').order('created_at',{ascending:false}).limit(200):Promise.resolve({data:[]} as {data:unknown[]})
    ])
    if(enrollmentRes.data)setEnrollments(enrollmentRes.data as Enrollment[])
    if(spaceRes.data){const next=spaceRes.data as LearningSpace[];setSpaces(next);if(!selectedSpace&&next.length)setSelectedSpace(next[0].id)}
