@@ -13,6 +13,10 @@ Only append meaningful completed milestones. Do not copy every small commit. Rev
 
 Built compact Student and Teacher dashboard flows on top of the existing Academy tables instead of creating a parallel system. Student view is language/course-first with progress, sessions, teacher summary, homework, notes and App vocabulary/grammar shortcuts. Linked teachers get a teacher-only operational view with weekly availability/occupancy, students, learning plans and teaching resources. Admin teacher assignment now uses a secure lookup design rather than raw UUID entry. Prepared, but did not apply, the database migration for test-result history and Control Center Academy operations. App Home Academy access moved into the primary mosaic navigation. Production remained unchanged during this implementation.
 
+## 2026-11-17 — Academy Role Dashboards Prepared
+
+Prepared the next Academy operating model on a feature branch: students get a language/course dashboard with progress, sessions, teacher summaries, homework, notes, tests and App shortcuts; linked teachers get a teacher-only workspace with courses, students, weekly availability and instructional inputs; admins retain both management surfaces. Teacher role remains an admin-controlled link through `academy_teachers.user_id`, not user-editable metadata. A migration for structured summaries/tests, managed languages and Control Center RPCs is prepared but intentionally not applied to production yet.
+
 ## 2026-11-17 — Academy Routed Pages and Theme System
 
 Refactored Academy from a single long anchor-based page into route-backed SPA pages while preserving the one shared Supabase session and App/Academy boundary. Added dedicated routes for learning path, courses, teachers, levels, My Academy, Admin, About, Pricing, Resources and Contact. Added a persisted Academy Light/Dark theme with Light as the default. Updated route/sitemap checks and development-history operating rules.
