@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import './academy.css'
@@ -68,6 +68,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  const [compact,setCompact]=useState(false),[courses,setCourses]=useState<Course[]>([]),[teachers,setTeachers]=useState<Teacher[]>([]),[teacherCourses,setTeacherCourses]=useState<TeacherCourse[]>([]),[enrollments,setEnrollments]=useState<Enrollment[]>([]),[adminEnrollments,setAdminEnrollments]=useState<Enrollment[]>([]),[spaces,setSpaces]=useState<LearningSpace[]>([]),[notes,setNotes]=useState<AcademyNote[]>([])
  const [displayName,setDisplayName]=useState(''),[isAdmin,setIsAdmin]=useState(false),[loading,setLoading]=useState(true),[loginOpen,setLoginOpen]=useState(false),[subject,setSubject]=useState('sv'),[level,setLevel]=useState('A1'),[notice,setNotice]=useState('')
  const [courseForm,setCourseForm]=useState(blankCourse),[teacherForm,setTeacherForm]=useState(blankTeacher),[teacherAssigned,setTeacherAssigned]=useState<string[]>([]),[enrollmentTeacher,setEnrollmentTeacher]=useState<Record<string,string>>({}),[selectedSpace,setSelectedSpace]=useState(''),[noteBody,setNoteBody]=useState(''),[shareNote,setShareNote]=useState(false)
+ const navRef=useRef<HTMLElement|null>(null)
  const t=C[locale],dir=locale==='fa'?'rtl':'ltr'
  useEffect(()=>{localStorage.setItem('lingo3.academy.locale',locale);document.documentElement.lang=locale},[locale])
  useEffect(()=>{const fn=()=>setCompact(scrollY>80);fn();addEventListener('scroll',fn,{passive:true});return()=>removeEventListener('scroll',fn)},[])
@@ -96,7 +97,11 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  const selfTeacher=activeTeachers.find(x=>x.user_id===userId),teacherCourseIds=new Set(teacherCourses.filter(x=>x.teacher_id===selfTeacher?.id).map(x=>x.course_id)),studentCourseIds=new Set(enrollments.filter(x=>x.status!=='cancelled').map(x=>x.course_id))
  const text=(v:I18nText|undefined)=>v?.[locale]||v?.en||Object.values(v||{})[0]||'', list=(v:I18nList|undefined)=>v?.[locale]||v?.en||Object.values(v||{})[0]||[]
  const mode=(m:string)=>m==='individual_online'?t.individual:m==='small_group_online'?t.group:m==='offline_intro'?t.offline:m
+ const closeMenus=(except?:HTMLDetailsElement)=>{navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{if(menu!==except)menu.open=false})}
+ const onMenuToggle=(event:React.SyntheticEvent<HTMLDetailsElement>)=>{const menu=event.currentTarget;if(menu.open)closeMenus(menu)}
+ const closeMenuOnLeave=(event:React.MouseEvent<HTMLDetailsElement>)=>{event.currentTarget.open=false}
  const jump=(id:string)=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})
+ const go=(id:string)=>{closeMenus();jump(id)}
  async function addInterest(course:Course){if(!userId){setLoginOpen(true);return}if(studentCourseIds.has(course.id))return;const {error}=await supabase().from('academy_enrollments').insert({student_id:userId,course_id:course.id,teacher_id:null,status:'interested'});setNotice(error?error.message:t.added);if(!error){await refresh();jump('personal-space')}}
  async function requestTrial(teacher:Teacher){if(!userId){setLoginOpen(true);return}const courseId=teacherCourses.find(tc=>tc.teacher_id===teacher.id)?.course_id||null;const {error}=await supabase().from('academy_bookings').insert({student_id:userId,teacher_id:teacher.id,course_id:courseId,session_type:'trial',status:'requested'});setNotice(error?error.message:t.requested);if(!error)jump('personal-space')}
 
@@ -111,13 +116,13 @@ export function Academy({userId,email,sessionLoading=false}:Props){
 
  return <div className="academy" dir={dir}>
   <header className={'academy-top '+(compact?'is-compact':'')}><a className="academy-brand" href="/academy">Lingo3 <span>Academy</span></a>
-   <nav className="academy-nav">
-    <button onClick={()=>jump('academy-home')}>{t.home}</button>
-    <details><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>jump('learning-path')}>{t.path}</button><button onClick={()=>jump('courses')}>{t.courses}</button><button onClick={()=>jump('teachers')}>{t.teachers}</button><button onClick={()=>jump('levels')}>{t.levels}</button></div></details>
-    <details><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>jump('personal-space')}>{t.personal}</button>{isAdmin&&<button onClick={()=>jump('admin-studio')}>{t.admin}</button>}<a href="/">{t.app}</a>{userId&&<button onClick={()=>supabase().auth.signOut()}>{t.logout}</button>}</div></details>
-    <details><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>jump('how')}>{t.how}</button><button onClick={()=>jump('pricing')}>{t.pricing}</button><button onClick={()=>jump('resources')}>{t.resources}</button><button onClick={()=>jump('contact')}>{t.contact}</button></div></details>
-    <select className="academy-language" value={locale} onChange={e=>setLocale(e.target.value as Locale)}><option value="en">EN</option><option value="sv">SV</option><option value="fa">FA</option></select>
-    {userId?<button className="academy-user" onClick={()=>jump('personal-space')}>{t.hello} {displayName||email}</button>:<button className="academy-login" onClick={()=>setLoginOpen(true)}>{t.login}</button>}
+   <nav className="academy-nav" ref={navRef}>
+    <button onClick={()=>go('academy-home')}>{t.home}</button>
+    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('learning-path')}>{t.path}</button><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('levels')}>{t.levels}</button></div></details>
+    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal-space')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin-studio')}>{t.admin}</button>}<a href="/">{t.app}</a>{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
+    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('how')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
+    <select className="academy-language" value={locale} onChange={e=>{closeMenus();setLocale(e.target.value as Locale)}}><option value="en">EN</option><option value="sv">SV</option><option value="fa">FA</option></select>
+    {userId?<button className="academy-user" onClick={()=>go('personal-space')}>{t.hello} {displayName||email}</button>:<button className="academy-login" onClick={()=>setLoginOpen(true)}>{t.login}</button>}
    </nav>
   </header>
   <main>
