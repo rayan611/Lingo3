@@ -117,8 +117,6 @@ export function AcademyPortal({
  const [dashboardResources,setDashboardResources]=useState<Resource[]>([])
  const [dashboardNotes,setDashboardNotes]=useState<Note[]>([])
  const [testResults,setTestResults]=useState<TestResult[]>([])
- const [selectedTestResults,setSelectedTestResults]=useState<TestResult[]>([])
- const [studentSlots,setStudentSlots]=useState<Availability[]>([])
  const [dashboardSummaries,setDashboardSummaries]=useState<SessionSummary[]>([])
  const [selectedSummaries,setSelectedSummaries]=useState<SessionSummary[]>([])
  const [selectedTests,setSelectedTests]=useState<TestResult[]>([])
@@ -141,7 +139,6 @@ export function AcademyPortal({
  const [weeklyWeeks,setWeeklyWeeks]=useState('6')
  const [teacherPlan,setTeacherPlan]=useState({progress:'0',nextTopics:'',goal:''})
  const [resourceForm,setResourceForm]=useState({kind:'material',title:'',description:'',url:'',due:''})
- const [testForm,setTestForm]=useState({title:'',score:'',maxScore:'100',summary:''})
  const [summaryForm,setSummaryForm]=useState({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''})
  const [testForm,setTestForm]=useState({title:'',kind:'test',score:'',max_score:'',teacher_summary:''})
  const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;meeting_url:string;teacher_note:string;duration_minutes:string}>>({})
@@ -576,7 +573,7 @@ export function AcademyPortal({
     <article className="academy-card">
      <h3>{t.addResource}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{t.kind}<select value={resourceForm.kind} onChange={e=>setResourceForm({...resourceForm,kind:e.target.value})}><option value="material">{t.material}</option><option value="homework">{t.homework}</option><option value="lesson_note">Lesson note</option><option value="grammar">Grammar</option><option value="link">Useful link</option></select></label>
+      <label>{t.kind}<select value={resourceForm.kind} onChange={e=>setResourceForm({...resourceForm,kind:e.target.value})}><option value="material">{t.material}</option><option value="homework">{t.homework}</option><option value="lesson">Lesson note</option><option value="grammar">Grammar</option><option value="link">Useful link</option></select></label>
       <label>{t.title}<input value={resourceForm.title} onChange={e=>setResourceForm({...resourceForm,title:e.target.value})}/></label>
       <label>{t.description}<textarea value={resourceForm.description} onChange={e=>setResourceForm({...resourceForm,description:e.target.value})}/></label>
       <label>{t.url}<input value={resourceForm.url} onChange={e=>setResourceForm({...resourceForm,url:e.target.value})}/></label>
