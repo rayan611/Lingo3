@@ -1,3 +1,8 @@
+## 2026-11-17 — Academy public foundation
+Branch feat/academy-foundation-20261117; reviewed Lingo3 v0.7.5. Added public/academy.html with responsive en/fa/sv/de UI, known/target language selector, planned course formats (private, groups up to 3, online), resources placeholders and contact email. Linked Academy from existing showcase header and hero; existing app entry retained. No database/auth changes, payments, bookings or trainer portal. Shared-account future work deliberately not represented as implemented; login links to existing Lingo3 entry. SITEMAP.md and ROUTE_INDEX.md updated. Connector-side static code review only; build/browser/deployment not verified. Next: verify preview and mobile layout, then decide on production release and trainer/course data model.
+
+---
+
 ## 2026-11-09 — Highlighted info and personal word removal (0.7.5)
 
 Branch: `feat/review-card-removal`; base `dfa536ed7197aa7de6aa3698859f79cb5adcbb56`. Highlighted accessible info control in Recall and Word Practice opens full native/active-target details. Bottom Remove chooser offers tests-only suspension or personal-list soft removal; shared bank, entries, review history and scheduler parameters are retained. Suspended words stay in manual practice with Restore to tests. Atomic personal Dexie transaction reuses existing synced suspended/deletedAt/updatedAt fields; no migration or shared-bank mutation. Recall skips removed words without grading/incrementing session count; auto-advance pauses while details are open. Practice details support browser Back; keyboard navigation cannot change the underlying word while details are open.
