@@ -147,7 +147,7 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
           <span style={{ display: 'block', marginTop: 12, fontWeight: 800, color: '#8ee8ff' }}>Enter App →</span>
         </button>
         <a
-          href="/academy.html"
+          href="/academy"
           style={{
             minHeight: 118,
             padding: 20,
