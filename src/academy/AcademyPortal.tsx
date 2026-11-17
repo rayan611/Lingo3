@@ -4,7 +4,7 @@ import { navigateProduct } from '../lib/productNavigation'
 
 type Locale = 'en' | 'sv' | 'fa' | 'de'
 type Course = { id:string; subject_code:string; level_code:string; title_i18n:Record<string,string> }
-type Teacher = { id:string; user_id:string|null; display_name:string; email?:string|null; phone?:string|null; teams_chat_url?:string|null; telegram_url?:string|null }
+type Teacher = { id:string; user_id:string|null; display_name:string; email?:string|null; phone?:string|null; teams_chat_url?:string|null; teams_call_url?:string|null; telegram_url?:string|null }
 type Enrollment = { id:string; student_id:string; course_id:string; teacher_id:string|null; status:string }
 type Space = {
   id:string
@@ -48,7 +48,7 @@ type Resource = {
   id:string
   learning_space_id:string
   teacher_id:string
-  kind:'material'|'homework'|'lesson_note'|'grammar'|'link'
+  kind:'material'|'homework'|'lesson'|'grammar'|'link'|'lesson_note'|'grammar'|'link'
   title:string
   description:string|null
   url:string|null
@@ -117,6 +117,8 @@ export function AcademyPortal({
  const [dashboardResources,setDashboardResources]=useState<Resource[]>([])
  const [dashboardNotes,setDashboardNotes]=useState<Note[]>([])
  const [testResults,setTestResults]=useState<TestResult[]>([])
+ const [selectedTestResults,setSelectedTestResults]=useState<TestResult[]>([])
+ const [studentSlots,setStudentSlots]=useState<Availability[]>([])
  const [dashboardSummaries,setDashboardSummaries]=useState<SessionSummary[]>([])
  const [selectedSummaries,setSelectedSummaries]=useState<SessionSummary[]>([])
  const [selectedTests,setSelectedTests]=useState<TestResult[]>([])
@@ -133,8 +135,13 @@ export function AcademyPortal({
  const [slotStart,setSlotStart]=useState('')
  const [slotDuration,setSlotDuration]=useState('60')
  const [slotMode,setSlotMode]=useState('online')
+ const [weeklyDays,setWeeklyDays]=useState<number[]>([])
+ const [weeklyStart,setWeeklyStart]=useState('18:00')
+ const [weeklyEnd,setWeeklyEnd]=useState('19:00')
+ const [weeklyWeeks,setWeeklyWeeks]=useState('6')
  const [teacherPlan,setTeacherPlan]=useState({progress:'0',nextTopics:'',goal:''})
  const [resourceForm,setResourceForm]=useState({kind:'material',title:'',description:'',url:'',due:''})
+ const [testForm,setTestForm]=useState({title:'',score:'',maxScore:'100',summary:''})
  const [summaryForm,setSummaryForm]=useState({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''})
  const [testForm,setTestForm]=useState({title:'',kind:'test',score:'',max_score:'',teacher_summary:''})
  const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;meeting_url:string;teacher_note:string;duration_minutes:string}>>({})
