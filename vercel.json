@@ -14,7 +14,7 @@
       "destination": "/api/ai-status"
     },
     {
-      "source": "/((?!api/|assets/).*)",
+      "source": "/((?!api/|assets/|academy\\.html$|showcase\\.html$|version\\.json$|manifest\\.webmanifest$|sw\\.js$|workbox-).*)",
       "destination": "/index.html"
     }
   ],
