@@ -439,7 +439,7 @@ begin
           '[]'::jsonb
         ) as course_ids
       from public.academy_teachers t
-      where t.status<>'archived'
+      where t.user_id is not null or t.status<>'archived'
     ) x;
     return r;
 
