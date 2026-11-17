@@ -182,7 +182,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
     onClose={()=>setBookingTeacher(null)}
     onSuccess={(message)=>{setNotice(message);setBookingTeacher(null);void refresh();jump('personal-space')}}
   />}
-    {loginOpen&&!userId&&<div className="academy-modal"><div className="academy-modal-inner"><button className="modal-close" onClick={()=>setLoginOpen(false)}>×</button><SignIn context="academy" onBack={()=>setLoginOpen(false)}/></div></div>}
+    {loginOpen&&!userId&&<div className="academy-modal"><div className="academy-modal-inner"><button className="modal-close" onClick={()=>setLoginOpen(false)}>×</button><SignIn context="academy" locale={locale} onBack={()=>setLoginOpen(false)}/></div></div>}
   {sessionLoading&&<div className="academy-session-check">{t.loading}</div>}
  </div>
 }
