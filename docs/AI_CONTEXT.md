@@ -1,0 +1,181 @@
+# Lingo3 AI Development Context
+
+Reviewed: 2026-11-17  
+Repository: `rayan611/Lingo3`  
+Production: `https://lingo3.com`
+
+This file is the fast-start memory for future AI development sessions.
+
+## Read order at the start of every development session
+
+1. `AGENTS.md`
+2. `docs/AI_CONTEXT.md` (this file)
+3. `docs/ACADEMY_ROADMAP.md` when the task touches Academy
+4. `docs/DEVELOPMENT_HANDOFF.md` for the latest verified work
+5. `docs/DEVELOPMENT_HISTORY.md` only when older history is needed
+6. `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md` when routes/UI structure may change
+7. Relevant code, migrations, open PRs and deployment state
+
+Do not reconstruct project history from memory when these files are available.
+
+## Current production baseline
+
+Production code release:
+- PR #47
+- Runtime commit: `79b8cff3df3b2b0718cc85674af1459048e25b98`
+- Vercel production deployment: `dpl_6QfHz8xcgNniSxqTNBcZzwgfMZV5`
+- Status at verification: READY
+- Primary domains: `lingo3.com`, `www.lingo3.com`
+
+Latest documentation-only main commit after production verification:
+- `e31a8cc2fb1b64503b7d9c3bd98654f906008645`
+
+## Product boundary
+
+### Lingo3 App
+Self-study product: vocabulary, grammar, review, reading, translation, settings and sync.
+
+The App owns Dexie/local data. Academy must not mount the App/Dexie lifecycle.
+
+### Lingo3 Academy
+Human-led learning product using the same Supabase Auth identity.
+
+Primary code:
+- `src/academy/Academy.tsx`
+- `src/academy/AcademyBookingDialog.tsx`
+- `src/academy/AcademyPortal.tsx`
+- `src/academy/academy.css`
+- `supabase/migrations/*academy*`
+
+Primary route:
+- `/academy`
+
+Compatibility:
+- `/academy.html` redirects to `/academy`
+
+## Academy capabilities active now
+
+Public:
+- Learning Path
+- course catalogue
+- course topics/formats
+- verified Teacher Directory
+- EN/SV/FA UI with Persian RTL
+- teacher contact links/fields
+- trial request entry
+
+Authenticated Student:
+- course interest/enrollment view
+- trial/session booking request
+- choose published teacher slot or suggest another time
+- student message
+- booking/session status
+- manual meeting URL when provided
+- Learning Space
+- learning goal
+- progress display
+- notes
+- materials/homework
+- homework text response/status
+- teacher feedback
+- private Student ↔ Teacher messaging
+
+Authenticated linked Teacher:
+- internal availability/calendar slots
+- online/offline slot type
+- booking request review
+- confirm/cancel/complete/no-show
+- confirmed time/duration
+- manual meeting URL
+- student list
+- progress and next-session plan
+- goals
+- materials/homework authoring
+- homework feedback/completion
+- private Student ↔ Teacher messaging
+
+Admin:
+- multilingual course CRUD
+- teacher CRUD
+- teacher/course assignment
+- teacher account link
+- activate/publish teacher
+- interested enrollment queue
+- atomic enrollment activation + Learning Space creation
+
+## Academy security/integrity invariants
+
+Do not weaken these without explicit review:
+- public catalogue does not expose internal `created_by` or teacher `user_id`
+- teacher cannot self-publish
+- student cannot change teacher/course/progress fields
+- teacher cannot reassign student/course
+- enrollment activation uses `academy_activate_enrollment(...)`
+- overlapping teacher availability is rejected
+- overlapping confirmed teacher sessions are rejected
+- student cancellation releases the booked slot
+- private messages are visible only to participants/admin
+- notes cannot be moved to another author/Learning Space
+- RLS remains enabled on private Academy tables
+
+## Current Academy production data
+
+At last verified production check:
+- 6 starter courses
+- 0 teachers
+- 0 teacher-course links
+- 0 enrollments
+- 0 bookings
+- 0 Learning Spaces
+- 0 notes
+- 0 availability slots
+- 0 resources/homework
+- 0 messages
+
+No fake teachers or test rows were left behind.
+
+## External/incomplete capabilities
+
+See `docs/ACADEMY_ROADMAP.md` for the canonical backlog.
+
+Important: do not claim these are active until implemented and verified:
+- automatic Teams meeting creation
+- Google/Microsoft calendar synchronization
+- payment processing
+- embedded/hosted video classroom
+- binary file upload/storage
+- placement/test engine
+- realtime collaborative notebook
+- production Teacher/Student E2E with real accounts
+
+## Required checks for Academy work
+
+Run:
+- `npm run check:academy`
+- `npm run check:docs`
+- `npm run typecheck`
+- `npm test`
+- `npm run build`
+
+For RLS/schema changes:
+- rehearse migrations transactionally when possible
+- test Student/Teacher/Admin separately
+- verify cross-user isolation
+- inspect Supabase security/performance/health advisors
+
+For route/UI changes:
+- update `docs/SITEMAP.md`
+- update `docs/ROUTE_INDEX.md`
+- record result in `docs/DEVELOPMENT_HANDOFF.md`
+
+## Session close rule
+
+Before ending a development session:
+1. update `docs/DEVELOPMENT_HANDOFF.md`
+2. update `docs/ACADEMY_ROADMAP.md` if Academy status changed
+3. append a concise durable milestone to `docs/DEVELOPMENT_HISTORY.md` only for meaningful completed work
+4. update sitemap/route index when navigation changed
+5. run `npm run check:docs`
+6. commit documentation with the code change whenever possible
+
+The handoff is current-state detail. The history is durable chronology. The roadmap is remaining work. Do not merge all three responsibilities into one file.
