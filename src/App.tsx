@@ -136,7 +136,7 @@ export function App() {
   }, [sessionState.session])
 
   const cleanEntryPath = entryPath.replace(/\/+$/, '') || '/'
-  if (cleanEntryPath === '/academy' || cleanEntryPath === '/academy.html') {
+  if (cleanEntryPath === '/academy' || cleanEntryPath === '/academy.html' || cleanEntryPath.startsWith('/academy/')) {
     return <AcademyEntry sessionState={sessionState} />
   }
 
