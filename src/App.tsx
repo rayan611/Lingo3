@@ -150,7 +150,10 @@ export function App() {
   // An invite link (lingo3.com/invite/<name>) always opens on the front page,
   // which greets the visitor by the inviter's name.
   const [inviter] = useState(() => inviterFromPath(window.location.pathname))
-  const [showLanding, setShowLanding] = useState(() => shouldShowLanding() || inviter !== '')
+  const [showLanding, setShowLanding] = useState(() => {
+    const isRoot = (window.location.pathname.replace(/\/+$/, '') || '/') === '/'
+    return isRoot || shouldShowLanding() || inviter !== ''
+  })
 
   // Point Dexie at this user's store before rendering anything that queries it.
   useEffect(() => {
@@ -213,7 +216,7 @@ export function App() {
 
   // The front door, for a first visit in a browser. Someone already signed in
   // has plainly been here before, so they go straight through.
-  if (showLanding && !session) {
+  if (showLanding) {
     return (
       <Suspense fallback={screenFallback}>
         <Landing
