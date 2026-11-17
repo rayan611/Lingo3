@@ -734,10 +734,6 @@ function HomeTiles({
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings
       </Tile>
-      <button className="tile tile-academy" type="button" onClick={() => navigateProduct('/academy')} aria-label="Open Lingo3 Academy">
-        <span className="tile-icon" aria-hidden="true">🎓</span>
-        <span className="tile-label">Academy</span>
-      </button>
       <button className="tile tile-academy" type="button" onClick={onAcademy} aria-label="Open Lingo3 Academy">
         <span className="tile-icon" aria-hidden="true">🎓</span>
         <span className="tile-label">Academy</span>
