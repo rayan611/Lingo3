@@ -119,6 +119,8 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
           <label className="field">
             <span>{context === 'academy' ? academyT.email : 'Email'}</span>
             <input
+              placeholder="you@example.com"
+              autoComplete="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
