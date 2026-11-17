@@ -21,7 +21,7 @@ This file is the fast-start memory for future AI development sessions.
 
 Do not reconstruct project history from memory when these files are available.
 
-## Current production baseline
+## Current production baseline\nLatest Academy routed pages/theme release:\n- PR #52\n- Runtime/main commit deployed: `a4381c9841d13f71f1cf2af5b677874c94780d78`\n- Vercel production deployment: `dpl_BTCtnsEB8vrDTxhw8ZvSSdYREJP6` — READY\n- Academy routes: `/academy`, `/academy/path`, `/academy/courses`, `/academy/teachers`, `/academy/levels`, `/academy/my`, `/academy/admin`, `/academy/about`, `/academy/pricing`, `/academy/resources`, `/academy/contact`\n- Academy theme: Light default with persisted Light/Dark toggle\n
 
 Production code release:
 - Auth/session navigation fix: PR #49
