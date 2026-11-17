@@ -164,6 +164,10 @@ create table if not exists public.academy_test_results (
   updated_at timestamptz not null default now()
 );
 
+alter table public.academy_test_results
+  add constraint academy_test_results_score_bounds_check
+  check (score is null or max_score is null or score<=max_score);
+
 create index if not exists academy_test_results_space_taken_idx
   on public.academy_test_results(learning_space_id,taken_at desc);
 create index if not exists academy_test_results_student_taken_idx
@@ -624,7 +628,7 @@ begin
       coalesce(nullif(p_payload->>'sort_order','')::integer,0)
     )
     on conflict(code) do update set
-      name_i18n=excluded.name_i18n,
+      name_i18n=public.academy_languages.name_i18n || excluded.name_i18n,
       status=excluded.status,
       sort_order=excluded.sort_order,
       updated_at=now();
@@ -666,9 +670,9 @@ begin
       update public.academy_courses
       set subject_code=v_code,
           level_code=upper(coalesce(nullif(trim(p_payload->>'level_code'),''),level_code)),
-          title_i18n=coalesce(p_payload->'title_i18n',title_i18n),
-          description_i18n=coalesce(p_payload->'description_i18n',description_i18n),
-          topics_i18n=coalesce(p_payload->'topics_i18n',topics_i18n),
+          title_i18n=case when p_payload ? 'title_i18n' then title_i18n || (p_payload->'title_i18n') else title_i18n end,
+          description_i18n=case when p_payload ? 'description_i18n' then description_i18n || (p_payload->'description_i18n') else description_i18n end,
+          topics_i18n=case when p_payload ? 'topics_i18n' then topics_i18n || (p_payload->'topics_i18n') else topics_i18n end,
           delivery_modes=case
             when p_payload ? 'delivery_modes'
             then array(select jsonb_array_elements_text(p_payload->'delivery_modes'))
