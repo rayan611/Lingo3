@@ -1,4 +1,17 @@
-2026-11-17 final release record — main merge `ed7e95e89ca153691ca95a067123fb0affbbbbb3`; CI run 44178293124 passed. Responsive phone/tablet/laptop source QA and form guidance are included in this merge. Lingo3 Academy database migration is applied and verified in production. Vercel production deployment blocked by HTTP 402 api-deployments-free-per-day; latest UI is not yet production-live.
+Reviewed: 2026-11-17 · Version 0.7.5 · Code: PR #53 plus release/academy-review-20261117 (`src/App.tsx`, `src/academy/*`, `src/ui/GrammarManager.tsx`).
+
+Current review: App and Academy share one session. App has a primary Academy tile; Academy has a direct App shortcut. Browser Back/Forward uses SPA history. Teacher dashboard is restricted to linked teachers; Admin Studio requires admin access. Student learning data requires sign-in and enrollment. Native date/time inputs retain labels; editable text fields show guidance. No route was added or removed in this QA release.
+
+| Academy route | Entry / access | Back |
+|---|---|---|
+| `/academy` | Welcome, App Academy tile, Academy brand | Browser history |
+| `/academy/path`, `/academy/courses`, `/academy/teachers`, `/academy/levels` | Learn menu and Home buttons; public | Home or browser history |
+| `/academy/my` | My Academy menu; sign-in for student/teacher data | Academy Home or browser history |
+| `/academy/admin` | Admin Studio; admin only; non-admin falls back to personal page | Academy Home or browser history |
+| `/academy/about`, `/academy/pricing`, `/academy/resources`, `/academy/contact` | About menu; public | Academy Home or browser history |
+| `/academy.html` | Legacy compatibility redirect to `/academy` | Normal history |
+
+Previous review history follows; current route descriptions above supersede older Academy snapshots.
 
 2026-11-17 release QA update — branch `feat/academy-role-dashboards-20261117`. Responsive review covered phone, portrait tablet and laptop breakpoints in source: Academy navigation now collapses through 860px, mobile controls have 46px minimum touch height, tablet learning grids remain two-column where space permits, cards wrap long URLs/text safely, and form fields now include example placeholders/guidance (native date/time fields use explicit labels/title because browsers do not render reliable placeholders). The production Supabase migration `20261117211500_academy_role_dashboards.sql` was dry-run in a transaction and then applied successfully. Verified: Academy languages, session summaries and test-results tables; test-results RLS with policies; admin user lookup; privacy-safe teacher calendar; Control Center Academy RPCs; canonical resource kinds. Security Advisor showed only the expected guarded SECURITY DEFINER exposure for the new connector/RPC functions and no new missing-RLS or mutable-search-path finding. Control Center CI is green; Lingo3 latest CI is still pending GitHub runner at the time of this documentation commit. Vercel deployment attempt is currently blocked by Free plan daily deployment quota (HTTP 402 api-deployments-free-per-day), so production UI is not yet claimed live.
 
