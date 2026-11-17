@@ -45,6 +45,7 @@ import { shouldShowLanding } from './ui/landingSeen'
 import { inviterFromPath } from './lib/invite'
 import { lazyScreen } from './ui/lazyScreen'
 import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
+import { navigateProduct } from './lib/productNavigation'
 
 /**
  * Screens that are not needed to open the app, each in its own chunk, so the
@@ -615,7 +616,23 @@ function Workspace({
 
         {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
 
-        {tab === 'add' && <AddWord key={addKey} settings={settings} />}
+        {tab === 'add' && (
+          <>
+            <AddWord key={addKey} settings={settings} />
+            <section className="academy-entry-card" aria-label="Lingo3 Academy">
+              <div>
+                <strong>Lingo3 Academy</strong>
+                <span>Human-led courses, teachers, bookings and your Learning Space.</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigateProduct('/academy')}
+              >
+                Enter Academy →
+              </button>
+            </section>
+          </>
+        )}
 
         {tab !== 'add' && (
           <Suspense fallback={screenFallback}>
