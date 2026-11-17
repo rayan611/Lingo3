@@ -118,7 +118,7 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         // The fallback is for page navigations only; it must never swallow an
         // API call and hand back HTML.
-        navigateFallbackDenylist: [/^\/api\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/academy\.html$/, /^\/showcase\.html$/, /^\/version\.json$/, /^\/manifest\.webmanifest$/],
         runtimeCaching: [
           {
             // Never cache model calls — they must hit the network or fail
