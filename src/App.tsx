@@ -13,7 +13,7 @@ import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
 import { authConfigured } from './auth/supabase'
-import { useSession, type SessionState } from './auth/useSession'
+import { consumeOAuthReturnPath, useSession, type SessionState } from './auth/useSession'
 import { ResetPassword } from './auth/ResetPassword'
 import { SignIn } from './auth/SignIn'
 import { sync, type SyncResult } from './sync/sync'
@@ -128,6 +128,12 @@ export function App() {
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
+
+  useEffect(() => {
+    if (!sessionState.session) return
+    const returnPath = consumeOAuthReturnPath()
+    if (returnPath) navigateProduct(returnPath)
+  }, [sessionState.session])
 
   const cleanEntryPath = entryPath.replace(/\/+$/, '') || '/'
   if (cleanEntryPath === '/academy' || cleanEntryPath === '/academy.html') {
