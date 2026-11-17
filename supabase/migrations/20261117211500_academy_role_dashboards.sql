@@ -1,6 +1,10 @@
 -- Academy role dashboards, test-result history, secure admin lookup and Control Center connector.
 -- Prepared for a future database release. Do not apply automatically with the UI branch.
 
+alter table public.academy_resources drop constraint if exists academy_resources_kind_check;
+alter table public.academy_resources add constraint academy_resources_kind_check
+  check (kind in ('material','homework','lesson_note','grammar','link'));
+
 create table if not exists public.academy_test_results (
   id uuid primary key default gen_random_uuid(),
   learning_space_id uuid not null references public.academy_learning_spaces(id) on delete cascade,
@@ -45,22 +49,28 @@ create policy "academy test results teacher admin write" on public.academy_test_
 for all to authenticated
 using (
   exists (
-    select 1 from public.academy_teachers t
-    where t.id = teacher_id and t.user_id = (select auth.uid())
+    select 1
+    from public.academy_learning_spaces ls
+    join public.academy_teachers t on t.id=ls.teacher_id
+    where ls.id=learning_space_id and ls.student_id=student_id and ls.teacher_id=teacher_id
+      and t.user_id=(select auth.uid())
   )
   or exists (
     select 1 from public.user_settings s
-    where s.user_id = (select auth.uid()) and s.is_admin
+    where s.user_id=(select auth.uid()) and s.is_admin
   )
 )
 with check (
   exists (
-    select 1 from public.academy_teachers t
-    where t.id = teacher_id and t.user_id = (select auth.uid())
+    select 1
+    from public.academy_learning_spaces ls
+    join public.academy_teachers t on t.id=ls.teacher_id
+    where ls.id=learning_space_id and ls.student_id=student_id and ls.teacher_id=teacher_id
+      and t.user_id=(select auth.uid())
   )
   or exists (
     select 1 from public.user_settings s
-    where s.user_id = (select auth.uid()) and s.is_admin
+    where s.user_id=(select auth.uid()) and s.is_admin
   )
 );
 
@@ -110,7 +120,7 @@ declare
   lim int := least(greatest(coalesce((p_args->>'limit')::int,100),1),500);
   r jsonb;
 begin
-  select encode(extensions.sha256(convert_to(coalesce(p_token,''),'UTF8')),'hex')=h.token_hash
+  select encode(pg_catalog.sha256(convert_to(coalesce(p_token,''),'UTF8')),'hex')=h.token_hash
     into ok from public.hub_access h where h.id=1;
   if not coalesce(ok,false) then raise exception 'forbidden' using errcode='42501'; end if;
 
@@ -180,7 +190,7 @@ declare
   u_name text;
   tid uuid;
 begin
-  select encode(extensions.sha256(convert_to(coalesce(p_token,''),'UTF8')),'hex')=h.token_hash
+  select encode(pg_catalog.sha256(convert_to(coalesce(p_token,''),'UTF8')),'hex')=h.token_hash
     into ok from public.hub_access h where h.id=1;
   if not coalesce(ok,false) then raise exception 'forbidden' using errcode='42501'; end if;
 
