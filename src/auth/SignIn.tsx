@@ -183,7 +183,7 @@ export function SignIn({ context = 'app' }: { context?: 'app' | 'academy' } = {}
                   setError(null)
                   setNotice(null)
                   // No `busy` reset on success: the page is leaving.
-                  signInWithGoogle().catch((err) => {
+                  signInWithGoogle(context === 'academy' ? '/academy' : '/').catch((err) => {
                     setBusy(false)
                     setError(err instanceof Error ? err.message : String(err))
                   })
