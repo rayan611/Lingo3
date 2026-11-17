@@ -80,9 +80,9 @@ export function Academy({userId,email,sessionLoading=false}:Props){
    ? 'id,user_id,display_name,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
    : 'id,display_name,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
   const [cr,tr,tc]=await Promise.all([
-   c.from('academy_courses').select(courseFields).order('sort_order'),
-   c.from('academy_teachers').select(teacherFields).order('display_name'),
-   c.from('academy_teacher_courses').select('teacher_id,course_id')
+   (c.from('academy_courses') as any).select(courseFields).order('sort_order'),
+   (c.from('academy_teachers') as any).select(teacherFields).order('display_name'),
+   (c.from('academy_teacher_courses') as any).select('teacher_id,course_id')
   ])
   if(cr.data)setCourses(cr.data as Course[])
   if(tr.data)setTeachers((tr.data as unknown[]).map((row:any)=>({user_id:null,...row})) as Teacher[])
