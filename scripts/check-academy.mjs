@@ -24,7 +24,7 @@ const checks = [
   ['Showcase points to interactive Academy route', showcase.includes('href="/academy"')],
   ['Legacy Academy redirects to interactive route', legacy.includes('url=/academy')],
   ['Showcase iframe has no resize feedback observer', !showcase.includes('ResizeObserver')],
-  ['Welcome gateway contains no unreachable legacy second page', (landing.match(/return \(/g) || []).length === 1],
+  ['Welcome gateway contains no unreachable legacy second page', landing.includes("return (\n    <main") && !landing.includes('className="lx"') && !landing.includes('function Deck(')],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
 
