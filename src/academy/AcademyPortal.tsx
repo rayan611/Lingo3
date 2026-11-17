@@ -289,6 +289,32 @@ export function AcademyPortal({
   })
  }
 
+ function weekdayLabel(day:number){const d=new Date(2026,10,15+day);return new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)}
+ function weeklyDate(day:number,week:number,time:string){
+  const now=new Date(),base=new Date(now);base.setHours(0,0,0,0)
+  const untilMonday=((8-base.getDay())%7)||7
+  base.setDate(base.getDate()+untilMonday+week*7+(day===0?6:day-1))
+  const [hour,minute]=time.split(':').map(Number);base.setHours(hour||0,minute||0,0,0)
+  return base
+ }
+ async function addWeeklySlots(){
+  if(!selfTeacher||weeklyDays.length===0)return
+  const weeks=Math.max(1,Math.min(8,Number(weeklyWeeks)||1))
+  const rows=[] as Array<{teacher_id:string;starts_at:string;ends_at:string;delivery_mode:string;status:string}>
+  for(let week=0;week<weeks;week++)for(const day of weeklyDays){
+   const start=weeklyDate(day,week,weeklyStart),end=weeklyDate(day,week,weeklyEnd)
+   if(end<=start)continue
+   const overlaps=availability.some(a=>new Date(a.starts_at)<end&&new Date(a.ends_at)>start&&a.status!=='cancelled')
+   if(!overlaps)rows.push({teacher_id:selfTeacher.id,starts_at:start.toISOString(),ends_at:end.toISOString(),delivery_mode:slotMode,status:'available'})
+  }
+  if(rows.length===0){onNotice(locale==='fa'?'زمان جدیدی برای ساختن وجود ندارد.':'No new times to create.');return}
+  await run(async()=>{
+   const {error}=await supabase().from('academy_availability').insert(rows)
+   if(error)throw error
+   onNotice(String(rows.length)+' '+t.saved);await refresh()
+  })
+ }
+
  async function addSlot(){
   if(!selfTeacher||!slotStart)return
   await run(async()=>{
@@ -521,6 +547,13 @@ export function AcademyPortal({
      <label>{t.start}<input type="datetime-local" value={slotStart} onChange={e=>setSlotStart(e.target.value)}/></label>
      <div className="editor-two"><label>{t.duration}<input type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label></div>
      <button className="academy-primary small" onClick={addSlot}>{t.addSlot}</button>
+     <div className="academy-weekly-builder">
+      <h4>{locale==='fa'?'برنامه تکرارشونده هفتگی':'Weekly recurring times'}</h4>
+      <div className="academy-weekdays">{[1,2,3,4,5,6,0].map(day=><label key={day}><input type="checkbox" checked={weeklyDays.includes(day)} onChange={e=>setWeeklyDays(e.target.checked?[...weeklyDays,day]:weeklyDays.filter(x=>x!==day))}/>{weekdayLabel(day)}</label>)}</div>
+      <div className="editor-two"><label>{locale==='fa'?'از ساعت':'From'}<input type="time" value={weeklyStart} onChange={e=>setWeeklyStart(e.target.value)}/></label><label>{locale==='fa'?'تا ساعت':'To'}<input type="time" value={weeklyEnd} onChange={e=>setWeeklyEnd(e.target.value)}/></label></div>
+      <label>{locale==='fa'?'برای چند هفته':'Weeks'}<input type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label>
+      <button className="small-link" onClick={addWeeklySlots}>{locale==='fa'?'ساخت زمان‌های هفتگی':'Create weekly times'}</button>
+     </div>
      <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);return <div className={'academy-week-slot '+(booked?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(a.status==='available'?'Free':a.status)}</small>{!booked&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
     </article>
 
