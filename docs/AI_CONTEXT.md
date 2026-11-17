@@ -33,6 +33,10 @@ Production code release:
 Latest documentation-only main commit after production verification:
 - `e31a8cc2fb1b64503b7d9c3bd98654f906008645`
 
+## Pending role-dashboard branch (not production)
+
+Branch: `feat/academy-role-dashboards-20261117`. It introduces role-aware Student/Teacher dashboards, App↔Academy primary navigation, session summaries, test history, managed Academy languages and Control Center connector RPCs. The associated migration `20261117211500_academy_role_dashboards.sql` is repository-only and has NOT been applied. Do not claim these features live or merge/deploy the branch before an explicit database release decision.
+
 ## Product boundary
 
 ### Lingo3 App

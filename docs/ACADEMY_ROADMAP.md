@@ -9,6 +9,16 @@ Status legend:
 - 🔴 Not implemented
 - ⏸ Deferred intentionally
 
+## Current implementation pending release
+
+| Capability | Status | Current branch reality |
+|---|---|---|
+| Role-aware Student / Teacher dashboard | 🟡 prepared | Student language cards, progress, sessions, notes, homework, tests and App shortcuts; Teacher-only workspace for linked teachers; Admin can manage both |
+| Structured teacher session summaries | 🟡 migration prepared | Covered topics, grammar focus, strengths, improvement and next focus; migration not applied to production |
+| Test result history | 🟡 migration prepared | Student history + teacher entry; migration not applied to production |
+| Managed language catalogue | 🟡 migration prepared | EN/SV/DE/FA seeded, Control Center-ready; migration not applied to production |
+| Rayan Control Center Academy connector | 🟡 contract prepared | Hub read/manage RPCs prepared; Control Center implementation is separate and production remains unchanged |
+
 ## Current completed baseline
 
 | Capability | Status | Current reality |
@@ -60,7 +70,7 @@ Acceptance:
 - no unexpected console/runtime error
 
 ### P0.2 Teacher account lookup UX
-Status: 🟡 current admin UX is weak
+Status: 🟡 implemented in branch; pending database migration/release
 
 Current limitation:
 - Admin links a teacher using raw Lingo3 user UUID.

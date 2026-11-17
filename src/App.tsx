@@ -618,27 +618,11 @@ function Workspace({
             row doubles as the answer to "where am I". They are deliberately
             small — the Add box has to be visible on a phone without
             scrolling past them. */}
-        <HomeTiles set={goTab} due={due} active={tab} />
+        <HomeTiles set={goTab} due={due} active={tab} onAcademy={() => navigateProduct('/academy')} />
 
         {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
 
-        {tab === 'add' && (
-          <>
-            <AddWord key={addKey} settings={settings} />
-            <section className="academy-entry-card" aria-label="Lingo3 Academy">
-              <div>
-                <strong>Lingo3 Academy</strong>
-                <span>Human-led courses, teachers, bookings and your Learning Space.</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigateProduct('/academy')}
-              >
-                Enter Academy →
-              </button>
-            </section>
-          </>
-        )}
+        {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
         {tab !== 'add' && (
           <Suspense fallback={screenFallback}>
@@ -726,10 +710,12 @@ function HomeTiles({
   set,
   due,
   active,
+  onAcademy,
 }: {
   set: (t: Tab) => void
   due: number
   active: Tab
+  onAcademy: () => void
 }) {
   return (
     <nav className="tiles primary-tiles" aria-label="Go to">
@@ -748,6 +734,10 @@ function HomeTiles({
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
         Settings
       </Tile>
+      <button className="tile tile-academy" type="button" onClick={onAcademy} aria-label="Open Lingo3 Academy">
+        <span className="tile-icon" aria-hidden="true">🎓</span>
+        <span className="tile-label">Academy</span>
+      </button>
     </nav>
   )
 }
