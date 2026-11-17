@@ -66,6 +66,7 @@ type Note = {
   created_at:string
 }
 type TestResult = { id:string; learning_space_id:string; title:string; score:number|null; max_score:number|null; percent:number|null; teacher_summary:string|null; taken_at:string }
+type SessionSummary = { id:string; learning_space_id:string; booking_id:string|null; teacher_id:string; student_id:string; covered:string|null; grammar_focus:string|null; strengths:string|null; improve_next:string|null; next_focus:string|null; created_at:string }
 type Message = {
   id:string
   learning_space_id:string
@@ -96,13 +97,14 @@ function dt(v:string|null){return v?new Intl.DateTimeFormat(undefined,{dateStyle
 function toIso(v:string){return new Date(v).toISOString()}
 
 export function AcademyPortal({
- locale,userId,courses,teachers,selfTeacher,isAdmin,onNotice
+ locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice
 }:{
  locale:Locale
  userId:string
  courses:Course[]
  teachers:Teacher[]
  selfTeacher:Teacher|undefined
+ teacherCourseIds:string[]
  isAdmin:boolean
  onNotice:(message:string)=>void
 }){
@@ -115,6 +117,10 @@ export function AcademyPortal({
  const [dashboardResources,setDashboardResources]=useState<Resource[]>([])
  const [dashboardNotes,setDashboardNotes]=useState<Note[]>([])
  const [testResults,setTestResults]=useState<TestResult[]>([])
+ const [dashboardSummaries,setDashboardSummaries]=useState<SessionSummary[]>([])
+ const [selectedSummaries,setSelectedSummaries]=useState<SessionSummary[]>([])
+ const [selectedTests,setSelectedTests]=useState<TestResult[]>([])
+ const [studentAvailability,setStudentAvailability]=useState<Availability[]>([])
  const [selectedSpace,setSelectedSpace]=useState('')
  const [notes,setNotes]=useState<Note[]>([])
  const [resources,setResources]=useState<Resource[]>([])
@@ -129,6 +135,8 @@ export function AcademyPortal({
  const [slotMode,setSlotMode]=useState('online')
  const [teacherPlan,setTeacherPlan]=useState({progress:'0',nextTopics:'',goal:''})
  const [resourceForm,setResourceForm]=useState({kind:'material',title:'',description:'',url:'',due:''})
+ const [summaryForm,setSummaryForm]=useState({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''})
+ const [testForm,setTestForm]=useState({title:'',kind:'test',score:'',max_score:'',teacher_summary:''})
  const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;meeting_url:string;teacher_note:string;duration_minutes:string}>>({})
  const [busy,setBusy]=useState(false)
 
@@ -160,20 +168,23 @@ export function AcademyPortal({
   setBookings((results[2].data??[]) as Booking[])
   if(ownSpaces.length){
    const ids=ownSpaces.map(x=>x.id)
-   const [rr,nn,tr]=await Promise.all([
+   const [rr,nn,tr,sr]=await Promise.all([
     client.from('academy_resources').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(300),
     client.from('academy_notes').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(300),
     client.from('academy_test_results').select('*').in('learning_space_id',ids).order('taken_at',{ascending:false}).limit(200),
+    client.from('academy_session_summaries').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(200),
    ])
    setDashboardResources((rr.data??[]) as Resource[])
    setDashboardNotes((nn.data??[]) as Note[])
    setTestResults(tr.error?[]:((tr.data??[]) as TestResult[]))
-  }else{setDashboardResources([]);setDashboardNotes([]);setTestResults([])}
+   setDashboardSummaries(sr.error?[]:((sr.data??[]) as SessionSummary[]))
+  }else{setDashboardResources([]);setDashboardNotes([]);setTestResults([]);setDashboardSummaries([])}
   const taughtSpaces=selfTeacher?((results[3].data??[]) as Space[]):[]
   const slots=selfTeacher?((results[4].data??[]) as Availability[]):[]
   setTeacherSpaces(taughtSpaces.filter(x=>x.student_id!==userId))
   setAvailability(slots)
-  const all=[...ownSpaces,...taughtSpaces.filter(x=>x.student_id!==userId)]
+  const taught=taughtSpaces.filter(x=>x.student_id!==userId)
+  const all=teacherOnly?taught:[...ownSpaces,...taught]
   if(!selectedSpace&&all[0])setSelectedSpace(all[0].id)
   if(selectedSpace&&!all.some(x=>x.id===selectedSpace))setSelectedSpace(all[0]?.id??'')
  }
@@ -181,23 +192,33 @@ export function AcademyPortal({
  useEffect(()=>{void refresh()},[userId,selfTeacher?.id])
 
  useEffect(()=>{
-  if(!selectedSpace){setNotes([]);setResources([]);setMessages([]);return}
+  if(!selectedSpace){setNotes([]);setResources([]);setMessages([]);setSelectedSummaries([]);setSelectedTests([]);setStudentAvailability([]);return}
   let cancelled=false
+  const space=[...studentSpaces,...teacherSpaces].find(x=>x.id===selectedSpace)
+  const availabilityReq=space?.teacher_id
+    ? supabase().from('academy_availability').select('id,teacher_id,starts_at,ends_at,delivery_mode,status,note').eq('teacher_id',space.teacher_id).gte('ends_at',new Date().toISOString()).order('starts_at').limit(50)
+    : Promise.resolve({data:[],error:null})
   Promise.all([
    supabase().from('academy_notes').select('*').eq('learning_space_id',selectedSpace).order('created_at',{ascending:false}).limit(50),
    supabase().from('academy_resources').select('*').eq('learning_space_id',selectedSpace).order('created_at',{ascending:false}).limit(100),
    supabase().from('academy_messages').select('*').eq('learning_space_id',selectedSpace).order('created_at').limit(200),
-  ]).then(([n,r,m])=>{
+   supabase().from('academy_session_summaries').select('*').eq('learning_space_id',selectedSpace).order('created_at',{ascending:false}).limit(20),
+   supabase().from('academy_test_results').select('*').eq('learning_space_id',selectedSpace).order('taken_at',{ascending:false}).limit(30),
+   availabilityReq,
+  ]).then(([n,r,m,summaries,tests,slots])=>{
    if(cancelled)return
    setNotes((n.data??[]) as Note[])
    setResources((r.data??[]) as Resource[])
+   setSelectedSummaries(summaries.error?[]:((summaries.data??[]) as SessionSummary[]))
+   setSelectedTests(tests.error?[]:((tests.data??[]) as TestResult[]))
+   setStudentAvailability((slots.data??[]) as Availability[])
    const msg=(m.data??[]) as Message[]
    setMessages(msg)
    const unread=msg.filter(x=>x.recipient_id===userId&&!x.read_at).map(x=>x.id)
    if(unread.length)void supabase().from('academy_messages').update({read_at:new Date().toISOString(),updated_at:new Date().toISOString()}).in('id',unread)
   })
   return()=>{cancelled=true}
- },[selectedSpace,userId])
+ },[selectedSpace,userId,studentSpaces,teacherSpaces])
 
  useEffect(()=>{
   if(!selected)return
@@ -338,6 +359,40 @@ export function AcademyPortal({
   })
  }
 
+ async function saveSessionSummary(){
+  if(!selected||!selectedIsTeacher||!selfTeacher)return
+  const hasText=Object.values(summaryForm).some(v=>v.trim())
+  if(!hasText)return
+  const related=teacherBookings.filter(b=>b.student_id===selected.student_id&&b.course_id===selected.course_id&&['completed','confirmed'].includes(b.status))
+    .sort((a,b)=>new Date(b.confirmed_start??b.preferred_start??0).getTime()-new Date(a.confirmed_start??a.preferred_start??0).getTime())[0]
+  await run(async()=>{
+   const {error}=await supabase().from('academy_session_summaries').insert({
+    learning_space_id:selected.id,booking_id:related?.id??null,teacher_id:selfTeacher.id,student_id:selected.student_id,
+    covered:summaryForm.covered.trim()||null,grammar_focus:summaryForm.grammar_focus.trim()||null,
+    strengths:summaryForm.strengths.trim()||null,improve_next:summaryForm.improve_next.trim()||null,next_focus:summaryForm.next_focus.trim()||null,
+   })
+   if(error)throw error
+   setSummaryForm({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''});onNotice(t.saved)
+   const {data}=await supabase().from('academy_session_summaries').select('*').eq('learning_space_id',selected.id).order('created_at',{ascending:false}).limit(20)
+   setSelectedSummaries((data??[]) as SessionSummary[])
+  })
+ }
+
+ async function addTestResult(){
+  if(!selected||!selectedIsTeacher||!selfTeacher||!testForm.title.trim())return
+  await run(async()=>{
+   const {error}=await supabase().from('academy_test_results').insert({
+    learning_space_id:selected.id,teacher_id:selfTeacher.id,student_id:selected.student_id,title:testForm.title.trim(),kind:testForm.kind,
+    score:testForm.score===''?null:Number(testForm.score),max_score:testForm.max_score===''?null:Number(testForm.max_score),
+    teacher_summary:testForm.teacher_summary.trim()||null,
+   })
+   if(error)throw error
+   setTestForm({title:'',kind:'test',score:'',max_score:'',teacher_summary:''});onNotice(t.saved)
+   const {data}=await supabase().from('academy_test_results').select('*').eq('learning_space_id',selected.id).order('taken_at',{ascending:false}).limit(30)
+   setSelectedTests((data??[]) as TestResult[])
+  })
+ }
+
  const courseTitle=(id:string|null)=>id?(courseById.get(id)?i18n(courseById.get(id)!.title_i18n,locale):id):'—'
  const teacherTitle=(id:string)=>teacherById.get(id)?.display_name??'Teacher'
 
@@ -354,6 +409,7 @@ export function AcademyPortal({
       const hw=dashboardResources.filter(r=>r.learning_space_id===sp.id&&r.kind==='homework')
       const open=hw.filter(r=>r.student_status!=='completed').length
       const lastTest=testResults.find(r=>r.learning_space_id===sp.id)
+      const lastSummary=dashboardSummaries.find(r=>r.learning_space_id===sp.id)
       const ownNoteCount=dashboardNotes.filter(n=>n.learning_space_id===sp.id&&n.author_id===userId).length
       return <article className={'academy-card academy-language-card '+(selectedSpace===sp.id?'is-selected':'')} key={sp.id} onClick={()=>setSelectedSpace(sp.id)}>
        <div className="academy-card-top"><span className="academy-badge">{subjectName(c?.subject_code??'')}</span><span>{c?.level_code??sp.current_level??'—'}</span></div>
@@ -362,7 +418,7 @@ export function AcademyPortal({
        <dl className="academy-dashboard-facts">
         <div><dt>{locale==='fa'?'آخرین جلسه':locale==='sv'?'Senaste lektion':'Last session'}</dt><dd>{past?dt(past.confirmed_start??past.preferred_start):'—'}</dd></div>
         <div><dt>{locale==='fa'?'جلسه بعد':locale==='sv'?'Nästa lektion':'Next session'}</dt><dd>{next?dt(next.confirmed_start??next.preferred_start):'—'}</dd></div>
-        <div><dt>{locale==='fa'?'جمع‌بندی استاد':locale==='sv'?'Lärarens senaste notering':'Latest teacher summary'}</dt><dd>{past?.teacher_note||'—'}</dd></div>
+        <div><dt>{locale==='fa'?'جمع‌بندی استاد':locale==='sv'?'Lärarens senaste notering':'Latest teacher summary'}</dt><dd>{lastSummary?.next_focus||lastSummary?.covered||past?.teacher_note||'—'}</dd></div>
         <div><dt>{t.homework}</dt><dd>{open} {locale==='fa'?'باز':'open'}</dd></div>
         <div><dt>{t.notes}</dt><dd>{ownNoteCount}</dd></div>
         <div><dt>{locale==='fa'?'آخرین تست':'Latest test'}</dt><dd>{lastTest?(lastTest.percent!=null?Math.round(lastTest.percent)+'%':lastTest.title):'—'}</dd></div>
@@ -432,10 +488,27 @@ export function AcademyPortal({
    </article>
   </div>}
 
+  {!teacherOnly&&selected&&selected.student_id===userId&&<div className="academy-learning-columns academy-learning-insights">
+   <article className="academy-card">
+    <h3>{locale==='fa'?'جمع‌بندی‌های استاد':'Teacher summaries'}</h3>
+    {selectedSummaries.length===0?<p>—</p>:selectedSummaries.slice(0,5).map(s=><div className="academy-summary-item" key={s.id}>
+     <strong>{dt(s.created_at)}</strong>{s.covered&&<p><b>{locale==='fa'?'مطالب جلسه':'Covered'}:</b> {s.covered}</p>}{s.grammar_focus&&<p><b>Grammar:</b> {s.grammar_focus}</p>}{s.strengths&&<p><b>{locale==='fa'?'نقاط قوت':'Strengths'}:</b> {s.strengths}</p>}{s.improve_next&&<p><b>{locale==='fa'?'تمرکز برای بهبود':'Improve'}:</b> {s.improve_next}</p>}{s.next_focus&&<p><b>{locale==='fa'?'جلسه بعد':'Next'}:</b> {s.next_focus}</p>}
+    </div>)}
+   </article>
+   <article className="academy-card">
+    <h3>{locale==='fa'?'نتایج تست‌ها':'Test results'}</h3>
+    {selectedTests.length===0?<p>—</p>:selectedTests.slice(0,8).map(x=><div className="personal-row" key={x.id}><div><strong>{x.title}</strong><small>{dt(x.taken_at)}</small></div><b>{x.percent!=null?Math.round(x.percent)+'%':(x.score!=null?x.score+(x.max_score!=null?'/'+x.max_score:''):'—')}</b></div>)}
+   </article>
+   <article className="academy-card">
+    <h3>{locale==='fa'?'تقویم استاد':'Teacher calendar'}</h3>
+    {studentAvailability.length===0?<p>—</p>:<div className="academy-week-board">{studentAvailability.slice(0,16).map(a=><div className={'academy-week-slot '+(a.status==='available'?'is-free':'is-booked')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{a.status==='available'?(locale==='fa'?'آزاد':'Free'):(locale==='fa'?'رزرو شده':'Booked')}</small></div>)}</div>}
+   </article>
+  </div>}
+
   {selfTeacher&&<section className="academy-teacher-desk">
    <div className="academy-teacher-summary">
     <div><p className="academy-kicker">{t.teacherDesk}</p><h2>{selfTeacher.display_name}</h2><p>{[selfTeacher.email,selfTeacher.phone].filter(Boolean).join(' · ')||'—'}</p></div>
-    <div className="academy-tags">{Array.from(new Set(teacherSpaces.map(sp=>courseById.get(sp.course_id)?.subject_code).filter(Boolean))).map(code=><span key={code}>{subjectName(code as string)}</span>)}</div>
+    <div className="academy-tags">{teacherCourseIds.map(id=>courseById.get(id)).filter(Boolean).map(course=><span key={course!.id}>{subjectName(course!.subject_code)} · {course!.level_code}</span>)}</div>
     <div className="academy-card-actions">{selfTeacher.email&&<a className="small-link" href={'mailto:'+selfTeacher.email}>Email</a>}{selfTeacher.teams_chat_url&&<a className="small-link" href={selfTeacher.teams_chat_url} target="_blank" rel="noreferrer">Teams</a>}{selfTeacher.telegram_url&&<a className="small-link" href={selfTeacher.telegram_url} target="_blank" rel="noreferrer">Telegram</a>}<button className="small-link" onClick={()=>navigateProduct('/grammar',{directApp:true})}>Grammar ↗</button></div>
    </div>
    <div className="academy-learning-columns">
@@ -467,6 +540,30 @@ export function AcademyPortal({
       <label>{t.nextTopics}<textarea value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label>
       <button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
+    </article>
+
+    <article className="academy-card">
+     <h3>{locale==='fa'?'جمع‌بندی جلسه و گرامر':'Session summary & grammar'}</h3>
+     {!selectedIsTeacher?<p>{t.students}</p>:<>
+      <label>{locale==='fa'?'مطالب تدریس‌شده':'Covered'}<textarea value={summaryForm.covered} onChange={e=>setSummaryForm({...summaryForm,covered:e.target.value})}/></label>
+      <label>Grammar<textarea value={summaryForm.grammar_focus} onChange={e=>setSummaryForm({...summaryForm,grammar_focus:e.target.value})}/></label>
+      <label>{locale==='fa'?'نقاط قوت':'Strengths'}<textarea value={summaryForm.strengths} onChange={e=>setSummaryForm({...summaryForm,strengths:e.target.value})}/></label>
+      <label>{locale==='fa'?'نیاز به بهبود':'Improve next'}<textarea value={summaryForm.improve_next} onChange={e=>setSummaryForm({...summaryForm,improve_next:e.target.value})}/></label>
+      <label>{locale==='fa'?'تمرکز جلسه بعد':'Next lesson'}<textarea value={summaryForm.next_focus} onChange={e=>setSummaryForm({...summaryForm,next_focus:e.target.value})}/></label>
+      <button className="academy-primary small" onClick={saveSessionSummary}>{t.savePlan}</button>
+      {selectedSummaries.slice(0,3).map(s=><div className="academy-summary-item" key={s.id}><small>{dt(s.created_at)}</small><p>{s.next_focus||s.covered||'—'}</p></div>)}
+     </>}
+    </article>
+
+    <article className="academy-card">
+     <h3>{locale==='fa'?'ثبت نتیجه تست':'Record test result'}</h3>
+     {!selectedIsTeacher?<p>{t.students}</p>:<>
+      <label>{t.title}<input value={testForm.title} onChange={e=>setTestForm({...testForm,title:e.target.value})}/></label>
+      <div className="editor-two"><label>{locale==='fa'?'امتیاز':'Score'}<input type="number" value={testForm.score} onChange={e=>setTestForm({...testForm,score:e.target.value})}/></label><label>{locale==='fa'?'از':'Max'}<input type="number" value={testForm.max_score} onChange={e=>setTestForm({...testForm,max_score:e.target.value})}/></label></div>
+      <label>{t.feedback}<textarea value={testForm.teacher_summary} onChange={e=>setTestForm({...testForm,teacher_summary:e.target.value})}/></label>
+      <button className="academy-primary small" onClick={addTestResult}>{t.publish}</button>
+      {selectedTests.slice(0,4).map(x=><div className="personal-row" key={x.id}><span>{x.title}</span><b>{x.percent!=null?Math.round(x.percent)+'%':'—'}</b></div>)}
+     </>}
     </article>
 
     <article className="academy-card">
