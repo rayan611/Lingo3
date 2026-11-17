@@ -60,7 +60,7 @@ Acceptance:
 - no unexpected console/runtime error
 
 ### P0.2 Teacher account lookup UX
-Status: 🟡 current admin UX is weak
+Status: 🟡 implemented in branch; pending database migration/release
 
 Current limitation:
 - Admin links a teacher using raw Lingo3 user UUID.
