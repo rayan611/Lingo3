@@ -167,7 +167,7 @@ function GrammarEditor({ lang, nativeLang, userId, syncing, onSync, syncError }:
           {sections.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}
         </select>
       </label>
-      <label>Title <input style={fieldStyle} required maxLength={160} value={title} onChange={e => setTitle(e.target.value)} /></label>
+      <label>Title <input style={fieldStyle} required maxLength={160} placeholder="e.g. Swedish word order — BIFF" value={title} onChange={e => setTitle(e.target.value)} /></label>
       <label>Explanation</label>
       <div role="toolbar" aria-label="Text formatting" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
         <button type="button" onClick={() => wrapSelection('**')} aria-label="Bold selected text"><strong>B</strong></button>
@@ -182,10 +182,10 @@ function GrammarEditor({ lang, nativeLang, userId, syncing, onSync, syncError }:
       <p className="muted">Examples are saved with the rule. When you save a new rule without examples, AI can add them quietly in the background; you can edit them later.</p>
       {examples.map((example, index) => <div key={example.id} style={{ marginBottom: 12, padding: 10, border: '1px solid var(--line)', borderRadius: 8 }}>
         <label>Example {index + 1} ({LANG_NAMES[lang]})
-          <textarea style={{ ...fieldStyle, minHeight: 55 }} value={example.sentence} onChange={e => setExamples(old => old.map(x => x.id === example.id ? { ...x, sentence: e.target.value } : x))} />
+          <textarea style={{ ...fieldStyle, minHeight: 55 }} placeholder="e.g. Jag stannar hemma eftersom jag inte mår bra." value={example.sentence} onChange={e => setExamples(old => old.map(x => x.id === example.id ? { ...x, sentence: e.target.value } : x))} />
         </label>
         <label>Translation ({LANG_NAMES[example.translationLang]})
-          <textarea style={{ ...fieldStyle, minHeight: 55 }} value={example.translation} onChange={e => setExamples(old => old.map(x => x.id === example.id ? { ...x, translation: e.target.value } : x))} />
+          <textarea style={{ ...fieldStyle, minHeight: 55 }} placeholder="Write the meaning in your native language" value={example.translation} onChange={e => setExamples(old => old.map(x => x.id === example.id ? { ...x, translation: e.target.value } : x))} />
         </label>
         <button type="button" onClick={() => setExamples(old => old.filter(x => x.id !== example.id))}>Remove example</button>
       </div>)}
@@ -195,7 +195,7 @@ function GrammarEditor({ lang, nativeLang, userId, syncing, onSync, syncError }:
       {editingId && <button type="button" onClick={reset}>Cancel edit</button>}</div>
     </form>
     <h3>Saved grammar — {LANG_NAMES[lang]}</h3>
-    <label>Search <input style={fieldStyle} value={search} onChange={e => setSearch(e.target.value)} /></label>
+    <label>Search <input style={fieldStyle} placeholder="Search your grammar titles and notes" value={search} onChange={e => setSearch(e.target.value)} /></label>
     {sections.map(section => {
       const group = matches.filter(r => r.sectionId === section.id)
       if (!group.length && search) return null
@@ -209,7 +209,7 @@ function GrammarEditor({ lang, nativeLang, userId, syncing, onSync, syncError }:
             try { await renameGrammarSection(section.id, renameTitle); setRenamingId(null); if (userId) void onSync().catch(() => {}) }
             catch (err) { setError(String(err)) }
           }}>
-            <label>Section name<input required maxLength={120} value={renameTitle} onChange={event => setRenameTitle(event.target.value)} /></label>
+            <label>Section name<input required maxLength={120} placeholder="e.g. Verbs and tenses" value={renameTitle} onChange={event => setRenameTitle(event.target.value)} /></label>
             <button type="submit">Save name</button><button type="button" onClick={() => setRenamingId(null)}>Cancel</button>
           </form> : <div className="grammar-section-actions">
             <button type="button" onClick={() => { setRenamingId(section.id); setRenameTitle(section.title) }}>Rename section</button>

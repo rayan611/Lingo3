@@ -572,6 +572,7 @@ export function SettingsPanel({
             type="number"
             min={0}
             max={200}
+            placeholder="e.g. 10"
             value={settings.dailyNewLimit}
             onChange={(e) =>
               void persistSettings({ dailyNewLimit: Number(e.target.value) })
@@ -584,6 +585,7 @@ export function SettingsPanel({
             type="number"
             min={10}
             max={1000}
+            placeholder="e.g. 100"
             value={settings.dailyReviewLimit}
             onChange={(e) =>
               void persistSettings({ dailyReviewLimit: Number(e.target.value) })

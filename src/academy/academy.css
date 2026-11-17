@@ -65,3 +65,10 @@
   .academy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .academy-language-dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* Keep the language selector from stretching the desktop header. */
+.academy .academy-nav .academy-language{width:auto;flex:0 0 auto}
+.academy[data-theme=light] .academy-hero-card small{color:#5b6577}
+.academy input[type=checkbox]{width:auto;min-height:0;flex:0 0 auto}
+@media(min-width:861px){.academy-nav{flex-wrap:nowrap}.academy-nav>button,.academy-nav>details{flex:0 0 auto}}
+@media(max-width:860px){.academy .academy-nav .academy-language{width:100%}}

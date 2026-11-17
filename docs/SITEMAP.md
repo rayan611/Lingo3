@@ -1,3 +1,28 @@
+# Current App and Academy map
+
+Reviewed: 2026-11-17 · Version 0.7.5 · Code: PR #53 plus release/academy-review-20261117 (`src/App.tsx`, `src/academy/*`, `src/ui/GrammarManager.tsx`).
+
+Current review: App and Academy share one session. App has a primary Academy tile; Academy has a direct App shortcut. Browser Back/Forward uses SPA history. Teacher dashboard is restricted to linked teachers; Admin Studio requires admin access. Student learning data requires sign-in and enrollment. Native date/time inputs retain labels; editable text fields show guidance. No route was added or removed in this QA release.
+
+```mermaid
+flowchart TD
+ W["Welcome /"] --> A["Lingo3 App"]
+ W --> B["Academy /academy"]
+ A --> T["Training Center"]
+ A --> B
+ B --> A
+ B --> L["Path, Courses, Teachers, Levels"]
+ B --> M["My Academy /academy/my"]
+ B --> I["About, Pricing, Resources, Contact"]
+ M --> S["Student: progress, sessions, notes, homework, tests"]
+ M --> R["Linked teacher: availability and teaching workspace"]
+ B --> D["Admin Studio: admin only"]
+```
+
+Implemented external-link support: manual meeting and learning-resource URLs. Planned: automatic Teams meetings, external calendar sync, payments, hosted video, binary uploads, automated placement tests and realtime notebook. Recorded test results are teacher-entered history, not an automated testing engine.
+
+Previous review history follows; this current review supersedes earlier release-status statements.
+
 2026-11-17 release QA update — branch `feat/academy-role-dashboards-20261117`. Responsive review covered phone, portrait tablet and laptop breakpoints in source: Academy navigation now collapses through 860px, mobile controls have 46px minimum touch height, tablet learning grids remain two-column where space permits, cards wrap long URLs/text safely, and form fields now include example placeholders/guidance (native date/time fields use explicit labels/title because browsers do not render reliable placeholders). The production Supabase migration `20261117211500_academy_role_dashboards.sql` was dry-run in a transaction and then applied successfully. Verified: Academy languages, session summaries and test-results tables; test-results RLS with policies; admin user lookup; privacy-safe teacher calendar; Control Center Academy RPCs; canonical resource kinds. Security Advisor showed only the expected guarded SECURITY DEFINER exposure for the new connector/RPC functions and no new missing-RLS or mutable-search-path finding. Control Center CI is green; Lingo3 latest CI is still pending GitHub runner at the time of this documentation commit. Vercel deployment attempt is currently blocked by Free plan daily deployment quota (HTTP 402 api-deployments-free-per-day), so production UI is not yet claimed live.
 
 2026-11-17 · Academy role-dashboard implementation (branch `feat/academy-role-dashboards-20261117`, not deployed): App primary navigation now includes an Academy mosaic tile. Academy `/academy/my` becomes role-aware: normal authenticated users see a compact per-language student dashboard; linked teachers see the Teacher workspace instead of the student dashboard; admins retain management access. Student cards surface progress, last/next session, latest teacher note, open homework, note count, latest test result foundation, plus App shortcuts to `/words` and `/grammar`. Teacher workspace surfaces profile/contact/course context, weekly free/booked slots with student labels, students, progress/plans, lesson/grammar/link resources and homework. Admin Studio gains secure user search/selection for teacher linking. Database migration `20261117211500_academy_role_dashboards.sql` is prepared but NOT applied; it adds test-result history, expands resource kinds, admin-only user lookup, and token-guarded Control Center Academy operations. No production deployment or database change was performed in this batch.\n\n2026-11-17 · Academy routed-pages + theme review: `/academy` is Home; dedicated SPA routes now exist for Path, Courses, Teachers, Levels, My Academy, Admin, About, Pricing, Resources and Contact. All retain the one shared Supabase SessionState and keep App Dexie out of Academy. Academy defaults to Light theme and offers a persisted Light/Dark toggle. Browser Back/Forward follows Academy route history.\n\n2026-11-17 · Academy Google OAuth return hardening: Academy and App continue to use one shared Supabase account/session. Google OAuth now returns through the established root `/` redirect and stores a short-lived same-tab intent for `/academy`; after Supabase restores the shared session, App performs same-document navigation back to `/academy`. No separate Academy Google OAuth client/domain is required. Email/password login remains in-place in the Academy modal. No top-level route was added or removed; browser Back behavior is unchanged after the post-auth product restore. Reviewed against `src/auth/useSession.ts`, `src/App.tsx`, and `src/auth/SignIn.tsx`.\n\n2026-11-17 · Academy mobile/German navigation review (fix/academy-mobile-german-20261117). No URL or Back-behavior change. `/academy` keeps the same Learn / My Academy / About information architecture, but on screens ≤650px the sticky header now collapses behind a hamburger control instead of wrapping all top-level items; opening a section keeps grouped dropdowns inside the mobile panel and section selection closes the panel. Academy UI language now supports EN/SV/DE/FA; German is LTR and Persian remains RTL. German is also available as a learnable subject alongside Swedish, English and Persian. Admin course/teacher editors now accept German titles/descriptions/topics/introductions. `↑` remains the fixed return-to-top control.

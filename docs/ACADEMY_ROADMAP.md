@@ -14,9 +14,9 @@ Status legend:
 | Capability | Status | Current branch reality |
 |---|---|---|
 | Role-aware Student / Teacher dashboard | 🟡 prepared | Student language cards, progress, sessions, notes, homework, tests and App shortcuts; Teacher-only workspace for linked teachers; Admin can manage both |
-| Structured teacher session summaries | 🟡 migration prepared | Covered topics, grammar focus, strengths, improvement and next focus; migration not applied to production |
-| Test result history | 🟡 migration prepared | Student history + teacher entry; migration not applied to production |
-| Managed language catalogue | 🟡 migration prepared | EN/SV/DE/FA seeded, Control Center-ready; migration not applied to production |
+| Structured teacher session summaries | 🟡 schema applied, UI pending release | Covered topics, grammar focus, strengths, improvement and next focus; live schema confirmed during 2026-11-17 QA; UI release pending |
+| Test result history | 🟡 schema applied, UI pending release | Student history + teacher entry; live schema confirmed during 2026-11-17 QA; UI release pending |
+| Managed language catalogue | 🟡 schema applied, UI pending release | EN/SV/DE/FA seeded, Control Center-ready; live schema confirmed during 2026-11-17 QA; UI release pending |
 | Rayan Control Center Academy connector | 🟡 contract prepared | Hub read/manage RPCs prepared; Control Center implementation is separate and production remains unchanged |
 
 ## Current completed baseline
