@@ -15,7 +15,7 @@ This file is the fast-start memory for future AI development sessions.
 2. `docs/AI_CONTEXT.md` (this file)
 3. `docs/ACADEMY_ROADMAP.md` when the task touches Academy
 4. `docs/DEVELOPMENT_HANDOFF.md` for the latest verified work
-5. `docs/DEVELOPMENT_HISTORY.md` only when older history is needed
+5. `docs/DEVELOPMENT_HISTORY.md` before editing code, to avoid repeating or reversing prior decisions
 6. `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md` when routes/UI structure may change
 7. Relevant code, migrations, open PRs and deployment state
 
@@ -176,7 +176,7 @@ For route/UI changes:
 Before ending a development session:
 1. update `docs/DEVELOPMENT_HANDOFF.md`
 2. update `docs/ACADEMY_ROADMAP.md` if Academy status changed
-3. append a concise durable milestone to `docs/DEVELOPMENT_HISTORY.md` only for meaningful completed work
+3. append a concise durable milestone to `docs/DEVELOPMENT_HISTORY.md` for meaningful user-visible, architectural, auth, database or navigation work
 4. update sitemap/route index when navigation changed
 5. run `npm run check:docs`
 6. commit documentation with the code change whenever possible
