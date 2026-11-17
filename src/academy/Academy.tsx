@@ -148,7 +148,8 @@ export function Academy({userId,email,sessionLoading=false}:Props){
    <nav className={'academy-nav '+(mobileMenuOpen?'is-open':'')} ref={navRef}>
     <button onClick={()=>go('home')}>{t.home}</button>
     <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('path')}>{t.path}</button><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('levels')}>{t.levels}</button></div></details>
-    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin')}>{t.admin}</button>}<button onClick={()=>{closeMenus();navigateProduct('/',{directApp:true})}}>{t.app}</button>{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
+    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin')}>{t.admin}</button>}{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
+    <button onClick={()=>{closeMenus();setMobileMenuOpen(false);navigateProduct('/',{directApp:true})}}>{t.app}</button>
     <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('about')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
     <select className="academy-language" value={locale} onChange={e=>{closeMenus();setLocale(e.target.value as Locale)}}><option value="en">EN</option><option value="sv">SV</option><option value="de">DE</option><option value="fa">FA</option></select>
     <button className="academy-theme-toggle" type="button" onClick={()=>setTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?themeLabels[locale].dark:themeLabels[locale].light} title={theme==='light'?themeLabels[locale].dark:themeLabels[locale].light}>{theme==='light'?'☾':'☀'} <span>{theme==='light'?themeLabels[locale].dark:themeLabels[locale].light}</span></button>
@@ -173,6 +174,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
           courses={courses}
           teachers={teachers}
           selfTeacher={selfTeacher}
+          teacherCourseIds={selfTeacher?teacherCourses.filter(tc=>tc.teacher_id===selfTeacher.id).map(tc=>tc.course_id):[]}
           isAdmin={isAdmin}
           onNotice={setNotice}
         />}
