@@ -36,6 +36,11 @@ export function Landing({ onOpen, inviter = '' }: { onOpen: () => void; inviter?
         return
       }
 
+      if (event.data?.type === 'showcase-academy') {
+        navigateProduct('/academy')
+        return
+      }
+
       if (event.data?.type === 'showcase-height' && Number.isFinite(event.data.height)) {
         const frame = document.getElementById('lingo-showcase') as HTMLIFrameElement | null
         if (!frame) return
