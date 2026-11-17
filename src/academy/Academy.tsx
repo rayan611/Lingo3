@@ -157,11 +157,9 @@ export function Academy({userId,email,sessionLoading=false}:Props){
           userId={userId}
           courses={courses}
           teachers={teachers}
-          teacherCourses={teacherCourses}
           selfTeacher={selfTeacher}
           isAdmin={isAdmin}
           onNotice={setNotice}
-          onDataChanged={refresh}
         />}
    </section>
    {isAdmin&&<section className="academy-section academy-admin" id="admin-studio"><div className="academy-section-head"><p>{t.settings}</p><h2>{t.adminTitle}</h2><span>{t.adminB}</span></div>{notice&&<div className="academy-notice">{notice}</div>}<div className="academy-pending"><h3>{t.pending}</h3>{adminEnrollments.filter(e=>e.status==='interested').length===0?<p>—</p>:adminEnrollments.filter(e=>e.status==='interested').map(e=>{const c=courses.find(x=>x.id===e.course_id);const eligible=teachers.filter(x=>x.status==='active'&&teacherCourses.some(tc=>tc.teacher_id===x.id&&tc.course_id===e.course_id));return <div className="pending-row" key={e.id}><span>{c?text(c.title_i18n):e.course_id}</span><select value={enrollmentTeacher[e.id]||''} onChange={ev=>setEnrollmentTeacher({...enrollmentTeacher,[e.id]:ev.target.value})}><option value="">{t.selectTeacher}</option>{eligible.map(x=><option key={x.id} value={x.id}>{x.display_name}</option>)}</select><button className="academy-primary small" onClick={()=>activateEnrollment(e)}>{t.activate}</button></div>})}</div><div className="academy-admin-grid">
