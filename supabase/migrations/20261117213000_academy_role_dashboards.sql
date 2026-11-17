@@ -227,7 +227,7 @@ declare
   lim integer := least(greatest(coalesce((p_args->>'limit')::integer,100),1),500);
   r jsonb;
 begin
-  select encode(extensions.sha256(convert_to(coalesce(p_token,''),'UTF8')), 'hex') = h.token_hash
+  select encode(pg_catalog.sha256(convert_to(coalesce(p_token,''),'UTF8')), 'hex') = h.token_hash
     into ok from public.hub_access h where h.id = 1;
   if not coalesce(ok,false) then raise exception 'forbidden' using errcode='42501'; end if;
 
@@ -310,7 +310,7 @@ declare
   cid uuid;
   label text;
 begin
-  select encode(extensions.sha256(convert_to(coalesce(p_token,''),'UTF8')), 'hex') = h.token_hash
+  select encode(pg_catalog.sha256(convert_to(coalesce(p_token,''),'UTF8')), 'hex') = h.token_hash
     into ok from public.hub_access h where h.id = 1;
   if not coalesce(ok,false) then raise exception 'forbidden' using errcode='42501'; end if;
 
