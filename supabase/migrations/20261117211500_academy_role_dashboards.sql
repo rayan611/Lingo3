@@ -84,6 +84,36 @@ with check (
   )
 );
 
+create or replace function public.academy_teacher_calendar(
+  p_teacher_id uuid,
+  p_from timestamptz default now(),
+  p_to timestamptz default now() + interval '60 days'
+)
+returns table(id uuid,starts_at timestamptz,ends_at timestamptz,delivery_mode text,status text)
+language sql
+stable
+security definer
+set search_path = ''
+as $
+  select a.id,a.starts_at,a.ends_at,a.delivery_mode,
+         case when a.status='available' then 'free' else 'busy' end::text as status
+  from public.academy_availability a
+  where a.teacher_id=p_teacher_id
+    and a.status <> 'cancelled'
+    and a.ends_at >= greatest(p_from,now())
+    and a.starts_at <= least(p_to,now()+interval '120 days')
+    and (
+      exists(select 1 from public.academy_teachers t where t.id=p_teacher_id and t.status='active')
+      or exists(select 1 from public.academy_learning_spaces ls where ls.teacher_id=p_teacher_id and ls.student_id=(select auth.uid()))
+      or exists(select 1 from public.academy_teachers t where t.id=p_teacher_id and t.user_id=(select auth.uid()))
+      or exists(select 1 from public.user_settings s where s.user_id=(select auth.uid()) and s.is_admin)
+    )
+  order by a.starts_at
+  limit 200
+$;
+revoke all on function public.academy_teacher_calendar(uuid,timestamptz,timestamptz) from public,anon;
+grant execute on function public.academy_teacher_calendar(uuid,timestamptz,timestamptz) to authenticated;
+
 create or replace function public.academy_admin_search_users(p_query text, p_limit integer default 12)
 returns table(user_id uuid, email text, display_name text, teacher_id uuid)
 language plpgsql
