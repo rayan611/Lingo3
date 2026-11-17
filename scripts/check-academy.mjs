@@ -10,6 +10,7 @@ const guide = read('docs/LINGO3_APP_ACADEMY_GUIDE.md')
 const landing = read('src/ui/Landing.tsx')
 const portal = read('src/academy/AcademyPortal.tsx')
 const booking = read('src/academy/AcademyBookingDialog.tsx')
+const signIn = read('src/auth/SignIn.tsx')
 const mvpMigration = read('supabase/migrations/20261117160000_academy_real_mvp.sql')
 const labelMigration = read('supabase/migrations/20261117161000_academy_student_labels.sql')
 const hardeningMigration = read('supabase/migrations/20261117162000_academy_mvp_hardening.sql')
@@ -28,6 +29,7 @@ const checks = [
   ['Admin Studio remains role-conditional', academy.includes("isAdmin&&<section") && academy.includes('id="admin-studio"')],
   ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">DE</option>')],
   ['Academy mobile navigation is collapsible', academy.includes('academy-mobile-toggle') && academy.includes("mobileMenuOpen?'is-open':''") && css.includes('.academy-nav.is-open')],
+  ['Academy login follows selected locale', academy.includes('locale={locale}') && signIn.includes("type AuthLocale = 'en' | 'sv' | 'de' | 'fa'") && signIn.includes("de:{back:'Zurück zur Academy'")],
   ['Persian RTL remains enabled', academy.includes("locale==='fa'?'rtl':'ltr'") && css.includes('.academy[dir=rtl]')],
   ['Hero typography is bounded', css.includes('clamp(2.2rem,4.7vw,4rem)')],
   ['Showcase points to interactive Academy route', showcase.includes('href="/academy"')],
