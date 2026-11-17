@@ -48,7 +48,7 @@ type Resource = {
   id:string
   learning_space_id:string
   teacher_id:string
-  kind:'material'|'homework'|'lesson'|'grammar'|'link'|'lesson_note'|'grammar'|'link'
+  kind:'material'|'homework'|'lesson'|'grammar'|'link'
   title:string
   description:string|null
   url:string|null
