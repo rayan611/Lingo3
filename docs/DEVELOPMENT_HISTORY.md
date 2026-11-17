@@ -7,7 +7,11 @@ This is not the live handoff and not the backlog.
 - Latest session detail: `docs/DEVELOPMENT_HANDOFF.md`
 - Remaining work: `docs/ACADEMY_ROADMAP.md`
 
-Only append meaningful completed milestones. Do not copy every small commit.
+Only append meaningful completed milestones. Do not copy every small commit. Review this file before every development session so new work respects earlier decisions.
+
+## 2026-11-17 — Academy Routed Pages and Theme System
+
+Refactored Academy from a single long anchor-based page into route-backed SPA pages while preserving the one shared Supabase session and App/Academy boundary. Added dedicated routes for learning path, courses, teachers, levels, My Academy, Admin, About, Pricing, Resources and Contact. Added a persisted Academy Light/Dark theme with Light as the default. Updated route/sitemap checks and development-history operating rules.
 
 ## 2026-11-17 — Shared App/Academy Auth Lifecycle Hardening
 
