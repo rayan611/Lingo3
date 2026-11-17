@@ -396,11 +396,18 @@ export function AcademyPortal({
   const related=teacherBookings.filter(b=>b.student_id===selected.student_id&&b.course_id===selected.course_id&&['completed','confirmed'].includes(b.status))
     .sort((a,b)=>new Date(b.confirmed_start??b.preferred_start??0).getTime()-new Date(a.confirmed_start??a.preferred_start??0).getTime())[0]
   await run(async()=>{
-   const {error}=await supabase().from('academy_session_summaries').insert({
+   const payload={
     learning_space_id:selected.id,booking_id:related?.id??null,teacher_id:selfTeacher.id,student_id:selected.student_id,
     covered:summaryForm.covered.trim()||null,grammar_focus:summaryForm.grammar_focus.trim()||null,
     strengths:summaryForm.strengths.trim()||null,improve_next:summaryForm.improve_next.trim()||null,next_focus:summaryForm.next_focus.trim()||null,
-   })
+    updated_at:new Date().toISOString(),
+   }
+   let error
+   if(related?.id){
+    const existing=selectedSummaries.find(x=>x.booking_id===related.id)
+    if(existing)({error}=await supabase().from('academy_session_summaries').update(payload).eq('id',existing.id))
+    else ({error}=await supabase().from('academy_session_summaries').insert(payload))
+   }else ({error}=await supabase().from('academy_session_summaries').insert(payload))
    if(error)throw error
    setSummaryForm({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''});onNotice(t.saved)
    const {data}=await supabase().from('academy_session_summaries').select('*').eq('learning_space_id',selected.id).order('created_at',{ascending:false}).limit(20)
