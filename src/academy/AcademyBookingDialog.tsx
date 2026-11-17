@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../auth/supabase'
 
-type Locale = 'en' | 'sv' | 'fa'
+type Locale = 'en' | 'sv' | 'fa' | 'de'
 
 type Course = {
   id: string
@@ -38,6 +38,20 @@ const copy = {
     customOption: 'I will suggest another time',
     sent: 'Trial request sent.',
     signIn: 'Sign in before requesting a lesson.',
+  },
+  de: {
+    title: 'Probestunde anfragen',
+    course: 'Kurs',
+    slot: 'Verfügbare Zeit',
+    custom: 'Oder eine andere Zeit vorschlagen',
+    message: 'Nachricht an die Lehrkraft',
+    send: 'Anfrage senden',
+    close: 'Schließen',
+    noSlots: 'Noch keine veröffentlichten Zeiten — du kannst trotzdem eine Zeit vorschlagen.',
+    choose: 'Auswählen…',
+    customOption: 'Ich schlage eine andere Zeit vor',
+    sent: 'Anfrage für Probestunde gesendet.',
+    signIn: 'Bitte melde dich an, bevor du eine Stunde anfragst.',
   },
   sv: {
     title: 'Begär en provlektion',

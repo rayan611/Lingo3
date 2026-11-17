@@ -14,7 +14,7 @@ Status legend:
 | Capability | Status | Current reality |
 |---|---|---|
 | Public Academy route | ✅ | `/academy`, shared Lingo3 auth |
-| Multilingual Academy UI | ✅ | EN/SV/FA, Persian RTL |
+| Multilingual Academy UI | ✅ | EN/SV/DE/FA; Persian RTL, others LTR |
 | Course catalogue | ✅ | DB-backed, multilingual topics/formats |
 | Teacher Directory | ✅ infrastructure | Only real active teachers are shown; currently no real teacher seeded |
 | Student course interest | ✅ | Student may register interest |
@@ -53,7 +53,7 @@ Use one real Lingo3 user as a teacher and verify:
 
 Acceptance:
 - desktop and mobile
-- EN/SV/FA
+- EN/SV/DE/FA
 - Persian RTL
 - Student cannot see another student's data
 - Teacher only sees assigned students
