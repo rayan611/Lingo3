@@ -17,6 +17,7 @@ const hardeningMigration = read('supabase/migrations/20261117162000_academy_mvp_
 const cancelMigration = read('supabase/migrations/20261117163000_academy_slot_cancel_fix.sql')
 const advisorMigration = read('supabase/migrations/20261117164000_academy_advisor_cleanup.sql')
 const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
+const dashboardMigration = read('supabase/migrations/20261117211500_academy_role_dashboards.sql')
 
 const checks = [
   ['Academy route is split before LingoApp', app.includes("cleanEntryPath.startsWith('/academy/')") && app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
@@ -53,6 +54,8 @@ const checks = [
   ['Student cancellation releases booked slots', cancelMigration.includes('security definer') && cancelMigration.includes("status = 'available'")],
   ['Academy booking policies are consolidated', advisorMigration.includes('academy bookings member update') && advisorMigration.includes('academy_messages_sender_idx')],
   ['Database prevents teacher double-booking', overlapMigration.includes('academy_guard_availability_overlap') && overlapMigration.includes('Teacher already has a confirmed session at this time')],
+  ['Dashboard migration keeps teacher assignment admin-only', dashboardMigration.includes('academy_admin_search_users') && dashboardMigration.includes("raise exception 'forbidden'") && dashboardMigration.includes('hub_academy_manage')],
+  ['Test-result writes are scoped to matching learning space', dashboardMigration.includes('ls.id=learning_space_id and ls.student_id=student_id and ls.teacher_id=teacher_id')],
   ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
