@@ -178,12 +178,52 @@ export async function signUp(email: string, password: string, captchaToken?: str
  * all — everything after the redirect is handled by `detectSessionInUrl`,
  * which is what `onAuthStateChange` is already listening for.
  */
+const OAUTH_RETURN_PATH_KEY = 'lingo3.oauthReturnPath'
+
+/**
+ * Consume the product destination remembered before a full OAuth round-trip.
+ * Only known same-origin product routes are accepted, and stale intents are
+ * discarded so an abandoned Google flow cannot redirect a later login.
+ */
+export function consumeOAuthReturnPath(): string | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = window.sessionStorage.getItem(OAUTH_RETURN_PATH_KEY)
+    window.sessionStorage.removeItem(OAUTH_RETURN_PATH_KEY)
+    if (!raw) return null
+    const saved = JSON.parse(raw) as { path?: unknown; at?: unknown }
+    const path = saved.path === '/academy' ? '/academy' : null
+    const at = typeof saved.at === 'number' ? saved.at : 0
+    if (!path || Date.now() - at > 10 * 60_000) return null
+    return path
+  } catch {
+    window.sessionStorage.removeItem(OAUTH_RETURN_PATH_KEY)
+    return null
+  }
+}
+
 export async function signInWithGoogle(returnPath = '/') {
+  // Google always returns through the already-established root redirect. The
+  // intended product is restored after Supabase has recreated the shared
+  // session. This avoids requiring /academy to be a separate OAuth client or
+  // a provider callback URL.
+  if (returnPath === '/academy') {
+    window.sessionStorage.setItem(
+      OAUTH_RETURN_PATH_KEY,
+      JSON.stringify({ path: returnPath, at: Date.now() }),
+    )
+  } else {
+    window.sessionStorage.removeItem(OAUTH_RETURN_PATH_KEY)
+  }
+
   const { error } = await supabase().auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: `${window.location.origin}${returnPath}` },
+    options: { redirectTo: `${window.location.origin}/` },
   })
-  if (error) throw new Error(friendly(error.message))
+  if (error) {
+    window.sessionStorage.removeItem(OAUTH_RETURN_PATH_KEY)
+    throw new Error(friendly(error.message))
+  }
 }
 
 export async function signOut() {
