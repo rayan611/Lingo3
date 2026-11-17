@@ -19,15 +19,17 @@ const advisorMigration = read('supabase/migrations/20261117164000_academy_adviso
 const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
 
 const checks = [
-  ['Academy route is split before LingoApp', app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
+  ['Academy route is split before LingoApp', app.includes("cleanEntryPath.startsWith('/academy/')") && app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
   ['LingoApp owns Dexie init', app.includes('function LingoApp({ sessionState }') && app.includes('await openForUser(userId)') && app.indexOf('await openForUser(userId)') > app.indexOf('function LingoApp({ sessionState }')],
   ['Academy source does not import App Dexie', !/from ['"]\.\.\/db\//.test(academy) && !academy.includes('dexie')],
   ['Academy grouped menus close on mouse leave', (academy.match(/onMouseLeave={closeMenuOnLeave}/g) || []).length === 3],
   ['Academy grouped menus coordinate open state', (academy.match(/onToggle={onMenuToggle}/g) || []).length === 3],
-  ['Academy section navigation closes menus', academy.includes("const go=(id:string)=>{closeMenus();setMobileMenuOpen(false);jump(id)}")],
-  ['Academy has required public sections', ['academy-home','learning-path','courses','teachers','levels','how','pricing','personal-space','resources','contact'].every(id => academy.includes('id="' + id + '"'))],
+  ['Academy route navigation closes menus', academy.includes("const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);navigateProduct(ACADEMY_PATHS[next])")],
+  ['Academy has real sub-page routes', ['/academy/path','/academy/courses','/academy/teachers','/academy/levels','/academy/my','/academy/admin','/academy/about','/academy/pricing','/academy/resources','/academy/contact'].every(path => academy.includes(path))],
+  ['Academy renders routed pages conditionally', ["page==='home'","page==='courses'","page==='teachers'","page==='personal'","page==='admin'"].every(x=>academy.includes(x))],
   ['Admin Studio remains role-conditional', academy.includes("isAdmin&&<section") && academy.includes('id="admin-studio"')],
   ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">DE</option>')],
+  ['Academy defaults to light theme with persistent dark toggle', academy.includes("localStorage.getItem('lingo3.academy.theme')==='dark'?'dark':'light'") && academy.includes('academy-theme-toggle') && css.includes('.academy[data-theme=light]')],
   ['Academy mobile navigation is collapsible', academy.includes('academy-mobile-toggle') && academy.includes("mobileMenuOpen?'is-open':''") && css.includes('.academy-nav.is-open')],
   ['Academy login follows selected locale', academy.includes('locale={locale}') && signIn.includes("type AuthLocale = 'en' | 'sv' | 'de' | 'fa'") && signIn.includes("de:{back:'Zurück zur Academy'")],
   ['Persian RTL remains enabled', academy.includes("locale==='fa'?'rtl':'ltr'") && css.includes('.academy[dir=rtl]')],
