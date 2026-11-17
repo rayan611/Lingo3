@@ -494,7 +494,7 @@ grant execute on function public.hub_academy_call(text,text,jsonb) to anon;
 create or replace function public.hub_academy_manage(
   p_token text,
   p_action text,
-  p_user_id uuid,
+  p_user_id uuid default null,
   p_payload jsonb default '{}'::jsonb
 )
 returns jsonb
