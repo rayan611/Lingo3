@@ -489,7 +489,7 @@ export function AcademyPortal({
      <label>{t.myCourses}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}>{studentSpaces.map(sp=><option key={sp.id} value={sp.id}>{courseTitle(sp.course_id)}</option>)}</select></label>
      {selected&&selected.student_id===userId&&<>
       <div className="space-progress"><span>{t.progress}</span><b>{selected.progress}%</b></div><div className="progress-bar"><i style={{width:String(selected.progress)+'%'}}/></div>
-      <label>{t.goal}<textarea value={goal} onChange={e=>setGoal(e.target.value)}/></label><button className="academy-primary small" onClick={saveGoal}>{t.saveGoal}</button>
+      <label>{t.goal}<textarea placeholder={locale==='fa'?'مثال: تا پایان این دوره بتوانم مکالمه روزمره انجام دهم':'e.g. Hold a basic everyday conversation by the end of this course'} value={goal} onChange={e=>setGoal(e.target.value)}/></label><button className="academy-primary small" onClick={saveGoal}>{t.saveGoal}</button>
      </>}
     </>}
    </article>
@@ -500,7 +500,7 @@ export function AcademyPortal({
   {!teacherOnly&&selected&&<div className="academy-learning-columns">
    <article className="academy-card">
     <h3>{t.notes}</h3>
-    <textarea value={noteBody} onChange={e=>setNoteBody(e.target.value)} />
+    <textarea placeholder={locale==='fa'?'یادداشت خودت درباره درس یا جلسه را اینجا بنویس…':'Write your own lesson note here…'} value={noteBody} onChange={e=>setNoteBody(e.target.value)} />
     <label className="inline-check"><input type="checkbox" checked={shareNote} onChange={e=>setShareNote(e.target.checked)}/>{t.share}</label>
     <button className="academy-primary small" onClick={saveNote}>{t.saveNote}</button>
     <div className="note-list">{notes.slice(0,8).map(n=><div key={n.id}><p>{n.body}</p><small>{n.visibility} · {dt(n.created_at)}</small></div>)}</div>
@@ -520,7 +520,7 @@ export function AcademyPortal({
    <article className="academy-card">
     <h3>{t.messages}</h3>
     <div className="academy-message-list">{messages.map(m=><div className={'academy-message '+(m.sender_id===userId?'mine':'theirs')} key={m.id}><p>{m.body}</p><small>{dt(m.created_at)}</small></div>)}</div>
-    <textarea value={messageBody} onChange={e=>setMessageBody(e.target.value)} maxLength={5000}/>
+    <textarea placeholder={locale==='fa'?'پیام برای مدرس را اینجا بنویس…':'Write a message to your teacher…'} value={messageBody} onChange={e=>setMessageBody(e.target.value)} maxLength={5000}/>
     <button className="academy-primary small" onClick={sendMessage}>{t.send}</button>
    </article>
   </div>}
@@ -552,13 +552,13 @@ export function AcademyPortal({
     <article className="academy-card">
      <h3>{t.availability}</h3>
      <label>{t.start}<input type="datetime-local" value={slotStart} onChange={e=>setSlotStart(e.target.value)}/></label>
-     <div className="editor-two"><label>{t.duration}<input type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label></div>
+     <div className="editor-two"><label>{t.duration}<input placeholder="60" type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label></div>
      <button className="academy-primary small" onClick={addSlot}>{t.addSlot}</button>
      <div className="academy-weekly-builder">
       <h4>{locale==='fa'?'برنامه تکرارشونده هفتگی':'Weekly recurring times'}</h4>
       <div className="academy-weekdays">{[1,2,3,4,5,6,0].map(day=><label key={day}><input type="checkbox" checked={weeklyDays.includes(day)} onChange={e=>setWeeklyDays(e.target.checked?[...weeklyDays,day]:weeklyDays.filter(x=>x!==day))}/>{weekdayLabel(day)}</label>)}</div>
       <div className="editor-two"><label>{locale==='fa'?'از ساعت':'From'}<input type="time" value={weeklyStart} onChange={e=>setWeeklyStart(e.target.value)}/></label><label>{locale==='fa'?'تا ساعت':'To'}<input type="time" value={weeklyEnd} onChange={e=>setWeeklyEnd(e.target.value)}/></label></div>
-      <label>{locale==='fa'?'برای چند هفته':'Weeks'}<input type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label>
+      <label>{locale==='fa'?'برای چند هفته':'Weeks'}<input placeholder="4" type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label>
       <button className="small-link" onClick={addWeeklySlots}>{locale==='fa'?'ساخت زمان‌های هفتگی':'Create weekly times'}</button>
      </div>
      <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);return <div className={'academy-week-slot '+(booked?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(a.status==='available'?'Free':a.status)}</small>{!booked&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
@@ -570,7 +570,7 @@ export function AcademyPortal({
       const draft=bookingDraft[b.id]??{confirmed_start:b.confirmed_start?new Date(b.confirmed_start).toISOString().slice(0,16):'',meeting_url:b.meeting_url??'',teacher_note:b.teacher_note??'',duration_minutes:String(b.duration_minutes??60)}
       return <div className="academy-booking-admin" key={b.id}>
        <strong>{b.student_display_name??t.student}</strong><small>{courseTitle(b.course_id)} · {b.status}</small><small>{t.preferred}: {dt(b.preferred_start)}</small>{b.student_message&&<p>{b.student_message}</p>}
-       {b.status==='requested'&&<><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label><label>{t.meetingLink}<input value={draft.meeting_url} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,meeting_url:e.target.value}})}/></label><label>{t.teacherNote}<textarea value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
+       {b.status==='requested'&&<><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label><label>{t.meetingLink}<input placeholder="https://teams.microsoft.com/..." value={draft.meeting_url} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,meeting_url:e.target.value}})}/></label><label>{t.teacherNote}<textarea placeholder={locale==='fa'?'مثال: قبل از جلسه فصل ۳ را مرور کن':'e.g. Review chapter 3 before the lesson'} value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
        {b.status==='confirmed'&&<div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'completed')}>{t.complete}</button><button className="small-link" onClick={()=>updateBooking(b,'no_show')}>{t.noShow}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div>}
       </div>
      })}
@@ -579,9 +579,9 @@ export function AcademyPortal({
     <article className="academy-card">
      <h3>{t.students}</h3>
      {teacherSpaces.length===0?<p>—</p>:<><select value={teacherSpaces.some(x=>x.id===selectedSpace)?selectedSpace:''} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option value={sp.id} key={sp.id}>{sp.student_display_name??t.student} · {courseTitle(sp.course_id)}</option>)}</select>{selectedIsTeacher&&<>
-      <label>{t.progress}<input type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label>
-      <label>{t.goal}<textarea value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label>
-      <label>{t.nextTopics}<textarea value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label>
+      <label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label>
+      <label>{t.goal}<textarea placeholder={locale==='fa'?'هدف این دانشجو، مثال: رسیدن به A2':'Student goal, e.g. reach A2'} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label>
+      <label>{t.nextTopics}<textarea placeholder={locale==='fa'?'هر موضوع جلسه بعد در یک خط':'One next-lesson topic per line'} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label>
       <button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
     </article>
@@ -589,11 +589,11 @@ export function AcademyPortal({
     <article className="academy-card">
      <h3>{locale==='fa'?'جمع‌بندی جلسه و گرامر':'Session summary & grammar'}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{locale==='fa'?'مطالب تدریس‌شده':'Covered'}<textarea value={summaryForm.covered} onChange={e=>setSummaryForm({...summaryForm,covered:e.target.value})}/></label>
-      <label>Grammar<textarea value={summaryForm.grammar_focus} onChange={e=>setSummaryForm({...summaryForm,grammar_focus:e.target.value})}/></label>
-      <label>{locale==='fa'?'نقاط قوت':'Strengths'}<textarea value={summaryForm.strengths} onChange={e=>setSummaryForm({...summaryForm,strengths:e.target.value})}/></label>
-      <label>{locale==='fa'?'نیاز به بهبود':'Improve next'}<textarea value={summaryForm.improve_next} onChange={e=>setSummaryForm({...summaryForm,improve_next:e.target.value})}/></label>
-      <label>{locale==='fa'?'تمرکز جلسه بعد':'Next lesson'}<textarea value={summaryForm.next_focus} onChange={e=>setSummaryForm({...summaryForm,next_focus:e.target.value})}/></label>
+      <label>{locale==='fa'?'مطالب تدریس‌شده':'Covered'}<textarea placeholder={locale==='fa'?'مثال: افعال روزمره و ترتیب کلمات':'e.g. Everyday verbs and word order'} value={summaryForm.covered} onChange={e=>setSummaryForm({...summaryForm,covered:e.target.value})}/></label>
+      <label>Grammar<textarea placeholder={locale==='fa'?'مثال: BIFF و جایگاه inte':'e.g. BIFF rule and position of inte'} value={summaryForm.grammar_focus} onChange={e=>setSummaryForm({...summaryForm,grammar_focus:e.target.value})}/></label>
+      <label>{locale==='fa'?'نقاط قوت':'Strengths'}<textarea placeholder={locale==='fa'?'مثال: دایره لغات خوب و تلفظ واضح':'e.g. Strong vocabulary and clear pronunciation'} value={summaryForm.strengths} onChange={e=>setSummaryForm({...summaryForm,strengths:e.target.value})}/></label>
+      <label>{locale==='fa'?'نیاز به بهبود':'Improve next'}<textarea placeholder={locale==='fa'?'مثال: تمرین بیشتر ترتیب کلمات':'e.g. Practise word order more'} value={summaryForm.improve_next} onChange={e=>setSummaryForm({...summaryForm,improve_next:e.target.value})}/></label>
+      <label>{locale==='fa'?'تمرکز جلسه بعد':'Next lesson'}<textarea placeholder={locale==='fa'?'مثال: گذشته افعال و مکالمه خرید':'e.g. Past tense and shopping dialogue'} value={summaryForm.next_focus} onChange={e=>setSummaryForm({...summaryForm,next_focus:e.target.value})}/></label>
       <button className="academy-primary small" onClick={saveSessionSummary}>{t.savePlan}</button>
       {selectedSummaries.slice(0,3).map(s=><div className="academy-summary-item" key={s.id}><small>{dt(s.created_at)}</small><p>{s.next_focus||s.covered||'—'}</p></div>)}
      </>}
@@ -602,9 +602,9 @@ export function AcademyPortal({
     <article className="academy-card">
      <h3>{locale==='fa'?'ثبت نتیجه تست':'Record test result'}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{t.title}<input value={testForm.title} onChange={e=>setTestForm({...testForm,title:e.target.value})}/></label>
-      <div className="editor-two"><label>{locale==='fa'?'امتیاز':'Score'}<input type="number" value={testForm.score} onChange={e=>setTestForm({...testForm,score:e.target.value})}/></label><label>{locale==='fa'?'از':'Max'}<input type="number" value={testForm.max_score} onChange={e=>setTestForm({...testForm,max_score:e.target.value})}/></label></div>
-      <label>{t.feedback}<textarea value={testForm.teacher_summary} onChange={e=>setTestForm({...testForm,teacher_summary:e.target.value})}/></label>
+      <label>{t.title}<input placeholder={locale==='fa'?'مثال: آزمون A1 — درس ۴':'e.g. A1 quiz — Lesson 4'} value={testForm.title} onChange={e=>setTestForm({...testForm,title:e.target.value})}/></label>
+      <div className="editor-two"><label>{locale==='fa'?'امتیاز':'Score'}<input placeholder="e.g. 18" type="number" value={testForm.score} onChange={e=>setTestForm({...testForm,score:e.target.value})}/></label><label>{locale==='fa'?'از':'Max'}<input placeholder="e.g. 20" type="number" value={testForm.max_score} onChange={e=>setTestForm({...testForm,max_score:e.target.value})}/></label></div>
+      <label>{t.feedback}<textarea placeholder={locale==='fa'?'مثال: نتیجه خوب؛ روی صرف فعل بیشتر کار شود':'e.g. Good result; practise verb conjugation next'} value={testForm.teacher_summary} onChange={e=>setTestForm({...testForm,teacher_summary:e.target.value})}/></label>
       <button className="academy-primary small" onClick={addTestResult}>{t.publish}</button>
       {selectedTests.slice(0,4).map(x=><div className="personal-row" key={x.id}><span>{x.title}</span><b>{x.percent!=null?Math.round(x.percent)+'%':'—'}</b></div>)}
      </>}
@@ -614,9 +614,9 @@ export function AcademyPortal({
      <h3>{t.addResource}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
       <label>{t.kind}<select value={resourceForm.kind} onChange={e=>setResourceForm({...resourceForm,kind:e.target.value})}><option value="material">{t.material}</option><option value="homework">{t.homework}</option><option value="lesson">Lesson note</option><option value="grammar">Grammar</option><option value="link">Useful link</option></select></label>
-      <label>{t.title}<input value={resourceForm.title} onChange={e=>setResourceForm({...resourceForm,title:e.target.value})}/></label>
-      <label>{t.description}<textarea value={resourceForm.description} onChange={e=>setResourceForm({...resourceForm,description:e.target.value})}/></label>
-      <label>{t.url}<input value={resourceForm.url} onChange={e=>setResourceForm({...resourceForm,url:e.target.value})}/></label>
+      <label>{t.title}<input placeholder={locale==='fa'?'مثال: تمرین درس ۵':'e.g. Lesson 5 homework'} value={resourceForm.title} onChange={e=>setResourceForm({...resourceForm,title:e.target.value})}/></label>
+      <label>{t.description}<textarea placeholder={locale==='fa'?'توضیح کوتاه درباره تکلیف، گرامر یا منبع':'Short instructions for this homework, grammar note or resource'} value={resourceForm.description} onChange={e=>setResourceForm({...resourceForm,description:e.target.value})}/></label>
+      <label>{t.url}<input placeholder="https://example.com/resource" value={resourceForm.url} onChange={e=>setResourceForm({...resourceForm,url:e.target.value})}/></label>
       {resourceForm.kind==='homework'&&<label>{t.due}<input type="datetime-local" value={resourceForm.due} onChange={e=>setResourceForm({...resourceForm,due:e.target.value})}/></label>}
       <button className="academy-primary small" onClick={addResource}>{t.publish}</button>
      </>}
