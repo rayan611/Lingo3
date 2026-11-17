@@ -199,8 +199,8 @@ export function AcademyPortal({
   if(!selectedSpace){setNotes([]);setResources([]);setMessages([]);setSelectedSummaries([]);setSelectedTests([]);setStudentAvailability([]);return}
   let cancelled=false
   const space=[...studentSpaces,...teacherSpaces].find(x=>x.id===selectedSpace)
-  const availabilityReq=space?.teacher_id
-    ? supabase().from('academy_availability').select('id,teacher_id,starts_at,ends_at,delivery_mode,status,note').eq('teacher_id',space.teacher_id).gte('ends_at',new Date().toISOString()).order('starts_at').limit(50)
+  const availabilityReq=space?.teacher_id&&space.student_id===userId
+    ? supabase().rpc('academy_teacher_calendar',{p_teacher_id:space.teacher_id,p_from:new Date().toISOString(),p_to:new Date(Date.now()+60*86400000).toISOString()})
     : Promise.resolve({data:[],error:null})
   Promise.all([
    supabase().from('academy_notes').select('*').eq('learning_space_id',selectedSpace).order('created_at',{ascending:false}).limit(50),
@@ -531,7 +531,7 @@ export function AcademyPortal({
    </article>
    <article className="academy-card">
     <h3>{locale==='fa'?'تقویم استاد':'Teacher calendar'}</h3>
-    {studentAvailability.length===0?<p>—</p>:<div className="academy-week-board">{studentAvailability.slice(0,16).map(a=><div className={'academy-week-slot '+(a.status==='available'?'is-free':'is-booked')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{a.status==='available'?(locale==='fa'?'آزاد':'Free'):(locale==='fa'?'رزرو شده':'Booked')}</small></div>)}</div>}
+    {studentAvailability.length===0?<p>—</p>:<div className="academy-week-board">{studentAvailability.slice(0,16).map(a=><div className={'academy-week-slot '+(a.status==='free'?'is-free':'is-booked')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{a.status==='free'?(locale==='fa'?'آزاد':'Free'):(locale==='fa'?'رزرو شده':'Busy')}</small></div>)}</div>}
    </article>
   </div>}
 
