@@ -225,6 +225,8 @@ export function AcademyBookingDialog({
         <label>
           {t.custom}
           <input
+            aria-label="Preferred lesson date and time"
+            title="Choose your preferred lesson date and time"
             type="datetime-local"
             value={customStart}
             disabled={Boolean(slotId)}
@@ -234,7 +236,7 @@ export function AcademyBookingDialog({
 
         <label>
           {t.message}
-          <textarea value={message} maxLength={3000} onChange={(event) => setMessage(event.target.value)} />
+          <textarea placeholder="e.g. I would like to focus on conversation and pronunciation." value={message} maxLength={3000} onChange={(event) => setMessage(event.target.value)} />
         </label>
 
         {error && <div className="academy-notice error">{error}</div>}
