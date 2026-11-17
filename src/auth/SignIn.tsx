@@ -11,7 +11,7 @@ import { Captcha, captchaEnabled } from './Captcha'
 
 type Mode = 'in' | 'up' | 'forgot'
 
-export function SignIn({ context = 'app' }: { context?: 'app' | 'academy' } = {}) {
+export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy'; onBack?: () => void } = {}) {
   const [mode, setMode] = useState<Mode>('in')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -65,7 +65,9 @@ export function SignIn({ context = 'app' }: { context?: 'app' | 'academy' } = {}
       <div className="signin">
         <header className="signin-intro">
           <p>
-            <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? 'Back to Academy' : 'Home / Showcase'}</a>
+            {context === 'academy' && onBack
+              ? <button type="button" className="link" onClick={onBack}>Back to Academy</button>
+              : <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? 'Back to Academy' : 'Home / Showcase'}</a>}
           </p>
           <h1 className="signin-brand">{context === 'academy' ? 'Lingo3 Academy' : 'Lingo3'}</h1>
           <p className="signin-tagline">
