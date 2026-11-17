@@ -11,7 +11,18 @@ import { Captcha, captchaEnabled } from './Captcha'
 
 type Mode = 'in' | 'up' | 'forgot'
 
-export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy'; onBack?: () => void } = {}) {
+type AuthLocale = 'en' | 'sv' | 'de' | 'fa'
+
+const academyAuthCopy: Record<AuthLocale, Record<string,string>> = {
+  en:{back:'Back to Academy',tagline:'Use the same Lingo3 account for your courses, teachers and Academy personal space.',blurb:'Sign in once to keep your courses, bookings, Learning Space, messages and teacher work connected.',p1:'One account, both products.',p2:'Your Academy learning stays private.',p3:'Continue across phone and computer.',signIn:'Sign in',create:'Create an account',reset:'Reset your password',resetHelp:'Enter the email address you signed up with and we will send a password reset link.',email:'Email',password:'Password',forgot:'{context === 'academy' ? academyT.forgot : 'Forgot your password?'}',working:'Working…',checking:'Checking you are human…',sendReset:'Send reset link',or:'or',google:'{context === 'academy' ? academyT.google : 'Continue with Google'}',noAccount:'{context === 'academy' ? academyT.noAccount : 'No account yet? Create one'}',already:'{context === 'academy' ? academyT.already : 'Already have an account? Sign in'}',backSignIn:'{context === 'academy' ? academyT.backSignIn : 'Back to sign in'}',resetNotice:'If that address has an account, a reset link is on its way. Check spam if it does not arrive.',createdNotice:context === 'academy' ? academyT.createdNotice : 'Account created. Check your email for a confirmation link, then sign in.'},
+  sv:{back:'Tillbaka till Academy',tagline:'Använd samma Lingo3-konto för dina kurser, lärare och personliga Academy-yta.',blurb:'Logga in en gång för att hålla kurser, bokningar, Learning Space, meddelanden och lärararbete samlat.',p1:'Ett konto för båda produkterna.',p2:'Ditt Academy-lärande förblir privat.',p3:'Fortsätt på mobil och dator.',signIn:'Logga in',create:'Skapa konto',reset:'Återställ lösenord',resetHelp:'Ange e-postadressen du registrerade dig med så skickar vi en återställningslänk.',email:'E-post',password:'Lösenord',forgot:'Glömt lösenordet?',working:'Arbetar…',checking:'Kontrollerar att du är människa…',sendReset:'Skicka återställningslänk',or:'eller',google:'Fortsätt med Google',noAccount:'Inget konto ännu? Skapa ett',already:'Har du redan ett konto? Logga in',backSignIn:'Tillbaka till inloggning',resetNotice:'Om adressen har ett konto är en återställningslänk på väg. Kontrollera skräppost om den inte kommer.',createdNotice:'Kontot skapades. Kontrollera e-posten för en bekräftelselänk och logga sedan in.'},
+  de:{back:'Zurück zur Academy',tagline:'Nutze dasselbe Lingo3-Konto für deine Kurse, Lehrkräfte und deinen persönlichen Academy-Bereich.',blurb:'Melde dich einmal an, damit Kurse, Buchungen, Learning Space, Nachrichten und Lehrkraft-Arbeit verbunden bleiben.',p1:'Ein Konto für beide Produkte.',p2:'Dein Academy-Lernen bleibt privat.',p3:'Auf Handy und Computer weitermachen.',signIn:'Anmelden',create:'Konto erstellen',reset:'Passwort zurücksetzen',resetHelp:'Gib die E-Mail-Adresse deines Kontos ein. Wir senden dir einen Link zum Zurücksetzen.',email:'E-Mail',password:'Passwort',forgot:'Passwort vergessen?',working:'Wird verarbeitet…',checking:'Wir prüfen, ob du ein Mensch bist…',sendReset:'Reset-Link senden',or:'oder',google:'Mit Google fortfahren',noAccount:'Noch kein Konto? Konto erstellen',already:'Schon ein Konto? Anmelden',backSignIn:'Zurück zur Anmeldung',resetNotice:'Wenn für diese Adresse ein Konto existiert, ist ein Reset-Link unterwegs. Prüfe auch den Spam-Ordner.',createdNotice:'Konto erstellt. Prüfe deine E-Mail für den Bestätigungslink und melde dich danach an.'},
+  fa:{back:'بازگشت به آکادمی',tagline:'برای دوره‌ها، مدرس‌ها و فضای شخصی آکادمی از همان حساب Lingo3 استفاده کن.',blurb:'یک‌بار وارد شو تا دوره‌ها، رزروها، فضای یادگیری، پیام‌ها و فعالیت مدرس به همان حساب متصل بماند.',p1:'یک حساب برای هر دو بخش.',p2:'اطلاعات آموزشی آکادمی خصوصی می‌ماند.',p3:'بین موبایل و کامپیوتر ادامه بده.',signIn:'ورود',create:'ساخت حساب',reset:'بازیابی رمز عبور',resetHelp:'ایمیلی را که با آن ثبت‌نام کرده‌ای وارد کن تا لینک بازیابی برایت ارسال شود.',email:'ایمیل',password:'رمز عبور',forgot:'رمز عبور را فراموش کرده‌ای؟',working:'در حال انجام…',checking:'در حال بررسی انسان بودن…',sendReset:'ارسال لینک بازیابی',or:'یا',google:'ادامه با Google',noAccount:'حساب نداری؟ یکی بساز',already:'حساب داری؟ وارد شو',backSignIn:'بازگشت به ورود',resetNotice:'اگر برای این ایمیل حسابی وجود داشته باشد، لینک بازیابی ارسال شده است. پوشه Spam را هم بررسی کن.',createdNotice:'حساب ساخته شد. ایمیل تأیید را باز کن و بعد وارد شو.'}
+}
+
+
+export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: 'app' | 'academy'; onBack?: () => void; locale?: AuthLocale } = {}) {
+  const academyT = academyAuthCopy[locale]
   const [mode, setMode] = useState<Mode>('in')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -39,7 +50,7 @@ export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy
         // account. "No such user" would turn this box into a way of finding
         // out who has one.
         setNotice(
-          'If that address has an account, a reset link is on its way. It is good for one hour — check spam if it does not arrive.',
+          context === 'academy' ? academyT.resetNotice : 'If that address has an account, a reset link is on its way. It is good for one hour — check spam if it does not arrive.',
         )
       } else if (mode === 'in') {
         await signIn(email.trim(), password, token)
@@ -66,54 +77,48 @@ export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy
         <header className="signin-intro">
           <p>
             {context === 'academy' && onBack
-              ? <button type="button" className="link" onClick={onBack}>Back to Academy</button>
+              ? <button type="button" className="link" onClick={onBack}>{academyT.back}</button>
               : <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? 'Back to Academy' : 'Home / Showcase'}</a>}
           </p>
           <h1 className="signin-brand">{context === 'academy' ? 'Lingo3 Academy' : 'Lingo3'}</h1>
           <p className="signin-tagline">
-            {context === 'academy' ? 'Use the same Lingo3 account for your courses, teachers and Academy personal space.' : 'A place to make your own learning material and study up to three languages at once.'}
+            {context === 'academy' ? academyT.tagline : 'A place to make your own learning material and study up to three languages at once.'}
           </p>
-          <p className="signin-blurb">
-            Add a word once in your own language. It comes back with the meaning,
-            gender and verb forms in every language you are learning, side by
-            side, and then returns for review exactly when you are about to
-            forget it.
-          </p>
-          <ul className="signin-points">
-            <li>
-              <strong>Three languages, one card.</strong> Each language is
-              scheduled on its own, so the one you find hard does not drag the
-              easy ones with it.
-            </li>
-            <li>
-              <strong>Works offline.</strong> Reviewing never needs a
-              connection — only adding new words does.
-            </li>
-            <li>
-              <strong>Your words, everywhere.</strong> Add on your computer,
-              review on your phone.
-            </li>
-          </ul>
+          {context === 'academy' ? <>
+            <p className="signin-blurb">{academyT.blurb}</p>
+            <ul className="signin-points"><li>{academyT.p1}</li><li>{academyT.p2}</li><li>{academyT.p3}</li></ul>
+          </> : <>
+            <p className="signin-blurb">
+              Add a word once in your own language. It comes back with the meaning,
+              gender and verb forms in every language you are learning, side by
+              side, and then returns for review exactly when you are about to
+              forget it.
+            </p>
+            <ul className="signin-points">
+              <li><strong>Three languages, one card.</strong> Each language is scheduled on its own, so the one you find hard does not drag the easy ones with it.</li>
+              <li><strong>Works offline.</strong> Reviewing never needs a connection — only adding new words does.</li>
+              <li><strong>Your words, everywhere.</strong> Add on your computer, review on your phone.</li>
+            </ul>
+          </>}
         </header>
 
         <form className="panel" onSubmit={submit}>
           <h2>
             {mode === 'in'
-              ? 'Sign in'
+              ? (context === 'academy' ? academyT.signIn : 'Sign in')
               : mode === 'up'
-                ? 'Create an account'
-                : 'Reset your password'}
+                ? (context === 'academy' ? academyT.create : 'Create an account')
+                : (context === 'academy' ? academyT.reset : 'Reset your password')}
           </h2>
 
           {mode === 'forgot' && (
             <p className="muted small">
-              Give the address you signed up with and we will send a link that
-              lets you set a new password.
+              {context === 'academy' ? academyT.resetHelp : 'Give the address you signed up with and we will send a link that lets you set a new password.'}
             </p>
           )}
 
           <label className="field">
-            <span>Email</span>
+            <span>{context === 'academy' ? academyT.email : 'Email'}</span>
             <input
               type="email"
               value={email}
@@ -129,7 +134,7 @@ export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy
               form, and it is nonsense. */}
           {mode !== 'forgot' && (
             <PasswordField
-              label="Password"
+              label={context === 'academy' ? academyT.password : 'Password'}
               value={password}
               onChange={setPassword}
               autoComplete={mode === 'in' ? 'current-password' : 'new-password'}
@@ -160,14 +165,14 @@ export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy
 
           <button className="primary big" type="submit" disabled={busy || waitingForCaptcha}>
             {busy
-              ? 'Working…'
+              ? (context === 'academy' ? academyT.working : 'Working…')
               : waitingForCaptcha
-                ? 'Checking you are human…'
+                ? (context === 'academy' ? academyT.checking : 'Checking you are human…')
               : mode === 'in'
-                ? 'Sign in'
+                ? (context === 'academy' ? academyT.signIn : 'Sign in')
                 : mode === 'up'
-                  ? 'Create account'
-                  : 'Send reset link'}
+                  ? (context === 'academy' ? academyT.create : 'Create account')
+                  : (context === 'academy' ? academyT.sendReset : 'Send reset link')}
           </button>
 
           {/* Not offered while resetting a password: the whole point of that
@@ -175,7 +180,7 @@ export function SignIn({ context = 'app', onBack }: { context?: 'app' | 'academy
           {mode !== 'forgot' && (
             <>
               <div className="signin-or">
-                <span>or</span>
+                <span>{context === 'academy' ? academyT.or : 'or'}</span>
               </div>
               <button
                 type="button"
