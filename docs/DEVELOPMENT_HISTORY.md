@@ -120,3 +120,7 @@ Major milestones:
 - routing/sitemap documentation introduced
 
 See older entries in `docs/DEVELOPMENT_HANDOFF.md` for detailed historical evidence.
+
+## 2026-11-17 — Academy release QA
+
+Corrected two TypeScript build errors and one broken regression assertion in the pending dashboard release. Fixed desktop header language-selector sizing, Light-theme hero contrast and checkbox sizing; completed Grammar/Settings form guidance. Reviewed current route map and live RLS-backed dashboard schema. Release status and verification limits are in DEVELOPMENT_HANDOFF.
