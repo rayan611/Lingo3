@@ -52,6 +52,7 @@ import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
  * service worker precaches every chunk, so they still open offline.
  */
 const Landing = lazyScreen(() => import('./ui/Landing'), 'Landing')
+const Academy = lazyScreen(() => import('./academy/Academy'), 'Academy')
 const Privacy = lazyScreen(() => import('./ui/Privacy'), 'Privacy')
 const Browse = lazyScreen(() => import('./ui/Browse'), 'Browse')
 const Translate = lazyScreen(() => import('./ui/Translate'), 'Translate')
@@ -196,6 +197,15 @@ export function App() {
       cancelled = true
     }
   }, [session, userId])
+
+  const cleanPath = path.replace(/\/+$/, '') || '/'
+  if (cleanPath === '/academy' || cleanPath === '/academy.html') {
+    return (
+      <Suspense fallback={screenFallback}>
+        <Academy userId={userId} email={email} sessionLoading={session === undefined} />
+      </Suspense>
+    )
+  }
 
   if (path.replace(/\/+$/, '') === '/privacy') {
     return (

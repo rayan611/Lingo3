@@ -171,10 +171,10 @@ export async function signUp(email: string, password: string, captchaToken?: str
  * all — everything after the redirect is handled by `detectSessionInUrl`,
  * which is what `onAuthStateChange` is already listening for.
  */
-export async function signInWithGoogle() {
+export async function signInWithGoogle(returnPath = '/') {
   const { error } = await supabase().auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: `${window.location.origin}/` },
+    options: { redirectTo: `${window.location.origin}${returnPath}` },
   })
   if (error) throw new Error(friendly(error.message))
 }

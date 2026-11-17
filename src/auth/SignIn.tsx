@@ -11,7 +11,7 @@ import { Captcha, captchaEnabled } from './Captcha'
 
 type Mode = 'in' | 'up' | 'forgot'
 
-export function SignIn() {
+export function SignIn({ context = 'app' }: { context?: 'app' | 'academy' } = {}) {
   const [mode, setMode] = useState<Mode>('in')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -65,12 +65,11 @@ export function SignIn() {
       <div className="signin">
         <header className="signin-intro">
           <p>
-            <a className="link" href="/showcase.html">Home / Showcase</a>
+            <a className="link" href={context === 'academy' ? '/academy' : '/showcase.html'}>{context === 'academy' ? 'Back to Academy' : 'Home / Showcase'}</a>
           </p>
-          <h1 className="signin-brand">Lingo3</h1>
+          <h1 className="signin-brand">{context === 'academy' ? 'Lingo3 Academy' : 'Lingo3'}</h1>
           <p className="signin-tagline">
-            A place to make your own learning material and study up to three
-            languages at once.
+            {context === 'academy' ? 'Use the same Lingo3 account for your courses, teachers and Academy personal space.' : 'A place to make your own learning material and study up to three languages at once.'}
           </p>
           <p className="signin-blurb">
             Add a word once in your own language. It comes back with the meaning,
@@ -184,7 +183,7 @@ export function SignIn() {
                   setError(null)
                   setNotice(null)
                   // No `busy` reset on success: the page is leaving.
-                  signInWithGoogle().catch((err) => {
+                  signInWithGoogle(context === 'academy' ? '/academy' : '/').catch((err) => {
                     setBusy(false)
                     setError(err instanceof Error ? err.message : String(err))
                   })
