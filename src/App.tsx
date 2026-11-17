@@ -100,7 +100,45 @@ function tabFromPath(pathname: string): Tab | null {
   return found ?? null
 }
 
+/**
+ * Product split:
+ * - Lingo3 App: self-study vocabulary/grammar/review workspace. It owns Dexie,
+ *   sync and the workspace routes.
+ * - Lingo3 Academy: human-led courses/teachers/Learning Space. It uses the
+ *   shared Supabase identity but MUST NOT open the App's Dexie database.
+ *
+ * Keep this route split above LingoApp. Mounting LingoApp while visiting
+ * /academy can open/upgrade IndexedDB unnecessarily and make repeated
+ * App <-> Academy navigation wait on a database lock.
+ * See docs/LINGO3_APP_ACADEMY_GUIDE.md before changing either product area.
+ */
 export function App() {
+  const [entryPath, setEntryPath] = useState(() => window.location.pathname)
+
+  useEffect(() => {
+    const onPop = () => setEntryPath(window.location.pathname)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  const cleanEntryPath = entryPath.replace(/\/+$/, '') || '/'
+  if (cleanEntryPath === '/academy' || cleanEntryPath === '/academy.html') {
+    return <AcademyEntry />
+  }
+
+  return <LingoApp />
+}
+
+function AcademyEntry() {
+  const { session, userId, email } = useSession()
+  return (
+    <Suspense fallback={screenFallback}>
+      <Academy userId={userId} email={email} sessionLoading={session === undefined} />
+    </Suspense>
+  )
+}
+
+function LingoApp() {
   const { session, userId, email, recovery, endRecovery } = useSession()
 
   /**
@@ -198,14 +236,6 @@ export function App() {
     }
   }, [session, userId])
 
-  const cleanPath = path.replace(/\/+$/, '') || '/'
-  if (cleanPath === '/academy' || cleanPath === '/academy.html') {
-    return (
-      <Suspense fallback={screenFallback}>
-        <Academy userId={userId} email={email} sessionLoading={session === undefined} />
-      </Suspense>
-    )
-  }
 
   if (path.replace(/\/+$/, '') === '/privacy') {
     return (
