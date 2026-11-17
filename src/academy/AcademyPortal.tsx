@@ -4,7 +4,6 @@ import { supabase } from '../auth/supabase'
 type Locale = 'en' | 'sv' | 'fa'
 type Course = { id:string; level_code:string; title_i18n:Record<string,string> }
 type Teacher = { id:string; user_id:string|null; display_name:string }
-type TeacherCourse = { teacher_id:string; course_id:string }
 type Enrollment = { id:string; student_id:string; course_id:string; teacher_id:string|null; status:string }
 type Space = {
   id:string
@@ -92,17 +91,15 @@ function dt(v:string|null){return v?new Intl.DateTimeFormat(undefined,{dateStyle
 function toIso(v:string){return new Date(v).toISOString()}
 
 export function AcademyPortal({
- locale,userId,courses,teachers,teacherCourses,selfTeacher,isAdmin,onNotice,onDataChanged
+ locale,userId,courses,teachers,selfTeacher,isAdmin,onNotice
 }:{
  locale:Locale
  userId:string
  courses:Course[]
  teachers:Teacher[]
- teacherCourses:TeacherCourse[]
  selfTeacher:Teacher|undefined
  isAdmin:boolean
  onNotice:(message:string)=>void
- onDataChanged:()=>Promise<void>|void
 }){
  const t=copy[locale]
  const [enrollments,setEnrollments]=useState<Enrollment[]>([])
