@@ -74,7 +74,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  useEffect(()=>{const fn=()=>setCompact(scrollY>80);fn();addEventListener('scroll',fn,{passive:true});return()=>removeEventListener('scroll',fn)},[])
  async function refresh(){
   setLoading(true)
-  const c=supabase()
+  const c:any=supabase()
   const courseFields='id,subject_code,level_code,title_i18n,description_i18n,topics_i18n,delivery_modes,price_sek,duration_minutes,telegram_url,status,sort_order'
   const teacherFields=userId
    ? 'id,user_id,display_name,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
