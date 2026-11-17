@@ -1,4 +1,4 @@
-Reviewed: 2026-11-17 · Version 0.7.5 · Code: PR #53 plus release/academy-review-20261117 (`src/App.tsx`, `src/academy/*`, `src/ui/GrammarManager.tsx`).
+Reviewed: 2026-11-17 · Version 0.7.5 · Code: merged PR #53 and #54; main `a5a2c9c8338dcb9f2ea1ab90f9e110a49f338d32` (`src/App.tsx`, `src/academy/*`, `src/ui/GrammarManager.tsx`).
 
 Current review: App and Academy share one session. App has a primary Academy tile; Academy has a direct App shortcut. Browser Back/Forward uses SPA history. Teacher dashboard is restricted to linked teachers; Admin Studio requires admin access. Student learning data requires sign-in and enrollment. Native date/time inputs retain labels; editable text fields show guidance. No route was added or removed in this QA release.
 

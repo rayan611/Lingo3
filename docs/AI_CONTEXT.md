@@ -1,3 +1,5 @@
+2026-11-17 latest release status: PR #53 dashboards merged as ed7e95e; PR #54 supplemental presentation/form QA merged as a5a2c9c8338dcb9f2ea1ab90f9e110a49f338d32. Local regression/typecheck/build pass. Dashboard DB schema already applied and RLS confirmed. New UI is NOT production-live: Vercel rejects deployment with 402 api-deployments-free-per-day (retryAfter 86400). Last verified production runtime remains a4381c9 / dpl_BTCtnsEB8vrDTxhw8ZvSSdYREJP6. Full viewport and signed-in role E2E pending; do not describe source/CSS checks as physical-device testing.
+
 # Lingo3 AI Development Context
 
 2026-11-17 auth/navigation invariant: Lingo3 App and Academy share exactly one browser Supabase SessionState owned by root App(). Do not mount separate useSession() hooks per product. Product switching inside lingo3.com must use src/lib/productNavigation.ts (same-document history navigation) rather than full-page href/location reload; OAuth itself remains an external redirect. The same Supabase auth user/account backs both products, while App Dexie remains App-only.
