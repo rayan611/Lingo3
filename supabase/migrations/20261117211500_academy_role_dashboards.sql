@@ -186,6 +186,21 @@ begin
       order by u.created_at desc limit lim
     ) x;
     return r;
+  elsif p_op='academy-students' then
+    select jsonb_build_object('items',coalesce(jsonb_agg(x order by x.last_enrollment desc),'[]'::jsonb)) into r
+    from (
+      select u.id as user_id,u.email,s.display_name,
+             count(*) filter(where e.status='active')::integer as active_courses,
+             array_remove(array_agg(distinct c.subject_code),null) as languages,
+             max(e.created_at) as last_enrollment
+      from public.academy_enrollments e
+      join auth.users u on u.id=e.student_id
+      left join public.user_settings s on s.user_id=u.id
+      left join public.academy_courses c on c.id=e.course_id
+      where e.status in ('interested','active','completed')
+      group by u.id,u.email,s.display_name
+    ) x;
+    return r;
   elsif p_op='academy-teachers' then
     select jsonb_build_object('items',coalesce(jsonb_agg(x order by x.display_name),'[]'::jsonb)) into r
     from (
