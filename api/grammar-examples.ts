@@ -13,14 +13,14 @@ function json(body: unknown, status = 200) { return new Response(JSON.stringify(
 async function respond(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405)
   const auth = await authenticateAiRequest(req)
-  if (!auth.ok) return json({ error: auth.message }, auth.status)
+  if ('message' in auth) return json({ error: auth.message }, auth.status)
   let body: unknown
   try { body = await req.json() } catch { return json({ error: 'Invalid request' }, 400) }
   const parsed = schema.safeParse(body)
   if (!parsed.success) return json({ error: 'Invalid grammar input' }, 400)
   if (!providers.length) return json({ error: 'AI provider unavailable' }, 503)
   const rate = await enforceAiRateLimit(req, auth.userId, 'story', 20)
-  if (!rate.allowed) return json({ error: rate.message }, rate.status)
+  if ('message' in rate) return json({ error: rate.message }, rate.status)
   const { lang, nativeLang, title, explanation } = parsed.data
   const prompt = `Create 3 to 4 DIFFERENT natural, grammatically accurate examples that demonstrate this grammar rule. Sentences MUST be in ${LANG_PROMPT_NAMES[lang]}; translations MUST be in ${LANG_PROMPT_NAMES[nativeLang]}. Return only tool JSON. Do not invent unsupported grammar. Rule: ${title}\nNotes: ${explanation.slice(0, 10000)}`
   const result = await firstAnswer(providers.map(provider => ({
@@ -36,7 +36,7 @@ async function respond(req: Request): Promise<Response> {
     },
     read: provider === 'gemini' ? (data: unknown) => { try { return JSON.parse((data as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> }).candidates?.[0]?.content?.parts?.[0]?.text ?? '') } catch { return null } } : provider === 'anthropic' ? (data: unknown) => (data as { content?: Array<{ type: string; name?: string; input?: unknown }> }).content?.find(x => x.type === 'tool_use' && x.name === tool.name)?.input : readGroq(tool.name),
   })), 45000, 'grammar-examples', 'AI unavailable')
-  if (!result.ok) return json({ error: result.error }, result.status)
+  if ('error' in result) return json({ error: result.error }, result.status)
   const checked = resultSchema.safeParse(result.value)
   return checked.success ? json(checked.data) : json({ error: 'Invalid examples' }, 502)
 }

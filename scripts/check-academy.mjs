@@ -8,6 +8,14 @@ const showcase = read('public/showcase.html')
 const legacy = read('public/academy.html')
 const guide = read('docs/LINGO3_APP_ACADEMY_GUIDE.md')
 const landing = read('src/ui/Landing.tsx')
+const portal = read('src/academy/AcademyPortal.tsx')
+const booking = read('src/academy/AcademyBookingDialog.tsx')
+const mvpMigration = read('supabase/migrations/20261117160000_academy_real_mvp.sql')
+const labelMigration = read('supabase/migrations/20261117161000_academy_student_labels.sql')
+const hardeningMigration = read('supabase/migrations/20261117162000_academy_mvp_hardening.sql')
+const cancelMigration = read('supabase/migrations/20261117163000_academy_slot_cancel_fix.sql')
+const advisorMigration = read('supabase/migrations/20261117164000_academy_advisor_cleanup.sql')
+const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
 
 const checks = [
   ['Academy route is split before LingoApp', app.includes('return <AcademyEntry />') && app.indexOf('return <AcademyEntry />') < app.indexOf('function LingoApp()')],
@@ -25,6 +33,18 @@ const checks = [
   ['Legacy Academy redirects to interactive route', legacy.includes('url=/academy')],
   ['Showcase iframe has no resize feedback observer', !showcase.includes('ResizeObserver')],
   ['Welcome gateway contains no unreachable legacy second page', landing.includes("return (\n    <main") && !landing.includes('className="lx"') && !landing.includes('function Deck(')],
+  ['Academy uses atomic enrollment activation RPC', academy.includes("rpc('academy_activate_enrollment'") && !academy.includes("from('academy_learning_spaces').insert")],
+  ['Academy catalogue avoids anonymous select-star', academy.includes('const courseFields=') && academy.includes('const teacherFields=')],
+  ['Trial booking captures course time and message', booking.includes("academy_availability") && booking.includes("preferred_start") && booking.includes("student_message")],
+  ['Teacher portal has availability and session workflow', portal.includes("academy_availability") && portal.includes("academy_bookings") && portal.includes("confirmed_start")],
+  ['Learning Space has resources homework and messaging', portal.includes("academy_resources") && portal.includes("academy_messages") && portal.includes("student_response")],
+  ['Academy MVP migration creates protected workflow tables', mvpMigration.includes("create table if not exists public.academy_availability") && mvpMigration.includes("create table if not exists public.academy_resources") && mvpMigration.includes("create table if not exists public.academy_messages")],
+  ['Student labels are added for teacher workflows', labelMigration.includes('student_display_name')],
+  ['Booking and note hardening migration exists', hardeningMigration.includes('academy_guard_note_update') && hardeningMigration.includes('Confirmed bookings may only be cancelled')],
+  ['Student cancellation releases booked slots', cancelMigration.includes('security definer') && cancelMigration.includes("status = 'available'")],
+  ['Academy booking policies are consolidated', advisorMigration.includes('academy bookings member update') && advisorMigration.includes('academy_messages_sender_idx')],
+  ['Database prevents teacher double-booking', overlapMigration.includes('academy_guard_availability_overlap') && overlapMigration.includes('Teacher already has a confirmed session at this time')],
+  ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
 
