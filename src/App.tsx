@@ -13,7 +13,7 @@ import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
 import { authConfigured } from './auth/supabase'
-import { useSession } from './auth/useSession'
+import { useSession, type SessionState } from './auth/useSession'
 import { ResetPassword } from './auth/ResetPassword'
 import { SignIn } from './auth/SignIn'
 import { sync, type SyncResult } from './sync/sync'
@@ -113,6 +113,13 @@ function tabFromPath(pathname: string): Tab | null {
  * See docs/LINGO3_APP_ACADEMY_GUIDE.md before changing either product area.
  */
 export function App() {
+  /**
+   * One shared Supabase session lifecycle for the entire Lingo3 document.
+   * App and Academy are two product surfaces of the same account, not two
+   * independent auth clients. Keeping this hook above the route split avoids
+   * tearing down/recreating auth listeners while moving between products.
+   */
+  const sessionState = useSession()
   const [entryPath, setEntryPath] = useState(() => window.location.pathname)
 
   useEffect(() => {
@@ -123,14 +130,14 @@ export function App() {
 
   const cleanEntryPath = entryPath.replace(/\/+$/, '') || '/'
   if (cleanEntryPath === '/academy' || cleanEntryPath === '/academy.html') {
-    return <AcademyEntry />
+    return <AcademyEntry sessionState={sessionState} />
   }
 
-  return <LingoApp />
+  return <LingoApp sessionState={sessionState} />
 }
 
-function AcademyEntry() {
-  const { session, userId, email } = useSession()
+function AcademyEntry({ sessionState }: { sessionState: SessionState }) {
+  const { session, userId, email } = sessionState
   return (
     <Suspense fallback={screenFallback}>
       <Academy userId={userId} email={email} sessionLoading={session === undefined} />
@@ -138,8 +145,8 @@ function AcademyEntry() {
   )
 }
 
-function LingoApp() {
-  const { session, userId, email, recovery, endRecovery } = useSession()
+function LingoApp({ sessionState }: { sessionState: SessionState }) {
+  const { session, userId, email, recovery, endRecovery } = sessionState
 
   /**
    * The privacy policy, at /privacy.
@@ -190,6 +197,8 @@ function LingoApp() {
   // which greets the visitor by the inviter's name.
   const [inviter] = useState(() => inviterFromPath(window.location.pathname))
   const [showLanding, setShowLanding] = useState(() => {
+    const directApp = Boolean(window.history.state?.lingo3DirectApp)
+    if (directApp) return false
     const isRoot = (window.location.pathname.replace(/\/+$/, '') || '/') === '/'
     return isRoot || shouldShowLanding() || inviter !== ''
   })
