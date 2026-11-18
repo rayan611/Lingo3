@@ -782,6 +782,10 @@ function TrainingCenter({ set, active }: { set: (tab: Tab) => void; active: Tab 
           icon={item.icon}>
           <strong>{item.title}</strong><small>{item.detail}</small>
         </Tile>)}
+        <button className="tile tile-academy" type="button" onClick={() => navigateProduct('/academy')}>
+          <span className="tile-icon" aria-hidden="true">🎓</span>
+          <span className="tile-label"><strong>Academy</strong><small>Explore courses and lessons with teachers.</small></span>
+        </button>
       </nav>
     </section>
   )

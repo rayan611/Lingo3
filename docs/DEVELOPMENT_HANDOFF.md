@@ -1,3 +1,5 @@
+2026-11-18 · v0.7.5 · based on 41e49ac. Training Center now links to /academy alongside its activities. Online navigation requests fresh HTML; offline navigation can use the precached app shell. No route removed.
+
 2026-11-18 · v0.7.5 · Academy navigation, based on 70a0f9a. Groups open with click, tap or keyboard, stay open during pointer movement, and close with selection, outside click or Escape. Mobile uses one column. Routes and browser Back behavior unchanged. Preview release only until required Supabase migrations are verified.
 
 2026-11-18 · v0.7.5 · Teams/Zoom manual meeting links, based on 5b4d1fc. /academy/my Teacher Space has private reusable links and per-booking primary/backup selection; Student Space displays participant links for confirmed/in-progress bookings. Paths and Back behavior unchanged. Apply 20261118050000 then 20261118131500 before production deployment. Supabase rehearsal confirmation expired. Automatic provider creation and embedded video remain pending.
