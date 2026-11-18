@@ -96,7 +96,34 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  const closeDialog=()=>{if(window.history.state?.academyDialog)window.history.back();else setDialog(null)}
  useEffect(()=>{if(userId&&dialog?.type==='login'){const {academyDialog:_old,...state}=window.history.state??{};window.history.replaceState(state,'',window.location.href);setDialog(null)}},[userId,dialog])
  const navRef=useRef<HTMLElement|null>(null)
- useEffect(()=>{const escape=(e:KeyboardEvent)=>{if(e.key==='Escape'&&(window.history.state?.academySettings||window.history.state?.academyDialog))window.history.back()};window.addEventListener('keydown',escape);return()=>window.removeEventListener('keydown',escape)},[])
+ useEffect(()=>{
+  function dismissOutside(event:PointerEvent){
+   if(event.target instanceof Element && !event.target.closest('.academy-top')){
+    navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{menu.open=false})
+    setMobileMenuOpen(false)
+   }
+  }
+  function escape(event:KeyboardEvent){
+   if(event.key!=='Escape') return
+   if(window.history.state?.academySettings||window.history.state?.academyDialog){
+    window.history.back()
+    return
+   }
+   const menu=navRef.current?.querySelector<HTMLDetailsElement>('details[open]')
+   if(menu){
+    menu.open=false
+    menu.querySelector('summary')?.focus()
+   }else{
+    setMobileMenuOpen(false)
+   }
+  }
+  window.addEventListener('pointerdown',dismissOutside)
+  window.addEventListener('keydown',escape)
+  return()=>{
+   window.removeEventListener('pointerdown',dismissOutside)
+   window.removeEventListener('keydown',escape)
+  }
+ },[])
  const t=C[locale],dir=locale==='fa'?'rtl':'ltr'
 
 
@@ -150,7 +177,6 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  const mode=(m:string)=>m==='individual_online'?t.individual:m==='small_group_online'?t.group:m==='offline_intro'?t.offline:m
  const closeMenus=(except?:HTMLDetailsElement)=>{navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{if(menu!==except)menu.open=false})}
  const onMenuToggle=(event:React.SyntheticEvent<HTMLDetailsElement>)=>{const menu=event.currentTarget;if(menu.open)closeMenus(menu)}
- const closeMenuOnLeave=(event:React.MouseEvent<HTMLDetailsElement>)=>{event.currentTarget.open=false}
  const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);setDialog(null);navigateProduct(ACADEMY_PATHS[next],{replace:Boolean(window.history.state?.academyDialog||window.history.state?.academySettings)});scrollTo({top:0,behavior:'smooth'})}
  async function addInterest(course:Course){if(!userId){openDialog({type:'login'});return}if(studentCourseIds.has(course.id))return;const {error}=await supabase().from('academy_enrollments').insert({student_id:userId,course_id:course.id,teacher_id:null,status:'interested'});setNotice(error?error.message:t.added);if(!error){await refresh();go('personal')}}
 
@@ -171,14 +197,14 @@ export function Academy({userId,email,sessionLoading=false}:Props){
 
  return <div className="academy" dir={dir} data-theme={theme} data-page={page}>
   <header className={'academy-top '+(compact?'is-compact':'')}><div className="academy-brand-group"><button className="academy-brand" type="button" onClick={()=>{closeMenus();setMobileMenuOpen(false);go('home')}}>Lingo3 <span>Academy</span></button>{userId?<button className="academy-user" onClick={()=>go('personal')}>{t.hello} {displayName||email}</button>:<button className="academy-login" onClick={()=>openDialog({type:'login'})}>{t.login}</button>}</div>
-   <button className="academy-mobile-toggle" type="button" aria-label="Menu" aria-expanded={mobileMenuOpen} onClick={()=>{closeMenus();setMobileMenuOpen(v=>!v)}}><span></span><span></span><span></span></button>
-   <nav className={'academy-nav '+(mobileMenuOpen?'is-open':'')} ref={navRef}>
+   <button className="academy-mobile-toggle" type="button" aria-label="Menu" aria-controls="academy-navigation" aria-expanded={mobileMenuOpen} onClick={()=>{closeMenus();setMobileMenuOpen(v=>!v)}}><span></span><span></span><span></span></button>
+   <nav id="academy-navigation" className={'academy-nav '+(mobileMenuOpen?'is-open':'')} ref={navRef}>
     <button onClick={()=>go('home')}>{t.home}</button>
-    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('path')}>{t.path}</button><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('levels')}>{t.levels}</button></div></details>
-    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin')}>{t.admin}</button>}{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
+    <details onToggle={onMenuToggle}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('path')}>{t.path}</button><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('levels')}>{t.levels}</button></div></details>
+    <details onToggle={onMenuToggle}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal')}>{t.personal}</button>{isAdmin&&<button onClick={()=>go('admin')}>{t.admin}</button>}{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
     <button onClick={()=>{closeMenus();setMobileMenuOpen(false);navigateProduct('/',{directApp:true})}}>{t.app}</button>
-    <details onToggle={onMenuToggle} onMouseLeave={closeMenuOnLeave}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('about')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
-    <button type="button" aria-expanded={settingsOpen} onClick={()=>{if(settingsOpen){window.history.back()}else{window.history.pushState({...window.history.state,academySettings:true},'',window.location.href);setSettingsOpen(true)}}}>{locale==='fa'?'تنظیمات':locale==='sv'?'Inställningar':locale==='de'?'Einstellungen':'Settings'} ⚙</button>
+    <details onToggle={onMenuToggle}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('about')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
+    <button type="button" aria-expanded={settingsOpen} onClick={()=>{closeMenus();setMobileMenuOpen(false);if(settingsOpen){window.history.back()}else{window.history.pushState({...window.history.state,academySettings:true},'',window.location.href);setSettingsOpen(true)}}}>{locale==='fa'?'تنظیمات':locale==='sv'?'Inställningar':locale==='de'?'Einstellungen':'Settings'} ⚙</button>
    </nav>
   </header>
   {settingsOpen&&<section className="academy-settings-panel" aria-label="Academy settings"><div className="editor-head"><h2>{locale==='fa'?'تنظیمات':'Settings'}</h2><button aria-label="Close settings" onClick={()=>window.history.back()}>×</button></div><label>{t.language}<select className="academy-language" value={locale} onChange={e=>void setLocale(e.target.value as Locale)}><option value="en">English</option><option value="sv">Svenska</option><option value="de">Deutsch</option><option value="fa">فارسی</option></select></label><label>{locale==='fa'?'ظاهر':'Appearance'}<select value={theme} onChange={e=>void setTheme(e.target.value as AcademyTheme)}><option value="light">{themeLabels[locale].light}</option><option value="dark">{themeLabels[locale].dark}</option></select></label><p>{userId?(locale==='fa'?'انتخاب شما در حساب ذخیره می‌شود.':'Your choice is saved to your account.'):(locale==='fa'?'برای همگام‌سازی بین دستگاه‌ها وارد حساب شوید.':'Sign in to sync this choice across devices.')}</p>{preferenceError&&<p role="alert">{preferenceError}</p>}</section>}

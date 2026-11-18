@@ -27,7 +27,7 @@ const checks = [
   ['Academy route is split before LingoApp', app.includes("cleanEntryPath.startsWith('/academy/')") && app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],
   ['LingoApp owns Dexie init', app.includes('function LingoApp({ sessionState }') && app.includes('await openForUser(userId)') && app.indexOf('await openForUser(userId)') > app.indexOf('function LingoApp({ sessionState }')],
   ['Academy source does not import App Dexie', !/from ['"]\.\.\/db\//.test(academy) && !academy.includes('dexie')],
-  ['Academy grouped menus close on mouse leave', (academy.match(/onMouseLeave={closeMenuOnLeave}/g) || []).length === 3],
+  ['Academy grouped menus stay open across pointer movement', !academy.includes('onMouseLeave') && academy.includes("window.addEventListener('pointerdown',dismissOutside)")],
   ['Academy grouped menus coordinate open state', (academy.match(/onToggle={onMenuToggle}/g) || []).length === 3],
   ['Academy route navigation closes menus', academy.includes("const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);setDialog(null);navigateProduct(ACADEMY_PATHS[next]")],
   ['Academy has real sub-page routes', ['/academy/path','/academy/courses','/academy/teachers','/academy/levels','/academy/my','/academy/admin','/academy/about','/academy/pricing','/academy/resources','/academy/contact'].every(path => academy.includes(path))],
