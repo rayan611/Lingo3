@@ -8,11 +8,13 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "check": "tsx scripts/check-queries.ts && tsx scripts/check-scheduling.ts && tsx scripts/check-sync.ts && tsx scripts/check-collections.ts && tsx scripts/check-api.mts && tsx scripts/check-invite.ts && tsx scripts/check-waiting-review.ts && tsx scripts/check-shared-vocab.ts && tsx scripts/check-grammar.ts && tsx scripts/check-grammar-authoring.ts && tsx scripts/check-vocab-010.ts && tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs",
+    "check": "node --import tsx scripts/check-queries.ts && node --import tsx scripts/check-scheduling.ts && node --import tsx scripts/check-sync.ts && node --import tsx scripts/check-collections.ts && node --import tsx scripts/check-api.mts && node --import tsx scripts/check-invite.ts && node --import tsx scripts/check-waiting-review.ts && node --import tsx scripts/check-shared-vocab.ts && node --import tsx scripts/check-grammar.ts && node --import tsx scripts/check-grammar-authoring.ts && node --import tsx scripts/check-vocab-010.ts && node --import tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs && npm run check:academy-behavior && npm run check:academy-preferences",
     "test": "npm run check",
     "check:academy": "node scripts/check-academy.mjs",
     "check:docs": "node scripts/check-development-docs.mjs",
-    "check:auth-navigation": "node scripts/check-auth-navigation.mjs"
+    "check:auth-navigation": "node scripts/check-auth-navigation.mjs",
+    "check:academy-behavior": "node scripts/check-academy-behavior.mjs",
+    "check:academy-preferences": "node scripts/check-academy-preferences.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
@@ -29,6 +31,7 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "fake-indexeddb": "^6.2.5",
+    "react-test-renderer": "^18.3.1",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3",
     "vite": "^6.0.7",

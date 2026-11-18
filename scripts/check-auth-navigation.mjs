@@ -22,7 +22,7 @@ const checks = [
   ['Google OAuth uses root callback and remembers Academy return', session.includes("OAUTH_RETURN_PATH_KEY = 'lingo3.oauthReturnPath'") && session.includes("options: { redirectTo: \`\${window.location.origin}/\` }") && session.includes("saved.path === '/academy'")],
   ['Shared session restores Academy after OAuth', app.includes('consumeOAuthReturnPath()') && app.includes('if (returnPath) navigateProduct(returnPath)')],
   ['Welcome Academy entry uses SPA navigation', landing.includes("navigateProduct('/academy')")],
-  ['Embedded showcase Academy entry posts to parent', showcase.includes('showcase-academy') && landing.includes("event.data?.type === 'showcase-academy'")],
+  ['Legacy showcase bridge and direct shared-home Academy entry', showcase.includes('showcase-academy') && landing.includes("navigateProduct('/academy')") && !landing.includes('<iframe')],
   ['Embedded showcase App entry posts to parent', showcase.includes('showcase-open') && showcaseHtml.includes('data-showcase-app')],
 ]
 

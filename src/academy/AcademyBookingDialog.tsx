@@ -125,6 +125,7 @@ export function AcademyBookingDialog({
   const [slotId, setSlotId] = useState('')
   const [customStart, setCustomStart] = useState('')
   const [message, setMessage] = useState('')
+  const [sessionType,setSessionType]=useState('trial')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
@@ -161,25 +162,15 @@ export function AcademyBookingDialog({
       return
     }
 
-    setBusy(true)
-    setError('')
-    const preferredStart = slot?.starts_at ?? new Date(customStart).toISOString()
-    const { error: insertError } = await supabase().from('academy_bookings').insert({
-      student_id: userId,
-      teacher_id: teacher.id,
-      course_id: courseId,
-      availability_id: slot?.id ?? null,
-      session_type: 'trial',
-      preferred_start: preferredStart,
-      student_message: message.trim() || null,
-      status: 'requested',
-    })
-    setBusy(false)
-    if (insertError) {
-      setError(insertError.message)
-      return
-    }
-    onSuccess(t.sent)
+    if(busy)return
+    const date=new Date(slot?.starts_at??customStart)
+    if(!Number.isFinite(date.getTime())||date.getTime()<=Date.now()){setError(locale==='fa'?'زمان معتبر در آینده انتخاب کن.':'Choose a valid future lesson time.');return}
+    setBusy(true);setError('')
+    try{
+     const {error:insertError}=await supabase().from('academy_bookings').insert({student_id:userId,teacher_id:teacher.id,course_id:courseId,availability_id:slot?.id??null,session_type:sessionType,preferred_start:date.toISOString(),student_message:message.trim()||null,status:'requested'})
+     if(insertError)throw insertError
+     onSuccess(t.sent)
+    }catch(error){setError(error instanceof Error?error.message:String((error as {message?:string}).message??error))}finally{setBusy(false)}
   }
 
   return (
@@ -234,6 +225,7 @@ export function AcademyBookingDialog({
           />
         </label>
 
+        <label>{locale==='fa'?'نوع جلسه':'Lesson type'}<select value={sessionType} onChange={e=>setSessionType(e.target.value)}><option value="trial">{locale==='fa'?'آزمایشی':'Trial'}</option><option value="individual">{locale==='fa'?'خصوصی':'Individual'}</option><option value="small_group">{locale==='fa'?'گروه کوچک':'Small group'}</option><option value="offline_intro">{locale==='fa'?'معرفی حضوری':'Offline introduction'}</option></select></label>
         <label>
           {t.message}
           <textarea placeholder="e.g. I would like to focus on conversation and pronunciation." value={message} maxLength={3000} onChange={(event) => setMessage(event.target.value)} />

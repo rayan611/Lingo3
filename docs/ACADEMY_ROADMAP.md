@@ -1,3 +1,5 @@
+2026-11-18 source implementation update: workflow integrity, shared teacher/student panels, account UI preferences, compact shared homepage/header, admin enrollment operations and explicit App classroom snapshots/grammar resource copies are implemented on fix/academy-complete-workflows-20261118, not yet released. SQL/React test evidence and remaining migration/browser/deployment gates: docs/ACADEMY_RELEASE_2026-11-18.md. Earlier “completed” labels below refer to previous production baseline, not full acceptance of this batch.
+
 # Lingo3 Academy Roadmap
 
 Reviewed: 2026-11-17  

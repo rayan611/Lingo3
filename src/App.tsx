@@ -45,6 +45,8 @@ import { shouldShowLanding } from './ui/landingSeen'
 import { inviterFromPath } from './lib/invite'
 import { lazyScreen } from './ui/lazyScreen'
 import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
+import {AcademyBridge} from './ui/AcademyBridge'
+import {LANGS} from './db/langs'
 import { navigateProduct } from './lib/productNavigation'
 
 /**
@@ -147,7 +149,7 @@ function AcademyEntry({ sessionState }: { sessionState: SessionState }) {
   const { session, userId, email } = sessionState
   return (
     <Suspense fallback={screenFallback}>
-      <Academy userId={userId} email={email} sessionLoading={session === undefined} />
+      <Academy key={userId??'guest'} userId={userId} email={email} sessionLoading={session === undefined} />
     </Suspense>
   )
 }
@@ -313,6 +315,8 @@ function Workspace({
   email: string | null
 }) {
   const [tab, setTab] = useState<Tab>(() => tabFromPath(window.location.pathname) ?? 'add')
+  const requestedAcademyLang=new URLSearchParams(window.location.search).get('academyLang')
+  const academyLang=LANGS.find(l=>l===requestedAcademyLang)
   /**
    * Bumped by pressing Add a word (tile or logo): AddWord is keyed on it, so
    * the screen comes back empty — no word in the box, no card, no preview —
@@ -330,7 +334,7 @@ function Workspace({
   // predictably without changing the URL or disturbing the privacy route.
   useEffect(() => {
     const onTabPop = (event: PopStateEvent) => {
-      const previous = event.state?.lingo3Tab
+      const previous = event.state?.lingo3Tab ?? tabFromPath(window.location.pathname)
       // Only a real tab change may set the flag: an in-screen history entry
       // (the word page inside Review) pops back to the same tab, and a flag
       // left set there would swallow the next tab's history entry.
@@ -357,7 +361,7 @@ function Workspace({
       window.history.replaceState(
         { ...(window.history.state ?? {}), lingo3Tab: tab },
         '',
-        onScreenPath ? TAB_PATHS[tab] : undefined,
+        onScreenPath ? TAB_PATHS[tab]+window.location.search+window.location.hash : undefined,
       )
       return
     }
@@ -622,6 +626,8 @@ function Workspace({
 
         {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
 
+        {userId&&(tab==='browse'||tab==='grammar')&&<AcademyBridge key={userId+tab} userId={userId} kind={tab==='browse'?'words':'grammar'} languages={activeTargets(settings)}/>}
+
         {tab === 'add' && <AddWord key={addKey} settings={settings} />}
 
         {tab !== 'add' && (
@@ -633,9 +639,9 @@ function Workspace({
               <Training settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'read' && <StoryMode settings={settings} />}
-            {tab === 'browse' && <Browse settings={settings} />}
+            {tab === 'browse' && <Browse settings={settings} initialLang={academyLang} />}
             {tab === 'translate' && <Translate settings={settings} />}
-            {tab === 'grammar' && <GrammarManager learningLangs={activeTargets(settings)} nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={activeTargets(settings)[0] ?? settings.nativeLang} />}
+            {tab === 'grammar' && <GrammarManager learningLangs={activeTargets(settings)} nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={academyLang&&activeTargets(settings).includes(academyLang)?academyLang:activeTargets(settings)[0] ?? settings.nativeLang} />}
             {tab === 'settings' && (
               <SettingsPanel
                 settings={settings}

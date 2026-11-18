@@ -17,6 +17,8 @@ const hardeningMigration = read('supabase/migrations/20261117162000_academy_mvp_
 const cancelMigration = read('supabase/migrations/20261117163000_academy_slot_cancel_fix.sql')
 const advisorMigration = read('supabase/migrations/20261117164000_academy_advisor_cleanup.sql')
 const overlapMigration = read('supabase/migrations/20261117165000_academy_double_booking_guard.sql')
+const workflowMigration=read('supabase/migrations/20261118050000_academy_workflow_integrity.sql')
+const preferences=read('src/academy/preferences.ts')
 const dashboardMigration = read('supabase/migrations/20261117211500_academy_role_dashboards.sql')
 
 const checks = [
@@ -31,12 +33,12 @@ const checks = [
   ['Academy has real sub-page routes', ['/academy/path','/academy/courses','/academy/teachers','/academy/levels','/academy/my','/academy/admin','/academy/about','/academy/pricing','/academy/resources','/academy/contact'].every(path => academy.includes(path))],
   ['Academy renders routed pages conditionally', ["page==='home'","page==='courses'","page==='teachers'","page==='personal'","page==='admin'"].every(x=>academy.includes(x))],
   ['Admin Studio remains role-conditional', academy.includes("isAdmin&&<section") && academy.includes('id="admin-studio"')],
-  ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">DE</option>')],
+  ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">Deutsch</option>')],
   ['App primary navigation contains one Academy mosaic tile', (app.match(/tile tile-academy/g)||[]).length===1 && app.includes('onAcademy={() => navigateProduct(\'/academy\')}') && !app.includes('academy-entry-card')],
-  ['Student dashboard links App words and grammar', portal.includes("navigateProduct('/words',{directApp:true})") && portal.includes("navigateProduct('/grammar',{directApp:true})") && portal.includes('academy-language-dashboard')],
+  ['Student dashboard links App words and grammar', portal.includes("navigateProduct('/words?academyLang='") && portal.includes("navigateProduct('/grammar?academyLang='") && portal.includes('academy-language-dashboard')],
   ['Teacher role gets exclusive dashboard outside admin', portal.includes('const teacherOnly=Boolean(selfTeacher&&!isAdmin)') && portal.includes('academy-week-board')],
   ['Admin teacher lookup uses guarded RPC', academy.includes("rpc('academy_admin_search_users'") && academy.includes('academy-user-results')],
-  ['Academy defaults to light theme with persistent dark toggle', academy.includes("localStorage.getItem('lingo3.academy.theme')==='dark'?'dark':'light'") && academy.includes('academy-theme-toggle') && css.includes('.academy[data-theme=light]')],
+  ['Academy defaults to light theme with persistent dark toggle', preferences.includes("'light'") && academy.includes('academy-settings-panel') && academy.includes('useAcademyPreferences(userId)') && css.includes('.academy[data-theme=light]')],
   ['Academy mobile navigation is collapsible', academy.includes('academy-mobile-toggle') && academy.includes("mobileMenuOpen?'is-open':''") && css.includes('.academy-nav.is-open')],
   ['Academy login follows selected locale', academy.includes('locale={locale}') && signIn.includes("type AuthLocale = 'en' | 'sv' | 'de' | 'fa'") && signIn.includes("de:{back:'Zurück zur Academy'")],
   ['Persian RTL remains enabled', academy.includes("locale==='fa'?'rtl':'ltr'") && css.includes('.academy[dir=rtl]')],
@@ -65,7 +67,7 @@ const checks = [
   ['Teacher can generate recurring weekly availability', portal.includes('async function addWeeklySlots()') && portal.includes('weeklyDays') && portal.includes('Create weekly times')],
   ['Teacher resources support lesson grammar and useful links', ['lesson','grammar','link'].every(x=>dashboardMigration.includes("'"+x+"'")) && portal.includes('<option value="lesson">') && portal.includes('<option value="grammar">') && portal.includes('<option value="link">')],
   ['Role-dashboard migration has one canonical language table definition', (dashboardMigration.match(/create table if not exists public\.academy_languages/g)||[]).length===1 && !dashboardMigration.includes('lesson_note')],
-  ['Test-result writes are scoped to matching learning space', /ls\.id=learning_space_id\s+and ls\.student_id=student_id\s+and ls\.teacher_id=teacher_id/.test(dashboardMigration)],
+  ['Current migration qualifies classroom identity columns (SQL workflow test verifies enforcement)', workflowMigration.includes('ls.student_id=academy_test_results.student_id') && workflowMigration.includes('ls.teacher_id=academy_session_summaries.teacher_id')],
   ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]

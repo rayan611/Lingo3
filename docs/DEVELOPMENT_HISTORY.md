@@ -124,3 +124,7 @@ See older entries in `docs/DEVELOPMENT_HANDOFF.md` for detailed historical evide
 ## 2026-11-17 — Academy release QA
 
 Corrected two TypeScript build errors and one broken regression assertion in the pending dashboard release. Fixed desktop header language-selector sizing, Light-theme hero contrast and checkbox sizing; completed Grammar/Settings form guidance. Reviewed current route map and live RLS-backed dashboard schema. Release status and verification limits are in DEVELOPMENT_HANDOFF.
+
+## 2026-11-18 — Academy workflow integrity and compact shared homepage (feature source)
+
+Completed the role-workflow source batch and added real SQL/React behavioral verification alongside existing source checks. Added account-scoped UI preferences, compact homepage/header, explicit classroom sharing and grammar resource copying. Source is release-gated on the unapplied permanent database migration and browser acceptance; see ACADEMY_RELEASE_2026-11-18.md.

@@ -248,7 +248,11 @@ async function main() {
 
   await check('moving a word changes its list and nothing else', async () => {
     const work = (await listCollections()).find((c) => c.name === 'Words at work')!
-    const concept = (await db.concepts.toArray()).find((c) => !c.deletedAt)!
+    // Use an isolated fixture: random UUID ordering must not move the export anchor out of A1.
+    const fixtureId=newId(),fixtureNow=Date.now()
+    await db.concepts.add({id:fixtureId,lemma:'movement fixture',sourceLang:'sv',pos:'other',category:'uncategorised',createdAt:fixtureNow,updatedAt:fixtureNow})
+    await db.cards.add(makeCard(fixtureId,'sv'))
+    const concept=(await db.concepts.get(fixtureId))!
     const cardsBefore = await db.cards.where('conceptId').equals(concept.id).toArray()
     await moveWord(concept.id, work.id)
     const after = await db.concepts.get(concept.id)
@@ -296,7 +300,11 @@ async function main() {
     const all = await listCollections()
     const uni = all.find((c) => c.name === 'Evening class')!
     const gone = await createCollection('Short-lived', { plan: 'full' })
-    const concept = (await db.concepts.toArray()).find((c) => !c.deletedAt)!
+    // Use an isolated fixture: random UUID ordering must not move the export anchor out of A1.
+    const fixtureId=newId(),fixtureNow=Date.now()
+    await db.concepts.add({id:fixtureId,lemma:'movement fixture',sourceLang:'sv',pos:'other',category:'uncategorised',createdAt:fixtureNow,updatedAt:fixtureNow})
+    await db.cards.add(makeCard(fixtureId,'sv'))
+    const concept=(await db.concepts.get(fixtureId))!
     await moveWord(concept.id, gone.id)
     await deleteCollection(gone.id, uni.id)
     if (collectionOf((await db.concepts.get(concept.id))!) !== uni.id) {
