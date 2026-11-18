@@ -98,7 +98,7 @@ function dt(v:string|null){return v?new Intl.DateTimeFormat(undefined,{dateStyle
 function toIso(v:string){return new Date(v).toISOString()}
 
 export function AcademyPortal({
- locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId
+ locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view
 }:{
  locale:Locale
  userId:string
@@ -107,6 +107,7 @@ export function AcademyPortal({
  selfTeacher:Teacher|undefined
  teacherCourseIds:string[]
  isAdmin:boolean
+ view?:'student'|'teacher'
  initialSpaceId?:string
  onNotice:(message:string)=>void
 }){
@@ -159,9 +160,9 @@ export function AcademyPortal({
  const teacherById=useMemo(()=>new Map(teachers.map(x=>[x.id,x])),[teachers])
  const ownBookings=bookings.filter(x=>x.student_id===userId)
  const teacherBookings=selfTeacher?bookings.filter(x=>x.teacher_id===selfTeacher.id):[]
- const selected=[...studentSpaces,...teacherSpaces].find(x=>x.id===selectedSpace)
- const selectedIsTeacher=Boolean(selected&&(isAdmin||(selfTeacher&&selected.teacher_id===selfTeacher.id&&selected.student_id!==userId)))
- const teacherOnly=Boolean(selfTeacher&&!isAdmin)
+ const teacherOnly=isAdmin?(view??'teacher')==='teacher':Boolean(selfTeacher)
+ const selected=(teacherOnly?teacherSpaces:studentSpaces).find(x=>x.id===selectedSpace)
+ const selectedIsTeacher=Boolean(selected&&teacherOnly&&(isAdmin||(selfTeacher&&selected.teacher_id===selfTeacher.id&&selected.student_id!==userId)))
  const bookingByAvailability=useMemo(()=>new Map(teacherBookings.filter(b=>b.availability_id&&['requested','confirmed','in_progress'].includes(b.status)).map(b=>[b.availability_id!,b])),[teacherBookings])
  const subjectName=(code:string)=>({sv:{en:'Swedish',sv:'Svenska',de:'Schwedisch',fa:'سوئدی'},en:{en:'English',sv:'Engelska',de:'Englisch',fa:'انگلیسی'},de:{en:'German',sv:'Tyska',de:'Deutsch',fa:'آلمانی'},fa:{en:'Persian',sv:'Persiska',de:'Persisch',fa:'فارسی'}} as any)[code]?.[locale]??code.toUpperCase()
 
@@ -205,7 +206,7 @@ export function AcademyPortal({
   setTeacherSpaces(taughtSpaces.filter(x=>x.student_id!==userId))
   setAvailability(slots)
   const taught=taughtSpaces.filter(x=>x.student_id!==userId)
-  const all=teacherOnly?taught:[...ownSpaces,...taught]
+  const all=teacherOnly?taught:ownSpaces
   if(!selectedSpace&&all[0])setSelectedSpace(all[0].id)
   if(selectedSpace&&!all.some(x=>x.id===selectedSpace))setSelectedSpace(all[0]?.id??'')
  }
@@ -468,7 +469,7 @@ export function AcademyPortal({
   <div className="academy-card-actions"><button disabled={busy} onClick={()=>{void refresh().catch(e=>onNotice(String(e)));setRefreshTick(n=>n+1)}}>{t.refresh}</button>{selected&&<><button disabled={historyPage===0||busy||contentLoading} onClick={()=>setHistoryPage(n=>n-1)}>{fa?'جدیدتر':'Newer'}</button><span>{fa?'صفحه':'Page'} {historyPage+1}</span><button disabled={busy||contentLoading||Math.max(notes.length,resources.length,messages.length,selectedSummaries.length,selectedTests.length)<50} onClick={()=>setHistoryPage(n=>n+1)}>{fa?'قدیمی‌تر':'Older'}</button></>}</div>
   {contentLoading&&<p role="status">{fa?'در حال دریافت اطلاعات کلاس…':'Loading classroom…'}</p>}
   <fieldset disabled={busy||contentLoading} className="academy-workflow-fields">
-  {isAdmin&&<label>{fa?'انتخاب کلاس دانشجو':'Select student classroom'}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option key={sp.id} value={sp.id}>{sp.student_display_name??sp.student_id} · {courseTitle(sp.course_id)}</option>)}</select></label>}
+  {isAdmin&&teacherOnly&&<label>{fa?'انتخاب کلاس دانشجو':'Select student classroom'}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option key={sp.id} value={sp.id}>{sp.student_display_name??sp.student_id} · {courseTitle(sp.course_id)}</option>)}</select></label>}
   {!teacherOnly&&<section className="academy-dashboard-summary">
    <div className="academy-section-head"><p>{locale==='fa'?'زبان‌های من':locale==='sv'?'Mina språk':locale==='de'?'Meine Sprachen':'My languages'}</p><h3>{locale==='fa'?'وضعیت یادگیری':locale==='sv'?'Din läröversikt':locale==='de'?'Dein Lernüberblick':'Your learning overview'}</h3></div>
    <div className="academy-language-dashboard">
@@ -581,7 +582,7 @@ export function AcademyPortal({
    </article>
   </div>}
 
-  {(selfTeacher||isAdmin)&&<section className="academy-teacher-desk">
+  {teacherOnly&&(selfTeacher||isAdmin)&&<section className="academy-teacher-desk">
    <div className="academy-teacher-summary">
     <div><p className="academy-kicker">{t.teacherDesk}</p><h2>{selfTeacher?.display_name??(fa?'مدیریت کلاس‌ها':'Classroom management')}</h2><p>{[selfTeacher?.email,selfTeacher?.phone].filter(Boolean).join(' · ')||'—'}</p></div>
     <div className="academy-tags">{teacherCourseIds.map(id=>courseById.get(id)).filter(Boolean).map(course=><span key={course!.id}>{subjectName(course!.subject_code)} · {course!.level_code}</span>)}</div>

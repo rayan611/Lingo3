@@ -93,3 +93,6 @@
 .academy .academy-notice{align-items:flex-start}
 .academy .academy-notice>button{width:44px;min-width:44px;height:44px;align-self:flex-start;padding:0}
 @media(max-width:650px){.academy .academy-brand-group .academy-user,.academy .academy-brand-group .academy-login{min-height:44px}}
+
+.academy .academy-space-switch{margin-block:0 16px;display:flex;flex-wrap:wrap;gap:8px}
+.academy .academy-space-switch button[aria-pressed=true]{outline:2px solid #8f78f5;outline-offset:-2px;font-weight:700}

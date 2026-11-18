@@ -1,3 +1,5 @@
+2026-11-18 · v0.7.5 · reviewed 8e3a388 and role-view patch. /academy/my offers Student Space and Teacher Space to admins. Other signed-in accounts see their own role view. Opening a classroom from Admin Studio selects Teacher Space. URLs and browser Back behavior are unchanged.
+
 2026-11-18 navigation acceptance review · v0.7.5 · source cd4d705 + navigation/UI patch (feature branch). Paths unchanged. Login and booking are same-URL history overlays: Back/Escape/Close dismiss, Forward restores; successful login consumes login overlay; successful booking replaces overlay with /academy/my. Product navigation discards overlay state. Settings remains same-URL history overlay. No new active production feature.
 
 2026-11-18 follow-up route review · version 0.7.5 · source 5fcd5da + preference/sharing integration patch. No paths, entries, roles or Back behavior changed; existing map verified against App.tsx, Academy.tsx and AcademyBridge.tsx. Feature branch only; not production-live.

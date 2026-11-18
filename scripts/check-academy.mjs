@@ -36,7 +36,7 @@ const checks = [
   ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">Deutsch</option>')],
   ['App primary navigation contains one Academy mosaic tile', (app.match(/tile tile-academy/g)||[]).length===1 && app.includes('onAcademy={() => navigateProduct(\'/academy\')}') && !app.includes('academy-entry-card')],
   ['Student dashboard links App words and grammar', portal.includes("navigateProduct('/words?academyLang='") && portal.includes("navigateProduct('/grammar?academyLang='") && portal.includes('academy-language-dashboard')],
-  ['Teacher role gets exclusive dashboard outside admin', portal.includes('const teacherOnly=Boolean(selfTeacher&&!isAdmin)') && portal.includes('academy-week-board')],
+  ['Teacher role gets exclusive dashboard outside admin', portal.includes(':Boolean(selfTeacher)') && portal.includes('academy-week-board')],
   ['Admin teacher lookup uses guarded RPC', academy.includes("rpc('academy_admin_search_users'") && academy.includes('academy-user-results')],
   ['Academy defaults to light theme with persistent dark toggle', preferences.includes("'light'") && academy.includes('academy-settings-panel') && academy.includes('useAcademyPreferences(userId)') && css.includes('.academy[data-theme=light]')],
   ['Academy mobile navigation is collapsible', academy.includes('academy-mobile-toggle') && academy.includes("mobileMenuOpen?'is-open':''") && css.includes('.academy-nav.is-open')],
