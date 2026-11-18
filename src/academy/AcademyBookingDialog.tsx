@@ -19,6 +19,7 @@ type TeacherCourse = { teacher_id: string; course_id: string }
 type Slot = {
   id: string
   teacher_id: string
+  status?: string
   starts_at: string
   ends_at: string
   delivery_mode: 'online' | 'offline'
@@ -131,14 +132,7 @@ export function AcademyBookingDialog({
 
   useEffect(() => {
     let cancelled = false
-    supabase()
-      .from('academy_availability')
-      .select('id,teacher_id,starts_at,ends_at,delivery_mode')
-      .eq('teacher_id', teacher.id)
-      .eq('status', 'available')
-      .gt('ends_at', new Date().toISOString())
-      .order('starts_at')
-      .limit(30)
+    supabase().rpc('academy_teacher_calendar',{p_teacher_id:teacher.id})
       .then(({ data, error: queryError }) => {
         if (cancelled) return
         if (queryError) setError(queryError.message)
@@ -205,8 +199,8 @@ export function AcademyBookingDialog({
           >
             <option value="">{t.customOption}</option>
             {slots.map((slot) => (
-              <option value={slot.id} key={slot.id}>
-                {localDateTime(slot.starts_at)} · {slot.delivery_mode}
+              <option value={slot.id} key={slot.id} disabled={slot.status==='busy'}>
+                {localDateTime(slot.starts_at)} · {slot.status==='busy' ? ({en:'Busy',fa:'رزرو شده',sv:'Bokad',de:'Belegt'}[locale]) : slot.delivery_mode}
               </option>
             ))}
           </select>

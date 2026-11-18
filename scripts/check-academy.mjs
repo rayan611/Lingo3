@@ -49,7 +49,7 @@ const checks = [
   ['Welcome gateway contains no unreachable legacy second page', landing.includes("return (\n    <main") && !landing.includes('className="lx"') && !landing.includes('function Deck(')],
   ['Academy uses atomic enrollment activation RPC', academy.includes("rpc('academy_activate_enrollment'") && !academy.includes("from('academy_learning_spaces').insert")],
   ['Academy catalogue avoids anonymous select-star', academy.includes('const courseFields=') && academy.includes('const teacherFields=')],
-  ['Trial booking captures course time and message', booking.includes("academy_availability") && booking.includes("preferred_start") && booking.includes("student_message")],
+  ['Trial booking captures course time and message', booking.includes("academy_teacher_calendar") && booking.includes("preferred_start") && booking.includes("student_message")],
   ['Teacher portal has availability and session workflow', portal.includes("academy_availability") && portal.includes("academy_bookings") && portal.includes("confirmed_start")],
   ['Learning Space has resources homework and messaging', portal.includes("academy_resources") && portal.includes("academy_messages") && portal.includes("student_response")],
   ['Academy MVP migration creates protected workflow tables', mvpMigration.includes("create table if not exists public.academy_availability") && mvpMigration.includes("create table if not exists public.academy_resources") && mvpMigration.includes("create table if not exists public.academy_messages")],

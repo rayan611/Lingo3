@@ -1,3 +1,9 @@
+2026-11-18 release verification: production source f9c8408bb3fa3032f6d4e77413b56df430d2fffb, deployment dpl_B6U7WtmEWWveDn1ugR2yUkQfa3zf. Vercel build completed in 41s; live lingo3.com serves index-CIUEiV-3.js / Academy-67xfYk_A.js containing new admin roster, group scheduling and calendar RPCs. Admin/my/teachers routes returned HTTP 200. PR #56 is draft; source not merged to main. New signed-in/viewport browser E2E remains unverified: local Chromium failed with socket Operation not permitted. SQL fixture cleanup verified zero test users. This delivers roster/scheduling foundation, not all remaining Academy scope.
+
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend source f9c8408 deployed; see release verification above.
+
+Latest delivery details and remaining approved scope: [ACADEMY_MANAGEMENT_DELIVERY.md](ACADEMY_MANAGEMENT_DELIVERY.md). Admin roster, reversible enrollments and group scheduling implemented; complete Academy program still in progress.
+
 2026-11-18 source implementation update: workflow integrity, shared teacher/student panels, account UI preferences, compact shared homepage/header, admin enrollment operations and explicit App classroom snapshots/grammar resource copies are implemented on fix/academy-complete-workflows-20261118, not yet released. SQL/React test evidence and remaining migration/browser/deployment gates: docs/ACADEMY_RELEASE_2026-11-18.md. Earlier “completed” labels below refer to previous production baseline, not full acceptance of this batch.
 
 # Lingo3 Academy Roadmap
