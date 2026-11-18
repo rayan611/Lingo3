@@ -1,3 +1,4 @@
+import {AcademyClasses} from './AcademyClasses'
 import {meetingLinkPair,meetingProvider,type MeetingProvider} from './meetingLinks'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../auth/supabase'
@@ -144,6 +145,7 @@ export function AcademyPortal({
  const [teacherSpaces,setTeacherSpaces]=useState<Space[]>([])
  const [bookings,setBookings]=useState<Booking[]>([])
  const [availability,setAvailability]=useState<Availability[]>([])
+ const [teacherCalendar,setTeacherCalendar]=useState<{id:string;starts_at:string;ends_at:string;status:string}[]>([])
  const [dashboardResources,setDashboardResources]=useState<Resource[]>([])
  const [dashboardNotes,setDashboardNotes]=useState<Note[]>([])
  const [testResults,setTestResults]=useState<TestResult[]>([])
@@ -223,6 +225,7 @@ export function AcademyPortal({
    if(!isAdmin)q=q.eq('teacher_id',selfTeacher!.id)
    reqs.push(q)
    reqs.push(client.from('academy_availability').select('*').eq('teacher_id',selfTeacher?.id??'00000000-0000-0000-0000-000000000000').gte('ends_at',new Date().toISOString()).order('starts_at').limit(100))
+   reqs.push(client.rpc('academy_teacher_calendar',{p_teacher_id:selfTeacher?.id??'00000000-0000-0000-0000-000000000000'}))
   }
   const results=await Promise.all(reqs)
   if(version!==requestVersion.current)return
@@ -249,6 +252,7 @@ export function AcademyPortal({
   const slots=(selfTeacher||isAdmin)?((results[4].data??[]) as Availability[]):[]
   setTeacherSpaces(taughtSpaces.filter(x=>x.student_id!==userId))
   setAvailability(slots)
+  setTeacherCalendar(results[5]?.data??[])
   const taught=taughtSpaces.filter(x=>x.student_id!==userId)
   const all=teacherOnly?taught:ownSpaces
   if(!selectedSpace&&all[0])setSelectedSpace(all[0].id)
@@ -539,6 +543,7 @@ export function AcademyPortal({
  const teacherTitle=(id:string)=>{const t=teacherById.get(id);return t?localizedName(t,locale):'Teacher'}
 
  return <div className="academy-portal" aria-busy={busy||contentLoading}>
+  <AcademyClasses key={userId+String(teacherOnly)} isAdmin={isAdmin&&teacherOnly} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} courses={courses.filter(c=>teacherCourseIds.includes(c.id))}/>
   <div className="academy-card-actions"><button disabled={busy} onClick={()=>{void refresh().catch(e=>onNotice(String(e)));setRefreshTick(n=>n+1)}}>{t.refresh}</button>{selected&&<><button disabled={historyPage===0||busy||contentLoading} onClick={()=>setHistoryPage(n=>n-1)}>{fa?'جدیدتر':'Newer'}</button><span>{fa?'صفحه':'Page'} {historyPage+1}</span><button disabled={busy||contentLoading||Math.max(notes.length,resources.length,messages.length,selectedSummaries.length,selectedTests.length)<50} onClick={()=>setHistoryPage(n=>n+1)}>{fa?'قدیمی‌تر':'Older'}</button></>}</div>
   {contentLoading&&<p role="status">{fa?'در حال دریافت اطلاعات کلاس…':'Loading classroom…'}</p>}
   <fieldset disabled={busy||contentLoading} className="academy-workflow-fields">
@@ -651,7 +656,7 @@ export function AcademyPortal({
    </article>
    <article className="academy-card">
     <h3>{locale==='fa'?'تقویم استاد':'Teacher calendar'}</h3>
-    {studentAvailability.length===0?<p>—</p>:<div className="academy-week-board">{studentAvailability.slice(0,16).map(a=><div className={'academy-week-slot '+(a.status==='free'?'is-free':'is-booked')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{a.status==='free'?(locale==='fa'?'آزاد':'Free'):(locale==='fa'?'رزرو شده':'Busy')}</small></div>)}</div>}
+    {studentAvailability.length===0?<p>—</p>:<div className="academy-week-board">{studentAvailability.map(a=><div className={'academy-week-slot '+(a.status==='free'?'is-free':'is-booked')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{a.status==='free'?(locale==='fa'?'آزاد':'Free'):(locale==='fa'?'رزرو شده':'Busy')}</small></div>)}</div>}
    </article>
   </div>}
 
@@ -674,7 +679,7 @@ export function AcademyPortal({
       <label>{locale==='fa'?'برای چند هفته':'Weeks'}<input placeholder="4" type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label>
       <button className="small-link" onClick={addWeeklySlots}>{locale==='fa'?'ساخت زمان‌های هفتگی':'Create weekly times'}</button>
      </div>
-     <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);return <div className={'academy-week-slot '+(booked?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(a.status==='available'?'Free':a.status)}</small>{!booked&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
+     <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);const occupied=teacherCalendar.some(c=>c.status==='busy'&&new Date(c.starts_at)<new Date(a.ends_at)&&new Date(c.ends_at)>new Date(a.starts_at));return <div className={'academy-week-slot '+(booked||occupied?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(occupied?(fa?'رزرو شده':'Busy'):a.status==='available'?'Free':a.status)}</small>{!booked&&!occupied&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
     </article>
 
     <article className="academy-card">

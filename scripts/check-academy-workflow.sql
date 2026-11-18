@@ -58,4 +58,17 @@ do $$begin if not coalesce(((select count(*)=0 from public.academy_learning_spac
 reset role; set local role authenticated; select set_config('request.jwt.claim.sub','e6180000-0000-4000-8000-000000000004',true);
 do $$begin if not coalesce(((select count(*)=1 from public.academy_learning_spaces where id='e6180000-0000-4000-8000-000000000041')),false) then raise exception 'FAIL: cancelled student keeps history'; end if; end$$;
 select 'PASS: ownership, role isolation, homework loop, private/shared notes, messages, latest history, account preferences, atomic admin save and inactive/cancelled access' as verification;
+reset role; set local role authenticated;
+select set_config('request.jwt.claim.sub','e6180000-0000-4000-8000-000000000005',true);
+select public.academy_admin_set_enrollment('e6180000-0000-4000-8000-000000000030','e6180000-0000-4000-8000-000000000020','paused');
+select set_config('request.jwt.claim.sub','e6180000-0000-4000-8000-000000000003',true);
+do $$begin
+ begin insert into public.academy_notes(learning_space_id,author_id,body,visibility) values ('e6180000-0000-4000-8000-000000000040','e6180000-0000-4000-8000-000000000003','Paused write','shared');raise exception 'Paused write allowed';exception when insufficient_privilege then null;end;
+end$$;
+select set_config('request.jwt.claim.sub','e6180000-0000-4000-8000-000000000005',true);
+select public.academy_admin_set_enrollment('e6180000-0000-4000-8000-000000000030','e6180000-0000-4000-8000-000000000020','removed');
+do $$begin if (select removed_at is null from public.academy_enrollments where id='e6180000-0000-4000-8000-000000000030') then raise exception 'Removal missing';end if;end$$;
+update public.academy_teachers set status='active' where id='e6180000-0000-4000-8000-000000000020';
+select public.academy_admin_set_enrollment('e6180000-0000-4000-8000-000000000030','e6180000-0000-4000-8000-000000000020','active');
+do $$begin if (select removed_at is not null from public.academy_enrollments where id='e6180000-0000-4000-8000-000000000030') then raise exception 'Restore failed';end if;end$$;
 rollback;

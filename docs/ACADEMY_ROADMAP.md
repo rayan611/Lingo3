@@ -1,3 +1,7 @@
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend release pending at this checkpoint.
+
+Latest delivery details and remaining approved scope: [ACADEMY_MANAGEMENT_DELIVERY.md](ACADEMY_MANAGEMENT_DELIVERY.md). Admin roster, reversible enrollments and group scheduling implemented; complete Academy program still in progress.
+
 2026-11-18 source implementation update: workflow integrity, shared teacher/student panels, account UI preferences, compact shared homepage/header, admin enrollment operations and explicit App classroom snapshots/grammar resource copies are implemented on fix/academy-complete-workflows-20261118, not yet released. SQL/React test evidence and remaining migration/browser/deployment gates: docs/ACADEMY_RELEASE_2026-11-18.md. Earlier “completed” labels below refer to previous production baseline, not full acceptance of this batch.
 
 # Lingo3 Academy Roadmap

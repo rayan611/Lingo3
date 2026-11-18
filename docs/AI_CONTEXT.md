@@ -1,3 +1,7 @@
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend release pending at this checkpoint.
+
+Latest delivery details and remaining approved scope: [ACADEMY_MANAGEMENT_DELIVERY.md](ACADEMY_MANAGEMENT_DELIVERY.md). Admin roster, reversible enrollments and group scheduling implemented; complete Academy program still in progress.
+
 2026-11-18 pending release: feature branch fix/academy-complete-workflows-20261118 contains the workflow integrity migration and completed source batch. SQL role tests pass in BEGIN/ROLLBACK; permanent migration confirmation expired and schema remains old. Do not deploy feature source until the migration succeeds. Settings/preferences use academy_preferences, independent of App native/learning language settings. See ACADEMY_RELEASE_2026-11-18.md and latest handoff for test limits.
 
 2026-11-17 latest release status: PR #53 dashboards merged as ed7e95e; PR #54 supplemental presentation/form QA merged as a5a2c9c8338dcb9f2ea1ab90f9e110a49f338d32. Local regression/typecheck/build pass. Dashboard DB schema already applied and RLS confirmed. New UI is NOT production-live: Vercel rejects deployment with 402 api-deployments-free-per-day (retryAfter 86400). Last verified production runtime remains a4381c9 / dpl_BTCtnsEB8vrDTxhw8ZvSSdYREJP6. Full viewport and signed-in role E2E pending; do not describe source/CSS checks as physical-device testing.

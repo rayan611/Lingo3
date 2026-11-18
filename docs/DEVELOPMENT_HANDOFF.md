@@ -1,3 +1,7 @@
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend release pending at this checkpoint.
+
+Latest delivery details and remaining approved scope: [ACADEMY_MANAGEMENT_DELIVERY.md](ACADEMY_MANAGEMENT_DELIVERY.md). Admin roster, reversible enrollments and group scheduling implemented; complete Academy program still in progress.
+
 2026-11-18 · v0.7.5 · based on 41e49ac. Training Center now links to /academy alongside its activities. Online navigation requests fresh HTML; offline navigation can use the precached app shell. No route removed.
 
 2026-11-18 · v0.7.5 · Academy navigation, based on 70a0f9a. Groups open with click, tap or keyboard, stay open during pointer movement, and close with selection, outside click or Escape. Mobile uses one column. Routes and browser Back behavior unchanged. Preview release only until required Supabase migrations are verified.
