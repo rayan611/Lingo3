@@ -1,3 +1,4 @@
+import {meetingLinkPair,meetingProvider,type MeetingProvider} from './meetingLinks'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../auth/supabase'
 import {localizedName} from './preferences'
@@ -33,6 +34,7 @@ type Booking = {
   duration_minutes:number|null
   status:string
   meeting_url:string|null
+  meeting_backup_url?:string|null
   student_message:string|null
   teacher_note:string|null
 }
@@ -97,6 +99,31 @@ function i18n(v:Record<string,string>, locale:Locale){return v[locale]||v.en||Ob
 function dt(v:string|null){return v?new Intl.DateTimeFormat(undefined,{dateStyle:'medium',timeStyle:'short'}).format(new Date(v)):'—'}
 function toIso(v:string){return new Date(v).toISOString()}
 
+type MeetingDraft = { teams: string; zoom: string; primary: MeetingProvider }
+const blankMeeting: MeetingDraft = {teams:'',zoom:'',primary:'Teams'}
+
+function bookingMeetingDraft(booking: Booking): MeetingDraft {
+ const links = [booking.meeting_url, booking.meeting_backup_url]
+ return {
+  teams: links.find(link => link && meetingProvider(link)==='Teams') ?? '',
+  zoom: links.find(link => link && meetingProvider(link)==='Zoom') ?? '',
+  primary: booking.meeting_url && meetingProvider(booking.meeting_url)==='Zoom' ? 'Zoom' : 'Teams',
+ }
+}
+
+function JoinMeetingLinks({booking,fa}:{booking:Booking;fa:boolean}) {
+ if (!['confirmed','in_progress'].includes(booking.status)) return null
+ return <div className="academy-card-actions">
+  {[booking.meeting_url,booking.meeting_backup_url].map((link,i) => {
+   if (!link || !/^https:\/\//i.test(link)) return null
+   const provider = meetingProvider(link)
+   return <a key={link} className="small-link" href={link} target="_blank" rel="noreferrer">
+    {i===0 ? (fa?'ورود به کلاس':'Join lesson') : (fa?'لینک جایگزین':'Backup link')}{provider ? ' · '+provider : ''}
+   </a>
+  })}
+ </div>
+}
+
 export function AcademyPortal({
  locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view
 }:{
@@ -144,7 +171,24 @@ export function AcademyPortal({
  const [resourceForm,setResourceForm]=useState({kind:'material',title:'',description:'',url:'',due:''})
  const [summaryForm,setSummaryForm]=useState({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''})
  const [testForm,setTestForm]=useState({title:'',kind:'test',score:'',max_score:'',teacher_summary:''})
- const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;meeting_url:string;teacher_note:string;duration_minutes:string}>>({})
+ const [meetingDefaults,setMeetingDefaults]=useState<MeetingDraft>(blankMeeting)
+ const [meetingDrafts,setMeetingDrafts]=useState<Record<string,MeetingDraft>>({})
+ const [savedMeetingDefaults,setSavedMeetingDefaults]=useState<MeetingDraft>(blankMeeting)
+ const [defaultsReady,setDefaultsReady]=useState(false)
+ useEffect(()=>{
+  if(!selfTeacher || (isAdmin && view==='student')) return
+  let active=true
+  void Promise.resolve(supabase().from('academy_teacher_meeting_links').select('teams_url,zoom_url').eq('teacher_id',selfTeacher.id).maybeSingle()).then(({data,error})=>{
+   if(!active) return
+   if(error){onNotice(error.message);return}
+   const saved:MeetingDraft={teams:data?.teams_url??'',zoom:data?.zoom_url??'',primary:'Teams'}
+   setMeetingDefaults(saved)
+   setSavedMeetingDefaults(saved)
+   setDefaultsReady(true)
+  }).catch(error=>{if(active)onNotice(String(error))})
+  return()=>{active=false}
+ },[selfTeacher?.id,isAdmin,view])
+ const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;teacher_note:string;duration_minutes:string}>>({})
  const [busy,setBusy]=useState(false)
  const busyRef=useRef(false),requestVersion=useRef(0)
  const [contentLoading,setContentLoading]=useState(false)
@@ -365,15 +409,44 @@ export function AcademyPortal({
   })
  }
 
+ async function saveMeetingDefaults(){
+  if(!selfTeacher || !defaultsReady) return
+  await run(async()=>{
+   meetingLinkPair(meetingDefaults.teams,meetingDefaults.zoom,'Teams')
+   const {error}=await supabase().from('academy_teacher_meeting_links').upsert({
+    teacher_id:selfTeacher.id,teams_url:meetingDefaults.teams.trim()||null,zoom_url:meetingDefaults.zoom.trim()||null,
+   })
+   if(error) throw error
+   setSavedMeetingDefaults(meetingDefaults)
+   onNotice(t.saved)
+  })
+ }
+
+ async function saveBookingLinks(booking: Booking){
+  const draft=meetingDrafts[booking.id]
+  if(!draft) return
+  await run(async()=>{
+   const links=meetingLinkPair(draft.teams,draft.zoom,draft.primary)
+   const {error}=await supabase().from('academy_bookings')
+    .update({...links,updated_at:new Date().toISOString()}).eq('id',booking.id).eq('status','confirmed').select('id').single()
+   if(error) throw error
+   setMeetingDrafts(previous=>{const next={...previous};delete next[booking.id];return next})
+   onNotice(t.saved)
+   await refresh()
+  })
+ }
  async function updateBooking(booking:Booking,status:string){
-  const draft=bookingDraft[booking.id]??{confirmed_start:'',meeting_url:'',teacher_note:'',duration_minutes:'60'}
+  const draft=bookingDraft[booking.id]??{confirmed_start:'',teacher_note:'',duration_minutes:'60'}
   await run(async()=>{
    const payload:any={status,updated_at:new Date().toISOString()}
    if(status==='confirmed'){
     payload.confirmed_start=draft.confirmed_start?toIso(draft.confirmed_start):(booking.preferred_start??new Date().toISOString())
     const slot=availability.find(a=>a.id===booking.availability_id)
     payload.duration_minutes=slot?Math.round((new Date(slot.ends_at).getTime()-new Date(slot.starts_at).getTime())/60000):(Number(draft.duration_minutes)||60)
-    payload.meeting_url=draft.meeting_url.trim()||null
+    if(meetingDrafts[booking.id]) {
+     const {teams,zoom,primary}=meetingDrafts[booking.id]
+     Object.assign(payload,meetingLinkPair(teams,zoom,primary))
+    }
     payload.teacher_note=draft.teacher_note.trim()||null
    }
    const {error}=await supabase().from('academy_bookings').update(payload).eq('id',booking.id)
@@ -515,7 +588,7 @@ export function AcademyPortal({
     {ownBookings.length===0?<p>{t.noBookings}</p>:ownBookings.map(b=><div className="academy-session-row" key={b.id}>
      <div><strong>{teacherTitle(b.teacher_id)}</strong><small>{courseTitle(b.course_id)}</small></div>
      <div><span>{b.confirmed_start?t.confirmed:t.preferred}: {dt(b.confirmed_start??b.preferred_start)}</span><small>{b.status}</small></div>
-     <div className="academy-card-actions">{b.meeting_url&&<a className="small-link" href={b.meeting_url} target="_blank" rel="noreferrer">{t.meeting}</a>}{['requested','confirmed'].includes(b.status)&&<button className="small-link" onClick={()=>cancelBooking(b.id)}>{t.cancel}</button>}</div>
+     <JoinMeetingLinks booking={b} fa={fa}/><div className="academy-card-actions">{['requested','confirmed'].includes(b.status)&&<button className="small-link" onClick={()=>cancelBooking(b.id)}>{t.cancel}</button>}</div>
     </div>)}
    </article>
 
@@ -605,12 +678,32 @@ export function AcademyPortal({
     </article>
 
     <article className="academy-card">
+     {selfTeacher&&<details className="academy-meeting-options">
+      <summary>{fa?'لینک‌های ثابت کلاس':'Reusable meeting links'}</summary>
+      <p>{fa?'لینک‌های ثابت را فقط در رزروهای انتخابی به اشتراک بگذار.':'Reuse these links on selected bookings.'}</p>
+      <label>Teams<input type="url" disabled={!defaultsReady} placeholder="https://teams.microsoft.com/l/meetup-join/…" value={meetingDefaults.teams} onChange={e=>setMeetingDefaults({...meetingDefaults,teams:e.target.value})}/></label>
+      <label>Zoom<input type="url" disabled={!defaultsReady} placeholder="https://zoom.us/my/your-room" value={meetingDefaults.zoom} onChange={e=>setMeetingDefaults({...meetingDefaults,zoom:e.target.value})}/></label>
+      <button type="button" disabled={!defaultsReady} onClick={saveMeetingDefaults}>{fa?'ذخیره لینک‌های ثابت':'Save reusable links'}</button>
+     </details>}
      <h3>{t.sessionRequests}</h3>
      {teacherBookings.length===0?<p>—</p>:teacherBookings.map(b=>{
-      const draft=bookingDraft[b.id]??{confirmed_start:b.confirmed_start?new Date(new Date(b.confirmed_start).getTime()-new Date(b.confirmed_start).getTimezoneOffset()*60000).toISOString().slice(0,16):'',meeting_url:b.meeting_url??'',teacher_note:b.teacher_note??'',duration_minutes:String(b.duration_minutes??60)}
+      const draft=bookingDraft[b.id]??{confirmed_start:b.confirmed_start?new Date(new Date(b.confirmed_start).getTime()-new Date(b.confirmed_start).getTimezoneOffset()*60000).toISOString().slice(0,16):'',teacher_note:b.teacher_note??'',duration_minutes:String(b.duration_minutes??60)}
+      const links=meetingDrafts[b.id]??bookingMeetingDraft(b)
+      const updateLinks=(patch:Partial<MeetingDraft>)=>setMeetingDrafts(previous=>({
+       ...previous,[b.id]:{...(previous[b.id]??bookingMeetingDraft(b)),...patch},
+      }))
       return <div className="academy-booking-admin" key={b.id}>
        <strong>{b.student_display_name??t.student}</strong><small>{courseTitle(b.course_id)} · {b.status}</small><small>{t.preferred}: {dt(b.preferred_start)}</small>{b.student_message&&<p>{b.student_message}</p>}
-       {b.status==='requested'&&<><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label><label>{t.meetingLink}<input placeholder="https://teams.microsoft.com/..." value={draft.meeting_url} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,meeting_url:e.target.value}})}/></label><label>{t.teacherNote}<textarea placeholder={locale==='fa'?'مثال: قبل از جلسه فصل ۳ را مرور کن':'e.g. Review chapter 3 before the lesson'} value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
+       <JoinMeetingLinks booking={b} fa={fa}/>
+       {['requested','confirmed'].includes(b.status)&&<details className="academy-meeting-options">
+        <summary>{fa?'لینک ورود به جلسه':'Meeting links'}</summary>
+        {defaultsReady&&(savedMeetingDefaults.teams||savedMeetingDefaults.zoom)&&<button type="button" onClick={()=>updateLinks(savedMeetingDefaults)}>{fa?'کپی لینک‌های ثابت':'Use reusable links'}</button>}
+        <label>Teams<input type="url" placeholder="https://teams.microsoft.com/l/meetup-join/…" value={links.teams} onChange={e=>updateLinks({teams:e.target.value})}/></label>
+        <label>Zoom<input type="url" placeholder="https://zoom.us/j/123456789" value={links.zoom} onChange={e=>updateLinks({zoom:e.target.value})}/></label>
+        <label>{fa?'سرویس اصلی':'Primary service'}<select value={links.primary} onChange={e=>updateLinks({primary:e.target.value==='Zoom'?'Zoom':'Teams'})}><option>Teams</option><option>Zoom</option></select></label>
+        {b.status==='confirmed'&&<button type="button" disabled={!meetingDrafts[b.id]} onClick={()=>void saveBookingLinks(b)}>{fa?'ذخیره لینک جلسه':'Save meeting links'}</button>}
+       </details>}
+       {b.status==='requested'&&<><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label><label>{t.teacherNote}<textarea placeholder={locale==='fa'?'مثال: قبل از جلسه فصل ۳ را مرور کن':'e.g. Review chapter 3 before the lesson'} value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
        {b.status==='confirmed'&&<div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'completed')}>{t.complete}</button><button className="small-link" onClick={()=>updateBooking(b,'no_show')}>{t.noShow}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div>}
       </div>
      })}
