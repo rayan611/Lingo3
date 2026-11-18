@@ -37,3 +37,16 @@ Automatic Teams meetings, external calendar synchronization, payments, hosted vi
 ## Follow-up integration review
 
 Reviewed shared-session/product routing, contextual shortcuts, client RPC field names and database identity guards. Corrected settings isolation while switching an already mounted account, rapid locale/theme saves, persistence when browser storage is blocked, and stale App sharing previews during a language reload. Added real React transport tests in check-academy-preferences.mjs and check-academy-bridge.mjs. Full npm test, TypeScript and production/PWA build passed again. Existing migration and signed-in acceptance gates are unchanged. No new production modification or deployment is claimed.
+
+## Navigation, controls and comparison review
+
+- 201 route/navigation assertions using actual Academy, SignIn and Booking components with mocked transport/auth: guest/student/teacher/admin; all 10 public/personal paths plus admin role gate; direct entry; Back/Forward; Settings/Close/Escape; email sign-in, sign-up confirmation, reset, OAuth failure; trial blocked for guest and valid booking for member; signout; product jump; external href protocol and new-tab rel checks. The classroom component is covered separately by behavior and SQL tests.
+- Fixed global CSS leakage from Academy classes such as .small-link/.modal-close/.editor-two into App. PostCSS regression rejects any unscoped Academy stylesheet selector.
+- Login and trial windows now participate in history, close with Back/Escape and clear on product navigation; booking success replaces the overlay with My Academy. Login success consumes stale login overlay state.
+- Controls use 42px desktop / 44px mobile minimum targets, 14–16px action labels and 16px form text. Main headline is bounded to 26.4–38.4px. Academy layouts remain scoped; App learning-card type hierarchy is preserved.
+- Cloud Browser observed 390px Persian Academy with no horizontal overflow, functional mobile menu/settings/close and 16px / 46px preference fields. Signed-in layouts, physical devices, every App button and external-provider completion have not been exhaustively clicked in a live browser. Missing live migration is still visible in the preview.
+- Seven separate after-save queries were replaced with the shared paged history refresh. Sending a message from an older page now returns to the latest page and retains recent messages beyond the first 200; React regression passes.
+
+Preply research (official Help Center, 2026-11-18): https://help.preply.com/en/articles/4179351-find-the-right-tutor-for-you ; https://help.preply.com/en/articles/4182666-preply-classroom-a-student-s-guide ; https://help.preply.com/en/articles/13399431-preply-canvas-your-workspace-for-focused-and-collaborative-teaching . Useful future directions: tutor filters by language/specialty/budget/availability; a prominent next-lesson entry; organized persistent class notes and tasks. These are product recommendations, not claims that Lingo3 has Preply video/collaboration/payment features. No paid service or external integration was added.
+
+Final validation for this navigation/UI patch: full npm test (including all 201 navigation assertions and classroom message-history regression) passed; TypeScript and production/PWA build passed, Vite 6.92s. git diff --check clean.

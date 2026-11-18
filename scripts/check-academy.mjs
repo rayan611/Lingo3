@@ -29,7 +29,7 @@ const checks = [
   ['Academy source does not import App Dexie', !/from ['"]\.\.\/db\//.test(academy) && !academy.includes('dexie')],
   ['Academy grouped menus close on mouse leave', (academy.match(/onMouseLeave={closeMenuOnLeave}/g) || []).length === 3],
   ['Academy grouped menus coordinate open state', (academy.match(/onToggle={onMenuToggle}/g) || []).length === 3],
-  ['Academy route navigation closes menus', academy.includes("const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);navigateProduct(ACADEMY_PATHS[next])")],
+  ['Academy route navigation closes menus', academy.includes("const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);setDialog(null);navigateProduct(ACADEMY_PATHS[next]")],
   ['Academy has real sub-page routes', ['/academy/path','/academy/courses','/academy/teachers','/academy/levels','/academy/my','/academy/admin','/academy/about','/academy/pricing','/academy/resources','/academy/contact'].every(path => academy.includes(path))],
   ['Academy renders routed pages conditionally', ["page==='home'","page==='courses'","page==='teachers'","page==='personal'","page==='admin'"].every(x=>academy.includes(x))],
   ['Admin Studio remains role-conditional', academy.includes("isAdmin&&<section") && academy.includes('id="admin-studio"')],

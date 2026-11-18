@@ -282,8 +282,7 @@ export function AcademyPortal({
    const {error}=await q
    if(error)throw error
    setNoteBody('');setEditNoteId('');setShareNote(false);onNotice(t.saved);void refresh()
-   const {data}=await supabase().from('academy_notes').select('*').eq('learning_space_id',selected.id).order('created_at',{ascending:false}).limit(50)
-   setNotes((data??[]) as Note[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -300,8 +299,7 @@ export function AcademyPortal({
    const {error}=await supabase().from('academy_resources').update({student_response:(resourceResponse[resource.id]??'').trim()||null,student_status:'submitted',updated_at:new Date().toISOString()}).eq('id',resource.id)
    if(error)throw error
    onNotice(t.saved)
-   const {data}=await supabase().from('academy_resources').select('*').eq('learning_space_id',resource.learning_space_id).order('created_at',{ascending:false})
-   setResources((data??[]) as Resource[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -315,8 +313,7 @@ export function AcademyPortal({
    const {error}=await supabase().from('academy_messages').insert({learning_space_id:selected.id,sender_id:userId,recipient_id:recipient,body:messageBody.trim()})
    if(error)throw error
    setMessageBody('');onNotice(t.sent)
-   const {data}=await supabase().from('academy_messages').select('*').eq('learning_space_id',selected.id).order('created_at')
-   setMessages((data??[]) as Message[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -409,8 +406,7 @@ export function AcademyPortal({
    const {error}=await (resourceEditId?supabase().from('academy_resources').update(editable).eq('id',resourceEditId):supabase().from('academy_resources').insert(payload))
    if(error)throw error
    setResourceEditId('');setResourceForm({kind:'material',title:'',description:'',url:'',due:''});onNotice(t.saved)
-   const {data}=await supabase().from('academy_resources').select('*').eq('learning_space_id',selected.id).order('created_at',{ascending:false})
-   setResources((data??[]) as Resource[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -420,8 +416,7 @@ export function AcademyPortal({
    const {error}=await supabase().from('academy_resources').update({student_status:'completed',teacher_feedback:feedback||null,updated_at:new Date().toISOString()}).eq('id',resource.id)
    if(error)throw error
    onNotice(t.saved)
-   const {data}=await supabase().from('academy_resources').select('*').eq('learning_space_id',resource.learning_space_id).order('created_at',{ascending:false})
-   setResources((data??[]) as Resource[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -446,8 +441,7 @@ export function AcademyPortal({
    else ({error}=await supabase().from('academy_session_summaries').insert(payload))
    if(error)throw error
    setSummaryEditId('');setSummaryBooking('');setSummaryForm({covered:'',grammar_focus:'',strengths:'',improve_next:'',next_focus:''});onNotice(t.saved)
-   const {data}=await supabase().from('academy_session_summaries').select('*').eq('learning_space_id',selected.id).order('created_at',{ascending:false}).limit(20)
-   setSelectedSummaries((data??[]) as SessionSummary[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
@@ -463,8 +457,7 @@ export function AcademyPortal({
    })
    if(error)throw error
    setTestForm({title:'',kind:'test',score:'',max_score:'',teacher_summary:''});onNotice(t.saved)
-   const {data}=await supabase().from('academy_test_results').select('*').eq('learning_space_id',selected.id).order('taken_at',{ascending:false}).limit(30)
-   setSelectedTests((data??[]) as TestResult[])
+   setHistoryPage(0);setRefreshTick(n=>n+1)
   })
  }
 
