@@ -33,3 +33,7 @@ Do not deploy this source against the old schema. Apply and verify `202611180500
 ## Coverage boundaries
 
 Automatic Teams meetings, external calendar synchronization, payments, hosted video, binary file storage, an automated testing engine and a realtime collaborative notebook remain separate integrations. Teacher-recorded progress and App review progress are deliberately distinct. Sharing is explicit snapshots, not blanket access to a learner's App data.
+
+## Follow-up integration review
+
+Reviewed shared-session/product routing, contextual shortcuts, client RPC field names and database identity guards. Corrected settings isolation while switching an already mounted account, rapid locale/theme saves, persistence when browser storage is blocked, and stale App sharing previews during a language reload. Added real React transport tests in check-academy-preferences.mjs and check-academy-bridge.mjs. Full npm test, TypeScript and production/PWA build passed again. Existing migration and signed-in acceptance gates are unchanged. No new production modification or deployment is claimed.

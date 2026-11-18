@@ -1,3 +1,5 @@
+2026-11-18 follow-up integration review · branch fix/academy-complete-workflows-20261118; reviewed source 5fcd5da plus this patch. Shared auth/product routing, query context, role/RPC payloads, migration ownership guards and App sharing rechecked. Fixed mounted-account preference isolation, sequential rapid preference writes, blocked-browser-storage fallback, and stale sharing previews during language reload. Added real React transport tests for these cases. Full npm test, TypeScript and production/PWA build pass. No new database change or deployment; permanent migration and signed-in browser acceptance remain release gates. No route/page/Back change; SITEMAP and ROUTE_INDEX reviewed. PR #55 remains draft.
+
 # Lingo3 Development History
 
 Purpose: durable high-level chronology for future developers/AI agents.
