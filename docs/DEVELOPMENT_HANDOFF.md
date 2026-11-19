@@ -1,3 +1,11 @@
+2026-11-19 · 0.7.6 integration validation: merged concurrent governance 5752c9d without dropping Academy history; package/version sources bumped together. Documentation checks and merged TypeScript/Vite/PWA build passed (22.25s). Runtime changes since prior full regressions are version metadata only. PR #57; production verification pending.
+
+2026-11-19 · Release 0.7.6 · PR #57 · reviewed merged source including 5752c9d; deployment pending.
+
+## 2026-11-19 — docs-2026-11-19.1 — Changelog workflow (app 0.7.5)
+
+Base main `91fa6f742fa43cb3dc148d3d9318fca4b7e7c217`. Added mandatory before/after changelog instructions to `AGENTS.md` and the first comment of `src/main.tsx`; canonical log `CHANGELOG.md`. Backfilled missing 2026-11-09 / 0.7.5 info/removal release entry from PR #39 and verified release evidence. Reviewed current route documents and entry-point diff: executable content/routes/menus/Back unchanged; refreshed sitemap/route review metadata. Validation: comment-stripping equality and existing history preservation; existing check:docs also run. No new runtime version/deployment/database mutation. This adds written requirements, not a new automated CI gate. Next: apply this workflow to future changes; prior product backlogs/release limits below remain unchanged.
+
 2026-11-19 final local verification: npm test including article UI and SEO regressions passed; final TypeScript/production/PWA build passed (Vite 32.48s). SQL draft/article sharing test passed without publishing the source; lifecycle transfer/course-closure test passed after preserving resource authorship. Deployment and signed-in browser verification pending.
 
 2026-11-19 · v0.7.5 · branch feat/academy-student-workspaces-20261119 · based on bc38fb9 + this release patch.
