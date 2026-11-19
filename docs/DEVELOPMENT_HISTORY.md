@@ -1,3 +1,17 @@
+2026-11-18 release verification: production source f9c8408bb3fa3032f6d4e77413b56df430d2fffb, deployment dpl_B6U7WtmEWWveDn1ugR2yUkQfa3zf. Vercel build completed in 41s; live lingo3.com serves index-CIUEiV-3.js / Academy-67xfYk_A.js containing new admin roster, group scheduling and calendar RPCs. Admin/my/teachers routes returned HTTP 200. PR #56 is draft; source not merged to main. New signed-in/viewport browser E2E remains unverified: local Chromium failed with socket Operation not permitted. SQL fixture cleanup verified zero test users. This delivers roster/scheduling foundation, not all remaining Academy scope.
+
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend source f9c8408 deployed; see release verification above.
+
+Latest delivery details and remaining approved scope: [ACADEMY_MANAGEMENT_DELIVERY.md](ACADEMY_MANAGEMENT_DELIVERY.md). Admin roster, reversible enrollments and group scheduling implemented; complete Academy program still in progress.
+
+2026-11-18 · v0.7.5 · based on 41e49ac. Training Center now links to /academy alongside its activities. Online navigation requests fresh HTML; offline navigation can use the precached app shell. No route removed.
+
+2026-11-18 · v0.7.5 · Teams/Zoom manual meeting links, based on 5b4d1fc. /academy/my Teacher Space has private reusable links and per-booking primary/backup selection; Student Space displays participant links for confirmed/in-progress bookings. Paths and Back behavior unchanged. Apply 20261118050000 then 20261118131500 before production deployment. Supabase rehearsal confirmation expired. Automatic provider creation and embedded video remain pending.
+
+2026-11-18 navigation/UI acceptance review · branch fix/academy-complete-workflows-20261118; reviewed cd4d705 plus this patch. Added 201 real-React navigation assertions across guest/student/teacher/admin, all Academy routes and direct entries, Back/Forward, login modes/OAuth error, guest/valid booking, settings and signout. External href syntax checked; third-party delivery is not verified. Fixed leaking Academy CSS selectors; login/booking overlays now close with Back/Escape and product changes discard overlay state. Standardized bounded typography and 42px desktop/44px mobile touch controls, 16px form text. Unified seven post-write classroom refresh paths so history always returns to the latest paginated results. Message-from-older-page regression passes. Full test/build results are recorded in release report. Browser checked Persian 390px menu/settings and actual form sizes; old live schema still blocks real-role acceptance. Permanent migration, signed-in live E2E and production deployment remain pending.
+
+2026-11-18 follow-up integration review · branch fix/academy-complete-workflows-20261118; reviewed source 5fcd5da plus this patch. Shared auth/product routing, query context, role/RPC payloads, migration ownership guards and App sharing rechecked. Fixed mounted-account preference isolation, sequential rapid preference writes, blocked-browser-storage fallback, and stale sharing previews during language reload. Added real React transport tests for these cases. Full npm test, TypeScript and production/PWA build pass. No new database change or deployment; permanent migration and signed-in browser acceptance remain release gates. No route/page/Back change; SITEMAP and ROUTE_INDEX reviewed. PR #55 remains draft.
+
 # Lingo3 Development History
 
 Purpose: durable high-level chronology for future developers/AI agents.
@@ -124,3 +138,23 @@ See older entries in `docs/DEVELOPMENT_HANDOFF.md` for detailed historical evide
 ## 2026-11-17 — Academy release QA
 
 Corrected two TypeScript build errors and one broken regression assertion in the pending dashboard release. Fixed desktop header language-selector sizing, Light-theme hero contrast and checkbox sizing; completed Grammar/Settings form guidance. Reviewed current route map and live RLS-backed dashboard schema. Release status and verification limits are in DEVELOPMENT_HANDOFF.
+
+## 2026-11-18 — Academy workflow integrity and compact shared homepage (feature source)
+
+Completed the role-workflow source batch and added real SQL/React behavioral verification alongside existing source checks. Added account-scoped UI preferences, compact homepage/header, explicit classroom sharing and grammar resource copying. Source is release-gated on the unapplied permanent database migration and browser acceptance; see ACADEMY_RELEASE_2026-11-18.md.
+
+## 2026-11-19 — Academy workspaces, multilingual publishing and SEO
+
+2026-11-19 · v0.7.5 · branch feat/academy-student-workspaces-20261119 · based on bc38fb9 + this release patch.
+
+Academy release: named teacher roster, private teaching desk, isolated demo student view, shared class feed with per-student homework, makeup votes/time-off, course/teacher detail URLs and device-aware sharing. Added multilingual educational posts (grammar/vocabulary/conversation/exam), per-language drafts/publication, YouTube/Instagram URL validation, teacher/admin editor and explicit snapshot sharing into assigned student workspaces. Public article listing strictly matches the selected locale; translations are manually authored, never invented.
+
+SEO: server-readable Academy public pages, per-page title/description/Open Graph, canonical and published-translation hreflang, Article JSON-LD, dynamic /sitemap.xml and robots.txt. Private Academy routes are noindex. No ranking or Google indexing guarantee. API uses anonymous database permissions only. Sitemap updates within 60 seconds of publication. Archived/draft translations are excluded.
+
+Security/lifecycle: demo class membership and real slots are isolated; demo booking conflicts excluded from real availability. Admin course closure and teacher transfer require an impact preview checked again at execution. Transfer cancels upcoming private bookings, ends old group membership and retains the same classroom, resources and original authorship; new schedule is arranged explicitly. Course closure cancels future sessions, keeps history and closes groups. Reviews remain disabled; moderation audit prepared.
+
+Verification: full existing npm test passed; article UI transport test and SEO HTML escaping tests passed; PostgreSQL transaction tests passed for article roles/locale/drafts/unsafe URLs, private student boundaries, makeup/time-off and transfer/history/course closure. Zero QA fixture accounts remain. Production build passed before final translation/editor changes; final build and deployment verification recorded separately below. Signed-in browser E2E not yet verified.
+
+Remaining: domain email/reminders/retry provider not configured (no sending API key in Vercel); no delivery claim. Automatic video/calendar/payment integrations remain outside this release. Historic teacher-authored assessment records retain their authorship; new teacher can read shared classroom history and write new assessments. No production data deleted. Source release and deployment pending until recorded below.
+
+SITEMAP/ROUTE_INDEX reviewed and updated with actual active/planned and role boundaries. Central governance URL was unavailable; owner-provided Lean v3 protocol used.

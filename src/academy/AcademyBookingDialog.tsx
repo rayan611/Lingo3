@@ -19,6 +19,7 @@ type TeacherCourse = { teacher_id: string; course_id: string }
 type Slot = {
   id: string
   teacher_id: string
+  status?: string
   starts_at: string
   ends_at: string
   delivery_mode: 'online' | 'offline'
@@ -100,6 +101,7 @@ export function AcademyBookingDialog({
   teacher,
   courses,
   teacherCourses,
+  initialCourseId,
   onClose,
   onSuccess,
 }: {
@@ -108,6 +110,7 @@ export function AcademyBookingDialog({
   teacher: Teacher
   courses: Course[]
   teacherCourses: TeacherCourse[]
+  initialCourseId?: string
   onClose: () => void
   onSuccess: (message: string) => void
 }) {
@@ -120,24 +123,18 @@ export function AcademyBookingDialog({
         .filter((course): course is Course => Boolean(course)),
     [teacher.id, teacherCourses, courses],
   )
-  const [courseId, setCourseId] = useState(eligible[0]?.id ?? '')
+  const [courseId, setCourseId] = useState(eligible.find(c=>c.id===initialCourseId)?.id ?? eligible[0]?.id ?? '')
   const [slots, setSlots] = useState<Slot[]>([])
   const [slotId, setSlotId] = useState('')
   const [customStart, setCustomStart] = useState('')
   const [message, setMessage] = useState('')
+  const [sessionType,setSessionType]=useState('trial')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     let cancelled = false
-    supabase()
-      .from('academy_availability')
-      .select('id,teacher_id,starts_at,ends_at,delivery_mode')
-      .eq('teacher_id', teacher.id)
-      .eq('status', 'available')
-      .gt('ends_at', new Date().toISOString())
-      .order('starts_at')
-      .limit(30)
+    supabase().rpc('academy_teacher_calendar',{p_teacher_id:teacher.id})
       .then(({ data, error: queryError }) => {
         if (cancelled) return
         if (queryError) setError(queryError.message)
@@ -161,25 +158,15 @@ export function AcademyBookingDialog({
       return
     }
 
-    setBusy(true)
-    setError('')
-    const preferredStart = slot?.starts_at ?? new Date(customStart).toISOString()
-    const { error: insertError } = await supabase().from('academy_bookings').insert({
-      student_id: userId,
-      teacher_id: teacher.id,
-      course_id: courseId,
-      availability_id: slot?.id ?? null,
-      session_type: 'trial',
-      preferred_start: preferredStart,
-      student_message: message.trim() || null,
-      status: 'requested',
-    })
-    setBusy(false)
-    if (insertError) {
-      setError(insertError.message)
-      return
-    }
-    onSuccess(t.sent)
+    if(busy)return
+    const date=new Date(slot?.starts_at??customStart)
+    if(!Number.isFinite(date.getTime())||date.getTime()<=Date.now()){setError(locale==='fa'?'زمان معتبر در آینده انتخاب کن.':'Choose a valid future lesson time.');return}
+    setBusy(true);setError('')
+    try{
+     const {error:insertError}=await supabase().from('academy_bookings').insert({student_id:userId,teacher_id:teacher.id,course_id:courseId,availability_id:slot?.id??null,session_type:sessionType,preferred_start:date.toISOString(),student_message:message.trim()||null,status:'requested'})
+     if(insertError)throw insertError
+     onSuccess(t.sent)
+    }catch(error){setError(error instanceof Error?error.message:String((error as {message?:string}).message??error))}finally{setBusy(false)}
   }
 
   return (
@@ -214,8 +201,8 @@ export function AcademyBookingDialog({
           >
             <option value="">{t.customOption}</option>
             {slots.map((slot) => (
-              <option value={slot.id} key={slot.id}>
-                {localDateTime(slot.starts_at)} · {slot.delivery_mode}
+              <option value={slot.id} key={slot.id} disabled={slot.status==='busy'}>
+                {localDateTime(slot.starts_at)} · {slot.status==='busy' ? ({en:'Busy',fa:'رزرو شده',sv:'Bokad',de:'Belegt'}[locale]) : slot.delivery_mode}
               </option>
             ))}
           </select>
@@ -234,6 +221,7 @@ export function AcademyBookingDialog({
           />
         </label>
 
+        <label>{locale==='fa'?'نوع جلسه':'Lesson type'}<select value={sessionType} onChange={e=>setSessionType(e.target.value)}><option value="trial">{locale==='fa'?'آزمایشی':'Trial'}</option><option value="individual">{locale==='fa'?'خصوصی':'Individual'}</option><option value="small_group">{locale==='fa'?'گروه کوچک':'Small group'}</option><option value="offline_intro">{locale==='fa'?'معرفی حضوری':'Offline introduction'}</option></select></label>
         <label>
           {t.message}
           <textarea placeholder="e.g. I would like to focus on conversation and pronunciation." value={message} maxLength={3000} onChange={(event) => setMessage(event.target.value)} />

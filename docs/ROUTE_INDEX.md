@@ -1,4 +1,42 @@
+2026-11-19 · Release 0.7.6 · PR #57 · reviewed merged source including 5752c9d; deployment pending.
+
 Reviewed: 2026-11-19 · App 0.7.5 · docs-2026-11-19.1 · Base main `91fa6f742fa43cb3dc148d3d9318fca4b7e7c217`; leading comment only in `src/main.tsx`. No executable navigation/page/shortcut/Back changes; existing map retained.
+
+2026-11-19 · v0.7.5 · reviewed bc38fb9 + release patch on feat/academy-student-workspaces-20261119. This section supersedes historic route descriptions below.
+
+| Route | Access / behavior |
+|---|---|
+| `/academy/posts?lang=fa` (also en/sv/de) | Public learning articles, only published translation matching locale; category filter |
+| `/academy/posts/:id?lang=fa` | Public stable article URL; available translation links; missing/unpublished translation returns server 404/noindex |
+| `/academy/courses/:id?lang=…` | Public course introduction, syllabus, duration/price and offering teachers; booking retains teacher/course |
+| `/academy/teachers/:id?lang=…` | Public teacher introduction, courses and anonymous free/busy calendar |
+| `/academy/levels` | Compatibility redirect to `/academy/courses`; no menu entry |
+| `/academy/my` | Authenticated; teacher roster → selected student → notes/messages/resources/homework/progress. Personal teacher desk; article editor; admin teacher/student switch. Own isolated demo student view. Noindex |
+| `/academy/admin` | Admin only: users, enrollments, impact-checked course closure/teacher transfer, editors. Noindex |
+| `/sitemap.xml` | Public dynamic XML, public course/teacher URLs and published article translations only |
+| `/api/academy-page` | HTML/XML rendering endpoint, anonymous reads only; not a navigation entry |
+
+Back: directory/detail links use shared SPA history, browser Back restores previous route. Article translation URLs preserve article identity. Post Studio lives inside Teacher Space (admins can select Teacher Space); student sharing stores a snapshot without publishing the draft. Existing App routes and single shared auth session remain unchanged. Reviews are prepared but disabled; domain-email delivery remains unconfigured, not active.
+
+2026-11-18 release verification: production source f9c8408bb3fa3032f6d4e77413b56df430d2fffb, deployment dpl_B6U7WtmEWWveDn1ugR2yUkQfa3zf. Vercel build completed in 41s; live lingo3.com serves index-CIUEiV-3.js / Academy-67xfYk_A.js containing new admin roster, group scheduling and calendar RPCs. Admin/my/teachers routes returned HTTP 200. PR #56 is draft; source not merged to main. New signed-in/viewport browser E2E remains unverified: local Chromium failed with socket Operation not permitted. SQL fixture cleanup verified zero test users. This delivers roster/scheduling foundation, not all remaining Academy scope.
+
+2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend source f9c8408 deployed; see release verification above.
+
+Navigation review: no top-level routes removed or added. /academy/admin → collapsed Users/access (paged search, teacher profile, admin grant/revoke, user enrollments), Students/enrollments (assign, pause, activate, complete, reversible remove), Course editor/list, Teacher editor/list → assigned courses and students. /academy/my → collapsed Classes/schedule → membership requests, one-time/daily/weekly sessions, attendance, cancellation requests, meeting links and notifications. Admin teacher view can manage existing group classes. /academy/teachers → request lesson dialog → sanitized free/busy calendar, occupied options disabled; existing student classroom has teacher calendar. Teacher workspace retains single and recurring weekly availability. Browser Back routes unchanged; inline details expand/collapse without history entries. New group UI implemented in this branch; advanced makeup/shared group coursework remain planned.
+
+2026-11-18 · v0.7.5 · based on 41e49ac. Training Center now links to /academy alongside its activities. Online navigation requests fresh HTML; offline navigation can use the precached app shell. No route removed.
+
+2026-11-18 · v0.7.5 · Academy navigation, based on 70a0f9a. Groups open with click, tap or keyboard, stay open during pointer movement, and close with selection, outside click or Escape. Mobile uses one column. Routes and browser Back behavior unchanged. Preview release only until required Supabase migrations are verified.
+
+2026-11-18 · v0.7.5 · Teams/Zoom manual meeting links, based on 5b4d1fc. /academy/my Teacher Space has private reusable links and per-booking primary/backup selection; Student Space displays participant links for confirmed/in-progress bookings. Paths and Back behavior unchanged. Apply 20261118050000 then 20261118131500 before production deployment. Supabase rehearsal confirmation expired. Automatic provider creation and embedded video remain pending.
+
+2026-11-18 · v0.7.5 · reviewed 8e3a388 and role-view patch. /academy/my offers Student Space and Teacher Space to admins. Other signed-in accounts see their own role view. Opening a classroom from Admin Studio selects Teacher Space. URLs and browser Back behavior are unchanged.
+
+2026-11-18 navigation acceptance review · v0.7.5 · source cd4d705 + navigation/UI patch (feature branch). Paths unchanged. Login and booking are same-URL history overlays: Back/Escape/Close dismiss, Forward restores; successful login consumes login overlay; successful booking replaces overlay with /academy/my. Product navigation discards overlay state. Settings remains same-URL history overlay. No new active production feature.
+
+2026-11-18 follow-up route review · version 0.7.5 · source 5fcd5da + preference/sharing integration patch. No paths, entries, roles or Back behavior changed; existing map verified against App.tsx, Academy.tsx and AcademyBridge.tsx. Feature branch only; not production-live.
+
+2026-11-18 source review · version 0.7.5 · branch fix/academy-complete-workflows-20261118; base main 91fa6f7. Reference: src/App.tsx, src/academy/*, src/ui/Landing.tsx, src/ui/AcademyBridge.tsx. Implemented in feature source; NOT production-live. No top-level route added/removed. / is now the compact App + Academy introduction; the legacy /showcase.html remains available but is not embedded on the homepage. Academy Settings is a same-route overlay: browser Back/Escape closes it. App shortcuts support ?academyLang=<code>; grammar resource import additionally uses ?academyResource=<resource-id>. These query parameters preserve personal learning-language settings. Shared notes/homework/messages are reachable from the selected classroom for both students and active assigned teachers. Admin Studio lists all enrollment statuses and opens the chosen classroom. Tests-only scripts/qa paths are not production routes. Planned provider integrations remain labelled planned.
 
 Reviewed: 2026-11-17 · Version 0.7.5 · Code: merged PR #53 and #54; main `a5a2c9c8338dcb9f2ea1ab90f9e110a49f338d32` (`src/App.tsx`, `src/academy/*`, `src/ui/GrammarManager.tsx`).
 

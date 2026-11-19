@@ -1,0 +1,37 @@
+begin;
+insert into auth.users(id,raw_user_meta_data) values('e6192000-0000-4000-8000-000000000001','{}'),('e6192000-0000-4000-8000-000000000002','{"full_name":"Named student"}'),('e6192000-0000-4000-8000-000000000003','{}');
+insert into public.academy_courses(id,subject_code,level_code,title_i18n,status) values('e6192000-0000-4000-8000-000000000010','sv','A2','{"en":"Workspace test"}','active');
+insert into public.academy_teachers(id,user_id,display_name,status) values('e6192000-0000-4000-8000-000000000020','e6192000-0000-4000-8000-000000000001','Teacher test','active');
+insert into public.academy_teacher_courses(teacher_id,course_id) values('e6192000-0000-4000-8000-000000000020','e6192000-0000-4000-8000-000000000010');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','e6192000-0000-4000-8000-000000000001',true);
+select set_config('test.class',public.academy_create_class('e6192000-0000-4000-8000-000000000020','e6192000-0000-4000-8000-000000000010','Workspace test',2)::text,true);
+select public.academy_add_class_member(current_setting('test.class')::uuid,'e6192000-0000-4000-8000-000000000002');
+select public.academy_add_class_member(current_setting('test.class')::uuid,'e6192000-0000-4000-8000-000000000003');
+select public.academy_add_class_member(current_setting('test.class')::uuid,'e6192000-0000-4000-8000-000000000002');
+do $$begin
+ if (select count(*) from public.academy_learning_spaces where teacher_id='e6192000-0000-4000-8000-000000000020')<>2 then raise exception 'Duplicate/missing space';end if;
+ if public.academy_teacher_roster('e6192000-0000-4000-8000-000000000020')->0->>'resolved_name' is null then raise exception 'Roster has no name';end if;
+end$$;
+select public.academy_publish_class_post(current_setting('test.class')::uuid,'homework','Shared assignment','Read chapter one',now()+interval '1 week');
+insert into public.academy_teacher_desk(user_id,notes) values(auth.uid(),'Teacher secret');
+select set_config('test.space',(select id::text from public.academy_learning_spaces where teacher_id='e6192000-0000-4000-8000-000000000020' and student_id='e6192000-0000-4000-8000-000000000002'),true);
+insert into public.academy_notes(learning_space_id,author_id,body,visibility) values(current_setting('test.space')::uuid,auth.uid(),'Private teacher note','private');
+select set_config('test.article',public.academy_save_post(null,'sv','grammar','Private reusable lesson','Reusable lesson body',null,'{}','','draft')::text,true);
+select public.academy_share_post(current_setting('test.article')::uuid,'sv',current_setting('test.space')::uuid);
+select set_config('request.jwt.claim.sub','e6192000-0000-4000-8000-000000000002',true);
+do $$begin
+ if not exists(select 1 from public.academy_resources where title='Private reusable lesson') then raise exception 'Shared article missing';end if;
+ if exists(select 1 from public.academy_post_translations where post_id=current_setting('test.article')::uuid) then raise exception 'Sharing exposed private source';end if;
+ if (select count(*) from public.academy_resources where title='Shared assignment')<>1 then raise exception 'Cross-student resource leak';end if;
+ if exists(select 1 from public.academy_teacher_desk) then raise exception 'Private desk leaked';end if;
+ if exists(select 1 from public.academy_notes where body='Private teacher note') then raise exception 'Private note leaked';end if;
+ if (select count(*) from public.academy_class_posts where class_id=current_setting('test.class')::uuid)<>1 then raise exception 'Class feed missing';end if;
+ begin perform public.academy_teacher_roster('e6192000-0000-4000-8000-000000000020');raise exception 'Roster exposed to student';exception when insufficient_privilege then null;end;
+ begin perform public.academy_publish_class_post(current_setting('test.class')::uuid,'homework','Forgery','Should fail');raise exception 'Student published homework';exception when insufficient_privilege then null;end;
+ begin perform public.academy_review_action('submit','e6192000-0000-4000-8000-000000000020',null,5,'Should fail');raise exception 'Disabled reviews accepted';exception when insufficient_privilege then null;end;
+end$$;
+update public.academy_resources set student_status='submitted',student_response='My private answer' where learning_space_id=current_setting('test.space')::uuid;
+select set_config('request.jwt.claim.sub','e6192000-0000-4000-8000-000000000003',true);
+do $$begin if exists(select 1 from public.academy_resources where student_response='My private answer') then raise exception 'Answer leaked';end if;end$$;
+rollback;

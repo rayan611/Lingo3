@@ -9,13 +9,15 @@ import {
   activeTargets,
   collectionOf,
   type Settings,
+  LANG_NAMES, type Lang,
 } from '../db/types'
 import { collectionCounts, listCollections } from '../db/collections'
 import { leechCounts, matchesTopic, LEECH_LAPSES } from '../fsrs/queue'
 import { WordCard } from './WordCard'
 import { WordLists } from './WordLists'
 
-export function Browse({ settings }: Props) {
+export function Browse({ settings,initialLang }: Props) {
+  const [browseLang,setBrowseLang]=useState<Lang|'all'>(initialLang??'all')
   const [query, setQuery] = useState('')
   const [topic, setTopic] = useState<string>('all')
   /**
@@ -110,8 +112,10 @@ export function Browse({ settings }: Props) {
   const concepts = useLiveQuery(async () => {
     const all = await db.concepts.orderBy('createdAt').reverse().toArray()
     const q = query.trim().toLocaleLowerCase()
+    const languageConcepts=browseLang==='all'?null:new Set((await db.entries.where('lang').equals(browseLang).toArray()).map(e=>e.conceptId))
     return all.filter((c) => {
       if (c.deletedAt) return false
+      if(languageConcepts&&!languageConcepts.has(c.id))return false
       if (lists && !lists.has(collectionOf(c))) return false
       if (!matchesTopic(c, topic)) return false
       if (pos !== 'all' && c.pos !== pos) return false
@@ -119,7 +123,7 @@ export function Browse({ settings }: Props) {
       if (!q) return true
       return c.lemma.toLocaleLowerCase().includes(q)
     })
-  }, [query, topic, pos, lists, troubleOnly, leeches], [])
+  }, [query, topic, pos, lists, troubleOnly, leeches,browseLang], [])
 
   /** Every topic in use, from tags and from the old single category field. */
   const topics = useLiveQuery(
@@ -193,7 +197,7 @@ export function Browse({ settings }: Props) {
       <WordLists settings={settings} />
 
       <div className="panel">
-        <h2>My Word List</h2>
+        <h2>My Word List</h2><label>Language context<select value={browseLang} onChange={e=>setBrowseLang(e.target.value as Lang|'all')}><option value="all">All languages</option>{[...new Set([...activeTargets(settings),...(initialLang?[initialLang]:[])])].map(l=><option key={l} value={l}>{LANG_NAMES[l]}</option>)}</select></label>
         {/* Which lists to show, as a row of chips rather than a menu: the
             words below used to carry their list's name on every row, which
             pushed redo/pause/delete out of line. The name now lives here,
@@ -326,5 +330,6 @@ export function Browse({ settings }: Props) {
 }
 
 interface Props {
+  initialLang?:Lang
   settings: Settings
 }

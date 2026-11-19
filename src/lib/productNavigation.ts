@@ -12,8 +12,9 @@ export interface ProductNavigationOptions {
  * refresh lifecycles. Keep product switches inside this SPA instead.
  */
 export function navigateProduct(path: string, options: ProductNavigationOptions = {}) {
+  const {lingo3Tab:_oldTab,academySettings:_oldSettings,academyDialog:_oldDialog,...previousState}=window.history.state??{}
   const state = {
-    ...(window.history.state ?? {}),
+    ...previousState,
     lingo3ProductNavigation: true,
     lingo3DirectApp: Boolean(options.directApp),
   }

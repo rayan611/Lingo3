@@ -108,7 +108,6 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // The link-preview image is for other sites' crawlers, never the app.
         globIgnores: ['**/og-image.png'],
-        navigateFallback: '/index.html',
         // Without these, a bad shell cached by an older service worker (for
         // example a login wall served while deployment protection was on)
         // keeps being served forever and the app looks dead. These make a new
@@ -116,10 +115,15 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        // The fallback is for page navigations only; it must never swallow an
-        // API call and hand back HTML.
-        navigateFallbackDenylist: [/^\/api\//, /^\/academy\.html$/, /^\/showcase\.html$/, /^\/version\.json$/, /^\/manifest\.webmanifest$/],
         runtimeCaching: [
+          {
+            // Use the deployed HTML when online. Keep the precached shell for offline study.
+            urlPattern: ({ request, url, sameOrigin }) => request.mode === 'navigate'
+              && sameOrigin
+              && !/^\/(api(?:\/|$)|academy\.html$|showcase\.html$|version\.json$|manifest\.webmanifest$)/.test(url.pathname),
+            handler: 'NetworkOnly',
+            options: { precacheFallback: { fallbackURL: '/index.html' } },
+          },
           {
             // Never cache model calls — they must hit the network or fail
             // into the pending queue.

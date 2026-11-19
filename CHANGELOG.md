@@ -1,3 +1,11 @@
+## 0.7.6 — 2026-11-19 — Academy workspaces and publishing
+
+- Named student workspaces, private teacher desk, isolated demo view, group learning resources, makeup/time-off and public course/teacher sharing.
+- Teacher/admin multilingual educational articles: independent locale publication, safe video links, private student sharing; server-readable SEO, metadata, structured data and dynamic sitemap.
+- Guarded admin teacher transfer and course closure preserve history; strengthened privacy and demo separation.
+- Validation: full regressions/build and transactional SQL role/privacy/lifecycle tests passed before integration; merged-source checks recorded in handoff. Signed-in browser acceptance and domain email delivery remain unverified/unconfigured. Deployment pending.
+- Reference: https://github.com/rayan611/Lingo3/pull/57. Preserves concurrent changelog governance revision 5752c9d.
+
 ## docs-2026-11-19.1 — 2026-11-19 — Changelog workflow (app 0.7.5)
 
 - Require changelog review before code/config edits and a dated, versioned entry before completion. Instructions appear at the top of `AGENTS.md` and `src/main.tsx`.
