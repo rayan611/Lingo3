@@ -114,3 +114,5 @@
 .academy-share{margin-block:.5rem}.academy-share summary{cursor:pointer;font-size:.95rem}.academy-profile-photo{width:160px;max-width:100%;border-radius:16px}.academy-teacher-switch{position:sticky;top:64px;z-index:5;background:var(--academy-bg,#fff);padding:.75rem;border:1px solid var(--academy-border,#aaa);border-radius:12px}.academy-teacher-switch label{display:block}.academy-teacher-switch select{width:100%;max-width:100%;min-height:44px}.academy-desk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem}.academy-desk-grid textarea{width:100%;min-height:140px}.academy-demo-banner{padding:.75rem;border:2px dashed #a36c00;border-radius:10px}
 
 .academy .academy-article-body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;max-width:75ch}.academy .academy-card fieldset{min-width:0}.academy .academy-card input,.academy .academy-card textarea,.academy .academy-card select{max-width:100%}
+
+.academy[data-theme=light] .academy-section>label{color:#475467}

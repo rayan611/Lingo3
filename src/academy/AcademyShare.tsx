@@ -1,7 +1,8 @@
 import {useState} from 'react'
 export const shareLabels={en:{share:'Share',copy:'Copy link',copied:'Link copied',device:'Share with an app',failed:'Copy the link below'},fa:{share:'اشتراک‌گذاری',copy:'کپی لینک',copied:'لینک کپی شد',device:'اشتراک با برنامه‌های دستگاه',failed:'لینک زیر را کپی کنید'},sv:{share:'Dela',copy:'Kopiera länk',copied:'Länken kopierad',device:'Dela med en app',failed:'Kopiera länken nedan'},de:{share:'Teilen',copy:'Link kopieren',copied:'Link kopiert',device:'Mit einer App teilen',failed:'Link unten kopieren'}}
 export function AcademyShare({locale,title,description,path}:{locale:keyof typeof shareLabels;title:string;description:string;path:string}){
- const t=shareLabels[locale],url=new URL(path,window.location.origin).href,body=`${title}\n${description}\n${url}`
+ const target=new URL(path,window.location.origin);target.searchParams.set('lang',locale)
+ const t=shareLabels[locale],url=target.href,body=`${title}\n${description}\n${url}`
  const [notice,setNotice]=useState('')
  const data={title,text:description,url}
  const native=typeof navigator.share==='function'&&(!navigator.canShare||navigator.canShare(data))

@@ -1,3 +1,9 @@
+## 0.7.7 — 2026-11-19 — Demo isolation and public language continuity
+
+- Exclude demo booking requests, submitted homework and next sessions from the teacher production summary; retain the named demo classroom for practice. No database change.
+- Live QA also found public navigation dropping the selected URL language and a faint article filter label; preserve locale on Academy navigation and sharing links, and correct light-theme contrast.
+- Verification: 189 navigation assertions, 13 auth/navigation checks, article/SEO tests, docs checks and TypeScript/Vite/PWA build passed (17.01s); follows deployed 0.7.6 / PR #57 (`46e4ffe`).
+
 ## 0.7.6 — 2026-11-19 — Academy workspaces and publishing
 
 - Named student workspaces, private teacher desk, isolated demo view, group learning resources, makeup/time-off and public course/teacher sharing.

@@ -1,3 +1,5 @@
+2026-11-19 · 0.7.7 · reviewed 46e4ffe + demo-summary correction: route set unchanged; internal Academy navigation and share links preserve explicit lang. Back restores the original locale; App entry drops the Academy query.
+
 2026-11-19 · Release 0.7.6 · PR #57 · reviewed merged source including 5752c9d; deployment pending.
 
 Reviewed: 2026-11-19 · App 0.7.5 · docs-2026-11-19.1 · Base main `91fa6f742fa43cb3dc148d3d9318fca4b7e7c217`; leading comment only in `src/main.tsx`. No executable navigation/page/shortcut/Back changes; existing map retained.
