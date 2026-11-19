@@ -1,3 +1,11 @@
+## Mandatory changelog workflow — effective 2026-11-19 (revision 1)
+
+- BEFORE any code/config modification, read `CHANGELOG.md`, verify the current app version and latest relevant changes, and read `docs/DEVELOPMENT_HANDOFF.md`. Resolve missing/conflicting history against verified code; never invent releases or prior work.
+- BEFORE completing work, update `CHANGELOG.md` in the same commit/change as the implementation. Every change entry must include its application version, actual date (YYYY-MM-DD), concise description, validation results/limits and commit/PR reference when known. Keep newest entries first; preserve history.
+- New runtime releases must increment the app version using the existing repository mechanism and keep version sources consistent. Changes within the same unreleased version need separately dated/revisioned entries; never silently overwrite history or invent a version.
+- Documentation/comment-only changes use a dated documentation revision plus the current app version; do not claim a new runtime release or deployment.
+- Review/update `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md` in the same change and record this in `docs/DEVELOPMENT_HANDOFF.md`. Distinguish implemented, tested, committed and deployed. Completion requires these records to be current.
+
 # Development Agent Instructions
 
 This repository follows the canonical [Rayan AI Development Team Master Operating Protocol](https://github.com/rayan611/apps-ontrol-panel-/blob/main/governance/MASTER_PROTOCOL.md).

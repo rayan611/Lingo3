@@ -1,3 +1,17 @@
+## docs-2026-11-19.1 — 2026-11-19 — Changelog workflow (app 0.7.5)
+
+- Require changelog review before code/config edits and a dated, versioned entry before completion. Instructions appear at the top of `AGENTS.md` and `src/main.tsx`.
+- Follow existing runtime versioning; identify documentation revisions separately. Sitemap/route review and handoff remain required.
+- Validation: executable entry-point content unchanged after the leading comment; prior history preserved. No runtime release, deployment, database or navigation change.
+
+## 0.7.5 — 2026-11-09 — Word information and personal removal
+
+- Highlighted the information icon in Word Practice and Recall; opens full native/active-learning-language details.
+- Bottom Remove offers tests-only suspension (manual practice retained) or personal-list soft removal. Shared vocabulary and review history remain stored; Restore to tests is available.
+- Recall skips removed words without counting a review; details pause auto-advance. Atomic writes reuse existing sync fields; no migration.
+- Historical validation: 12 local regression scripts and TypeScript/Vite/PWA build passed. GitHub CI failed at service startup. Signed-in mobile/cross-device acceptance was not verified.
+- Historical release: [PR #39](https://github.com/rayan611/Lingo3/pull/39), commit `2bb6869057530d2c535b99b40262cd318bbda058`; production `dpl_GVgJU9mawE1crzwHnfTeGY9s3nn8` verified READY with version 0.7.5 on 2026-11-09. Backfilled 2026-11-19 from the verified release record; no new deployment.
+
 ## 0.7.4 — 2026-11-08
 - Added 200 new shared-bank verb concepts in all eight supported languages, with searchable stored inflections.
 - Store normalized lexical keys once in Postgres to keep RLS-protected lookups fast; preserve ambiguity checks and access rules.
