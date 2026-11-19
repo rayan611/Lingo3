@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-
+Disallow: /academy/my
+Disallow: /academy/admin
 Sitemap: https://lingo3.com/sitemap.xml

@@ -42,7 +42,7 @@ const click=async(label)=>{const b=find(label);assert(b,'Button exists: '+label)
 const page=()=>tree.root.find(n=>n.props.className==='academy').props['data-page']
 async function mount(nextRole,url='/academy'){role=nextRole;reset(url);await act(async()=>{tree=TestRenderer.create(React.createElement(Academy,{userId:role==='guest'?null:role==='teacher'?'teacher-user':'student-user',email:role+'@example.invalid'}),{createNodeMock:()=>({querySelectorAll:()=>[]})})});await flush()}
 async function unmount(){await act(async()=>tree.unmount())}
-const routes=[['Home','home','/academy'],['Find your learning path','path','/academy/path'],['Courses','courses','/academy/courses'],['Teachers','teachers','/academy/teachers'],['Levels','levels','/academy/levels'],['Personal space','personal','/academy/my'],['How it works','about','/academy/about'],['Pricing','pricing','/academy/pricing'],['Resources','resources','/academy/resources'],['Contact','contact','/academy/contact']]
+const routes=[['Home','home','/academy'],['Find your learning path','path','/academy/path'],['Courses','courses','/academy/courses'],['Teachers','teachers','/academy/teachers'],['Personal space','personal','/academy/my'],['How it works','about','/academy/about'],['Pricing','pricing','/academy/pricing'],['Resources','resources','/academy/resources'],['Contact','contact','/academy/contact']]
 try{
  for(const r of ['guest','student','teacher','admin']){
   await mount(r)
@@ -67,6 +67,7 @@ try{
   await click('Lingo3 App');assert.equal(location.pathname,'/');assert(history.state.lingo3DirectApp);assert(!history.state.academyDialog&&!history.state.academySettings);await unmount()
  }
  for(const [,expected,url]of routes){await mount('guest',url);assert.equal(page(),expected);await unmount();checks++}
+ await mount('guest','/academy/levels');assert.equal(page(),'courses');assert(!find('Levels'));await unmount();
  await mount('student','/academy/admin');assert(!find('Save course'));await click('Personal space');assert.equal(page(),'personal');await unmount()
  const css=postcss.parse(fs.readFileSync('src/academy/academy.css','utf8'));css.walkRules(r=>r.selectors.forEach(s=>assert(s.trim().startsWith('.academy'),'Academy CSS must not leak into App: '+s)))
  console.log(`PASS: ${checks} route/navigation assertions; 4 roles, direct URLs, Back/Forward, Settings/Escape, login modes/OAuth error, booking guest/submit, signout, external link formats and scoped CSS. Transport/auth are mocked; no real account or message created.`)

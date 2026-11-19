@@ -35,7 +35,7 @@ class Query{
  return {data:rows.slice(this.start,this.end+1),error:null}
  }).then(resolve,reject)}
 }
-globalThis.__academyQAClient={from:t=>new Query(t),rpc:()=>Promise.resolve({data:[],error:null})}
+globalThis.__academyQAClient={from:t=>new Query(t),rpc:(name,args)=>Promise.resolve({data:name==='academy_teacher_roster'?tables.academy_learning_spaces.filter(s=>args.p_teacher===null||s.teacher_id===args.p_teacher).map(s=>({...s,resolved_name:s.student_display_name})):[],error:null})}
 const output=path.resolve('node_modules/.cache/academy-behavior.mjs');fs.mkdirSync(path.dirname(output),{recursive:true})
 await build({stdin:{contents:"export {AcademyPortal} from './src/academy/AcademyPortal';export {Landing} from './src/ui/Landing';export {countryLocale,localizedName,useAcademyPreferences} from './src/academy/preferences'",resolveDir:process.cwd(),loader:'tsx'},outfile:output,bundle:true,jsx:'automatic',platform:'node',format:'esm',external:['react','react/jsx-runtime'],plugins:[{name:'qa-transport',setup(b){b.onResolve({filter:/auth\/supabase$/},()=>({path:'qa-client',namespace:'qa'}));b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const authConfigured=false;export const supabase=()=>globalThis.__academyQAClient;',loader:'js'}))}}]})
 const {AcademyPortal,Landing,countryLocale,localizedName}=await import('file://'+output+'?'+Date.now())

@@ -101,6 +101,7 @@ export function AcademyBookingDialog({
   teacher,
   courses,
   teacherCourses,
+  initialCourseId,
   onClose,
   onSuccess,
 }: {
@@ -109,6 +110,7 @@ export function AcademyBookingDialog({
   teacher: Teacher
   courses: Course[]
   teacherCourses: TeacherCourse[]
+  initialCourseId?: string
   onClose: () => void
   onSuccess: (message: string) => void
 }) {
@@ -121,7 +123,7 @@ export function AcademyBookingDialog({
         .filter((course): course is Course => Boolean(course)),
     [teacher.id, teacherCourses, courses],
   )
-  const [courseId, setCourseId] = useState(eligible[0]?.id ?? '')
+  const [courseId, setCourseId] = useState(eligible.find(c=>c.id===initialCourseId)?.id ?? eligible[0]?.id ?? '')
   const [slots, setSlots] = useState<Slot[]>([])
   const [slotId, setSlotId] = useState('')
   const [customStart, setCustomStart] = useState('')

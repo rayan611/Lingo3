@@ -1,3 +1,19 @@
+2026-11-19 · v0.7.5 · reviewed bc38fb9 + release patch on feat/academy-student-workspaces-20261119. This section supersedes historic route descriptions below.
+
+| Route | Access / behavior |
+|---|---|
+| `/academy/posts?lang=fa` (also en/sv/de) | Public learning articles, only published translation matching locale; category filter |
+| `/academy/posts/:id?lang=fa` | Public stable article URL; available translation links; missing/unpublished translation returns server 404/noindex |
+| `/academy/courses/:id?lang=…` | Public course introduction, syllabus, duration/price and offering teachers; booking retains teacher/course |
+| `/academy/teachers/:id?lang=…` | Public teacher introduction, courses and anonymous free/busy calendar |
+| `/academy/levels` | Compatibility redirect to `/academy/courses`; no menu entry |
+| `/academy/my` | Authenticated; teacher roster → selected student → notes/messages/resources/homework/progress. Personal teacher desk; article editor; admin teacher/student switch. Own isolated demo student view. Noindex |
+| `/academy/admin` | Admin only: users, enrollments, impact-checked course closure/teacher transfer, editors. Noindex |
+| `/sitemap.xml` | Public dynamic XML, public course/teacher URLs and published article translations only |
+| `/api/academy-page` | HTML/XML rendering endpoint, anonymous reads only; not a navigation entry |
+
+Back: directory/detail links use shared SPA history, browser Back restores previous route. Article translation URLs preserve article identity. Post Studio lives inside Teacher Space (admins can select Teacher Space); student sharing stores a snapshot without publishing the draft. Existing App routes and single shared auth session remain unchanged. Reviews are prepared but disabled; domain-email delivery remains unconfigured, not active.
+
 2026-11-18 release verification: production source f9c8408bb3fa3032f6d4e77413b56df430d2fffb, deployment dpl_B6U7WtmEWWveDn1ugR2yUkQfa3zf. Vercel build completed in 41s; live lingo3.com serves index-CIUEiV-3.js / Academy-67xfYk_A.js containing new admin roster, group scheduling and calendar RPCs. Admin/my/teachers routes returned HTTP 200. PR #56 is draft; source not merged to main. New signed-in/viewport browser E2E remains unverified: local Chromium failed with socket Operation not permitted. SQL fixture cleanup verified zero test users. This delivers roster/scheduling foundation, not all remaining Academy scope.
 
 2026-11-18 · v0.7.5 · branch feat/academy-class-management-20261118, source base 6b00c4 + current patch. This entry supersedes older release-status entries below. Seven new migrations (20261118172726–20261118220631) applied successfully. Frontend source f9c8408 deployed; see release verification above.

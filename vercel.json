@@ -10,6 +10,18 @@
   },
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/academy-page?sitemap=1"
+    },
+    {
+      "source": "/academy",
+      "destination": "/api/academy-page"
+    },
+    {
+      "source": "/academy/:route*",
+      "destination": "/api/academy-page?route=:route*"
+    },
+    {
       "source": "/api/hub-ai",
       "destination": "/api/ai-status"
     },
@@ -57,5 +69,17 @@
         }
       ]
     }
-  ]
+  ],
+  "redirects": [
+    {
+      "source": "/academy/levels",
+      "destination": "/academy/courses",
+      "permanent": true
+    }
+  ],
+  "functions": {
+    "api/academy-page.ts": {
+      "includeFiles": "dist/index.html"
+    }
+  }
 }
