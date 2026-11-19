@@ -69,6 +69,7 @@ try{
  for(const [,expected,url]of routes){await mount('guest',url);assert.equal(page(),expected);await unmount();checks++}
  await mount('guest','/academy/levels');assert.equal(page(),'courses');assert(!find('Levels'));await unmount();
  await mount('student','/academy/admin');assert(!find('Save course'));await click('Personal space');assert.equal(page(),'personal');await unmount()
+ await mount('guest','/academy/posts?lang=fa');await click('مدرس‌ها');assert.equal(location.search,'?lang=fa');assert(find('دوره‌ها'));await act(async()=>history.back());assert.equal(location.search,'?lang=fa');await click('اپ Lingo3');assert.equal(location.search,'');await unmount();checks+=3
  const css=postcss.parse(fs.readFileSync('src/academy/academy.css','utf8'));css.walkRules(r=>r.selectors.forEach(s=>assert(s.trim().startsWith('.academy'),'Academy CSS must not leak into App: '+s)))
  console.log(`PASS: ${checks} route/navigation assertions; 4 roles, direct URLs, Back/Forward, Settings/Escape, login modes/OAuth error, booking guest/submit, signout, external link formats and scoped CSS. Transport/auth are mocked; no real account or message created.`)
 }finally{if(tree)await act(async()=>tree.unmount());fs.rmSync(file,{force:true})}

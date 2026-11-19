@@ -1,3 +1,11 @@
+2026-11-19 · 0.7.7 checks passed: 189 navigation assertions, 13 auth/navigation checks, article/SEO regressions, docs checks, TypeScript/Vite/PWA build (17.01s). No further DB migration. Ready for supplemental source commit and deployment.
+
+2026-11-19 · 0.7.7 live QA corrections: keep explicit lang across Academy navigation and share URLs; article category label contrast fixed. Navigation regression extended: 189 assertions pass including Persian→teacher→Back→App locale boundaries. Public 0.7.6 endpoints verified: /version.json, article HTML metadata/canonical, sitemap XML, private noindex and levels redirect. Domain email and signed-in browser role acceptance remain pending.
+
+2026-11-19 · 0.7.7 follow-up: found demo requests/homework still included in teacher overview totals; exclude demo students from these totals and next real session. Demo classroom remains accessible. No DB changes. Route maps reviewed; checks/deployment pending.
+
+2026-11-19 · 0.7.6 deployed: PR #57 merged as 46e4ffeb8e77fa8396509aca2fb14b9b2b70f564; production dpl_HC7sz4x4UDwr2WQmo943tmcre99d READY and lingo3.com aliased. Public Persian article page opens in browser.
+
 2026-11-19 · 0.7.6 integration validation: merged concurrent governance 5752c9d without dropping Academy history; package/version sources bumped together. Documentation checks and merged TypeScript/Vite/PWA build passed (22.25s). Runtime changes since prior full regressions are version metadata only. PR #57; production verification pending.
 
 2026-11-19 · Release 0.7.6 · PR #57 · reviewed merged source including 5752c9d; deployment pending.
