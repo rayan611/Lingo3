@@ -1,3 +1,8 @@
+## docs-2026-11-19.2 — 2026-11-19 — Release evidence (app 0.7.7)
+
+- Record successful production deployment `dpl_74ibKKE4JTxaiAanKAiRstiodHNC`, runtime `e0a6466`, PRs #57/#58; full local tests/build and live public browser/HTTP checks passed.
+- Keep limitations explicit: signed-in real-role/mobile-tablet browser acceptance and configured domain email delivery remain outstanding. Updated handoff, roadmap, context and route maps. No runtime or database change in this evidence revision.
+
 ## 0.7.7 — 2026-11-19 — Demo isolation and public language continuity
 
 - Exclude demo booking requests, submitted homework and next sessions from the teacher production summary; retain the named demo classroom for practice. No database change.

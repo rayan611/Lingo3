@@ -1,3 +1,5 @@
+Reviewed 2026-11-19 · app 0.7.7 · deployed source e0a6466 (PR #58). Public guest routes, language continuity, Back, profile share and old-level redirect verified; role routes covered by tests, signed-in browser acceptance outstanding. See ACADEMY_RELEASE_2026-11-19.md.
+
 2026-11-19 · 0.7.7 · reviewed 46e4ffe + demo-summary correction: route set unchanged; internal Academy navigation and share links preserve explicit lang. Back restores the original locale; App entry drops the Academy query.
 
 2026-11-19 · Release 0.7.6 · PR #57 · reviewed merged source including 5752c9d; deployment pending.
