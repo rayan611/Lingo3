@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy SEO schema improvement (0.7.12, unreleased branch)
+
+Added Course and Person JSON-LD for published Academy course and teacher details, plus source-contract assertions. Existing server metadata and indexing rules retained. Checks and build not yet executed; no deployment. Issue #65 remains open for admin SEO editor, multilingual controls, indexing audit, performance and Search Console.
+
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)
