@@ -1,3 +1,4 @@
+import {AcademyHelp} from './AcademyHelp'
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../auth/supabase'
 
@@ -178,7 +179,7 @@ export function AcademyBookingDialog({
         <h2>{t.title}</h2>
         <p className="muted">{teacher.display_name}</p>
 
-        <label>
+        <div className="academy-field-help">        <label>
           {t.course}
           <select value={courseId} onChange={(event) => setCourseId(event.target.value)} required>
             <option value="">{t.choose}</option>
@@ -188,9 +189,9 @@ export function AcademyBookingDialog({
               </option>
             ))}
           </select>
-        </label>
+        </label><AcademyHelp locale={locale} text={{fa:'دوره‌ای را که می‌خواهید با این استاد بگذرانید انتخاب کنید.',en:'Choose the course you want to study with this teacher.',sv:'Välj kursen du vill läsa med läraren.',de:'Wählen Sie den Kurs bei dieser Lehrkraft.'}}/></div>
 
-        <label>
+        <div className="academy-field-help">        <label>
           {t.slot}
           <select
             value={slotId}
@@ -206,10 +207,10 @@ export function AcademyBookingDialog({
               </option>
             ))}
           </select>
-        </label>
+        </label><AcademyHelp locale={locale} text={{fa:'زمان آزاد استاد را انتخاب کنید؛ در صورت نبودن زمان مناسب، زمان دیگری پیشنهاد دهید.',en:'Choose an available time or suggest another below.',sv:'Välj en ledig tid eller föreslå en annan nedan.',de:'Wählen Sie einen freien Termin oder schlagen Sie unten einen anderen vor.'}}/></div>
         {slots.length === 0 && <p className="academy-help">{t.noSlots}</p>}
 
-        <label>
+        <div className="academy-field-help">        <label>
           {t.custom}
           <input
             aria-label="Preferred lesson date and time"
@@ -219,13 +220,13 @@ export function AcademyBookingDialog({
             disabled={Boolean(slotId)}
             onChange={(event) => setCustomStart(event.target.value)}
           />
-        </label>
+        </label><AcademyHelp locale={locale} text={{fa:'تاریخ و ساعت پیشنهادی خود را به وقت دستگاه وارد کنید.',en:'Enter your preferred date and time in your device time zone.',sv:'Ange önskat datum och tid enligt enhetens tidszon.',de:'Geben Sie Datum und Uhrzeit in der Zeitzone Ihres Geräts ein.'}}/></div>
 
-        <label>{locale==='fa'?'نوع جلسه':'Lesson type'}<select value={sessionType} onChange={e=>setSessionType(e.target.value)}><option value="trial">{locale==='fa'?'آزمایشی':'Trial'}</option><option value="individual">{locale==='fa'?'خصوصی':'Individual'}</option><option value="small_group">{locale==='fa'?'گروه کوچک':'Small group'}</option><option value="offline_intro">{locale==='fa'?'معرفی حضوری':'Offline introduction'}</option></select></label>
-        <label>
+        <label>{{fa:'نوع جلسه',sv:'Lektionstyp',de:'Unterrichtsart',en:'Lesson type'}[locale]}<select value={sessionType} onChange={e=>setSessionType(e.target.value)}><option value="trial">{{fa:'آزمایشی',sv:'Prova på',de:'Probestunde',en:'Trial'}[locale]}</option><option value="individual">{{fa:'خصوصی',sv:'Enskild',de:'Einzelunterricht',en:'Individual'}[locale]}</option><option value="small_group">{{fa:'گروه کوچک',sv:'Liten grupp',de:'Kleingruppe',en:'Small group'}[locale]}</option><option value="offline_intro">{{fa:'معرفی حضوری',sv:'Introduktion på plats',de:'Einführung vor Ort',en:'Offline introduction'}[locale]}</option></select></label>
+        <div className="academy-field-help">        <label>
           {t.message}
           <textarea placeholder="e.g. I would like to focus on conversation and pronunciation." value={message} maxLength={3000} onChange={(event) => setMessage(event.target.value)} />
-        </label>
+        </label><AcademyHelp locale={locale} text={{fa:'در صورت تمایل نیاز یا هدف خود را برای استاد بنویسید.',en:'Optionally tell the teacher about your goals or needs.',sv:'Beskriv gärna dina mål eller behov för läraren.',de:'Beschreiben Sie optional Ihre Ziele oder Wünsche.'}}/></div>
 
         {error && <div className="academy-notice error">{error}</div>}
         <div className="academy-card-actions">
