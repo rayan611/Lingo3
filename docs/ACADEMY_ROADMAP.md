@@ -1,3 +1,7 @@
+## 2026-11-21 — SEO Manager (#65, partial)
+
+Course/Person JSON-LD implemented on feature branch; not tested or released. Admin-editable multilingual SEO metadata, search previews, structured-data audit, Core Web Vitals, Search Console and full verification remain pending.
+
 ## 2026-11-20 — Academy group session count (app 0.7.12)
 
 Teacher and administrator student planning counts completed group sessions during the student's current active membership, explicitly stating this is not an attendance record. Pagination covers history under existing row-level permissions. No schema or permission changes. Admin enrollment creation, suggested schedules, full role views, public Instagram/articles and audited permanent teacher deletion remain outstanding. Real signed-in role and mobile acceptance remain unverified. Route maps reviewed; URLs unchanged. Deployment pending.
