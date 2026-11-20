@@ -1,6 +1,6 @@
-## 2026-11-21 — SEO Manager (#65, partial)
+## 2026-11-21 — Academy SEO Manager (0.7.13, issue #65)
 
-Course/Person JSON-LD implemented on feature branch; not tested or released. Admin-editable multilingual SEO metadata, search previews, structured-data audit, Core Web Vitals, Search Console and full verification remain pending.
+Admin editor for per-locale SEO title, description, target phrases, Open Graph image, preview and warnings; protected storage and server-rendered public metadata/structured data implemented on feature branch. Academy/root sitemap and indexing behaviors retained; root homepage rewrite now provides crawlable SEO HTML with fallback. SQL migration applied with anon RLS fixture QA rollback. Full CI, authenticated admin QA and production release pending. Google Search Console and Core Web Vitals continuous reporting require external ownership/credential access; public PageSpeed Insights link available. Next: validation and release.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)
 
