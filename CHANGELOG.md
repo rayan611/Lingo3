@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy SEO Manager and crawlable pages (app 0.7.13; PR #66, issue #65)
+
+Implemented admin-only localized SEO metadata for Lingo3 landing, Academy public pages, published courses, teachers and learning articles: titles, descriptions, target content keywords, social preview images, preview and quality warnings. Added RLS-protected academy_seo_settings migration (applied to Lingo3 Supabase), server-rendered metadata overrides, Organization/BreadcrumbList/Course/Person JSON-LD, Twitter/Open Graph titles and descriptions, multilingual fallback descriptions and a crawlable homepage rewrite with static fallback. Updated teacher-image alt/loading and added SEO regression assertions. Anonymous SQL RLS fixture read test passed and rolled back; full CI/build and live authenticated acceptance pending at documentation update. Search Console live metrics require owner Google authorization; no ranking or indexing guarantee. No content or account data deleted. Routes unchanged except homepage now rendered through API with fail-open HTML fallback. Production deploy pending verification.
+
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)

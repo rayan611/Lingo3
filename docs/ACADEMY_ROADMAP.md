@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy SEO Manager (0.7.13, issue #65)
+
+Admin editor for per-locale SEO title, description, target phrases, Open Graph image, preview and warnings; protected storage and server-rendered public metadata/structured data implemented on feature branch. Academy/root sitemap and indexing behaviors retained; root homepage rewrite now provides crawlable SEO HTML with fallback. SQL migration applied with anon RLS fixture QA rollback. Full CI, authenticated admin QA and production release pending. Google Search Console and Core Web Vitals continuous reporting require external ownership/credential access; public PageSpeed Insights link available. Next: validation and release.
+
 ## 2026-11-20 — Academy group session count (app 0.7.12)
 
 Teacher and administrator student planning counts completed group sessions during the student's current active membership, explicitly stating this is not an attendance record. Pagination covers history under existing row-level permissions. No schema or permission changes. Admin enrollment creation, suggested schedules, full role views, public Instagram/articles and audited permanent teacher deletion remain outstanding. Real signed-in role and mobile acceptance remain unverified. Route maps reviewed; URLs unchanged. Deployment pending.
