@@ -1,3 +1,5 @@
+2026-11-20 · 0.7.8 production: PR #59 merged as a4bb323553e6ca0fa003c3e4083ae05e7ad4aa9d; deployment dpl_CxpSMeEBtoA4EU6WqP8z7iwXMRw1 READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. Live public Persian course page and help control verified after reload; prior service worker initially showed cached content. Signed-in teacher/student/admin flows and complete mobile/tablet browser acceptance remain unverified. No schema changes. Previous rollback deployment dpl_74ibKKE4JTxaiAanKAiRstiodHNC.
+
 2026-11-20 · App 0.7.8 · Academy UX redesign, branch feat/academy-ux-redesign-20261119, based on d13941b: route URLs unchanged. Personal/admin workspace panels and teacher tools use browser history state for Back; booking resumes after sign-in. Public and role-restricted access remains as documented below. Production verification pending.
 
 2026-11-20 · UX redesign checkpoint, app 0.7.7, branch feat/academy-ux-redesign-20261119: no URL changes; new personal-space section selection is local state, not browser-history navigation. Unreleased, not deployed.
