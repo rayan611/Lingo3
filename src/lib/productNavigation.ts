@@ -26,6 +26,7 @@ export function navigateProduct(path: string, options: ProductNavigationOptions 
     ...previousState,
     lingo3ProductNavigation: true,
     lingo3DirectApp: Boolean(options.directApp),
+    ...(!options.replace && /^\/academy(?:\/|$)/.test(window.location.pathname) && /^\/academy(?:[/?#]|$)/.test(path) ? {academyPreviousPath: window.location.pathname + window.location.search} : {}),
   }
   if (options.replace) window.history.replaceState(state, '', path)
   else window.history.pushState(state, '', path)

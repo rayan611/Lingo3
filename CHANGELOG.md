@@ -1,3 +1,9 @@
+## 2026-11-20 — Academy UX redesign (app 0.7.8)
+
+Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Separates personal and admin workspaces into focused panels with history-aware Back, adds a week view of private/group sessions and available teacher times, searchable bounded lists, localized green field/form help, clearer controls and responsive visual polish. Booking requests prompt guests to sign in and resume their selection. No database migration. Student availability is limited to the existing public 120-day window; real signed-in role and full mobile browser acceptance remain unverified. Prior production rollback deployment: `dpl_74ibKKE4JTxaiAanKAiRstiodHNC`. Release checks and deployment are recorded separately when verified.
+
+Sitemap and route index reviewed: URLs remain unchanged; workspace section selection uses browser history state. The changes preserve existing access controls and use authenticated, role-filtered data.
+
 ## 2026-11-20 — Academy UX redesign work in progress (app 0.7.7)
 
 Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Unreleased and not deployed. Added a weekly private/group session view, available-time selection entry, searchable public course/teacher catalogues and group selector, portal sections, localized green help controls in selected booking, post, class and administration fields, contrast and reduced-motion styling. No database migration.

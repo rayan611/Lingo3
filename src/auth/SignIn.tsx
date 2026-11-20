@@ -1,4 +1,6 @@
+import {AcademyFormHelp} from '../academy/AcademyHelp'
 import { useState } from 'react'
+import {AcademyHelp} from '../academy/AcademyHelp'
 import {
   consumeAuthLinkError,
   requestPasswordReset,
@@ -101,7 +103,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
           </>}
         </header>
 
-        <form className="panel" onSubmit={submit}>
+        <form className="panel" onSubmit={submit}>{context==='academy'&&<AcademyFormHelp locale={locale}/>}
           <h2>
             {mode === 'in'
               ? (context === 'academy' ? academyT.signIn : 'Sign in')
@@ -116,7 +118,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
             </p>
           )}
 
-          <label className="field">
+          <div className={context === 'academy' ? 'academy-field-help' : undefined}><label className="field">
             <span>{context === 'academy' ? academyT.email : 'Email'}</span>
             <input
               placeholder="you@example.com"
@@ -127,13 +129,13 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
               required
               disabled={busy}
             />
-          </label>
+          </label>{context==='academy'&&<AcademyHelp locale={locale} text={{fa:'ایمیلی را وارد کنید که با آن حساب لینگو۳ ساخته‌اید.',en:'Enter the email address used for your Lingo3 account.',sv:'Ange e-postadressen för ditt Lingo3-konto.',de:'Geben Sie die E-Mail-Adresse Ihres Lingo3-Kontos ein.'}}/>}</div>
 
           {/* No password field when resetting: asking for the thing you have
               just said you cannot remember is the classic version of this
               form, and it is nonsense. */}
           {mode !== 'forgot' && (
-            <PasswordField
+            <div className={context === 'academy' ? 'academy-field-help' : undefined}><PasswordField
               label={context === 'academy' ? academyT.password : 'Password'}
               value={password}
               onChange={setPassword}
@@ -142,7 +144,7 @@ export function SignIn({ context = 'app', onBack, locale = 'en' }: { context?: '
               // accounts with a 6-character password can still get in.
               minLength={mode === 'up' ? 8 : 6}
               disabled={busy}
-            />
+            />{context==='academy'&&<AcademyHelp locale={locale} text={{fa:'رمز حساب خود را وارد کنید؛ برای حساب جدید رمزی با حداقل ۸ نویسه انتخاب کنید.',en:'Enter your account password. New accounts require at least 8 characters.',sv:'Ange ditt lösenord. Nya konton kräver minst 8 tecken.',de:'Geben Sie Ihr Passwort ein. Neue Konten benötigen mindestens 8 Zeichen.'}}/>}</div>
           )}
 
           {mode === 'in' && (
