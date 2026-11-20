@@ -169,6 +169,7 @@ export function AcademyPortal({
  const [enrollments,setEnrollments]=useState<Enrollment[]>([])
  const [studentSpaces,setStudentSpaces]=useState<Space[]>([])
  const [teacherSpaces,setTeacherSpaces]=useState<Space[]>([])
+ const [selectedBookings,setSelectedBookings]=useState<Booking[]>([]),[selectedBookingsError,setSelectedBookingsError]=useState(''),[completedPrivateCount,setCompletedPrivateCount]=useState<number|null>(null)
  const [scheduleRevision,setScheduleRevision]=useState(0)
  const [bookings,setBookings]=useState<Booking[]>([])
  const [availability,setAvailability]=useState<Availability[]>([])
@@ -253,7 +254,7 @@ export function AcademyPortal({
   if(selfTeacher||isAdmin){
    let q=client.from('academy_learning_spaces').select('*').order('created_at',{ascending:false})
    if(!isAdmin)q=q.eq('teacher_id',selfTeacher!.id)
-   reqs.push(client.rpc('academy_teacher_roster',{p_teacher:isAdmin?null:selfTeacher!.id}))
+   reqs.push(isAdmin?q.limit(1000):client.rpc('academy_teacher_roster',{p_teacher:selfTeacher!.id}))
    reqs.push(client.from('academy_availability').select('*').eq('teacher_id',selfTeacher?.id??'00000000-0000-0000-0000-000000000000').gte('ends_at',new Date().toISOString()).order('starts_at').limit(100))
    reqs.push(client.rpc('academy_teacher_calendar',{p_teacher_id:selfTeacher?.id??'00000000-0000-0000-0000-000000000000'}))
   }
@@ -331,6 +332,14 @@ export function AcademyPortal({
   }).catch(error=>{if(!cancelled){setContentLoading(false);onNotice(String(error))}})
   return()=>{cancelled=true}
  },[selectedSpace,userId,studentSpaces,teacherSpaces,refreshTick,historyPage])
+
+ useEffect(()=>{
+  let live=true;setSelectedBookings([]);setSelectedBookingsError('');setCompletedPrivateCount(null)
+  if(!selected||!selectedIsTeacher||!selected.teacher_id)return
+  const client=supabase(),byStudent=(query:any)=>query.eq('student_id',selected.student_id).eq('teacher_id',selected.teacher_id).eq('course_id',selected.course_id)
+  void Promise.all([byStudent(client.from('academy_bookings').select('*')).order('confirmed_start',{ascending:false}).limit(200),byStudent(client.from('academy_bookings').select('id',{count:'exact',head:true})).eq('status','completed')]).then(([result,total])=>{if(live){setSelectedBookings((result.data??[]) as Booking[]);setCompletedPrivateCount(typeof total.count==='number'?total.count:null);if(result.error||total.error)setSelectedBookingsError((result.error||total.error).message)}}).catch(error=>{if(live)setSelectedBookingsError(String(error))})
+  return()=>{live=false}
+ },[selected?.id,selected?.student_id,selected?.teacher_id,selected?.course_id,selectedIsTeacher,refreshTick])
 
  useEffect(()=>{
   if(!selected)return
@@ -781,7 +790,7 @@ export function AcademyPortal({
       <AcademyField locale={locale}><label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"هدف این دانشجو، مثال: رسیدن به A2","Student goal, e.g. reach A2")} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.nextTopics}<textarea placeholder={workspaceLabel(locale,"هر موضوع جلسه بعد در یک خط","One next-lesson topic per line")} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label></AcademyField>
-      <button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
+      <section className="academy-student-session-list"><h4>{({fa:'جلسات این دانشجو',en:'This student’s lessons',sv:'Elevens lektioner',de:'Unterricht dieser Person'})[locale]}</h4>{completedPrivateCount!==null&&<p><strong>{({fa:'جلسات خصوصی انجام‌شده',en:'Completed private lessons',sv:'Avslutade privatlektioner',de:'Abgeschlossene Einzelstunden'})[locale]}: {completedPrivateCount}</strong></p>}<small>{({fa:'نمایش حداکثر ۲۰۰ جلسهٔ اخیر خصوصی',en:'Showing up to 200 recent private lessons',sv:'Visar högst 200 senaste privatlektioner',de:'Bis zu 200 letzte Einzelstunden'})[locale]}</small>{selectedBookingsError&&<p role="alert">{selectedBookingsError}</p>}{selectedBookings.length===0&&!selectedBookingsError&&<p>—</p>}{selectedBookings.map(booking=><div className="academy-session-row" key={booking.id}><span>{dt(booking.confirmed_start??booking.preferred_start)} · {academyStatus(booking.status,locale)}</span>{booking.status==='confirmed'&&<button type="button" onClick={async()=>{await updateBooking(booking,'completed');setRefreshTick(n=>n+1)}}>{t.markComplete}</button>}</div>)}</section><button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
     </article></div>
 

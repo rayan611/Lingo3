@@ -28,17 +28,17 @@ const tables={
 const writes=[]
 class Query{
  constructor(table){this.table=table;this.filters=[];this.sort=null;this.start=0;this.end=Infinity;this.action='select'}
- select(){return this} eq(k,v){this.filters.push(r=>r[k]===v);return this} in(k,v){this.filters.push(r=>v.includes(r[k]));return this} gte(k,v){this.filters.push(r=>r[k]!=null&&r[k]>=v);return this} lt(k,v){this.filters.push(r=>r[k]!=null&&r[k]<v);return this} maybeSingle(){return Promise.resolve({data:null,error:null})}
+ select(_columns,options){this.countMode=options?.count==='exact';this.head=!!options?.head;return this} eq(k,v){this.filters.push(r=>r[k]===v);return this} in(k,v){this.filters.push(r=>v.includes(r[k]));return this} gte(k,v){this.filters.push(r=>r[k]!=null&&r[k]>=v);return this} lt(k,v){this.filters.push(r=>r[k]!=null&&r[k]<v);return this} maybeSingle(){return Promise.resolve({data:null,error:null})}
  order(k,o={}){this.sort=[k,o.ascending!==false];return this} limit(n){this.end=n-1;return this} range(a,b){this.start=a;this.end=b;return this}
  insert(p){this.action='insert';this.payload=p;return this} update(p){this.action='update';this.payload=p;return this} delete(){this.action='delete';return this}
  then(resolve,reject){return Promise.resolve().then(()=>{
  let rows=(tables[this.table]??[]).filter(r=>this.filters.every(f=>f(r)))
  if(this.action!=='select'){writes.push({table:this.table,action:this.action,payload:this.payload,ids:rows.map(r=>r.id)});if(this.action==='update')rows.forEach(r=>Object.assign(r,this.payload));if(this.action==='insert'){for(const r of [this.payload].flat())(tables[this.table]??=[]).push({...r,id:'new-'+writes.length,created_at:new Date().toISOString()})}}
  if(this.sort){const [k,asc]=this.sort;rows=[...rows].sort((a,b)=>String(a[k]).localeCompare(String(b[k]))*(asc?1:-1))}
- return {data:rows.slice(this.start,this.end+1),error:null}
+ return {data:this.head?null:rows.slice(this.start,this.end+1),count:this.countMode?rows.length:null,error:null}
  }).then(resolve,reject)}
 }
-globalThis.__academyQAClient={from:t=>new Query(t),rpc:(name,args)=>Promise.resolve({data:name==='academy_teacher_roster'?tables.academy_learning_spaces.filter(s=>args.p_teacher===null||s.teacher_id===args.p_teacher).map(s=>({...s,resolved_name:s.student_display_name})):[],error:null})}
+globalThis.__academyQAClient={from:t=>new Query(t),rpc:(name,args)=>Promise.resolve({data:name==='academy_teacher_roster'?tables.academy_learning_spaces.filter(s=>s.teacher_id===args.p_teacher).map(s=>({...s,resolved_name:s.student_display_name})):[],error:null})}
 const output=path.resolve('node_modules/.cache/academy-behavior.mjs');fs.mkdirSync(path.dirname(output),{recursive:true})
 await build({stdin:{contents:"export {AcademyPortal} from './src/academy/AcademyPortal';export {Landing} from './src/ui/Landing';export {countryLocale,localizedName,useAcademyPreferences} from './src/academy/preferences'",resolveDir:process.cwd(),loader:'tsx'},outfile:output,bundle:true,jsx:'automatic',platform:'node',format:'esm',external:['react','react/jsx-runtime'],plugins:[{name:'qa-transport',setup(b){b.onResolve({filter:/auth\/supabase$/},()=>({path:'qa-client',namespace:'qa'}));b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const authConfigured=false;export const supabase=()=>globalThis.__academyQAClient;',loader:'js'}))}}]})
 const {AcademyPortal,Landing,countryLocale,localizedName}=await import('file://'+output+'?'+Date.now())
@@ -96,6 +96,11 @@ try{
  await act(async()=>tree.unmount())
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'admin',selfTeacher:undefined,isAdmin:true,initialSpaceId:'space-b'}))});await flush();await flush()
  assert.match(text(tree.toJSON()),/Classroom management/);assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-a'));assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-b'))
+ const adminSelect=tree.root.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='space-a'))
+ await act(async()=>adminSelect.props.onChange({target:{value:'space-a'}}));await flush()
+ await act(async()=>exactButton('Teacher tools').props.onClick());await act(async()=>exactButton('Students').props.onClick());await flush()
+ const sessionArea=tree.root.findAll(n=>n.props.className==='academy-student-session-list')[0];assert(sessionArea);assert.match(text(sessionArea),/confirmed/i)
+ await act(async()=>find(sessionArea,'button','Mark completed').props.onClick());await flush();assert(writes.some(w=>w.table==='academy_bookings'&&w.ids.includes('confirmed')&&w.payload?.status==='completed'));assert.match(text(sessionArea),/Completed private lessons\s*:\s*1/)
  await act(async()=>tree.unmount())
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'student-a',isAdmin:true,view:'student'}))});await flush();await flush()
  assert.match(text(tree.toJSON()),/Your learning overview/)
