@@ -1,3 +1,17 @@
+## 2026-11-20 — Academy UX redesign (app 0.7.8)
+
+Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Separates personal and admin workspaces into focused panels with history-aware Back, adds a week view of private/group sessions and available teacher times, searchable bounded lists, localized green field/form help, clearer controls and responsive visual polish. Booking requests prompt guests to sign in and resume their selection. No database migration. Student availability is limited to the existing public 120-day window; real signed-in role and full mobile browser acceptance remain unverified. Prior production rollback deployment: `dpl_74ibKKE4JTxaiAanKAiRstiodHNC`. Release checks and deployment are recorded separately when verified.
+
+Sitemap and route index reviewed: URLs remain unchanged; workspace section selection uses browser history state. The changes preserve existing access controls and use authenticated, role-filtered data.
+
+## 2026-11-20 — Academy UX redesign work in progress (app 0.7.7)
+
+Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Unreleased and not deployed. Added a weekly private/group session view, available-time selection entry, searchable public course/teacher catalogues and group selector, portal sections, localized green help controls in selected booking, post, class and administration fields, contrast and reduced-motion styling. No database migration.
+
+Verification: `npm test` passed with mocked role/navigation flows; TypeScript and Vite/PWA build passed. These checks do not verify signed-in production roles or mobile layouts. Sitemap and route index reviewed: no URL changed; portal section state is local UI state, not a route.
+
+Outstanding: help for remaining fields/forms, comprehensive searchable bounded lists, independent form flows and browser Back, accessible scheduling across all roles including history/pagination/time zones, full signed-in mobile/desktop functional checks, release version and final documentation. Do not deploy this checkpoint as complete. Next: complete and verify these items, then release when acceptance checks pass.
+
 2026-11-19 · 0.7.7 production verification: PR #57 and #58 merged; runtime source e0a646654c5c214ba1fcd3da8970be1fda9c86ad, deployment dpl_74ibKKE4JTxaiAanKAiRstiodHNC READY with lingo3.com aliases and no alias error. Live /version.json reports 0.7.7 / 0.7.7-mwnr9x6e. Full npm test passed after the navigation correction; TypeScript/Vite/PWA build passed. Browser guest QA passed: Persian articles, teacher directory/detail, locale retained across SPA navigation and Back, correct lang in share links, copy success, corrected light label contrast. HTTP QA passed for public metadata/canonical/hreflang, server-readable teacher content, 73-URL XML sitemap with zero private routes, private noindex and old levels redirect. Database role/privacy/lifecycle tests were transactional and rolled back; no public QA articles created. Signed-in real teacher/student browser E2E and full mobile/tablet acceptance remain unverified; email sender/provider is unconfigured. No email delivery claim. Final report: docs/ACADEMY_RELEASE_2026-11-19.md. Documentation-only evidence revision; runtime unchanged.
 
 2026-11-19 · 0.7.7 checks passed: 189 navigation assertions, 13 auth/navigation checks, article/SEO regressions, docs checks, TypeScript/Vite/PWA build (17.01s). No further DB migration. Ready for supplemental source commit and deployment.

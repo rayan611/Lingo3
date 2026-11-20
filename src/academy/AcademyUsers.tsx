@@ -1,3 +1,4 @@
+import {AcademyField} from './AcademyField'
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../auth/supabase'
 
@@ -41,8 +42,8 @@ export function AcademyUsers({locale,onTeacher,onAccessChanged,onCourses}:{local
  }
  return <section className="academy-card academy-users" aria-busy={loading||busy}>
   <h3>{t.title}</h3>
-  <div className="editor-two"><label>{t.search}<input placeholder={t.search} value={query} onChange={e=>{setQuery(e.target.value);setPage(0)}}/></label>
-  <label>{t.all}<select value={role} onChange={e=>{setRole(e.target.value);setPage(0)}}><option value="">{t.all}</option><option value="admin">{t.admin}</option><option value="teacher">{t.teacher}</option><option value="student">{t.student}</option></select></label></div>
+  <div className="editor-two"><AcademyField locale={locale}><label>{t.search}<input placeholder={t.search} value={query} onChange={e=>{setQuery(e.target.value);setPage(0)}}/></label></AcademyField>
+  <AcademyField locale={locale}><label>{t.all}<select value={role} onChange={e=>{setRole(e.target.value);setPage(0)}}><option value="">{t.all}</option><option value="admin">{t.admin}</option><option value="teacher">{t.teacher}</option><option value="student">{t.student}</option></select></label></AcademyField></div>
   {error&&<p role="alert">{error}</p>}
   {!loading&&!error&&users.length===0&&<p>{t.empty}</p>}
   {users.map(user=><article className="academy-card" key={user.user_id}>

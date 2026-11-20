@@ -53,10 +53,10 @@ try{
   await click('Settings ⚙');assert(tree.root.findAll(n=>n.props['aria-label']==='Academy settings').length)
   await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(tree.root.findAll(n=>n.props['aria-label']==='Academy settings').length,0)
   await act(async()=>history.forward());await click('Close settings');assert.equal(history.state.academySettings,undefined)
-  await click('Teachers');await click('Request trial');assert.equal(history.state.academyDialog.type,'booking')
+  await click('Teachers');await click('Request trial');assert.equal(history.state.academyDialog.type,r==='guest'?'login':'booking')
   await act(async()=>history.back());assert.equal(tree.root.findAllByType('form').length,0)
   await act(async()=>history.forward());const booking=tree.root.findByType('form')
-  if(r==='guest'){await act(async()=>booking.props.onSubmit({preventDefault(){}}));assert(!calls.some(c=>c.table==='academy_bookings'&&c.action==='insert'))}
+  if(r==='guest'){assert(!calls.some(c=>c.table==='academy_bookings'&&c.action==='insert'))}
   else{await act(async()=>tree.root.findByProps({type:'datetime-local'}).props.onChange({target:{value:'2099-01-02T15:30'}}));await act(async()=>booking.props.onSubmit({preventDefault(){}}));assert(calls.some(c=>c.table==='academy_bookings'&&c.payload?.course_id==='course'));assert.equal(page(),'personal');assert(!history.state.academyDialog)}
   await act(async()=>{if(history.state.academyDialog)history.back()})
   if(r==='guest'){
@@ -66,6 +66,7 @@ try{
   }else{await click('Log out');assert(calls.some(c=>c.auth==='out'))}
   await click('Lingo3 App');assert.equal(location.pathname,'/');assert(history.state.lingo3DirectApp);assert(!history.state.academyDialog&&!history.state.academySettings);await unmount()
  }
+ await mount('guest','/academy/teachers');await click('Request trial');assert.equal(history.state.academyDialog.type,'login');role='student';await act(async()=>tree.update(React.createElement(Academy,{userId:'student-user',email:'student@example.invalid'})));await flush();assert.equal(history.state.academyDialog.type,'booking');assert.equal(history.state.academyDialog.teacherId,'teacher');assert(tree.root.findAllByType('form').length===1);await unmount();checks+=4
  for(const [,expected,url]of routes){await mount('guest',url);assert.equal(page(),expected);await unmount();checks++}
  await mount('guest','/academy/levels');assert.equal(page(),'courses');assert(!find('Levels'));await unmount();
  await mount('student','/academy/admin');assert(!find('Save course'));await click('Personal space');assert.equal(page(),'personal');await unmount()

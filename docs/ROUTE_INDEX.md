@@ -1,3 +1,7 @@
+2026-11-20 · App 0.7.8 · Academy UX redesign, branch feat/academy-ux-redesign-20261119, based on d13941b: route URLs unchanged. Personal/admin workspace panels and teacher tools use browser history state for Back; booking resumes after sign-in. Public and role-restricted access remains as documented below. Production verification pending.
+
+2026-11-20 · UX redesign checkpoint, app 0.7.7, branch feat/academy-ux-redesign-20261119: no URL changes; new personal-space section selection is local state, not browser-history navigation. Unreleased, not deployed.
+
 Reviewed 2026-11-19 · app 0.7.7 · deployed source e0a6466 (PR #58). Public guest routes, language continuity, Back, profile share and old-level redirect verified; role routes covered by tests, signed-in browser acceptance outstanding. See ACADEMY_RELEASE_2026-11-19.md.
 
 2026-11-19 · 0.7.7 · reviewed 46e4ffe + demo-summary correction: route set unchanged; internal Academy navigation and share links preserve explicit lang. Back restores the original locale; App entry drops the Academy query.

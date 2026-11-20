@@ -11,6 +11,9 @@ import {renderToStaticMarkup} from 'react-dom/server'
 const storage=new Map()
 globalThis.localStorage={getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,String(v))}
 globalThis.window={localStorage,location:{pathname:'/academy/my',search:'',origin:'https://qa.invalid'},setInterval,clearInterval,setTimeout,clearTimeout,addEventListener(){},removeEventListener(){},confirm:()=>true,history:{state:{},pushState(){},replaceState(){}},dispatchEvent(){}}
+const listeners=new Set(),historyStack=[{}];let historyIndex=0
+window.addEventListener=(kind,fn)=>{if(kind==='popstate')listeners.add(fn)};window.removeEventListener=(kind,fn)=>{if(kind==='popstate')listeners.delete(fn)}
+window.history={state:{},pushState(value){historyStack.splice(++historyIndex);historyStack.push(value);this.state=value},replaceState(value){historyStack[historyIndex]=value;this.state=value},back(){if(historyIndex>0){this.state=historyStack[--historyIndex];for(const fn of listeners)fn({type:'popstate',state:this.state})}}}
 globalThis.location=window.location
 globalThis.document={documentElement:{lang:'en'}}
 globalThis.fetch=async()=>({json:async()=>({locale:'en'})})
@@ -25,7 +28,7 @@ const tables={
 const writes=[]
 class Query{
  constructor(table){this.table=table;this.filters=[];this.sort=null;this.start=0;this.end=Infinity;this.action='select'}
- select(){return this} eq(k,v){this.filters.push(r=>r[k]===v);return this} in(k,v){this.filters.push(r=>v.includes(r[k]));return this} gte(){return this} maybeSingle(){return Promise.resolve({data:null,error:null})}
+ select(){return this} eq(k,v){this.filters.push(r=>r[k]===v);return this} in(k,v){this.filters.push(r=>v.includes(r[k]));return this} gte(k,v){this.filters.push(r=>r[k]!=null&&r[k]>=v);return this} lt(k,v){this.filters.push(r=>r[k]!=null&&r[k]<v);return this} maybeSingle(){return Promise.resolve({data:null,error:null})}
  order(k,o={}){this.sort=[k,o.ascending!==false];return this} limit(n){this.end=n-1;return this} range(a,b){this.start=a;this.end=b;return this}
  insert(p){this.action='insert';this.payload=p;return this} update(p){this.action='update';this.payload=p;return this} delete(){this.action='delete';return this}
  then(resolve,reject){return Promise.resolve().then(()=>{
@@ -47,6 +50,15 @@ const base={locale:'en',courses:[{id:'course-a',subject_code:'sv',level_code:'A1
 let tree
 try{
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'teacher-user',selfTeacher:base.teachers[0]}))});await flush();await flush()
+ const visible=n=>{for(let p=n;p;p=p.parent)if(p.props?.hidden)return false;return true}
+ const exactButton=label=>tree.root.findAllByType('button').find(n=>text(n).trim()===label&&visible(n))
+ assert(exactButton('Teacher tools'));await act(async()=>exactButton('Teacher tools').props.onClick())
+ assert(exactButton('Session summary & grammar'));await act(async()=>exactButton('Session summary & grammar').props.onClick())
+ assert(tree.root.findAllByType('textarea').some(n=>n.props.placeholder==='e.g. Everyday verbs and word order'&&visible(n)))
+ await act(async()=>window.history.back());assert(exactButton('Teacher tools'))
+ await act(async()=>exactButton('Learning space').props.onClick());await act(async()=>exactButton('Materials & homework').props.onClick())
+ assert(tree.root.findAllByType('textarea').some(n=>n.props.placeholder==='Teacher feedback'&&visible(n)))
+ await act(async()=>window.history.back());assert(exactButton('Learning space'))
  assert.match(text(tree.toJSON()),/Shared student note/);assert.match(text(tree.toJSON()),/Student homework answer/);assert.match(text(tree.toJSON()),/Message 225/);assert.doesNotMatch(text(tree.toJSON()),/Message 1\s/)
  assert(find(tree.root,'h3','Messages'),'teacher messaging panel visible')
  const weekBoard=tree.root.findAll(n=>n.props.className==='academy-week-board')[0];assert.match(text(weekBoard),/Free/);assert.doesNotMatch(text(weekBoard),/Cancelled student/)

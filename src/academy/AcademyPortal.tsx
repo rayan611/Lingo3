@@ -1,3 +1,7 @@
+import {academyStatus} from './statusLabels'
+import {AcademyField} from './AcademyField'
+import {AcademyHelp} from './AcademyHelp'
+import {AcademySchedule} from './AcademySchedule'
 import {workspaceLabel} from './workspaceLabels'
 import {AcademyPostStudio} from './AcademyPosts'
 import {AcademyClasses} from './AcademyClasses'
@@ -151,9 +155,21 @@ export function AcademyPortal({
  onNotice:(message:string)=>void
 }){
  const t=copy[locale]
+ type PortalPanel='overview'|'schedule'|'classroom'|'teacher'
+ const [panel,setPanel]=useState<PortalPanel>(initialSpaceId?'classroom':'overview')
+ type TeacherTool='home'|'availability'|'requests'|'plan'|'summary'|'test'|'resource'
+ const [teacherTool,setTeacherTool]=useState<TeacherTool>('home')
+ type ClassroomTool='home'|'notes'|'materials'|'messages'|'progress'
+ const [classroomTool,setClassroomTool]=useState<ClassroomTool>('home')
+ const openClassroomTool=(tool:ClassroomTool)=>{window.history.pushState({...window.history.state,academyPortalPanel:'classroom',academyClassroomTool:tool},'',window.location.href);setPanel('classroom');setClassroomTool(tool)}
+ const openTeacherTool=(tool:TeacherTool)=>{window.history.pushState({...window.history.state,academyPortalPanel:'teacher',academyTeacherTool:tool},'',window.location.href);setPanel('teacher');setTeacherTool(tool)}
+ const openPanel=(next:PortalPanel)=>{if(next===panel)return;window.history.pushState({...window.history.state,academyPortalPanel:next},'',window.location.href);setPanel(next)}
+ useEffect(()=>{const onPop=()=>{const value=window.history.state?.academyPortalPanel;setPanel(['overview','schedule','classroom','teacher'].includes(value)?value:'overview');const tool=window.history.state?.academyTeacherTool;setTeacherTool(['home','availability','requests','plan','summary','test','resource'].includes(tool)?tool:'home');const ct=window.history.state?.academyClassroomTool;setClassroomTool(['home','notes','materials','messages','progress'].includes(ct)?ct:'home')};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[])
+
  const [enrollments,setEnrollments]=useState<Enrollment[]>([])
  const [studentSpaces,setStudentSpaces]=useState<Space[]>([])
  const [teacherSpaces,setTeacherSpaces]=useState<Space[]>([])
+ const [scheduleRevision,setScheduleRevision]=useState(0)
  const [bookings,setBookings]=useState<Booking[]>([])
  const [availability,setAvailability]=useState<Availability[]>([])
  const [teacherCalendar,setTeacherCalendar]=useState<{id:string;starts_at:string;ends_at:string;status:string}[]>([])
@@ -164,6 +180,7 @@ export function AcademyPortal({
  const [selectedSummaries,setSelectedSummaries]=useState<SessionSummary[]>([])
  const [selectedTests,setSelectedTests]=useState<TestResult[]>([])
  const [studentAvailability,setStudentAvailability]=useState<Availability[]>([])
+ const [studentFilter,setStudentFilter]=useState('')
  const [selectedSpace,setSelectedSpace]=useState(initialSpaceId??'')
  const [notes,setNotes]=useState<Note[]>([])
  const [resources,setResources]=useState<Resource[]>([])
@@ -270,6 +287,7 @@ export function AcademyPortal({
   const all=teacherOnly?taught:ownSpaces
   if(!selectedSpace&&all[0])setSelectedSpace(all[0].id)
   if(selectedSpace&&!all.some(x=>x.id===selectedSpace))setSelectedSpace(all[0]?.id??'')
+  setScheduleRevision(n=>n+1)
  }
 
  useEffect(()=>{void refresh().catch(e=>onNotice(String(e)));return()=>{requestVersion.current++}},[userId,selfTeacher?.id,isAdmin])
@@ -558,15 +576,30 @@ export function AcademyPortal({
  const demoControls=selfTeacher&&teacherOnly&&<div className="academy-card-actions"><button onClick={()=>{setDemoView(false);void refresh()}}>{locale==='fa'?'نمای استاد':locale==='sv'?'Lärarvy':locale==='de'?'Lehrkraftansicht':'Teacher view'}</button><button disabled={busy} onClick={()=>void run(async()=>{const r=await supabase().rpc('academy_prepare_demo');if(r.error)throw r.error;setDemoView(true)})}>{locale==='fa'?'نمای دانشجوی آزمایشی':locale==='sv'?'Testelevens vy':locale==='de'?'Testschüleransicht':'Demo student view'}</button><button disabled={busy} onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"فقط داده‌های دانشجوی آزمایشی بازنشانی شوند؟","Reset only the demo student data?")))return;const r=await supabase().rpc('academy_prepare_demo',{p_reset:true});if(r.error)throw r.error;setDemoView(false);await refresh();setRefreshTick(n=>n+1)})}>{locale==='fa'?'بازنشانی آزمایشی':locale==='sv'?'Återställ testdata':locale==='de'?'Testdaten zurücksetzen':'Reset demo'}</button></div>
  if(demoView&&teacherOnly&&selfTeacher)return <div className="academy-portal">{demoControls}<AcademyDemoStudent key={userId} locale={locale}/></div>
  return <div className="academy-portal" aria-busy={busy||contentLoading}>{demoControls}
+  <nav className="academy-portal-nav" aria-label={t.learning}>{([['overview',({fa:'نمای کلی',en:'Overview',sv:'Översikt',de:'Übersicht'})[locale]],['schedule',({fa:'برنامه و کلاس‌ها',en:'Schedule & classes',sv:'Schema och klasser',de:'Termine und Klassen'})[locale]],['classroom',({fa:'فضای یادگیری',en:'Learning space',sv:'Lärmiljö',de:'Lernraum'})[locale]],...(teacherOnly?([['teacher',({fa:'ابزار استاد',en:'Teacher tools',sv:'Lärarverktyg',de:'Lehrwerkzeuge'})[locale]]] as [string,string][]):[])] as [string,string][]).map(([id,label])=><button type="button" key={id} aria-pressed={panel===id} onClick={()=>openPanel(id as PortalPanel)}>{label}</button>)}</nav>
+  {panel!=='overview'&&<button type="button" className="academy-panel-back" onClick={()=>{if(window.history.state?.academyPortalPanel)window.history.back();else setPanel('overview')}}>{({fa:'بازگشت به نمای کلی',en:'Back to overview',sv:'Tillbaka till översikten',de:'Zurück zur Übersicht'})[locale]}</button>}
+  <div hidden={panel!=='schedule'}>
+  <AcademySchedule revision={scheduleRevision} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} studentTeacherId={!teacherOnly?selected?.teacher_id??undefined:undefined} courses={courses} onSelectDay={teacherOnly&&selfTeacher?(day)=>{const d=new Date(day),now=new Date();d.setHours(9,0,0,0);if(d.getTime()<=now.getTime())d.setHours(Math.min(now.getHours()+1,23),now.getHours()===23?59:0,0,0);setSlotStart(new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16));openTeacherTool('availability');window.setTimeout(()=>document.getElementById('academy-availability')?.scrollIntoView({behavior:'smooth',block:'start'}),0)}:undefined}/>
+
+  </div>
+  <div hidden={panel!=='overview'}>
   {teacherOnly&&<section className="academy-card"><h3>{locale==='fa'?'خلاصهٔ تدریس':locale==='sv'?'Undervisningsöversikt':locale==='de'?'Unterrichtsübersicht':'Teaching overview'}</h3><div className="academy-tags"><span>{t.students}: {new Set(teacherSpaces.filter(s=>!s.is_demo).map(s=>s.student_id)).size}</span><span>{t.sessionRequests}: {realTeacherBookings.filter(b=>b.status==='requested').length}</span><span>{t.submitted}: {teacherSpaces.filter(s=>!s.is_demo).reduce((n,s)=>n+(s.awaiting_review||0),0)}</span></div>{realTeacherBookings.filter(b=>['confirmed','in_progress'].includes(b.status)&&b.confirmed_start&&new Date(b.confirmed_start)>new Date()).sort((a,b)=>String(a.confirmed_start).localeCompare(String(b.confirmed_start))).slice(0,1).map(b=><p key={b.id}>{locale==='fa'?'جلسهٔ بعدی':locale==='sv'?'Nästa lektion':locale==='de'?'Nächste Stunde':'Next lesson'}: {dt(b.confirmed_start)} · {b.student_display_name||teacherSpaces.find(s=>s.student_id===b.student_id)?.student_display_name||t.student}</p>)}</section>}
-  {teacherOnly&&<section className="academy-teacher-switch"><h3>{locale==='fa'?'فضای مشترک با شاگردان':locale==='sv'?'Elevernas lärmiljö':locale==='de'?'Lernräume der Schüler':'Shared student workspaces'}</h3><label>{t.students}<select aria-label={t.students} value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option key={sp.id} value={sp.id}>{sp.student_display_name||sp.student_id} · {courseTitle(sp.course_id)}{sp.awaiting_review?' · '+t.submitted+': '+sp.awaiting_review:''}</option>)}</select></label>{teacherSpaces.length===0&&<p>{t.noSpace}</p>}{selected&&<p>{selected.student_display_name} · {selected.progress}% · {selected.next_session_topics.join(' · ')}</p>}</section>}
+  </div>
+  <div hidden={panel!=='classroom'&&panel!=='teacher'}>
+  {teacherOnly&&<section className="academy-teacher-switch"><h3>{locale==='fa'?'فضای مشترک با شاگردان':locale==='sv'?'Elevernas lärmiljö':locale==='de'?'Lernräume der Schüler':'Shared student workspaces'}</h3><AcademyField locale={locale}><label className="academy-search">{({fa:"جستجوی دانشجو",en:"Search students",sv:"Sök elev",de:"Schüler suchen"})[locale]}<input type="search" value={studentFilter} onChange={e=>setStudentFilter(e.target.value)}/></label><label>{t.students}<select aria-label={t.students} value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.filter(sp=>sp.id===selectedSpace||[sp.student_display_name,courseTitle(sp.course_id)].join(' ').toLocaleLowerCase().includes(studentFilter.toLocaleLowerCase())).map(sp=><option key={sp.id} value={sp.id}>{sp.student_display_name||sp.student_id} · {courseTitle(sp.course_id)}{sp.awaiting_review?' · '+t.submitted+': '+sp.awaiting_review:''}</option>)}</select></label></AcademyField>{teacherSpaces.length===0&&<p>{t.noSpace}</p>}{selected&&<p>{selected.student_display_name} · {selected.progress}% · {selected.next_session_topics.join(' · ')}</p>}</section>}
+  </div>
+  <div hidden={panel!=='teacher'}>
   {teacherOnly&&(selfTeacher||isAdmin)&&<AcademyPostStudio key={'posts-'+userId} locale={locale} userId={userId} isAdmin={isAdmin} spaces={teacherSpaces}/>}
   {teacherOnly&&selfTeacher&&<AcademyTeacherDesk key={userId} userId={userId} locale={locale}/>}
   {teacherOnly&&selfTeacher&&<AcademyTimeOff teacherId={selfTeacher.id} locale={locale} onChanged={()=>void refresh()}/>}
-  <AcademyClasses onOpenSpace={id=>{void refresh();setSelectedSpace(id)}} key={userId+String(teacherOnly)} isAdmin={isAdmin&&teacherOnly} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} courses={courses.filter(c=>teacherCourseIds.includes(c.id))}/>
+  </div>
+  <div hidden={panel!=='schedule'}>
+  <AcademyClasses onScheduleChanged={()=>setScheduleRevision(n=>n+1)} onOpenSpace={id=>{void refresh();setSelectedSpace(id);openPanel('classroom')}} key={userId+String(teacherOnly)} isAdmin={isAdmin&&teacherOnly} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} courses={courses.filter(c=>teacherCourseIds.includes(c.id))}/>
+  </div>
   <div className="academy-card-actions"><button disabled={busy} onClick={()=>{void refresh().catch(e=>onNotice(String(e)));setRefreshTick(n=>n+1)}}>{t.refresh}</button>{selected&&<><button disabled={historyPage===0||busy||contentLoading} onClick={()=>setHistoryPage(n=>n-1)}>{workspaceLabel(locale,"جدیدتر","Newer")}</button><span>{workspaceLabel(locale,"صفحه","Page")} {historyPage+1}</span><button disabled={busy||contentLoading||Math.max(notes.length,resources.length,messages.length,selectedSummaries.length,selectedTests.length)<50} onClick={()=>setHistoryPage(n=>n+1)}>{workspaceLabel(locale,"قدیمی‌تر","Older")}</button></>}</div>
   {contentLoading&&<p role="status">{workspaceLabel(locale,"در حال دریافت اطلاعات کلاس…","Loading classroom…")}</p>}
   <fieldset disabled={busy||contentLoading} className="academy-workflow-fields">
+  <div hidden={panel!=='overview'}>
   {!teacherOnly&&<section className="academy-dashboard-summary">
    <div className="academy-section-head"><p>{locale==='fa'?'زبان‌های من':locale==='sv'?'Mina språk':locale==='de'?'Meine Sprachen':'My languages'}</p><h3>{locale==='fa'?'وضعیت یادگیری':locale==='sv'?'Din läröversikt':locale==='de'?'Dein Lernüberblick':'Your learning overview'}</h3></div>
    <div className="academy-language-dashboard">
@@ -594,6 +627,7 @@ export function AcademyPortal({
         <div><dt>{workspaceLabel(locale,"آخرین تست","Latest test")}</dt><dd>{lastTest?(lastTest.percent!=null?Math.round(lastTest.percent)+'%':lastTest.title):'—'}</dd></div>
        </dl>
        <div className="academy-card-actions" onClick={e=>e.stopPropagation()}>
+        <button type="button" onClick={()=>{setSelectedSpace(sp.id);openPanel('classroom')}}>{({fa:'بازکردن فضای یادگیری',en:'Open learning space',sv:'Öppna lärmiljö',de:'Lernraum öffnen'})[locale]}</button>
         <button className="small-link" onClick={()=>navigateProduct('/words?academyLang='+encodeURIComponent(c?.subject_code??''),{directApp:true})}>{workspaceLabel(locale,"لغات","Words ↗")}</button>
         <button className="small-link" onClick={()=>navigateProduct('/grammar?academyLang='+encodeURIComponent(courseById.get(selected?.course_id??'')?.subject_code??''),{directApp:true})}>{workspaceLabel(locale,"گرامر","Grammar ↗")}</button>
        </div>
@@ -604,14 +638,14 @@ export function AcademyPortal({
   {!teacherOnly&&<div className="academy-personal-grid">
    <article className="academy-card">
     <h3>{t.myCourses}</h3>
-    {enrollments.length===0?<p>—</p>:enrollments.map(e=><div className="personal-row" key={e.id}><span>{courseTitle(e.course_id)}</span><b>{e.status}</b></div>)}
+    {enrollments.length===0?<p>—</p>:enrollments.map(e=><div className="personal-row" key={e.id}><span>{courseTitle(e.course_id)}</span><b>{academyStatus(e.status,locale)}</b></div>)}
    </article>
 
    <article className="academy-card">
     <h3>{t.bookings}</h3>
     {ownBookings.length===0?<p>{t.noBookings}</p>:ownBookings.map(b=><div className="academy-session-row" key={b.id}>
      <div><strong>{teacherTitle(b.teacher_id)}</strong><small>{courseTitle(b.course_id)}</small></div>
-     <div><span>{b.confirmed_start?t.confirmed:t.preferred}: {dt(b.confirmed_start??b.preferred_start)}</span><small>{b.status}</small></div>
+     <div><span>{b.confirmed_start?t.confirmed:t.preferred}: {dt(b.confirmed_start??b.preferred_start)}</span><small>{academyStatus(b.status,locale)}</small></div>
      <JoinMeetingLinks booking={b} locale={locale}/><div className="academy-card-actions">{['requested','confirmed'].includes(b.status)&&<button className="small-link" onClick={()=>cancelBooking(b.id)}>{t.cancel}</button>}</div>
     </div>)}
    </article>
@@ -619,10 +653,10 @@ export function AcademyPortal({
    <article className="academy-card academy-learning-workspace">
     <h3>{t.learning}</h3>{selected?.next_session_topics?.length? <p>{t.nextTopics}: {selected.next_session_topics.join(' · ')}</p>:null}
     {studentSpaces.length===0?<p>{t.noSpace}</p>:<>
-     <label>{t.myCourses}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}>{studentSpaces.map(sp=><option key={sp.id} value={sp.id}>{courseTitle(sp.course_id)}</option>)}</select></label>
+     <AcademyField locale={locale}><label>{t.myCourses}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}>{studentSpaces.map(sp=><option key={sp.id} value={sp.id}>{courseTitle(sp.course_id)}</option>)}</select></label></AcademyField>
      {selected&&selected.student_id===userId&&<>
       <div className="space-progress"><span>{workspaceLabel(locale,"پیشرفت ثبت‌شده توسط استاد","Teacher-recorded progress")}</span><b>{selected.progress}%</b></div><div className="progress-bar"><i style={{width:String(selected.progress)+'%'}}/></div>
-      <label>{t.goal}<textarea placeholder={workspaceLabel(locale,"مثال: تا پایان این دوره بتوانم مکالمه روزمره انجام دهم","e.g. Hold a basic everyday conversation by the end of this course")} value={goal} onChange={e=>setGoal(e.target.value)}/></label><button className="academy-primary small" onClick={saveGoal}>{t.saveGoal}</button>
+      <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"مثال: تا پایان این دوره بتوانم مکالمه روزمره انجام دهم","e.g. Hold a basic everyday conversation by the end of this course")} value={goal} onChange={e=>setGoal(e.target.value)}/></label></AcademyField><button className="academy-primary small" onClick={saveGoal}>{t.saveGoal}</button>
      </>}
     </>}
    </article>
@@ -630,39 +664,42 @@ export function AcademyPortal({
    {isAdmin&&<article className="academy-card"><h3>Admin</h3><p>Course, teacher and enrollment administration remains in Admin Studio.</p></article>}
   </div>}
 
-  {selected&&<div className="academy-learning-columns">
-   <article className="academy-card">
+  </div>
+  <div hidden={panel!=='classroom'}>
+  <nav className="academy-portal-nav" aria-label={t.learning}>{([['notes',t.notes],['materials',t.materials],['messages',t.messages],...(!teacherOnly?([['progress',({fa:'پیشرفت و نتایج',en:'Progress & results',sv:'Framsteg och resultat',de:'Fortschritt und Ergebnisse'})[locale]]] as [ClassroomTool,string][]):[])] as [ClassroomTool,string][]).map(([id,label])=><button key={id} type="button" disabled={!selected} aria-pressed={classroomTool===id} onClick={()=>openClassroomTool(id)}>{label}</button>)}</nav>{!selected&&<p className="academy-empty">{t.noSpace}</p>}{classroomTool!=='home'&&<button type="button" className="academy-panel-back" onClick={()=>window.history.state?.academyClassroomTool?window.history.back():setClassroomTool('home')}>{({fa:'بازگشت به فضای یادگیری',en:'Back to learning space',sv:'Tillbaka till lärmiljön',de:'Zurück zum Lernraum'})[locale]}</button>}
+  {selected&&<div className="academy-learning-columns academy-single-tool">
+   <div hidden={classroomTool!=='notes'}><article className="academy-card">
     <h3>{t.notes}</h3>
-    <textarea placeholder={workspaceLabel(locale,"یادداشت خودت درباره درس یا جلسه را اینجا بنویس…","Write your own lesson note here…")} value={noteBody} onChange={e=>setNoteBody(e.target.value)} />
-    <label className="inline-check"><input type="checkbox" checked={shareNote} onChange={e=>setShareNote(e.target.checked)}/>{t.share}</label>
+    <AcademyField locale={locale}><label>{t.notes}<textarea aria-label={t.notes} placeholder={workspaceLabel(locale,"یادداشت خودت درباره درس یا جلسه را اینجا بنویس…","Write your own lesson note here…")} value={noteBody} onChange={e=>setNoteBody(e.target.value)} /></label></AcademyField>
+    <AcademyField locale={locale}><label className="inline-check"><input type="checkbox" checked={shareNote} onChange={e=>setShareNote(e.target.checked)}/>{t.share}</label></AcademyField>
     <button className="academy-primary small" onClick={saveNote}>{t.saveNote}</button>
     <div className="note-list">{notes.map(n=><div key={n.id}><p>{n.body}</p><small>{n.visibility} · {dt(n.created_at)}</small>{n.author_id===userId&&<div className="academy-card-actions"><button onClick={()=>{setEditNoteId(n.id);setNoteBody(n.body);setShareNote(n.visibility==='shared')}}>{workspaceLabel(locale,"ویرایش / اشتراک","Edit / sharing")}</button><button onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"این یادداشت حذف شود؟","Delete this note?")))return;const {error}=await supabase().from('academy_notes').delete().eq('id',n.id);if(error)throw error;setRefreshTick(x=>x+1)})}>{workspaceLabel(locale,"حذف","Delete")}</button></div>}</div>)}</div>
-   </article>
+   </article></div>
 
-   <article className="academy-card">
+   <div hidden={classroomTool!=='materials'}><article className="academy-card">
     <h3>{t.materials}</h3>
     {resources.length===0?<p>{t.noResources}</p>:resources.map(r=><div className="academy-resource" key={r.id}>
-     <div className="academy-card-top"><span className="academy-badge">{r.kind==='homework'?t.homework:r.kind==='grammar'?'Grammar':r.kind==='lesson'?'Lesson':r.kind==='link'?'Link':t.material}</span><span>{r.student_status}</span></div>
+     <div className="academy-card-top"><span className="academy-badge">{r.kind==='homework'?t.homework:r.kind==='grammar'?'Grammar':r.kind==='lesson'?'Lesson':r.kind==='link'?'Link':t.material}</span><span>{academyStatus(r.student_status,locale)}</span></div>
      <strong>{r.title}</strong>{r.description&&<p>{r.description}</p>}{r.url&&<a href={r.url} target="_blank" rel="noreferrer">{r.url}</a>}{r.due_at&&<small>{t.due}: {dt(r.due_at)}</small>}
-     {r.kind==='homework'&&selected.student_id===userId&&r.student_status!=='completed'&&<><textarea placeholder={t.response} value={resourceResponse[r.id]??r.student_response??''} onChange={e=>setResourceResponse({...resourceResponse,[r.id]:e.target.value})}/><button className="small-link" onClick={()=>submitHomework(r)}>{t.submit}</button></>}
+     {r.kind==='homework'&&selected.student_id===userId&&r.student_status!=='completed'&&<><AcademyField locale={locale}><label>{t.response}<textarea aria-label={t.response} placeholder={t.response} value={resourceResponse[r.id]??r.student_response??''} onChange={e=>setResourceResponse({...resourceResponse,[r.id]:e.target.value})}/></label></AcademyField><button className="small-link" onClick={()=>submitHomework(r)}>{t.submit}</button></>}
      {r.student_response&&selectedIsTeacher&&<p style={{whiteSpace:'pre-wrap'}}><b>{t.response}:</b> {r.student_response}</p>}
      {r.kind==='grammar'&&selected.student_id===userId&&<button onClick={()=>navigateProduct('/grammar?academyLang='+encodeURIComponent(courseById.get(selected.course_id)?.subject_code??'')+'&academyResource='+r.id,{directApp:true})}>{workspaceLabel(locale,"افزودن به دفتر گرامر من","Add to my grammar notebook")}</button>}
      {r.teacher_feedback&&<p><b>{t.feedback}:</b> {r.teacher_feedback}</p>}
-     {selectedIsTeacher&&r.kind==='homework'&&r.student_status==='submitted'&&<label>{t.feedback}<textarea placeholder={t.feedback} value={feedbackDraft[r.id]??r.teacher_feedback??''} onChange={e=>setFeedbackDraft({...feedbackDraft,[r.id]:e.target.value})}/></label>}
-     {selectedIsTeacher&&<div className="academy-card-actions"><button onClick={()=>{setResourceEditId(r.id);setResourceForm({kind:r.kind,title:r.title,description:r.description??'',url:r.url??'',due:r.due_at?new Date(new Date(r.due_at).getTime()-new Date(r.due_at).getTimezoneOffset()*60000).toISOString().slice(0,16):''})}}>{workspaceLabel(locale,"ویرایش منبع","Edit resource")}</button><button onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"این منبع حذف شود؟","Delete this resource?")))return;const {error}=await supabase().from('academy_resources').delete().eq('id',r.id);if(error)throw error;setRefreshTick(x=>x+1)})}>{workspaceLabel(locale,"حذف","Delete")}</button></div>}
+     {selectedIsTeacher&&r.kind==='homework'&&r.student_status==='submitted'&&<AcademyField locale={locale}><label>{t.feedback}<textarea placeholder={t.feedback} value={feedbackDraft[r.id]??r.teacher_feedback??''} onChange={e=>setFeedbackDraft({...feedbackDraft,[r.id]:e.target.value})}/></label></AcademyField>}
+     {selectedIsTeacher&&<div className="academy-card-actions"><button onClick={()=>{openTeacherTool('resource');setResourceEditId(r.id);setResourceForm({kind:r.kind,title:r.title,description:r.description??'',url:r.url??'',due:r.due_at?new Date(new Date(r.due_at).getTime()-new Date(r.due_at).getTimezoneOffset()*60000).toISOString().slice(0,16):''})}}>{workspaceLabel(locale,"ویرایش منبع","Edit resource")}</button><button onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"این منبع حذف شود؟","Delete this resource?")))return;const {error}=await supabase().from('academy_resources').delete().eq('id',r.id);if(error)throw error;setRefreshTick(x=>x+1)})}>{workspaceLabel(locale,"حذف","Delete")}</button></div>}
      {selectedIsTeacher&&r.kind==='homework'&&r.student_status==='submitted'&&<button className="small-link" onClick={()=>completeResource(r)}>{t.markComplete}</button>}
     </div>)}
-   </article>
+   </article></div>
 
-   <article className="academy-card">
+   <div hidden={classroomTool!=='messages'}><article className="academy-card">
     <h3>{t.messages}</h3>
     <div className="academy-message-list">{messages.map(m=><div className={'academy-message '+(m.sender_id===userId?'mine':'theirs')} key={m.id}><p>{m.body}</p><small>{dt(m.created_at)}</small></div>)}</div>
-    <textarea placeholder={workspaceLabel(locale,"پیام برای عضو دیگر کلاس…","Write a message to the other classroom member…")} value={messageBody} onChange={e=>setMessageBody(e.target.value)} maxLength={5000}/>
+    <AcademyField locale={locale}><label>{t.messages}<textarea aria-label={t.messages} placeholder={workspaceLabel(locale,"پیام برای عضو دیگر کلاس…","Write a message to the other classroom member…")} value={messageBody} onChange={e=>setMessageBody(e.target.value)} maxLength={5000}/></label></AcademyField>
     <button className="academy-primary small" onClick={sendMessage}>{t.send}</button>
-   </article>
+   </article></div>
   </div>}
 
-  {!teacherOnly&&selected&&selected.student_id===userId&&<div className="academy-learning-columns academy-learning-insights">
+  {!teacherOnly&&selected&&selected.student_id===userId&&<div className="academy-learning-columns academy-learning-insights" hidden={classroomTool!=='progress'}>
    <article className="academy-card">
     <h3>{workspaceLabel(locale,"جمع‌بندی‌های استاد","Teacher summaries")}</h3>
     {selectedSummaries.length===0?<p>—</p>:selectedSummaries.map(s=><div className="academy-summary-item" key={s.id}>
@@ -679,34 +716,37 @@ export function AcademyPortal({
    </article>
   </div>}
 
+  </div>
+  <div hidden={panel!=='teacher'}>
   {teacherOnly&&(selfTeacher||isAdmin)&&<section className="academy-teacher-desk">
    <div className="academy-teacher-summary">
     <div><p className="academy-kicker">{t.teacherDesk}</p><h2>{selfTeacher?.display_name??(workspaceLabel(locale,"مدیریت کلاس‌ها","Classroom management"))}</h2><p>{[selfTeacher?.email,selfTeacher?.phone].filter(Boolean).join(' · ')||'—'}</p></div>
     <div className="academy-tags">{teacherCourseIds.map(id=>courseById.get(id)).filter(Boolean).map(course=><span key={course!.id}>{subjectName(course!.subject_code)} · {course!.level_code}</span>)}</div>
     <div className="academy-card-actions">{selfTeacher?.email&&<a className="small-link" href={'mailto:'+selfTeacher.email}>Email</a>}{selfTeacher?.teams_chat_url&&<a className="small-link" href={selfTeacher.teams_chat_url} target="_blank" rel="noreferrer">Teams</a>}{selfTeacher?.telegram_url&&<a className="small-link" href={selfTeacher.telegram_url} target="_blank" rel="noreferrer">Telegram</a>}<button className="small-link" onClick={()=>navigateProduct('/grammar?academyLang='+encodeURIComponent(courseById.get(selected?.course_id??'')?.subject_code??''),{directApp:true})}>Grammar ↗</button></div>
    </div>
-   <div className="academy-learning-columns">
-    <article className="academy-card" hidden={!selfTeacher}>
-     <h3>{t.availability}</h3>
-     <label>{t.start}<input type="datetime-local" value={slotStart} onChange={e=>setSlotStart(e.target.value)}/></label>
-     <div className="editor-two"><label>{t.duration}<input placeholder="60" type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label></div>
+   <nav className="academy-portal-nav" aria-label={t.teacherDesk}>{([['availability',t.availability],['requests',t.sessionRequests],['plan',t.students],['summary',workspaceLabel(locale,'جمع‌بندی جلسه','Session summary & grammar')],['test',workspaceLabel(locale,'ثبت نتیجه تست','Record test result')],['resource',t.addResource]] as [TeacherTool,string][]).filter(([id])=>id!=='availability'||Boolean(selfTeacher)).map(([id,label])=><button key={id} type="button" aria-pressed={teacherTool===id} onClick={()=>openTeacherTool(id)}>{label}</button>)}</nav>{teacherTool!=='home'&&<button type="button" className="academy-panel-back" onClick={()=>window.history.state?.academyTeacherTool?window.history.back():setTeacherTool('home')}>{({fa:'بازگشت به ابزار استاد',en:'Back to teacher tools',sv:'Tillbaka till lärarverktyg',de:'Zurück zu Lehrwerkzeugen'})[locale]}</button>}
+   <div className="academy-learning-columns academy-single-tool">
+    <div hidden={teacherTool!=='availability'}><article className="academy-card" hidden={!selfTeacher}>
+     <h3 id="academy-availability">{t.availability}</h3>
+     <div className="academy-field-help"><label>{t.start}<input type="datetime-local" value={slotStart} onChange={e=>setSlotStart(e.target.value)}/></label><AcademyHelp locale={locale} text={{fa:'زمان شروع بازهٔ آزادی را که دانشجو می\u200cتواند درخواست کند انتخاب کنید.',en:'Choose the start of a time slot students may request.',sv:'Välj starttid för den lediga tid elever kan boka.',de:'Wählen Sie den Beginn eines verfügbaren Termins.'}}/></div>
+     <div className="editor-two"><div className="academy-field-help"><label>{t.duration}<input placeholder="60" type="number" min="15" max="240" value={slotDuration} onChange={e=>setSlotDuration(e.target.value)}/></label><AcademyHelp locale={locale} text={{fa:'مدت هر جلسه را به دقیقه وارد کنید.',en:'Enter the session length in minutes.',sv:'Ange lektionens längd i minuter.',de:'Geben Sie die Dauer in Minuten ein.'}}/></div><div className="academy-field-help"><label>{t.mode}<select value={slotMode} onChange={e=>setSlotMode(e.target.value)}><option value="online">{t.online}</option><option value="offline">{t.offline}</option></select></label><AcademyHelp locale={locale} text={{fa:'نحوه برگزاری این بازه را مشخص کنید.',en:'Choose whether this time is online or in person.',sv:'Välj om tiden är online eller på plats.',de:'Wählen Sie online oder vor Ort.'}}/></div></div>
      <button className="academy-primary small" onClick={addSlot}>{t.addSlot}</button>
      <div className="academy-weekly-builder">
       <h4>{workspaceLabel(locale,"برنامه تکرارشونده هفتگی","Weekly recurring times")}</h4>
-      <div className="academy-weekdays">{[1,2,3,4,5,6,0].map(day=><label key={day}><input type="checkbox" checked={weeklyDays.includes(day)} onChange={e=>setWeeklyDays(e.target.checked?[...weeklyDays,day]:weeklyDays.filter(x=>x!==day))}/>{weekdayLabel(day)}</label>)}</div>
-      <div className="editor-two"><label>{workspaceLabel(locale,"از ساعت","From")}<input type="time" value={weeklyStart} onChange={e=>setWeeklyStart(e.target.value)}/></label><label>{workspaceLabel(locale,"تا ساعت","To")}<input type="time" value={weeklyEnd} onChange={e=>setWeeklyEnd(e.target.value)}/></label></div>
-      <label>{workspaceLabel(locale,"برای چند هفته","Weeks")}<input placeholder="4" type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label>
+      <div className="academy-weekdays">{[1,2,3,4,5,6,0].map(day=><AcademyField locale={locale} key={day}><label key={day}><input type="checkbox" checked={weeklyDays.includes(day)} onChange={e=>setWeeklyDays(e.target.checked?[...weeklyDays,day]:weeklyDays.filter(x=>x!==day))}/>{weekdayLabel(day)}</label></AcademyField>)}</div>
+      <div className="editor-two"><AcademyField locale={locale}><label>{workspaceLabel(locale,"از ساعت","From")}<input type="time" value={weeklyStart} onChange={e=>setWeeklyStart(e.target.value)}/></label></AcademyField><AcademyField locale={locale}><label>{workspaceLabel(locale,"تا ساعت","To")}<input type="time" value={weeklyEnd} onChange={e=>setWeeklyEnd(e.target.value)}/></label></AcademyField></div>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"برای چند هفته","Weeks")}<input placeholder="4" type="number" min="1" max="8" value={weeklyWeeks} onChange={e=>setWeeklyWeeks(e.target.value)}/></label></AcademyField>
       <button className="small-link" onClick={addWeeklySlots}>{workspaceLabel(locale,"ساخت زمان‌های هفتگی","Create weekly times")}</button>
      </div>
      <div className="academy-week-board">{availability.map(a=>{const booked=bookingByAvailability.get(a.id);const occupied=teacherCalendar.some(c=>c.status==='busy'&&new Date(c.starts_at)<new Date(a.ends_at)&&new Date(c.ends_at)>new Date(a.starts_at));return <div className={'academy-week-slot '+(booked||occupied?'is-booked':'is-free')} key={a.id}><div><strong>{new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(a.starts_at))}</strong><span>{new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date(a.starts_at))}</span></div><small>{booked?(booked.student_display_name??t.student):(occupied?(workspaceLabel(locale,"رزرو شده","Busy")):a.status==='available'?'Free':a.status)}</small>{!booked&&!occupied&&a.status==='available'&&<button className="small-link" onClick={()=>removeSlot(a.id)}>{t.removeSlot}</button>}</div>})}</div>
-    </article>
+    </article></div>
 
-    <article className="academy-card">
+    <div hidden={teacherTool!=='requests'}><article className="academy-card">
      {selfTeacher&&<details className="academy-meeting-options">
       <summary>{workspaceLabel(locale,"لینک‌های ثابت کلاس","Reusable meeting links")}</summary>
       <p>{workspaceLabel(locale,"لینک‌های ثابت را فقط در رزروهای انتخابی به اشتراک بگذار.","Reuse these links on selected bookings.")}</p>
-      <label>Teams<input type="url" disabled={!defaultsReady} placeholder="https://teams.microsoft.com/l/meetup-join/…" value={meetingDefaults.teams} onChange={e=>setMeetingDefaults({...meetingDefaults,teams:e.target.value})}/></label>
-      <label>Zoom<input type="url" disabled={!defaultsReady} placeholder="https://zoom.us/my/your-room" value={meetingDefaults.zoom} onChange={e=>setMeetingDefaults({...meetingDefaults,zoom:e.target.value})}/></label>
+      <AcademyField locale={locale}><label>Teams<input type="url" disabled={!defaultsReady} placeholder="https://teams.microsoft.com/l/meetup-join/…" value={meetingDefaults.teams} onChange={e=>setMeetingDefaults({...meetingDefaults,teams:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>Zoom<input type="url" disabled={!defaultsReady} placeholder="https://zoom.us/my/your-room" value={meetingDefaults.zoom} onChange={e=>setMeetingDefaults({...meetingDefaults,zoom:e.target.value})}/></label></AcademyField>
       <button type="button" disabled={!defaultsReady} onClick={saveMeetingDefaults}>{workspaceLabel(locale,"ذخیره لینک‌های ثابت","Save reusable links")}</button>
      </details>}
      <h3>{t.sessionRequests}</h3>
@@ -717,69 +757,70 @@ export function AcademyPortal({
        ...previous,[b.id]:{...(previous[b.id]??bookingMeetingDraft(b)),...patch},
       }))
       return <div className="academy-booking-admin" key={b.id}>
-       <strong>{b.student_display_name??t.student}</strong><small>{courseTitle(b.course_id)} · {b.status}</small><small>{t.preferred}: {dt(b.preferred_start)}</small>{b.student_message&&<p>{b.student_message}</p>}
+       <strong>{b.student_display_name??t.student}</strong><small>{courseTitle(b.course_id)} · {academyStatus(b.status,locale)}</small><small>{t.preferred}: {dt(b.preferred_start)}</small>{b.student_message&&<p>{b.student_message}</p>}
        <JoinMeetingLinks booking={b} locale={locale}/>
        {['requested','confirmed'].includes(b.status)&&<details className="academy-meeting-options">
         <summary>{workspaceLabel(locale,"لینک ورود به جلسه","Meeting links")}</summary>
         {defaultsReady&&(savedMeetingDefaults.teams||savedMeetingDefaults.zoom)&&<button type="button" onClick={()=>updateLinks(savedMeetingDefaults)}>{workspaceLabel(locale,"کپی لینک‌های ثابت","Use reusable links")}</button>}
-        <label>Teams<input type="url" placeholder="https://teams.microsoft.com/l/meetup-join/…" value={links.teams} onChange={e=>updateLinks({teams:e.target.value})}/></label>
-        <label>Zoom<input type="url" placeholder="https://zoom.us/j/123456789" value={links.zoom} onChange={e=>updateLinks({zoom:e.target.value})}/></label>
-        <label>{workspaceLabel(locale,"سرویس اصلی","Primary service")}<select value={links.primary} onChange={e=>updateLinks({primary:e.target.value==='Zoom'?'Zoom':'Teams'})}><option>Teams</option><option>Zoom</option></select></label>
+        <AcademyField locale={locale}><label>Teams<input type="url" placeholder="https://teams.microsoft.com/l/meetup-join/…" value={links.teams} onChange={e=>updateLinks({teams:e.target.value})}/></label></AcademyField>
+        <AcademyField locale={locale}><label>Zoom<input type="url" placeholder="https://zoom.us/j/123456789" value={links.zoom} onChange={e=>updateLinks({zoom:e.target.value})}/></label></AcademyField>
+        <AcademyField locale={locale}><label>{workspaceLabel(locale,"سرویس اصلی","Primary service")}<select value={links.primary} onChange={e=>updateLinks({primary:e.target.value==='Zoom'?'Zoom':'Teams'})}><option>Teams</option><option>Zoom</option></select></label></AcademyField>
         {b.status==='confirmed'&&<button type="button" disabled={!meetingDrafts[b.id]} onClick={()=>void saveBookingLinks(b)}>{workspaceLabel(locale,"ذخیره لینک جلسه","Save meeting links")}</button>}
        </details>}
-       {b.status==='requested'&&<><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label><label>{t.teacherNote}<textarea placeholder={workspaceLabel(locale,"مثال: قبل از جلسه فصل ۳ را مرور کن","e.g. Review chapter 3 before the lesson")} value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
+       {b.status==='requested'&&<><AcademyField locale={locale}><label>{t.when}<input type="datetime-local" value={draft.confirmed_start} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,confirmed_start:e.target.value}})}/></label></AcademyField><AcademyField locale={locale}><label>{t.teacherNote}<textarea placeholder={workspaceLabel(locale,"مثال: قبل از جلسه فصل ۳ را مرور کن","e.g. Review chapter 3 before the lesson")} value={draft.teacher_note} onChange={e=>setBookingDraft({...bookingDraft,[b.id]:{...draft,teacher_note:e.target.value}})}/></label></AcademyField><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'confirmed')}>{t.confirm}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div></>}
        {b.status==='confirmed'&&<div className="academy-card-actions"><button className="academy-primary small" onClick={()=>updateBooking(b,'completed')}>{t.complete}</button><button className="small-link" onClick={()=>updateBooking(b,'no_show')}>{t.noShow}</button><button className="small-link" onClick={()=>updateBooking(b,'cancelled_teacher')}>{t.cancel}</button></div>}
       </div>
      })}
-    </article>
+    </article></div>
 
-    <article className="academy-card">
+    <div hidden={teacherTool!=='plan'}><article className="academy-card">
      <h3>{t.students}</h3>
-     {teacherSpaces.length===0?<p>—</p>:<><select value={teacherSpaces.some(x=>x.id===selectedSpace)?selectedSpace:''} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option value={sp.id} key={sp.id}>{sp.student_display_name??t.student} · {courseTitle(sp.course_id)}</option>)}</select>{selectedIsTeacher&&<>
-      <label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label>
-      <label>{t.goal}<textarea placeholder={workspaceLabel(locale,"هدف این دانشجو، مثال: رسیدن به A2","Student goal, e.g. reach A2")} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label>
-      <label>{t.nextTopics}<textarea placeholder={workspaceLabel(locale,"هر موضوع جلسه بعد در یک خط","One next-lesson topic per line")} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label>
+     {teacherSpaces.length===0?<p>—</p>:<><AcademyField locale={locale}><label>{t.students}<select value={teacherSpaces.some(x=>x.id===selectedSpace)?selectedSpace:''} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.map(sp=><option value={sp.id} key={sp.id}>{sp.student_display_name??t.student} · {courseTitle(sp.course_id)}</option>)}</select></label></AcademyField>{selectedIsTeacher&&<>
+      <AcademyField locale={locale}><label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"هدف این دانشجو، مثال: رسیدن به A2","Student goal, e.g. reach A2")} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>{t.nextTopics}<textarea placeholder={workspaceLabel(locale,"هر موضوع جلسه بعد در یک خط","One next-lesson topic per line")} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label></AcademyField>
       <button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
-    </article>
+    </article></div>
 
-    <article className="academy-card">
+    <div hidden={teacherTool!=='summary'}><article className="academy-card">
      <h3>{workspaceLabel(locale,"جمع‌بندی جلسه و گرامر","Session summary & grammar")}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{workspaceLabel(locale,"جلسهٔ مربوط","Related session")}<select value={summaryBooking} onChange={e=>{const id=e.target.value;setSummaryBooking(id);const prev=selectedSummaries.find(x=>x.booking_id===id);setSummaryEditId(prev?.id??'');setSummaryForm({covered:prev?.covered??'',grammar_focus:prev?.grammar_focus??'',strengths:prev?.strengths??'',improve_next:prev?.improve_next??'',next_focus:prev?.next_focus??''})}}><option value="">{workspaceLabel(locale,"یادداشت مستقل کلاس","Standalone classroom summary")}</option>{bookings.filter(b=>b.student_id===selected?.student_id&&b.course_id===selected?.course_id&&b.teacher_id===selected?.teacher_id&&['confirmed','completed'].includes(b.status)).map(b=><option key={b.id} value={b.id}>{dt(b.confirmed_start??b.preferred_start)} · {b.status}</option>)}</select></label>
-      <label>{workspaceLabel(locale,"مطالب تدریس‌شده","Covered")}<textarea placeholder={workspaceLabel(locale,"مثال: افعال روزمره و ترتیب کلمات","e.g. Everyday verbs and word order")} value={summaryForm.covered} onChange={e=>setSummaryForm({...summaryForm,covered:e.target.value})}/></label>
-      <label>Grammar<textarea placeholder={workspaceLabel(locale,"مثال: BIFF و جایگاه inte","e.g. BIFF rule and position of inte")} value={summaryForm.grammar_focus} onChange={e=>setSummaryForm({...summaryForm,grammar_focus:e.target.value})}/></label>
-      <label>{workspaceLabel(locale,"نقاط قوت","Strengths")}<textarea placeholder={workspaceLabel(locale,"مثال: دایره لغات خوب و تلفظ واضح","e.g. Strong vocabulary and clear pronunciation")} value={summaryForm.strengths} onChange={e=>setSummaryForm({...summaryForm,strengths:e.target.value})}/></label>
-      <label>{workspaceLabel(locale,"نیاز به بهبود","Improve next")}<textarea placeholder={workspaceLabel(locale,"مثال: تمرین بیشتر ترتیب کلمات","e.g. Practise word order more")} value={summaryForm.improve_next} onChange={e=>setSummaryForm({...summaryForm,improve_next:e.target.value})}/></label>
-      <label>{workspaceLabel(locale,"تمرکز جلسه بعد","Next lesson")}<textarea placeholder={workspaceLabel(locale,"مثال: گذشته افعال و مکالمه خرید","e.g. Past tense and shopping dialogue")} value={summaryForm.next_focus} onChange={e=>setSummaryForm({...summaryForm,next_focus:e.target.value})}/></label>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"جلسهٔ مربوط","Related session")}<select value={summaryBooking} onChange={e=>{const id=e.target.value;setSummaryBooking(id);const prev=selectedSummaries.find(x=>x.booking_id===id);setSummaryEditId(prev?.id??'');setSummaryForm({covered:prev?.covered??'',grammar_focus:prev?.grammar_focus??'',strengths:prev?.strengths??'',improve_next:prev?.improve_next??'',next_focus:prev?.next_focus??''})}}><option value="">{workspaceLabel(locale,"یادداشت مستقل کلاس","Standalone classroom summary")}</option>{bookings.filter(b=>b.student_id===selected?.student_id&&b.course_id===selected?.course_id&&b.teacher_id===selected?.teacher_id&&['confirmed','completed'].includes(b.status)).map(b=><option key={b.id} value={b.id}>{dt(b.confirmed_start??b.preferred_start)} · {academyStatus(b.status,locale)}</option>)}</select></label></AcademyField>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"مطالب تدریس‌شده","Covered")}<textarea placeholder={workspaceLabel(locale,"مثال: افعال روزمره و ترتیب کلمات","e.g. Everyday verbs and word order")} value={summaryForm.covered} onChange={e=>setSummaryForm({...summaryForm,covered:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>Grammar<textarea placeholder={workspaceLabel(locale,"مثال: BIFF و جایگاه inte","e.g. BIFF rule and position of inte")} value={summaryForm.grammar_focus} onChange={e=>setSummaryForm({...summaryForm,grammar_focus:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"نقاط قوت","Strengths")}<textarea placeholder={workspaceLabel(locale,"مثال: دایره لغات خوب و تلفظ واضح","e.g. Strong vocabulary and clear pronunciation")} value={summaryForm.strengths} onChange={e=>setSummaryForm({...summaryForm,strengths:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"نیاز به بهبود","Improve next")}<textarea placeholder={workspaceLabel(locale,"مثال: تمرین بیشتر ترتیب کلمات","e.g. Practise word order more")} value={summaryForm.improve_next} onChange={e=>setSummaryForm({...summaryForm,improve_next:e.target.value})}/></label></AcademyField>
+      <AcademyField locale={locale}><label>{workspaceLabel(locale,"تمرکز جلسه بعد","Next lesson")}<textarea placeholder={workspaceLabel(locale,"مثال: گذشته افعال و مکالمه خرید","e.g. Past tense and shopping dialogue")} value={summaryForm.next_focus} onChange={e=>setSummaryForm({...summaryForm,next_focus:e.target.value})}/></label></AcademyField>
       <button className="academy-primary small" onClick={saveSessionSummary}>{t.savePlan}</button>
       {selectedSummaries.map(s=><div className="academy-summary-item" key={s.id}><small>{dt(s.created_at)}</small><p>{s.next_focus||s.covered||'—'}</p>{s.teacher_id===selected?.teacher_id&&<button onClick={()=>{setSummaryEditId(s.id);setSummaryBooking(s.booking_id??'');setSummaryForm({covered:s.covered??'',grammar_focus:s.grammar_focus??'',strengths:s.strengths??'',improve_next:s.improve_next??'',next_focus:s.next_focus??''})}}>{workspaceLabel(locale,"ویرایش","Edit")}</button>}</div>)}
      </>}
-    </article>
+    </article></div>
 
-    <article className="academy-card">
+    <div hidden={teacherTool!=='test'}><article className="academy-card">
      <h3>{workspaceLabel(locale,"ثبت نتیجه تست","Record test result")}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{t.title}<input placeholder={workspaceLabel(locale,"مثال: آزمون A1 — درس ۴","e.g. A1 quiz — Lesson 4")} value={testForm.title} onChange={e=>setTestForm({...testForm,title:e.target.value})}/></label>
-      <div className="editor-two"><label>{workspaceLabel(locale,"امتیاز","Score")}<input placeholder="e.g. 18" type="number" value={testForm.score} onChange={e=>setTestForm({...testForm,score:e.target.value})}/></label><label>{workspaceLabel(locale,"از","Max")}<input placeholder="e.g. 20" type="number" value={testForm.max_score} onChange={e=>setTestForm({...testForm,max_score:e.target.value})}/></label></div>
-      <label>{t.feedback}<textarea placeholder={workspaceLabel(locale,"مثال: نتیجه خوب؛ روی صرف فعل بیشتر کار شود","e.g. Good result; practise verb conjugation next")} value={testForm.teacher_summary} onChange={e=>setTestForm({...testForm,teacher_summary:e.target.value})}/></label>
+      <AcademyField locale={locale}><label>{t.title}<input placeholder={workspaceLabel(locale,"مثال: آزمون A1 — درس ۴","e.g. A1 quiz — Lesson 4")} value={testForm.title} onChange={e=>setTestForm({...testForm,title:e.target.value})}/></label></AcademyField>
+      <div className="editor-two"><AcademyField locale={locale}><label>{workspaceLabel(locale,"امتیاز","Score")}<input placeholder="e.g. 18" type="number" value={testForm.score} onChange={e=>setTestForm({...testForm,score:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{workspaceLabel(locale,"از","Max")}<input placeholder="e.g. 20" type="number" value={testForm.max_score} onChange={e=>setTestForm({...testForm,max_score:e.target.value})}/></label></AcademyField></div>
+      <AcademyField locale={locale}><label>{t.feedback}<textarea placeholder={workspaceLabel(locale,"مثال: نتیجه خوب؛ روی صرف فعل بیشتر کار شود","e.g. Good result; practise verb conjugation next")} value={testForm.teacher_summary} onChange={e=>setTestForm({...testForm,teacher_summary:e.target.value})}/></label></AcademyField>
       <button className="academy-primary small" onClick={addTestResult}>{t.publish}</button>
       {selectedTests.map(x=><div className="personal-row" key={x.id}><span>{x.title}</span><b>{x.percent!=null?Math.round(x.percent)+'%':'—'}</b></div>)}
      </>}
-    </article>
+    </article></div>
 
-    <article className="academy-card">
+    <div hidden={teacherTool!=='resource'}><article className="academy-card">
      <h3>{t.addResource}</h3>
      {!selectedIsTeacher?<p>{t.students}</p>:<>
-      <label>{t.kind}<select value={resourceForm.kind} onChange={e=>setResourceForm({...resourceForm,kind:e.target.value})}><option value="material">{t.material}</option><option value="homework">{t.homework}</option><option value="lesson">Lesson note</option><option value="grammar">Grammar</option><option value="link">Useful link</option></select></label>
-      <label>{t.title}<input placeholder={workspaceLabel(locale,"مثال: تمرین درس ۵","e.g. Lesson 5 homework")} value={resourceForm.title} onChange={e=>setResourceForm({...resourceForm,title:e.target.value})}/></label>
-      <label>{t.description}<textarea placeholder={workspaceLabel(locale,"توضیح کوتاه درباره تکلیف، گرامر یا منبع","Short instructions for this homework, grammar note or resource")} value={resourceForm.description} onChange={e=>setResourceForm({...resourceForm,description:e.target.value})}/></label>
-      <label>{t.url}<input placeholder="https://example.com/resource" value={resourceForm.url} onChange={e=>setResourceForm({...resourceForm,url:e.target.value})}/></label>
-      {resourceForm.kind==='homework'&&<label>{t.due}<input type="datetime-local" value={resourceForm.due} onChange={e=>setResourceForm({...resourceForm,due:e.target.value})}/></label>}
+      <div className="academy-field-help"><label>{t.kind}<select value={resourceForm.kind} onChange={e=>setResourceForm({...resourceForm,kind:e.target.value})}><option value="material">{t.material}</option><option value="homework">{t.homework}</option><option value="lesson">Lesson note</option><option value="grammar">Grammar</option><option value="link">Useful link</option></select></label><AcademyHelp locale={locale} text={{fa:'نوع محتوایی را که برای دانشجو می\u200cفرستید مشخص کنید.',en:'Choose the type of content to share with the student.',sv:'Välj vilken typ av innehåll som ska delas med eleven.',de:'Wählen Sie die Art des Inhalts für den Lernenden.'}}/></div>
+      <div className="academy-field-help"><label>{t.title}<input placeholder={workspaceLabel(locale,"مثال: تمرین درس ۵","e.g. Lesson 5 homework")} value={resourceForm.title} onChange={e=>setResourceForm({...resourceForm,title:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'عنوانی برای تکلیف یا منبع بنویسید.',en:'Enter a title for the assignment or resource.',sv:'Ange en titel för läxan eller materialet.',de:'Geben Sie einen Titel für Aufgabe oder Material ein.'}}/></div>
+      <AcademyField locale={locale}><label>{t.description}<textarea placeholder={workspaceLabel(locale,"توضیح کوتاه درباره تکلیف، گرامر یا منبع","Short instructions for this homework, grammar note or resource")} value={resourceForm.description} onChange={e=>setResourceForm({...resourceForm,description:e.target.value})}/></label></AcademyField>
+      <div className="academy-field-help"><label>{t.url}<input placeholder="https://example.com/resource" value={resourceForm.url} onChange={e=>setResourceForm({...resourceForm,url:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'لینک منبع را در صورت نیاز وارد کنید.',en:'Optionally enter the resource link.',sv:'Ange vid behov en länk till materialet.',de:'Geben Sie bei Bedarf den Link zum Material ein.'}}/></div>
+      {resourceForm.kind==='homework'&&<div className="academy-field-help"><label>{t.due}<input type="datetime-local" value={resourceForm.due} onChange={e=>setResourceForm({...resourceForm,due:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'مهلت ارسال تکلیف را انتخاب کنید.',en:'Choose when the assignment is due.',sv:'Välj sista tid för inlämning.',de:'Wählen Sie den Abgabetermin.'}}/></div>}
       <button className="academy-primary small" onClick={addResource}>{t.publish}</button>
      </>}
-    </article>
+    </article></div>
    </div>
   </section>}
+ </div>
  </fieldset></div>
 }

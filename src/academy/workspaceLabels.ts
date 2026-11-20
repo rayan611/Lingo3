@@ -1,4 +1,7 @@
 const translations:Record<string,{sv:string;de:string}>={
+  "Search classes": {sv:'Sök klasser',de:'Klassen suchen'},
+  "Search courses": {sv:'Sök kurser',de:'Kurse suchen'},
+  "Search teachers": {sv:'Sök lärare',de:'Lehrkräfte suchen'},
   "Absent": {
     "sv": "Frånvarande",
     "de": "Abwesend"

@@ -1,3 +1,17 @@
+## 2026-11-20 — Academy UX redesign (app 0.7.8)
+
+Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Separates personal and admin workspaces into focused panels with history-aware Back, adds a week view of private/group sessions and available teacher times, searchable bounded lists, localized green field/form help, clearer controls and responsive visual polish. Booking requests prompt guests to sign in and resume their selection. No database migration. Student availability is limited to the existing public 120-day window; real signed-in role and full mobile browser acceptance remain unverified. Prior production rollback deployment: `dpl_74ibKKE4JTxaiAanKAiRstiodHNC`. Release checks and deployment are recorded separately when verified.
+
+Sitemap and route index reviewed: URLs remain unchanged; workspace section selection uses browser history state. The changes preserve existing access controls and use authenticated, role-filtered data.
+
+## 2026-11-20 — Academy UX redesign work in progress (app 0.7.7)
+
+Branch `feat/academy-ux-redesign-20261119`, based on `d13941b`. Unreleased and not deployed. Added a weekly private/group session view, available-time selection entry, searchable public course/teacher catalogues and group selector, portal sections, localized green help controls in selected booking, post, class and administration fields, contrast and reduced-motion styling. No database migration.
+
+Verification: `npm test` passed with mocked role/navigation flows; TypeScript and Vite/PWA build passed. These checks do not verify signed-in production roles or mobile layouts. Sitemap and route index reviewed: no URL changed; portal section state is local UI state, not a route.
+
+Outstanding: help for remaining fields/forms, comprehensive searchable bounded lists, independent form flows and browser Back, accessible scheduling across all roles including history/pagination/time zones, full signed-in mobile/desktop functional checks, release version and final documentation. Do not deploy this checkpoint as complete. Next: complete and verify these items, then release when acceptance checks pass.
+
 ## docs-2026-11-19.2 — 2026-11-19 — Release evidence (app 0.7.7)
 
 - Record successful production deployment `dpl_74ibKKE4JTxaiAanKAiRstiodHNC`, runtime `e0a6466`, PRs #57/#58; full local tests/build and live public browser/HTTP checks passed.
