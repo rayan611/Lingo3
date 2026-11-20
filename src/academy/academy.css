@@ -154,3 +154,14 @@
 @media(max-width:720px){.academy .academy-profile-hero>div{align-items:flex-start}.academy .academy-profile-photo,.academy .academy-profile-avatar{width:76px;height:76px}.academy .academy-pending .pending-row{grid-template-columns:1fr;gap:8px}.academy .academy-section-hint{margin-top:8px}}
 .academy .academy-action-feedback{margin:0;padding:6px 10px;min-height:0;max-width:min(230px,85vw);background:#daf5e5;color:#145a38;border:1px solid #8cc6a5;box-shadow:0 5px 14px #152b1d33;font-size:.85rem;pointer-events:none}
 .academy .academy-inline-success{align-self:center;color:#17804a;font-size:.85rem;font-weight:600;margin-inline:8px}
+/* Teacher management: choose first, then edit one compact section at a time. */
+.academy .academy-teacher-picker{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end}
+.academy .academy-teacher-edit-layout{display:grid;grid-template-columns:minmax(160px,220px) minmax(0,1fr);gap:14px;align-items:start}
+.academy .academy-teacher-edit-menu{display:grid;gap:5px;position:sticky;top:80px}
+.academy .academy-teacher-edit-menu button{text-align:start;min-height:44px}
+.academy .academy-teacher-edit-menu button[aria-pressed=true]{background:#775bc4;color:white;border-color:#775bc4}
+.academy .academy-teacher-edit-fields>div:not([hidden]){display:grid;gap:10px}
+.academy .academy-my-menu>summary{background:linear-gradient(125deg,#ffe593,#cc9925)!important;color:#352405!important;border:1px solid #c89824!important;box-shadow:0 4px 14px #a6783e55;font-weight:800}
+.academy .academy-admin .academy-card,.academy .academy-admin .academy-editor{padding:14px}.academy .academy-admin .academy-card-actions{gap:6px;margin-top:8px}.academy .academy-admin p{margin-block:5px}
+@media(max-width:700px){.academy .academy-teacher-picker{grid-template-columns:1fr 1fr}.academy .academy-teacher-picker>button{grid-column:1/-1}.academy .academy-teacher-edit-layout{grid-template-columns:1fr}.academy .academy-teacher-edit-menu{position:static;display:flex;overflow:auto}.academy .academy-teacher-edit-menu button{white-space:nowrap}}
+.academy .academy-danger{background:#ac252e!important;color:#fff!important;border:1px solid #991b1b!important}.academy .academy-danger-confirm{padding:14px;margin-top:10px;border:2px solid #c93640;border-radius:12px;background:#fff1f1;color:#7e1720}.academy .academy-danger-confirm button{margin-inline-end:8px}

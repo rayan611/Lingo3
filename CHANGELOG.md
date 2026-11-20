@@ -1,3 +1,7 @@
+## 2026-11-20 — Academy teacher editor (app 0.7.10)
+
+Teacher selection, search and creation precede the editor; sectioned name, introduction, languages/courses, contact and account panels retain form state. Red confirmation deactivates without deleting teacher records. Enrollment status filtering, compact admin spacing and highlighted My Academy menu added. Existing schema and access controls unchanged. Administrator enrollment creation, suggested session tracking, comprehensive student/teacher impersonation and permanent teacher deletion remain unimplemented. Live signed-in role and complete mobile browser checks remain outstanding. Route URLs unchanged. Production verification pending.
+
 2026-11-20 · 0.7.9 production: PR #60 merged as 25e78bde4874adaab3e85f5977ea2e77ce40215e; deployment dpl_Fmb4ekXUwMyt4YGpb4UzAKvoW9DR READY with lingo3.com and www aliases, no alias error. Full tests passed before final focused changes; article, UX, navigation, docs checks and final build passed afterward. Real-role and full mobile browser verification remains outstanding. No database migration. Rollback: dpl_CxpSMeEBtoA4EU6WqP8z7iwXMRw1.
 
 ## 2026-11-20 — Academy usability refinements (app 0.7.9)

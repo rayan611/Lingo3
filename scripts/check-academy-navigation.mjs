@@ -40,7 +40,7 @@ const flush=()=>act(async()=>pause(10))
 const find=(label)=>tree.root.findAllByType('button').find(n=>(text(n)===label||n.props['aria-label']===label))
 const click=async(label)=>{const b=find(label);assert(b,'Button exists: '+label);await act(async()=>b.props.onClick());await flush();checks++}
 const page=()=>tree.root.find(n=>n.props.className==='academy').props['data-page']
-async function mount(nextRole,url='/academy'){role=nextRole;reset(url);await act(async()=>{tree=TestRenderer.create(React.createElement(Academy,{userId:role==='guest'?null:role==='teacher'?'teacher-user':'student-user',email:role+'@example.invalid'}),{createNodeMock:()=>({querySelectorAll:()=>[]})})});await flush()}
+async function mount(nextRole,url='/academy'){role=nextRole;reset(url);await act(async()=>{tree=TestRenderer.create(React.createElement(Academy,{userId:role==='guest'?null:role==='teacher'?'teacher-user':'student-user',email:role+'@example.invalid'}),{createNodeMock:()=>({querySelectorAll:()=>[],scrollIntoView:()=>{}})})});await flush()}
 async function unmount(){await act(async()=>tree.unmount())}
 const routes=[['Home','home','/academy'],['Find your learning path','path','/academy/path'],['Courses','courses','/academy/courses'],['Teachers','teachers','/academy/teachers'],['Personal space','personal','/academy/my'],['How it works','about','/academy/about'],['Pricing','pricing','/academy/pricing'],['Resources','resources','/academy/resources'],['Contact','contact','/academy/contact']]
 try{
@@ -49,7 +49,7 @@ try{
   for(const [label,expected,url] of routes){await click(label);assert.equal(page(),expected);assert.equal(location.pathname,url);await act(async()=>history.back());await act(async()=>history.forward());assert.equal(page(),expected);checks+=3
    for(const link of tree.root.findAllByType('a')){assert.match(link.props.href,/^(https:\/\/|mailto:|tel:|\/)/);if(link.props.target==='_blank')assert.match(link.props.rel,/noreferrer/)}
   }
-  if(r==='admin'){await click('Admin Studio');assert.equal(page(),'admin');assert.equal(tree.root.findAllByType('form').length,2)}else{assert(!find('Admin Studio'))}
+  if(r==='admin'){await click('Admin Studio');assert.equal(page(),'admin');assert.equal(tree.root.findAllByType('form').length,1);await click('Teacher editor');await click('New teacher');assert(find('Name & photo'));assert(find('Introduction'));await click('Introduction');assert.equal(find('Introduction').props['aria-pressed'],true);await click('Contact details');assert.equal(find('Contact details').props['aria-pressed'],true)}else{assert(!find('Admin Studio'))}
   await click('Settings ⚙');assert(tree.root.findAll(n=>n.props['aria-label']==='Academy settings').length)
   await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(tree.root.findAll(n=>n.props['aria-label']==='Academy settings').length,0)
   await act(async()=>history.forward());await click('Close settings');assert.equal(history.state.academySettings,undefined)
