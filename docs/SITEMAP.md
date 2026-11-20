@@ -1,4 +1,4 @@
-2026-11-21 review (0.7.12, branch feat/academy-seo-manager-20261121): SEO structured-data enhancement only; existing public/private route inventory unchanged. Issue #65 pending verification and release.
+2026-11-21 review (0.7.13, PR #66): no new Academy URLs; SEO editor is a private tab under /academy/admin. Public root / now uses server-rendered homepage metadata with fail-open static HTML; /academy, /academy/courses, /academy/teachers, /academy/posts and their existing detail URLs retain their current routes. Sitemap includes public published records, not private/draft/archived items. CI and live deployment evidence pending.
 
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
