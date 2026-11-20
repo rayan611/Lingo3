@@ -1,3 +1,5 @@
+2026-11-21 · v0.7.15: Academy SEO hardening: authored-locale-only sitemap/hreflang, noindex untranslated detail variants, public SEO audit under admin, server/UI regression tests. Archived-only permanent teacher deletion guarded by existing historical FKs and new admin-only audit log; no live teacher records removed. See handoff for test/release evidence.
+
 ## 2026-11-20 — Academy group session count (app 0.7.12)
 
 Teacher and administrator student planning counts completed group sessions during the student's current active membership, explicitly stating this is not an attendance record. Pagination covers history under existing row-level permissions. No schema or permission changes. Admin enrollment creation, suggested schedules, full role views, public Instagram/articles and audited permanent teacher deletion remain outstanding. Real signed-in role and mobile acceptance remain unverified. Route maps reviewed; URLs unchanged. Deployment pending.
