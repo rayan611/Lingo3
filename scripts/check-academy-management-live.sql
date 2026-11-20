@@ -1,0 +1,24 @@
+-- Transactional smoke test. The fixture is rolled back and cannot affect existing users.
+begin;
+insert into auth.users(id) values ('e6190000-0000-4000-8000-000000000001'),('e6190000-0000-4000-8000-000000000002'),('e6190000-0000-4000-8000-000000000003');
+insert into public.user_settings(user_id,is_admin) values ('e6190000-0000-4000-8000-000000000001',true),('e6190000-0000-4000-8000-000000000002',false),('e6190000-0000-4000-8000-000000000003',false) on conflict(user_id) do update set is_admin=excluded.is_admin;
+insert into public.academy_courses(id,subject_code,level_code,title_i18n,status) values ('e6190000-0000-4000-8000-000000000010','sv','A1','{"en":"Rollback course"}','active');
+insert into public.academy_teachers(id,user_id,display_name,status) values ('e6190000-0000-4000-8000-000000000020','e6190000-0000-4000-8000-000000000002','Rollback teacher','active'),('e6190000-0000-4000-8000-000000000021',null,'Empty teacher','draft');
+insert into public.academy_teacher_courses(teacher_id,course_id) values ('e6190000-0000-4000-8000-000000000020','e6190000-0000-4000-8000-000000000010');
+insert into public.academy_posts(id,author_id,category,original_locale) values ('e6190000-0000-4000-8000-000000000030','e6190000-0000-4000-8000-000000000002','grammar','en');
+insert into public.academy_post_translations(post_id,locale,title,body,status) values ('e6190000-0000-4000-8000-000000000030','en','Public article','Public body','published'),('e6190000-0000-4000-8000-000000000030','fa','Private draft','Private body','draft');
+set local role authenticated;select set_config('request.jwt.claim.sub','e6190000-0000-4000-8000-000000000003',true);
+do $$declare rejected boolean:=false;begin begin perform public.academy_admin_add_enrollment('e6190000-0000-4000-8000-000000000003','e6190000-0000-4000-8000-000000000020','e6190000-0000-4000-8000-000000000010');exception when insufficient_privilege then rejected:=true;end;if not rejected then raise exception 'Student could add enrollment';end if;end$$;
+do $$declare rejected boolean:=false;begin begin perform public.academy_admin_student_snapshot('e6190000-0000-4000-8000-000000000003');exception when insufficient_privilege then rejected:=true;end;if not rejected then raise exception 'Student accessed admin snapshot';end if;end$$;
+select set_config('request.jwt.claim.sub','e6190000-0000-4000-8000-000000000001',true);
+select public.academy_admin_add_enrollment('e6190000-0000-4000-8000-000000000003','e6190000-0000-4000-8000-000000000020','e6190000-0000-4000-8000-000000000010');
+do $$begin if jsonb_array_length(public.academy_admin_student_snapshot('e6190000-0000-4000-8000-000000000003')->'enrollments')<>1 then raise exception 'Student snapshot failed';end if;end$$;
+do $$declare space uuid; rejected boolean:=false;begin select id into space from public.academy_learning_spaces where student_id='e6190000-0000-4000-8000-000000000003';if space is null then raise exception 'Learning space not created';end if;perform public.academy_save_course_plan(space,12,'2026-12-01');begin perform public.academy_admin_delete_teacher('e6190000-0000-4000-8000-000000000020','Rollback teacher');exception when raise_exception then rejected:=true;end;if not rejected then raise exception 'Teacher with dependencies deleted';end if;end$$;
+select public.academy_admin_save_teacher_desk('e6190000-0000-4000-8000-000000000020','notes','materials','plan');
+do $$begin if public.academy_admin_teacher_desk('e6190000-0000-4000-8000-000000000020')->>'notes'<>'notes' then raise exception 'Teacher desk failed';end if;end$$;
+select public.academy_admin_delete_teacher('e6190000-0000-4000-8000-000000000021','Empty teacher');
+select set_config('request.jwt.claim.sub','e6190000-0000-4000-8000-000000000003',true);
+do $$declare space uuid;rejected boolean:=false;begin select id into space from public.academy_learning_spaces where student_id=auth.uid();if not exists(select 1 from public.academy_course_plans where learning_space_id=space and suggested_sessions=12) then raise exception 'Student cannot read own plan';end if;begin perform public.academy_save_course_plan(space,99,null);exception when insufficient_privilege then rejected:=true;end;if not rejected then raise exception 'Student could modify plan';end if;end$$;
+reset role;set local role anon;select set_config('request.jwt.claim.sub','',true);
+do $$begin if (select count(*) from public.academy_teacher_public_posts('e6190000-0000-4000-8000-000000000020','en'))<>1 or (select count(*) from public.academy_teacher_public_posts('e6190000-0000-4000-8000-000000000020','fa'))<>0 then raise exception 'Published/draft article isolation failed';end if;end$$;
+reset role;rollback;

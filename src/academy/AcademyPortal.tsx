@@ -1,3 +1,5 @@
+import {AcademyAdminPrivateNotes} from './AcademyAdminPrivateNotes'
+import {AcademyCoursePlan} from './AcademyCoursePlan'
 import {academyStatus} from './statusLabels'
 import {AcademyField} from './AcademyField'
 import {AcademyHelp} from './AcademyHelp'
@@ -700,6 +702,8 @@ export function AcademyPortal({
 
   </div>
   <div hidden={panel!=='classroom'}>
+  {selected&&<AcademyCoursePlan key={selected.id} locale={locale} spaceId={selected.id} editable={selectedIsTeacher}/>}
+  {isAdmin&&selected&&<AcademyAdminPrivateNotes key={'private-'+selected.id} locale={locale} spaceId={selected.id}/>}
   {selected&&<div className="academy-context-card"><strong>{courseTitle(selected.course_id)}</strong><span>{selected.teacher_id?teacherTitle(selected.teacher_id):''}</span>{!teacherOnly&&ownBookings.filter(b=>b.course_id===selected.course_id&&b.teacher_id===selected.teacher_id&&['confirmed','in_progress'].includes(b.status)&&b.confirmed_start&&new Date(b.confirmed_start).getTime()>=Date.now()-24*60*60*1000).sort((a,b)=>String(a.confirmed_start).localeCompare(String(b.confirmed_start))).slice(0,1).map(b=><div key={b.id}><small>{dt(b.confirmed_start)}</small><JoinMeetingLinks booking={b} locale={locale}/></div>)}</div>}
   <nav className="academy-portal-nav" aria-label={t.learning}>{([['notes',t.notes],['materials',t.materials],['messages',t.messages],...(!teacherOnly?([['progress',({fa:'پیشرفت و نتایج',en:'Progress & results',sv:'Framsteg och resultat',de:'Fortschritt und Ergebnisse'})[locale]]] as [ClassroomTool,string][]):[])] as [ClassroomTool,string][]).map(([id,label])=><button key={id} type="button" disabled={!selected} aria-pressed={classroomTool===id} onClick={()=>openClassroomTool(id)}>{label}</button>)}</nav>{!selected&&<p className="academy-empty">{t.noSpace}</p>}{classroomTool!=='home'&&<button type="button" className="academy-panel-back" onClick={()=>window.history.state?.academyClassroomTool?window.history.back():setClassroomTool('home')}>{({fa:'بازگشت به فضای یادگیری',en:'Back to learning space',sv:'Tillbaka till lärmiljön',de:'Zurück zum Lernraum'})[locale]}</button>}
   {selected&&<div className="academy-learning-columns academy-single-tool">
