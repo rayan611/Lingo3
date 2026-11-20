@@ -1,3 +1,7 @@
+## 2026-11-20 — Academy selected-student sessions (app 0.7.11)
+
+Fixed the administrator classroom selector using the existing admin-authorized learning-space query instead of passing null to the teacher roster. Teacher/admin student planning shows the completed-private-lesson count and up to 200 recent private bookings for the selected student, course and teacher, and allows confirmed lessons to be marked completed. Fixed the removed-enrollment status filter. Existing RLS and schema unchanged. Group lessons and suggested session counts are not included. Administrator enrollment creation, full role views, public teacher Instagram/articles and permanent teacher deletion remain outstanding. Mocked React tests cover admin selection and session completion; signed-in live and full mobile acceptance remain unverified. Route map reviewed; URLs unchanged. Deployment pending.
+
 2026-11-20 · 0.7.10 production: PR #61 merged as 9a8385194416effcfb4bc053f2326fd345e3d04c; deployment dpl_GWQzSw1PQrCrqsidGx6uRdHVEuYE READY and lingo3.com/www aliases attached without errors. Full npm test and build passed; role scenarios use mocked transport. Real signed-in and full mobile browser acceptance remain unverified. No database migration. Rollback deployment dpl_Fmb4ekXUwMyt4YGpb4UzAKvoW9DR.
 
 ## 2026-11-20 — Academy teacher editor (app 0.7.10)

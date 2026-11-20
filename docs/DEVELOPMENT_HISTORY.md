@@ -1,3 +1,7 @@
+## 2026-11-20 — Academy selected-student sessions (app 0.7.11)
+
+Fixed the administrator classroom selector using the existing admin-authorized learning-space query instead of passing null to the teacher roster. Teacher/admin student planning shows the completed-private-lesson count and up to 200 recent private bookings for the selected student, course and teacher, and allows confirmed lessons to be marked completed. Fixed the removed-enrollment status filter. Existing RLS and schema unchanged. Group lessons and suggested session counts are not included. Administrator enrollment creation, full role views, public teacher Instagram/articles and permanent teacher deletion remain outstanding. Mocked React tests cover admin selection and session completion; signed-in live and full mobile acceptance remain unverified. Route map reviewed; URLs unchanged. Deployment pending.
+
 ## 2026-11-20 — Academy teacher editor (app 0.7.10)
 
 Teacher selection, search and creation precede the editor; sectioned name, introduction, languages/courses, contact and account panels retain form state. Red confirmation deactivates without deleting teacher records. Enrollment status filtering, compact admin spacing and highlighted My Academy menu added. Existing schema and access controls unchanged. Administrator enrollment creation, suggested session tracking, comprehensive student/teacher impersonation and permanent teacher deletion remain unimplemented. Live signed-in role and complete mobile browser checks remain outstanding. Route URLs unchanged. Production verification pending.
