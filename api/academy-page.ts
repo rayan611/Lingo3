@@ -5,6 +5,7 @@ const locales=['en','fa','sv','de']
 const names:Record<string,Record<string,string>>={en:{home:'Lingo3 Academy',posts:'Learning articles',courses:'Language courses',teachers:'Language teachers',about:'About Lingo3 Academy',path:'Find your learning path',pricing:'Pricing',resources:'Learning resources',contact:'Contact'},fa:{home:'آکادمی لینگو۳',posts:'مطالب آموزشی',courses:'دوره‌های زبان',teachers:'استادهای زبان',about:'دربارهٔ آکادمی لینگو۳',path:'مسیر یادگیری',pricing:'هزینهٔ دوره‌ها',resources:'منابع آموزشی',contact:'تماس'},sv:{home:'Lingo3 Academy',posts:'Lärartiklar',courses:'Språkkurser',teachers:'Språklärare',about:'Om Lingo3 Academy',path:'Hitta din studieplan',pricing:'Priser',resources:'Lärresurser',contact:'Kontakt'},de:{home:'Lingo3 Academy',posts:'Lernartikel',courses:'Sprachkurse',teachers:'Sprachlehrkräfte',about:'Über Lingo3 Academy',path:'Lernweg finden',pricing:'Preise',resources:'Lernmaterial',contact:'Kontakt'}}
 export const escapeHtml=(s:unknown)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!))
 const jsonLd=(x:unknown)=>JSON.stringify(x).replace(/</g,'\\u003c')
+const organization={'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}
 async function rows(table:string,query:string){
  const base=process.env.SUPABASE_URL||process.env.VITE_SUPABASE_URL,key=process.env.SUPABASE_ANON_KEY||process.env.VITE_SUPABASE_ANON_KEY
  if(!base||!key)throw Error('Public database configuration missing')
@@ -13,13 +14,14 @@ async function rows(table:string,query:string){
 export function renderPage(shell:string,data:{title:string;description:string;locale:string;url:string;content:string;alternates:{locale:string;url:string}[];schema?:unknown;noindex?:boolean;image?:string}){
  let html=shell.replace(/<title>[\s\S]*?<\/title>/i,'').replace(/<meta\s+(?:name|property)="(?:description|robots|og:[^"]+|twitter:[^"]+)"[\s\S]*?>/gi,'').replace(/<link\s+rel="(?:canonical|alternate)"[^>]*>/gi,'')
  const title=escapeHtml(data.title),description=escapeHtml(data.description),url=escapeHtml(data.url)
- const head=`<title>${title}</title><meta name="description" content="${description}"><link rel="canonical" href="${url}"><meta name="robots" content="${data.noindex?'noindex, nofollow':'index, follow'}"><meta property="og:type" content="${data.schema?'article':'website'}"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${url}"><meta property="og:image" content="${escapeHtml(data.image||origin+'/og-image.png')}"><meta name="twitter:card" content="summary_large_image">${data.alternates.map(a=>`<link rel="alternate" hreflang="${a.locale}" href="${escapeHtml(a.url)}">`).join('')}${data.schema?`<script type="application/ld+json">${jsonLd(data.schema)}</script>`:''}`
+ const structure=data.noindex?undefined:{'@context':'https://schema.org','@graph':[organization,...(data.url===origin+'/'?[]:[{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Lingo3',item:origin+'/'},{'@type':'ListItem',position:2,name:'Academy',item:origin+'/academy'},...(data.url.includes('/academy/')?[{'@type':'ListItem',position:3,name:data.title,item:data.url}]:[])]}]),...(data.schema?[data.schema]:[])]}
+ const head=`<title>${title}</title><meta name="description" content="${description}"><link rel="canonical" href="${url}"><meta name="robots" content="${data.noindex?'noindex, nofollow':'index, follow'}"><meta property="og:type" content="${data.schema?'article':'website'}"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${url}"><meta property="og:image" content="${escapeHtml(data.image||origin+'/og-image.png')}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title}"><meta name="twitter:description" content="${description}">${data.alternates.map(a=>`<link rel="alternate" hreflang="${a.locale}" href="${escapeHtml(a.url)}">`).join('')}${structure?`<script type="application/ld+json">${jsonLd(structure)}</script>`:''}`
  return html.replace('<html lang="en">',`<html lang="${data.locale}" dir="${data.locale==='fa'?'rtl':'ltr'}">`).replace('</head>',head+'</head>').replace('<div id="root"></div>',`<div id="root"><main style="max-width:850px;margin:auto;padding:24px;font-family:system-ui;line-height:1.8"><nav><a href="/academy?lang=${data.locale}">${escapeHtml(names[data.locale].home)}</a> · <a href="/academy/posts?lang=${data.locale}">${escapeHtml(names[data.locale].posts)}</a></nav><h1>${title}</h1>${data.content}</main></div>`)
 }
 export default async function handler(req:{method?:string;url?:string;query:Record<string,string|string[]|undefined>},res:{setHeader:(k:string,v:string)=>void;status:(s:number)=>{send:(s:string)=>void}}){
  if(req.method!=='GET'&&req.method!=='HEAD')return res.status(405).send('Method not allowed')
  const q=(k:string)=>{const v=req.query[k];return Array.isArray(v)?v[0]:v??''},lang=locales.includes(q('lang'))?q('lang'):'en'
- const suffix=q('route').replace(/^\/+|\/+$/g,''),route=suffix?'/' + suffix:''
+ const root=q('root')==='1';const suffix=q('route').replace(/^\/+|\/+$/g,''),route=suffix?'/' + suffix:''
  try{
  if(q('sitemap')==='1'){
   const urls=new Set<string>([origin+'/'])
@@ -36,9 +38,10 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
  }
  let shell:string
  try{shell=await readFile(path.join(process.cwd(),'dist/index.html'),'utf8')}catch{const r=await fetch(origin+'/index.html',{signal:AbortSignal.timeout(6000)});if(!r.ok)throw Error('Shell unavailable');shell=await r.text()}
- const parts=suffix.split('/'),kind=parts[0]||'home',id=parts[1],url=`${origin}/academy${route}?lang=${lang}`
- let title=names[lang][kind]||names[lang].home,description=title,content='',schema:unknown,alternates=locales.map(l=>({locale:l,url:`${origin}/academy${route}?lang=${l}`})),noindex=['my','admin'].includes(kind),status=200,image:string|undefined
- if(id&&['posts','courses','teachers'].includes(kind)){
+ const parts=suffix.split('/'),kind=parts[0]||'home',id=parts[1],url=root?origin+'/':`${origin}/academy${route}?lang=${lang}`
+ let title=root?'Lingo3 — learn up to 3 languages':names[lang][kind]||names[lang].home,description=root?'Learn up to three languages from your own words with offline vocabulary practice and spaced review.':title,content='',schema:unknown,alternates=root?[]:locales.map(l=>({locale:l,url:`${origin}/academy${route}?lang=${l}`})),noindex=['my','admin'].includes(kind)&&!root,status=200,image:string|undefined
+ if(root){content='<p>Learn languages using your own vocabulary, offline practice and spaced review.</p><p><a href="/academy">Explore Lingo3 Academy courses and teachers</a></p>'}
+ else if(id&&['posts','courses','teachers'].includes(kind)){
   if(!/^[0-9a-f-]{36}$/i.test(id)){status=404;noindex=true}else if(kind==='posts'){
    const translations=await rows('academy_post_translations',`select=*&post_id=eq.${id}&status=eq.published`),x=translations.find(x=>x.locale===lang)
    alternates=translations.map(x=>({locale:x.locale,url:`${origin}/academy/posts/${id}?lang=${x.locale}`}))
@@ -58,6 +61,15 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
   const course=kind==='courses',entries=await rows(course?'academy_courses':'academy_teachers',`select=${course?'id,title_i18n,description_i18n':'id,display_name,display_name_i18n,intro_i18n'}&status=eq.active&limit=100`)
   content=entries.map(x=>`<article><h2><a href="/academy/${kind}/${x.id}?lang=${lang}">${escapeHtml(course?(x.title_i18n[lang]||x.title_i18n.en):(x.display_name_i18n?.[lang]||x.display_name))}</a></h2><p>${escapeHtml((course?x.description_i18n:x.intro_i18n)?.[lang]||'')}</p></article>`).join('')
  }else if(!names[lang][kind]&&!noindex){status=404;noindex=true}
+ if(!noindex&&status===200){
+  const entityType=root?'app':id?({posts:'post',courses:'course',teachers:'teacher'} as Record<string,string>)[kind]:'page'
+  const entityId=root?'home':id||kind
+  if(entityType){const overrides=await rows('academy_seo_settings',`select=title,description,image_url,target_keywords&entity_type=eq.${entityType}&entity_id=eq.${encodeURIComponent(entityId)}&locale=eq.${root?'en':lang}&limit=1`)
+   const meta=overrides[0]
+   if(meta){if(meta.title)title=meta.title;if(meta.description)description=meta.description;if(meta.image_url)image=meta.image_url}
+  }
+  if(schema&&typeof schema==='object')schema={...(schema as Record<string,unknown>),...(title?{headline:title,name:title}:{}),description}
+ }
  if(!content&&!noindex)content=`<p>${escapeHtml(title)}</p><nav>${['courses','teachers','posts','about','contact'].map(r=>`<p><a href="/academy/${r}?lang=${lang}">${escapeHtml(names[lang][r])}</a></p>`).join('')}</nav>`
  if(noindex)alternates=[]
  res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control',noindex?'private, no-store':'public, s-maxage=60');res.setHeader('X-Robots-Tag',noindex?'noindex, nofollow':'index, follow')
