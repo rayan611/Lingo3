@@ -1,3 +1,9 @@
+2026-11-20 · 0.7.13 unreleased revision 3 · Added role-based overview cards in existing Academy portal; routes unchanged.
+
+2026-11-20 · 0.7.13 unreleased revision 2 · Selected student/teacher panels opened from Admin Studio; section state only, routes unchanged.
+
+2026-11-20 · 0.7.13 · Reviewed Academy management pagination and private-note controls; URLs unchanged, unreleased.
+
 ## 2026-11-20 — Academy management completion (app 0.7.13)
 
 Added administrator-created enrollment with eligible teacher/course selection and audit, suggested lesson count/start/schedule, teacher public Instagram and published articles, audited administrator student overview, private-note and teacher-desk access, and confirmed permanent deletion guarded against all linked records. The additive migration uses RLS and checked non-exposed privileged functions; isolated PostgreSQL and mocked UI tests cover key roles and workflows. Existing classroom administration remains available; exact account impersonation is not implemented. Real signed-in and mobile browser acceptance remain unverified. Sitemap and route index reviewed: URLs unchanged. Deployment pending.

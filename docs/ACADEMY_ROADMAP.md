@@ -1,3 +1,11 @@
+## 2026-11-20 — Student and teacher overview dashboards (0.7.13 unreleased revision 3)
+
+At-a-glance dashboards added locally; production deployment and real signed-in/mobile acceptance pending.
+
+## 2026-11-20 — Local Academy progress (0.7.13 unreleased revision 2)
+
+Selected student and teacher panels, recorded group attendance and teacher profile erasure with anonymous historical retention are implemented locally. Deletion preserves referenced history; active work must be resolved first. Admin can create and edit selected teacher articles with explicit attribution and an audit record. Remaining: real signed-in/mobile acceptance. No production migration or deployment.
+
 ## 2026-11-20 — Academy management completion (app 0.7.13)
 
 Added administrator-created enrollment with eligible teacher/course selection and audit, suggested lesson count/start/schedule, teacher public Instagram and published articles, audited administrator student overview, private-note and teacher-desk access, and confirmed permanent deletion guarded against all linked records. The additive migration uses RLS and checked non-exposed privileged functions; isolated PostgreSQL and mocked UI tests cover key roles and workflows. Existing classroom administration remains available; exact account impersonation is not implemented. Real signed-in and mobile browser acceptance remain unverified. Sitemap and route index reviewed: URLs unchanged. Deployment pending.

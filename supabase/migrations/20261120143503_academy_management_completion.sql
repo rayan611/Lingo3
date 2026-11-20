@@ -162,19 +162,45 @@ grant execute on function academy_private.academy_admin_private_notes(uuid,integ
 create function public.academy_admin_private_notes(p_space uuid,p_page integer default 0) returns jsonb language sql security invoker set search_path='' as $$select academy_private.academy_admin_private_notes(p_space,p_page)$$;
 revoke all on function public.academy_admin_private_notes(uuid,integer) from public,anon,authenticated;
 grant execute on function public.academy_admin_private_notes(uuid,integer) to authenticated;
-create function academy_private.academy_admin_student_snapshot(p_student uuid) returns jsonb language plpgsql security definer set search_path='' as $$
+
+-- Admin edits are explicit, audited, scoped to the selected space and protected against stale writes.
+create function academy_private.academy_admin_change_private_note(p_space uuid,p_note uuid,p_expected text,p_body text,p_delete boolean) returns void language plpgsql security definer set search_path='' as $$
+declare s public.academy_learning_spaces; n public.academy_notes;
+begin
+ if auth.uid() is null or not public.is_admin() then raise exception 'Admin permission required' using errcode='42501';end if;
+ select * into s from public.academy_learning_spaces where id=p_space;
+ if s.id is null then raise exception 'Learning space not found';end if;
+ select * into n from public.academy_notes where id=p_note and learning_space_id=p_space and visibility='private' for update;
+ if n.id is null then raise exception 'Private note not found';end if;
+ if n.body is distinct from p_expected then raise exception 'Note changed; refresh before editing';end if;
+ if p_delete is null then raise exception 'Action required';end if;
+ if p_delete then delete from public.academy_notes where id=p_note;
+ else
+  if p_body is null or length(trim(p_body))=0 or length(p_body)>20000 then raise exception 'Invalid note';end if;
+  update public.academy_notes set body=p_body,updated_at=now() where id=p_note;
+ end if;
+ insert into public.academy_admin_audit(actor_id,target_id,action,details) values(auth.uid(),s.student_id,case when p_delete then 'delete_private_note' else 'edit_private_note' end,jsonb_build_object('space',p_space,'note',p_note));
+end;$$;
+revoke all on function academy_private.academy_admin_change_private_note(uuid,uuid,text,text,boolean) from public,anon,authenticated;
+grant execute on function academy_private.academy_admin_change_private_note(uuid,uuid,text,text,boolean) to authenticated;
+create function public.academy_admin_change_private_note(p_space uuid,p_note uuid,p_expected text,p_body text,p_delete boolean) returns void language sql security invoker set search_path='' as $$select academy_private.academy_admin_change_private_note(p_space,p_note,p_expected,p_body,p_delete)$$;
+revoke all on function public.academy_admin_change_private_note(uuid,uuid,text,text,boolean) from public,anon,authenticated;
+grant execute on function public.academy_admin_change_private_note(uuid,uuid,text,text,boolean) to authenticated;
+create function academy_private.academy_admin_student_snapshot(p_student uuid,p_page integer,p_status text) returns jsonb language plpgsql security definer set search_path='' as $$
 declare result jsonb;
 begin
  if auth.uid() is null or not public.is_admin() then raise exception 'Admin permission required' using errcode='42501';end if;
  if not exists(select 1 from auth.users where id=p_student) then raise exception 'User not found';end if;
+ if p_page is null or p_page<0 or p_page>100000 or p_status is null or p_status not in ('all','active','interested','paused','completed','cancelled','removed') then raise exception 'Invalid page or status';end if;
  select jsonb_build_object(
- 'enrollments',coalesce((select jsonb_agg(to_jsonb(e) order by e.created_at desc) from (select id,course_id,teacher_id,status,removed_at,created_at from public.academy_enrollments where student_id=p_student order by created_at desc,id desc limit 200)e),'[]'::jsonb),
- 'spaces',coalesce((select jsonb_agg(to_jsonb(s) order by s.created_at desc) from (select id,enrollment_id,course_id,teacher_id,progress,created_at from public.academy_learning_spaces where student_id=p_student order by created_at desc,id desc limit 200)s),'[]'::jsonb),
- 'bookings',coalesce((select jsonb_agg(to_jsonb(b) order by b.created_at desc) from (select id,course_id,teacher_id,status,confirmed_start,created_at from public.academy_bookings where student_id=p_student order by created_at desc,id desc limit 200)b),'[]'::jsonb)) into result;
- insert into public.academy_admin_audit(actor_id,target_id,action,details) values(auth.uid(),p_student,'view_student_snapshot','{}'::jsonb);return result;
+ 'enrollments',coalesce((select jsonb_agg(to_jsonb(e) order by e.created_at desc,e.id desc) from (select e.id,e.course_id,e.teacher_id,e.status,e.removed_at,e.created_at,(select s.id from public.academy_learning_spaces s where s.enrollment_id=e.id order by s.created_at desc,s.id desc limit 1) as space_id from public.academy_enrollments e where e.student_id=p_student and (p_status='all' or (p_status='removed' and e.removed_at is not null) or (p_status<>'removed' and e.removed_at is null and e.status=p_status)) order by e.created_at desc,e.id desc limit 50 offset (p_page*50))e),'[]'::jsonb),
+ 'has_more_enrollments',exists(select 1 from public.academy_enrollments e where e.student_id=p_student and (p_status='all' or (p_status='removed' and e.removed_at is not null) or (p_status<>'removed' and e.removed_at is null and e.status=p_status)) order by e.created_at desc,e.id desc offset ((p_page+1)*50) limit 1),
+ 'bookings',coalesce((select jsonb_agg(to_jsonb(b) order by b.created_at desc,b.id desc) from (select id,course_id,teacher_id,status,confirmed_start,created_at from public.academy_bookings where student_id=p_student order by created_at desc,id desc limit 50 offset (p_page*50))b),'[]'::jsonb),
+ 'has_more_bookings',exists(select 1 from public.academy_bookings where student_id=p_student order by created_at desc,id desc offset ((p_page+1)*50) limit 1)) into result;
+ insert into public.academy_admin_audit(actor_id,target_id,action,details) values(auth.uid(),p_student,'view_student_snapshot',jsonb_build_object('page',p_page,'status',p_status));return result;
 end;$$;
-revoke all on function academy_private.academy_admin_student_snapshot(uuid) from public,anon,authenticated;
-grant execute on function academy_private.academy_admin_student_snapshot(uuid) to authenticated;
-create function public.academy_admin_student_snapshot(p_student uuid) returns jsonb language sql security invoker set search_path='' as $$select academy_private.academy_admin_student_snapshot(p_student)$$;
-revoke all on function public.academy_admin_student_snapshot(uuid) from public,anon,authenticated;
-grant execute on function public.academy_admin_student_snapshot(uuid) to authenticated;
+revoke all on function academy_private.academy_admin_student_snapshot(uuid,integer,text) from public,anon,authenticated;
+grant execute on function academy_private.academy_admin_student_snapshot(uuid,integer,text) to authenticated;
+create function public.academy_admin_student_snapshot(p_student uuid,p_page integer default 0,p_status text default 'all') returns jsonb language sql security invoker set search_path='' as $$select academy_private.academy_admin_student_snapshot(p_student,p_page,p_status)$$;
+revoke all on function public.academy_admin_student_snapshot(uuid,integer,text) from public,anon,authenticated;
+grant execute on function public.academy_admin_student_snapshot(uuid,integer,text) to authenticated;

@@ -40,10 +40,11 @@ class Query{
  return {data:this.head?null:rows.slice(this.start,this.end+1),count:this.countMode?rows.length:null,error:null}
  }).then(resolve,reject)}
 }
-globalThis.__academyQAClient={from:t=>new Query(t),rpc:(name,args)=>Promise.resolve({data:name==='academy_teacher_roster'?tables.academy_learning_spaces.filter(s=>s.teacher_id===args.p_teacher).map(s=>({...s,resolved_name:s.student_display_name})):[],error:null})}
+const rpcCalls=[]
+globalThis.__academyQAClient={from:t=>new Query(t),rpc:(name,args)=>{rpcCalls.push({name,args});return Promise.resolve({data:name==='academy_class_roster'?[{student_id:'student-a',display_name:'Student A',learning_space_id:'space-a',status:'active'}]:name==='academy_group_attendance_summary'?{present:args.p_space==='space-a'?1:0}:name==='academy_teacher_roster'?tables.academy_learning_spaces.filter(s=>s.teacher_id===args.p_teacher).map(s=>({...s,resolved_name:s.student_display_name})):[],error:null})}}
 const output=path.resolve('node_modules/.cache/academy-behavior.mjs');fs.mkdirSync(path.dirname(output),{recursive:true})
-await build({stdin:{contents:"export {AcademyPortal} from './src/academy/AcademyPortal';export {Landing} from './src/ui/Landing';export {countryLocale,localizedName,useAcademyPreferences} from './src/academy/preferences'",resolveDir:process.cwd(),loader:'tsx'},outfile:output,bundle:true,jsx:'automatic',platform:'node',format:'esm',external:['react','react/jsx-runtime'],plugins:[{name:'qa-transport',setup(b){b.onResolve({filter:/auth\/supabase$/},()=>({path:'qa-client',namespace:'qa'}));b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const authConfigured=false;export const supabase=()=>globalThis.__academyQAClient;',loader:'js'}))}}]})
-const {AcademyPortal,Landing,countryLocale,localizedName}=await import('file://'+output+'?'+Date.now())
+await build({stdin:{contents:"export {AcademyPortal} from './src/academy/AcademyPortal';export {AcademyClasses} from './src/academy/AcademyClasses';export {Landing} from './src/ui/Landing';export {countryLocale,localizedName,useAcademyPreferences} from './src/academy/preferences'",resolveDir:process.cwd(),loader:'tsx'},outfile:output,bundle:true,jsx:'automatic',platform:'node',format:'esm',external:['react','react/jsx-runtime'],plugins:[{name:'qa-transport',setup(b){b.onResolve({filter:/auth\/supabase$/},()=>({path:'qa-client',namespace:'qa'}));b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const authConfigured=false;export const supabase=()=>globalThis.__academyQAClient;',loader:'js'}))}}]})
+const {AcademyPortal,AcademyClasses,Landing,countryLocale,localizedName}=await import('file://'+output+'?'+Date.now())
 const text=n=>typeof n==='string'?n:(n?.children??[]).map(text).join(' ')
 const find=(root,type,label)=>root.findAllByType(type).find(n=>text(n).includes(label))
 const flush=async()=>{await act(async()=>{await new Promise(r=>setTimeout(r,15))})}
@@ -101,13 +102,30 @@ try{
  const adminSelect=tree.root.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='space-a'))
  await act(async()=>adminSelect.props.onChange({target:{value:'space-a'}}));await flush()
  await act(async()=>exactButton('Teacher tools').props.onClick());await act(async()=>exactButton('Students').props.onClick());await flush()
- const sessionArea=tree.root.findAll(n=>n.props.className==='academy-student-session-list')[0];assert(sessionArea);assert.match(text(sessionArea),/confirmed/i);assert.match(text(sessionArea),/Group sessions held since joining\s*:\s*1/);assert.match(text(sessionArea),/does not confirm attendance/)
+ const sessionArea=tree.root.findAll(n=>n.props.className==='academy-student-session-list')[0];assert(sessionArea);assert.match(text(sessionArea),/confirmed/i);assert.match(text(sessionArea),/Recorded group attendance\s*:\s*1/);assert.match(text(sessionArea),/Only recorded attendance is counted/)
  await act(async()=>find(sessionArea,'button','Mark completed').props.onClick());await flush();assert(writes.some(w=>w.table==='academy_bookings'&&w.ids.includes('confirmed')&&w.payload?.status==='completed'));assert.match(text(sessionArea),/Completed private lessons\s*:\s*1/)
  await act(async()=>tree.unmount())
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'student-a',isAdmin:true,view:'student'}))});await flush();await flush()
  assert.match(text(tree.toJSON()),/Your learning overview/)
  assert(!find(tree.root,'h3','Classroom management'))
  assert(!tree.root.findAllByType('option').some(o=>o.props.value==='space-b'))
+ await act(async()=>tree.unmount())
+ await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'admin',adminStudentId:'student-a',selfTeacher:undefined,isAdmin:true,view:'student'}))});await flush();await flush()
+ assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-a'));assert(!tree.root.findAllByType('option').some(o=>o.props.value==='space-b'));assert.match(text(tree.toJSON()),/Recorded group attendance/)
+ await act(async()=>tree.unmount())
+ tables.academy_learning_spaces.push({id:'other-teacher-space',student_id:'other-student',teacher_id:'other-teacher',course_id:'course-a',student_display_name:'Other teacher student'})
+ await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'admin',selfTeacher:base.teachers[0],isAdmin:true,view:'teacher',adminTeacherMode:true}))});await flush();await flush()
+ assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-a'));assert(!tree.root.findAllByType('option').some(o=>o.props.value==='other-teacher-space'))
+ await act(async()=>tree.unmount())
+ tables.academy_classes=[{id:'group-a',teacher_id:'teacher-a',course_id:'course-a',title:'Group A',capacity:5,status:'active'}]
+ tables.academy_class_sessions=[{id:'group-after',class_id:'group-a',teacher_id:'teacher-a',status:'completed',starts_at:'2026-11-03T10:00:00Z',ends_at:'2026-11-03T11:00:00Z'}];tables.academy_class_attendance=[{session_id:'group-after',student_id:'student-a',status:'present'}]
+ await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyClasses,{locale:'en',userId:'teacher-user',teacherId:'teacher-a',courses:base.courses}))});await flush();await flush()
+ const classSelector=tree.root.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='group-a'));await act(async()=>classSelector.props.onChange({target:{value:'group-a'}}));await flush()
+ const sessionArticle=tree.root.findAllByType('article').find(n=>text(n).includes('Completed')&&n.findAllByType('button').some(b=>text(b)==='Session actions'));assert(sessionArticle)
+ await act(async()=>find(sessionArticle,'button','Session actions').props.onClick());await flush()
+ const attendanceSelect=sessionArticle.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='present'));assert.equal(attendanceSelect.props.value,'present')
+ await act(async()=>attendanceSelect.props.onChange({target:{value:'absent'}}));await flush();assert(rpcCalls.some(x=>x.name==='academy_session_action'&&x.args.p_action==='attendance'&&x.args.p_data.status==='absent'))
+ await act(async()=>tree.unmount())
  assert.equal(countryLocale('IR'),'fa');assert.equal(countryLocale('DE'),'de');assert.equal(countryLocale('SE'),'sv');assert.equal(countryLocale(null),'en')
  assert.equal(localizedName({display_name:'Original',display_name_i18n:{en:'Latin',fa:'فارسی'}},'de'),'Latin')
  assert.equal(localizedName({display_name:'Original',display_name_i18n:{en:'Latin',fa:'فارسی'}},'fa'),'فارسی')

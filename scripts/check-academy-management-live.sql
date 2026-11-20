@@ -14,6 +14,17 @@ select set_config('request.jwt.claim.sub','e6190000-0000-4000-8000-000000000001'
 select public.academy_admin_add_enrollment('e6190000-0000-4000-8000-000000000003','e6190000-0000-4000-8000-000000000020','e6190000-0000-4000-8000-000000000010');
 do $$begin if jsonb_array_length(public.academy_admin_student_snapshot('e6190000-0000-4000-8000-000000000003')->'enrollments')<>1 then raise exception 'Student snapshot failed';end if;end$$;
 do $$declare space uuid; rejected boolean:=false;begin select id into space from public.academy_learning_spaces where student_id='e6190000-0000-4000-8000-000000000003';if space is null then raise exception 'Learning space not created';end if;perform public.academy_save_course_plan(space,12,'2026-12-01');begin perform public.academy_admin_delete_teacher('e6190000-0000-4000-8000-000000000020','Rollback teacher');exception when raise_exception then rejected:=true;end;if not rejected then raise exception 'Teacher with dependencies deleted';end if;end$$;
+do $$declare space uuid; note uuid; rejected boolean:=false;begin
+ select id into space from public.academy_learning_spaces where student_id='e6190000-0000-4000-8000-000000000003';
+ insert into public.academy_notes(learning_space_id,author_id,body,visibility) values(space,auth.uid(),'Original private note','private') returning id into note;
+ perform public.academy_admin_change_private_note(space,note,'Original private note','Updated private note',false);
+ begin perform public.academy_admin_change_private_note(space,note,'Original private note',null,true);exception when raise_exception then rejected:=true;end;
+ if not rejected then raise exception 'Stale note change succeeded';end if;
+ if (public.academy_admin_private_notes(space,0)->0->>'body')<>'Updated private note' then raise exception 'Private note edit failed';end if;
+ perform public.academy_admin_change_private_note(space,note,'Updated private note',null,true);
+ if jsonb_array_length(public.academy_admin_private_notes(space,0))<>0 then raise exception 'Private note deletion failed';end if;
+ if not exists(select 1 from public.academy_admin_audit where action='edit_private_note' and details->>'note'=note::text) or not exists(select 1 from public.academy_admin_audit where action='delete_private_note' and details->>'note'=note::text) then raise exception 'Private note audit missing';end if;
+end$$;
 select public.academy_admin_save_teacher_desk('e6190000-0000-4000-8000-000000000020','notes','materials','plan');
 do $$begin if public.academy_admin_teacher_desk('e6190000-0000-4000-8000-000000000020')->>'notes'<>'notes' then raise exception 'Teacher desk failed';end if;end$$;
 select public.academy_admin_delete_teacher('e6190000-0000-4000-8000-000000000021','Empty teacher');
