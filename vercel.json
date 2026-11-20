@@ -85,5 +85,12 @@
     "api/academy-page.ts": {
       "includeFiles": "dist/index.html"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "^/$",
+      "dest": "/api/academy-page?root=1",
+      "override": true
+    }
+  ]
 }
