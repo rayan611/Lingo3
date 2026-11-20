@@ -2,6 +2,7 @@ import {useEffect,useMemo,useState} from 'react'
 import {supabase} from '../auth/supabase'
 import type {Course,Teacher} from './Academy'
 import {localizedName} from './preferences'
+import {AcademySeoAudit} from './AcademySeoAudit'
 
 type Locale='en'|'sv'|'fa'|'de'
 type Kind='app'|'page'|'course'|'teacher'|'post'
@@ -45,8 +46,8 @@ export function AcademySeoManager({locale,userId,courses,teachers}:{locale:Local
   <p>{name('عنوان و توضیح اختصاصی هر صفحه به زبان انتخابی، تصویر اشتراک‌گذاری، و کلیدواژه‌های هدف را مدیریت کنید. کلیدواژه‌ها متاتگ رتبه‌بندی گوگل نیستند.','Edit localized search titles, descriptions, social images and editorial target phrases. Target phrases are not a Google ranking meta tag.',locale)}</p>
   {loading?<p role="status">…</p>:<form onSubmit={save}>
    <div className="editor-two">
-    <label>{name('نوع صفحه','Page type',locale)}<select value={kind} onChange={e=>{setKind(e.target.value as Kind);setEntityId('')}}><option value="app">Lingo3 app homepage</option><option value="page">Academy pages</option><option value="course">Courses</option><option value="teacher">Teachers</option><option value="post">Learning articles</option></select></label>
-    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>setLanguage(e.target.value as Locale)}>{locales.map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
+    <label>{name('نوع صفحه','Page type',locale)}<select value={kind} onChange={e=>{setKind(e.target.value as Kind);setEntityId('');if(e.target.value==='app')setLanguage('en')}}><option value="app">Lingo3 app homepage</option><option value="page">Academy pages</option><option value="course">Courses</option><option value="teacher">Teachers</option><option value="post">Learning articles</option></select></label>
+    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>setLanguage(e.target.value as Locale)}>{(kind==='app'?(['en'] as Locale[]):locales).map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
    </div>
    <label>{name('صفحه یا محتوا','Page or content',locale)}<select value={entityId} onChange={e=>setEntityId(e.target.value)}>{options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>
    <label>SEO Title <input maxLength={140} value={title} onChange={e=>setTitle(e.target.value)} placeholder="e.g. Online Swedish courses | Lingo3 Academy"/></label>
@@ -62,6 +63,7 @@ export function AcademySeoManager({locale,userId,courses,teachers}:{locale:Local
    <div className="academy-card-actions"><button type="submit" disabled={busy||!entityId}>{busy?'…':name('ذخیره تنظیمات سئو','Save SEO settings',locale)}</button><a href={url} target="_blank" rel="noopener noreferrer">{name('مشاهده صفحه عمومی','View public page',locale)}</a></div>
    {message&&<p role="status" aria-live="polite">{message}</p>}
   </form>}
+  <AcademySeoAudit locale={locale} courses={courses} teachers={teachers}/>
   <p><a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer">Google Search Console</a> · <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer">PageSpeed Insights</a></p>
   <small>{name('داده‌های Search Console فقط پس از اتصال مجاز مالک سایت قابل نمایش هستند.','Search Console data requires the site owner to authorize access.',locale)}</small>
  </section>
