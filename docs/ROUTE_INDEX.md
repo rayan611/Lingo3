@@ -1,3 +1,13 @@
+2026-11-20 · 0.7.13 unreleased revision 3 · Added links from role summaries to existing schedule, classroom and teacher sections; routes unchanged.
+
+2026-11-20 · 0.7.13 unreleased revision 2 · Selected student/teacher panels use Admin Studio section state; URLs unchanged.
+
+2026-11-20 · 0.7.13 · Reviewed Academy management pagination and private-note controls; routes and Back behavior unchanged, unreleased.
+
+## 2026-11-20 — Academy management completion (app 0.7.13)
+
+Added administrator-created enrollment with eligible teacher/course selection and audit, suggested lesson count/start/schedule, teacher public Instagram and published articles, audited administrator student overview, private-note and teacher-desk access, and confirmed permanent deletion guarded against all linked records. The additive migration uses RLS and checked non-exposed privileged functions; isolated PostgreSQL and mocked UI tests cover key roles and workflows. Existing classroom administration remains available; exact account impersonation is not implemented. Real signed-in and mobile browser acceptance remain unverified. Sitemap and route index reviewed: URLs unchanged. Deployment pending.
+
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)

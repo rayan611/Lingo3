@@ -1,3 +1,5 @@
+import {AcademyAdminStudentView} from './AcademyAdminStudentView'
+import {AcademyAdminEnrollment} from './AcademyAdminEnrollment'
 import {AcademyField} from './AcademyField'
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../auth/supabase'
@@ -10,7 +12,7 @@ const labels = {
  sv: {title:'Användare och behörigheter',search:'Sök namn, e-post eller konto-ID',all:'Alla användare',admin:'Administratör',teacher:'Lärare',student:'Elev',previous:'Föregående',next:'Nästa',grant:'Ge administratörsbehörighet',revoke:'Ta bort administratörsbehörighet',confirm:'Bekräfta ändring',cancel:'Avbryt',profile:'Hantera lärarprofil',error:'Kunde inte hämta användare',empty:'Inga användare hittades'},
  de: {title:'Benutzer und Berechtigungen',search:'Name, E-Mail oder Konto-ID suchen',all:'Alle Benutzer',admin:'Administrator',teacher:'Lehrkraft',student:'Lernende',previous:'Zurück',next:'Weiter',grant:'Administratorzugriff erteilen',revoke:'Administratorzugriff entziehen',confirm:'Änderung bestätigen',cancel:'Abbrechen',profile:'Lehrerprofil verwalten',error:'Benutzer konnten nicht geladen werden',empty:'Keine Benutzer gefunden'}
 }
-export function AcademyUsers({locale,onTeacher,onAccessChanged,onCourses}:{locale:Locale;onTeacher:(user:User)=>void;onAccessChanged:()=>void;onCourses:(userId:string)=>void}) {
+export function AcademyUsers({locale,onTeacher,onAccessChanged,onCourses,onOpenSpace=()=>{},onOpenStudent,teachers=[],courses=[],links=[]}:{locale:Locale;onTeacher:(user:User)=>void;onAccessChanged:()=>void;onCourses:(userId:string)=>void;onOpenSpace?:(spaceId:string)=>void;onOpenStudent?:(id:string)=>void;teachers?:{id:string;display_name:string;status:string}[];courses?:{id:string;title_i18n:Record<string,string>;status:string;level_code:string}[];links?:{teacher_id:string;course_id:string}[]}) {
  const t=labels[locale]
  const [query,setQuery]=useState(''),[role,setRole]=useState(''),[page,setPage]=useState(0)
  const [users,setUsers]=useState<User[]>([]),[total,setTotal]=useState(0),[error,setError]=useState('')
@@ -49,7 +51,7 @@ export function AcademyUsers({locale,onTeacher,onAccessChanged,onCourses}:{local
   {users.map(user=><article className="academy-card" key={user.user_id}>
    <strong>{user.display_name||user.email}</strong><p dir="ltr">{user.email}</p>
    <p dir="ltr">{user.phone} {user.username}</p><small>{locale==='fa'?'آخرین ورود':'Last sign-in'} {user.last_sign_in_at?new Date(user.last_sign_in_at).toLocaleString(locale):'—'}</small><br/><small>{user.is_admin?t.admin:''} {user.teacher_status==='active'?t.teacher:''}</small>
-   <div className="academy-card-actions"><button onClick={()=>onCourses(user.user_id)}>{locale==='fa'?'دوره‌های کاربر':'User courses'}</button><button disabled={busy} onClick={()=>onTeacher(user)}>{t.profile}</button><button disabled={busy} onClick={()=>setPending(user)}>{user.is_admin?t.revoke:t.grant}</button></div>
+   <AcademyAdminStudentView locale={locale} userId={user.user_id} courses={courses} teachers={teachers} onOpenSpace={onOpenSpace} onOpenStudent={onOpenStudent}/><AcademyAdminEnrollment locale={locale} userId={user.user_id} teachers={teachers} courses={courses} links={links} onChanged={onAccessChanged}/><div className="academy-card-actions"><button onClick={()=>onCourses(user.user_id)}>{locale==='fa'?'دوره‌های کاربر':'User courses'}</button><button disabled={busy} onClick={()=>onTeacher(user)}>{t.profile}</button><button disabled={busy} onClick={()=>setPending(user)}>{user.is_admin?t.revoke:t.grant}</button></div>
   </article>)}
   {pending&&<div className="academy-card" role="group" aria-label={t.confirm}><p>{pending.display_name||pending.email} — {pending.is_admin?t.revoke:t.grant}</p><div className="academy-card-actions"><button disabled={busy} onClick={changeAccess}>{t.confirm}</button><button disabled={busy} onClick={()=>setPending(null)}>{t.cancel}</button></div></div>}
   <div className="academy-card-actions"><button disabled={page===0||loading} onClick={()=>setPage(p=>p-1)}>{t.previous}</button><span>{page+1} / {Math.max(1,Math.ceil(total/25))}</span><button disabled={(page+1)*25>=total||loading} onClick={()=>setPage(p=>p+1)}>{t.next}</button></div>

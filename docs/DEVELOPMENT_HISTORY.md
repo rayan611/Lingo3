@@ -1,3 +1,15 @@
+## 2026-11-20 — Academy at-a-glance dashboards (0.7.13 unreleased revision 3)
+
+Added role-scoped summary cards for student lessons, deadlines and progress and teacher lessons, outstanding requests and homework reviews. See handoff for validation and deployment status.
+
+## 2026-11-20 — Academy admin role tools (0.7.13 unreleased revision 2)
+
+Selected-person role panels, audited admin messaging and core changes, recorded group attendance across membership states, and dependency-aware teacher deletion/profile erasure added locally. No production schema change or deployment. See DEVELOPMENT_HANDOFF.md for verification and open limits.
+
+## 2026-11-20 — Academy management completion (app 0.7.13)
+
+Added administrator-created enrollment with eligible teacher/course selection and audit, suggested lesson count/start/schedule, teacher public Instagram and published articles, audited administrator student overview, private-note and teacher-desk access, and confirmed permanent deletion guarded against all linked records. The additive migration uses RLS and checked non-exposed privileged functions; isolated PostgreSQL and mocked UI tests cover key roles and workflows. Existing classroom administration remains available; exact account impersonation is not implemented. Real signed-in and mobile browser acceptance remain unverified. Sitemap and route index reviewed: URLs unchanged. Deployment pending.
+
 ## 2026-11-20 — Academy group session count (app 0.7.12)
 
 Teacher and administrator student planning counts completed group sessions during the student's current active membership, explicitly stating this is not an attendance record. Pagination covers history under existing row-level permissions. No schema or permission changes. Admin enrollment creation, suggested schedules, full role views, public Instagram/articles and audited permanent teacher deletion remain outstanding. Real signed-in role and mobile acceptance remain unverified. Route maps reviewed; URLs unchanged. Deployment pending.

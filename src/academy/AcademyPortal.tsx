@@ -1,3 +1,6 @@
+import {AcademyAtAGlance} from './AcademyAtAGlance'
+import {AcademyAdminPrivateNotes} from './AcademyAdminPrivateNotes'
+import {AcademyCoursePlan} from './AcademyCoursePlan'
 import {academyStatus} from './statusLabels'
 import {AcademyField} from './AcademyField'
 import {AcademyHelp} from './AcademyHelp'
@@ -141,7 +144,7 @@ function JoinMeetingLinks({booking,locale}:{booking:Booking;locale:Locale}) {
 }
 
 export function AcademyPortal({
- locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view
+ locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view,adminTeacherMode=false,adminStudentId
 }:{
  locale:Locale
  userId:string
@@ -151,10 +154,13 @@ export function AcademyPortal({
  teacherCourseIds:string[]
  isAdmin:boolean
  view?:'student'|'teacher'
+ adminTeacherMode?:boolean
+ adminStudentId?:string
  initialSpaceId?:string
  onNotice:(message:string)=>void
 }){
  const t=copy[locale]
+ const subjectId=isAdmin&&adminStudentId?adminStudentId:userId
  type PortalPanel='overview'|'schedule'|'classroom'|'teacher'
  const [panel,setPanel]=useState<PortalPanel>(initialSpaceId?'classroom':'overview')
  type TeacherTool='home'|'availability'|'requests'|'plan'|'summary'|'test'|'resource'
@@ -190,7 +196,7 @@ export function AcademyPortal({
  const [goal,setGoal]=useState('')
  const [noteBody,setNoteBody]=useState('')
  const [shareNote,setShareNote]=useState(false)
- const [messageBody,setMessageBody]=useState('')
+ const [messageBody,setMessageBody]=useState(''),[adminRecipient,setAdminRecipient]=useState<'student'|'teacher'>('student')
  const [resourceResponse,setResourceResponse]=useState<Record<string,string>>({})
  const [slotStart,setSlotStart]=useState('')
  const [slotDuration,setSlotDuration]=useState('60')
@@ -210,7 +216,7 @@ export function AcademyPortal({
  useEffect(()=>{
   if(!selfTeacher || (isAdmin && view==='student')) return
   let active=true
-  void Promise.resolve(supabase().from('academy_teacher_meeting_links').select('teams_url,zoom_url').eq('teacher_id',selfTeacher.id).maybeSingle()).then(({data,error})=>{
+  void Promise.resolve(adminTeacherMode?supabase().rpc('academy_admin_teacher_links',{p_teacher:selfTeacher.id}):supabase().from('academy_teacher_meeting_links').select('teams_url,zoom_url').eq('teacher_id',selfTeacher.id).maybeSingle()).then(({data,error})=>{
    if(!active) return
    if(error){onNotice(error.message);return}
    const saved:MeetingDraft={teams:data?.teams_url??'',zoom:data?.zoom_url??'',primary:'Teams'}
@@ -219,7 +225,7 @@ export function AcademyPortal({
    setDefaultsReady(true)
   }).catch(error=>{if(active)onNotice(String(error))})
   return()=>{active=false}
- },[selfTeacher?.id,isAdmin,view])
+ },[selfTeacher?.id,isAdmin,view,adminTeacherMode])
  const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;teacher_note:string;duration_minutes:string}>>({})
  const [demoView,setDemoView]=useState(false)
  const [busy,setBusy]=useState(false)
@@ -234,7 +240,7 @@ export function AcademyPortal({
 
  const courseById=useMemo(()=>new Map(courses.map(c=>[c.id,c])),[courses])
  const teacherById=useMemo(()=>new Map(teachers.map(x=>[x.id,x])),[teachers])
- const ownBookings=bookings.filter(x=>x.student_id===userId)
+ const ownBookings=bookings.filter(x=>x.student_id===subjectId)
  const teacherBookings=selfTeacher?bookings.filter(x=>x.teacher_id===selfTeacher.id):[]
  const demoStudentIds=new Set(teacherSpaces.filter(s=>s.is_demo).map(s=>s.student_id))
  const realTeacherBookings=teacherBookings.filter(b=>!b.is_demo&&!demoStudentIds.has(b.student_id))
@@ -248,13 +254,13 @@ export function AcademyPortal({
   const version=++requestVersion.current
   const client=supabase()
   const reqs:PromiseLike<any>[]=[
-   client.from('academy_enrollments').select('*').eq('student_id',userId).order('created_at',{ascending:false}),
-   client.from('academy_learning_spaces').select('*').eq('student_id',userId).order('created_at',{ascending:false}),
-   client.from('academy_bookings').select('*').order('created_at',{ascending:false}).limit(200),
+   client.from('academy_enrollments').select('*').eq('student_id',subjectId).order('created_at',{ascending:false}),
+   client.from('academy_learning_spaces').select('*').eq('student_id',subjectId).order('created_at',{ascending:false}),
+   (adminTeacherMode&&selfTeacher?client.from('academy_bookings').select('*').eq('teacher_id',selfTeacher.id):adminStudentId&&isAdmin?client.from('academy_bookings').select('*').eq('student_id',subjectId):client.from('academy_bookings').select('*')).order('created_at',{ascending:false}).limit(200),
   ]
   if(selfTeacher||isAdmin){
    let q=client.from('academy_learning_spaces').select('*').order('created_at',{ascending:false})
-   if(!isAdmin)q=q.eq('teacher_id',selfTeacher!.id)
+   if(!isAdmin||adminTeacherMode)q=q.eq('teacher_id',selfTeacher!.id)
    reqs.push(isAdmin?q.limit(1000):client.rpc('academy_teacher_roster',{p_teacher:selfTeacher!.id}))
    reqs.push(client.from('academy_availability').select('*').eq('teacher_id',selfTeacher?.id??'00000000-0000-0000-0000-000000000000').gte('ends_at',new Date().toISOString()).order('starts_at').limit(100))
    reqs.push(client.rpc('academy_teacher_calendar',{p_teacher_id:selfTeacher?.id??'00000000-0000-0000-0000-000000000000'}))
@@ -292,7 +298,7 @@ export function AcademyPortal({
   setScheduleRevision(n=>n+1)
  }
 
- useEffect(()=>{void refresh().catch(e=>onNotice(String(e)));return()=>{requestVersion.current++}},[userId,selfTeacher?.id,isAdmin])
+ useEffect(()=>{void refresh().catch(e=>onNotice(String(e)));return()=>{requestVersion.current++}},[userId,subjectId,selfTeacher?.id,isAdmin,adminTeacherMode])
  useEffect(()=>{const timer=window.setInterval(()=>setRefreshTick(n=>n+1),20000);return()=>clearInterval(timer)},[])
  useEffect(()=>{
   setNotes([]);setResources([]);setMessages([]);setSelectedSummaries([]);setSelectedTests([])
@@ -307,7 +313,7 @@ export function AcademyPortal({
   let cancelled=false
   setContentLoading(true)
   const space=[...studentSpaces,...teacherSpaces].find(x=>x.id===selectedSpace)
-  const availabilityReq=space?.teacher_id&&space.student_id===userId
+  const availabilityReq=space?.teacher_id&&space.student_id===subjectId
     ? supabase().rpc('academy_teacher_calendar',{p_teacher_id:space.teacher_id,p_from:new Date().toISOString(),p_to:new Date(Date.now()+60*86400000).toISOString()})
     : Promise.resolve({data:[],error:null})
   Promise.all([
@@ -344,26 +350,10 @@ export function AcademyPortal({
 
  useEffect(()=>{
   let live=true;setCompletedGroupCount(null);setGroupCountError('')
-  if(!selected||!selectedIsTeacher||!selected.teacher_id)return
-  const load=async()=>{try{
-   const client=supabase()
-   const memberships=await client.from('academy_class_members').select('class_id,joined_at').eq('student_id',selected.student_id).eq('learning_space_id',selected.id).eq('status','active')
-   if(memberships.error)throw memberships.error
-   const rows=(memberships.data??[]) as {class_id:string;joined_at:string}[]
-   if(!rows.length){if(live)setCompletedGroupCount(0);return}
-   const start=rows.reduce((a,b)=>a<b.joined_at?a:b.joined_at,rows[0].joined_at),joined=new Map(rows.map(m=>[m.class_id,m.joined_at]))
-   let total=0,offset=0
-   for(;;){const result=await client.from('academy_class_sessions').select('id,class_id,starts_at').eq('teacher_id',selected.teacher_id).eq('status','completed').in('class_id',rows.map(x=>x.class_id)).gte('starts_at',start).order('starts_at',{ascending:true}).order('id',{ascending:true}).range(offset,offset+999)
-    if(result.error)throw result.error
-    const page=(result.data??[]) as {id:string;class_id:string;starts_at:string}[]
-    total+=page.filter(session=>session.starts_at>=(joined.get(session.class_id)??'9999')).length
-    if(page.length<1000)break
-    offset+=1000
-   }
-   if(live)setCompletedGroupCount(total)
-  }catch(error){if(live)setGroupCountError(error instanceof Error?error.message:String(error))}}
-  void load();return()=>{live=false}
- },[selected?.id,selected?.student_id,selected?.teacher_id,selectedIsTeacher,refreshTick])
+  if(!selected)return
+  void Promise.resolve(supabase().rpc('academy_group_attendance_summary',{p_space:selected.id})).then(({data,error})=>{if(!live)return;if(error){setGroupCountError(error.message);return}setCompletedGroupCount(data?.present??0)}).catch(error=>{if(live)setGroupCountError(String(error))})
+  return()=>{live=false}
+ },[selected?.id,refreshTick])
 
  useEffect(()=>{
   if(!selected)return
@@ -379,7 +369,7 @@ export function AcademyPortal({
  }
 
  async function saveGoal(){
-  if(!selected||selected.student_id!==userId)return
+  if(!selected||(selected.student_id!==userId&&!adminStudentId))return
   await run(async()=>{
    const {error}=await supabase().from('academy_learning_spaces').update({goal:goal.trim()||null,updated_at:new Date().toISOString()}).eq('id',selected.id)
    if(error)throw error
@@ -420,10 +410,11 @@ export function AcademyPortal({
   if(!selected||!messageBody.trim())return
   const teacher=selected.teacher_id?teacherById.get(selected.teacher_id):undefined
   const recipient=selected.student_id===userId?teacher?.user_id:selected.student_id
-  if(isAdmin&&selected.student_id!==userId&&selfTeacher?.id!==selected.teacher_id){onNotice(workspaceLabel(locale,"پیام فقط بین استاد و دانشجوی کلاس ارسال می‌شود.","Messages are sent only between the assigned teacher and student."));return}
   if(!recipient){onNotice('The other Academy member is not linked to a Lingo3 account yet.');return}
   await run(async()=>{
-   const {error}=await supabase().from('academy_messages').insert({learning_space_id:selected.id,sender_id:userId,recipient_id:recipient,body:messageBody.trim()})
+   const target=isAdmin&&selected.student_id!==userId&&selfTeacher?.user_id!==userId?(adminRecipient==='teacher'?teacher?.user_id:selected.student_id):recipient
+   if(!target)throw new Error('The selected participant has no linked account')
+   const {error}=await (isAdmin&&selected.student_id!==userId&&selfTeacher?.user_id!==userId?supabase().rpc('academy_admin_send_message',{p_space:selected.id,p_recipient:target,p_body:messageBody.trim()}):supabase().from('academy_messages').insert({learning_space_id:selected.id,sender_id:userId,recipient_id:target,body:messageBody.trim()}))
    if(error)throw error
    setMessageBody('');onNotice(t.sent)
    setHistoryPage(0);setRefreshTick(n=>n+1)
@@ -481,9 +472,7 @@ export function AcademyPortal({
   if(!selfTeacher || !defaultsReady) return
   await run(async()=>{
    meetingLinkPair(meetingDefaults.teams,meetingDefaults.zoom,'Teams')
-   const {error}=await supabase().from('academy_teacher_meeting_links').upsert({
-    teacher_id:selfTeacher.id,teams_url:meetingDefaults.teams.trim()||null,zoom_url:meetingDefaults.zoom.trim()||null,
-   })
+   const {error}=await (adminTeacherMode?supabase().rpc('academy_admin_teacher_links',{p_teacher:selfTeacher.id,p_write:true,p_teams:meetingDefaults.teams.trim()||null,p_zoom:meetingDefaults.zoom.trim()||null}):supabase().from('academy_teacher_meeting_links').upsert({teacher_id:selfTeacher.id,teams_url:meetingDefaults.teams.trim()||null,zoom_url:meetingDefaults.zoom.trim()||null}))
    if(error) throw error
    setSavedMeetingDefaults(meetingDefaults)
    onNotice(t.saved)
@@ -606,29 +595,30 @@ export function AcademyPortal({
  const courseTitle=(id:string|null)=>id?(courseById.get(id)?i18n(courseById.get(id)!.title_i18n,locale):id):'—'
  const teacherTitle=(id:string)=>{const t=teacherById.get(id);return t?localizedName(t,locale):'Teacher'}
 
- const demoControls=selfTeacher&&teacherOnly&&<div className="academy-card-actions"><button onClick={()=>{setDemoView(false);void refresh()}}>{locale==='fa'?'نمای استاد':locale==='sv'?'Lärarvy':locale==='de'?'Lehrkraftansicht':'Teacher view'}</button><button disabled={busy} onClick={()=>void run(async()=>{const r=await supabase().rpc('academy_prepare_demo');if(r.error)throw r.error;setDemoView(true)})}>{locale==='fa'?'نمای دانشجوی آزمایشی':locale==='sv'?'Testelevens vy':locale==='de'?'Testschüleransicht':'Demo student view'}</button><button disabled={busy} onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"فقط داده‌های دانشجوی آزمایشی بازنشانی شوند؟","Reset only the demo student data?")))return;const r=await supabase().rpc('academy_prepare_demo',{p_reset:true});if(r.error)throw r.error;setDemoView(false);await refresh();setRefreshTick(n=>n+1)})}>{locale==='fa'?'بازنشانی آزمایشی':locale==='sv'?'Återställ testdata':locale==='de'?'Testdaten zurücksetzen':'Reset demo'}</button></div>
+ const demoControls=!adminTeacherMode&&selfTeacher&&teacherOnly&&<div className="academy-card-actions"><button onClick={()=>{setDemoView(false);void refresh()}}>{locale==='fa'?'نمای استاد':locale==='sv'?'Lärarvy':locale==='de'?'Lehrkraftansicht':'Teacher view'}</button><button disabled={busy} onClick={()=>void run(async()=>{const r=await supabase().rpc('academy_prepare_demo');if(r.error)throw r.error;setDemoView(true)})}>{locale==='fa'?'نمای دانشجوی آزمایشی':locale==='sv'?'Testelevens vy':locale==='de'?'Testschüleransicht':'Demo student view'}</button><button disabled={busy} onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"فقط داده‌های دانشجوی آزمایشی بازنشانی شوند؟","Reset only the demo student data?")))return;const r=await supabase().rpc('academy_prepare_demo',{p_reset:true});if(r.error)throw r.error;setDemoView(false);await refresh();setRefreshTick(n=>n+1)})}>{locale==='fa'?'بازنشانی آزمایشی':locale==='sv'?'Återställ testdata':locale==='de'?'Testdaten zurücksetzen':'Reset demo'}</button></div>
  if(demoView&&teacherOnly&&selfTeacher)return <div className="academy-portal">{demoControls}<AcademyDemoStudent key={userId} locale={locale}/></div>
  return <div className="academy-portal" aria-busy={busy||contentLoading}>{demoControls}
   <nav className="academy-portal-nav" aria-label={t.learning}>{([['overview',({fa:'نمای کلی',en:'Overview',sv:'Översikt',de:'Übersicht'})[locale]],['schedule',({fa:'برنامه و کلاس‌ها',en:'Schedule & classes',sv:'Schema och klasser',de:'Termine und Klassen'})[locale]],['classroom',({fa:'فضای یادگیری',en:'Learning space',sv:'Lärmiljö',de:'Lernraum'})[locale]],...(teacherOnly?([['teacher',({fa:'ابزار استاد',en:'Teacher tools',sv:'Lärarverktyg',de:'Lehrwerkzeuge'})[locale]]] as [string,string][]):[])] as [string,string][]).map(([id,label])=><button type="button" key={id} aria-pressed={panel===id} onClick={()=>openPanel(id as PortalPanel)}>{label}</button>)}</nav>
   <p className="academy-section-hint">{({overview:{fa:'مرور دوره‌ها، ثبت‌نام‌ها و فعالیت‌های اخیر.',en:'Review your courses, enrollments and recent activity.',sv:'Se dina kurser, registreringar och senaste aktiviteter.',de:'Kurse, Anmeldungen und aktuelle Aktivitäten ansehen.'},schedule:{fa:'برنامهٔ کلاس‌ها و زمان‌های آزاد را ببین و مدیریت کن.',en:'View and manage lesson times and availability.',sv:'Se och hantera lektioner och lediga tider.',de:'Unterrichtstermine und Verfügbarkeit ansehen und verwalten.'},classroom:{fa:'یادداشت، منابع، پیام‌ها و پیشرفت این دوره را ببین.',en:'See notes, materials, messages and progress for this course.',sv:'Se kursens anteckningar, material, meddelanden och framsteg.',de:'Notizen, Materialien, Nachrichten und Fortschritt dieses Kurses ansehen.'},teacher:{fa:'کلاس‌ها، مطالب و پیشرفت زبان‌آموزان را مدیریت کن.',en:'Manage classes, learning materials and student progress.',sv:'Hantera klasser, material och elevernas framsteg.',de:'Klassen, Lernmaterial und Fortschritte verwalten.'}} as const)[panel][locale]}</p>
   {panel!=='overview'&&<button type="button" className="academy-panel-back" onClick={()=>{if(window.history.state?.academyPortalPanel)window.history.back();else setPanel('overview')}}>{({fa:'بازگشت به نمای کلی',en:'Back to overview',sv:'Tillbaka till översikten',de:'Zurück zur Übersicht'})[locale]}</button>}
   <div hidden={panel!=='schedule'}>
-  <AcademySchedule revision={scheduleRevision} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} studentTeacherId={!teacherOnly?selected?.teacher_id??undefined:undefined} courses={courses} onSelectDay={teacherOnly&&selfTeacher?(day)=>{const d=new Date(day),now=new Date();d.setHours(9,0,0,0);if(d.getTime()<=now.getTime())d.setHours(Math.min(now.getHours()+1,23),now.getHours()===23?59:0,0,0);setSlotStart(new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16));openTeacherTool('availability');window.setTimeout(()=>document.getElementById('academy-availability')?.scrollIntoView({behavior:'smooth',block:'start'}),0)}:undefined}/>
+  <AcademySchedule subjectStudentId={adminStudentId} revision={scheduleRevision} locale={locale} userId={subjectId} teacherId={teacherOnly?selfTeacher?.id:undefined} studentTeacherId={!teacherOnly?selected?.teacher_id??undefined:undefined} courses={courses} onSelectDay={teacherOnly&&selfTeacher?(day)=>{const d=new Date(day),now=new Date();d.setHours(9,0,0,0);if(d.getTime()<=now.getTime())d.setHours(Math.min(now.getHours()+1,23),now.getHours()===23?59:0,0,0);setSlotStart(new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16));openTeacherTool('availability');window.setTimeout(()=>document.getElementById('academy-availability')?.scrollIntoView({behavior:'smooth',block:'start'}),0)}:undefined}/>
 
   </div>
   <div hidden={panel!=='overview'}>
+  <AcademyAtAGlance locale={locale} subjectId={subjectId} teacherId={selfTeacher?.id} teacherMode={teacherOnly} spaces={teacherOnly?teacherSpaces:studentSpaces} courses={courses} revision={refreshTick} onSchedule={()=>openPanel('schedule')} onHomework={id=>{setSelectedSpace(id);openClassroomTool('materials')}} onRequests={()=>openTeacherTool('requests')} onReview={id=>{if(id)setSelectedSpace(id);openClassroomTool('materials')}}/>
   {teacherOnly&&<section className="academy-card"><h3>{locale==='fa'?'خلاصهٔ تدریس':locale==='sv'?'Undervisningsöversikt':locale==='de'?'Unterrichtsübersicht':'Teaching overview'}</h3><div className="academy-tags"><span>{t.students}: {new Set(teacherSpaces.filter(s=>!s.is_demo).map(s=>s.student_id)).size}</span><span>{t.sessionRequests}: {realTeacherBookings.filter(b=>b.status==='requested').length}</span><span>{t.submitted}: {teacherSpaces.filter(s=>!s.is_demo).reduce((n,s)=>n+(s.awaiting_review||0),0)}</span></div>{realTeacherBookings.filter(b=>['confirmed','in_progress'].includes(b.status)&&b.confirmed_start&&new Date(b.confirmed_start)>new Date()).sort((a,b)=>String(a.confirmed_start).localeCompare(String(b.confirmed_start))).slice(0,1).map(b=><p key={b.id}>{locale==='fa'?'جلسهٔ بعدی':locale==='sv'?'Nästa lektion':locale==='de'?'Nächste Stunde':'Next lesson'}: {dt(b.confirmed_start)} · {b.student_display_name||teacherSpaces.find(s=>s.student_id===b.student_id)?.student_display_name||t.student}</p>)}</section>}
   </div>
   <div hidden={panel!=='classroom'&&panel!=='teacher'}>
   {teacherOnly&&<section className="academy-teacher-switch"><h3>{locale==='fa'?'فضای مشترک با شاگردان':locale==='sv'?'Elevernas lärmiljö':locale==='de'?'Lernräume der Schüler':'Shared student workspaces'}</h3><AcademyField locale={locale}><label className="academy-search">{({fa:"جستجوی دانشجو",en:"Search students",sv:"Sök elev",de:"Schüler suchen"})[locale]}<input type="search" value={studentFilter} onChange={e=>setStudentFilter(e.target.value)}/></label><label>{t.students}<select aria-label={t.students} value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}><option value="">—</option>{teacherSpaces.filter(sp=>sp.id===selectedSpace||[sp.student_display_name,courseTitle(sp.course_id)].join(' ').toLocaleLowerCase().includes(studentFilter.toLocaleLowerCase())).map(sp=><option key={sp.id} value={sp.id}>{sp.student_display_name||sp.student_id} · {courseTitle(sp.course_id)}{sp.awaiting_review?' · '+t.submitted+': '+sp.awaiting_review:''}</option>)}</select></label></AcademyField>{teacherSpaces.length===0&&<p>{t.noSpace}</p>}{selected&&<p>{selected.student_display_name} · {selected.progress}% · {selected.next_session_topics.join(' · ')}</p>}</section>}
   </div>
   <div hidden={panel!=='teacher'}>
-  {teacherOnly&&(selfTeacher||isAdmin)&&<AcademyPostStudio key={'posts-'+userId} locale={locale} userId={userId} isAdmin={isAdmin} spaces={teacherSpaces}/>}
-  {teacherOnly&&selfTeacher&&<AcademyTeacherDesk key={userId} userId={userId} locale={locale}/>}
+  {teacherOnly&&(selfTeacher||isAdmin)&&(!adminTeacherMode||selfTeacher?.user_id)&&<AcademyPostStudio key={'posts-'+userId+(selfTeacher?.id??'')} locale={locale} userId={userId} isAdmin={isAdmin} authorFilter={adminTeacherMode?selfTeacher?.user_id??undefined:undefined} spaces={teacherSpaces}/>}
+  {teacherOnly&&!adminTeacherMode&&selfTeacher&&<AcademyTeacherDesk key={userId} userId={userId} locale={locale}/>}
   {teacherOnly&&selfTeacher&&<AcademyTimeOff teacherId={selfTeacher.id} locale={locale} onChanged={()=>void refresh()}/>}
   </div>
   <div hidden={panel!=='schedule'}>
-  <AcademyClasses onScheduleChanged={()=>setScheduleRevision(n=>n+1)} onOpenSpace={id=>{void refresh();setSelectedSpace(id);openPanel('classroom')}} key={userId+String(teacherOnly)} isAdmin={isAdmin&&teacherOnly} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} courses={courses.filter(c=>teacherCourseIds.includes(c.id))}/>
+  <AcademyClasses onScheduleChanged={()=>setScheduleRevision(n=>n+1)} onOpenSpace={id=>{void refresh();setSelectedSpace(id);openPanel('classroom')}} key={userId+subjectId+String(teacherOnly)} isAdmin={isAdmin&&(teacherOnly||Boolean(adminStudentId))} subjectStudentId={adminStudentId} locale={locale} userId={userId} teacherId={teacherOnly?selfTeacher?.id:undefined} courses={courses.filter(c=>teacherCourseIds.includes(c.id))}/>
   </div>
   <div className="academy-card-actions"><button disabled={busy} onClick={()=>{void refresh().catch(e=>onNotice(String(e)));setRefreshTick(n=>n+1)}}>{t.refresh}</button>{selected&&<><button disabled={historyPage===0||busy||contentLoading} onClick={()=>setHistoryPage(n=>n-1)}>{workspaceLabel(locale,"جدیدتر","Newer")}</button><span>{workspaceLabel(locale,"صفحه","Page")} {historyPage+1}</span><button disabled={busy||contentLoading||Math.max(notes.length,resources.length,messages.length,selectedSummaries.length,selectedTests.length)<50} onClick={()=>setHistoryPage(n=>n+1)}>{workspaceLabel(locale,"قدیمی‌تر","Older")}</button></>}</div>
   {contentLoading&&<p role="status">{workspaceLabel(locale,"در حال دریافت اطلاعات کلاس…","Loading classroom…")}</p>}
@@ -647,7 +637,7 @@ export function AcademyPortal({
       const open=hw.filter(r=>r.student_status!=='completed').length
       const lastTest=testResults.find(r=>r.learning_space_id===sp.id)
       const lastSummary=dashboardSummaries.find(r=>r.learning_space_id===sp.id)
-      const ownNoteCount=dashboardNotes.filter(n=>n.learning_space_id===sp.id&&n.author_id===userId).length
+      const ownNoteCount=dashboardNotes.filter(n=>n.learning_space_id===sp.id&&n.author_id===subjectId).length
       return <article className={'academy-card academy-language-card '+(selectedSpace===sp.id?'is-selected':'')} key={sp.id} onClick={()=>setSelectedSpace(sp.id)}>
        <div className="academy-card-top"><span className="academy-badge">{subjectName(c?.subject_code??'')}</span><span>{c?.level_code??sp.current_level??'—'}</span></div>
        <h3>{c?i18n(c.title_i18n,locale):sp.current_level??t.learning}</h3>
@@ -688,7 +678,7 @@ export function AcademyPortal({
     <h3>{t.learning}</h3>{selected?.next_session_topics?.length? <p>{t.nextTopics}: {selected.next_session_topics.join(' · ')}</p>:null}
     {studentSpaces.length===0?<p>{t.noSpace}</p>:<>
      <AcademyField locale={locale}><label>{t.myCourses}<select value={selectedSpace} onChange={e=>setSelectedSpace(e.target.value)}>{studentSpaces.map(sp=><option key={sp.id} value={sp.id}>{courseTitle(sp.course_id)}</option>)}</select></label></AcademyField>
-     {selected&&selected.student_id===userId&&<>
+     {selected&&(selected.student_id===userId||Boolean(adminStudentId))&&<>
       <div className="space-progress"><span>{workspaceLabel(locale,"پیشرفت ثبت‌شده توسط استاد","Teacher-recorded progress")}</span><b>{selected.progress}%</b></div><div className="progress-bar"><i style={{width:String(selected.progress)+'%'}}/></div>
       <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"مثال: تا پایان این دوره بتوانم مکالمه روزمره انجام دهم","e.g. Hold a basic everyday conversation by the end of this course")} value={goal} onChange={e=>setGoal(e.target.value)}/></label></AcademyField><button className="academy-primary small" onClick={saveGoal}>{t.saveGoal}</button>
      </>}
@@ -700,7 +690,9 @@ export function AcademyPortal({
 
   </div>
   <div hidden={panel!=='classroom'}>
-  {selected&&<div className="academy-context-card"><strong>{courseTitle(selected.course_id)}</strong><span>{selected.teacher_id?teacherTitle(selected.teacher_id):''}</span>{!teacherOnly&&ownBookings.filter(b=>b.course_id===selected.course_id&&b.teacher_id===selected.teacher_id&&['confirmed','in_progress'].includes(b.status)&&b.confirmed_start&&new Date(b.confirmed_start).getTime()>=Date.now()-24*60*60*1000).sort((a,b)=>String(a.confirmed_start).localeCompare(String(b.confirmed_start))).slice(0,1).map(b=><div key={b.id}><small>{dt(b.confirmed_start)}</small><JoinMeetingLinks booking={b} locale={locale}/></div>)}</div>}
+  {selected&&<AcademyCoursePlan key={selected.id} locale={locale} spaceId={selected.id} editable={selectedIsTeacher}/>}
+  {isAdmin&&selected&&<AcademyAdminPrivateNotes key={'private-'+selected.id} locale={locale} spaceId={selected.id}/>}
+  {selected&&<div className="academy-context-card"><strong>{courseTitle(selected.course_id)}</strong><span>{selected.teacher_id?teacherTitle(selected.teacher_id):''}</span>{!teacherOnly&&completedGroupCount!==null&&<small>{({fa:'حضور ثبت‌شده در جلسات گروهی',en:'Recorded group attendance',sv:'Registrerad gruppnärvaro',de:'Erfasste Gruppenteilnahme'})[locale]}: {completedGroupCount}</small>}{!teacherOnly&&ownBookings.filter(b=>b.course_id===selected.course_id&&b.teacher_id===selected.teacher_id&&['confirmed','in_progress'].includes(b.status)&&b.confirmed_start&&new Date(b.confirmed_start).getTime()>=Date.now()-24*60*60*1000).sort((a,b)=>String(a.confirmed_start).localeCompare(String(b.confirmed_start))).slice(0,1).map(b=><div key={b.id}><small>{dt(b.confirmed_start)}</small><JoinMeetingLinks booking={b} locale={locale}/></div>)}</div>}
   <nav className="academy-portal-nav" aria-label={t.learning}>{([['notes',t.notes],['materials',t.materials],['messages',t.messages],...(!teacherOnly?([['progress',({fa:'پیشرفت و نتایج',en:'Progress & results',sv:'Framsteg och resultat',de:'Fortschritt und Ergebnisse'})[locale]]] as [ClassroomTool,string][]):[])] as [ClassroomTool,string][]).map(([id,label])=><button key={id} type="button" disabled={!selected} aria-pressed={classroomTool===id} onClick={()=>openClassroomTool(id)}>{label}</button>)}</nav>{!selected&&<p className="academy-empty">{t.noSpace}</p>}{classroomTool!=='home'&&<button type="button" className="academy-panel-back" onClick={()=>window.history.state?.academyClassroomTool?window.history.back():setClassroomTool('home')}>{({fa:'بازگشت به فضای یادگیری',en:'Back to learning space',sv:'Tillbaka till lärmiljön',de:'Zurück zum Lernraum'})[locale]}</button>}
   {selected&&<div className="academy-learning-columns academy-single-tool">
    <div hidden={classroomTool!=='notes'}><article className="academy-card">
@@ -716,9 +708,9 @@ export function AcademyPortal({
     {resources.length===0?<p>{t.noResources}</p>:resources.map(r=><div className="academy-resource" key={r.id}>
      <div className="academy-card-top"><span className="academy-badge">{r.kind==='homework'?t.homework:r.kind==='grammar'?'Grammar':r.kind==='lesson'?'Lesson':r.kind==='link'?'Link':t.material}</span><span>{academyStatus(r.student_status,locale)}</span></div>
      <strong>{r.title}</strong>{r.description&&<p>{r.description}</p>}{r.url&&<a href={r.url} target="_blank" rel="noreferrer">{r.url}</a>}{r.due_at&&<small>{t.due}: {dt(r.due_at)}</small>}
-     {r.kind==='homework'&&selected.student_id===userId&&r.student_status!=='completed'&&<><AcademyField locale={locale}><label>{t.response}<textarea aria-label={t.response} placeholder={t.response} value={resourceResponse[r.id]??r.student_response??''} onChange={e=>setResourceResponse({...resourceResponse,[r.id]:e.target.value})}/></label></AcademyField><button className="small-link" onClick={()=>submitHomework(r)}>{t.submit}</button></>}
+     {r.kind==='homework'&&(selected.student_id===userId||Boolean(adminStudentId))&&r.student_status!=='completed'&&<><AcademyField locale={locale}><label>{t.response}<textarea aria-label={t.response} placeholder={t.response} value={resourceResponse[r.id]??r.student_response??''} onChange={e=>setResourceResponse({...resourceResponse,[r.id]:e.target.value})}/></label></AcademyField><button className="small-link" onClick={()=>submitHomework(r)}>{t.submit}</button></>}
      {r.student_response&&selectedIsTeacher&&<p style={{whiteSpace:'pre-wrap'}}><b>{t.response}:</b> {r.student_response}</p>}
-     {r.kind==='grammar'&&selected.student_id===userId&&<button onClick={()=>navigateProduct('/grammar?academyLang='+encodeURIComponent(courseById.get(selected.course_id)?.subject_code??'')+'&academyResource='+r.id,{directApp:true})}>{workspaceLabel(locale,"افزودن به دفتر گرامر من","Add to my grammar notebook")}</button>}
+     {r.kind==='grammar'&&(selected.student_id===userId||Boolean(adminStudentId))&&<button onClick={()=>navigateProduct('/grammar?academyLang='+encodeURIComponent(courseById.get(selected.course_id)?.subject_code??'')+'&academyResource='+r.id,{directApp:true})}>{workspaceLabel(locale,"افزودن به دفتر گرامر من","Add to my grammar notebook")}</button>}
      {r.teacher_feedback&&<p><b>{t.feedback}:</b> {r.teacher_feedback}</p>}
      {selectedIsTeacher&&r.kind==='homework'&&r.student_status==='submitted'&&<AcademyField locale={locale}><label>{t.feedback}<textarea placeholder={t.feedback} value={feedbackDraft[r.id]??r.teacher_feedback??''} onChange={e=>setFeedbackDraft({...feedbackDraft,[r.id]:e.target.value})}/></label></AcademyField>}
      {selectedIsTeacher&&<div className="academy-card-actions"><button onClick={()=>{openTeacherTool('resource');setResourceEditId(r.id);setResourceForm({kind:r.kind,title:r.title,description:r.description??'',url:r.url??'',due:r.due_at?new Date(new Date(r.due_at).getTime()-new Date(r.due_at).getTimezoneOffset()*60000).toISOString().slice(0,16):''})}}>{workspaceLabel(locale,"ویرایش منبع","Edit resource")}</button><button onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"این منبع حذف شود؟","Delete this resource?")))return;const {error}=await supabase().from('academy_resources').delete().eq('id',r.id);if(error)throw error;setRefreshTick(x=>x+1)})}>{workspaceLabel(locale,"حذف","Delete")}</button></div>}
@@ -729,12 +721,13 @@ export function AcademyPortal({
    <div hidden={classroomTool!=='messages'}><article className="academy-card">
     <h3>{t.messages}</h3>
     <div className="academy-message-list">{messages.map(m=><div className={'academy-message '+(m.sender_id===userId?'mine':'theirs')} key={m.id}><p>{m.body}</p><small>{dt(m.created_at)}</small></div>)}</div>
+    {isAdmin&&selected.student_id!==userId&&selfTeacher?.user_id!==userId&&<label>{({fa:'ارسال از طرف ادمین به',en:'Send as admin to',sv:'Skicka som admin till',de:'Als Admin senden an'})[locale]}<select value={adminRecipient} onChange={e=>setAdminRecipient(e.target.value as 'student'|'teacher')}><option value="student">{({fa:'دانشجو',en:'Student',sv:'Elev',de:'Lernende'})[locale]}</option><option value="teacher">{({fa:'استاد',en:'Teacher',sv:'Lärare',de:'Lehrkraft'})[locale]}</option></select></label>}
     <AcademyField locale={locale}><label>{t.messages}<textarea aria-label={t.messages} placeholder={workspaceLabel(locale,"پیام برای عضو دیگر کلاس…","Write a message to the other classroom member…")} value={messageBody} onChange={e=>setMessageBody(e.target.value)} maxLength={5000}/></label></AcademyField>
     <button className="academy-primary small" onClick={sendMessage}>{t.send}</button>
    </article></div>
   </div>}
 
-  {!teacherOnly&&selected&&selected.student_id===userId&&<div className="academy-learning-columns academy-learning-insights" hidden={classroomTool!=='progress'}>
+  {!teacherOnly&&selected&&(selected.student_id===userId||Boolean(adminStudentId))&&<div className="academy-learning-columns academy-learning-insights" hidden={classroomTool!=='progress'}>
    <article className="academy-card">
     <h3>{workspaceLabel(locale,"جمع‌بندی‌های استاد","Teacher summaries")}</h3>
     {selectedSummaries.length===0?<p>—</p>:selectedSummaries.map(s=><div className="academy-summary-item" key={s.id}>
@@ -814,7 +807,7 @@ export function AcademyPortal({
       <AcademyField locale={locale}><label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"هدف این دانشجو، مثال: رسیدن به A2","Student goal, e.g. reach A2")} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.nextTopics}<textarea placeholder={workspaceLabel(locale,"هر موضوع جلسه بعد در یک خط","One next-lesson topic per line")} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label></AcademyField>
-      <section className="academy-student-session-list"><h4>{({fa:'جلسات این دانشجو',en:'This student’s lessons',sv:'Elevens lektioner',de:'Unterricht dieser Person'})[locale]}</h4>{completedPrivateCount!==null&&<p><strong>{({fa:'جلسات خصوصی انجام‌شده',en:'Completed private lessons',sv:'Avslutade privatlektioner',de:'Abgeschlossene Einzelstunden'})[locale]}: {completedPrivateCount}</strong></p>}{completedGroupCount!==null&&<p><strong>{({fa:'جلسات گروهی برگزارشده از زمان عضویت',en:'Group sessions held since joining',sv:'Grupplektioner sedan eleven gick med',de:'Gruppentermine seit dem Beitritt'})[locale]}: {completedGroupCount}</strong><br/><small>{({fa:'این عدد حضور دانشجو را تأیید نمی‌کند.',en:'This does not confirm attendance.',sv:'Detta bekräftar inte närvaro.',de:'Dies bestätigt keine Teilnahme.'})[locale]}</small></p>}{groupCountError&&<p role="alert">{groupCountError}</p>}<small>{({fa:'نمایش حداکثر ۲۰۰ جلسهٔ اخیر خصوصی',en:'Showing up to 200 recent private lessons',sv:'Visar högst 200 senaste privatlektioner',de:'Bis zu 200 letzte Einzelstunden'})[locale]}</small>{selectedBookingsError&&<p role="alert">{selectedBookingsError}</p>}{selectedBookings.length===0&&!selectedBookingsError&&<p>—</p>}{selectedBookings.map(booking=><div className="academy-session-row" key={booking.id}><span>{dt(booking.confirmed_start??booking.preferred_start)} · {academyStatus(booking.status,locale)}</span>{booking.status==='confirmed'&&<button type="button" onClick={async()=>{await updateBooking(booking,'completed');setRefreshTick(n=>n+1)}}>{t.markComplete}</button>}</div>)}</section><button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
+      <section className="academy-student-session-list"><h4>{({fa:'جلسات این دانشجو',en:'This student’s lessons',sv:'Elevens lektioner',de:'Unterricht dieser Person'})[locale]}</h4>{completedPrivateCount!==null&&<p><strong>{({fa:'جلسات خصوصی انجام‌شده',en:'Completed private lessons',sv:'Avslutade privatlektioner',de:'Abgeschlossene Einzelstunden'})[locale]}: {completedPrivateCount}</strong></p>}{completedGroupCount!==null&&<p><strong>{({fa:'حضور ثبت‌شده در جلسات گروهی',en:'Recorded group attendance',sv:'Registrerad gruppnärvaro',de:'Erfasste Gruppenteilnahme'})[locale]}: {completedGroupCount}</strong><br/><small>{({fa:'فقط حضورهایی که ثبت شده‌اند شمرده می‌شوند.',en:'Only recorded attendance is counted.',sv:'Endast registrerad närvaro räknas.',de:'Nur erfasste Anwesenheit wird gezählt.'})[locale]}</small></p>}{groupCountError&&<p role="alert">{groupCountError}</p>}<small>{({fa:'نمایش حداکثر ۲۰۰ جلسهٔ اخیر خصوصی',en:'Showing up to 200 recent private lessons',sv:'Visar högst 200 senaste privatlektioner',de:'Bis zu 200 letzte Einzelstunden'})[locale]}</small>{selectedBookingsError&&<p role="alert">{selectedBookingsError}</p>}{selectedBookings.length===0&&!selectedBookingsError&&<p>—</p>}{selectedBookings.map(booking=><div className="academy-session-row" key={booking.id}><span>{dt(booking.confirmed_start??booking.preferred_start)} · {academyStatus(booking.status,locale)}</span>{booking.status==='confirmed'&&<button type="button" onClick={async()=>{await updateBooking(booking,'completed');setRefreshTick(n=>n+1)}}>{t.markComplete}</button>}</div>)}</section><button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
     </article></div>
 

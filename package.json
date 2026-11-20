@@ -1,16 +1,17 @@
 {
   "name": "lingo3",
   "private": true,
-  "version": "0.7.12",
+  "version": "0.7.13",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "check": "node --import tsx scripts/check-queries.ts && node --import tsx scripts/check-scheduling.ts && node --import tsx scripts/check-sync.ts && node --import tsx scripts/check-collections.ts && node --import tsx scripts/check-api.mts && node --import tsx scripts/check-invite.ts && node --import tsx scripts/check-waiting-review.ts && node --import tsx scripts/check-shared-vocab.ts && node --import tsx scripts/check-grammar.ts && node --import tsx scripts/check-grammar-authoring.ts && node --import tsx scripts/check-vocab-010.ts && node --import tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs && npm run check:academy-behavior && npm run check:academy-preferences && npm run check:academy-bridge && npm run check:academy-navigation && npm run check:academy-roster && npm run check:academy-posts && npm run check:academy-ux",
+    "check": "node --import tsx scripts/check-queries.ts && node --import tsx scripts/check-scheduling.ts && node --import tsx scripts/check-sync.ts && node --import tsx scripts/check-collections.ts && node --import tsx scripts/check-api.mts && node --import tsx scripts/check-invite.ts && node --import tsx scripts/check-waiting-review.ts && node --import tsx scripts/check-shared-vocab.ts && node --import tsx scripts/check-grammar.ts && node --import tsx scripts/check-grammar-authoring.ts && node --import tsx scripts/check-vocab-010.ts && node --import tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs && npm run check:academy-behavior && npm run check:academy-preferences && npm run check:academy-bridge && npm run check:academy-navigation && npm run check:academy-roster && npm run check:academy-posts && npm run check:academy-ux && npm run check:academy-management-db && npm run check:academy-management-ui && npm run check:academy-at-a-glance && npm run check:academy-complete-schema",
     "test": "npm run check",
     "check:academy": "node scripts/check-academy.mjs",
+    "check:academy-at-a-glance": "node scripts/check-academy-at-a-glance.mjs",
     "check:docs": "node scripts/check-development-docs.mjs",
     "check:auth-navigation": "node scripts/check-auth-navigation.mjs",
     "check:academy-behavior": "node scripts/check-academy-behavior.mjs",
@@ -19,7 +20,10 @@
     "check:academy-navigation": "node scripts/check-academy-navigation.mjs",
     "check:academy-roster": "node scripts/check-academy-roster-ui.mjs",
     "check:academy-posts": "node scripts/check-academy-posts.mjs && node --import tsx scripts/check-academy-seo.mts",
-    "check:academy-ux": "node scripts/check-academy-field.mjs && node scripts/check-academy-schedule.mjs"
+    "check:academy-ux": "node scripts/check-academy-field.mjs && node scripts/check-academy-schedule.mjs",
+    "check:academy-management-db": "node scripts/check-academy-management-db.mjs",
+    "check:academy-management-ui": "node scripts/check-academy-management-ui.mjs",
+    "check:academy-complete-schema": "node scripts/check-academy-complete-schema.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
@@ -31,6 +35,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.17",
     "@types/node": "^26.6.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

@@ -1,3 +1,24 @@
+## 2026-11-20 — Academy overview dashboards (0.7.13, unreleased revision 3)
+
+- Add student next confirmed private/group lesson, meeting link, nearest homework deadline and course progress at a glance.
+- Add teacher today’s lessons, pending booking/group/cancellation requests and homework awaiting review.
+- Local build and automated checks; live role and device acceptance pending. Deployment to follow verified database migration.
+
+## 2026-11-20 — Academy admin role tools, revision 2 (app 0.7.13, unreleased)
+
+- Added administrator views scoped to a selected teacher or student, retaining administrator identity; scoped schedule/class data, audited classroom changes and messages.
+- Show persisted group attendance and count recorded attendance even after a membership ends. Added dependency previews for permanent teacher deletion and irreversible profile erasure with an anonymous historical marker when active work is resolved.
+- Verification: isolated migration replay with role, attendance and deletion tests; React mocked flows and application build. No deployment or production migration. Signed-in browser and device checks remain open.
+
+## Unreleased — Academy management verification
+
+- Paginated and filtered the administrator student overview; enabled audited private-note editing and deletion with stale-write protection.
+- Added a full Academy schema replay and transactional workflow regression check. No production deployment.
+
+## 2026-11-20 — Academy management completion (app 0.7.13)
+
+Added administrator-created enrollment with eligible teacher/course selection and audit, suggested lesson count/start/schedule, teacher public Instagram and published articles, audited administrator student overview, private-note and teacher-desk access, and confirmed permanent deletion guarded against all linked records. The additive migration uses RLS and checked non-exposed privileged functions; isolated PostgreSQL and mocked UI tests cover key roles and workflows. Existing classroom administration remains available; exact account impersonation is not implemented. Real signed-in and mobile browser acceptance remain unverified. Sitemap and route index reviewed: URLs unchanged. Deployment pending.
+
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)

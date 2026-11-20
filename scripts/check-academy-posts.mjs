@@ -6,7 +6,8 @@ import React from 'react'
 import TestRenderer,{act} from 'react-test-renderer'
 const translations=[{post_id:'post',locale:'fa',title:'درس فارسی',body:'متن فارسی',description:'معرفی',status:'published',keywords:['گرامر'],video_url:null},{post_id:'post',locale:'en',title:'Private English',body:'PRIVATE_DRAFT',description:'',status:'draft',keywords:[],video_url:null}]
 const post={id:'post',category:'grammar',original_locale:'fa',author_id:'teacher',academy_post_translations:translations},calls=[]
-class Q{select(){return this}eq(){return this}order(){return this}limit(){return this}then(resolve,reject){return Promise.resolve({data:[post],error:null}).then(resolve,reject)}}
+const filters=[]
+class Q{select(){return this}eq(k,v){filters.push([k,v]);return this}order(){return this}limit(){return this}then(resolve,reject){return Promise.resolve({data:[post],error:null}).then(resolve,reject)}}
 globalThis.__postClient={from:()=>new Q(),rpc:async(name,args)=>{calls.push({name,args});return {data:'post',error:null}}}
 globalThis.window={location:{origin:'https://lingo3.com'},confirm:()=>true};globalThis.navigator??={};
 const out=path.resolve('node_modules/.cache/post-test.mjs');fs.mkdirSync(path.dirname(out),{recursive:true})
@@ -28,5 +29,11 @@ try{
  await act(async()=>field('Choose a student workspace').findByType('select').props.onChange({target:{value:'space'}}))
  await act(async()=>tree.root.findAllByType('button').find(b=>text(b)==='Share a saved copy with student').props.onClick());await flush()
  assert.equal(calls[1].name,'academy_share_post');assert.equal(calls[1].args.p_space,'space');assert.equal(calls[1].args.p_locale,'sv')
+ await act(async()=>tree.unmount());await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPostStudio,{locale:'en',userId:'admin',isAdmin:true,authorFilter:'teacher'}))});await flush()
+ assert(filters.some(([key,value])=>key==='author_id'&&value==='teacher'))
+ await act(async()=>tree.root.findAllByType('label').find(n=>text(n).startsWith('Title')).findByType('input').props.onChange({target:{value:'Teacher article'}}))
+ await act(async()=>tree.root.findAllByType('label').find(n=>text(n).startsWith('Article text')).findByType('textarea').props.onChange({target:{value:'Article body'}}))
+ await act(async()=>tree.root.findByType('form').props.onSubmit({preventDefault(){}}));await flush()
+ assert(calls.some(c=>c.name==='academy_admin_create_teacher_post'&&c.args.p_author==='teacher'&&c.args.p_title==='Teacher article'))
  console.log('PASS articles UI: strict public locale, no draft fallback, original language save and explicit student-sharing RPC.')
 }finally{if(tree)await act(async()=>tree.unmount());fs.rmSync(out,{force:true})}
