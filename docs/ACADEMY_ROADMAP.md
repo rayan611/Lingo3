@@ -1,3 +1,7 @@
+## 2026-11-20 — Academy group session count (app 0.7.12)
+
+Teacher and administrator student planning counts completed group sessions during the student's current active membership, explicitly stating this is not an attendance record. Pagination covers history under existing row-level permissions. No schema or permission changes. Admin enrollment creation, suggested schedules, full role views, public Instagram/articles and audited permanent teacher deletion remain outstanding. Real signed-in role and mobile acceptance remain unverified. Route maps reviewed; URLs unchanged. Deployment pending.
+
 ## 2026-11-20 — Academy selected-student sessions (app 0.7.11)
 
 Fixed the administrator classroom selector using the existing admin-authorized learning-space query instead of passing null to the teacher roster. Teacher/admin student planning shows the completed-private-lesson count and up to 200 recent private bookings for the selected student, course and teacher, and allows confirmed lessons to be marked completed. Fixed the removed-enrollment status filter. Existing RLS and schema unchanged. Group lessons and suggested session counts are not included. Administrator enrollment creation, full role views, public teacher Instagram/articles and permanent teacher deletion remain outstanding. Mocked React tests cover admin selection and session completion; signed-in live and full mobile acceptance remain unverified. Route map reviewed; URLs unchanged. Deployment pending.

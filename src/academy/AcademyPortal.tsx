@@ -170,6 +170,7 @@ export function AcademyPortal({
  const [studentSpaces,setStudentSpaces]=useState<Space[]>([])
  const [teacherSpaces,setTeacherSpaces]=useState<Space[]>([])
  const [selectedBookings,setSelectedBookings]=useState<Booking[]>([]),[selectedBookingsError,setSelectedBookingsError]=useState(''),[completedPrivateCount,setCompletedPrivateCount]=useState<number|null>(null)
+ const [completedGroupCount,setCompletedGroupCount]=useState<number|null>(null),[groupCountError,setGroupCountError]=useState('')
  const [scheduleRevision,setScheduleRevision]=useState(0)
  const [bookings,setBookings]=useState<Booking[]>([])
  const [availability,setAvailability]=useState<Availability[]>([])
@@ -340,6 +341,29 @@ export function AcademyPortal({
   void Promise.all([byStudent(client.from('academy_bookings').select('*')).order('confirmed_start',{ascending:false}).limit(200),byStudent(client.from('academy_bookings').select('id',{count:'exact',head:true})).eq('status','completed')]).then(([result,total])=>{if(live){setSelectedBookings((result.data??[]) as Booking[]);setCompletedPrivateCount(typeof total.count==='number'?total.count:null);if(result.error||total.error)setSelectedBookingsError((result.error||total.error).message)}}).catch(error=>{if(live)setSelectedBookingsError(String(error))})
   return()=>{live=false}
  },[selected?.id,selected?.student_id,selected?.teacher_id,selected?.course_id,selectedIsTeacher,refreshTick])
+
+ useEffect(()=>{
+  let live=true;setCompletedGroupCount(null);setGroupCountError('')
+  if(!selected||!selectedIsTeacher||!selected.teacher_id)return
+  const load=async()=>{try{
+   const client=supabase()
+   const memberships=await client.from('academy_class_members').select('class_id,joined_at').eq('student_id',selected.student_id).eq('learning_space_id',selected.id).eq('status','active')
+   if(memberships.error)throw memberships.error
+   const rows=(memberships.data??[]) as {class_id:string;joined_at:string}[]
+   if(!rows.length){if(live)setCompletedGroupCount(0);return}
+   const start=rows.reduce((a,b)=>a<b.joined_at?a:b.joined_at,rows[0].joined_at),joined=new Map(rows.map(m=>[m.class_id,m.joined_at]))
+   let total=0,offset=0
+   for(;;){const result=await client.from('academy_class_sessions').select('id,class_id,starts_at').eq('teacher_id',selected.teacher_id).eq('status','completed').in('class_id',rows.map(x=>x.class_id)).gte('starts_at',start).order('starts_at',{ascending:true}).order('id',{ascending:true}).range(offset,offset+999)
+    if(result.error)throw result.error
+    const page=(result.data??[]) as {id:string;class_id:string;starts_at:string}[]
+    total+=page.filter(session=>session.starts_at>=(joined.get(session.class_id)??'9999')).length
+    if(page.length<1000)break
+    offset+=1000
+   }
+   if(live)setCompletedGroupCount(total)
+  }catch(error){if(live)setGroupCountError(error instanceof Error?error.message:String(error))}}
+  void load();return()=>{live=false}
+ },[selected?.id,selected?.student_id,selected?.teacher_id,selectedIsTeacher,refreshTick])
 
  useEffect(()=>{
   if(!selected)return
@@ -790,7 +814,7 @@ export function AcademyPortal({
       <AcademyField locale={locale}><label>{t.progress}<input placeholder="e.g. 45" type="number" min="0" max="100" value={teacherPlan.progress} onChange={e=>setTeacherPlan({...teacherPlan,progress:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.goal}<textarea placeholder={workspaceLabel(locale,"هدف این دانشجو، مثال: رسیدن به A2","Student goal, e.g. reach A2")} value={teacherPlan.goal} onChange={e=>setTeacherPlan({...teacherPlan,goal:e.target.value})}/></label></AcademyField>
       <AcademyField locale={locale}><label>{t.nextTopics}<textarea placeholder={workspaceLabel(locale,"هر موضوع جلسه بعد در یک خط","One next-lesson topic per line")} value={teacherPlan.nextTopics} onChange={e=>setTeacherPlan({...teacherPlan,nextTopics:e.target.value})}/></label></AcademyField>
-      <section className="academy-student-session-list"><h4>{({fa:'جلسات این دانشجو',en:'This student’s lessons',sv:'Elevens lektioner',de:'Unterricht dieser Person'})[locale]}</h4>{completedPrivateCount!==null&&<p><strong>{({fa:'جلسات خصوصی انجام‌شده',en:'Completed private lessons',sv:'Avslutade privatlektioner',de:'Abgeschlossene Einzelstunden'})[locale]}: {completedPrivateCount}</strong></p>}<small>{({fa:'نمایش حداکثر ۲۰۰ جلسهٔ اخیر خصوصی',en:'Showing up to 200 recent private lessons',sv:'Visar högst 200 senaste privatlektioner',de:'Bis zu 200 letzte Einzelstunden'})[locale]}</small>{selectedBookingsError&&<p role="alert">{selectedBookingsError}</p>}{selectedBookings.length===0&&!selectedBookingsError&&<p>—</p>}{selectedBookings.map(booking=><div className="academy-session-row" key={booking.id}><span>{dt(booking.confirmed_start??booking.preferred_start)} · {academyStatus(booking.status,locale)}</span>{booking.status==='confirmed'&&<button type="button" onClick={async()=>{await updateBooking(booking,'completed');setRefreshTick(n=>n+1)}}>{t.markComplete}</button>}</div>)}</section><button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
+      <section className="academy-student-session-list"><h4>{({fa:'جلسات این دانشجو',en:'This student’s lessons',sv:'Elevens lektioner',de:'Unterricht dieser Person'})[locale]}</h4>{completedPrivateCount!==null&&<p><strong>{({fa:'جلسات خصوصی انجام‌شده',en:'Completed private lessons',sv:'Avslutade privatlektioner',de:'Abgeschlossene Einzelstunden'})[locale]}: {completedPrivateCount}</strong></p>}{completedGroupCount!==null&&<p><strong>{({fa:'جلسات گروهی برگزارشده از زمان عضویت',en:'Group sessions held since joining',sv:'Grupplektioner sedan eleven gick med',de:'Gruppentermine seit dem Beitritt'})[locale]}: {completedGroupCount}</strong><br/><small>{({fa:'این عدد حضور دانشجو را تأیید نمی‌کند.',en:'This does not confirm attendance.',sv:'Detta bekräftar inte närvaro.',de:'Dies bestätigt keine Teilnahme.'})[locale]}</small></p>}{groupCountError&&<p role="alert">{groupCountError}</p>}<small>{({fa:'نمایش حداکثر ۲۰۰ جلسهٔ اخیر خصوصی',en:'Showing up to 200 recent private lessons',sv:'Visar högst 200 senaste privatlektioner',de:'Bis zu 200 letzte Einzelstunden'})[locale]}</small>{selectedBookingsError&&<p role="alert">{selectedBookingsError}</p>}{selectedBookings.length===0&&!selectedBookingsError&&<p>—</p>}{selectedBookings.map(booking=><div className="academy-session-row" key={booking.id}><span>{dt(booking.confirmed_start??booking.preferred_start)} · {academyStatus(booking.status,locale)}</span>{booking.status==='confirmed'&&<button type="button" onClick={async()=>{await updateBooking(booking,'completed');setRefreshTick(n=>n+1)}}>{t.markComplete}</button>}</div>)}</section><button className="academy-primary small" onClick={saveTeacherPlan}>{t.savePlan}</button>
      </>}</>}
     </article></div>
 

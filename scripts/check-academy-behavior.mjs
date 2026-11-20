@@ -19,6 +19,8 @@ globalThis.document={documentElement:{lang:'en'}}
 globalThis.fetch=async()=>({json:async()=>({locale:'en'})})
 const tables={
  academy_enrollments:[],
+ academy_class_members:[{class_id:'group-a',student_id:'student-a',learning_space_id:'space-a',status:'active',joined_at:'2026-11-01T00:00:00Z'}],
+ academy_class_sessions:[{id:'group-before',class_id:'group-a',teacher_id:'teacher-a',status:'completed',starts_at:'2026-10-01T10:00:00Z'},{id:'group-after',class_id:'group-a',teacher_id:'teacher-a',status:'completed',starts_at:'2026-11-03T10:00:00Z'},{id:'group-pending',class_id:'group-a',teacher_id:'teacher-a',status:'confirmed',starts_at:'2026-11-04T10:00:00Z'}],
  academy_learning_spaces:[{id:'space-a',student_id:'student-a',teacher_id:'teacher-a',course_id:'course-a',student_display_name:'Student A',progress:20,goal:'A1',next_session_topics:['Shopping']},{id:'space-b',student_id:'student-b',teacher_id:'teacher-a',course_id:'course-a',student_display_name:'Student B',progress:5,goal:null,next_session_topics:[]}],
  academy_bookings:[{id:'cancelled',teacher_id:'teacher-a',student_id:'student-a',student_display_name:'Cancelled student',course_id:'course-a',availability_id:'slot-a',status:'cancelled_student',meeting_url:'https://zoom.us/j/999'},{id:'confirmed',teacher_id:'teacher-a',student_id:'student-a',course_id:'course-a',status:'confirmed',meeting_url:'https://zoom.us/j/123',meeting_backup_url:'https://teams.microsoft.com/l/meetup-join/example'}],academy_availability:[{id:'slot-a',teacher_id:'teacher-a',starts_at:'2027-01-05T18:00:00Z',ends_at:'2027-01-05T19:00:00Z',status:'available'}],academy_session_summaries:[{id:'summary-a',learning_space_id:'space-a',teacher_id:'teacher-a',student_id:'student-a',booking_id:null,covered:'Existing coverage',strengths:'Preserve strengths',created_at:'2026-11-18T09:00:00Z'}],academy_test_results:[],
  academy_notes:[{id:'note-a',learning_space_id:'space-a',author_id:'student-a',body:'Shared student note',visibility:'shared',created_at:'2026-11-18T09:00:00Z'}],
@@ -99,7 +101,7 @@ try{
  const adminSelect=tree.root.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='space-a'))
  await act(async()=>adminSelect.props.onChange({target:{value:'space-a'}}));await flush()
  await act(async()=>exactButton('Teacher tools').props.onClick());await act(async()=>exactButton('Students').props.onClick());await flush()
- const sessionArea=tree.root.findAll(n=>n.props.className==='academy-student-session-list')[0];assert(sessionArea);assert.match(text(sessionArea),/confirmed/i)
+ const sessionArea=tree.root.findAll(n=>n.props.className==='academy-student-session-list')[0];assert(sessionArea);assert.match(text(sessionArea),/confirmed/i);assert.match(text(sessionArea),/Group sessions held since joining\s*:\s*1/);assert.match(text(sessionArea),/does not confirm attendance/)
  await act(async()=>find(sessionArea,'button','Mark completed').props.onClick());await flush();assert(writes.some(w=>w.table==='academy_bookings'&&w.ids.includes('confirmed')&&w.payload?.status==='completed'));assert.match(text(sessionArea),/Completed private lessons\s*:\s*1/)
  await act(async()=>tree.unmount())
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'student-a',isAdmin:true,view:'student'}))});await flush();await flush()
