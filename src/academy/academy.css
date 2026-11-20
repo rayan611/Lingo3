@@ -133,3 +133,24 @@
 .academy .academy-help-button{width:44px;height:44px;min-width:44px;min-height:44px}.academy form>.academy-help-control{justify-self:end;align-self:flex-end}.academy .academy-auto-field>.academy-help-control{top:-8px}
 .academy .academy-pending{max-height:38rem;overflow:auto;overscroll-behavior:contain}.academy .academy-resource,.academy .academy-booking-admin{min-width:0}.academy .academy-card:has(> .academy-resource){max-height:38rem;overflow:auto}.academy .academy-user-lookup{display:flex;flex-wrap:wrap;gap:8px}.academy .academy-user-lookup>.academy-auto-field{flex:1 1 14rem}
 .academy .academy-detail-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:26px 0}.academy .academy-detail-header h1{margin:0}.academy .academy-detail-header .academy-profile-photo{float:inline-start;width:86px;height:86px;object-fit:cover;margin-inline-end:16px}.academy .academy-detail-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,1fr);gap:16px;align-items:start}.academy .academy-detail-main{display:grid;gap:16px;min-width:0}.academy .academy-detail .academy-card h2{font-size:1.25rem}.academy .academy-detail-list{max-height:24rem;overflow:auto;overscroll-behavior:contain}.academy .academy-detail-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #94a3b833}.academy .academy-detail-row:last-child{border-bottom:0}.academy .academy-detail-facts{position:sticky;top:90px}@media(max-width:700px){.academy .academy-detail-grid{grid-template-columns:1fr}.academy .academy-detail-facts{position:static}.academy .academy-detail-row{flex-wrap:wrap}.academy .academy-detail-header{flex-wrap:wrap}}
+
+/* Compact, tactile surfaces and a quiet outlined help marker. */
+.academy .academy-help-button,.academy .academy-help-button:hover{color:#177a4a!important;background:radial-gradient(circle,transparent 0 6px,#278958 6px 7px,transparent 7.5px)!important;border:0!important;font-size:10px;font-weight:700;box-shadow:none!important}
+.academy .academy-auto-field:not(.has-help)>label{padding-inline-end:0}
+.academy .academy-card,.academy .academy-editor,.academy .academy-pending{box-shadow:0 8px 24px #11182712,0 1px 3px #11182712}
+.academy .academy-section{padding-block:clamp(24px,3vw,42px)}
+.academy .academy-card{padding:clamp(14px,1.5vw,20px)}
+.academy .academy-section-hint{margin:8px 2px 12px;font-size:.85rem;line-height:1.4;opacity:.8}
+.academy .academy-context-card{display:flex;gap:8px 16px;align-items:center;flex-wrap:wrap;margin:0 0 12px;padding:12px 16px;border-radius:14px;background:#7f6ad01c;border:1px solid #8f78f555}
+.academy .academy-context-card .academy-card-actions{margin:0}
+.academy .academy-profile-hero{padding:clamp(18px,3vw,32px);border-radius:22px;background:linear-gradient(130deg,#7963c926,#63c6a31c);border:1px solid #a995e955;box-shadow:0 12px 32px #2520471c}
+.academy .academy-profile-hero>div{display:flex;gap:20px;align-items:center}
+.academy .academy-profile-photo,.academy .academy-profile-avatar{width:112px;height:112px;flex:none;border-radius:22px;object-fit:cover}
+.academy .academy-profile-avatar{display:grid;place-items:center;background:linear-gradient(140deg,#745bc0,#42a783);font-size:2.6rem;color:white;font-weight:700}
+.academy .academy-profile-contact{grid-column:1/-1}
+.academy .academy-pending .pending-row{grid-template-columns:minmax(160px,1.2fr) minmax(150px,1fr) minmax(250px,2fr);align-items:start;gap:12px}
+.academy .academy-pending .pending-row .academy-card-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0}
+.academy .academy-pending .pending-row .academy-card-actions button{min-width:0}
+@media(max-width:720px){.academy .academy-profile-hero>div{align-items:flex-start}.academy .academy-profile-photo,.academy .academy-profile-avatar{width:76px;height:76px}.academy .academy-pending .pending-row{grid-template-columns:1fr;gap:8px}.academy .academy-section-hint{margin-top:8px}}
+.academy .academy-action-feedback{margin:0;padding:6px 10px;min-height:0;max-width:min(230px,85vw);background:#daf5e5;color:#145a38;border:1px solid #8cc6a5;box-shadow:0 5px 14px #152b1d33;font-size:.85rem;pointer-events:none}
+.academy .academy-inline-success{align-self:center;color:#17804a;font-size:.85rem;font-weight:600;margin-inline:8px}

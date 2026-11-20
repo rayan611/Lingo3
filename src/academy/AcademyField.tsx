@@ -37,5 +37,6 @@ export function AcademyField({locale,children}:{locale:string;children:ReactNode
  const required=control?.props.required?{fa:' این فیلد ضروری است.',en:' This field is required.',sv:' Fältet är obligatoriskt.',de:' Dieses Feld ist erforderlich.'}:{fa:'',en:'',sv:'',de:''}
  const bounds=control?.props.min!=null||control?.props.max!=null?` (${control?.props.min??'…'}–${control?.props.max??'…'})`:''
  const text={fa:`${fieldName}: ${detail.fa}${bounds}${required.fa}`,en:`${fieldName}: ${detail.en}${bounds}${required.en}`,sv:`${fieldName}: ${detail.sv}${bounds}${required.sv}`,de:`${fieldName}: ${detail.de}${bounds}${required.de}`}
- return <div className="academy-field-help academy-auto-field">{searchable&&<input className="academy-select-search" type="search" aria-label={searchLabel} placeholder={searchLabel} value={query} onChange={e=>setQuery(e.target.value)}/>} {body}<AcademyHelp locale={lang} text={text}/></div>
+ const showHelp=!!control&&!['select','checkbox','radio','date','datetime-local','time','week','month','search'].includes(type)&&!/\b(day|date|time|week|weekday|datum|dag|vecka|tid|uhrzeit|woche|tag)\b|تاریخ|ساعت|روز|هفته/i.test(fieldName)
+ return <div className={'academy-field-help academy-auto-field'+(showHelp?' has-help':'')}>{searchable&&<input className="academy-select-search" type="search" aria-label={searchLabel} placeholder={searchLabel} value={query} onChange={e=>setQuery(e.target.value)}/>} {body}{showHelp&&<AcademyHelp locale={lang} text={text}/>}</div>
 }
