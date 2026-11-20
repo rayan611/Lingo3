@@ -49,7 +49,7 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
   }else{
    const table=kind==='courses'?'academy_courses':'academy_teachers',fields=kind==='courses'?'id,title_i18n,description_i18n,topics_i18n':'id,display_name,display_name_i18n,intro_i18n,photo_url'
    const x=(await rows(table,`select=${fields}&id=eq.${id}&status=eq.active`))[0]
-   if(!x){status=404;noindex=true}else{title=kind==='courses'?(x.title_i18n[lang]||x.title_i18n.en):(x.display_name_i18n?.[lang]||x.display_name);description=(kind==='courses'?x.description_i18n:x.intro_i18n)?.[lang]||'';image=x.photo_url||undefined;content=`<p>${escapeHtml(description)}</p>`;if(x.topics_i18n)content+=`<ul>${(x.topics_i18n[lang]||[]).map((s:string)=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>`}
+   if(!x){status=404;noindex=true}else{title=kind==='courses'?(x.title_i18n[lang]||x.title_i18n.en):(x.display_name_i18n?.[lang]||x.display_name);description=(kind==='courses'?x.description_i18n:x.intro_i18n)?.[lang]||'';image=x.photo_url||undefined;content=`<p>${escapeHtml(description)}</p>`;if(x.topics_i18n)content+=`<ul>${(x.topics_i18n[lang]||[]).map((s:string)=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>`;schema=kind==='courses'?{'@context':'https://schema.org','@type':'Course',name:title,description,inLanguage:lang,url,provider:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}:{'@context':'https://schema.org','@type':'Person',name:title,description,url,image:image||undefined,worksFor:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}}
   }
  }else if(!id&&kind==='posts'){
   const entries=await rows('academy_post_translations',`select=post_id,title,description&locale=eq.${lang}&status=eq.published&order=published_at.desc&limit=100`)
