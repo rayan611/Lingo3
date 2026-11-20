@@ -10,6 +10,10 @@
   },
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/api/academy-page?root=1"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/api/academy-page?sitemap=1"
     },
