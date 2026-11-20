@@ -5,7 +5,6 @@ type Locale='en'|'sv'|'fa'|'de'
 type Finding={url:string;issues:string[];title:string}
 const locales:Locale[]=['en','sv','fa','de']
 const sectionPaths=['','/courses','/teachers','/posts','/about','/path','/pricing','/resources','/contact']
-const absolute=(path:string)=>'https://lingo3.com'+path
 const translated=(map:Record<string,string>|undefined,lang:string)=>Boolean(map?.[lang]?.trim())
 
 /** Read-only, client-side crawl audit. Never fetches user workspaces or unpublished content. */
