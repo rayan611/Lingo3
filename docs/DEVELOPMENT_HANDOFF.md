@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy SEO partial implementation (0.7.12)
+
+Branch feat/academy-seo-manager-20261121: added Course/Person JSON-LD on published detail routes and source-contract assertions. Code committed to branch; tests/build, PR, preview and production not completed. SEO Manager, admin fields, content validations, Search Console and full audit remain pending (#65). No database changes. Sitemap and route index reviewed; no new routes. Next: implement admin-managed SEO data contract, run tests and deploy after verification.
+
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)
