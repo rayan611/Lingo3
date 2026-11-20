@@ -30,3 +30,6 @@ const migration=readFileSync(new URL('../supabase/migrations/20261121004000_acad
 assert(migration.includes('enable row level security'),'SEO overrides must be protected by RLS')
 assert(migration.includes('seo admin update')&&migration.includes('seo published public read'),'Require admin writes and published-only public visibility')
 console.log('PASS SEO: home rewrite, multilingual overrides, public structured data, social previews, noindex and RLS contract.')
+
+assert(vercel.routes?.some((r:{src:string;dest:string;override:boolean})=>r.src==='^/$'&&r.dest.includes('root=1')&&r.override===true),'Homepage must override static index filesystem precedence')
+console.log('PASS SEO: root rewrite overrides filesystem with server-rendered metadata.')

@@ -1,3 +1,5 @@
+2026-11-21 review (0.7.14, PR #67): / -> prioritized server SEO metadata route (overrides Vercel's static index.html) -> /api/academy-page?root=1. On metadata failure the function returns static index. /academy and other routes unchanged; /academy/admin stays noindex. Preview verification passed; production pending.
+
 2026-11-21 review (0.7.13, PR #66): public routes unchanged; / homepage rewrite -> /api/academy-page?root=1 added with static fallback on metadata failure. /academy/admin remains private/noindex and contains SEO Manager tab without new route. Detail pages retain original URLs/canonical/hreflang; only published content appears in sitemap. CI and live deployment evidence pending.
 
 2026-11-20 · 0.7.12 production: PR #63 merged as eb771b3513fe368f6cf7e1bc6678e1662a9109ce; deployment dpl_CL2CpgMFRsPAvP4eLbP87mB8mwKm READY with lingo3.com and www aliases, no alias error. Full npm test and production build passed. No schema or RLS change. Live signed-in roles and complete mobile acceptance remain unverified. Rollback: dpl_Fb2TZj7gdK1eUz8ntQnGP7C3atoW.
