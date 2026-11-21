@@ -1,3 +1,5 @@
+2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` redirects to `/academy`, and `/academy/my` provides My Courses/profile via UI state. Production HTTP check reached Persian Academy HTML; actual browser Back and user-device acceptance remain unverified. Documentation revision only.
+
 2026-11-22 review v0.7.19: /academy.html → temporary server redirect → /academy, replacing meta-refresh-only behavior; fallback HTML remains. Verify query preservation, browser Back and live deployment.
 
 2026-11-22 review v0.7.19: boot diagnostic only; no URL or Back changes. Production rolled back to v0.7.17; change unreleased.

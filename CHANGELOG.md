@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
+
+Record production v0.7.19 deployment and HTTP checks for PR #72, released v0.7.17–0.7.19 changes, and outstanding real-device/role acceptance and functionality gaps. No runtime change; no new deployment claimed. See `docs/DEVELOPMENT_HANDOFF.md` for evidence and next steps.
+
 ## 2026-11-22 — Legacy Academy redirect (v0.7.19, unreleased)
 
 Redirect /academy.html to /academy at the server instead of depending on HTML meta refresh; retain the old page as a fallback. User screenshot matches the legacy page, but exact URL and device behavior remain unconfirmed. Full npm test and build passed; preview and live redirect checks pending.
