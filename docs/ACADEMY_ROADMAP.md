@@ -1,3 +1,5 @@
+2026-11-21 · v0.7.16 teacher deletion error UX fix: archived teacher with one booking cannot be hard-deleted without damaging history; UI now checks booking references first and displays an actionable localized explanation instead of [object Object]. No live teacher/student rows removed. Pending CI/release verification.
+
 2026-11-21 · v0.7.15 PRODUCTION: Public SEO Audit available in Admin > SEO & Google, authored-locale sitemap/hreflang/noindex live and tested; archived-only teacher permanent delete action and protected deletion audit deployed, while existing archived teacher with a historical booking stays preserved by FK. PR #68, commit 466896c0, Vercel dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL READY. CI #344 and production HTTP tests passed. Remaining external owner-controlled: Google Search Console authorization/metrics, browser owner-login end-to-end and real-user Core Web Vitals. Full classroom history must not be deleted solely to remove a teacher profile.
 
 ## 2026-11-21 — SEO final hardening and teacher deletion (0.7.15)
