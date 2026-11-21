@@ -1,3 +1,5 @@
+2026-11-21 review v0.7.16: archived teacher deletion error handling only; no new or removed page, route, navigation entry or public teacher link. Existing archived teachers remain excluded from public directory. Pending release verification.
+
 2026-11-21 production review v0.7.15 (release commit 466896c0): verified 58 public sitemap URLs; un-authored teacher/course locales excluded, /academy/admin and /academy/my excluded; live /, /academy, translated course and de noindex verified. No new public routes; Admin SEO audit remains a private tab. Deployment dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL READY.
 
 2026-11-21 review (0.7.15, issue #65): existing public routes retained. Untranslated teacher/course locale variants are excluded from /sitemap.xml and tagged noindex; only authored translations expose hreflang. Existing posts remain publication-scoped. Admin SEO Audit is an internal tab on /academy/admin, no new URL. Teacher permanent delete admin action is on existing Teachers editor, no new route. Validation/release pending.
