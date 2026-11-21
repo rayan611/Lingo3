@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.19: legacy /academy.html redirects server-side to active /academy; no new content route. Preview verification and release pending.
+
 2026-11-22 review v0.7.19: boot diagnostics only; routes and entry points unchanged. Production rolled back to v0.7.17; diagnostic change unreleased.
 
 2026-11-21 review v0.7.18: signed-in /academy home shows student summary; /academy/my also contains My Courses and read-only profile views selected from mobile navigation. Settings and admin links use existing state/routes and role restrictions. No new URL; release pending.

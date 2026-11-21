@@ -6,6 +6,7 @@ const academy = read('src/academy/Academy.tsx')
 const css = read('src/academy/academy.css')
 const showcase = read('public/showcase.html')
 const legacy = read('public/academy.html')
+const vercel = JSON.parse(read('vercel.json'))
 const guide = read('docs/LINGO3_APP_ACADEMY_GUIDE.md')
 const landing = read('src/ui/Landing.tsx')
 const portal = read('src/academy/AcademyPortal.tsx')
@@ -22,6 +23,7 @@ const preferences=read('src/academy/preferences.ts')
 const dashboardMigration = read('supabase/migrations/20261117211500_academy_role_dashboards.sql')
 
 const checks = [
+  ['Legacy Academy URL redirects at server', vercel.redirects.some(r=>r.source==='/academy.html' && r.destination==='/academy')],
   ['Responsive Academy uses tablet hamburger and mobile touch targets', css.includes('@media(max-width:860px)') && css.includes('.academy-mobile-toggle{display:flex}') && css.includes('min-height:46px')],
   ['Academy forms provide example placeholders', academy.includes('e.g. Swedish A1') && portal.includes('Write your own lesson note here') && portal.includes('e.g. A1 quiz')],
   ['Academy route is split before LingoApp', app.includes("cleanEntryPath.startsWith('/academy/')") && app.includes('return <AcademyEntry sessionState={sessionState} />') && app.indexOf('return <AcademyEntry sessionState={sessionState} />') < app.indexOf('function LingoApp(')],

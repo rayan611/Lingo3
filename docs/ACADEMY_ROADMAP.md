@@ -1,3 +1,7 @@
+## 2026-11-22 — Legacy entry redirect (v0.7.19, unreleased)
+
+Server redirect added for /academy.html after screenshot matched fallback HTML. Verify preview, authenticated navigation and cached-device behavior before claiming resolution.
+
 ## 2026-11-21 — Student home navigation (v0.7.18, pending release)
 
 Added student home summary, My Courses, profile and settings shortcuts. Group-session home summary, editable profile and live signed-in/browser acceptance remain open. See handoff.
