@@ -1,3 +1,5 @@
+2026-11-21 review v0.7.17, branch feat/academy-reference-navigation-20261121: mobile bottom bar adds shortcuts to existing Home, Courses, My Academy and complete menu; existing public and role-restricted destinations remain unchanged. Browser acceptance and release pending.
+
 2026-11-21 review v0.7.16: archived teacher deletion error handling only; no new or removed page, route, navigation entry or public teacher link. Existing archived teachers remain excluded from public directory. Pending release verification.
 
 2026-11-21 production review v0.7.15 (release commit 466896c0): verified 58 public sitemap URLs; un-authored teacher/course locales excluded, /academy/admin and /academy/my excluded; live /, /academy, translated course and de noindex verified. No new public routes; Admin SEO audit remains a private tab. Deployment dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL READY.

@@ -1,3 +1,7 @@
+## 2026-11-21 — Reference-inspired navigation (v0.7.17, unreleased)
+
+Mobile bottom shortcuts implemented on feat/academy-reference-navigation-20261121. Full Base44 section/function comparison, further visual redesign and real role/viewport acceptance remain open. No production release claimed.
+
 2026-11-22 · v0.7.16 release verified: archived-teacher deletion shows exact booking dependency and no longer displays [object Object]. CI #353, preview and production HTTP smoke passed, Vercel READY dpl_4u9gSmHfQ9aCcqRvGKBkiWnKXjN7. Existing archived teacher linked to one booking is intentionally retained; physical deletion of that historical identity remains blocked pending explicit record-retention/anonymization decision.
 
 2026-11-21 · v0.7.16 teacher deletion error UX fix: archived teacher with one booking cannot be hard-deleted without damaging history; UI now checks booking references first and displays an actionable localized explanation instead of [object Object]. No live teacher/student rows removed. Pending CI/release verification.

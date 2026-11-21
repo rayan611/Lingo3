@@ -40,12 +40,19 @@ const flush=()=>act(async()=>pause(10))
 const find=(label)=>tree.root.findAllByType('button').find(n=>(text(n)===label||n.props['aria-label']===label))
 const click=async(label)=>{const b=find(label);assert(b,'Button exists: '+label);await act(async()=>b.props.onClick());await flush();checks++}
 const page=()=>tree.root.find(n=>n.props.className==='academy').props['data-page']
-async function mount(nextRole,url='/academy'){role=nextRole;reset(url);await act(async()=>{tree=TestRenderer.create(React.createElement(Academy,{userId:role==='guest'?null:role==='teacher'?'teacher-user':'student-user',email:role+'@example.invalid'}),{createNodeMock:()=>({querySelectorAll:()=>[],scrollIntoView:()=>{}})})});await flush()}
+async function mount(nextRole,url='/academy'){role=nextRole;reset(url);await act(async()=>{tree=TestRenderer.create(React.createElement(Academy,{userId:role==='guest'?null:role==='teacher'?'teacher-user':'student-user',email:role+'@example.invalid'}),{createNodeMock:()=>({querySelectorAll:()=>[],querySelector:()=>null,scrollIntoView:()=>{}})})});await flush()}
 async function unmount(){await act(async()=>tree.unmount())}
 const routes=[['Home','home','/academy'],['Find your learning path','path','/academy/path'],['Courses','courses','/academy/courses'],['Teachers','teachers','/academy/teachers'],['Personal space','personal','/academy/my'],['How it works','about','/academy/about'],['Pricing','pricing','/academy/pricing'],['Resources','resources','/academy/resources'],['Contact','contact','/academy/contact']]
 try{
  for(const r of ['guest','student','teacher','admin']){
   await mount(r)
+  const mobile=()=>tree.root.find(n=>n.props.className==='academy-bottom-nav')
+  const mobileButton=label=>mobile().findAllByType('button').find(n=>text(n)===label)
+  for(const [label,expected] of [['Courses','courses'],['My Academy','personal'],['Home','home']]){
+   await act(async()=>mobileButton(label).props.onClick());await flush();assert.equal(page(),expected);assert.equal(mobileButton(label).props['aria-current'],'page');checks+=2
+  }
+  await act(async()=>mobileButton('Menu').props.onClick());assert.equal(mobileButton('Menu').props['aria-expanded'],true)
+  await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(mobileButton('Menu').props['aria-expanded'],false);checks+=2
   for(const [label,expected,url] of routes){await click(label);assert.equal(page(),expected);assert.equal(location.pathname,url);await act(async()=>history.back());await act(async()=>history.forward());assert.equal(page(),expected);checks+=3
    for(const link of tree.root.findAllByType('a')){assert.match(link.props.href,/^(https:\/\/|mailto:|tel:|\/)/);if(link.props.target==='_blank')assert.match(link.props.rel,/noreferrer/)}
   }

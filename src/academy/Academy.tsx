@@ -121,7 +121,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
  const navRef=useRef<HTMLElement|null>(null)
  useEffect(()=>{
   function dismissOutside(event:PointerEvent){
-   if(event.target instanceof Element && !event.target.closest('.academy-top')){
+   if(event.target instanceof Element && !event.target.closest('.academy-top, .academy-bottom-nav')){
     navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{menu.open=false})
     setMobileMenuOpen(false)
    }
@@ -259,6 +259,12 @@ export function Academy({userId,email,sessionLoading=false}:Props){
     <button type="button" aria-expanded={settingsOpen} onClick={()=>{closeMenus();setMobileMenuOpen(false);if(settingsOpen){window.history.back()}else{window.history.pushState({...window.history.state,academySettings:true},'',window.location.href);setSettingsOpen(true)}}}>{locale==='fa'?'تنظیمات':locale==='sv'?'Inställningar':locale==='de'?'Einstellungen':'Settings'} ⚙</button>
    </nav>
   </header>
+  <nav className="academy-bottom-nav" aria-label={locale==='fa'?'ناوبری آکادمی':locale==='sv'?'Akademinavigering':locale==='de'?'Academy-Navigation':'Academy navigation'}>
+   <button type="button" aria-current={page==='home'?'page':undefined} onClick={()=>go('home')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>{t.home}</span></button>
+   <button type="button" aria-current={page==='courses'||page==='courseDetail'?'page':undefined} onClick={()=>go('courses')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14"/></svg><span>{t.courses}</span></button>
+   <button type="button" aria-current={page==='personal'?'page':undefined} onClick={()=>go('personal')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7 12 3l8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4"/></svg><span>{t.mine}</span></button>
+   <button type="button" aria-controls="academy-navigation" aria-expanded={mobileMenuOpen} onClick={()=>{closeMenus();setMobileMenuOpen(v=>!v)}}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>{locale==='fa'?'منو':locale==='sv'?'Meny':locale==='de'?'Menü':'Menu'}</span></button>
+  </nav>
   {settingsOpen&&<section className="academy-settings-panel" aria-label="Academy settings"><div className="editor-head"><h2>{workspaceLabel(locale,"تنظیمات","Settings")}</h2><button aria-label="Close settings" onClick={()=>window.history.back()}>×</button></div><AcademyField locale={locale}><label>{t.language}<select className="academy-language" value={locale} onChange={e=>void setLocale(e.target.value as Locale)}><option value="en">English</option><option value="sv">Svenska</option><option value="de">Deutsch</option><option value="fa">فارسی</option></select></label></AcademyField><AcademyField locale={locale}><label>{workspaceLabel(locale,"ظاهر","Appearance")}<select value={theme} onChange={e=>void setTheme(e.target.value as AcademyTheme)}><option value="light">{themeLabels[locale].light}</option><option value="dark">{themeLabels[locale].dark}</option></select></label></AcademyField><p>{userId?(workspaceLabel(locale,"انتخاب شما در حساب ذخیره می‌شود.","Your choice is saved to your account.")):(workspaceLabel(locale,"برای همگام‌سازی بین دستگاه‌ها وارد حساب شوید.","Sign in to sync this choice across devices."))}</p>{preferenceError&&<p role="alert">{preferenceError}</p>}</section>}
   <main>
    {notice&&<div className={"academy-notice "+(successNotice?"academy-action-feedback":"")} style={successNotice&&actionPoint.current?{position:"fixed",left:actionPoint.current.x,top:actionPoint.current.y,zIndex:150}:undefined} role="status" aria-live="polite">{notice}{!successNotice&&<button type="button" onClick={()=>setNotice('')} aria-label="Dismiss">×</button>}</div>}
