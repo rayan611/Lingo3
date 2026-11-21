@@ -1,3 +1,5 @@
+2026-11-21 · v0.7.15 production verification: PR #68 merged 466896c0, Vercel READY dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL, CI #344 success and published SSR/canonical/noindex/sitemap HTTP smoke passed. SEO public audit and guarded archived teacher deletion with audit released. Real historic teacher booking preserved. See handoff.
+
 2026-11-21 · v0.7.15: Academy SEO hardening: authored-locale-only sitemap/hreflang, noindex untranslated detail variants, public SEO audit under admin, server/UI regression tests. Archived-only permanent teacher deletion guarded by existing historical FKs and new admin-only audit log; no live teacher records removed. See handoff for test/release evidence.
 
 ## 2026-11-20 — Academy group session count (app 0.7.12)
