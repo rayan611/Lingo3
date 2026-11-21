@@ -1,3 +1,7 @@
+## 2026-11-21 — Student home navigation (v0.7.18, pending release)
+
+Added student home summary, My Courses, profile and settings shortcuts. Group-session home summary, editable profile and live signed-in/browser acceptance remain open. See handoff.
+
 ## 2026-11-21 — Student home request (v0.7.17, incomplete)
 
 Home shortcuts and admin-only settings link added. Student dashboard, My Courses navigation, profile, full acceptance and requested production deployment remain open. See handoff.

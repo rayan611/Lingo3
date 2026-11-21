@@ -1,3 +1,7 @@
+## 2026-11-21 — Student home navigation (v0.7.18, pending release)
+
+Added signed-in student summary and mobile My Courses, profile and settings shortcuts, preserving existing routes and role boundaries. Group sessions remain on Schedule and account profile is read-only. See handoff.
+
 ## 2026-11-21 — Academy home shortcuts (v0.7.17, incomplete)
 
 Added homepage shortcuts and admin-only settings entry; full requested student dashboard and navigation remain unfinished. See handoff.
