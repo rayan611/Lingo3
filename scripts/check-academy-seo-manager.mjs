@@ -16,7 +16,7 @@ globalThis.window={location:{origin:'https://lingo3.com'}}
 const out=path.resolve('node_modules/.cache/seo-manager-test.mjs');fs.mkdirSync(path.dirname(out),{recursive:true})
 await build({entryPoints:['src/academy/AcademySeoManager.tsx'],outfile:out,bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react/jsx-runtime'],plugins:[{name:'seo-transport',setup(b){
  b.onResolve({filter:/auth\/supabase$/},()=>({path:'transport',namespace:'qa'}))
- b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const supabase=()=>globalThis.__seoClient;'}))
+ b.onLoad({filter:/.*/,namespace:'qa'},()=>({contents:'export const authConfigured=true;export const supabase=()=>globalThis.__seoClient;'}))
 }}]})
 const {AcademySeoManager}=await import('file://'+out)
 let tree
