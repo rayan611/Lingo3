@@ -54,7 +54,7 @@ try{
   await act(async()=>mobileButton('Menu').props.onClick());assert.equal(mobileButton('Menu').props['aria-expanded'],true)
   await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(mobileButton('Menu').props['aria-expanded'],false);checks+=2
   for(const [label,expected,url] of routes){await click(label);assert.equal(page(),expected);assert.equal(location.pathname,url);await act(async()=>history.back());await act(async()=>history.forward());assert.equal(page(),expected);checks+=3
-   for(const link of tree.root.findAllByType('a')){assert.match(link.props.href,/^(https:\/\/|mailto:|tel:|\/)/);if(link.props.target==='_blank')assert.match(link.props.rel,/noreferrer/)}
+   for(const link of tree.root.findAllByType('a')){assert.match(link.props.href,/^(https:\/\/|mailto:|tel:|\/|#academy-main$)/);if(link.props.target==='_blank')assert.match(link.props.rel,/noreferrer/)}
   }
   if(r==='admin'){await click('Admin Studio');assert.equal(page(),'admin');assert.equal(tree.root.findAllByType('form').length,1);await click('Teacher editor');await click('New teacher');assert(find('Name & photo'));assert(find('Introduction'));await click('Introduction');assert.equal(find('Introduction').props['aria-pressed'],true);await click('Contact details');assert.equal(find('Contact details').props['aria-pressed'],true)}else{assert(!find('Admin Studio'))}
   await click('Settings ⚙');assert(tree.root.findAll(n=>n.props['aria-label']==='Academy settings').length)

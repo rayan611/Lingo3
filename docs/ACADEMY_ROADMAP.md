@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy discovery refinements (v0.7.17, unreleased)
+
+Homepage previews published courses and teachers, adds direct entry points and keyboard focus improvements. Complete reference comparison and responsive/signed-in browser acceptance remain open.
+
 ## 2026-11-21 — Reference-inspired navigation (v0.7.17, unreleased)
 
 Mobile bottom shortcuts implemented on feat/academy-reference-navigation-20261121. Full Base44 section/function comparison, further visual redesign and real role/viewport acceptance remain open. No production release claimed.

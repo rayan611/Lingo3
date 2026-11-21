@@ -1,3 +1,5 @@
+2026-11-21 review v0.7.17 discovery: /academy adds links to existing /academy/courses, /academy/teachers and active detail routes. Existing Back and role restrictions retained; no new route. Release pending.
+
 2026-11-21 review v0.7.17, branch feat/academy-reference-navigation-20261121: mobile bar links to existing /academy, /academy/courses and /academy/my and opens existing menu; no URL changes. Back behavior is unchanged; browser acceptance pending.
 
 2026-11-21 review v0.7.16: /academy/admin > Teachers retains archived-only protected deletion action; new booking preflight and error UI without route changes. /academy/teachers public visibility unchanged. Pending CI/release verification.

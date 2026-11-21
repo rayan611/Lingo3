@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy discovery and accessibility (v0.7.17, unreleased)
+
+Added real published course and teacher previews to the Academy homepage, direct catalogue and teacher links, a skip-to-content link, visible focus indicators, and responsive styling for discovery and workspace navigation. Existing functions and role permissions are retained. Full npm test and TypeScript/Vite build passed; browser acceptance pending. No production deployment claimed.
+
 ## 2026-11-21 — Academy mobile navigation (v0.7.17, unreleased)
 
 Added a mobile bottom bar for Home, Courses, My Academy and the full menu, preserving existing routes and role checks. Includes light/dark styling and safe-area spacing. Full npm test, production build and updated 230-assertion mocked navigation check passed. Browser acceptance remains pending; no production deployment claimed.

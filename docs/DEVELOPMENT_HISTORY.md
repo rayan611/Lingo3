@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy homepage discovery (v0.7.17, unreleased)
+
+Added active course and teacher previews, catalogue shortcuts and accessibility improvements without changing data or role contracts. See handoff for acceptance limits.
+
 ## 2026-11-21 — Academy mobile navigation (v0.7.17, unreleased)
 
 Introduced a mobile bottom shortcut bar and retained the complete existing Academy menu and role boundaries. Existing routes and data contracts are unchanged. Full reference comparison and signed-in responsive acceptance remain open; see handoff.
