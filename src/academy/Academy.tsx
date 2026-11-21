@@ -12,6 +12,7 @@ import { AcademyPublicDetail } from './AcademyPublicDetail'
 import {AcademyAdminLifecycle} from './AcademyAdminLifecycle'
 import {AcademyPosts} from './AcademyPosts'
 import {AcademySeoManager} from './AcademySeoManager'
+import {teacherBookingBlock,teacherDeletionError} from './teacherDeletion'
 import { AcademyUsers } from './AcademyUsers'
 import { AcademyPortal } from './AcademyPortal'
 import { navigateProduct } from '../lib/productNavigation'
@@ -229,10 +230,13 @@ export function Academy({userId,email,sessionLoading=false}:Props){
   if(!item)return
   const expected=item.display_name
   const promptMessage=locale==='fa'?'حذف دائمی غیرقابل بازگشت است. نام استاد را برای تأیید بنویسید. سوابق کلاس و رزرو مانع حذف هستند.':'Permanent deletion cannot be undone. Type the exact teacher name. Dependent classes and bookings block deletion.'
-  const answer=window.prompt(promptMessage+' ('+expected+')')
-  if(answer!==expected)return
   setSavingTeacher(true)
   try{
+   const {count,error:bookingError}=await supabase().from('academy_bookings').select('id',{count:'exact',head:true}).eq('teacher_id',item.id)
+   if(bookingError)throw bookingError
+   if((count||0)>0){setNotice(teacherBookingBlock(count||0,locale));return}
+   const answer=window.prompt(promptMessage+' ('+expected+')')
+   if(answer!==expected)return
    const {data,error}=await supabase().from('academy_teachers').delete().eq('id',item.id).select('id').maybeSingle()
    if(error)throw error
    if(!data)throw new Error('Profile was not deleted. Check administrator permission.')
@@ -240,7 +244,7 @@ export function Academy({userId,email,sessionLoading=false}:Props){
    await refresh()
    setNotice(locale==='fa'?'پروفایل استاد برای همیشه حذف شد.':'Teacher profile permanently deleted.')
   }catch(error){
-   setNotice((locale==='fa'?'حذف دائمی انجام نشد. سوابق آموزشی یا رزروها ممکن است مانع حذف باشند. ':'Permanent deletion blocked; dependent lesson history or bookings may exist. ')+String(error instanceof Error?error.message:error))
+   setNotice(teacherDeletionError(error,locale))
   }finally{setSavingTeacher(false)}
  }
  return <div className="academy" dir={dir} data-theme={theme} data-page={page} onClickCapture={e=>{const target=(e.target as HTMLElement).closest('button');if(target){const rect=target.getBoundingClientRect();actionPoint.current={x:Math.min(window.innerWidth-150,Math.max(8,rect.left)),y:Math.max(8,rect.top-44)}}}}>
