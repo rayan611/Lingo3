@@ -1,3 +1,5 @@
+2026-11-22 · v0.7.16 production verified: PR #69 merged 05676afc05d394593efb4d8510d5c8c8a9df713a, Vercel dpl_4u9gSmHfQ9aCcqRvGKBkiWnKXjN7 READY with lingo3.com aliases. CI #353 passed strict TypeScript, full regressions and production build. HTTP verified admin noindex, public teachers and sitemap. Archived teacher linked to one booking remains retained; no records deleted. Correct error messaging shipped; live signed-in end-to-end unverified.
+
 ## 2026-11-21 — Teacher deletion failure UX (Lingo3 v0.7.16, pending release)
 
 Fix archived-teacher permanent deletion failure message displaying `[object Object]`. Before an irreversible delete, admin now checks booking count and explains any retained booking and why the archived teacher must remain for student history. For other foreign-key or permission failures, show structured, localized error messages rather than coercing PostgREST objects. Existing exact-name confirmation for eligible teachers, FK constraints, audit trigger and RLS remain intact. No real teacher or booking rows changed. Regression check added; CI and deployment pending.
