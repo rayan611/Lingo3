@@ -47,9 +47,9 @@ export function AcademySeoManager({locale,userId,courses,teachers}:{locale:Local
   {loading?<p role="status">…</p>:<form onSubmit={save}>
    <div className="editor-two">
     <label>{name('نوع صفحه','Page type',locale)}<select value={kind} onChange={e=>{setKind(e.target.value as Kind);setEntityId('');setMessage('');if(e.target.value==='app')setLanguage('en')}}><option value="app">Lingo3 app homepage</option><option value="page">Academy pages</option><option value="course">Courses</option><option value="teacher">Teachers</option><option value="post">Learning articles</option></select></label>
-    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>setLanguage(e.target.value as Locale);setMessage('')}>{(kind==='app'?(['en'] as Locale[]):locales).map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
+    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>{setLanguage(e.target.value as Locale);setMessage('')}}>{(kind==='app'?(['en'] as Locale[]):locales).map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
    </div>
-   <label>{name('صفحه یا محتوا','Page or content',locale)}<select value={entityId} onChange={e=>setEntityId(e.target.value);setMessage('')}>{options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>
+   <label>{name('صفحه یا محتوا','Page or content',locale)}<select value={entityId} onChange={e=>{setEntityId(e.target.value);setMessage('')}}>{options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>
    <label>SEO Title <input maxLength={140} value={title} onChange={e=>setTitle(e.target.value)} placeholder="e.g. Online Swedish courses | Lingo3 Academy"/></label>
    <small>{title.length}/140</small>
    <label>Meta Description <textarea maxLength={360} value={description} onChange={e=>setDescription(e.target.value)} rows={3}/></label>
