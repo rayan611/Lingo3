@@ -25,7 +25,7 @@ export function AcademySeoAudit({locale,courses,teachers}:{locale:Locale;courses
   try{
    const sitemap=await fetch('/sitemap.xml',{credentials:'omit',cache:'no-store'})
    if(sitemap.ok){const xml=new DOMParser().parseFromString(await sitemap.text(),'application/xml')
-    for(const node of Array.from(xml.getElementsByTagName('loc'))){const raw=node.textContent||'';try{const parsed=new URL(raw);if(parsed.origin===window.location.origin&&parsed.pathname.startsWith('/academy/posts/'))urls.add(parsed.pathname+parsed.search)}catch{/* invalid sitemap URL */}}
+    for(const node of Array.from(xml.getElementsByTagName('loc'))){const raw=node.textContent||'';try{const parsed=new URL(raw);if(parsed.protocol==='https:'&&['lingo3.com','www.lingo3.com'].includes(parsed.hostname)&&parsed.pathname.startsWith('/academy/posts/'))urls.add(parsed.pathname+parsed.search)}catch{/* invalid sitemap URL */}}
    }
   }catch{/* report remaining public routes even if sitemap fetch fails */}
   const results:Finding[]=[],all=[...urls].slice(0,150)
