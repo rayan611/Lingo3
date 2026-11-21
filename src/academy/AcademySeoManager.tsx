@@ -29,7 +29,7 @@ export function AcademySeoManager({locale,userId,courses,teachers}:{locale:Local
   setLoading(false)}
  void load();return()=>{live=false}},[locale])
  useEffect(()=>{if(!options.some(x=>x.id===entityId))setEntityId(options[0]?.id||'')},[options,entityId])
- useEffect(()=>{const existing=records.find(x=>x.entity_type===kind&&x.entity_id===entityId&&x.locale===language);setTitle(existing?.title||'');setDescription(existing?.description||'');setKeywords((existing?.target_keywords||[]).join(', '));setImageUrl(existing?.image_url||'');setMessage('')},[records,kind,entityId,language])
+ useEffect(()=>{const existing=records.find(x=>x.entity_type===kind&&x.entity_id===entityId&&x.locale===language);setTitle(existing?.title||'');setDescription(existing?.description||'');setKeywords((existing?.target_keywords||[]).join(', '));setImageUrl(existing?.image_url||'')},[records,kind,entityId,language])
  const duplicate=records.some(x=>x.entity_type!==kind||x.entity_id!==entityId?x.locale===language&&x.title.trim()===title.trim()&&title.trim().length>0:false)
  const warnings=[!title.trim()?'SEO title missing':title.length>65?'Title may be truncated in search':null,!description.trim()?'Description missing':description.length>160?'Description may be truncated in search':description.length<65?'Consider a more descriptive summary':null,duplicate?'Another page uses this SEO title':null].filter(Boolean)
  const url='https://lingo3.com'+pageUrl(kind,entityId,language)
@@ -46,10 +46,10 @@ export function AcademySeoManager({locale,userId,courses,teachers}:{locale:Local
   <p>{name('عنوان و توضیح اختصاصی هر صفحه به زبان انتخابی، تصویر اشتراک‌گذاری، و کلیدواژه‌های هدف را مدیریت کنید. کلیدواژه‌ها متاتگ رتبه‌بندی گوگل نیستند.','Edit localized search titles, descriptions, social images and editorial target phrases. Target phrases are not a Google ranking meta tag.',locale)}</p>
   {loading?<p role="status">…</p>:<form onSubmit={save}>
    <div className="editor-two">
-    <label>{name('نوع صفحه','Page type',locale)}<select value={kind} onChange={e=>{setKind(e.target.value as Kind);setEntityId('');if(e.target.value==='app')setLanguage('en')}}><option value="app">Lingo3 app homepage</option><option value="page">Academy pages</option><option value="course">Courses</option><option value="teacher">Teachers</option><option value="post">Learning articles</option></select></label>
-    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>setLanguage(e.target.value as Locale)}>{(kind==='app'?(['en'] as Locale[]):locales).map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
+    <label>{name('نوع صفحه','Page type',locale)}<select value={kind} onChange={e=>{setKind(e.target.value as Kind);setEntityId('');setMessage('');if(e.target.value==='app')setLanguage('en')}}><option value="app">Lingo3 app homepage</option><option value="page">Academy pages</option><option value="course">Courses</option><option value="teacher">Teachers</option><option value="post">Learning articles</option></select></label>
+    <label>{name('زبان متادیتا','Metadata language',locale)}<select value={language} onChange={e=>setLanguage(e.target.value as Locale);setMessage('')}>{(kind==='app'?(['en'] as Locale[]):locales).map(l=><option key={l} value={l}>{l.toUpperCase()}</option>)}</select></label>
    </div>
-   <label>{name('صفحه یا محتوا','Page or content',locale)}<select value={entityId} onChange={e=>setEntityId(e.target.value)}>{options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>
+   <label>{name('صفحه یا محتوا','Page or content',locale)}<select value={entityId} onChange={e=>setEntityId(e.target.value);setMessage('')}>{options.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}</select></label>
    <label>SEO Title <input maxLength={140} value={title} onChange={e=>setTitle(e.target.value)} placeholder="e.g. Online Swedish courses | Lingo3 Academy"/></label>
    <small>{title.length}/140</small>
    <label>Meta Description <textarea maxLength={360} value={description} onChange={e=>setDescription(e.target.value)} rows={3}/></label>
