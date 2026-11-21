@@ -96,6 +96,13 @@ try{
  assert(!joinLinks.some(link=>link.props.href==='https://zoom.us/j/999'))
  assert.match(text(tree.toJSON()),/Useful feedback/);assert.match(text(tree.toJSON()),/Shopping/);assert(!find(tree.root,'h3','Teacher workspace'))
  await act(async()=>tree.unmount())
+ tables.academy_enrollments.push({id:'enroll-a',student_id:'student-a',course_id:'course-a',status:'active'})
+ tables.academy_bookings.push({id:'future-a',teacher_id:'teacher-a',student_id:'student-a',course_id:'course-a',status:'confirmed',confirmed_start:'2099-01-05T18:00:00Z',meeting_url:'https://zoom.us/j/123'})
+ tables.academy_resources.push({id:'new-hw',learning_space_id:'space-a',teacher_id:'teacher-a',kind:'homework',title:'Homework to do',student_status:'assigned',due_at:'2099-01-06T18:00:00Z'})
+ let opened='';let browsed=false
+ await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'student-a',selfTeacher:undefined,presentation:'summary',onBrowse:()=>{browsed=true},onOpenSpace:id=>{opened=id}}))});await flush();await flush()
+ assert.match(text(tree.toJSON()),/Upcoming classes/);assert.match(text(tree.toJSON()),/Homework to do/);assert.match(text(tree.toJSON()),/20\s*%/);assert.doesNotMatch(text(tree.toJSON()),/Student B/)
+ await act(async()=>tree.root.findAllByType('button').find(n=>text(n).includes('Add course')).props.onClick());assert(browsed);await act(async()=>exactButton('Learning Space').props.onClick());assert.equal(opened,'space-a');await act(async()=>tree.unmount())
  await act(async()=>{tree=TestRenderer.create(React.createElement(AcademyPortal,{...base,userId:'admin',selfTeacher:undefined,isAdmin:true,initialSpaceId:'space-b'}))});await flush();await flush()
  assert.match(text(tree.toJSON()),/Classroom management/);assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-a'));assert(tree.root.findAllByType('option').some(o=>o.props.value==='space-b'))
  const adminSelect=tree.root.findAllByType('select').find(n=>n.findAllByType('option').some(o=>o.props.value==='space-a'))

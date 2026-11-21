@@ -141,7 +141,7 @@ function JoinMeetingLinks({booking,locale}:{booking:Booking;locale:Locale}) {
 }
 
 export function AcademyPortal({
- locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view
+ locale,userId,courses,teachers,selfTeacher,teacherCourseIds,isAdmin,onNotice,initialSpaceId,view,presentation='full',onBrowse,onOpenSpace
 }:{
  locale:Locale
  userId:string
@@ -151,6 +151,9 @@ export function AcademyPortal({
  teacherCourseIds:string[]
  isAdmin:boolean
  view?:'student'|'teacher'
+ presentation?:'full'|'summary'|'courses'
+ onBrowse?:()=>void
+ onOpenSpace?:(id:string)=>void
  initialSpaceId?:string
  onNotice:(message:string)=>void
 }){
@@ -223,6 +226,7 @@ export function AcademyPortal({
  const [bookingDraft,setBookingDraft]=useState<Record<string,{confirmed_start:string;teacher_note:string;duration_minutes:string}>>({})
  const [demoView,setDemoView]=useState(false)
  const [busy,setBusy]=useState(false)
+ const [summaryLoading,setSummaryLoading]=useState(true),[summaryError,setSummaryError]=useState('')
  const busyRef=useRef(false),requestVersion=useRef(0)
  const [contentLoading,setContentLoading]=useState(false)
  const [refreshTick,setRefreshTick]=useState(0),[historyPage,setHistoryPage]=useState(0)
@@ -261,7 +265,8 @@ export function AcademyPortal({
   }
   const results=await Promise.all(reqs)
   if(version!==requestVersion.current)return
-  const failed=results.find(r=>r.error);if(failed){onNotice(failed.error.message);return}
+  const failed=results.find(r=>r.error);if(failed){setSummaryError(failed.error.message);onNotice(failed.error.message);return}
+  setSummaryError('')
   setEnrollments((results[0].data??[]) as Enrollment[])
   const ownSpaces=(results[1].data??[]) as Space[]
   setStudentSpaces(ownSpaces)
@@ -275,6 +280,7 @@ export function AcademyPortal({
     client.from('academy_session_summaries').select('*').in('learning_space_id',ids).order('created_at',{ascending:false}).limit(200),
    ])
    if(version!==requestVersion.current)return
+   if(rr.error){setSummaryError(rr.error.message);onNotice(rr.error.message)}
    setDashboardResources((rr.data??[]) as Resource[])
    setDashboardNotes((nn.data??[]) as Note[])
    setTestResults(tr.error?[]:((tr.data??[]) as TestResult[]))
@@ -292,7 +298,7 @@ export function AcademyPortal({
   setScheduleRevision(n=>n+1)
  }
 
- useEffect(()=>{void refresh().catch(e=>onNotice(String(e)));return()=>{requestVersion.current++}},[userId,selfTeacher?.id,isAdmin])
+ useEffect(()=>{let active=true;setSummaryLoading(true);void refresh().catch(e=>{if(active){setSummaryError(String(e));onNotice(String(e))}}).finally(()=>{if(active)setSummaryLoading(false)});return()=>{active=false;requestVersion.current++}},[userId,selfTeacher?.id,isAdmin])
  useEffect(()=>{const timer=window.setInterval(()=>setRefreshTick(n=>n+1),20000);return()=>clearInterval(timer)},[])
  useEffect(()=>{
   setNotes([]);setResources([]);setMessages([]);setSelectedSummaries([]);setSelectedTests([])
@@ -607,6 +613,18 @@ export function AcademyPortal({
  const teacherTitle=(id:string)=>{const t=teacherById.get(id);return t?localizedName(t,locale):'Teacher'}
 
  const demoControls=selfTeacher&&teacherOnly&&<div className="academy-card-actions"><button onClick={()=>{setDemoView(false);void refresh()}}>{locale==='fa'?'نمای استاد':locale==='sv'?'Lärarvy':locale==='de'?'Lehrkraftansicht':'Teacher view'}</button><button disabled={busy} onClick={()=>void run(async()=>{const r=await supabase().rpc('academy_prepare_demo');if(r.error)throw r.error;setDemoView(true)})}>{locale==='fa'?'نمای دانشجوی آزمایشی':locale==='sv'?'Testelevens vy':locale==='de'?'Testschüleransicht':'Demo student view'}</button><button disabled={busy} onClick={()=>void run(async()=>{if(!window.confirm(workspaceLabel(locale,"فقط داده‌های دانشجوی آزمایشی بازنشانی شوند؟","Reset only the demo student data?")))return;const r=await supabase().rpc('academy_prepare_demo',{p_reset:true});if(r.error)throw r.error;setDemoView(false);await refresh();setRefreshTick(n=>n+1)})}>{locale==='fa'?'بازنشانی آزمایشی':locale==='sv'?'Återställ testdata':locale==='de'?'Testdaten zurücksetzen':'Reset demo'}</button></div>
+ if(presentation!=='full'){
+  if(summaryLoading)return <p role="status">{workspaceLabel(locale,'در حال دریافت اطلاعات…','Loading your information…')}</p>
+  if(summaryError)return <div className="academy-empty" role="alert">{workspaceLabel(locale,'دریافت اطلاعات ممکن نشد.','Could not load your information.')} <button type="button" onClick={()=>{setSummaryLoading(true);void refresh().catch(e=>setSummaryError(String(e))).finally(()=>setSummaryLoading(false))}}>{t.refresh}</button></div>
+  const upcoming=ownBookings.filter(b=>['requested','confirmed','in_progress'].includes(b.status)&&new Date(b.confirmed_start??b.preferred_start??0).getTime()>=Date.now()).sort((a,b)=>String(a.confirmed_start??a.preferred_start).localeCompare(String(b.confirmed_start??b.preferred_start))).slice(0,5)
+  const homework=dashboardResources.filter(r=>r.kind==='homework'&&r.student_status==='assigned').sort((a,b)=>String(a.due_at??'9999').localeCompare(String(b.due_at??'9999'))).slice(0,5)
+  return <div className="academy-student-summary" aria-busy={busy}>
+   <section className="academy-card"><div className="academy-discover-head"><h2>{t.myCourses}</h2><button type="button" onClick={onBrowse}>+ {workspaceLabel(locale,'افزودن دوره','Add course')}</button></div>{enrollments.length===0?<p>{workspaceLabel(locale,'هنوز دوره‌ای اضافه نکرده‌اید.','No courses added yet.')}</p>:enrollments.map(e=><div className="personal-row" key={e.id}><span>{courseTitle(e.course_id)}</span><span>{academyStatus(e.status,locale)}</span>{studentSpaces.find(sp=>sp.course_id===e.course_id)&&<button type="button" onClick={()=>onOpenSpace?.(studentSpaces.find(sp=>sp.course_id===e.course_id)!.id)}>{t.learning}</button>}</div>)}</section>
+   {presentation==='summary'&&<><section className="academy-card"><h2>{workspaceLabel(locale,'کلاس‌های پیش رو','Upcoming classes')}</h2>{upcoming.length===0?<p>{t.noBookings}</p>:upcoming.map(b=><div className="academy-session-row" key={b.id}><strong>{courseTitle(b.course_id)} · {teacherTitle(b.teacher_id)}</strong><span>{dt(b.confirmed_start??b.preferred_start)} · {academyStatus(b.status,locale)}</span><JoinMeetingLinks booking={b} locale={locale}/></div>)}</section>
+   <section className="academy-card"><h2>{t.homework}</h2>{homework.length===0?<p>{workspaceLabel(locale,'تکلیف بازی وجود ندارد.','No homework to do.')}</p>:homework.map(r=><div className="academy-session-row" key={r.id}><strong>{r.title}</strong>{r.due_at&&<span>{t.due}: {dt(r.due_at)}</span>}<button type="button" onClick={()=>onOpenSpace?.(r.learning_space_id)}>{t.learning}</button></div>)}</section>
+   <section className="academy-card"><h2>{t.progress}</h2>{studentSpaces.length===0?<p>{t.noSpace}</p>:studentSpaces.map(sp=><div key={sp.id}><div className="space-progress"><span>{courseTitle(sp.course_id)}</span><b>{sp.progress}%</b></div><div className="progress-bar"><i style={{width:String(sp.progress)+'%'}}/></div><small>{workspaceLabel(locale,'پیشرفت ثبت‌شده توسط استاد','Teacher-recorded progress')}</small></div>)}</section></>}
+  </div>
+ }
  if(demoView&&teacherOnly&&selfTeacher)return <div className="academy-portal">{demoControls}<AcademyDemoStudent key={userId} locale={locale}/></div>
  return <div className="academy-portal" aria-busy={busy||contentLoading}>{demoControls}
   <nav className="academy-portal-nav" aria-label={t.learning}>{([['overview',({fa:'نمای کلی',en:'Overview',sv:'Översikt',de:'Übersicht'})[locale]],['schedule',({fa:'برنامه و کلاس‌ها',en:'Schedule & classes',sv:'Schema och klasser',de:'Termine und Klassen'})[locale]],['classroom',({fa:'فضای یادگیری',en:'Learning space',sv:'Lärmiljö',de:'Lernraum'})[locale]],...(teacherOnly?([['teacher',({fa:'ابزار استاد',en:'Teacher tools',sv:'Lärarverktyg',de:'Lehrwerkzeuge'})[locale]]] as [string,string][]):[])] as [string,string][]).map(([id,label])=><button type="button" key={id} aria-pressed={panel===id} onClick={()=>openPanel(id as PortalPanel)}>{label}</button>)}</nav>

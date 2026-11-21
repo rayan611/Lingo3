@@ -1,3 +1,5 @@
+2026-11-21 review v0.7.18: /academy signed-in home shows summary; /academy/my hosts My Courses and profile views, with navigation mode recorded in history state. Existing settings and /academy/admin role restrictions retained. No new URLs.
+
 2026-11-21 review v0.7.17: homepage shortcuts use existing /, /academy/courses, /academy/teachers; settings links authorized admins to /academy/admin. Existing routes preserved; release pending.
 
 2026-11-21 review v0.7.17 discovery: /academy adds links to existing /academy/courses, /academy/teachers and active detail routes. Existing Back and role restrictions retained; no new route. Release pending.

@@ -1,3 +1,7 @@
+## 2026-11-21 — Student home and navigation (v0.7.18, pending release)
+
+Added signed-in student home overview for enrollments, upcoming individual bookings, assigned homework and teacher-recorded progress; My Courses list and catalogue entry; profile summary and settings shortcuts on the mobile navigation. Existing student, teacher and admin tools remain available. Group sessions continue to be available in Schedule, not this home summary. Profile shows existing account information and does not edit it. Full npm test, focused role/navigation and summary checks, docs checks and production build passed; tests use mocked transport. Real signed-in and mobile browser acceptance pending.
+
 ## 2026-11-21 — Academy home shortcuts (v0.7.17, unreleased)
 
 Added home shortcuts to Lingo3 App, course and teacher catalogues, language selection and an admin-only settings shortcut. Full npm test and production build passed; new admin shortcut and mobile UI have not been verified in browser. Full student home and navigation redesign remain incomplete; no production release.

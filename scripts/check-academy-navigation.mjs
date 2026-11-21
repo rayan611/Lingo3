@@ -48,11 +48,11 @@ try{
   await mount(r)
   const mobile=()=>tree.root.find(n=>n.props.className==='academy-bottom-nav')
   const mobileButton=label=>mobile().findAllByType('button').find(n=>text(n)===label)
-  for(const [label,expected] of [['Courses','courses'],['My Academy','personal'],['Home','home']]){
+  for(const [label,expected] of [['My courses','personal'],['My Academy','personal'],['Profile','personal'],['Home','home']]){
    await act(async()=>mobileButton(label).props.onClick());await flush();assert.equal(page(),expected);assert.equal(mobileButton(label).props['aria-current'],'page');checks+=2
   }
-  await act(async()=>mobileButton('Menu').props.onClick());assert.equal(mobileButton('Menu').props['aria-expanded'],true)
-  await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(mobileButton('Menu').props['aria-expanded'],false);checks+=2
+  await act(async()=>mobileButton('Settings').props.onClick());assert.equal(mobileButton('Settings').props['aria-expanded'],true)
+  await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(mobileButton('Settings').props['aria-expanded'],false);checks+=2
   for(const [label,expected,url] of routes){await click(label);assert.equal(page(),expected);assert.equal(location.pathname,url);await act(async()=>history.back());await act(async()=>history.forward());assert.equal(page(),expected);checks+=3
    for(const link of tree.root.findAllByType('a')){assert.match(link.props.href,/^(https:\/\/|mailto:|tel:|\/|#academy-main$)/);if(link.props.target==='_blank')assert.match(link.props.rel,/noreferrer/)}
   }
