@@ -12,6 +12,11 @@ const defaultDescriptions:Record<string,Record<string,string>>={
 export const escapeHtml=(s:unknown)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!))
 const jsonLd=(x:unknown)=>JSON.stringify(x).replace(/</g,'\\u003c')
 const organization={'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}
+/** Only advertise languages containing authored content; a fallback is not a translation. */
+export function authoredLocales(kind:'courses'|'teachers',entry:{title_i18n?:Record<string,string>;description_i18n?:Record<string,string>;intro_i18n?:Record<string,string>}):string[]{
+ const content=kind==='courses'?entry.description_i18n:entry.intro_i18n
+ return locales.filter(l=>Boolean((kind==='courses'?entry.title_i18n?.[l]:true) && content?.[l]?.trim()))
+}
 async function rows(table:string,query:string){
  const base=process.env.SUPABASE_URL||process.env.VITE_SUPABASE_URL,key=process.env.SUPABASE_ANON_KEY||process.env.VITE_SUPABASE_ANON_KEY
  if(!base||!key)throw Error('Public database configuration missing')
@@ -34,9 +39,9 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
   for(const l of locales)for(const r of ['','/posts','/courses','/teachers','/about','/path','/pricing','/resources','/contact'])urls.add(`${origin}/academy${r}?lang=${l}`)
   for(const table of ['academy_post_translations','academy_courses','academy_teachers']){
    for(let offset=0;offset<50000;offset+=1000){
-    const query=table==='academy_post_translations'?'select=post_id,locale&status=eq.published&order=post_id,locale':'select=id&status=eq.active&order=id'
+    const query=table==='academy_post_translations'?'select=post_id,locale&status=eq.published&order=post_id,locale':table==='academy_courses'?'select=id,title_i18n,description_i18n&status=eq.active&order=id':'select=id,intro_i18n&status=eq.active&order=id'
     const batch=await rows(table,`${query}&limit=1000&offset=${offset}`)
-    for(const x of batch)if(table==='academy_post_translations')urls.add(`${origin}/academy/posts/${x.post_id}?lang=${x.locale}`);else for(const l of locales)urls.add(`${origin}/academy/${table==='academy_courses'?'courses':'teachers'}/${x.id}?lang=${l}`)
+    for(const x of batch)if(table==='academy_post_translations')urls.add(`${origin}/academy/posts/${x.post_id}?lang=${x.locale}`);else for(const l of authoredLocales(table==='academy_courses'?'courses':'teachers',x))urls.add(`${origin}/academy/${table==='academy_courses'?'courses':'teachers'}/${x.id}?lang=${l}`)
     if(batch.length<1000)break
    }
   }
@@ -58,7 +63,7 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
   }else{
    const table=kind==='courses'?'academy_courses':'academy_teachers',fields=kind==='courses'?'id,title_i18n,description_i18n,topics_i18n':'id,display_name,display_name_i18n,intro_i18n,photo_url'
    const x=(await rows(table,`select=${fields}&id=eq.${id}&status=eq.active`))[0]
-   if(!x){status=404;noindex=true}else{title=kind==='courses'?(x.title_i18n[lang]||x.title_i18n.en):(x.display_name_i18n?.[lang]||x.display_name);description=(kind==='courses'?x.description_i18n:x.intro_i18n)?.[lang]||'';image=x.photo_url||undefined;content=`<p>${escapeHtml(description)}</p>`;if(x.topics_i18n)content+=`<ul>${(x.topics_i18n[lang]||[]).map((s:string)=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>`;schema=kind==='courses'?{'@context':'https://schema.org','@type':'Course',name:title,description,inLanguage:lang,url,provider:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}:{'@context':'https://schema.org','@type':'Person',name:title,description,url,image:image||undefined,worksFor:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}}
+   if(!x){status=404;noindex=true}else{const contentLocales=authoredLocales(kind as 'courses'|'teachers',x);alternates=contentLocales.map(l=>({locale:l,url:`${origin}/academy/${kind}/${id}?lang=${l}`}));if(!contentLocales.includes(lang))noindex=true;title=kind==='courses'?(x.title_i18n[lang]||x.title_i18n.en):(x.display_name_i18n?.[lang]||x.display_name);description=(kind==='courses'?x.description_i18n:x.intro_i18n)?.[lang]||(kind==='courses'?x.description_i18n:x.intro_i18n)?.en||'';image=x.photo_url||undefined;content=`<p>${escapeHtml(description)}</p>`;if(x.topics_i18n)content+=`<ul>${(x.topics_i18n[lang]||[]).map((s:string)=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>`;schema=kind==='courses'?{'@context':'https://schema.org','@type':'Course',name:title,description,inLanguage:lang,url,provider:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}:{'@context':'https://schema.org','@type':'Person',name:title,description,url,image:image||undefined,worksFor:{'@type':'Organization',name:'Lingo3 Academy',url:origin+'/academy'}}}
   }
  }else if(!id&&kind==='posts'){
   const entries=await rows('academy_post_translations',`select=post_id,title,description&locale=eq.${lang}&status=eq.published&order=published_at.desc&limit=100`)

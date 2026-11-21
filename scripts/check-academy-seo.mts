@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
-import {renderPage,escapeHtml} from '../api/academy-page.ts'
+import {renderPage,escapeHtml,authoredLocales} from '../api/academy-page.ts'
 const html=renderPage('<html lang="en"><head><title>Old</title><meta name="description" content="Old"><meta property="og:title" content="Old"></head><body><div id="root"></div></body></html>',{title:'درس <script>',description:'"Quoted" & text',locale:'fa',url:'https://lingo3.com/academy/posts/a?lang=fa',content:'<article>Readable body</article>',alternates:[{locale:'fa',url:'https://lingo3.com/academy/posts/a?lang=fa'}],schema:{'@type':'Article',headline:'</script><script>alert(1)</script>'}})
 assert.equal((html.match(/<title>/g)||[]).length,1)
 assert.equal((html.match(/name="description"/g)||[]).length,1)
@@ -33,3 +33,12 @@ console.log('PASS SEO: home rewrite, multilingual overrides, public structured d
 
 assert(vercel.routes?.some((r:{src:string;dest:string;override:boolean})=>r.src==='^/$'&&r.dest.includes('root=1')&&r.override===true),'Homepage must override static index filesystem precedence')
 console.log('PASS SEO: root rewrite overrides filesystem with server-rendered metadata.')
+
+assert.deepEqual(authoredLocales('courses',{title_i18n:{en:'Swedish A1',fa:'سوئدی A1'},description_i18n:{en:'Start learning',fa:'آموزش'}}),['en','fa'])
+assert.deepEqual(authoredLocales('teachers',{intro_i18n:{en:'Teaching Swedish',fa:'آموزش',de:''}}),['en','fa'])
+const editor=readFileSync(new URL('../src/academy/Academy.tsx',import.meta.url),'utf8')
+assert(editor.includes('permanentlyDeleteTeacher')&&editor.includes("teacherForm.status==='archived'"),'Permanent deletion must remain archived-only')
+assert(editor.includes("window.prompt(")&&editor.includes(".delete().eq('id',item.id)"),'Exact-name confirmation and explicit ID filter required')
+const deletionAudit=readFileSync(new URL('../supabase/migrations/20261121030000_academy_teacher_deletion_audit.sql',import.meta.url),'utf8')
+assert(deletionAudit.includes('enable row level security')&&deletionAudit.includes('academy_teacher_delete_audit'),'Teacher deletion audit must be protected and automatic')
+console.log('PASS SEO: authored-only locale indexing and safe teacher deletion audit contract.')

@@ -1,3 +1,5 @@
+2026-11-21 review (0.7.15, issue #65): existing public routes retained. Untranslated teacher/course locale variants are excluded from /sitemap.xml and tagged noindex; only authored translations expose hreflang. Existing posts remain publication-scoped. Admin SEO Audit is an internal tab on /academy/admin, no new URL. Teacher permanent delete admin action is on existing Teachers editor, no new route. Validation/release pending.
+
 2026-11-21 review (0.7.14, PR #67): same public/private URLs as 0.7.13; / homepage now requires filesystem-priority route to the metadata renderer rather than static index.html. Sitemap entries unchanged. Preview HTTP 200/canonical/JSON-LD verified, production release pending.
 
 2026-11-21 review (0.7.13, PR #66): no new Academy URLs; SEO editor is a private tab under /academy/admin. Public root / now uses server-rendered homepage metadata with fail-open static HTML; /academy, /academy/courses, /academy/teachers, /academy/posts and their existing detail URLs retain their current routes. Sitemap includes public published records, not private/draft/archived items. CI and live deployment evidence pending.

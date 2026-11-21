@@ -1,3 +1,7 @@
+## 2026-11-21 — SEO final hardening and teacher deletion (0.7.15)
+
+Implemented on feature branch: Admin SEO Audit of public metadata, authored-translation-only sitemap/hreflang, noindex for untranslated teacher/course details, admin form and server SEO integration regression tests. App homepage SEO override only supports English. Teacher permanent deletion now possible for an archived teacher with no dependent history and exact-name confirmation, with audit trail; referential constraints block deletion of the existing archived teacher with 1 booking. No real historical data destroyed. Google Search Console consent and real browser admin acceptance remain external checks. Await CI/release verification.
+
 ## 2026-11-21 — SEO root crawlability correction (0.7.14, PR #67)
 
 Homepage metadata is now server-rendered in a verified Vercel preview through an explicit filesystem override. Live / and Academy /academy?lang=fa HTTP smoke passed in preview; CI/release pending. Search Console measurements still require external access; SEO Manager itself shipped in 0.7.13.

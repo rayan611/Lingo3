@@ -1,7 +1,7 @@
 {
   "name": "lingo3",
   "private": true,
-  "version": "0.7.14",
+  "version": "0.7.15",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,7 @@
     "check:academy-bridge": "node scripts/check-academy-bridge.mjs",
     "check:academy-navigation": "node scripts/check-academy-navigation.mjs",
     "check:academy-roster": "node scripts/check-academy-roster-ui.mjs",
-    "check:academy-posts": "node scripts/check-academy-posts.mjs && node --import tsx scripts/check-academy-seo.mts",
+    "check:academy-posts": "node scripts/check-academy-posts.mjs && node scripts/check-academy-seo-manager.mjs && node scripts/check-academy-seo-handler.mjs && node --import tsx scripts/check-academy-seo.mts",
     "check:academy-ux": "node scripts/check-academy-field.mjs && node scripts/check-academy-schedule.mjs"
   },
   "dependencies": {

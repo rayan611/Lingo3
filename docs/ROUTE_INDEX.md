@@ -1,3 +1,5 @@
+2026-11-21 review (0.7.15, issue #65): no new URLs. /academy/admin > SEO & Google includes public metadata audit (admin role only). /academy/admin > Teachers supports archived-only permanent deletion with exact-name confirmation; FK dependencies block historical teacher removal. Course/teacher detail links retain original route; untranslated detail variants noindex, excluded from sitemap/hreflang. Validation/release pending.
+
 2026-11-21 review (0.7.14, PR #67): / -> prioritized server SEO metadata route (overrides Vercel's static index.html) -> /api/academy-page?root=1. On metadata failure the function returns static index. /academy and other routes unchanged; /academy/admin stays noindex. Preview verification passed; production pending.
 
 2026-11-21 review (0.7.13, PR #66): public routes unchanged; / homepage rewrite -> /api/academy-page?root=1 added with static fallback on metadata failure. /academy/admin remains private/noindex and contains SEO Manager tab without new route. Detail pages retain original URLs/canonical/hreflang; only published content appears in sitemap. CI and live deployment evidence pending.
