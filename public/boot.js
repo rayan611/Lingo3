@@ -50,7 +50,7 @@ window.__linguaReset = async function () {
 // If React hasn't mounted after a few seconds, something is wrong.
 setTimeout(function () {
   var root = document.getElementById('root');
-  if (root && root.childElementCount === 0) {
+  if (root && root.getAttribute('data-lingo-mounted') !== 'true') {
     showBootFallback(window.__linguaBootError || 'The app bundle did not mount within 8 seconds.');
   }
 }, 8000);

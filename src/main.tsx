@@ -6,7 +6,7 @@
  * description and verification; commit with the code and update the handoff.
  * Follow AGENTS.md for version bumps, documentation revisions and route maps.
  */
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import { ErrorBoundary } from './ui/ErrorBoundary'
@@ -17,9 +17,18 @@ import './styles.css'
 
 startUpdates()
 
+function BootSignal() {
+  useEffect(() => {
+    document.getElementById('root')?.setAttribute('data-lingo-mounted', 'true')
+    document.getElementById('boot-fallback')?.classList.remove('visible')
+  }, [])
+  return null
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
+      <BootSignal />
       <InstallBanner />
       <UpdateBanner />
       <App />
