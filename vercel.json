@@ -76,6 +76,11 @@
   ],
   "redirects": [
     {
+      "source": "/academy.html",
+      "destination": "/academy",
+      "permanent": false
+    },
+    {
       "source": "/academy/levels",
       "destination": "/academy/courses",
       "permanent": true

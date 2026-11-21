@@ -1,3 +1,11 @@
+## 2026-11-22 — Legacy Academy redirect (v0.7.19, unreleased)
+
+Redirect /academy.html to /academy at the server instead of depending on HTML meta refresh; retain the old page as a fallback. User screenshot matches the legacy page, but exact URL and device behavior remain unconfirmed. Full npm test and build passed; preview and live redirect checks pending.
+
+## 2026-11-22 — Boot diagnostics (v0.7.19, unreleased)
+
+Detect missing React mount even when server-rendered HTML exists, so the existing error and recovery panel can appear. This is diagnostic hardening; the reported blank-page root cause has not been confirmed. Focused fallback test, docs check and build passed. Browser verification and release pending.
+
 ## 2026-11-21 — Student home and navigation (v0.7.18, pending release)
 
 Added signed-in student home overview for enrollments, upcoming individual bookings, assigned homework and teacher-recorded progress; My Courses list and catalogue entry; profile summary and settings shortcuts on the mobile navigation. Existing student, teacher and admin tools remain available. Group sessions continue to be available in Schedule, not this home summary. Profile shows existing account information and does not edit it. Full npm test, focused role/navigation and summary checks, docs checks and production build passed; tests use mocked transport. Real signed-in and mobile browser acceptance pending.

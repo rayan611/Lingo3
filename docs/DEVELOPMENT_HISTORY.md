@@ -1,3 +1,11 @@
+## 2026-11-22 — Legacy Academy entry (v0.7.19, unreleased)
+
+Added server redirect for /academy.html to /academy after user screenshot matched legacy fallback page. The image does not identify URL; browser verification remains required.
+
+## 2026-11-22 — Academy boot diagnostics (v0.7.19, unreleased)
+
+After reported blank page and rollback to v0.7.17, identified missing mount detection for server-rendered root markup. Added explicit mount marker; no claim of root-cause fix. See handoff.
+
 ## 2026-11-21 — Student home navigation (v0.7.18, pending release)
 
 Added signed-in student summary and mobile My Courses, profile and settings shortcuts, preserving existing routes and role boundaries. Group sessions remain on Schedule and account profile is read-only. See handoff.
