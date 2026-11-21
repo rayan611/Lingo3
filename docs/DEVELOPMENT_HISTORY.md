@@ -1,3 +1,15 @@
+## 2026-11-21 — Academy home shortcuts (v0.7.17, incomplete)
+
+Added homepage shortcuts and admin-only settings entry; full requested student dashboard and navigation remain unfinished. See handoff.
+
+## 2026-11-21 — Academy homepage discovery (v0.7.17, unreleased)
+
+Added active course and teacher previews, catalogue shortcuts and accessibility improvements without changing data or role contracts. See handoff for acceptance limits.
+
+## 2026-11-21 — Academy mobile navigation (v0.7.17, unreleased)
+
+Introduced a mobile bottom shortcut bar and retained the complete existing Academy menu and role boundaries. Existing routes and data contracts are unchanged. Full reference comparison and signed-in responsive acceptance remain open; see handoff.
+
 2026-11-21 v0.7.16: Teacher permanent deletion UI now checks booking references and reports structured FK/permissions errors rather than [object Object]. Existing archived teacher has one historic booking and remains retained; no data changes. See handoff for CI/deploy evidence.
 
 2026-11-21 · v0.7.15 production verification: PR #68 merged 466896c0, Vercel READY dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL, CI #344 success and published SSR/canonical/noindex/sitemap HTTP smoke passed. SEO public audit and guarded archived teacher deletion with audit released. Real historic teacher booking preserved. See handoff.

@@ -1,3 +1,9 @@
+2026-11-21 review v0.7.17: homepage shortcuts use existing /, /academy/courses, /academy/teachers; settings links authorized admins to /academy/admin. Existing routes preserved; release pending.
+
+2026-11-21 review v0.7.17 discovery: /academy adds links to existing /academy/courses, /academy/teachers and active detail routes. Existing Back and role restrictions retained; no new route. Release pending.
+
+2026-11-21 review v0.7.17, branch feat/academy-reference-navigation-20261121: mobile bar links to existing /academy, /academy/courses and /academy/my and opens existing menu; no URL changes. Back behavior is unchanged; browser acceptance pending.
+
 2026-11-21 review v0.7.16: /academy/admin > Teachers retains archived-only protected deletion action; new booking preflight and error UI without route changes. /academy/teachers public visibility unchanged. Pending CI/release verification.
 
 2026-11-21 production route review v0.7.15 (commit 466896c0): / and /academy SSR SEO live; /academy/admin remains private/noindex with SEO audit and Teachers editor; /academy/courses/:id?lang=de missing authored German copy returns noindex, authored lang=fa remains indexable. /sitemap.xml returned 58 public URLs and no private or fake-language course links. No public route added. Deployment READY dpl_GFvjj4kEvB8Lp1VTU6JEtHXM2BVL.

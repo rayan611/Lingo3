@@ -165,3 +165,47 @@
 .academy .academy-admin .academy-card,.academy .academy-admin .academy-editor{padding:14px}.academy .academy-admin .academy-card-actions{gap:6px;margin-top:8px}.academy .academy-admin p{margin-block:5px}
 @media(max-width:700px){.academy .academy-teacher-picker{grid-template-columns:1fr 1fr}.academy .academy-teacher-picker>button{grid-column:1/-1}.academy .academy-teacher-edit-layout{grid-template-columns:1fr}.academy .academy-teacher-edit-menu{position:static;display:flex;overflow:auto}.academy .academy-teacher-edit-menu button{white-space:nowrap}}
 .academy .academy-danger{background:#ac252e!important;color:#fff!important;border:1px solid #991b1b!important}.academy .academy-danger-confirm{padding:14px;margin-top:10px;border:2px solid #c93640;border-radius:12px;background:#fff1f1;color:#7e1720}.academy .academy-danger-confirm button{margin-inline-end:8px}
+
+/* Mobile app-style shortcuts retain the complete Academy menu. */
+.academy .academy-bottom-nav{display:none}
+@media(max-width:860px){
+ .academy{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+ .academy .academy-bottom-nav{position:fixed;z-index:60;inset-inline:0;bottom:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:5px max(6px,env(safe-area-inset-left)) calc(5px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-right));background:#14182e;border-top:1px solid #ffffff30;box-shadow:0 -8px 24px #0002}
+ .academy .academy-bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:58px;padding:4px 2px;border:0;border-radius:12px;background:transparent;color:#d9dceb;font-size:.75rem;line-height:1.15}
+ .academy .academy-bottom-nav button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .academy .academy-bottom-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .academy .academy-bottom-nav button[aria-current=page],.academy .academy-bottom-nav button[aria-expanded=true]{color:#8ee0bd;background:#ffffff12}
+ .academy .academy-nav.is-open{position:fixed;z-index:61;inset-inline:8px;top:auto;bottom:calc(76px + env(safe-area-inset-bottom));width:auto;max-height:min(65vh,36rem);overflow:auto;padding:12px;border:1px solid #ffffff30;border-radius:18px;background:#14182e;box-shadow:0 12px 40px #0005}
+ .academy[data-theme=light] .academy-bottom-nav{background:#fff;border-color:#dce3e7}
+ .academy[data-theme=light] .academy-bottom-nav button{background:transparent;color:#455568}
+ .academy[data-theme=light] .academy-bottom-nav button[aria-current=page],.academy[data-theme=light] .academy-bottom-nav button[aria-expanded=true]{background:#e6f5ed;color:#08704a}
+ .academy[data-theme=light] .academy-nav.is-open{background:#fff;border-color:#dce3e7}
+}
+
+/* Reference-inspired public catalogue and clearer workspace hierarchy. */
+.academy .academy-skip-link{position:fixed;z-index:200;inset-inline-start:12px;top:8px;transform:translateY(-160%);padding:12px 16px;background:#fff;color:#152237;border:2px solid #13704c;border-radius:8px}
+.academy .academy-skip-link:focus{transform:translateY(0)}
+.academy button:focus-visible,.academy a:focus-visible,.academy summary:focus-visible,.academy input:focus-visible,.academy select:focus-visible,.academy textarea:focus-visible{outline:3px solid #169763;outline-offset:3px}
+.academy .academy-hero{min-height:0;padding-block:clamp(44px,7vw,84px);gap:clamp(24px,5vw,64px)}
+.academy .academy-hero h1{max-width:18ch}
+.academy .academy-hero-card{min-height:260px}
+.academy .academy-discover{border-top:1px solid #94a3b833}
+.academy .academy-discover-head{display:flex;align-items:end;justify-content:space-between;gap:16px}
+.academy .academy-discover-head h2{margin-bottom:0}
+.academy .academy-discover-card{display:flex;flex-direction:column;gap:12px;min-width:0}
+.academy .academy-discover-card h3,.academy .academy-discover-card p{margin:0}
+.academy .academy-discover-card p{line-height:1.55;overflow-wrap:anywhere}
+.academy .academy-discover-card small{margin-top:auto}
+.academy .academy-discover-card .teacher-head{align-items:flex-start}
+.academy .academy-portal-nav{align-items:stretch;background:#ffffff08}
+.academy .academy-portal-nav button{flex:1 1 auto}
+.academy[data-theme=light] .academy-hero{background:radial-gradient(ellipse at 85% 30%,#e5f7ef,transparent 45%)}
+.academy[data-theme=light] .academy-portal-nav{background:#f5f8f7;border-color:#dbe6e1}
+.academy[data-theme=light] .academy-discover-card{border-color:#dce6e1;box-shadow:0 8px 24px #203f3210}
+@media(max-width:860px){
+ .academy .academy-top-button{bottom:calc(88px + env(safe-area-inset-bottom))}
+ .academy .academy-discover-head{align-items:flex-start;flex-wrap:wrap}
+ .academy .academy-discover-head button{min-height:44px}
+}
+
+.academy .academy-home-quick{display:grid;gap:10px;padding-top:24px;max-width:520px}.academy .academy-home-quick-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.academy .academy-home-quick label{display:flex;align-items:center;gap:12px}.academy .academy-home-quick select{max-width:200px}

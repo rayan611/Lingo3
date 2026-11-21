@@ -1,3 +1,15 @@
+## 2026-11-21 — Academy home shortcuts (v0.7.17, unreleased)
+
+Added home shortcuts to Lingo3 App, course and teacher catalogues, language selection and an admin-only settings shortcut. Full npm test and production build passed; new admin shortcut and mobile UI have not been verified in browser. Full student home and navigation redesign remain incomplete; no production release.
+
+## 2026-11-21 — Academy discovery and accessibility (v0.7.17, unreleased)
+
+Added real published course and teacher previews to the Academy homepage, direct catalogue and teacher links, a skip-to-content link, visible focus indicators, and responsive styling for discovery and workspace navigation. Existing functions and role permissions are retained. Full npm test and TypeScript/Vite build passed; browser acceptance pending. No production deployment claimed.
+
+## 2026-11-21 — Academy mobile navigation (v0.7.17, unreleased)
+
+Added a mobile bottom bar for Home, Courses, My Academy and the full menu, preserving existing routes and role checks. Includes light/dark styling and safe-area spacing. Full npm test, production build and updated 230-assertion mocked navigation check passed. Browser acceptance remains pending; no production deployment claimed.
+
 2026-11-22 · v0.7.16 production verified: PR #69 merged 05676afc05d394593efb4d8510d5c8c8a9df713a, Vercel dpl_4u9gSmHfQ9aCcqRvGKBkiWnKXjN7 READY with lingo3.com aliases. CI #353 passed strict TypeScript, full regressions and production build. HTTP verified admin noindex, public teachers and sitemap. Archived teacher linked to one booking remains retained; no records deleted. Correct error messaging shipped; live signed-in end-to-end unverified.
 
 ## 2026-11-21 — Teacher deletion failure UX (Lingo3 v0.7.16, pending release)
