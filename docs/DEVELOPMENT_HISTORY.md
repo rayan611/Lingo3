@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy home shortcuts (v0.7.17, incomplete)
+
+Added homepage shortcuts and admin-only settings entry; full requested student dashboard and navigation remain unfinished. See handoff.
+
 ## 2026-11-21 — Academy homepage discovery (v0.7.17, unreleased)
 
 Added active course and teacher previews, catalogue shortcuts and accessibility improvements without changing data or role contracts. See handoff for acceptance limits.

@@ -1,3 +1,7 @@
+## 2026-11-21 — Student home request (v0.7.17, incomplete)
+
+Home shortcuts and admin-only settings link added. Student dashboard, My Courses navigation, profile, full acceptance and requested production deployment remain open. See handoff.
+
 ## 2026-11-21 — Academy discovery refinements (v0.7.17, unreleased)
 
 Homepage previews published courses and teachers, adds direct entry points and keyboard focus improvements. Complete reference comparison and responsive/signed-in browser acceptance remain open.

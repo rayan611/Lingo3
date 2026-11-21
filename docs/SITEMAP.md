@@ -1,3 +1,5 @@
+2026-11-21 review v0.7.17: home adds shortcuts to existing App, Courses, Teachers, language preference; settings adds an admin-only shortcut to existing Admin Studio. No route changes; release pending.
+
 2026-11-21 review v0.7.17 discovery: homepage adds shortcuts to existing active course and teacher details and catalogues; no new routes, role changes or public drafts. Branch feat/academy-reference-navigation-20261121; release pending.
 
 2026-11-21 review v0.7.17, branch feat/academy-reference-navigation-20261121: mobile bottom bar adds shortcuts to existing Home, Courses, My Academy and complete menu; existing public and role-restricted destinations remain unchanged. Browser acceptance and release pending.

@@ -1,3 +1,7 @@
+## 2026-11-21 — Academy home shortcuts (v0.7.17, unreleased)
+
+Added home shortcuts to Lingo3 App, course and teacher catalogues, language selection and an admin-only settings shortcut. Full npm test and production build passed; new admin shortcut and mobile UI have not been verified in browser. Full student home and navigation redesign remain incomplete; no production release.
+
 ## 2026-11-21 — Academy discovery and accessibility (v0.7.17, unreleased)
 
 Added real published course and teacher previews to the Academy homepage, direct catalogue and teacher links, a skip-to-content link, visible focus indicators, and responsive styling for discovery and workspace navigation. Existing functions and role permissions are retained. Full npm test and TypeScript/Vite build passed; browser acceptance pending. No production deployment claimed.
