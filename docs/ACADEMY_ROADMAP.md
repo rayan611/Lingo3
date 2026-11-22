@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy home banner (v0.7.20, unreleased)
+
+Removed decorative A1/A2/B1 hero panel at owner request. Further owner suggestions pending.
+
 ## 2026-11-22 — Tikkaa-inspired discovery (v0.7.20, unreleased)
 
 Language and level filters added to teacher and course directories. Tikkaa mobile menu and signed-in sections remain uninspected; full design comparison, actual responsive QA, and coordination with mobile menu PR #74 remain open.

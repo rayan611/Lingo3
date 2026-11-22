@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy home banner removal (v0.7.20, unreleased)
+
+Removed the decorative A1/A2/B1 hero panel at the owner’s request; retained home actions and learning tools. Navigation and documentation checks and production build passed; real browser acceptance and deployment pending.
+
 ## 2026-11-22 — Academy discovery filters (v0.7.20, unreleased)
 
 Added language and level filters and localized no-results feedback to the existing teacher and course directories, with responsive RTL/LTR styling. Existing search, routes and role checks retained. Full `npm test` and `npm run build` passed; no browser/device acceptance or deployment.

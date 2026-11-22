@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy home panel removal (v0.7.20, unreleased)
+
+Removed decorative level panel from Academy home; retained existing actions and navigation.
+
 ## 2026-11-22 — Academy discovery filters (v0.7.20, unreleased)
 
 Added responsive, localized language and level filters plus empty results to teacher/course catalogues. Tikkaa mobile and real device checks pending; no route, data, authorization or deployment changes.

@@ -218,3 +218,6 @@
 .academy .academy-discovery-filters select{min-height:46px}
 .academy[data-theme=light] .academy-discovery-filters{background:#f4f8f7;border-color:#d8e6df}
 @media(max-width:420px){.academy .academy-discovery-filters{padding:12px;gap:10px}.academy .academy-discovery-filters label{font-size:.9rem}}
+
+/* Home hero uses the full content width without the decorative level panel. */
+.academy .academy-hero{grid-template-columns:minmax(0,1fr)}

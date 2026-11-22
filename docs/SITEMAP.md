@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.20: removed decorative Academy home level panel; routes, entry points and Back unchanged. Unreleased.
+
 2026-11-22 review v0.7.20, base `fc0a7cb`: existing teacher and course directories gain client-side language and level filters; no routes, entry points or Back changes. Not deployed.
 
 2026-11-22 review v0.7.20: existing Academy mobile header menu position fixed; no routes, links, role restrictions or Back behavior changed. Browser mobile acceptance and release pending.

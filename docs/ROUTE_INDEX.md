@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.20: `/academy` removes decorative level panel; no URL, entry-point or Back change. Unreleased.
+
 2026-11-22 review v0.7.20, base `fc0a7cb`: `/academy/courses` and `/academy/teachers` add client-side filters and empty states. URLs and Back behavior unchanged. Not deployed.
 
 2026-11-22 review v0.7.20: Academy mobile header menu renders below its header; destinations, URLs and Back behavior unchanged. Browser mobile acceptance and release pending.

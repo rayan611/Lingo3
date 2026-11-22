@@ -1,3 +1,7 @@
+## 2026-11-22 — Remove Academy home level panel (v0.7.20, unreleased)
+
+Removed only the decorative A1/A2/B1 homepage hero panel and expanded the remaining hero to the available width. Existing course, teacher and learning-path links remain. No route, role or data changes. Navigation checks (250 mocked assertions), documentation checks and production build passed. Real browser acceptance and deployment pending; user intends to provide further changes. SITEMAP and ROUTE_INDEX reviewed: no navigation or Back changes.
+
 ## 2026-11-22 — Combined Academy release candidate (v0.7.20)
 
 Combined PR #74 mobile menu fix with PR #75 catalogue filters on the feature branch. Full npm test, npm run build and git diff --check passed on the combined tree. Actual mobile/desktop browser console, authenticated key flows, viewport acceptance, and Tikkaa mobile reference remain unverified; no production release. Preview and CI pending for combined commit. Routes and Back behavior unchanged; SITEMAP and ROUTE_INDEX reviewed. Production remains v0.7.19.
