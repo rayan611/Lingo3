@@ -175,7 +175,7 @@
  .academy .academy-bottom-nav button span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  .academy .academy-bottom-nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
  .academy .academy-bottom-nav button[aria-current=page],.academy .academy-bottom-nav button[aria-expanded=true]{color:#8ee0bd;background:#ffffff12}
- .academy .academy-nav.is-open{position:fixed;z-index:61;inset-inline:8px;top:auto;bottom:calc(76px + env(safe-area-inset-bottom));width:auto;max-height:min(65vh,36rem);overflow:auto;padding:12px;border:1px solid #ffffff30;border-radius:18px;background:#14182e;box-shadow:0 12px 40px #0005}
+ .academy .academy-nav.is-open{position:absolute;z-index:61;inset-inline:8px;top:calc(100% + 4px);bottom:auto;width:auto;max-height:min(65vh,calc(100dvh - 160px));overflow:auto;padding:12px;border:1px solid #ffffff30;border-radius:18px;background:#14182e;box-shadow:0 12px 40px #0005}
  .academy[data-theme=light] .academy-bottom-nav{background:#fff;border-color:#dce3e7}
  .academy[data-theme=light] .academy-bottom-nav button{background:transparent;color:#455568}
  .academy[data-theme=light] .academy-bottom-nav button[aria-current=page],.academy[data-theme=light] .academy-bottom-nav button[aria-expanded=true]{background:#e6f5ed;color:#08704a}

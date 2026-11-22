@@ -1,3 +1,7 @@
+## 2026-11-22 — Mobile Academy header menu (v0.7.20, unreleased)
+
+Position the mobile header menu immediately below its sticky header instead of using a fixed bottom offset inside a backdrop-filter containing block, which could put the menu above the viewport. Add interaction, Escape and CSS-position regression checks. Full npm test, 250 mocked navigation assertions, docs check and TypeScript/Vite build passed. Browser/device acceptance and deployment pending.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 Record production v0.7.19 deployment and HTTP checks for PR #72, released v0.7.17–0.7.19 changes, and outstanding real-device/role acceptance and functionality gaps. No runtime change; no new deployment claimed. See `docs/DEVELOPMENT_HANDOFF.md` for evidence and next steps.
