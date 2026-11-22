@@ -1,3 +1,7 @@
+## 2026-11-22 — Localize Training Center (v0.7.20, unreleased)
+
+Training Center titles, descriptions and navigation now follow the selected native language for eight languages, including Persian RTL. Underlying activities and saved language settings are unchanged. Production build, full npm test and locale coverage check passed; other App screens remain incompletely localized and browser/device verification and deployment remain pending.
+
 ## 2026-11-22 — Main navigation language and control styling (v0.7.20, unreleased)
 
 Main App navigation labels follow the selected native language for eight supported languages; Persian navigation uses RTL. Added subtle dimensional button styling with reduced-motion support to the App navigation and Academy primary buttons. Other App screens remain incompletely localized. No settings, user data, routes or permissions changed. Full npm test and production build passed; browser/device acceptance and deployment pending.

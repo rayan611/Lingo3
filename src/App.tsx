@@ -48,6 +48,7 @@ import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
 import {AcademyBridge} from './ui/AcademyBridge'
 import {LANGS, type Lang} from './db/langs'
 import { navigateProduct } from './lib/productNavigation'
+import { TRAINING_LABELS } from './ui/trainingLabels'
 
 /**
  * Screens that are not needed to open the app, each in its own chunk, so the
@@ -624,7 +625,7 @@ function Workspace({
             scrolling past them. */}
         <HomeTiles nativeLang={settings.nativeLang} set={goTab} due={due} active={tab} onAcademy={() => navigateProduct('/academy')} />
 
-        {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
+        {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} nativeLang={settings.nativeLang} />}
 
         {userId&&(tab==='browse'||tab==='grammar')&&<AcademyBridge key={userId+tab} userId={userId} kind={tab==='browse'?'words':'grammar'} languages={activeTargets(settings)}/>}
 
@@ -774,31 +775,32 @@ const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React
   { id: 'training', title: 'Word Practice', detail: 'Explore words without changing your review schedule.', icon: <IconTraining /> },
 ]
 
-function TrainingCenter({ set, active }: { set: (tab: Tab) => void; active: Tab }) {
+function TrainingCenter({ set, active, nativeLang }: { set: (tab: Tab) => void; active: Tab; nativeLang: Lang }) {
+  const labels = TRAINING_LABELS[nativeLang]
   if (active !== 'training-center') return (
     <div className="training-center-navigation">
-      <button type="button" className="link" onClick={() => set('training-center')}>← Training Center</button>
-      <nav className="training-center-tabs" aria-label="Training activities">
-        {TRAINING_ACTIVITIES.map(item => <button key={item.id} type="button"
+      <button type="button" className="link" onClick={() => set('training-center')}>← {labels.title}</button>
+      <nav className="training-center-tabs" aria-label={labels.activities}>
+        {TRAINING_ACTIVITIES.map((item, index) => <button key={item.id} type="button"
           aria-current={active === item.id ? 'page' : undefined}
           className={active === item.id ? 'is-active' : undefined}
-          onClick={() => set(item.id)}>{item.icon}<span>{item.title}</span></button>)}
+          onClick={() => set(item.id)}>{item.icon}<span>{labels.titles[index]}</span></button>)}
       </nav>
     </div>
   )
   return (
-    <section className="training-center" aria-labelledby="training-center-title">
-      <button type="button" className="link" onClick={() => set('add')} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 12 }}><IconHome /> Home</button>
-      <h2 id="training-center-title">Training Center</h2>
-      <p className="muted">Choose how you want to learn today.</p>
-      <nav className="tiles training-center-activities" aria-label="Choose a training activity">
-        {TRAINING_ACTIVITIES.map(item => <Tile key={item.id} id={item.id} set={set} active={active}
+    <section className="training-center" dir={nativeLang === "fa" ? "rtl" : "ltr"} aria-labelledby="training-center-title">
+      <button type="button" className="link" onClick={() => set('add')} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 12 }}><IconHome /> {labels.home}</button>
+      <h2 id="training-center-title">{labels.title}</h2>
+      <p className="muted">{labels.choose}</p>
+      <nav className="tiles training-center-activities" aria-label={labels.activities}>
+        {TRAINING_ACTIVITIES.map((item, index) => <Tile key={item.id} id={item.id} set={set} active={active}
           icon={item.icon}>
-          <strong>{item.title}</strong><small>{item.detail}</small>
+          <strong>{labels.titles[index]}</strong><small>{labels.details[index]}</small>
         </Tile>)}
         <button className="tile tile-academy" type="button" onClick={() => navigateProduct('/academy')}>
           <span className="tile-icon" aria-hidden="true">🎓</span>
-          <span className="tile-label"><strong>Academy</strong><small>Explore courses and lessons with teachers.</small></span>
+          <span className="tile-label"><strong>{labels.academy}</strong><small>{labels.academyDetail}</small></span>
         </button>
       </nav>
     </section>

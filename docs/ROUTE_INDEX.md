@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.20: existing Training Center and activities remain at their URLs; labels localized. Back unchanged. Unreleased.
+
 2026-11-22 review v0.7.20: App navigation labels change with native-language preference; URLs, routes and Back unchanged. Unreleased.
 
 2026-11-22 review v0.7.20: `/academy` shows journey; `/academy/courses` and `/academy/teachers` have collapsible filters; teacher detail labels calendar zone. URLs and Back unchanged. Unreleased.

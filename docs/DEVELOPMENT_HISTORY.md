@@ -1,3 +1,7 @@
+## 2026-11-22 — Training Center locale (v0.7.20, unreleased)
+
+Localized Training Center labels and descriptions for the existing eight native-language options. Full App and Academy functionality remains incomplete.
+
 ## 2026-11-22 — App navigation locale (v0.7.20, unreleased)
 
 Eight-language native-language labels for main navigation and restrained App/Academy button depth. Full App translation and phase 1/2 Academy work remain open.
