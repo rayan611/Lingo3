@@ -1,3 +1,7 @@
+## 2026-11-22 — Phase 1/2 follow-up (v0.7.20, unreleased)
+
+Discovery filter panels/reset, home journey and calendar zone label added. Class vocabulary import, assessment, progress, review/guarantee and cancellation/refund workflows remain open; phase 3 excluded by owner.
+
 ## 2026-11-22 — Owner instruction inventory (v0.7.20, unreleased)
 
 See ACADEMY_REQUIREMENTS_2026-11-22.md for existing features, requirements and remaining work. Teacher specialty filtering added; class-to-bank and placement remain open.

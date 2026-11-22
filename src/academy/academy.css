@@ -221,3 +221,5 @@
 
 /* Home hero uses the full content width without the decorative level panel. */
 .academy .academy-hero{grid-template-columns:minmax(0,1fr)}
+
+.academy .academy-filter-panel{max-width:720px;margin:14px 0 22px}.academy .academy-filter-panel summary{cursor:pointer;min-height:44px;padding:10px 14px;border:1px solid #ffffff35;border-radius:12px;font-weight:700}.academy .academy-filter-panel .academy-discovery-filters{margin:8px 0 0}.academy[data-theme=light] .academy-filter-panel summary{border-color:#c9d9d0;background:#f4f8f7}.academy .academy-discovery-filters button{min-height:44px;align-self:end}.academy .academy-calendar-timezone{font-size:.9rem;overflow-wrap:anywhere}

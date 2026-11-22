@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy discovery and learning journey (v0.7.20, unreleased)
+
+Added collapsible course and teacher filter panels with clear controls, home learning steps, and explicit device time-zone labeling on the teacher calendar. Existing routes, roles, records and booking behavior retained. Build and test results recorded in handoff; no production release.
+
 ## 2026-11-22 — Teacher specialty discovery (v0.7.20, unreleased)
 
 Added specialty filtering and specialty text search to the teacher directory using existing teacher data. Four locale labels remain supported. Build and navigation checks passed; real browser acceptance and deployment pending. See the requirements inventory for remaining instruction scope.

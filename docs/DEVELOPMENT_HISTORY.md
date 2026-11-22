@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy discovery usability (v0.7.20, unreleased)
+
+Added collapsible filters/reset actions, homepage journey and calendar time-zone label. User-requested phase 1/2 work remains incomplete.
+
 ## 2026-11-22 — Academy instruction intake and teacher specialty (v0.7.20, unreleased)
 
 Owner instruction inventoried; existing teacher specialties now searchable and filterable with existing records. Broader class-to-bank, assessment, payments and mobile acceptance remain open.
