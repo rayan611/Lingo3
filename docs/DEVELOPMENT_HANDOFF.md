@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy instruction intake (v0.7.20, unreleased)
+
+Reviewed all six pages of owner-provided instruction and recorded a requirement-by-requirement implementation inventory in docs/ACADEMY_REQUIREMENTS_2026-11-22.md. Added teacher specialty filtering and search using existing teacher records, alongside existing language and level filters; no new schema, access, data or payment changes. Local build and 250 mocked navigation assertions passed. Real browser, responsive and authenticated role checks remain open. Other requirements are not complete; planned database/permissions, financial terms, placement question bank and AI costs must be designed and separately approved where required. SITEMAP/ROUTE_INDEX reviewed; no new route or Back change. Next: design and validate class-to-personal-bank contract, then prepare reversible migration and approval. No production deployment.
+
 ## 2026-11-22 — Remove Academy home level panel (v0.7.20, unreleased)
 
 Removed only the decorative A1/A2/B1 homepage hero panel and expanded the remaining hero to the available width. Existing course, teacher and learning-path links remain. No route, role or data changes. Navigation checks (250 mocked assertions), documentation checks and production build passed. Real browser acceptance and deployment pending; user intends to provide further changes. SITEMAP and ROUTE_INDEX reviewed: no navigation or Back changes.

@@ -1,3 +1,7 @@
+## 2026-11-22 — Teacher specialty discovery (v0.7.20, unreleased)
+
+Added specialty filtering and specialty text search to the teacher directory using existing teacher data. Four locale labels remain supported. Build and navigation checks passed; real browser acceptance and deployment pending. See the requirements inventory for remaining instruction scope.
+
 ## 2026-11-22 — Academy home banner removal (v0.7.20, unreleased)
 
 Removed the decorative A1/A2/B1 hero panel at the owner’s request; retained home actions and learning tools. Navigation and documentation checks and production build passed; real browser acceptance and deployment pending.

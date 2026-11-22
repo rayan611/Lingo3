@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy instruction intake and teacher specialty (v0.7.20, unreleased)
+
+Owner instruction inventoried; existing teacher specialties now searchable and filterable with existing records. Broader class-to-bank, assessment, payments and mobile acceptance remain open.
+
 ## 2026-11-22 — Academy home panel removal (v0.7.20, unreleased)
 
 Removed decorative level panel from Academy home; retained existing actions and navigation.

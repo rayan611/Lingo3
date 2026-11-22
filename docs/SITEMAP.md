@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.20: existing teacher directory gains specialty filter; no route or Back change. Unreleased.
+
 2026-11-22 review v0.7.20: removed decorative Academy home level panel; routes, entry points and Back unchanged. Unreleased.
 
 2026-11-22 review v0.7.20, base `fc0a7cb`: existing teacher and course directories gain client-side language and level filters; no routes, entry points or Back changes. Not deployed.

@@ -1,3 +1,7 @@
+## 2026-11-22 — Owner instruction inventory (v0.7.20, unreleased)
+
+See ACADEMY_REQUIREMENTS_2026-11-22.md for existing features, requirements and remaining work. Teacher specialty filtering added; class-to-bank and placement remain open.
+
 ## 2026-11-22 — Academy home banner (v0.7.20, unreleased)
 
 Removed decorative A1/A2/B1 hero panel at owner request. Further owner suggestions pending.
