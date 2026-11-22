@@ -1,3 +1,7 @@
+## 2026-11-22 — Owner follow-up (v0.7.20, unreleased)
+
+App main navigation translated for eight native languages; other surfaces need localization. Academy primary button depth enhanced. Nonfinancial phase 1/2 remains incomplete; see requirements inventory.
+
 ## 2026-11-22 — Phase 1/2 follow-up (v0.7.20, unreleased)
 
 Discovery filter panels/reset, home journey and calendar zone label added. Class vocabulary import, assessment, progress, review/guarantee and cancellation/refund workflows remain open; phase 3 excluded by owner.

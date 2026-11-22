@@ -1,3 +1,7 @@
+## 2026-11-22 — App navigation locale (v0.7.20, unreleased)
+
+Eight-language native-language labels for main navigation and restrained App/Academy button depth. Full App translation and phase 1/2 Academy work remain open.
+
 ## 2026-11-22 — Academy discovery usability (v0.7.20, unreleased)
 
 Added collapsible filters/reset actions, homepage journey and calendar time-zone label. User-requested phase 1/2 work remains incomplete.

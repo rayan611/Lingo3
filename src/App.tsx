@@ -46,7 +46,7 @@ import { inviterFromPath } from './lib/invite'
 import { lazyScreen } from './ui/lazyScreen'
 import { DEFAULT_THEME, applyTheme, cacheTheme, readTheme } from './lib/theme'
 import {AcademyBridge} from './ui/AcademyBridge'
-import {LANGS} from './db/langs'
+import {LANGS, type Lang} from './db/langs'
 import { navigateProduct } from './lib/productNavigation'
 
 /**
@@ -622,7 +622,7 @@ function Workspace({
             row doubles as the answer to "where am I". They are deliberately
             small — the Add box has to be visible on a phone without
             scrolling past them. */}
-        <HomeTiles set={goTab} due={due} active={tab} onAcademy={() => navigateProduct('/academy')} />
+        <HomeTiles nativeLang={settings.nativeLang} set={goTab} due={due} active={tab} onAcademy={() => navigateProduct('/academy')} />
 
         {isTrainingArea(tab) && <TrainingCenter set={goTab} active={tab} />}
 
@@ -712,37 +712,51 @@ function ReviewTab({
  * Add is a tile like any other, which is what replaced the Back control:
  * every destination including home is one press away from everywhere.
  */
+const HOME_LABELS: Record<Lang, {navigation:string;add:string;training:string;recall:string;translate:string;settings:string;academy:string;openAcademy:string}> = {
+  en:{navigation:'Go to',add:'Add a word',training:'Training Center',recall:'Recall test',translate:'Translate',settings:'Settings',academy:'Academy',openAcademy:'Open Lingo3 Academy'},
+  fa:{navigation:'ناوبری',add:'افزودن واژه',training:'مرکز تمرین',recall:'آزمون یادآوری',translate:'ترجمه',settings:'تنظیمات',academy:'آکادمی',openAcademy:'باز کردن آکادمی لینگو۳'},
+  sv:{navigation:'Navigering',add:'Lägg till ord',training:'Träningscenter',recall:'Minnestest',translate:'Översätt',settings:'Inställningar',academy:'Akademi',openAcademy:'Öppna Lingo3 Akademi'},
+  de:{navigation:'Navigation',add:'Wort hinzufügen',training:'Trainingszentrum',recall:'Erinnerungstest',translate:'Übersetzen',settings:'Einstellungen',academy:'Akademie',openAcademy:'Lingo3 Akademie öffnen'},
+  es:{navigation:'Navegación',add:'Añadir palabra',training:'Centro de práctica',recall:'Prueba de memoria',translate:'Traducir',settings:'Ajustes',academy:'Academia',openAcademy:'Abrir Lingo3 Academia'},
+  ru:{navigation:'Навигация',add:'Добавить слово',training:'Центр практики',recall:'Проверка памяти',translate:'Перевод',settings:'Настройки',academy:'Академия',openAcademy:'Открыть Lingo3 Академию'},
+  it:{navigation:'Navigazione',add:'Aggiungi parola',training:'Centro di pratica',recall:'Test di memoria',translate:'Traduci',settings:'Impostazioni',academy:'Accademia',openAcademy:'Apri Lingo3 Accademia'},
+  fr:{navigation:'Navigation',add:'Ajouter un mot',training:'Centre de pratique',recall:'Test de mémoire',translate:'Traduire',settings:'Paramètres',academy:'Académie',openAcademy:'Ouvrir Lingo3 Académie'},
+}
+
 function HomeTiles({
   set,
   due,
   active,
   onAcademy,
+  nativeLang,
 }: {
   set: (t: Tab) => void
   due: number
   active: Tab
   onAcademy: () => void
+  nativeLang: Lang
 }) {
+  const labels = HOME_LABELS[nativeLang]
   return (
-    <nav className="tiles primary-tiles" aria-label="Go to">
+    <nav className="tiles primary-tiles" aria-label={labels.navigation} dir={nativeLang === "fa" ? "rtl" : "ltr"}>
       <Tile id="add" set={set} active={active} icon={<IconAdd />}>
-        Add a word
+        {labels.add}
       </Tile>
       <Tile id="training-center" set={set} active={isTrainingArea(active) ? 'training-center' : active} icon={<IconTraining />}>
-        Training Center
+        {labels.training}
       </Tile>
       <Tile id="review" set={set} active={active} badge={due} icon={<IconReview />}>
-        Recall test
+        {labels.recall}
       </Tile>
       <Tile id="translate" set={set} active={active} icon={<IconTranslate />}>
-        Translate
+        {labels.translate}
       </Tile>
       <Tile id="settings" set={set} active={active} icon={<IconSettings />}>
-        Settings
+        {labels.settings}
       </Tile>
-      <button className="tile tile-academy" type="button" onClick={onAcademy} aria-label="Open Lingo3 Academy">
+      <button className="tile tile-academy" type="button" onClick={onAcademy} aria-label={labels.openAcademy}>
         <span className="tile-icon" aria-hidden="true">🎓</span>
-        <span className="tile-label">Academy</span>
+        <span className="tile-label">{labels.academy}</span>
       </button>
     </nav>
   )

@@ -1,3 +1,5 @@
+2026-11-22 review v0.7.20: main App navigation translated according to existing native-language preference; destinations and Back unchanged. Unreleased.
+
 2026-11-22 review v0.7.20: home adds existing how-it-works content, catalogues add collapsible filters and reset; teacher profile labels local timezone. No route or Back change. Unreleased.
 
 2026-11-22 review v0.7.20: existing teacher directory gains specialty filter; no route or Back change. Unreleased.

@@ -223,3 +223,9 @@
 .academy .academy-hero{grid-template-columns:minmax(0,1fr)}
 
 .academy .academy-filter-panel{max-width:720px;margin:14px 0 22px}.academy .academy-filter-panel summary{cursor:pointer;min-height:44px;padding:10px 14px;border:1px solid #ffffff35;border-radius:12px;font-weight:700}.academy .academy-filter-panel .academy-discovery-filters{margin:8px 0 0}.academy[data-theme=light] .academy-filter-panel summary{border-color:#c9d9d0;background:#f4f8f7}.academy .academy-discovery-filters button{min-height:44px;align-self:end}.academy .academy-calendar-timezone{font-size:.9rem;overflow-wrap:anywhere}
+
+/* Subtle dimensional feedback for Academy controls; reduced motion respected. */
+.academy .academy-primary{box-shadow:0 3px 0 #27473455,0 8px 18px #152e2526;transition:transform .16s ease,box-shadow .16s ease}
+.academy .academy-primary:hover{transform:translateY(-2px);box-shadow:0 5px 0 #27473455,0 12px 22px #152e2533}
+.academy .academy-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #27473455}
+@media(prefers-reduced-motion:reduce){.academy .academy-primary{transition:none}.academy .academy-primary:hover,.academy .academy-primary:active{transform:none}}

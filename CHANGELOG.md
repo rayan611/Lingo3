@@ -1,3 +1,7 @@
+## 2026-11-22 — Main navigation language and control styling (v0.7.20, unreleased)
+
+Main App navigation labels follow the selected native language for eight supported languages; Persian navigation uses RTL. Added subtle dimensional button styling with reduced-motion support to the App navigation and Academy primary buttons. Other App screens remain incompletely localized. No settings, user data, routes or permissions changed. Full npm test and production build passed; browser/device acceptance and deployment pending.
+
 ## 2026-11-22 — Academy discovery and learning journey (v0.7.20, unreleased)
 
 Added collapsible course and teacher filter panels with clear controls, home learning steps, and explicit device time-zone labeling on the teacher calendar. Existing routes, roles, records and booking behavior retained. Build and test results recorded in handoff; no production release.
