@@ -1,3 +1,7 @@
+## 2026-11-22 — Tikkaa-inspired Academy discovery (v0.7.20, unreleased)
+
+Branch `feat/academy-discovery-tikkaa-20261122`, based on `fc0a7cb`. Added language and level filters to existing teacher and course catalogues, localized empty states in en/fa/sv/de, responsive styling and existing search retained. No DB, data, auth or route changes. Full `npm test` and `npm run build` passed locally after implementation; real mobile and signed-in acceptance unverified. Tikkaa mobile menu could not be inspected in this session; earlier public desktop observations inform this limited first increment. PR #74 independently modifies mobile menu; do not overwrite or silently merge its work. SITEMAP and ROUTE_INDEX reviewed; no entry point, URL or Back changes. No deployment. Next: inspect Tikkaa mobile and protected pages with user access, verify responsive/RTL and real role flows, coordinate menu change, and complete broader redesign.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 **Current production:** v0.7.19, runtime commit `49c48096cf756c9128e518c885b05ff43b739878`, PR #72, Vercel deployment `dpl_EWc8J2MAS4swJW2D9zeAZn5dFTRe`, promoted to production after rollback. `lingo3.com/version.json` returned 0.7.19; `/academy.html?lang=fa` led to the Persian Academy HTML over HTTP. These observations do not prove the user's device rendered or redirected successfully. Earlier dated pending/rollback entries below are historical and superseded by this entry.

@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy discovery filters (v0.7.20, unreleased)
+
+Added language and level filters and localized no-results feedback to the existing teacher and course directories, with responsive RTL/LTR styling. Existing search, routes and role checks retained. Full `npm test` and `npm run build` passed; no browser/device acceptance or deployment.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 Record production v0.7.19 deployment and HTTP checks for PR #72, released v0.7.17–0.7.19 changes, and outstanding real-device/role acceptance and functionality gaps. No runtime change; no new deployment claimed. See `docs/DEVELOPMENT_HANDOFF.md` for evidence and next steps.

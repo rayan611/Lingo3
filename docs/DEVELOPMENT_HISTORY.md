@@ -1,3 +1,7 @@
+## 2026-11-22 — Academy discovery filters (v0.7.20, unreleased)
+
+Added responsive, localized language and level filters plus empty results to teacher/course catalogues. Tikkaa mobile and real device checks pending; no route, data, authorization or deployment changes.
+
 ## 2026-11-22 — Legacy Academy entry (v0.7.19, unreleased)
 
 Added server redirect for /academy.html to /academy after user screenshot matched legacy fallback page. The image does not identify URL; browser verification remains required.

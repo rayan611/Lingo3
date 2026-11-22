@@ -1,3 +1,7 @@
+## 2026-11-22 — Tikkaa-inspired discovery (v0.7.20, unreleased)
+
+Language and level filters added to teacher and course directories. Tikkaa mobile menu and signed-in sections remain uninspected; full design comparison, actual responsive QA, and coordination with mobile menu PR #74 remain open.
+
 ## 2026-11-22 — Academy release and next checks (documentation revision; v0.7.19)
 
 v0.7.17–0.7.19 deployed: reference-inspired navigation, student home summary, My Courses, read-only profile, settings, legacy entry redirect and boot diagnostics. Next: confirm user's actual device works; test real signed-in roles and responsive layouts. Group sessions remain in Schedule rather than home; profile is read-only; complete Base44 parity has not been established. See `DEVELOPMENT_HANDOFF.md` for evidence and limits.
