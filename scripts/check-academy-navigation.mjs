@@ -46,6 +46,9 @@ const routes=[['Home','home','/academy'],['Find your learning path','path','/aca
 try{
  for(const r of ['guest','student','teacher','admin']){
   await mount(r)
+  const headerMenu=()=>tree.root.findByProps({'aria-label':'Menu'})
+  await act(async()=>headerMenu().props.onClick());assert.equal(headerMenu().props['aria-expanded'],true);assert(tree.root.findByProps({id:'academy-navigation'}).props.className.includes('is-open'))
+  await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(headerMenu().props['aria-expanded'],false);checks+=3
   const mobile=()=>tree.root.find(n=>n.props.className==='academy-bottom-nav')
   const mobileButton=label=>mobile().findAllByType('button').find(n=>text(n)===label)
   for(const [label,expected] of [['My courses','personal'],['My Academy','personal'],['Profile','personal'],['Home','home']]){
@@ -79,5 +82,6 @@ try{
  await mount('student','/academy/admin');assert(!find('Save course'));await click('Personal space');assert.equal(page(),'personal');await unmount()
  await mount('guest','/academy/posts?lang=fa');await click('مدرس‌ها');assert.equal(location.search,'?lang=fa');assert(find('دوره‌ها'));await act(async()=>history.back());assert.equal(location.search,'?lang=fa');await click('اپ Lingo3');assert.equal(location.search,'');await unmount();checks+=3
  const css=postcss.parse(fs.readFileSync('src/academy/academy.css','utf8'));css.walkRules(r=>r.selectors.forEach(s=>assert(s.trim().startsWith('.academy'),'Academy CSS must not leak into App: '+s)))
+ const menuRules=[];css.walkRules('.academy .academy-nav.is-open',r=>{if(r.parent.type==='atrule'&&r.parent.params.includes('max-width:860px'))menuRules.push(r)});const menu=menuRules.at(-1);assert(menu,'mobile open menu positioning rule');const decl=Object.fromEntries(menu.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value]));assert.equal(decl.position,'absolute');assert.equal(decl.top,'calc(100% + 4px)');assert.equal(decl.bottom,'auto')
  console.log(`PASS: ${checks} route/navigation assertions; 4 roles, direct URLs, Back/Forward, Settings/Escape, login modes/OAuth error, booking guest/submit, signout, external link formats and scoped CSS. Transport/auth are mocked; no real account or message created.`)
 }finally{if(tree)await act(async()=>tree.unmount());fs.rmSync(file,{force:true})}
