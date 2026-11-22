@@ -1,6 +1,14 @@
+## 2026-11-22 — Combined Academy release candidate (v0.7.20)
+
+Combined PR #74 mobile menu fix with PR #75 catalogue filters on the feature branch. Full npm test, npm run build and git diff --check passed on the combined tree. Actual mobile/desktop browser console, authenticated key flows, viewport acceptance, and Tikkaa mobile reference remain unverified; no production release. Preview and CI pending for combined commit. Routes and Back behavior unchanged; SITEMAP and ROUTE_INDEX reviewed. Production remains v0.7.19.
+
 ## 2026-11-22 — Tikkaa-inspired Academy discovery (v0.7.20, unreleased)
 
 Branch `feat/academy-discovery-tikkaa-20261122`, based on `fc0a7cb`. Added language and level filters to existing teacher and course catalogues, localized empty states in en/fa/sv/de, responsive styling and existing search retained. No DB, data, auth or route changes. Full `npm test` and `npm run build` passed locally after implementation; real mobile and signed-in acceptance unverified. Tikkaa mobile menu could not be inspected in this session; earlier public desktop observations inform this limited first increment. PR #74 independently modifies mobile menu; do not overwrite or silently merge its work. SITEMAP and ROUTE_INDEX reviewed; no entry point, URL or Back changes. No deployment. Next: inspect Tikkaa mobile and protected pages with user access, verify responsive/RTL and real role flows, coordinate menu change, and complete broader redesign.
+
+## 2026-11-22 — Academy mobile header menu (v0.7.20, unreleased)
+
+User reported a top icon appears empty; icon was not identified by screenshot. Code inspection found the mobile hamburger menu uses fixed bottom positioning inside the sticky header, which has backdrop-filter and creates a fixed-position containing block. This can place the opened menu above the screen. Change to absolute positioning immediately below the header, retaining scroll, light/dark styling and existing destinations. Desktop guest settings gear was opened successfully in the live browser; real mobile and authenticated acceptance not performed. No route, role, data or database change. SITEMAP and ROUTE_INDEX reviewed. Full npm test, 250 mocked navigation assertions including header open/Escape and position rule, docs check and production build passed. Preview and production verification pending. Next: verify the user meant the hamburger and test on an actual mobile viewport.
 
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 

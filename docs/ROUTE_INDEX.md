@@ -1,5 +1,7 @@
 2026-11-22 review v0.7.20, base `fc0a7cb`: `/academy/courses` and `/academy/teachers` add client-side filters and empty states. URLs and Back behavior unchanged. Not deployed.
 
+2026-11-22 review v0.7.20: Academy mobile header menu renders below its header; destinations, URLs and Back behavior unchanged. Browser mobile acceptance and release pending.
+
 2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` redirects to `/academy`, and `/academy/my` provides My Courses/profile via UI state. Production HTTP check reached Persian Academy HTML; actual browser Back and user-device acceptance remain unverified. Documentation revision only.
 
 2026-11-22 review v0.7.19: /academy.html → temporary server redirect → /academy, replacing meta-refresh-only behavior; fallback HTML remains. Verify query preservation, browser Back and live deployment.

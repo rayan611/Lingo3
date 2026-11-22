@@ -2,6 +2,10 @@
 
 Added responsive, localized language and level filters plus empty results to teacher/course catalogues. Tikkaa mobile and real device checks pending; no route, data, authorization or deployment changes.
 
+## 2026-11-22 — Academy mobile menu positioning (v0.7.20, unreleased)
+
+Correct mobile header menu positioning relative to sticky header; retain all existing navigation and permissions. Actual mobile and signed-in browser acceptance pending. See handoff.
+
 ## 2026-11-22 — Legacy Academy entry (v0.7.19, unreleased)
 
 Added server redirect for /academy.html to /academy after user screenshot matched legacy fallback page. The image does not identify URL; browser verification remains required.
