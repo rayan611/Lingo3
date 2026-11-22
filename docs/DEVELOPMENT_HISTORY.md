@@ -1,3 +1,31 @@
+## 2026-11-22 — Training Center locale (v0.7.20, unreleased)
+
+Localized Training Center labels and descriptions for the existing eight native-language options. Full App and Academy functionality remains incomplete.
+
+## 2026-11-22 — App navigation locale (v0.7.20, unreleased)
+
+Eight-language native-language labels for main navigation and restrained App/Academy button depth. Full App translation and phase 1/2 Academy work remain open.
+
+## 2026-11-22 — Academy discovery usability (v0.7.20, unreleased)
+
+Added collapsible filters/reset actions, homepage journey and calendar time-zone label. User-requested phase 1/2 work remains incomplete.
+
+## 2026-11-22 — Academy instruction intake and teacher specialty (v0.7.20, unreleased)
+
+Owner instruction inventoried; existing teacher specialties now searchable and filterable with existing records. Broader class-to-bank, assessment, payments and mobile acceptance remain open.
+
+## 2026-11-22 — Academy home panel removal (v0.7.20, unreleased)
+
+Removed decorative level panel from Academy home; retained existing actions and navigation.
+
+## 2026-11-22 — Academy discovery filters (v0.7.20, unreleased)
+
+Added responsive, localized language and level filters plus empty results to teacher/course catalogues. Tikkaa mobile and real device checks pending; no route, data, authorization or deployment changes.
+
+## 2026-11-22 — Academy mobile menu positioning (v0.7.20, unreleased)
+
+Correct mobile header menu positioning relative to sticky header; retain all existing navigation and permissions. Actual mobile and signed-in browser acceptance pending. See handoff.
+
 ## 2026-11-22 — Legacy Academy entry (v0.7.19, unreleased)
 
 Added server redirect for /academy.html to /academy after user screenshot matched legacy fallback page. The image does not identify URL; browser verification remains required.

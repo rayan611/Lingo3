@@ -1,3 +1,35 @@
+## 2026-11-22 — Training Center localization (v0.7.20, unreleased)
+
+Owner requested completion and production deployment. Added localized Training Center labels, activity descriptions and navigation in en/fa/sv/de/es/ru/it/fr, using the existing native language preference and RTL for Persian. Existing activities and URLs remain. Other App screens still need translation; non-financial Academy phase 1/2 remains incomplete (see ACADEMY_REQUIREMENTS_2026-11-22.md). No database, auth or user-data changes. SITEMAP and ROUTE_INDEX reviewed; no route or Back changes. Production build, full npm test, docs checks and eight-language Training Center coverage check passed locally. Browser/device and signed-in acceptance and production deployment pending.
+
+## 2026-11-22 — App navigation locale and dimensional controls (v0.7.20, unreleased)
+
+Owner requested completion of non-financial Academy work, full App localization and visual update. Verified source DEFAULT_SETTINGS uses English for new users, and App supports eight learning languages. Added main App navigation labels in en/fa/sv/de/es/ru/it/fr, selected by nativeLang without changing stored preferences; Persian nav direction RTL. Added restrained three-dimensional hover/press styling and reduced-motion behavior to App nav and Academy primary controls. Other App surfaces remain in English or partially translated; complete UI localization is not implemented. Existing phase 1/2 Academy gaps remain open (see ACADEMY_REQUIREMENTS_2026-11-22.md). Full npm test and production build passed; tests are largely mocked. No schema/data/auth changes, no production deployment; real browser, responsive and signed-in verification pending. SITEMAP and ROUTE_INDEX reviewed: no route, entry point or Back changes.
+
+## 2026-11-22 — Phase 1/2 Academy follow-up (v0.7.20, unreleased)
+
+Owner requested all phase 1 and 2 requirements and responsive visual work, excluding phase 3. Added collapsible discovery filter panels and reset actions, home journey using existing copy, and local device time-zone label on teacher calendar. Existing roles, routes and storage retained. Full npm test and npm run build passed, including 256 mocked navigation assertions. Browser/real-device and signed-in acceptance remain outstanding. Automatic class-word import, teacher-approved AI drafts, six-language assessment, authentic progress, daily exercises, reviews, guarantee and financial policy remain unimplemented; see ACADEMY_REQUIREMENTS_2026-11-22.md. No DB or authorization changes. SITEMAP and ROUTE_INDEX reviewed; no URL or Back changes. Production release pending checks.
+
+## 2026-11-22 — Academy instruction intake (v0.7.20, unreleased)
+
+Reviewed all six pages of owner-provided instruction and recorded a requirement-by-requirement implementation inventory in docs/ACADEMY_REQUIREMENTS_2026-11-22.md. Added teacher specialty filtering and search using existing teacher records, alongside existing language and level filters; no new schema, access, data or payment changes. Local build and 250 mocked navigation assertions passed. Real browser, responsive and authenticated role checks remain open. Other requirements are not complete; planned database/permissions, financial terms, placement question bank and AI costs must be designed and separately approved where required. SITEMAP/ROUTE_INDEX reviewed; no new route or Back change. Next: design and validate class-to-personal-bank contract, then prepare reversible migration and approval. No production deployment.
+
+## 2026-11-22 — Remove Academy home level panel (v0.7.20, unreleased)
+
+Removed only the decorative A1/A2/B1 homepage hero panel and expanded the remaining hero to the available width. Existing course, teacher and learning-path links remain. No route, role or data changes. Navigation checks (250 mocked assertions), documentation checks and production build passed. Real browser acceptance and deployment pending; user intends to provide further changes. SITEMAP and ROUTE_INDEX reviewed: no navigation or Back changes.
+
+## 2026-11-22 — Combined Academy release candidate (v0.7.20)
+
+Combined PR #74 mobile menu fix with PR #75 catalogue filters on the feature branch. Full npm test, npm run build and git diff --check passed on the combined tree. Actual mobile/desktop browser console, authenticated key flows, viewport acceptance, and Tikkaa mobile reference remain unverified; no production release. Preview and CI pending for combined commit. Routes and Back behavior unchanged; SITEMAP and ROUTE_INDEX reviewed. Production remains v0.7.19.
+
+## 2026-11-22 — Tikkaa-inspired Academy discovery (v0.7.20, unreleased)
+
+Branch `feat/academy-discovery-tikkaa-20261122`, based on `fc0a7cb`. Added language and level filters to existing teacher and course catalogues, localized empty states in en/fa/sv/de, responsive styling and existing search retained. No DB, data, auth or route changes. Full `npm test` and `npm run build` passed locally after implementation; real mobile and signed-in acceptance unverified. Tikkaa mobile menu could not be inspected in this session; earlier public desktop observations inform this limited first increment. PR #74 independently modifies mobile menu; do not overwrite or silently merge its work. SITEMAP and ROUTE_INDEX reviewed; no entry point, URL or Back changes. No deployment. Next: inspect Tikkaa mobile and protected pages with user access, verify responsive/RTL and real role flows, coordinate menu change, and complete broader redesign.
+
+## 2026-11-22 — Academy mobile header menu (v0.7.20, unreleased)
+
+User reported a top icon appears empty; icon was not identified by screenshot. Code inspection found the mobile hamburger menu uses fixed bottom positioning inside the sticky header, which has backdrop-filter and creates a fixed-position containing block. This can place the opened menu above the screen. Change to absolute positioning immediately below the header, retaining scroll, light/dark styling and existing destinations. Desktop guest settings gear was opened successfully in the live browser; real mobile and authenticated acceptance not performed. No route, role, data or database change. SITEMAP and ROUTE_INDEX reviewed. Full npm test, 250 mocked navigation assertions including header open/Escape and position rule, docs check and production build passed. Preview and production verification pending. Next: verify the user meant the hamburger and test on an actual mobile viewport.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 **Current production:** v0.7.19, runtime commit `49c48096cf756c9128e518c885b05ff43b739878`, PR #72, Vercel deployment `dpl_EWc8J2MAS4swJW2D9zeAZn5dFTRe`, promoted to production after rollback. `lingo3.com/version.json` returned 0.7.19; `/academy.html?lang=fa` led to the Persian Academy HTML over HTTP. These observations do not prove the user's device rendered or redirected successfully. Earlier dated pending/rollback entries below are historical and superseded by this entry.

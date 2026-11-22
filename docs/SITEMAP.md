@@ -1,3 +1,17 @@
+2026-11-22 review v0.7.20: Training Center labels now follow native language; routes and Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20: main App navigation translated according to existing native-language preference; destinations and Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20: home adds existing how-it-works content, catalogues add collapsible filters and reset; teacher profile labels local timezone. No route or Back change. Unreleased.
+
+2026-11-22 review v0.7.20: existing teacher directory gains specialty filter; no route or Back change. Unreleased.
+
+2026-11-22 review v0.7.20: removed decorative Academy home level panel; routes, entry points and Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20, base `fc0a7cb`: existing teacher and course directories gain client-side language and level filters; no routes, entry points or Back changes. Not deployed.
+
+2026-11-22 review v0.7.20: existing Academy mobile header menu position fixed; no routes, links, role restrictions or Back behavior changed. Browser mobile acceptance and release pending.
+
 2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` server-redirects to `/academy`; `/academy/my` provides My Courses and profile UI state, no new URL. HTTP Persian redirect check passed; real-device and Back acceptance remain unverified. Documentation revision only.
 
 2026-11-22 review v0.7.19: legacy /academy.html redirects server-side to active /academy; no new content route. Preview verification and release pending.

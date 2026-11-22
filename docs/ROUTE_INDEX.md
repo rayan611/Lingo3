@@ -1,3 +1,17 @@
+2026-11-22 review v0.7.20: existing Training Center and activities remain at their URLs; labels localized. Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20: App navigation labels change with native-language preference; URLs, routes and Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20: `/academy` shows journey; `/academy/courses` and `/academy/teachers` have collapsible filters; teacher detail labels calendar zone. URLs and Back unchanged. Unreleased.
+
+2026-11-22 review v0.7.20: `/academy/teachers` adds specialty filter based on existing records; no route or Back change. Unreleased.
+
+2026-11-22 review v0.7.20: `/academy` removes decorative level panel; no URL, entry-point or Back change. Unreleased.
+
+2026-11-22 review v0.7.20, base `fc0a7cb`: `/academy/courses` and `/academy/teachers` add client-side filters and empty states. URLs and Back behavior unchanged. Not deployed.
+
+2026-11-22 review v0.7.20: Academy mobile header menu renders below its header; destinations, URLs and Back behavior unchanged. Browser mobile acceptance and release pending.
+
 2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` redirects to `/academy`, and `/academy/my` provides My Courses/profile via UI state. Production HTTP check reached Persian Academy HTML; actual browser Back and user-device acceptance remain unverified. Documentation revision only.
 
 2026-11-22 review v0.7.19: /academy.html → temporary server redirect → /academy, replacing meta-refresh-only behavior; fallback HTML remains. Verify query preservation, browser Back and live deployment.

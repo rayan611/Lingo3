@@ -18,7 +18,7 @@ globalThis.addEventListener=window.addEventListener;globalThis.removeEventListen
 globalThis.document={documentElement:{lang:'en'}};globalThis.localStorage={getItem:k=>local.get(k)??null,setItem:(k,v)=>local.set(k,v)}
 globalThis.fetch=async()=>({json:async()=>({locale:'en'})})
 const course={id:'course',subject_code:'sv',level_code:'A1',title_i18n:{en:'Swedish A1'},description_i18n:{en:'Learn Swedish'},topics_i18n:{en:['Greetings']},delivery_modes:['individual_online'],price_sek:300,duration_minutes:60,telegram_url:'https://t.me/example',status:'active',sort_order:0}
-const teacher={id:'teacher',user_id:'teacher-user',display_name:'Teacher A',intro_i18n:{en:'Swedish teacher'},teaching_languages:['sv'],spoken_languages:['en'],levels:['A1'],specialties:[],email:'teacher@example.invalid',phone:'+460000000',teams_chat_url:'https://teams.microsoft.com/chat',teams_call_url:'https://teams.microsoft.com/call',telegram_url:'https://t.me/example',status:'active'}
+const teacher={id:'teacher',user_id:'teacher-user',display_name:'Teacher A',intro_i18n:{en:'Swedish teacher'},teaching_languages:['sv'],spoken_languages:['en'],levels:['A1'],specialties:['Conversation'],email:'teacher@example.invalid',phone:'+460000000',teams_chat_url:'https://teams.microsoft.com/chat',teams_call_url:'https://teams.microsoft.com/call',telegram_url:'https://t.me/example',status:'active'}
 class Query{
  constructor(table){this.table=table;this.action='select'}select(){return this}eq(){return this}gt(){return this}order(){return this}limit(){return this}abortSignal(){return this}maybeSingle(){return this}insert(payload){this.action='insert';this.payload=payload;return this}update(payload){this.action='update';this.payload=payload;return this}
  then(resolve,reject){calls.push({table:this.table,action:this.action,payload:this.payload});const data={academy_courses:[course],academy_teachers:[teacher],academy_teacher_courses:[{teacher_id:'teacher',course_id:'course'}],academy_languages:[{code:'sv',name_i18n:{en:'Swedish'},status:'active',sort_order:0}],user_settings:{display_name:'QA',is_admin:role==='admin'},academy_preferences:null,academy_enrollments:[],academy_availability:[]}[this.table]??[];return Promise.resolve({data,error:null}).then(resolve,reject)}
@@ -46,6 +46,9 @@ const routes=[['Home','home','/academy'],['Find your learning path','path','/aca
 try{
  for(const r of ['guest','student','teacher','admin']){
   await mount(r)
+  const headerMenu=()=>tree.root.findByProps({'aria-label':'Menu'})
+  await act(async()=>headerMenu().props.onClick());assert.equal(headerMenu().props['aria-expanded'],true);assert(tree.root.findByProps({id:'academy-navigation'}).props.className.includes('is-open'))
+  await act(async()=>emit({type:'keydown',key:'Escape'}));assert.equal(headerMenu().props['aria-expanded'],false);checks+=3
   const mobile=()=>tree.root.find(n=>n.props.className==='academy-bottom-nav')
   const mobileButton=label=>mobile().findAllByType('button').find(n=>text(n)===label)
   for(const [label,expected] of [['My courses','personal'],['My Academy','personal'],['Profile','personal'],['Home','home']]){
@@ -73,11 +76,13 @@ try{
   }else{await click('Log out');assert(calls.some(c=>c.auth==='out'))}
   await click('Lingo3 App');assert.equal(location.pathname,'/');assert(history.state.lingo3DirectApp);assert(!history.state.academyDialog&&!history.state.academySettings);await unmount()
  }
+ await mount('guest','/academy/teachers');{const panel=tree.root.findByProps({className:'academy-filter-panel'});assert.equal(panel.findByType('summary').children.join(''),'Filters');const filters=panel.findAllByType('select');assert.equal(filters.length,3);await act(async()=>filters[2].props.onChange({target:{value:'Conversation'}}));assert(find('Request trial'));await act(async()=>tree.root.findAllByProps({type:'search'}).find(n=>n.props.value==='').props.onChange({target:{value:'no-such-teacher'}}));assert(tree.root.findAllByProps({role:'status'}).some(n=>text(n).includes('No results found')));await click('Clear filters');assert(find('Request trial'));assert.equal(tree.root.findByProps({className:'academy-filter-panel'}).findAllByType('select')[2].props.value,'');checks+=5}await unmount()
  await mount('guest','/academy/teachers');await click('Request trial');assert.equal(history.state.academyDialog.type,'login');role='student';await act(async()=>tree.update(React.createElement(Academy,{userId:'student-user',email:'student@example.invalid'})));await flush();assert.equal(history.state.academyDialog.type,'booking');assert.equal(history.state.academyDialog.teacherId,'teacher');assert(tree.root.findAllByType('form').length===1);await unmount();checks+=4
  for(const [,expected,url]of routes){await mount('guest',url);assert.equal(page(),expected);await unmount();checks++}
  await mount('guest','/academy/levels');assert.equal(page(),'courses');assert(!find('Levels'));await unmount();
  await mount('student','/academy/admin');assert(!find('Save course'));await click('Personal space');assert.equal(page(),'personal');await unmount()
  await mount('guest','/academy/posts?lang=fa');await click('مدرس‌ها');assert.equal(location.search,'?lang=fa');assert(find('دوره‌ها'));await act(async()=>history.back());assert.equal(location.search,'?lang=fa');await click('اپ Lingo3');assert.equal(location.search,'');await unmount();checks+=3
  const css=postcss.parse(fs.readFileSync('src/academy/academy.css','utf8'));css.walkRules(r=>r.selectors.forEach(s=>assert(s.trim().startsWith('.academy'),'Academy CSS must not leak into App: '+s)))
+ const menuRules=[];css.walkRules('.academy .academy-nav.is-open',r=>{if(r.parent.type==='atrule'&&r.parent.params.includes('max-width:860px'))menuRules.push(r)});const menu=menuRules.at(-1);assert(menu,'mobile open menu positioning rule');const decl=Object.fromEntries(menu.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value]));assert.equal(decl.position,'absolute');assert.equal(decl.top,'calc(100% + 4px)');assert.equal(decl.bottom,'auto')
  console.log(`PASS: ${checks} route/navigation assertions; 4 roles, direct URLs, Back/Forward, Settings/Escape, login modes/OAuth error, booking guest/submit, signout, external link formats and scoped CSS. Transport/auth are mocked; no real account or message created.`)
 }finally{if(tree)await act(async()=>tree.unmount());fs.rmSync(file,{force:true})}

@@ -1,3 +1,27 @@
+## 2026-11-22 — Owner follow-up (v0.7.20, unreleased)
+
+App main navigation translated for eight native languages; other surfaces need localization. Academy primary button depth enhanced. Nonfinancial phase 1/2 remains incomplete; see requirements inventory.
+
+## 2026-11-22 — Phase 1/2 follow-up (v0.7.20, unreleased)
+
+Discovery filter panels/reset, home journey and calendar zone label added. Class vocabulary import, assessment, progress, review/guarantee and cancellation/refund workflows remain open; phase 3 excluded by owner.
+
+## 2026-11-22 — Owner instruction inventory (v0.7.20, unreleased)
+
+See ACADEMY_REQUIREMENTS_2026-11-22.md for existing features, requirements and remaining work. Teacher specialty filtering added; class-to-bank and placement remain open.
+
+## 2026-11-22 — Academy home banner (v0.7.20, unreleased)
+
+Removed decorative A1/A2/B1 hero panel at owner request. Further owner suggestions pending.
+
+## 2026-11-22 — Tikkaa-inspired discovery (v0.7.20, unreleased)
+
+Language and level filters added to teacher and course directories. Tikkaa mobile menu and signed-in sections remain uninspected; full design comparison, actual responsive QA, and coordination with mobile menu PR #74 remain open.
+
+## 2026-11-22 — Academy mobile menu (v0.7.20, unreleased)
+
+Fix off-screen header menu positioning; verify user-reported icon and actual mobile interaction after release. See handoff.
+
 ## 2026-11-22 — Academy release and next checks (documentation revision; v0.7.19)
 
 v0.7.17–0.7.19 deployed: reference-inspired navigation, student home summary, My Courses, read-only profile, settings, legacy entry redirect and boot diagnostics. Next: confirm user's actual device works; test real signed-in roles and responsive layouts. Group sessions remain in Schedule rather than home; profile is read-only; complete Base44 parity has not been established. See `DEVELOPMENT_HANDOFF.md` for evidence and limits.
