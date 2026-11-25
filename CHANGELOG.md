@@ -1,3 +1,5 @@
+2026-11-25 · v0.7.24 production: built from main f41eb8e8 and deployed as dpl_6UvxJQ1yA9JgANFDiAPoRtXy257N (READY, lingo3.com and www aliases, no alias error). Previous production for rollback: dpl_EWc8J2MAS4swJW2D9zeAZn5dFTRe (v0.7.19). Pushes to main do not deploy by themselves; this release used a manual production build.
+
 ## 2026-11-25 — Refresh shows a loading indicator (v0.7.24)
 
 On refresh the server put the plain crawlable text inside the app container, so phones showed an unstyled page until the bundle loaded (it looked frozen). That text is now hidden from sighted users and replaced by a loading indicator until the app mounts; search engines and visitors without JavaScript still get the text (`api/academy-page.ts`). Handler and SEO checks pass.
