@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.26: no route change.
+
 2026-11-25 review v0.7.25: no route change.
 
 2026-11-25 review v0.7.24: no route change.

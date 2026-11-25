@@ -1,3 +1,7 @@
+## 2026-11-25 — Design v2 part 2 (v0.7.26)
+
+See CHANGELOG. Verified: tests, build, mock screenshots. **Not verified:** real signed-in booking end to end, step 3 screen, Persian/RTL layout of the sheet, desktop booking layout. **Next:** check those on a real device; then per-role Today layouts and the remaining pages.
+
 ## 2026-11-25 — Design v2 part 1 (v0.7.25)
 
 See CHANGELOG. **Next:** course cards, teacher profile, booking as a 3-step bottom sheet, then the signed-in Today screens on the same tokens. Deploy by manual production build (main does not auto-deploy).

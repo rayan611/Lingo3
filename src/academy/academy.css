@@ -3159,3 +3159,189 @@
   min-height: var(--ac-touch);
   padding: 0 16px;
 }
+
+/* ---------- Booking wizard (bottom sheet on phones) ---------- */
+.academy .ac-wizard-steps {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 16px;
+}
+.academy .ac-wizard-steps li {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ac-muted);
+  font-size: 0.9rem;
+}
+.academy .ac-wizard-steps li span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ac-surface-2);
+  color: var(--ac-muted);
+  font-weight: 700;
+}
+.academy .ac-wizard-steps li.on {
+  color: var(--ac-text);
+  font-weight: 700;
+}
+.academy .ac-wizard-steps li.on span,
+.academy .ac-wizard-steps li.done span {
+  background: var(--ac-primary);
+  color: var(--ac-primary-text);
+}
+.academy .ac-choice-list,
+.academy .ac-slot-grid {
+  display: grid;
+  gap: 8px;
+}
+.academy .ac-slot-grid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  margin-bottom: 10px;
+}
+.academy .ac-choice {
+  display: grid;
+  gap: 2px;
+  min-height: var(--ac-touch);
+  padding: 12px 14px;
+  text-align: start;
+  border-radius: 14px;
+  border: 1px solid var(--ac-border);
+  background: var(--ac-surface);
+  color: var(--ac-text);
+  cursor: pointer;
+}
+.academy .ac-choice small {
+  color: var(--ac-muted);
+}
+.academy .ac-choice.on {
+  border-color: var(--ac-primary);
+  background: color-mix(in srgb, var(--ac-primary) 10%, var(--ac-surface));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ac-primary) 35%, transparent);
+}
+.academy .ac-custom-time,
+.academy .academy-booking-dialog section label {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0;
+}
+.academy .ac-summary {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--ac-surface-2);
+  margin-bottom: 8px;
+}
+.academy .ac-wizard-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+.academy .ac-wizard-actions .ac-btn {
+  flex: 1;
+}
+@media (max-width: 650px) {
+  .academy .ac-sheet-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .academy .ac-sheet {
+    width: 100%;
+    max-width: none;
+    max-height: 92vh;
+    overflow: auto;
+    border-radius: 22px 22px 0 0;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Course card ---------- */
+.academy .ac-course {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  background: var(--ac-surface);
+  color: var(--ac-text);
+  border: 1px solid var(--ac-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(20, 24, 50, 0.05), 0 8px 24px rgba(20, 24, 50, 0.05);
+}
+.academy .ac-course-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.academy .ac-level {
+  font-weight: 800;
+  color: var(--ac-primary);
+}
+.academy .ac-course h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.academy .ac-course h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.academy .ac-course-desc {
+  margin: 0;
+  color: var(--ac-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.academy .ac-course-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--ac-muted);
+}
+.academy .ac-course-meta strong {
+  color: var(--ac-text);
+}
+.academy .ac-course-topics summary {
+  cursor: pointer;
+  color: var(--ac-primary);
+  font-weight: 600;
+}
+.academy .ac-course-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.academy .ac-course-actions .ac-btn {
+  flex: 1 1 auto;
+}
+
+/* Teacher / course detail header: flat card, round avatar (replaces the gradient hero) */
+.academy .academy-profile-hero {
+  background: var(--ac-surface);
+  border: 1px solid var(--ac-border);
+  box-shadow: 0 1px 2px rgba(20, 24, 50, 0.05), 0 8px 24px rgba(20, 24, 50, 0.05);
+}
+.academy .academy-profile-photo,
+.academy .academy-profile-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+}
+.academy .academy-profile-avatar {
+  background: color-mix(in srgb, var(--ac-primary) 16%, transparent);
+  color: var(--ac-primary);
+  font-size: 2.2rem;
+}
+.academy .academy-profile-hero h1 {
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  line-height: 1.2;
+}

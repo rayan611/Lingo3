@@ -311,7 +311,7 @@ export function AcademyPublicDetail({
                 <ul className="academy-detail-list">
                   {calendar.map(s => (
                     <li key={s.id}>
-                      {new Date(s.starts_at).toLocaleString(locale)} ·{' '}
+                      {new Date(s.starts_at).toLocaleString(locale, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} ·{' '}
                       {s.status === 'free'
                         ? { fa: 'آزاد', sv: 'Ledig', de: 'Frei', en: 'Free' }[locale]
                         : { fa: 'رزروشده', sv: 'Bokad', de: 'Gebucht', en: 'Booked' }[locale]}

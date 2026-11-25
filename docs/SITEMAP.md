@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.26: booking dialog becomes a 3-step sheet (same overlay history behaviour); course cards redesigned; no URL change.
+
 2026-11-25 review v0.7.25: visual redesign of public pages; teachers page gains a language filter (UI state only). No URL change.
 
 2026-11-25 review v0.7.24: loading indicator only; no URL change.

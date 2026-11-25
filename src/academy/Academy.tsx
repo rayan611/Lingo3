@@ -8,6 +8,7 @@ import { lazyScreen } from '../ui/lazyScreen'
 import { AcademyDialogHost, askText } from './AcademyDialogs'
 import { AcademyAdminOverview } from './AcademyAdminOverview'
 import { AcademyTeacherCard, AcademySkeletonCards } from './AcademyTeacherCard'
+import { AcademyCourseCard } from './AcademyCourseCard'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
@@ -763,6 +764,17 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
       setSavingTeacher(false)
     }
   }
+  const courseCardData = (course: Course) => ({
+    id: course.id,
+    title: text(course.title_i18n),
+    description: text(course.description_i18n),
+    language: languageLabel(course.subject_code),
+    level: course.level_code,
+    price: course.price_sek == null ? t.contact : String(course.price_sek) + ' SEK',
+    minutes: course.duration_minutes,
+    formats: course.delivery_modes.map(mode),
+    topics: list(course.topics_i18n)
+  })
   return (
     <div
       className="academy"
@@ -1294,28 +1306,13 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                     .filter(course => course.status === 'active')
                     .slice(0, 3)
                     .map(course => (
-                      <article className="academy-card academy-discover-card" key={course.id}>
-                        <div className="academy-card-top">
-                          <span className="academy-badge">{languageLabel(course.subject_code)}</span>
-                          <span>{course.level_code}</span>
-                        </div>
-                        <h3>
-                          <a
-                            href={'/academy/courses/' + course.id}
-                            onClick={e => {
-                              e.preventDefault()
-                              navigateProduct('/academy/courses/' + course.id)
-                            }}
-                          >
-                            {text(course.title_i18n)}
-                          </a>
-                        </h3>
-                        <p>{text(course.description_i18n)}</p>
-                        <small>
-                          {course.price_sek == null ? t.contact : String(course.price_sek) + ' SEK'} ·{' '}
-                          {course.duration_minutes} min
-                        </small>
-                      </article>
+                      <AcademyCourseCard
+                        key={course.id}
+                        locale={locale}
+                        course={courseCardData(course)}
+                        compact
+                        onOpen={() => navigateProduct('/academy/courses/' + course.id)}
+                      />
                     ))}
                 </div>
               )}
@@ -1571,68 +1568,40 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                         .includes(catalogSearch.toLocaleLowerCase())
                     )
                     .map(course => (
-                      <article className="academy-card" key={course.id}>
-                        <div className="academy-card-top">
-                          <span className="academy-badge">{languageLabel(course.subject_code)}</span>
-                          <span>{course.level_code}</span>
-                        </div>
-                        <h3>
-                          <a
-                            href={'/academy/courses/' + course.id}
-                            onClick={e => {
-                              e.preventDefault()
-                              navigateProduct('/academy/courses/' + course.id)
-                            }}
-                          >
-                            {text(course.title_i18n)}
-                          </a>
-                        </h3>
-                        <AcademyShare
-                          locale={locale}
-                          title={text(course.title_i18n)}
-                          description={text(course.description_i18n)}
-                          path={'/academy/courses/' + course.id}
-                        />
-                        <p>{text(course.description_i18n)}</p>
-                        <h4>{t.topics}</h4>
-                        <ul>
-                          {list(course.topics_i18n)
-                            .slice(0, 6)
-                            .map(topic => (
-                              <li key={topic}>{topic}</li>
-                            ))}
-                        </ul>
-                        <h4>{t.formats}</h4>
-                        <div className="academy-tags">
-                          {course.delivery_modes.map(m => (
-                            <span key={m}>{mode(m)}</span>
-                          ))}
-                        </div>
-                        <div className="academy-price">
-                          {course.price_sek == null ? t.contact : String(course.price_sek) + ' SEK'} ·{' '}
-                          {course.duration_minutes} min
-                        </div>
-                        <div className="academy-card-actions">
-                          <button className="academy-primary small" onClick={() => addInterest(course)}>
-                            {studentCourseIds.has(course.id) ? t.added : t.interest}
-                          </button>
-                          {course.telegram_url && (
-                            <a
-                              className="small-link"
-                              href={course.telegram_url}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {t.telegram}
-                            </a>
-                          )}
-                          {isAdmin && (
-                            <button className="small-link" onClick={() => editCourse(course)}>
-                              {t.edit}
+                      <AcademyCourseCard
+                        key={course.id}
+                        locale={locale}
+                        course={courseCardData(course)}
+                        onOpen={() => navigateProduct('/academy/courses/' + course.id)}
+                        actions={
+                          <>
+                            <button type="button" className="ac-btn" onClick={() => addInterest(course)}>
+                              {studentCourseIds.has(course.id) ? t.added : t.interest}
                             </button>
-                          )}
-                        </div>
-                      </article>
+                            <AcademyShare
+                              locale={locale}
+                              title={text(course.title_i18n)}
+                              description={text(course.description_i18n)}
+                              path={'/academy/courses/' + course.id}
+                            />
+                            {course.telegram_url && (
+                              <a
+                                className="small-link"
+                                href={course.telegram_url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {t.telegram}
+                              </a>
+                            )}
+                            {isAdmin && (
+                              <button type="button" className="small-link" onClick={() => editCourse(course)}>
+                                {t.edit}
+                              </button>
+                            )}
+                          </>
+                        }
+                      />
                     ))}
                 </div>
               )}

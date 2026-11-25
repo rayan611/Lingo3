@@ -1,3 +1,7 @@
+## 2026-11-25 — Academy design v2, part 2 (v0.7.26)
+
+Booking is now a three-step sheet (Course → Time → Confirm) that rises from the bottom on phones: course choice as cards with level and price, free times as tappable chips in the viewer's own time zone with a custom-time field, then lesson type, message and a summary before sending. Same insert and rules as before (status `requested`, double-booking guard unchanged). New course card (`AcademyCourseCard`: language and level, title, short description, price, length, formats, "What you learn", View course / Add to my courses) on the home and courses pages. Teacher/course detail header is a flat card with a round avatar; calendar times use a short format. Signed-in screens (Today card, teacher overview, admin overview) pick up the new card skin; their layouts are unchanged. Full `npm test` and build passed; checked with mock-data phone screenshots (course cards, teacher page, booking steps 1–2), no real accounts and no real booking submitted.
+
 2026-11-25 · v0.7.25 production: built from main 473d49e5 as dpl_A9s2q5XbQB8pFHkeY8VY43jcHVDJ (READY, lingo3.com and www aliases; live /version.json reports 0.7.25). Rollback target: dpl_6UvxJQ1yA9JgANFDiAPoRtXy257N (v0.7.24).
 
 ## 2026-11-25 — Academy design v2, part 1 (v0.7.25)

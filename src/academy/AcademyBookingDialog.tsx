@@ -1,6 +1,3 @@
-import { AcademyFormHelp } from './AcademyHelp'
-import { AcademyField } from './AcademyField'
-import { AcademyHelp } from './AcademyHelp'
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../auth/supabase'
 
@@ -93,9 +90,87 @@ function localized(value: Record<string, string>, locale: Locale) {
 
 function localDateTime(value: string) {
   return new Intl.DateTimeFormat(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short'
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit'
   }).format(new Date(value))
+}
+
+const wiz: Record<Locale, Record<string, string>> = {
+  en: {
+    s1: 'Course',
+    s2: 'Time',
+    s3: 'Confirm',
+    next: 'Next',
+    back: 'Back',
+    pickTime: 'Pick a time',
+    anotherTime: 'Or suggest another time',
+    showAll: 'Show all times',
+    summary: 'Your request',
+    lessonType: 'Lesson type',
+    noCourse: 'This teacher has no published courses yet.',
+    trial: 'Trial',
+    individual: 'Individual',
+    small_group: 'Small group',
+    offline_intro: 'Offline introduction',
+    timeNote: 'Times are shown in your own time zone.'
+  },
+  sv: {
+    s1: 'Kurs',
+    s2: 'Tid',
+    s3: 'Bekräfta',
+    next: 'Nästa',
+    back: 'Tillbaka',
+    pickTime: 'Välj en tid',
+    anotherTime: 'Eller föreslå en annan tid',
+    showAll: 'Visa alla tider',
+    summary: 'Din förfrågan',
+    lessonType: 'Lektionstyp',
+    noCourse: 'Läraren har inga publicerade kurser ännu.',
+    trial: 'Prova på',
+    individual: 'Enskild',
+    small_group: 'Liten grupp',
+    offline_intro: 'Introduktion på plats',
+    timeNote: 'Tiderna visas i din egen tidszon.'
+  },
+  fa: {
+    s1: 'دوره',
+    s2: 'زمان',
+    s3: 'تأیید',
+    next: 'بعدی',
+    back: 'قبلی',
+    pickTime: 'یک زمان انتخاب کنید',
+    anotherTime: 'یا زمان دیگری پیشنهاد دهید',
+    showAll: 'نمایش همهٔ زمان‌ها',
+    summary: 'درخواست شما',
+    lessonType: 'نوع جلسه',
+    noCourse: 'این استاد هنوز دورهٔ منتشرشده‌ای ندارد.',
+    trial: 'آزمایشی',
+    individual: 'خصوصی',
+    small_group: 'گروه کوچک',
+    offline_intro: 'معرفی حضوری',
+    timeNote: 'زمان‌ها به منطقهٔ زمانی خود شما نمایش داده می‌شوند.'
+  },
+  de: {
+    s1: 'Kurs',
+    s2: 'Zeit',
+    s3: 'Bestätigen',
+    next: 'Weiter',
+    back: 'Zurück',
+    pickTime: 'Zeit wählen',
+    anotherTime: 'Oder andere Zeit vorschlagen',
+    showAll: 'Alle Zeiten anzeigen',
+    summary: 'Ihre Anfrage',
+    lessonType: 'Unterrichtsart',
+    noCourse: 'Diese Lehrkraft hat noch keine veröffentlichten Kurse.',
+    trial: 'Probestunde',
+    individual: 'Einzelunterricht',
+    small_group: 'Kleingruppe',
+    offline_intro: 'Einführung vor Ort',
+    timeNote: 'Zeiten werden in Ihrer eigenen Zeitzone angezeigt.'
+  }
 }
 
 export function AcademyBookingDialog({
@@ -126,18 +201,18 @@ export function AcademyBookingDialog({
         .filter((course): course is Course => Boolean(course)),
     [teacher.id, teacherCourses, courses]
   )
-  const [courseSearch, setCourseSearch] = useState('')
   const [courseId, setCourseId] = useState(
     eligible.find(c => c.id === initialCourseId)?.id ?? eligible[0]?.id ?? ''
   )
   const [slots, setSlots] = useState<Slot[]>([])
-  const [slotSearch, setSlotSearch] = useState('')
   const [slotId, setSlotId] = useState('')
   const [customStart, setCustomStart] = useState('')
   const [message, setMessage] = useState('')
   const [sessionType, setSessionType] = useState('trial')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [step, setStep] = useState(1)
+  const [showAllSlots, setShowAllSlots] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -205,109 +280,95 @@ export function AcademyBookingDialog({
     }
   }
 
+  const w = wiz[locale]
+  const chosenCourse = eligible.find(c => c.id === courseId)
+  const chosenSlot = slots.find(s => s.id === slotId)
+  const timeLabel = chosenSlot
+    ? localDateTime(chosenSlot.starts_at)
+    : customStart
+      ? localDateTime(new Date(customStart).toISOString())
+      : ''
+  const canNext = step === 1 ? Boolean(courseId) : step === 2 ? Boolean(slotId || customStart) : true
+  const openSlots = slots.filter(s => s.status !== 'busy')
+  const shownSlots = showAllSlots ? openSlots : openSlots.slice(0, 9)
+
   return (
-    <div className="academy-modal" role="dialog" aria-modal="true" aria-label={t.title}>
-      <form className="academy-modal-inner academy-booking-dialog" onSubmit={submit}>
-        <AcademyFormHelp locale={locale} />
+    <div className="academy-modal ac-sheet-backdrop" role="dialog" aria-modal="true" aria-label={t.title}>
+      <form className="academy-modal-inner academy-booking-dialog ac-sheet" onSubmit={submit}>
         <button className="modal-close" type="button" onClick={onClose} aria-label={t.close}>
           ×
         </button>
         <h2>{t.title}</h2>
         <p className="muted">{teacher.display_name}</p>
-
-        {eligible.length > 8 && (
-          <AcademyField locale={locale}>
-            <label>
-              {{ fa: 'جستجوی دوره', en: 'Search courses', sv: 'Sök kurser', de: 'Kurse suchen' }[locale]}
-              <input type="search" value={courseSearch} onChange={e => setCourseSearch(e.target.value)} />
-            </label>
-          </AcademyField>
-        )}
-        <div className="academy-field-help">
-          {' '}
-          <label>
-            {t.course}
-            <select value={courseId} onChange={event => setCourseId(event.target.value)} required>
-              <option value="">{t.choose}</option>
-              {eligible
-                .filter(
-                  course =>
-                    course.id === courseId ||
-                    [localized(course.title_i18n, locale), course.level_code]
-                      .join(' ')
-                      .toLocaleLowerCase()
-                      .includes(courseSearch.toLocaleLowerCase())
-                )
-                .map(course => (
-                  <option value={course.id} key={course.id}>
-                    {localized(course.title_i18n, locale)} · {course.level_code}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <AcademyHelp
-            locale={locale}
-            text={{
-              fa: 'دوره‌ای را که می‌خواهید با این استاد بگذرانید انتخاب کنید.',
-              en: 'Choose the course you want to study with this teacher.',
-              sv: 'Välj kursen du vill läsa med läraren.',
-              de: 'Wählen Sie den Kurs bei dieser Lehrkraft.'
-            }}
-          />
-        </div>
-
-        {slots.length > 8 && (
-          <AcademyField locale={locale}>
-            <label>
-              {{ fa: 'جستجوی زمان', en: 'Search times', sv: 'Sök tider', de: 'Zeiten suchen' }[locale]}
-              <input type="search" value={slotSearch} onChange={e => setSlotSearch(e.target.value)} />
-            </label>
-          </AcademyField>
-        )}
-        <div className="academy-field-help">
-          {' '}
-          <label>
-            {t.slot}
-            <select
-              value={slotId}
-              onChange={event => {
-                setSlotId(event.target.value)
-                if (event.target.value) setCustomStart('')
-              }}
+        <ol className="ac-wizard-steps" aria-label="Steps">
+          {[w.s1, w.s2, w.s3].map((label, i) => (
+            <li
+              key={label}
+              className={step === i + 1 ? 'on' : step > i + 1 ? 'done' : ''}
+              aria-current={step === i + 1 ? 'step' : undefined}
             >
-              <option value="">{t.customOption}</option>
-              {slots
-                .filter(
-                  slot =>
-                    slot.id === slotId ||
-                    localDateTime(slot.starts_at).toLocaleLowerCase().includes(slotSearch.toLocaleLowerCase())
-                )
-                .map(slot => (
-                  <option value={slot.id} key={slot.id} disabled={slot.status === 'busy'}>
-                    {localDateTime(slot.starts_at)} ·{' '}
-                    {slot.status === 'busy'
-                      ? { en: 'Busy', fa: 'رزرو شده', sv: 'Bokad', de: 'Belegt' }[locale]
-                      : slot.delivery_mode}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <AcademyHelp
-            locale={locale}
-            text={{
-              fa: 'زمان آزاد استاد را انتخاب کنید؛ در صورت نبودن زمان مناسب، زمان دیگری پیشنهاد دهید.',
-              en: 'Choose an available time or suggest another below.',
-              sv: 'Välj en ledig tid eller föreslå en annan nedan.',
-              de: 'Wählen Sie einen freien Termin oder schlagen Sie unten einen anderen vor.'
-            }}
-          />
-        </div>
-        {slots.length === 0 && <p className="academy-help">{t.noSlots}</p>}
+              <span>{i + 1}</span>
+              {label}
+            </li>
+          ))}
+        </ol>
 
-        <div className="academy-field-help">
-          {' '}
-          <label>
-            {t.custom}
+        <section hidden={step !== 1} aria-label={w.s1}>
+          {eligible.length === 0 && <p className="academy-help">{w.noCourse}</p>}
+          <div className="ac-choice-list" role="radiogroup" aria-label={t.course}>
+            {eligible.map(course => (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={course.id === courseId}
+                key={course.id}
+                className={'ac-choice' + (course.id === courseId ? ' on' : '')}
+                onClick={() => setCourseId(course.id)}
+              >
+                <strong>{localized(course.title_i18n, locale)}</strong>
+                <small>
+                  {course.level_code}
+                  {typeof (course as { price_sek?: number | null }).price_sek === 'number'
+                    ? ` · ${(course as { price_sek?: number | null }).price_sek} SEK`
+                    : ''}
+                </small>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section hidden={step !== 2} aria-label={w.s2}>
+          <p className="muted">{w.timeNote}</p>
+          {openSlots.length === 0 ? (
+            <p className="academy-help">{t.noSlots}</p>
+          ) : (
+            <>
+              <h3>{w.pickTime}</h3>
+              <div className="ac-slot-grid">
+                {shownSlots.map(slot => (
+                  <button
+                    type="button"
+                    key={slot.id}
+                    className={'ac-choice ac-slot' + (slot.id === slotId ? ' on' : '')}
+                    aria-pressed={slot.id === slotId}
+                    onClick={() => {
+                      setSlotId(slot.id === slotId ? '' : slot.id)
+                      setCustomStart('')
+                    }}
+                  >
+                    {localDateTime(slot.starts_at)}
+                  </button>
+                ))}
+              </div>
+              {openSlots.length > shownSlots.length && (
+                <button type="button" className="ac-btn" onClick={() => setShowAllSlots(true)}>
+                  {w.showAll}
+                </button>
+              )}
+            </>
+          )}
+          <label className="ac-custom-time">
+            {w.anotherTime}
             <input
               aria-label={t.custom}
               title={t.custom}
@@ -317,45 +378,29 @@ export function AcademyBookingDialog({
               onChange={event => setCustomStart(event.target.value)}
             />
           </label>
-          <AcademyHelp
-            locale={locale}
-            text={{
-              fa: 'تاریخ و ساعت پیشنهادی خود را به وقت دستگاه وارد کنید.',
-              en: 'Enter your preferred date and time in your device time zone.',
-              sv: 'Ange önskat datum och tid enligt enhetens tidszon.',
-              de: 'Geben Sie Datum und Uhrzeit in der Zeitzone Ihres Geräts ein.'
-            }}
-          />
-        </div>
+          {slotId && (
+            <button type="button" className="ac-btn" onClick={() => setSlotId('')}>
+              ✕ {timeLabel}
+            </button>
+          )}
+        </section>
 
-        <AcademyField locale={locale}>
+        <section hidden={step !== 3} aria-label={w.s3}>
+          <div className="ac-summary">
+            <strong>{w.summary}</strong>
+            <span>{chosenCourse ? localized(chosenCourse.title_i18n, locale) : ''}</span>
+            <span>{timeLabel}</span>
+          </div>
           <label>
-            {{ fa: 'نوع جلسه', sv: 'Lektionstyp', de: 'Unterrichtsart', en: 'Lesson type' }[locale]}
+            {w.lessonType}
             <select value={sessionType} onChange={e => setSessionType(e.target.value)}>
-              <option value="trial">
-                {{ fa: 'آزمایشی', sv: 'Prova på', de: 'Probestunde', en: 'Trial' }[locale]}
-              </option>
-              <option value="individual">
-                {{ fa: 'خصوصی', sv: 'Enskild', de: 'Einzelunterricht', en: 'Individual' }[locale]}
-              </option>
-              <option value="small_group">
-                {{ fa: 'گروه کوچک', sv: 'Liten grupp', de: 'Kleingruppe', en: 'Small group' }[locale]}
-              </option>
-              <option value="offline_intro">
-                {
-                  {
-                    fa: 'معرفی حضوری',
-                    sv: 'Introduktion på plats',
-                    de: 'Einführung vor Ort',
-                    en: 'Offline introduction'
-                  }[locale]
-                }
-              </option>
+              {(['trial', 'individual', 'small_group', 'offline_intro'] as const).map(k => (
+                <option key={k} value={k}>
+                  {w[k]}
+                </option>
+              ))}
             </select>
           </label>
-        </AcademyField>
-        <div className="academy-field-help">
-          {' '}
           <label>
             {t.message}
             <textarea
@@ -372,25 +417,33 @@ export function AcademyBookingDialog({
               onChange={event => setMessage(event.target.value)}
             />
           </label>
-          <AcademyHelp
-            locale={locale}
-            text={{
-              fa: 'در صورت تمایل نیاز یا هدف خود را برای استاد بنویسید.',
-              en: 'Optionally tell the teacher about your goals or needs.',
-              sv: 'Beskriv gärna dina mål eller behov för läraren.',
-              de: 'Beschreiben Sie optional Ihre Ziele oder Wünsche.'
-            }}
-          />
-        </div>
+        </section>
 
         {error && <div className="academy-notice error">{error}</div>}
-        <div className="academy-card-actions">
-          <button className="academy-primary" type="submit" disabled={busy || !courseId}>
-            {busy ? '…' : t.send}
-          </button>
-          <button type="button" onClick={onClose}>
-            {t.close}
-          </button>
+        <div className="ac-wizard-actions">
+          {step > 1 ? (
+            <button type="button" className="ac-btn" onClick={() => setStep(step - 1)}>
+              {w.back}
+            </button>
+          ) : (
+            <button type="button" className="ac-btn" onClick={onClose}>
+              {t.close}
+            </button>
+          )}
+          {step < 3 ? (
+            <button
+              type="button"
+              className="ac-btn primary"
+              disabled={!canNext}
+              onClick={() => setStep(step + 1)}
+            >
+              {w.next}
+            </button>
+          ) : (
+            <button className="ac-btn primary" type="submit" disabled={busy || !courseId}>
+              {busy ? '…' : t.send}
+            </button>
+          )}
         </div>
       </form>
     </div>
