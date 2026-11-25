@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '../auth/supabase'
+import { AcademyWeekPicker } from './AcademyWeekPicker'
 
 import type { Locale } from './types'
 
@@ -205,14 +206,13 @@ export function AcademyBookingDialog({
     eligible.find(c => c.id === initialCourseId)?.id ?? eligible[0]?.id ?? ''
   )
   const [slots, setSlots] = useState<Slot[]>([])
-  const [slotId, setSlotId] = useState('')
+  const [slotIds, setSlotIds] = useState<string[]>([])
   const [customStart, setCustomStart] = useState('')
   const [message, setMessage] = useState('')
   const [sessionType, setSessionType] = useState('trial')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1)
-  const [showAllSlots, setShowAllSlots] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -228,6 +228,13 @@ export function AcademyBookingDialog({
     }
   }, [teacher.id])
 
+  const MAX_OPTIONS = 3
+  const picked = slots.filter(s => slotIds.includes(s.id))
+  const options: { date: Date; slot?: Slot }[] = [
+    ...picked.map(s => ({ date: new Date(s.starts_at), slot: s })),
+    ...(customStart ? [{ date: new Date(customStart) }] : [])
+  ].sort((a, b) => a.date.getTime() - b.date.getTime())
+
   async function submit(event: React.FormEvent) {
     event.preventDefault()
     if (!userId) {
@@ -235,15 +242,13 @@ export function AcademyBookingDialog({
       return
     }
     if (!courseId) return
-    const slot = slots.find(item => item.id === slotId)
-    if (!slot && !customStart) {
+    if (options.length === 0) {
       setError(t.custom)
       return
     }
 
     if (busy) return
-    const date = new Date(slot?.starts_at ?? customStart)
-    if (!Number.isFinite(date.getTime()) || date.getTime() <= Date.now()) {
+    if (options.some(o => !Number.isFinite(o.date.getTime()) || o.date.getTime() <= Date.now())) {
       setError(
         {
           fa: 'زمان معتبر در آینده انتخاب کن.',
@@ -254,6 +259,10 @@ export function AcademyBookingDialog({
       )
       return
     }
+    const primary = options[0]
+    // One time keeps the old behaviour (the free slot is reserved straight away).
+    // Several suggestions reserve nothing: the teacher confirms one of them.
+    const slotForPrimary = options.length === 1 ? primary.slot : undefined
     setBusy(true)
     setError('')
     try {
@@ -263,9 +272,10 @@ export function AcademyBookingDialog({
           student_id: userId,
           teacher_id: teacher.id,
           course_id: courseId,
-          availability_id: slot?.id ?? null,
+          availability_id: slotForPrimary?.id ?? null,
           session_type: sessionType,
-          preferred_start: date.toISOString(),
+          preferred_start: primary.date.toISOString(),
+          alternative_starts: options.slice(1).map(o => o.date.toISOString()),
           student_message: message.trim() || null,
           status: 'requested'
         })
@@ -282,15 +292,16 @@ export function AcademyBookingDialog({
 
   const w = wiz[locale]
   const chosenCourse = eligible.find(c => c.id === courseId)
-  const chosenSlot = slots.find(s => s.id === slotId)
-  const timeLabel = chosenSlot
-    ? localDateTime(chosenSlot.starts_at)
-    : customStart
-      ? localDateTime(new Date(customStart).toISOString())
-      : ''
-  const canNext = step === 1 ? Boolean(courseId) : step === 2 ? Boolean(slotId || customStart) : true
-  const openSlots = slots.filter(s => s.status !== 'busy')
-  const shownSlots = showAllSlots ? openSlots : openSlots.slice(0, 9)
+  const optionLabels = options.map(o =>
+    Number.isFinite(o.date.getTime()) ? localDateTime(o.date.toISOString()) : ''
+  )
+  const canNext = step === 1 ? Boolean(courseId) : step === 2 ? options.length > 0 : true
+  const weekSlots = slots.map(s => ({
+    id: s.id,
+    status: s.status === 'busy' ? 'busy' : 'free',
+    starts_at: s.starts_at,
+    ends_at: s.ends_at
+  }))
 
   return (
     <div className="academy-modal ac-sheet-backdrop" role="dialog" aria-modal="true" aria-label={t.title}>
@@ -339,33 +350,21 @@ export function AcademyBookingDialog({
 
         <section hidden={step !== 2} aria-label={w.s2}>
           <p className="muted">{w.timeNote}</p>
-          {openSlots.length === 0 ? (
+          <p className="muted">{w.suggestNote}</p>
+          {slots.length === 0 ? (
             <p className="academy-help">{t.noSlots}</p>
           ) : (
-            <>
-              <h3>{w.pickTime}</h3>
-              <div className="ac-slot-grid">
-                {shownSlots.map(slot => (
-                  <button
-                    type="button"
-                    key={slot.id}
-                    className={'ac-choice ac-slot' + (slot.id === slotId ? ' on' : '')}
-                    aria-pressed={slot.id === slotId}
-                    onClick={() => {
-                      setSlotId(slot.id === slotId ? '' : slot.id)
-                      setCustomStart('')
-                    }}
-                  >
-                    {localDateTime(slot.starts_at)}
-                  </button>
-                ))}
-              </div>
-              {openSlots.length > shownSlots.length && (
-                <button type="button" className="ac-btn" onClick={() => setShowAllSlots(true)}>
-                  {w.showAll}
-                </button>
-              )}
-            </>
+            <AcademyWeekPicker
+              locale={locale}
+              slots={weekSlots}
+              selected={slotIds}
+              max={MAX_OPTIONS - (customStart ? 1 : 0)}
+              onToggle={slot =>
+                setSlotIds(list =>
+                  list.includes(slot.id) ? list.filter(id => id !== slot.id) : [...list, slot.id]
+                )
+              }
+            />
           )}
           <label className="ac-custom-time">
             {w.anotherTime}
@@ -374,14 +373,18 @@ export function AcademyBookingDialog({
               title={t.custom}
               type="datetime-local"
               value={customStart}
-              disabled={Boolean(slotId)}
+              disabled={!customStart && options.length >= MAX_OPTIONS}
               onChange={event => setCustomStart(event.target.value)}
             />
           </label>
-          {slotId && (
-            <button type="button" className="ac-btn" onClick={() => setSlotId('')}>
-              ✕ {timeLabel}
-            </button>
+          {options.length > 0 && (
+            <div className="ac-chips" aria-live="polite">
+              {options.map((_o, i) => (
+                <span key={i} className="ac-chip">
+                  {i + 1}. {optionLabels[i]}
+                </span>
+              ))}
+            </div>
           )}
         </section>
 
@@ -389,7 +392,13 @@ export function AcademyBookingDialog({
           <div className="ac-summary">
             <strong>{w.summary}</strong>
             <span>{chosenCourse ? localized(chosenCourse.title_i18n, locale) : ''}</span>
-            <span>{timeLabel}</span>
+            {optionLabels.map((label, i) => (
+              <span key={i}>
+                {optionLabels.length > 1 ? `${i + 1}. ` : ''}
+                {label}
+              </span>
+            ))}
+            {optionLabels.length > 1 && <small>{w.confirmOne}</small>}
           </div>
           <label>
             {w.lessonType}

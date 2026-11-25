@@ -10,6 +10,7 @@ import { AcademyAdminOverview } from './AcademyAdminOverview'
 import { AcademyTeacherCard, AcademySkeletonCards } from './AcademyTeacherCard'
 import { AcademyCourseCard } from './AcademyCourseCard'
 import { AcademyPlacement } from './AcademyPlacement'
+import { AcademyAssignStudent } from './AcademyAssignStudent'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
@@ -2031,6 +2032,20 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
               </details>
             </div>
             <div hidden={adminPanel !== 'enrollments'}>
+              <AcademyAssignStudent
+                locale={locale}
+                courses={courses
+                  .filter(c => c.status === 'active')
+                  .map(c => ({ id: c.id, label: text(c.title_i18n) + ' · ' + c.level_code }))}
+                teachers={teachers
+                  .filter(x => x.status === 'active')
+                  .map(x => ({
+                    id: x.id,
+                    label: localizedName(x, locale),
+                    courseIds: teacherCourses.filter(tc => tc.teacher_id === x.id).map(tc => tc.course_id)
+                  }))}
+                onDone={() => void refresh()}
+              />
               <details ref={enrollmentsRef} className="academy-pending">
                 <summary>{workspaceLabel(locale, 'دانشجوها و ثبت‌نام‌ها', 'Students & enrollments')}</summary>
                 <AcademyField locale={locale}>

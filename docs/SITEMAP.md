@@ -1,3 +1,5 @@
+2026-11-26 review v0.7.29: booking sheet step 2 is a week view; Teacher Space → Students gains Fix lessons; Admin Studio → Students & enrollments gains Assign a student; no new URL.
+
 2026-11-25 review v0.7.28: `/academy/path` now contains the level check; `/academy/teachers/:id` shows reviews when an admin has switched them on; no new URL.
 
 2026-11-25 review v0.7.27: audit, documentation and a null-safe fix only; no route or navigation change.

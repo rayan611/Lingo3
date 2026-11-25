@@ -1,3 +1,9 @@
+## 2026-11-26 — Scheduling v2 (v0.7.29)
+
+See CHANGELOG. **Known limits:** when a student suggests several times, no availability slot is reserved, so two students can suggest the same slot; the teacher's confirmation is guarded by the existing overlap check on confirmed lessons. Fixed lessons ignore the teacher's published availability slots and time-off (they check only overlap with confirmed lessons); the weekly slot builder and fixed lessons are separate tools. **Next:** show teacher time-off in the week view; optional reminder e-mail; real-account test.
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no new URL.
+
 ## 2026-11-25 — Phases 3–4 subset (v0.7.28)
 
 See CHANGELOG. **Database:** migrations 20261125180000 (indexes) and 20261125190000 (reviews read side) applied; checked: anon cannot read reviewer ids, reviews_on = false. **Not verified:** a real review being written and shown (needs the switch on plus a completed lesson), progress numbers with real data. **Next:** owner decides payment market (blocks packages/payments/guarantee); AI draft endpoint; richer teacher profile; design v2 part 3.

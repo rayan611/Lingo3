@@ -73,6 +73,7 @@ touch them (the ratchet in `check-ui-standards.mjs` only allows the count to go 
 | Teacher in a list | `AcademyTeacherCard` | `AcademyTeacherCard.tsx` |
 | Course in a list | `AcademyCourseCard` | `AcademyCourseCard.tsx` |
 | Loading list | `AcademySkeletonCards` | `AcademyTeacherCard.tsx` |
+| A week of times (pick or view) | `AcademyWeekPicker` (viewer's time zone, free green / busy grey, `readOnly` for display) | `AcademyWeekPicker.tsx` |
 | Confirm / ask for text | `askConfirm()` / `askText()` — **never** `window.confirm/prompt` | `AcademyDialogs.tsx` |
 | Multi-step form | the booking sheet pattern: steps with `hidden` panels, `ac-wizard-steps`, one submit on the last step | `AcademyBookingDialog.tsx` |
 | Times and dates | `time.ts` (`formatLessonTime`, `userTimeZone`) — viewer's own zone, short weekday format | `time.ts` |

@@ -3428,3 +3428,149 @@
 .academy p.ac-level-big {
   color: var(--ac-primary);
 }
+
+/* ---------- Week view ---------- */
+.academy .ac-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.academy .ac-week {
+  display: grid;
+  gap: 10px;
+}
+.academy .ac-week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.academy .ac-week-grid {
+  display: grid;
+  grid-template-columns: 34px repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--ac-surface);
+  border: 1px solid var(--ac-border);
+  border-radius: 14px;
+  padding: 6px;
+  overflow: hidden;
+}
+.academy .ac-week-axis,
+.academy .ac-week-day {
+  display: grid;
+  grid-template-rows: 28px calc(var(--ac-hours) * var(--ac-hour-px));
+  min-width: 0;
+}
+.academy .ac-week-axis {
+  grid-template-rows: 28px;
+  grid-auto-rows: var(--ac-hour-px);
+}
+.academy .ac-week-hour {
+  font-size: 0.7rem;
+  color: var(--ac-muted);
+  text-align: end;
+  padding-inline-end: 4px;
+  transform: translateY(-6px);
+}
+.academy .ac-week-dayname {
+  font-size: 0.72rem;
+  text-align: center;
+  color: var(--ac-muted);
+  line-height: 1.1;
+  display: grid;
+  place-items: center;
+}
+.academy .ac-week-col {
+  position: relative;
+  border-inline-start: 1px solid var(--ac-border);
+}
+.academy .ac-week-line {
+  position: absolute;
+  inset-inline: 0;
+  height: 0;
+  border-top: 1px dashed var(--ac-border);
+}
+.academy .ac-week-block {
+  position: absolute;
+  inset-inline: 1px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  line-height: 1;
+  min-height: 26px;
+}
+.academy .ac-week-block.free {
+  background: color-mix(in srgb, var(--ac-success) 22%, var(--ac-surface));
+  border-color: color-mix(in srgb, var(--ac-success) 55%, transparent);
+  color: var(--ac-text);
+  cursor: pointer;
+}
+.academy .ac-week-block.free.on {
+  background: var(--ac-primary);
+  border-color: var(--ac-primary);
+  color: var(--ac-primary-text);
+  font-weight: 700;
+}
+.academy .ac-week-block.free:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.academy .ac-week-block.busy {
+  background: var(--ac-surface-2);
+  color: var(--ac-muted);
+  border-color: var(--ac-border);
+}
+@media (max-width: 650px) {
+  .academy .ac-week-grid {
+    grid-template-columns: 26px repeat(7, minmax(0, 1fr));
+    padding: 4px;
+  }
+  .academy .ac-week-block {
+    font-size: 0.62rem;
+    inset-inline: 0;
+    border-radius: 6px;
+  }
+}
+
+/* ---------- Scheduling forms ---------- */
+.academy .ac-schedule,
+.academy .ac-assign {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.academy .ac-schedule-rows {
+  display: grid;
+  gap: 8px;
+}
+.academy .ac-schedule-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.academy .ac-schedule-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+.academy .ac-schedule label,
+.academy .ac-assign label {
+  display: grid;
+  gap: 4px;
+}
+.academy .ac-assign-search {
+  display: flex;
+  gap: 8px;
+}
+.academy .ac-assign-search input {
+  flex: 1;
+}
+.academy .ac-week-corner {
+  display: block;
+  height: 28px;
+}

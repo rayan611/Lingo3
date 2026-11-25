@@ -17,6 +17,8 @@ import { askConfirm } from './AcademyDialogs'
 import { AcademyLessonForm } from './AcademyLessonForm'
 import { AcademyTodayCard } from './AcademyTodayCard'
 import { AcademyProgressCard } from './AcademyProgressCard'
+import { AcademyScheduleStudent } from './AcademyScheduleStudent'
+import { AcademyWeekPicker } from './AcademyWeekPicker'
 
 import type { Locale } from './types'
 type Course = { id: string; subject_code: string; level_code: string; title_i18n: Record<string, string> }
@@ -73,6 +75,7 @@ type Booking = {
   meeting_backup_url?: string | null
   student_message: string | null
   teacher_note: string | null
+  alternative_starts?: string[] | null
 }
 type Availability = {
   id: string
@@ -395,6 +398,10 @@ function dt(v: string | null) {
   return v
     ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(v))
     : '—'
+}
+function localInputValue(iso: string) {
+  const d = new Date(iso)
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
 }
 function toIso(v: string) {
   return new Date(v).toISOString()
@@ -2824,6 +2831,20 @@ export function AcademyPortal({
                 <div hidden={teacherTool !== 'availability'}>
                   <article className="academy-card" hidden={!selfTeacher}>
                     <h3 id="academy-availability">{t.availability}</h3>
+                    {availability.some(a => ['available', 'booked'].includes(a.status)) && (
+                      <AcademyWeekPicker
+                        locale={locale}
+                        readOnly
+                        slots={availability
+                          .filter(a => ['available', 'booked'].includes(a.status))
+                          .map(a => ({
+                            id: a.id,
+                            status: a.status === 'available' ? 'free' : 'busy',
+                            starts_at: a.starts_at,
+                            ends_at: a.ends_at
+                          }))}
+                      />
+                    )}
                     <div className="academy-field-help">
                       <label>
                         {t.start}
@@ -3076,6 +3097,30 @@ export function AcademyPortal({
                             <small>
                               {t.preferred}: {dt(b.preferred_start)}
                             </small>
+                            {b.status === 'requested' && (b.alternative_starts?.length ?? 0) > 0 && (
+                              <div className="ac-filter-chips" role="group" aria-label={t.preferred}>
+                                {[b.preferred_start, ...(b.alternative_starts ?? [])]
+                                  .filter((iso): iso is string => Boolean(iso))
+                                  .map(iso => (
+                                    <button
+                                      key={iso}
+                                      type="button"
+                                      className={
+                                        'ac-chip-btn' +
+                                        (draft.confirmed_start === localInputValue(iso) ? ' on' : '')
+                                      }
+                                      onClick={() =>
+                                        setBookingDraft({
+                                          ...bookingDraft,
+                                          [b.id]: { ...draft, confirmed_start: localInputValue(iso) }
+                                        })
+                                      }
+                                    >
+                                      {dt(iso)}
+                                    </button>
+                                  ))}
+                              </div>
+                            )}
                             {b.student_message && <p>{b.student_message}</p>}
                             <JoinMeetingLinks booking={b} locale={locale} />
                             {['requested', 'confirmed'].includes(b.status) && (
@@ -3237,6 +3282,16 @@ export function AcademyPortal({
                             </select>
                           </label>
                         </AcademyField>
+                        {selectedIsTeacher && selected && selected.teacher_id && (
+                          <AcademyScheduleStudent
+                            spaceId={selected.id}
+                            locale={locale}
+                            onDone={message => {
+                              onNotice(message)
+                              setRefreshTick(n => n + 1)
+                            }}
+                          />
+                        )}
                         {selectedIsTeacher && (
                           <>
                             <AcademyField locale={locale}>

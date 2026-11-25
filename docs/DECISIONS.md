@@ -5,6 +5,9 @@ entry without the owner's say-so; add a new entry that supersedes it instead. Cu
 `docs/DEVELOPMENT_HANDOFF.md`, chronology in `docs/DEVELOPMENT_HISTORY.md`, remaining work in `docs/ACADEMY_ROADMAP.md`
 and `docs/ACADEMY_IMPROVEMENT_PLAN.md`, UI rules in `docs/UI_STANDARDS.md`.
 
+## D-11 · 2026-11-26 · Three ways to create the teacher–student link, one result
+(1) Admin assigns a student to a course and teacher (`academy_admin_assign_student`); (2) the student requests a trial/lesson and suggests up to three times, the teacher confirms one; (3) the teacher fixes repeating lessons for a student (`academy_teacher_schedule_student`). All end in an enrollment, a learning space and confirmed bookings. A single suggested free slot is reserved immediately; several suggestions reserve nothing until confirmed. **Consequence:** do not add a fourth path; extend these. The limit of three suggestions is in the column check and the UI (`MAX_OPTIONS`).
+
 ## D-10 · 2026-11-25 · The level check is an estimate, two languages, no account
 Swedish and English only (12 questions each, three per step A1–B2); a step counts when two of three are right and every lower step passed; the result is stored on the device and shown as an estimate a teacher confirms. More languages need questions written by a teacher of that language, not generated. **Consequence:** add a language by adding to `placementQuestions.ts` and keeping `scripts/check-placement.ts` green.
 

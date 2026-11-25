@@ -1,14 +1,14 @@
 {
   "name": "lingo3",
   "private": true,
-  "version": "0.7.28",
+  "version": "0.7.29",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "check": "node --import tsx scripts/check-placement.ts && node --import tsx scripts/check-lesson-words.ts && node --import tsx scripts/check-queries.ts && node --import tsx scripts/check-scheduling.ts && node --import tsx scripts/check-sync.ts && node --import tsx scripts/check-collections.ts && node --import tsx scripts/check-api.mts && node --import tsx scripts/check-invite.ts && node --import tsx scripts/check-waiting-review.ts && node --import tsx scripts/check-shared-vocab.ts && node --import tsx scripts/check-grammar.ts && node --import tsx scripts/check-grammar-authoring.ts && node --import tsx scripts/check-vocab-010.ts && node --import tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs && npm run check:academy-behavior && npm run check:academy-preferences && npm run check:academy-bridge && npm run check:academy-navigation && npm run check:academy-roster && npm run check:academy-posts && npm run check:academy-ux && npm run check:boot && npm run check:ui",
+    "check": "node --import tsx scripts/check-week-picker.tsx && node --import tsx scripts/check-placement.ts && node --import tsx scripts/check-lesson-words.ts && node --import tsx scripts/check-queries.ts && node --import tsx scripts/check-scheduling.ts && node --import tsx scripts/check-sync.ts && node --import tsx scripts/check-collections.ts && node --import tsx scripts/check-api.mts && node --import tsx scripts/check-invite.ts && node --import tsx scripts/check-waiting-review.ts && node --import tsx scripts/check-shared-vocab.ts && node --import tsx scripts/check-grammar.ts && node --import tsx scripts/check-grammar-authoring.ts && node --import tsx scripts/check-vocab-010.ts && node --import tsx scripts/check-word-actions.ts && npm run check:auth-navigation && npm run check:academy && npm run check:docs && npm run check:academy-behavior && npm run check:academy-preferences && npm run check:academy-bridge && npm run check:academy-navigation && npm run check:academy-roster && npm run check:academy-posts && npm run check:academy-ux && npm run check:boot && npm run check:ui",
     "test": "npm run check",
     "check:academy": "node scripts/check-academy.mjs",
     "check:docs": "node scripts/check-development-docs.mjs",

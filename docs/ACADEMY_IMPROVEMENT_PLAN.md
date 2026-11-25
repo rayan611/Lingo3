@@ -213,3 +213,8 @@ Done: Phase 0 (except splitting the two giant components), Phase 1 (e-mail inact
 ## Status update 2026-11-25 (v0.7.28)
 
 Phase 3: level filter added (language filter existed), progress card, no-show and cancellation counts, reviews built (off by default). Phase 4: level check built (Swedish, English). **Not built:** AI draft, packages, payments, teacher-swap guarantee (owner's payment decision pending), richer teacher profile fields, 24-hour reminder e-mail, Phase 5. Decisions: `docs/DECISIONS.md` D-09, D-10.
+
+
+## Status update 2026-11-26 (v0.7.29)
+
+Scheduling v2 built: week view for students and teachers, up to three suggested times, fixed recurring lessons by the teacher, admin assignment of student to course and teacher. Decision D-11. Open: teacher time-off in the week view, reminder e-mail, real-account test.
