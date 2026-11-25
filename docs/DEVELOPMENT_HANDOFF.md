@@ -1,3 +1,11 @@
+## 2026-11-25 — Academy review and phased plan (documentation revision; app v0.7.19)
+
+**Done:** review of App and Academy (code, RLS, build, local screenshots; live site and Supabase not reachable, signed-in roles not exercised) and evaluation of the owner's PDF. Plan written to `docs/ACADEMY_IMPROVEMENT_PLAN.md`. No runtime change.
+
+**Next action:** owner chooses payment market; start Phase 0 (restructure Academy code, no behaviour change) on a feature branch, behind `academy_features` switches for later phases.
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no route change.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 **Current production:** v0.7.19, runtime commit `49c48096cf756c9128e518c885b05ff43b739878`, PR #72, Vercel deployment `dpl_EWc8J2MAS4swJW2D9zeAZn5dFTRe`, promoted to production after rollback. `lingo3.com/version.json` returned 0.7.19; `/academy.html?lang=fa` led to the Persian Academy HTML over HTTP. These observations do not prove the user's device rendered or redirected successfully. Earlier dated pending/rollback entries below are historical and superseded by this entry.

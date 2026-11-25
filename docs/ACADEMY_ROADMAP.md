@@ -1,3 +1,7 @@
+## 2026-11-25 — Phased improvement plan (documentation revision; v0.7.19)
+
+Current plan of record: `docs/ACADEMY_IMPROVEMENT_PLAN.md` (Phase 0 foundation, 1 class → word bank, 2 navigation and enrolment, 3 trust and progress, 4 growth, 5 later). Nothing implemented yet.
+
 ## 2026-11-22 — Academy release and next checks (documentation revision; v0.7.19)
 
 v0.7.17–0.7.19 deployed: reference-inspired navigation, student home summary, My Courses, read-only profile, settings, legacy entry redirect and boot diagnostics. Next: confirm user's actual device works; test real signed-in roles and responsive layouts. Group sessions remain in Schedule rather than home; profile is read-only; complete Base44 parity has not been established. See `DEVELOPMENT_HANDOFF.md` for evidence and limits.

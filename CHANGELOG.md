@@ -1,3 +1,7 @@
+## 2026-11-25 — Academy review and phased plan (documentation revision; app v0.7.19)
+
+Added `docs/ACADEMY_IMPROVEMENT_PLAN.md`: summary of a code/UX review of App and Academy, evaluation of the owner's PDF plan, and a phased improvement list (Phase 0 foundation → Phase 5 later) with acceptance checks per phase. No runtime change; no deployment.
+
 ## 2026-11-22 — Academy session closeout (documentation revision; app v0.7.19)
 
 Record production v0.7.19 deployment and HTTP checks for PR #72, released v0.7.17–0.7.19 changes, and outstanding real-device/role acceptance and functionality gaps. No runtime change; no new deployment claimed. See `docs/DEVELOPMENT_HANDOFF.md` for evidence and next steps.
