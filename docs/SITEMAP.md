@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.24: loading indicator only; no URL change.
+
 2026-11-25 review v0.7.23: /academy and sub-pages fail open to the app shell; no URL change.
 
 2026-11-25 review v0.7.22: guest phone bar changes to Home/Courses/Teachers/Log in; admin Overview is the opening view of /academy/admin; no URL change.

@@ -1,3 +1,7 @@
+## 2026-11-25 — Refresh loading indicator (v0.7.24)
+
+See CHANGELOG. Preview of v0.7.23 verified over HTTP (200, version.json). **Next:** verify v0.7.24 preview, then promote; ask the user for the exact error text if refresh still fails.
+
 ## 2026-11-25 — Phone menu and refresh fixes (v0.7.23)
 
 **Found:** production was still v0.7.19 (dpl_EWc8J2…); pushes to `main` only create preview deployments. **Fixed:** see CHANGELOG. **Tested:** `npm test`, build, local phone reproduction (menu top −416 px before, 364–768 px after; 3 reloads mounted). **Not verified:** the user's real refresh error (no message captured; cause inferred from the server fallback code and not reproduced live).

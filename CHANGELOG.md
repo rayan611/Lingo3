@@ -1,3 +1,7 @@
+## 2026-11-25 — Refresh shows a loading indicator (v0.7.24)
+
+On refresh the server put the plain crawlable text inside the app container, so phones showed an unstyled page until the bundle loaded (it looked frozen). That text is now hidden from sighted users and replaced by a loading indicator until the app mounts; search engines and visitors without JavaScript still get the text (`api/academy-page.ts`). Handler and SEO checks pass.
+
 ## 2026-11-25 — Phone menu and refresh fixes (v0.7.23)
 
 Phone menu: the open menu sheet was drawn above the top of the screen because the sticky header's `backdrop-filter` made it the containing block of the `position: fixed` sheet; the header is now opaque on phones, so the three-level menu (menu → group → items) shows above the bottom bar. Refresh: `/academy` and its sub-pages now fall back to the plain app shell (HTTP 200, no-store) when the database or the shell lookup fails, instead of the plain "temporarily unavailable" error (previously only `/` did); database lookups time out after 4 s instead of 6 s. The gold highlight on "My Academy" is shown only to signed-in users. New regression checks for both. Full `npm test` and build passed. Note: pushes to `main` do not deploy by themselves (`git.deploymentEnabled.main` is false); production stays on the last deployment until one is promoted.
