@@ -840,7 +840,7 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
               </button>
             </div>
           </details>
-          <details className="academy-my-menu" onToggle={onMenuToggle}>
+          <details className={'academy-my-menu' + (userId ? '' : ' is-guest')} onToggle={onMenuToggle}>
             <summary>{t.mine}</summary>
             <div className="academy-menu">
               <button onClick={() => go('personal')}>{t.personal}</button>

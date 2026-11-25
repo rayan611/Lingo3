@@ -58,5 +58,15 @@ try{
  const app=await request({root:'1'})
  assert.equal(app.status,200)
  assert(app.body.includes('rel="canonical" href="https://lingo3.com/"'))
+ // A refresh must open the app even when the database is down: every route falls back to the plain shell.
+ const realFetch=globalThis.fetch;globalThis.fetch=async()=>{throw new Error('database down')}
+ try{
+  for(const query of [{route:'',lang:'en'},{route:'courses/'+courseId,lang:'en'},{route:'teachers',lang:'fa'}]){
+   const down=await request(query)
+   assert.equal(down.status,200,'Refresh must not return an error page when the database is down')
+   assert(!/temporarily unavailable/i.test(down.body))
+   assert.equal(down.headers['Cache-Control'],'no-store')
+  }
+ }finally{globalThis.fetch=realFetch}
  console.log('PASS SEO server: saved admin metadata, published multilingual canonical/hreflang, missing locale noindex, sitemap, drafts and private exclusions.')
 }finally{fs.rmSync(output,{force:true})}

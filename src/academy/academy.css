@@ -2897,3 +2897,38 @@
   color: var(--ac-muted);
   font-size: 14px;
 }
+
+/* Phone menu fix: backdrop-filter on the sticky header turns it into the containing block of every
+   position:fixed child, so the open menu sheet was drawn inside the 65px header, above the screen.
+   On phones the header is opaque instead, and the sheet is positioned against the screen again. */
+@media (max-width: 860px) {
+  .academy .academy-top {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #0c1021;
+  }
+  .academy[data-theme='light'] .academy-top {
+    background: #ffffff;
+  }
+  .academy .academy-nav.is-open {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* second and third level: groups open inline inside the sheet */
+  .academy .academy-nav.is-open details[open] > .academy-menu {
+    display: grid;
+    gap: 4px;
+  }
+  .academy .academy-nav.is-open details > summary {
+    cursor: pointer;
+  }
+}
+
+/* The gold highlight marks the signed-in personal space only; visitors see a normal menu item. */
+.academy .academy-my-menu.is-guest > summary {
+  background: inherit !important;
+  color: inherit !important;
+  border-color: var(--ac-border) !important;
+  box-shadow: none;
+  font-weight: inherit;
+}

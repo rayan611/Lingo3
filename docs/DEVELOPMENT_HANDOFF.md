@@ -1,3 +1,9 @@
+## 2026-11-25 — Phone menu and refresh fixes (v0.7.23)
+
+**Found:** production was still v0.7.19 (dpl_EWc8J2…); pushes to `main` only create preview deployments. **Fixed:** see CHANGELOG. **Tested:** `npm test`, build, local phone reproduction (menu top −416 px before, 364–768 px after; 3 reloads mounted). **Not verified:** the user's real refresh error (no message captured; cause inferred from the server fallback code and not reproduced live).
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no route change.
+
 ## 2026-11-25 — Phase 2 navigation and overview (v0.7.22)
 
 **Implemented:** see CHANGELOG. **Tested:** `npm test`, build, mocked navigation check (updated for the guest bar), local phone screenshot. **Not verified:** signed-in role views and real devices. **Next:** guided enrolment flow, signed-in menus per role, then Phase 3 (profile, filters, progress, reviews).

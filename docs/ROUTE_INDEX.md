@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.23: /api/academy-page now returns the app shell (200, no-store) on any internal failure; no route change.
+
 2026-11-25 review v0.7.22: no route change; guest bottom bar and admin Overview are in-page UI.
 
 2026-11-25 review v0.7.21: `/api/academy-notify` (POST, teacher session token) sends lesson-published email; not a navigation entry. No page route change.

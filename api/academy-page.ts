@@ -20,7 +20,7 @@ export function authoredLocales(kind:'courses'|'teachers',entry:{title_i18n?:Rec
 async function rows(table:string,query:string){
  const base=process.env.SUPABASE_URL||process.env.VITE_SUPABASE_URL,key=process.env.SUPABASE_ANON_KEY||process.env.VITE_SUPABASE_ANON_KEY
  if(!base||!key)throw Error('Public database configuration missing')
- const r=await fetch(`${base}/rest/v1/${table}?${query}`,{headers:{apikey:key,authorization:`Bearer ${key}`},signal:AbortSignal.timeout(6000)});if(!r.ok)throw Error('Public content unavailable');return r.json() as Promise<any[]>
+ const r=await fetch(`${base}/rest/v1/${table}?${query}`,{headers:{apikey:key,authorization:`Bearer ${key}`},signal:AbortSignal.timeout(4000)});if(!r.ok)throw Error('Public content unavailable');return r.json() as Promise<any[]>
 }
 export function renderPage(shell:string,data:{title:string;description:string;locale:string;url:string;content:string;alternates:{locale:string;url:string}[];schema?:unknown;noindex?:boolean;image?:string}){
  let html=shell.replace(/<title>[\s\S]*?<\/title>/i,'').replace(/<meta\s+(?:name|property)="(?:description|robots|og:[^"]+|twitter:[^"]+)"[\s\S]*?>/gi,'').replace(/<link\s+rel="(?:canonical|alternate)"[^>]*>/gi,'')
@@ -85,5 +85,11 @@ export default async function handler(req:{method?:string;url?:string;query:Reco
  if(noindex)alternates=[]
  res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control',noindex?'private, no-store':'public, s-maxage=60');res.setHeader('X-Robots-Tag',noindex?'noindex, nofollow':'index, follow')
  return res.status(status).send(renderPage(shell,{title,description,locale:lang,url,content,alternates,schema,noindex,image}))
- }catch{if(q('root')==='1'){try{const shell=await readFile(path.join(process.cwd(),'dist/index.html'),'utf8');res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control','no-store');return res.status(200).send(shell)}catch{}}res.setHeader('Cache-Control','no-store');res.setHeader('Retry-After','60');return res.status(503).send('Content temporarily unavailable. Please retry.')}
+ }catch{
+ // Fail open for every page, not only "/": a refresh must still open the app when the database or the
+ // shell lookup is slow. The browser app loads its own data; only the crawlable server text is skipped.
+ let fallback=''
+ try{fallback=await readFile(path.join(process.cwd(),'dist/index.html'),'utf8')}catch{try{const r=await fetch(origin+'/index.html',{signal:AbortSignal.timeout(3000)});if(r.ok)fallback=await r.text()}catch{}}
+ if(fallback){res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Cache-Control','no-store');return res.status(200).send(fallback)}
+ res.setHeader('Cache-Control','no-store');res.setHeader('Retry-After','60');return res.status(503).send('Content temporarily unavailable. Please retry.')}
 }

@@ -24,6 +24,7 @@ const preferences=read('src/academy/preferences.ts')
 const dashboardMigration = read('supabase/migrations/20261117211500_academy_role_dashboards.sql')
 
 const checks = [
+  ['Phone header has no backdrop-filter (it would trap the fixed menu sheet inside the header)', /@media \(max-width: 860px\) \{\s*\.academy \.academy-top \{[^}]*backdrop-filter: none/.test(css)],
   ['Legacy Academy URL redirects at server', vercel.redirects.some(r=>r.source==='/academy.html' && r.destination==='/academy')],
   ['Responsive Academy uses tablet hamburger and mobile touch targets', css.includes('@media(max-width:860px)') && css.includes('.academy-mobile-toggle{display:flex}') && css.includes('min-height:46px')],
   ['Academy forms provide example placeholders', academy.includes('e.g. Swedish A1') && portal.includes('Write your own lesson note here') && portal.includes('e.g. A1 quiz')],
