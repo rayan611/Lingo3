@@ -7,6 +7,7 @@ import { Suspense, useEffect, useMemo, useRef, useState, type ComponentProps } f
 import { lazyScreen } from '../ui/lazyScreen'
 import { AcademyDialogHost, askText } from './AcademyDialogs'
 import { AcademyAdminOverview } from './AcademyAdminOverview'
+import { AcademyTeacherCard, AcademySkeletonCards } from './AcademyTeacherCard'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
@@ -220,6 +221,7 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
   const refreshVersion = useRef(0)
   const [catalogSearch, setCatalogSearch] = useState(''),
     [teacherSearch, setTeacherSearch] = useState(''),
+    [teacherLang, setTeacherLang] = useState(''),
     [adminCourseSearch, setAdminCourseSearch] = useState(''),
     [adminTeacherSearch, setAdminTeacherSearch] = useState(''),
     [teacherCourseSearch, setTeacherCourseSearch] = useState('')
@@ -1199,14 +1201,38 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                 <h1>{t.heroT}</h1>
                 <p>{t.heroB}</p>
                 <div className="academy-actions">
-                  <button className="academy-primary" onClick={() => go('courses')}>
-                    {t.browse}
+                  <button className="academy-primary" onClick={() => go('teachers')}>
+                    {
+                      {
+                        en: 'Find a teacher',
+                        sv: 'Hitta en lärare',
+                        fa: 'استاد پیدا کن',
+                        de: 'Lehrkraft finden'
+                      }[locale]
+                    }
                   </button>
-                  <button onClick={() => go('teachers')}>{t.teachers}</button>
+                  <button onClick={() => go('courses')}>{t.browse}</button>
                   <button onClick={() => go('path')}>{t.path}</button>
                 </div>
+                {[...new Set(activeTeachers.flatMap(x => x.teaching_languages))].length > 0 && (
+                  <div className="ac-filter-chips" role="group" aria-label={t.language}>
+                    {[...new Set(activeTeachers.flatMap(x => x.teaching_languages))].map(code => (
+                      <button
+                        key={code}
+                        type="button"
+                        className="ac-chip-btn"
+                        onClick={() => {
+                          setTeacherLang(code)
+                          go('teachers')
+                        }}
+                      >
+                        {languageLabel(code)}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-              <ol className="academy-hero-card academy-steps" aria-label={t.howTitle}>
+              <ol className="academy-hero-card ac-steps" aria-label={t.howTitle}>
                 {(
                   {
                     en: [
@@ -1320,37 +1346,37 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   )}
                 </div>
               ) : (
-                <div className="academy-grid">
+                <div className="ac-teacher-grid">
                   {teachers
                     .filter(teacher => teacher.status === 'active')
                     .slice(0, 3)
-                    .map(teacher => (
-                      <article className="academy-card academy-discover-card" key={teacher.id}>
-                        <div className="teacher-head">
-                          {teacher.photo_url ? (
-                            <img src={teacher.photo_url} loading="lazy" decoding="async" alt="" />
-                          ) : (
-                            <div className="teacher-placeholder" aria-hidden="true">
-                              {localizedName(teacher, locale).slice(0, 1)}
-                            </div>
-                          )}
-                          <div>
-                            <h3>
-                              <a
-                                href={'/academy/teachers/' + teacher.id}
-                                onClick={e => {
-                                  e.preventDefault()
-                                  navigateProduct('/academy/teachers/' + teacher.id)
-                                }}
-                              >
-                                {localizedName(teacher, locale)}
-                              </a>
-                            </h3>
-                            <p>{text(teacher.intro_i18n)}</p>
-                          </div>
-                        </div>
-                      </article>
-                    ))}
+                    .map(teacher => {
+                      const own = teacherCourses
+                        .filter(tc => tc.teacher_id === teacher.id)
+                        .map(tc => courses.find(course => course.id === tc.course_id))
+                        .filter((c): c is Course => Boolean(c))
+                      const prices = own
+                        .map(c => c.price_sek)
+                        .filter((p): p is number => typeof p === 'number')
+                      return (
+                        <AcademyTeacherCard
+                          key={teacher.id}
+                          locale={locale}
+                          teacher={{
+                            id: teacher.id,
+                            name: localizedName(teacher, locale),
+                            photoUrl: teacher.photo_url,
+                            intro: text(teacher.intro_i18n),
+                            languages: teacher.teaching_languages.map(languageLabel),
+                            levels: teacher.levels,
+                            fromPrice: prices.length ? Math.min(...prices) : null,
+                            courseCount: own.length
+                          }}
+                          onOpen={() => navigateProduct('/academy/teachers/' + teacher.id)}
+                          onTrial={() => openDialog({ type: 'booking', teacherId: teacher.id })}
+                        />
+                      )
+                    })}
                 </div>
               )}
             </section>
@@ -1630,6 +1656,26 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   />
                 </label>
               </AcademyField>
+              <div className="ac-filter-chips" role="group" aria-label={t.language}>
+                <button
+                  type="button"
+                  className={'ac-chip-btn' + (teacherLang ? '' : ' on')}
+                  onClick={() => setTeacherLang('')}
+                >
+                  {{ en: 'All', sv: 'Alla', fa: 'همه', de: 'Alle' }[locale]}
+                </button>
+                {[...new Set(activeTeachers.flatMap(x => x.teaching_languages))].map(code => (
+                  <button
+                    key={code}
+                    type="button"
+                    className={'ac-chip-btn' + (teacherLang === code ? ' on' : '')}
+                    onClick={() => setTeacherLang(code)}
+                  >
+                    {languageLabel(code)}
+                  </button>
+                ))}
+              </div>
+              {loading && <AcademySkeletonCards />}
               {activeTeachers.filter(x => x.status === 'active' || isAdmin).length === 0 ? (
                 <div className="academy-empty">
                   {t.noneTeachers}
@@ -1644,125 +1690,55 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   )}
                 </div>
               ) : (
-                <div className="academy-grid academy-scroll-list">
+                <div className="ac-teacher-grid">
                   {activeTeachers
                     .filter(
                       x =>
                         (x.status === 'active' || isAdmin) &&
+                        (!teacherLang || x.teaching_languages.includes(teacherLang)) &&
                         [localizedName(x, locale), text(x.intro_i18n), ...x.teaching_languages, ...x.levels]
                           .join(' ')
                           .toLocaleLowerCase()
                           .includes(teacherSearch.toLocaleLowerCase())
                     )
-                    .map(x => (
-                      <article className="academy-card" key={x.id}>
-                        <div className="teacher-head">
-                          {x.photo_url ? (
-                            <img
-                              src={x.photo_url}
-                              loading="lazy"
-                              decoding="async"
-                              alt={localizedName(x, locale)}
-                            />
-                          ) : (
-                            <div className="teacher-placeholder">{localizedName(x, locale).slice(0, 1)}</div>
-                          )}
-                          <div>
-                            <h3>
-                              <a
-                                href={'/academy/teachers/' + x.id}
-                                onClick={e => {
-                                  e.preventDefault()
-                                  navigateProduct('/academy/teachers/' + x.id)
-                                }}
-                              >
-                                {localizedName(x, locale)}
-                              </a>
-                            </h3>
-                            <AcademyShare
-                              locale={locale}
-                              title={localizedName(x, locale)}
-                              description={text(x.intro_i18n)}
-                              path={'/academy/teachers/' + x.id}
-                            />
-                            <p>{text(x.intro_i18n)}</p>
-                            {!x.intro_i18n[locale] && text(x.intro_i18n) && (
-                              <small>
-                                {
-                                  {
-                                    fa: 'معرفی به زبان دیگری ارائه شده است.',
-                                    en: 'Introduction shown in another language.',
-                                    sv: 'Presentationen visas på ett annat språk.',
-                                    de: 'Die Vorstellung wird in einer anderen Sprache angezeigt.'
-                                  }[locale]
-                                }
-                              </small>
-                            )}
-                          </div>
-                        </div>
-                        <div className="academy-tags">
-                          {x.teaching_languages.map(y => (
-                            <span key={y}>{languageLabel(y)}</span>
-                          ))}
-                          {x.levels.map(y => (
-                            <span key={y}>{y}</span>
-                          ))}
-                        </div>
-                        <details className="teacher-courses">
-                          <summary>{workspaceLabel(locale, 'دوره‌های این استاد', 'Courses taught')}</summary>
-                          {teacherCourses
-                            .filter(tc => tc.teacher_id === x.id)
-                            .map(tc => {
-                              const c = courses.find(course => course.id === tc.course_id)
-                              return c ? (
-                                <button
-                                  type="button"
-                                  key={tc.course_id}
-                                  onClick={() => {
-                                    navigateProduct('/academy/courses/' + c.id + '?teacher=' + x.id)
-                                  }}
-                                >
-                                  {text(c.title_i18n)}
-                                </button>
-                              ) : null
-                            })}
-                        </details>
-                        <div className="teacher-contact">
-                          {x.email && <a href={'mailto:' + x.email}>{t.email}</a>}
-                          {x.phone && <a href={'tel:' + x.phone}>{t.phone}</a>}
-                          {x.teams_chat_url && (
-                            <a href={x.teams_chat_url} target="_blank" rel="noreferrer">
-                              {t.teamsChat}
-                            </a>
-                          )}
-                          {x.teams_call_url && (
-                            <a href={x.teams_call_url} target="_blank" rel="noreferrer">
-                              {t.teamsCall}
-                            </a>
-                          )}
-                          {x.telegram_url && (
-                            <a href={x.telegram_url} target="_blank" rel="noreferrer">
-                              {t.telegram}
-                            </a>
-                          )}
-                        </div>
-                        <div className="academy-card-actions">
-                          {x.status === 'active' && (
-                            <button
-                              className="academy-primary small"
-                              onClick={() => openDialog({ type: 'booking', teacherId: x.id })}
-                            >
-                              {t.requestTrial}
-                            </button>
-                          )}
-                          {isAdmin && (
-                            <button className="small-link" onClick={() => editTeacher(x)}>
-                              {t.edit}
-                            </button>
-                          )}
-                        </div>
-                      </article>
-                    ))}
+                    .map(x => {
+                      const own = teacherCourses
+                        .filter(tc => tc.teacher_id === x.id)
+                        .map(tc => courses.find(course => course.id === tc.course_id))
+                        .filter((c): c is Course => Boolean(c))
+                      const prices = own
+                        .map(c => c.price_sek)
+                        .filter((p): p is number => typeof p === 'number')
+                      return (
+                        <AcademyTeacherCard
+                          key={x.id}
+                          locale={locale}
+                          teacher={{
+                            id: x.id,
+                            name: localizedName(x, locale),
+                            photoUrl: x.photo_url,
+                            intro: text(x.intro_i18n),
+                            languages: x.teaching_languages.map(languageLabel),
+                            levels: x.levels,
+                            fromPrice: prices.length ? Math.min(...prices) : null,
+                            courseCount: own.length
+                          }}
+                          onOpen={() => navigateProduct('/academy/teachers/' + x.id)}
+                          onTrial={
+                            x.status === 'active'
+                              ? () => openDialog({ type: 'booking', teacherId: x.id })
+                              : null
+                          }
+                          extra={
+                            isAdmin ? (
+                              <button className="small-link" onClick={() => editTeacher(x)}>
+                                {t.edit}
+                              </button>
+                            ) : null
+                          }
+                        />
+                      )
+                    })}
                 </div>
               )}
             </section>

@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.25: visual redesign of public pages; teachers page gains a language filter (UI state only). No URL change.
+
 2026-11-25 review v0.7.24: loading indicator only; no URL change.
 
 2026-11-25 review v0.7.23: /academy and sub-pages fail open to the app shell; no URL change.

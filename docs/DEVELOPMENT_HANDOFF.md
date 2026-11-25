@@ -1,3 +1,7 @@
+## 2026-11-25 — Design v2 part 1 (v0.7.25)
+
+See CHANGELOG. **Next:** course cards, teacher profile, booking as a 3-step bottom sheet, then the signed-in Today screens on the same tokens. Deploy by manual production build (main does not auto-deploy).
+
 ## 2026-11-25 — Refresh loading indicator (v0.7.24)
 
 See CHANGELOG. Preview of v0.7.23 verified over HTTP (200, version.json). **Next:** verify v0.7.24 preview, then promote; ask the user for the exact error text if refresh still fails.

@@ -2848,31 +2848,6 @@
   border-radius: 999px;
   padding: 0 16px;
 }
-.academy-steps {
-  list-style: none;
-  counter-reset: step;
-  display: grid;
-  gap: 12px;
-  align-content: center;
-}
-.academy-steps li {
-  counter-increment: step;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 600;
-}
-.academy-steps li::before {
-  content: counter(step);
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--ac-primary);
-  color: var(--ac-primary-text);
-}
 
 .academy-admin-overview {
   margin: 12px 0 20px;
@@ -2931,4 +2906,256 @@
   border-color: var(--ac-border) !important;
   box-shadow: none;
   font-weight: inherit;
+}
+
+/* =====================  Skin v2: calm, light, card-based  =====================
+   One primary colour, soft neutrals, solid buttons, one card style. Overrides the older gradient look. */
+.academy {
+  background: var(--ac-bg);
+  color: var(--ac-text);
+}
+.academy .academy-top {
+  background: var(--ac-surface);
+  border-bottom: 1px solid var(--ac-border);
+  box-shadow: 0 1px 0 rgba(20, 24, 50, 0.03);
+}
+.academy .academy-primary,
+.academy .academy-login {
+  background: var(--ac-primary) !important;
+  color: var(--ac-primary-text) !important;
+  border: 0 !important;
+  border-radius: 999px;
+  min-height: var(--ac-touch);
+  font-weight: 700;
+  box-shadow: none;
+}
+.academy .academy-primary:hover,
+.academy .academy-login:hover {
+  filter: brightness(1.08);
+}
+.academy .academy-card {
+  background: var(--ac-surface);
+  border: 1px solid var(--ac-border);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(20, 24, 50, 0.05), 0 8px 24px rgba(20, 24, 50, 0.05);
+}
+.academy .academy-hero {
+  background: none;
+}
+.academy .academy-hero h1 {
+  letter-spacing: -0.02em;
+}
+.academy .academy-hero-card.ac-steps {
+  background: var(--ac-surface);
+  border: 1px solid var(--ac-border);
+  border-radius: 20px;
+  padding: 24px;
+  min-height: 0;
+  box-shadow: 0 8px 28px rgba(20, 24, 50, 0.07);
+  color: var(--ac-text);
+}
+.academy .academy-kicker {
+  color: var(--ac-primary);
+}
+.academy-bottom-nav {
+  background: var(--ac-surface) !important;
+  border-top: 1px solid var(--ac-border) !important;
+}
+.academy .academy-bottom-nav button[aria-current='page'] {
+  color: var(--ac-primary) !important;
+  background: color-mix(in srgb, var(--ac-primary) 12%, transparent) !important;
+}
+
+/* Language chips (home and teachers) */
+.academy .ac-filter-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+.academy .ac-chip-btn {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ac-border);
+  background: var(--ac-surface);
+  color: var(--ac-text);
+  cursor: pointer;
+}
+.academy .ac-chip-btn.on {
+  background: var(--ac-primary);
+  color: var(--ac-primary-text);
+  border-color: transparent;
+}
+
+/* Teacher card */
+.academy .ac-teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.academy .ac-teacher {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  background: var(--ac-surface);
+  color: var(--ac-text);
+  border: 1px solid var(--ac-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(20, 24, 50, 0.05), 0 8px 24px rgba(20, 24, 50, 0.05);
+}
+.academy .ac-teacher-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.academy .ac-teacher-top img,
+.academy .ac-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+.academy .ac-avatar {
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--ac-primary) 16%, transparent);
+  color: var(--ac-primary);
+}
+.academy .ac-teacher-name {
+  display: grid;
+  gap: 2px;
+}
+.academy .ac-teacher-name strong {
+  font-size: 1.1rem;
+}
+.academy .ac-teacher-name small {
+  color: var(--ac-muted);
+}
+.academy .ac-teacher-intro {
+  margin: 0;
+  color: var(--ac-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.academy .ac-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.academy .ac-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--ac-primary) 14%, transparent);
+  color: var(--ac-primary);
+}
+.academy .ac-chip-soft {
+  background: var(--ac-surface-2);
+  color: var(--ac-muted);
+}
+.academy .ac-teacher-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.academy .ac-teacher-actions .ac-btn {
+  flex: 1 1 auto;
+}
+
+/* Loading skeletons */
+.academy .ac-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.academy .ac-skeleton {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--ac-surface);
+  border: 1px solid var(--ac-border);
+}
+.academy .ac-skeleton span {
+  display: block;
+  height: 14px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--ac-surface-2), var(--ac-border), var(--ac-surface-2));
+  background-size: 200% 100%;
+  animation: ac-shimmer 1.4s infinite linear;
+}
+.academy .ac-skeleton span:first-child {
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+}
+@keyframes ac-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .academy .ac-skeleton span {
+    animation: none;
+  }
+}
+
+.academy .ac-steps {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 0;
+}
+.academy .ac-steps li {
+  counter-increment: step;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+.academy .ac-steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ac-primary);
+  color: var(--ac-primary-text);
+}
+.academy .ac-teacher-top {
+  border: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.academy .academy-home-strip button {
+  white-space: nowrap;
+}
+.academy .academy-home-strip select {
+  width: auto;
+  max-width: 200px;
+}
+.academy .ac-teacher-actions {
+  align-items: stretch;
+}
+.academy .ac-teacher-actions .ac-btn {
+  min-height: var(--ac-touch);
+  padding: 0 16px;
 }

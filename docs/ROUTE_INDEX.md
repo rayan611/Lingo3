@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.25: no route change.
+
 2026-11-25 review v0.7.24: no route change.
 
 2026-11-25 review v0.7.23: /api/academy-page now returns the app shell (200, no-store) on any internal failure; no route change.

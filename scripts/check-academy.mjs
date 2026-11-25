@@ -72,7 +72,7 @@ const checks = [
   ['Teacher resources support lesson grammar and useful links', ['lesson','grammar','link'].every(x=>dashboardMigration.includes("'"+x+"'")) && portal.includes('<option value="lesson">') && portal.includes('<option value="grammar">') && portal.includes('<option value="link">')],
   ['Role-dashboard migration has one canonical language table definition', (dashboardMigration.match(/create table if not exists public\.academy_languages/g)||[]).length===1 && !dashboardMigration.includes('lesson_note')],
   ['Current migration qualifies classroom identity columns (SQL workflow test verifies enforcement)', workflowMigration.includes('ls.student_id=academy_test_results.student_id') && workflowMigration.includes('ls.teacher_id=academy_session_summaries.teacher_id')],
-  ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active'&&<button")],
+  ['Draft teachers cannot receive public trial requests', academy.includes("x.status==='active' ? () => openDialog({ type: 'booking', teacherId: x.id }) : null")],
   ['Developer guide documents Dexie boundary', guide.includes('Do not move Academy routing back inside')],
 ]
 
