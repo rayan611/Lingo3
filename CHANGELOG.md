@@ -1,3 +1,5 @@
+2026-11-25 · v0.7.25 production: built from main 473d49e5 as dpl_A9s2q5XbQB8pFHkeY8VY43jcHVDJ (READY, lingo3.com and www aliases; live /version.json reports 0.7.25). Rollback target: dpl_6UvxJQ1yA9JgANFDiAPoRtXy257N (v0.7.24).
+
 ## 2026-11-25 — Academy design v2, part 1 (v0.7.25)
 
 Calm, light, card-based skin driven by the `--ac-*` tokens: solid primary buttons instead of gradients, one card style, opaque header and bottom bar. New teacher card (`AcademyTeacherCard`: avatar or photo, name, courses and lowest price, language and level chips, Request trial / View profile) used on the teachers page and the home preview; language filter chips on the teachers page and under the home hero (tapping one opens the filtered list); skeleton cards while lists load; hero primary button is now "Find a teacher". Course cards, teacher profile page, booking dialog and the signed-in screens still use the older look and are next. Full `npm test` and build passed; checked with a mock-data phone and desktop screenshot, no real accounts.
