@@ -1,3 +1,4 @@
+import './lib/loose-source.mjs'
 import fs from 'node:fs'
 
 const read = (path) => fs.readFileSync(new URL('../' + path, import.meta.url), 'utf8')
@@ -35,7 +36,7 @@ const checks = [
   ['Academy has real sub-page routes', ['/academy/path','/academy/courses','/academy/teachers','/academy/levels','/academy/my','/academy/admin','/academy/about','/academy/pricing','/academy/resources','/academy/contact'].every(path => academy.includes(path))],
   ['Academy renders routed pages conditionally', ["page==='home'","page==='courses'","page==='teachers'","page==='personal'","page==='admin'"].every(x=>academy.includes(x))],
   ['Admin Studio remains role-conditional', academy.includes("isAdmin&&<section") && academy.includes('id="admin-studio"')],
-  ['Academy locale set includes EN/SV/DE/FA', academy.includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">Deutsch</option>')],
+  ['Academy locale set includes EN/SV/DE/FA', read('src/academy/types.ts').includes("type Locale = 'en' | 'sv' | 'fa' | 'de'") && academy.includes('option value="de">Deutsch</option>')],
   ['App home and Training Center both link to Academy', (app.match(/tile tile-academy/g)||[]).length===2 && app.includes('Explore courses and lessons with teachers.') && app.includes('onAcademy={() => navigateProduct(\'/academy\')}') && !app.includes('academy-entry-card')],
   ['Student dashboard links App words and grammar', portal.includes("navigateProduct('/words?academyLang='") && portal.includes("navigateProduct('/grammar?academyLang='") && portal.includes('academy-language-dashboard')],
   ['Teacher role gets exclusive dashboard outside admin', portal.includes(':Boolean(selfTeacher)') && portal.includes('academy-week-board')],

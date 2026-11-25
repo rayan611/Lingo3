@@ -1,18 +1,365 @@
-import {AcademyFormHelp} from './AcademyHelp'
-import {AcademyField} from './AcademyField'
-import {useEffect,useState} from 'react'
-import {supabase} from '../auth/supabase'
-const words={en:{timeoff:'Time off / cancel upcoming lessons',from:'From',to:'Until',reason:'Reason',preview:'Preview affected sessions',confirm:'Confirm cancellation and block time',makeup:'Makeup proposals',start:'Proposed time',zone:'Time zone',propose:'Propose replacement',accept:'Accept',reject:'Reject',waiting:'Waiting for every student',deadline:'Response deadline',expired:'Expired',none:'No affected sessions; time will be blocked',session:'Original session'},fa:{timeoff:'تعطیلی / لغو جلسه‌های آینده',from:'از',to:'تا',reason:'دلیل',preview:'پیش‌نمایش جلسه‌های تحت تأثیر',confirm:'تأیید لغو و مسدودکردن زمان',makeup:'پیشنهادهای جبرانی',start:'زمان پیشنهادی',zone:'منطقهٔ زمانی',propose:'پیشنهاد جلسهٔ جایگزین',accept:'پذیرش',reject:'رد',waiting:'در انتظار پاسخ مستقل همهٔ شاگردان',deadline:'مهلت پاسخ',expired:'منقضی',none:'جلسه‌ای تحت تأثیر نیست؛ زمان مسدود می‌شود',session:'جلسهٔ اصلی'},sv:{timeoff:'Ledighet / avboka kommande lektioner',from:'Från',to:'Till',reason:'Orsak',preview:'Förhandsvisa berörda lektioner',confirm:'Bekräfta avbokning och blockera tiden',makeup:'Ersättningslektioner',start:'Föreslagen tid',zone:'Tidszon',propose:'Föreslå ersättning',accept:'Acceptera',reject:'Avvisa',waiting:'Inväntar varje elevs svar',deadline:'Svarsfrist',expired:'Utgången',none:'Inga berörda lektioner; tiden blockeras',session:'Ursprunglig lektion'},de:{timeoff:'Abwesenheit / kommende Stunden absagen',from:'Von',to:'Bis',reason:'Grund',preview:'Betroffene Stunden anzeigen',confirm:'Absage bestätigen und Zeit sperren',makeup:'Ersatztermine',start:'Vorgeschlagener Termin',zone:'Zeitzone',propose:'Ersatztermin vorschlagen',accept:'Annehmen',reject:'Ablehnen',waiting:'Warten auf jede einzelne Zustimmung',deadline:'Antwortfrist',expired:'Abgelaufen',none:'Keine Stunden betroffen; Zeit wird gesperrt',session:'Ursprünglicher Termin'}}
-type Impact={kind:string;id:string;starts_at:string}
-export function AcademyTimeOff({teacherId,locale,onChanged}:{teacherId:string;locale:keyof typeof words;onChanged:()=>void}){
- const t=words[locale],[from,setFrom]=useState(''),[to,setTo]=useState(''),[reason,setReason]=useState(''),[impact,setImpact]=useState<Impact[]|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('')
- async function run(confirm=false){setBusy(true);setError('');try{const r=await supabase().rpc('academy_cancel_range',{p_teacher:teacherId,p_from:new Date(from).toISOString(),p_to:new Date(to).toISOString(),p_reason:reason,p_expected:confirm?impact:null});if(r.error)throw r.error;if(confirm){setImpact(null);onChanged()}else setImpact(r.data)}catch(e){setError((e as Error).message);setImpact(null)}finally{setBusy(false)}}
- return <details className="academy-card"><summary>{t.timeoff}</summary>{error&&<p role="alert">{error}</p>}<form onSubmit={e=>{e.preventDefault();void run()}}><AcademyFormHelp locale={locale}/><fieldset disabled={busy}><AcademyField locale={locale}><label>{t.from}<input required type="datetime-local" value={from} onChange={e=>{setFrom(e.target.value);setImpact(null)}}/></label></AcademyField><AcademyField locale={locale}><label>{t.to}<input required type="datetime-local" value={to} onChange={e=>{setTo(e.target.value);setImpact(null)}}/></label></AcademyField><AcademyField locale={locale}><label>{t.reason}<input required maxLength={2000} value={reason} onChange={e=>{setReason(e.target.value);setImpact(null)}}/></label></AcademyField><button>{t.preview}</button></fieldset></form>{impact&&<div>{impact.length?<ul>{impact.map(i=><li key={i.id}>{i.kind} · {new Date(i.starts_at).toLocaleString(locale)}</li>)}</ul>:<p>{t.none}</p>}<button disabled={busy} onClick={()=>void run(true)}>{t.confirm}</button></div>}</details>
+import { AcademyFormHelp } from './AcademyHelp'
+import { AcademyField } from './AcademyField'
+import { useEffect, useState } from 'react'
+import { supabase } from '../auth/supabase'
+const words = {
+  en: {
+    timeoff: 'Time off / cancel upcoming lessons',
+    from: 'From',
+    to: 'Until',
+    reason: 'Reason',
+    preview: 'Preview affected sessions',
+    confirm: 'Confirm cancellation and block time',
+    makeup: 'Makeup proposals',
+    start: 'Proposed time',
+    zone: 'Time zone',
+    propose: 'Propose replacement',
+    accept: 'Accept',
+    reject: 'Reject',
+    waiting: 'Waiting for every student',
+    deadline: 'Response deadline',
+    expired: 'Expired',
+    none: 'No affected sessions; time will be blocked',
+    session: 'Original session'
+  },
+  fa: {
+    timeoff: 'تعطیلی / لغو جلسه‌های آینده',
+    from: 'از',
+    to: 'تا',
+    reason: 'دلیل',
+    preview: 'پیش‌نمایش جلسه‌های تحت تأثیر',
+    confirm: 'تأیید لغو و مسدودکردن زمان',
+    makeup: 'پیشنهادهای جبرانی',
+    start: 'زمان پیشنهادی',
+    zone: 'منطقهٔ زمانی',
+    propose: 'پیشنهاد جلسهٔ جایگزین',
+    accept: 'پذیرش',
+    reject: 'رد',
+    waiting: 'در انتظار پاسخ مستقل همهٔ شاگردان',
+    deadline: 'مهلت پاسخ',
+    expired: 'منقضی',
+    none: 'جلسه‌ای تحت تأثیر نیست؛ زمان مسدود می‌شود',
+    session: 'جلسهٔ اصلی'
+  },
+  sv: {
+    timeoff: 'Ledighet / avboka kommande lektioner',
+    from: 'Från',
+    to: 'Till',
+    reason: 'Orsak',
+    preview: 'Förhandsvisa berörda lektioner',
+    confirm: 'Bekräfta avbokning och blockera tiden',
+    makeup: 'Ersättningslektioner',
+    start: 'Föreslagen tid',
+    zone: 'Tidszon',
+    propose: 'Föreslå ersättning',
+    accept: 'Acceptera',
+    reject: 'Avvisa',
+    waiting: 'Inväntar varje elevs svar',
+    deadline: 'Svarsfrist',
+    expired: 'Utgången',
+    none: 'Inga berörda lektioner; tiden blockeras',
+    session: 'Ursprunglig lektion'
+  },
+  de: {
+    timeoff: 'Abwesenheit / kommende Stunden absagen',
+    from: 'Von',
+    to: 'Bis',
+    reason: 'Grund',
+    preview: 'Betroffene Stunden anzeigen',
+    confirm: 'Absage bestätigen und Zeit sperren',
+    makeup: 'Ersatztermine',
+    start: 'Vorgeschlagener Termin',
+    zone: 'Zeitzone',
+    propose: 'Ersatztermin vorschlagen',
+    accept: 'Annehmen',
+    reject: 'Ablehnen',
+    waiting: 'Warten auf jede einzelne Zustimmung',
+    deadline: 'Antwortfrist',
+    expired: 'Abgelaufen',
+    none: 'Keine Stunden betroffen; Zeit wird gesperrt',
+    session: 'Ursprünglicher Termin'
+  }
 }
-export function AcademyMakeup({classId,locale,canManage,userId,sessions,onChanged}:{classId:string;locale:string;canManage:boolean;userId:string;sessions:{id:string;starts_at:string;status:string}[];onChanged:()=>void}){
- const t=words[locale as keyof typeof words]||words.en,[selected,setSelected]=useState(''),[start,setStart]=useState(''),[zone,setZone]=useState(Intl.DateTimeFormat().resolvedOptions().timeZone),[reason,setReason]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[rev,setRev]=useState(0)
- const [items,setItems]=useState<{id:string;starts_at:string;reason:string;expires_at:string;status:string}[]>([]),[votes,setVotes]=useState<{proposal_id:string;student_id:string;response:string}[]>([])
- useEffect(()=>{let live=true;void Promise.all([supabase().from('academy_makeup_proposals').select('*').eq('class_id',classId).order('created_at',{ascending:false}).limit(50),supabase().from('academy_makeup_votes').select('*')]).then(([p,v])=>{if(live){setItems(p.data??[]);setVotes(v.data??[]);setError(p.error?.message||v.error?.message||'')}}).catch(e=>{if(live)setError(String(e))});return()=>{live=false}},[classId,rev])
- async function action(name:string,args:Record<string,unknown>){setBusy(true);try{const r=await supabase().rpc(name,args);if(r.error)throw r.error;setRev(n=>n+1);onChanged();setError('')}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- return <details className="academy-card"><summary>{t.makeup}</summary>{error&&<p role="alert">{error}</p>}{canManage&&<form onSubmit={e=>{e.preventDefault();void action('academy_propose_makeup',{p_session:selected,p_start:start,p_timezone:zone,p_reason:reason})}}><AcademyFormHelp locale={locale}/><fieldset disabled={busy}><AcademyField locale={locale}><label>{t.session}<select required value={selected} onChange={e=>setSelected(e.target.value)}><option value="">—</option>{sessions.filter(s=>s.status!=='completed').map(s=><option key={s.id} value={s.id}>{new Date(s.starts_at).toLocaleString(locale)} · {s.status}</option>)}</select></label></AcademyField><AcademyField locale={locale}><label>{t.start}<input required type="datetime-local" value={start} onChange={e=>setStart(e.target.value)}/></label></AcademyField><AcademyField locale={locale}><label>{t.zone}<input required value={zone} onChange={e=>setZone(e.target.value)}/></label></AcademyField><AcademyField locale={locale}><label>{t.reason}<input required maxLength={2000} value={reason} onChange={e=>setReason(e.target.value)}/></label></AcademyField><button>{t.propose}</button></fieldset></form>}{items.map(p=>{const open=p.status==='pending'&&new Date(p.expires_at)>new Date(),mine=votes.find(v=>v.proposal_id===p.id&&v.student_id===userId);return <article className="academy-card" key={p.id}><strong>{new Date(p.starts_at).toLocaleString(locale)}</strong><p>{p.reason}</p><p>{p.status==='pending'?(open?t.waiting:t.expired):p.status}</p><small>{t.deadline}: {new Date(p.expires_at).toLocaleString(locale)}</small>{canManage&&<p>{votes.filter(v=>v.proposal_id===p.id&&v.response==='accepted').length}/{votes.filter(v=>v.proposal_id===p.id).length}</p>}{open&&mine&&<div className="academy-card-actions"><button disabled={busy} onClick={()=>void action('academy_answer_makeup',{p_proposal:p.id,p_accept:true})}>{t.accept}</button><button disabled={busy} onClick={()=>void action('academy_answer_makeup',{p_proposal:p.id,p_accept:false})}>{t.reject}</button></div>}</article>})}</details>
+type Impact = { kind: string; id: string; starts_at: string }
+export function AcademyTimeOff({
+  teacherId,
+  locale,
+  onChanged
+}: {
+  teacherId: string
+  locale: keyof typeof words
+  onChanged: () => void
+}) {
+  const t = words[locale],
+    [from, setFrom] = useState(''),
+    [to, setTo] = useState(''),
+    [reason, setReason] = useState(''),
+    [impact, setImpact] = useState<Impact[] | null>(null),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState('')
+  async function run(confirm = false) {
+    setBusy(true)
+    setError('')
+    try {
+      const r = await supabase().rpc('academy_cancel_range', {
+        p_teacher: teacherId,
+        p_from: new Date(from).toISOString(),
+        p_to: new Date(to).toISOString(),
+        p_reason: reason,
+        p_expected: confirm ? impact : null
+      })
+      if (r.error) throw r.error
+      if (confirm) {
+        setImpact(null)
+        onChanged()
+      } else setImpact(r.data)
+    } catch (e) {
+      setError((e as Error).message)
+      setImpact(null)
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <details className="academy-card">
+      <summary>{t.timeoff}</summary>
+      {error && <p role="alert">{error}</p>}
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          void run()
+        }}
+      >
+        <AcademyFormHelp locale={locale} />
+        <fieldset disabled={busy}>
+          <AcademyField locale={locale}>
+            <label>
+              {t.from}
+              <input
+                required
+                type="datetime-local"
+                value={from}
+                onChange={e => {
+                  setFrom(e.target.value)
+                  setImpact(null)
+                }}
+              />
+            </label>
+          </AcademyField>
+          <AcademyField locale={locale}>
+            <label>
+              {t.to}
+              <input
+                required
+                type="datetime-local"
+                value={to}
+                onChange={e => {
+                  setTo(e.target.value)
+                  setImpact(null)
+                }}
+              />
+            </label>
+          </AcademyField>
+          <AcademyField locale={locale}>
+            <label>
+              {t.reason}
+              <input
+                required
+                maxLength={2000}
+                value={reason}
+                onChange={e => {
+                  setReason(e.target.value)
+                  setImpact(null)
+                }}
+              />
+            </label>
+          </AcademyField>
+          <button>{t.preview}</button>
+        </fieldset>
+      </form>
+      {impact && (
+        <div>
+          {impact.length ? (
+            <ul>
+              {impact.map(i => (
+                <li key={i.id}>
+                  {i.kind} · {new Date(i.starts_at).toLocaleString(locale)}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>{t.none}</p>
+          )}
+          <button disabled={busy} onClick={() => void run(true)}>
+            {t.confirm}
+          </button>
+        </div>
+      )}
+    </details>
+  )
+}
+export function AcademyMakeup({
+  classId,
+  locale,
+  canManage,
+  userId,
+  sessions,
+  onChanged
+}: {
+  classId: string
+  locale: string
+  canManage: boolean
+  userId: string
+  sessions: { id: string; starts_at: string; status: string }[]
+  onChanged: () => void
+}) {
+  const t = words[locale as keyof typeof words] || words.en,
+    [selected, setSelected] = useState(''),
+    [start, setStart] = useState(''),
+    [zone, setZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone),
+    [reason, setReason] = useState(''),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState(''),
+    [rev, setRev] = useState(0)
+  const [items, setItems] = useState<
+      { id: string; starts_at: string; reason: string; expires_at: string; status: string }[]
+    >([]),
+    [votes, setVotes] = useState<{ proposal_id: string; student_id: string; response: string }[]>([])
+  useEffect(() => {
+    let live = true
+    void Promise.all([
+      supabase()
+        .from('academy_makeup_proposals')
+        .select('*')
+        .eq('class_id', classId)
+        .order('created_at', { ascending: false })
+        .limit(50),
+      supabase().from('academy_makeup_votes').select('*')
+    ])
+      .then(([p, v]) => {
+        if (live) {
+          setItems(p.data ?? [])
+          setVotes(v.data ?? [])
+          setError(p.error?.message || v.error?.message || '')
+        }
+      })
+      .catch(e => {
+        if (live) setError(String(e))
+      })
+    return () => {
+      live = false
+    }
+  }, [classId, rev])
+  async function action(name: string, args: Record<string, unknown>) {
+    setBusy(true)
+    try {
+      const r = await supabase().rpc(name, args)
+      if (r.error) throw r.error
+      setRev(n => n + 1)
+      onChanged()
+      setError('')
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <details className="academy-card">
+      <summary>{t.makeup}</summary>
+      {error && <p role="alert">{error}</p>}
+      {canManage && (
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            void action('academy_propose_makeup', {
+              p_session: selected,
+              p_start: start,
+              p_timezone: zone,
+              p_reason: reason
+            })
+          }}
+        >
+          <AcademyFormHelp locale={locale} />
+          <fieldset disabled={busy}>
+            <AcademyField locale={locale}>
+              <label>
+                {t.session}
+                <select required value={selected} onChange={e => setSelected(e.target.value)}>
+                  <option value="">—</option>
+                  {sessions
+                    .filter(s => s.status !== 'completed')
+                    .map(s => (
+                      <option key={s.id} value={s.id}>
+                        {new Date(s.starts_at).toLocaleString(locale)} · {s.status}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            </AcademyField>
+            <AcademyField locale={locale}>
+              <label>
+                {t.start}
+                <input
+                  required
+                  type="datetime-local"
+                  value={start}
+                  onChange={e => setStart(e.target.value)}
+                />
+              </label>
+            </AcademyField>
+            <AcademyField locale={locale}>
+              <label>
+                {t.zone}
+                <input required value={zone} onChange={e => setZone(e.target.value)} />
+              </label>
+            </AcademyField>
+            <AcademyField locale={locale}>
+              <label>
+                {t.reason}
+                <input required maxLength={2000} value={reason} onChange={e => setReason(e.target.value)} />
+              </label>
+            </AcademyField>
+            <button>{t.propose}</button>
+          </fieldset>
+        </form>
+      )}
+      {items.map(p => {
+        const open = p.status === 'pending' && new Date(p.expires_at) > new Date(),
+          mine = votes.find(v => v.proposal_id === p.id && v.student_id === userId)
+        return (
+          <article className="academy-card" key={p.id}>
+            <strong>{new Date(p.starts_at).toLocaleString(locale)}</strong>
+            <p>{p.reason}</p>
+            <p>{p.status === 'pending' ? (open ? t.waiting : t.expired) : p.status}</p>
+            <small>
+              {t.deadline}: {new Date(p.expires_at).toLocaleString(locale)}
+            </small>
+            {canManage && (
+              <p>
+                {votes.filter(v => v.proposal_id === p.id && v.response === 'accepted').length}/
+                {votes.filter(v => v.proposal_id === p.id).length}
+              </p>
+            )}
+            {open && mine && (
+              <div className="academy-card-actions">
+                <button
+                  disabled={busy}
+                  onClick={() => void action('academy_answer_makeup', { p_proposal: p.id, p_accept: true })}
+                >
+                  {t.accept}
+                </button>
+                <button
+                  disabled={busy}
+                  onClick={() => void action('academy_answer_makeup', { p_proposal: p.id, p_accept: false })}
+                >
+                  {t.reject}
+                </button>
+              </div>
+            )}
+          </article>
+        )
+      })}
+    </details>
+  )
 }

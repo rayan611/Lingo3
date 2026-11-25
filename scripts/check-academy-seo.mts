@@ -1,3 +1,4 @@
+import './lib/loose-source.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {renderPage,escapeHtml,authoredLocales} from '../api/academy-page.ts'
@@ -38,7 +39,7 @@ assert.deepEqual(authoredLocales('courses',{title_i18n:{en:'Swedish A1',fa:'سو
 assert.deepEqual(authoredLocales('teachers',{intro_i18n:{en:'Teaching Swedish',fa:'آموزش',de:''}}),['en','fa'])
 const editor=readFileSync(new URL('../src/academy/Academy.tsx',import.meta.url),'utf8')
 assert(editor.includes('permanentlyDeleteTeacher')&&editor.includes("teacherForm.status==='archived'"),'Permanent deletion must remain archived-only')
-assert(editor.includes("window.prompt(")&&editor.includes(".delete().eq('id',item.id)"),'Exact-name confirmation and explicit ID filter required')
+assert(editor.includes('askText(')&&editor.includes(".delete().eq('id',item.id)"),'Exact-name confirmation and explicit ID filter required')
 const deletionAudit=readFileSync(new URL('../supabase/migrations/20261121030000_academy_teacher_deletion_audit.sql',import.meta.url),'utf8')
 assert(deletionAudit.includes('enable row level security')&&deletionAudit.includes('academy_teacher_delete_audit'),'Teacher deletion audit must be protected and automatic')
 console.log('PASS SEO: authored-only locale indexing and safe teacher deletion audit contract.')

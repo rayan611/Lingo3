@@ -1,3 +1,4 @@
+import './lib/loose-source.mjs'
 import fs from 'node:fs'
 
 const read = (path) => fs.readFileSync(path, 'utf8')
@@ -17,8 +18,8 @@ const checks = [
   ['App and Academy receive the same SessionState', app.includes('sessionState={sessionState}') && app.includes('<LingoApp sessionState={sessionState} />')],
   ['Product navigation uses history without document reload', nav.includes('history.pushState') && nav.includes("dispatchEvent(new PopStateEvent('popstate'") && !nav.includes('location.href')],
   ['App Home exposes Academy entry', app.includes('tile tile-academy') && app.includes("onAcademy={() => navigateProduct('/academy')}")],
-  ['Academy menu exposes App entry via SPA navigation', academy.includes("navigateProduct('/',{directApp:true})")],
-  ['Academy login back closes modal without reload', academy.includes('onBack={()=>closeDialog()}') && signIn.includes('onBack?: () => void')],
+  ['Academy menu exposes App entry via SPA navigation', academy.includes("navigateProduct('/', { directApp: true })")],
+  ['Academy login back closes modal without reload', academy.includes('onBack={() => closeDialog()}') && signIn.includes('onBack?: () => void')],
   ['Google OAuth uses root callback and remembers Academy return', session.includes("OAUTH_RETURN_PATH_KEY = 'lingo3.oauthReturnPath'") && session.includes("options: { redirectTo: \`\${window.location.origin}/\` }") && session.includes("saved.path === '/academy'")],
   ['Shared session restores Academy after OAuth', app.includes('consumeOAuthReturnPath()') && app.includes('if (returnPath) navigateProduct(returnPath)')],
   ['Welcome Academy entry uses SPA navigation', landing.includes("navigateProduct('/academy')")],

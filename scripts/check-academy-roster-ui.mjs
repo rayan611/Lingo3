@@ -1,3 +1,4 @@
+import './lib/loose-source.mjs'
 import assert from 'node:assert/strict'
 import {build} from 'esbuild'
 import fs from 'node:fs'

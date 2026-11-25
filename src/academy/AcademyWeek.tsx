@@ -1,11 +1,146 @@
-import {AcademyHelp} from './AcademyHelp'
-import {useEffect,useState} from 'react'
-type Locale='fa'|'en'|'sv'|'de'
-type Event={id:string;start:string;title:string;status:string;url?:string|null}
-const labels={fa:{title:'برنامه هفتگی',prev:'هفته قبل',next:'هفته بعد',today:'این هفته',empty:'برنامه‌ای وجود ندارد',help:'جلسه‌ها و زمان‌های آزاد را در هفته انتخاب‌شده ببینید.',join:'ورود به جلسه'},en:{title:'Weekly schedule',prev:'Previous week',next:'Next week',today:'This week',empty:'Nothing scheduled',help:'See lessons and available times for the selected week.',join:'Join lesson'},sv:{title:'Veckoschema',prev:'Föregående vecka',next:'Nästa vecka',today:'Denna vecka',empty:'Inget planerat',help:'Se lektioner och lediga tider för vald vecka.',join:'Gå till lektionen'},de:{title:'Wochenplan',prev:'Vorherige Woche',next:'Nächste Woche',today:'Diese Woche',empty:'Keine Termine',help:'Zeigt Unterricht und freie Zeiten der gewählten Woche.',join:'Unterricht beitreten'}}
-export function AcademyWeek({locale,events,onSelectDay,onRangeChange,pending=false,unavailable=false}:{locale:Locale;events:Event[];onSelectDay?:(date:Date)=>void;onRangeChange?:(start:Date,end:Date)=>void;pending?:boolean;unavailable?:boolean}){
- const [offset,setOffset]=useState(0),t=labels[locale],start=new Date(); start.setHours(0,0,0,0);start.setDate(start.getDate()-((start.getDay()+6)%7)+offset*7)
- useEffect(()=>{const from=new Date();from.setHours(0,0,0,0);from.setDate(from.getDate()-((from.getDay()+6)%7)+offset*7);const end=new Date(from);end.setDate(end.getDate()+7);onRangeChange?.(from,end)},[offset])
- const days=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);return d})
- return <section className="academy-card academy-weekly" aria-busy={pending}><div className="academy-week-heading"><h3>{t.title}</h3><AcademyHelp locale={locale} text={{fa:labels.fa.help,en:labels.en.help,sv:labels.sv.help,de:labels.de.help}}/></div><div className="academy-card-actions"><button type="button" onClick={()=>setOffset(offset-1)}>{t.prev}</button><button type="button" onClick={()=>setOffset(0)}>{t.today}</button><button type="button" onClick={()=>setOffset(offset+1)}>{t.next}</button></div><p className="academy-timezone">{({fa:"منطقه زمانی",en:"Time zone",sv:"Tidszon",de:"Zeitzone"})[locale]}: {Intl.DateTimeFormat().resolvedOptions().timeZone}</p><div className="academy-week-grid">{days.map(day=>{const matches=events.filter(e=>{const d=new Date(e.start);return Number.isFinite(d.getTime())&&d.toDateString()===day.toDateString()}).sort((a,b)=>a.start.localeCompare(b.start));return <div className="academy-week-day" key={day.toISOString()}><strong>{new Intl.DateTimeFormat(locale,{weekday:'short',day:'numeric',month:'short'}).format(day)}</strong>{onSelectDay&&day.getTime()>=new Date(new Date().setHours(0,0,0,0)).getTime()&&<button type="button" onClick={()=>onSelectDay(day)}>{({fa:"افزودن زمان",en:"Add time",sv:"Lägg till tid",de:"Zeit hinzufügen"})[locale]}</button>}{matches.length?matches.map(e=><div className="academy-week-event" key={e.id}><time>{new Intl.DateTimeFormat(locale,{hour:'2-digit',minute:'2-digit'}).format(new Date(e.start))}</time><span>{e.title}</span><small>{e.status}</small>{e.url&&/^https:\/\//i.test(e.url)&&<a href={e.url} target="_blank" rel="noreferrer">{t.join} ↗</a>}</div>):<small>{pending?"…":unavailable?"—":t.empty}</small>}</div>})}</div></section>
+import { AcademyHelp } from './AcademyHelp'
+import { useEffect, useState } from 'react'
+type Locale = 'fa' | 'en' | 'sv' | 'de'
+type Event = { id: string; start: string; title: string; status: string; url?: string | null }
+const labels = {
+  fa: {
+    title: 'برنامه هفتگی',
+    prev: 'هفته قبل',
+    next: 'هفته بعد',
+    today: 'این هفته',
+    empty: 'برنامه‌ای وجود ندارد',
+    help: 'جلسه‌ها و زمان‌های آزاد را در هفته انتخاب‌شده ببینید.',
+    join: 'ورود به جلسه'
+  },
+  en: {
+    title: 'Weekly schedule',
+    prev: 'Previous week',
+    next: 'Next week',
+    today: 'This week',
+    empty: 'Nothing scheduled',
+    help: 'See lessons and available times for the selected week.',
+    join: 'Join lesson'
+  },
+  sv: {
+    title: 'Veckoschema',
+    prev: 'Föregående vecka',
+    next: 'Nästa vecka',
+    today: 'Denna vecka',
+    empty: 'Inget planerat',
+    help: 'Se lektioner och lediga tider för vald vecka.',
+    join: 'Gå till lektionen'
+  },
+  de: {
+    title: 'Wochenplan',
+    prev: 'Vorherige Woche',
+    next: 'Nächste Woche',
+    today: 'Diese Woche',
+    empty: 'Keine Termine',
+    help: 'Zeigt Unterricht und freie Zeiten der gewählten Woche.',
+    join: 'Unterricht beitreten'
+  }
+}
+export function AcademyWeek({
+  locale,
+  events,
+  onSelectDay,
+  onRangeChange,
+  pending = false,
+  unavailable = false
+}: {
+  locale: Locale
+  events: Event[]
+  onSelectDay?: (date: Date) => void
+  onRangeChange?: (start: Date, end: Date) => void
+  pending?: boolean
+  unavailable?: boolean
+}) {
+  const [offset, setOffset] = useState(0),
+    t = labels[locale],
+    start = new Date()
+  start.setHours(0, 0, 0, 0)
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7) + offset * 7)
+  useEffect(() => {
+    const from = new Date()
+    from.setHours(0, 0, 0, 0)
+    from.setDate(from.getDate() - ((from.getDay() + 6) % 7) + offset * 7)
+    const end = new Date(from)
+    end.setDate(end.getDate() + 7)
+    onRangeChange?.(from, end)
+  }, [offset])
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(start)
+    d.setDate(d.getDate() + i)
+    return d
+  })
+  return (
+    <section className="academy-card academy-weekly" aria-busy={pending}>
+      <div className="academy-week-heading">
+        <h3>{t.title}</h3>
+        <AcademyHelp
+          locale={locale}
+          text={{ fa: labels.fa.help, en: labels.en.help, sv: labels.sv.help, de: labels.de.help }}
+        />
+      </div>
+      <div className="academy-card-actions">
+        <button type="button" onClick={() => setOffset(offset - 1)}>
+          {t.prev}
+        </button>
+        <button type="button" onClick={() => setOffset(0)}>
+          {t.today}
+        </button>
+        <button type="button" onClick={() => setOffset(offset + 1)}>
+          {t.next}
+        </button>
+      </div>
+      <p className="academy-timezone">
+        {{ fa: 'منطقه زمانی', en: 'Time zone', sv: 'Tidszon', de: 'Zeitzone' }[locale]}:{' '}
+        {Intl.DateTimeFormat().resolvedOptions().timeZone}
+      </p>
+      <div className="academy-week-grid">
+        {days.map(day => {
+          const matches = events
+            .filter(e => {
+              const d = new Date(e.start)
+              return Number.isFinite(d.getTime()) && d.toDateString() === day.toDateString()
+            })
+            .sort((a, b) => a.start.localeCompare(b.start))
+          return (
+            <div className="academy-week-day" key={day.toISOString()}>
+              <strong>
+                {new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(
+                  day
+                )}
+              </strong>
+              {onSelectDay && day.getTime() >= new Date(new Date().setHours(0, 0, 0, 0)).getTime() && (
+                <button type="button" onClick={() => onSelectDay(day)}>
+                  {{ fa: 'افزودن زمان', en: 'Add time', sv: 'Lägg till tid', de: 'Zeit hinzufügen' }[locale]}
+                </button>
+              )}
+              {matches.length ? (
+                matches.map(e => (
+                  <div className="academy-week-event" key={e.id}>
+                    <time>
+                      {new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(
+                        new Date(e.start)
+                      )}
+                    </time>
+                    <span>{e.title}</span>
+                    <small>{e.status}</small>
+                    {e.url && /^https:\/\//i.test(e.url) && (
+                      <a href={e.url} target="_blank" rel="noreferrer">
+                        {t.join} ↗
+                      </a>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <small>{pending ? '…' : unavailable ? '—' : t.empty}</small>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
 }

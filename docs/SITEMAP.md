@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.20: Phase 0 restructuring only; no URL, entry point or Back change.
+
 2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` server-redirects to `/academy`; `/academy/my` provides My Courses and profile UI state, no new URL. HTTP Persian redirect check passed; real-device and Back acceptance remain unverified. Documentation revision only.
 
 2026-11-22 review v0.7.19: legacy /academy.html redirects server-side to active /academy; no new content route. Preview verification and release pending.

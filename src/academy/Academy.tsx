@@ -1,35 +1,102 @@
-import {academyStatus} from './statusLabels'
-import {AcademyFormHelp} from './AcademyHelp'
-import {AcademyField} from './AcademyField'
-import {AcademyHelp} from './AcademyHelp'
-import {workspaceLabel} from './workspaceLabels'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { academyStatus } from './statusLabels'
+import { AcademyFormHelp } from './AcademyHelp'
+import { AcademyField } from './AcademyField'
+import { AcademyHelp } from './AcademyHelp'
+import { workspaceLabel } from './workspaceLabels'
+import { Suspense, useEffect, useMemo, useRef, useState, type ComponentProps } from 'react'
+import { lazyScreen } from '../ui/lazyScreen'
+import { AcademyDialogHost, askText } from './AcademyDialogs'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
 import { AcademyShare } from './AcademyShare'
 import { AcademyPublicDetail } from './AcademyPublicDetail'
-import {AcademyAdminLifecycle} from './AcademyAdminLifecycle'
-import {AcademyPosts} from './AcademyPosts'
-import {AcademySeoManager} from './AcademySeoManager'
-import {teacherBookingBlock,teacherDeletionError} from './teacherDeletion'
-import { AcademyUsers } from './AcademyUsers'
-import { AcademyPortal } from './AcademyPortal'
+import { teacherBookingBlock, teacherDeletionError } from './teacherDeletion'
 import { navigateProduct } from '../lib/productNavigation'
 import './academy.css'
-import {useAcademyPreferences,localizedName} from './preferences'
+import { useAcademyPreferences, localizedName } from './preferences'
 
-type Locale = 'en' | 'sv' | 'fa' | 'de'
+// Signed-in and admin tools are loaded only when a visitor opens them.
+function lazyPanel<P extends object>(Panel: React.ComponentType<P>) {
+  return function LazyPanel(props: P) {
+    return (
+      <Suspense fallback={<p className="academy-loading">…</p>}>
+        <Panel {...(props as P & React.JSX.IntrinsicAttributes)} />
+      </Suspense>
+    )
+  }
+}
+const PortalChunk = lazyScreen(() => import('./AcademyPortal'), 'AcademyPortal')
+const SeoManagerChunk = lazyScreen(() => import('./AcademySeoManager'), 'AcademySeoManager')
+const AdminLifecycleChunk = lazyScreen(() => import('./AcademyAdminLifecycle'), 'AcademyAdminLifecycle')
+const UsersChunk = lazyScreen(() => import('./AcademyUsers'), 'AcademyUsers')
+const PostsChunk = lazyScreen(() => import('./AcademyPosts'), 'AcademyPosts')
+const AcademyPortal = lazyPanel<ComponentProps<typeof PortalChunk>>(PortalChunk)
+const AcademySeoManager = lazyPanel<ComponentProps<typeof SeoManagerChunk>>(SeoManagerChunk)
+const AcademyAdminLifecycle = lazyPanel<ComponentProps<typeof AdminLifecycleChunk>>(AdminLifecycleChunk)
+const AcademyUsers = lazyPanel<ComponentProps<typeof UsersChunk>>(UsersChunk)
+const AcademyPosts = lazyPanel<ComponentProps<typeof PostsChunk>>(PostsChunk)
+
+import type { Locale } from './types'
+import { C } from './copy'
+import { subjects, blankCourse, blankTeacher } from './constants'
 type AcademyTheme = 'light' | 'dark'
-type AcademyDialog = {type:'login'} | {type:'booking';teacherId:string;courseId?:string}
-type AcademyPage = 'home' | 'path' | 'courses' | 'teachers' | 'posts' | 'postDetail' | 'courseDetail' | 'teacherDetail' | 'personal' | 'admin' | 'about' | 'pricing' | 'resources' | 'contact'
+type AcademyDialog = { type: 'login' } | { type: 'booking'; teacherId: string; courseId?: string }
+type AcademyPage =
+  | 'home'
+  | 'path'
+  | 'courses'
+  | 'teachers'
+  | 'posts'
+  | 'postDetail'
+  | 'courseDetail'
+  | 'teacherDetail'
+  | 'personal'
+  | 'admin'
+  | 'about'
+  | 'pricing'
+  | 'resources'
+  | 'contact'
 
 const ACADEMY_PATHS: Record<AcademyPage, string> = {
- posts:'/academy/posts',postDetail:'/academy/posts/',home:'/academy',path:'/academy/path',courses:'/academy/courses',teachers:'/academy/teachers',courseDetail:'/academy/courses/',teacherDetail:'/academy/teachers/',personal:'/academy/my',admin:'/academy/admin',about:'/academy/about',pricing:'/academy/pricing',resources:'/academy/resources',contact:'/academy/contact'
+  posts: '/academy/posts',
+  postDetail: '/academy/posts/',
+  home: '/academy',
+  path: '/academy/path',
+  courses: '/academy/courses',
+  teachers: '/academy/teachers',
+  courseDetail: '/academy/courses/',
+  teacherDetail: '/academy/teachers/',
+  personal: '/academy/my',
+  admin: '/academy/admin',
+  about: '/academy/about',
+  pricing: '/academy/pricing',
+  resources: '/academy/resources',
+  contact: '/academy/contact'
 }
-function academyPageFromPath(pathname:string):AcademyPage{if(/^\/academy\/posts\/[^/]+\/?$/.test(pathname))return 'postDetail';if(pathname==='/academy/levels')return 'courses';if(/^\/academy\/courses\/[^/]+\/?$/.test(pathname))return 'courseDetail';if(/^\/academy\/teachers\/[^/]+\/?$/.test(pathname))return 'teacherDetail';const path=pathname.replace(/\/+$/,'')||'/academy';return (Object.entries(ACADEMY_PATHS) as [AcademyPage,string][]).find(([,value])=>value===path)?.[0]??'home'}
-const themeLabels:Record<Locale,{light:string;dark:string}>={en:{light:'Light',dark:'Dark'},sv:{light:'Ljust',dark:'Mörkt'},de:{light:'Hell',dark:'Dunkel'},fa:{light:'روشن',dark:'تیره'}}
-type AdminEnrollment = Enrollment & {removed_at?:string|null;student_name?:string;student_email?:string;space_id?:string}
+function academyPageFromPath(pathname: string): AcademyPage {
+  if (/^\/academy\/posts\/[^/]+\/?$/.test(pathname)) return 'postDetail'
+  if (pathname === '/academy/levels') return 'courses'
+  if (/^\/academy\/courses\/[^/]+\/?$/.test(pathname)) return 'courseDetail'
+  if (/^\/academy\/teachers\/[^/]+\/?$/.test(pathname)) return 'teacherDetail'
+  const path = pathname.replace(/\/+$/, '') || '/academy'
+  return (
+    (Object.entries(ACADEMY_PATHS) as [AcademyPage, string][]).find(([, value]) => value === path)?.[0] ??
+    'home'
+  )
+}
+const themeLabels: Record<Locale, { light: string; dark: string }> = {
+  en: { light: 'Light', dark: 'Dark' },
+  sv: { light: 'Ljust', dark: 'Mörkt' },
+  de: { light: 'Hell', dark: 'Dunkel' },
+  fa: { light: 'روشن', dark: 'تیره' }
+}
+type AdminEnrollment = Enrollment & {
+  removed_at?: string | null
+  student_name?: string
+  student_email?: string
+  space_id?: string
+}
 
 type I18nText = Record<string, string>
 type I18nList = Record<string, string[]>
@@ -52,7 +119,7 @@ export interface Teacher {
   id: string
   user_id: string | null
   display_name: string
-  display_name_i18n?: Record<string,string>
+  display_name_i18n?: Record<string, string>
   photo_url: string | null
   intro_i18n: I18nText
   teaching_languages: string[]
@@ -66,8 +133,16 @@ export interface Teacher {
   telegram_url: string | null
   status: 'draft' | 'active' | 'archived'
 }
-interface TeacherCourse { teacher_id: string; course_id: string }
-interface AcademyLanguage { code:string; name_i18n:I18nText; status:'active'|'archived'; sort_order:number }
+interface TeacherCourse {
+  teacher_id: string
+  course_id: string
+}
+interface AcademyLanguage {
+  code: string
+  name_i18n: I18nText
+  status: 'active' | 'archived'
+  sort_order: number
+}
 interface Enrollment {
   id: string
   student_id: string
@@ -75,255 +150,2876 @@ interface Enrollment {
   teacher_id: string | null
   status: 'interested' | 'active' | 'completed' | 'cancelled'
 }
-interface Props { userId: string | null; email: string | null; sessionLoading?: boolean }
-
-const subjects: Record<string, Record<Locale, string>> = {
-  sv:{en:'Swedish',sv:'Svenska',fa:'سوئدی',de:'Schwedisch'}, en:{en:'English',sv:'Engelska',fa:'انگلیسی',de:'Englisch'},
-  de:{en:'German',sv:'Tyska',fa:'آلمانی',de:'Deutsch'}, fa:{en:'Persian',sv:'Persiska',fa:'فارسی',de:'Persisch'},
+interface Props {
+  userId: string | null
+  email: string | null
+  sessionLoading?: boolean
 }
-const C = {
- en:{home:'Home',learn:'Learn',courses:'Courses',teachers:'Teachers',levels:'Levels',path:'Find your learning path',mine:'My Academy',personal:'Personal space',admin:'Admin Studio',about:'About',how:'How it works',pricing:'Pricing',resources:'Resources',contact:'Contact',login:'Log in',logout:'Log out',app:'Lingo3 App',hello:'Hello',studentTeacher:'Student ↔ Teacher',courseLine:'Course · Notes · Practice · Progress',heroK:'Human-led learning, connected to Lingo3',heroT:'Choose a course. Learn with a real teacher. Keep your progress together.',heroB:'Private and small-group lessons, practical course paths and a personal Learning Space for every learner.',browse:'Browse courses',pathB:'Choose what you want to learn and your current level. We will point you to the closest available course.',language:'Language',current:'Current level',recommended:'Recommended course',available:'Available courses',topics:'Topics covered',formats:'Formats',individual:'1-to-1 online',group:'Online group (up to 3)',offline:'Offline introduction',interest:'Add to my courses',added:'Added to My Academy',directory:'Teacher directory',noneTeachers:'No verified teachers are published yet. Admin can add and publish teachers in Admin Studio.',requestTrial:'Request trial',requested:'Trial requested',email:'Email',phone:'Phone',teamsChat:'Teams chat',teamsCall:'Teams call',telegram:'Telegram',levelGuide:'Level guide',foundation:'Foundation',independent:'Independent',advanced:'Advanced',howTitle:'How Academy works',choose:'Choose',book:'Book',learnV:'Learn',track:'Track',chooseB:'Choose a language, level, course and teacher.',bookB:'Request a trial or regular session.',learnB:'Meet online or in an agreed offline introduction.',trackB:'Keep courses, notes and progress in your personal space.',pricingTitle:'Pricing',pricingB:'Prices are set per course or teacher. Courses without a published price show “Contact”.',personalTitle:'Your Academy space',studentCourses:'Courses you learn',teacherCourses:'Courses you teach',noneStudent:'You have not added a course yet.',noneTeacher:'No courses are assigned to this teacher profile yet.',learningSpace:'Learning Space',learningB:'Private course areas are created for active enrolments. Session notes, homework, materials, tests and progress stay with the student and teacher.',settings:'Academy settings',adminTitle:'Admin Studio',adminB:'Create and edit courses and teachers. Draft entries stay private; active entries appear publicly.',courseEditor:'Course editor',teacherEditor:'Teacher editor',saveCourse:'Save course',saveTeacher:'Save teacher',newCourse:'New course',newTeacher:'New teacher',edit:'Edit',status:'Status',subject:'Subject',level:'Level',title:'Title',description:'Description',topicLines:'Topics (one per line)',duration:'Duration (minutes)',price:'Price SEK',courseTelegram:'Course Telegram channel',modes:'Delivery modes',teacherName:'Teacher name',picture:'Picture URL',introduction:'Introduction',teachLangs:'Languages taught (comma separated)',spokenLangs:'Languages spoken (comma separated)',teacherLevels:'Levels (comma separated)',specialties:'Specialties (comma separated)',linkedUser:'Linked Lingo3 user ID (optional)',saved:'Saved.',failed:'Could not save.',publicContact:'Public contact',top:'Top',loading:'Loading Academy…',signin:'Log in to add courses and use your personal Academy space.',contactTitle:'Contact & support',contactB:'For Academy questions, teacher onboarding or course requests:',resourcesTitle:'Learning resources',resourcesB:'Course resources, homework, notes, tests and shared materials appear inside the personal Learning Space as teachers add them.',pending:'Enrollment requests',activate:'Activate',selectTeacher:'Select teacher',notes:'My learning notes',saveNote:'Save note',shared:'Share with teacher',noSpace:'Your Learning Space will appear when an enrolment is activated.',progress:'Progress'},
- sv:{home:'Hem',learn:'Lär',courses:'Kurser',teachers:'Lärare',levels:'Nivåer',path:'Hitta din studieplan',mine:'Min Academy',personal:'Personlig yta',admin:'Adminstudio',about:'Om',how:'Så fungerar det',pricing:'Priser',resources:'Resurser',contact:'Kontakt',login:'Logga in',logout:'Logga ut',app:'Lingo3 App',hello:'Hej',studentTeacher:'Elev ↔ Lärare',courseLine:'Kurs · Anteckningar · Övning · Framsteg',heroK:'Lärarledd undervisning kopplad till Lingo3',heroT:'Välj en kurs. Lär med en riktig lärare. Samla dina framsteg.',heroB:'Privatlektioner och små grupper, tydliga kursvägar och en personlig Learning Space för varje elev.',browse:'Se kurser',pathB:'Välj vad du vill lära dig och din nuvarande nivå. Vi visar närmaste tillgängliga kurs.',language:'Språk',current:'Nuvarande nivå',recommended:'Rekommenderad kurs',available:'Tillgängliga kurser',topics:'Innehåll',formats:'Format',individual:'1-till-1 online',group:'Onlinegrupp (upp till 3)',offline:'Introduktion på plats',interest:'Lägg till i mina kurser',added:'Tillagd i Min Academy',directory:'Lärarkatalog',noneTeachers:'Inga verifierade lärare är publicerade ännu. Admin kan lägga till och publicera lärare i Adminstudio.',requestTrial:'Begär provlektion',requested:'Provlektion begärd',email:'E-post',phone:'Telefon',teamsChat:'Teams-chatt',teamsCall:'Teams-samtal',telegram:'Telegram',levelGuide:'Nivåguide',foundation:'Grund',independent:'Självständig',advanced:'Avancerad',howTitle:'Så fungerar Academy',choose:'Välj',book:'Boka',learnV:'Lär',track:'Följ',chooseB:'Välj språk, nivå, kurs och lärare.',bookB:'Begär en provlektion eller vanlig lektion.',learnB:'Träffas online eller vid en överenskommen introduktion på plats.',trackB:'Samla kurser, anteckningar och framsteg i din personliga yta.',pricingTitle:'Priser',pricingB:'Priser sätts per kurs eller lärare. Kurser utan publicerat pris visar ”Kontakta oss”.',personalTitle:'Din Academy-yta',studentCourses:'Kurser du läser',teacherCourses:'Kurser du undervisar',noneStudent:'Du har inte lagt till någon kurs ännu.',noneTeacher:'Inga kurser är kopplade till denna lärarprofil ännu.',learningSpace:'Learning Space',learningB:'Privata kursytor skapas för aktiva registreringar. Lektionsanteckningar, läxor, material, prov och framsteg stannar hos eleven och läraren.',settings:'Academy-inställningar',adminTitle:'Adminstudio',adminB:'Skapa och redigera kurser och lärare. Utkast är privata; aktiva poster visas offentligt.',courseEditor:'Kursredigerare',teacherEditor:'Lärarredigerare',saveCourse:'Spara kurs',saveTeacher:'Spara lärare',newCourse:'Ny kurs',newTeacher:'Ny lärare',edit:'Redigera',status:'Status',subject:'Ämne',level:'Nivå',title:'Titel',description:'Beskrivning',topicLines:'Ämnen (ett per rad)',duration:'Längd (minuter)',price:'Pris SEK',courseTelegram:'Kursens Telegram-kanal',modes:'Lektionsformat',teacherName:'Lärarnamn',picture:'Bild-URL',introduction:'Introduktion',teachLangs:'Språk som lärs ut (kommaseparerat)',spokenLangs:'Talade språk (kommaseparerat)',teacherLevels:'Nivåer (kommaseparerat)',specialties:'Specialiteter (kommaseparerat)',linkedUser:'Kopplat Lingo3-användar-ID (valfritt)',saved:'Sparat.',failed:'Kunde inte spara.',publicContact:'Offentlig kontakt',top:'Toppen',loading:'Laddar Academy…',signin:'Logga in för att lägga till kurser och använda din personliga Academy-yta.',contactTitle:'Kontakt & support',contactB:'För Academy-frågor, läraransökan eller kursönskemål:',resourcesTitle:'Lärresurser',resourcesB:'Kursmaterial, läxor, anteckningar, prov och delade resurser visas i Learning Space när läraren lägger till dem.',pending:'Kursförfrågningar',activate:'Aktivera',selectTeacher:'Välj lärare',notes:'Mina läranteckningar',saveNote:'Spara anteckning',shared:'Dela med lärare',noSpace:'Din Learning Space visas när en registrering aktiveras.',progress:'Framsteg'},
- de:{home:'Start',learn:'Lernen',courses:'Kurse',teachers:'Lehrkräfte',levels:'Niveaus',path:'Finde deinen Lernweg',mine:'Meine Academy',personal:'Persönlicher Bereich',admin:'Admin Studio',about:'Über uns',how:'So funktioniert es',pricing:'Preise',resources:'Ressourcen',contact:'Kontakt',login:'Anmelden',logout:'Abmelden',app:'Lingo3 App',hello:'Hallo',studentTeacher:'Lernende ↔ Lehrkraft',courseLine:'Kurs · Notizen · Übung · Fortschritt',heroK:'Unterricht mit echten Lehrkräften, verbunden mit Lingo3',heroT:'Wähle einen Kurs. Lerne mit einer echten Lehrkraft. Behalte deinen Fortschritt im Blick.',heroB:'Einzelunterricht und Kleingruppen, klare Lernwege und ein persönlicher Learning Space für jede lernende Person.',browse:'Kurse ansehen',pathB:'Wähle Sprache und aktuelles Niveau. Wir zeigen dir den passendsten verfügbaren Kurs.',language:'Sprache',current:'Aktuelles Niveau',recommended:'Empfohlener Kurs',available:'Verfügbare Kurse',topics:'Kursinhalte',formats:'Formate',individual:'1-zu-1 online',group:'Online-Kleingruppe (bis 3)',offline:'Einführung vor Ort',interest:'Zu meinen Kursen hinzufügen',added:'Zu Meine Academy hinzugefügt',directory:'Lehrkräfte',noneTeachers:'Noch sind keine verifizierten Lehrkräfte veröffentlicht. Admins können Lehrkräfte im Admin Studio hinzufügen und freischalten.',requestTrial:'Probestunde anfragen',requested:'Probestunde angefragt',email:'E-Mail',phone:'Telefon',teamsChat:'Teams-Chat',teamsCall:'Teams-Anruf',telegram:'Telegram',levelGuide:'Niveauübersicht',foundation:'Grundstufe',independent:'Selbstständig',advanced:'Fortgeschritten',howTitle:'So funktioniert die Academy',choose:'Auswählen',book:'Buchen',learnV:'Lernen',track:'Verfolgen',chooseB:'Wähle Sprache, Niveau, Kurs und Lehrkraft.',bookB:'Frage eine Probe- oder reguläre Stunde an.',learnB:'Trefft euch online oder zu einer vereinbarten Einführung vor Ort.',trackB:'Behalte Kurse, Notizen und Fortschritt in deinem persönlichen Bereich.',pricingTitle:'Preise',pricingB:'Preise werden pro Kurs oder Lehrkraft festgelegt. Kurse ohne veröffentlichten Preis zeigen „Kontakt“.',personalTitle:'Dein Academy-Bereich',studentCourses:'Kurse, die du lernst',teacherCourses:'Kurse, die du unterrichtest',noneStudent:'Du hast noch keinen Kurs hinzugefügt.',noneTeacher:'Dieser Lehrkraft sind noch keine Kurse zugeordnet.',learningSpace:'Learning Space',learningB:'Für aktive Einschreibungen werden private Kursbereiche erstellt. Sitzungsnotizen, Hausaufgaben, Materialien, Tests und Fortschritt bleiben zwischen Lernenden und Lehrkraft.',settings:'Academy-Einstellungen',adminTitle:'Admin Studio',adminB:'Erstelle und bearbeite Kurse und Lehrkräfte. Entwürfe bleiben privat; aktive Einträge werden öffentlich angezeigt.',courseEditor:'Kurs bearbeiten',teacherEditor:'Lehrkraft bearbeiten',saveCourse:'Kurs speichern',saveTeacher:'Lehrkraft speichern',newCourse:'Neuer Kurs',newTeacher:'Neue Lehrkraft',edit:'Bearbeiten',status:'Status',subject:'Sprache',level:'Niveau',title:'Titel',description:'Beschreibung',topicLines:'Themen (eine Zeile pro Thema)',duration:'Dauer (Minuten)',price:'Preis SEK',courseTelegram:'Telegram-Kanal des Kurses',modes:'Unterrichtsformate',teacherName:'Name der Lehrkraft',picture:'Bild-URL',introduction:'Vorstellung',teachLangs:'Unterrichtete Sprachen (kommagetrennt)',spokenLangs:'Gesprochene Sprachen (kommagetrennt)',teacherLevels:'Niveaus (kommagetrennt)',specialties:'Schwerpunkte (kommagetrennt)',linkedUser:'Verknüpfte Lingo3-Benutzer-ID (optional)',saved:'Gespeichert.',failed:'Speichern fehlgeschlagen.',publicContact:'Öffentlicher Kontakt',top:'Nach oben',loading:'Academy wird geladen…',signin:'Melde dich an, um Kurse hinzuzufügen und deinen persönlichen Academy-Bereich zu nutzen.',contactTitle:'Kontakt & Support',contactB:'Für Fragen zur Academy, Lehrkraft-Onboarding oder Kursanfragen:',resourcesTitle:'Lernressourcen',resourcesB:'Kursmaterialien, Hausaufgaben, Notizen, Tests und geteilte Ressourcen erscheinen im Learning Space, sobald Lehrkräfte sie hinzufügen.',pending:'Einschreibungsanfragen',activate:'Aktivieren',selectTeacher:'Lehrkraft auswählen',notes:'Meine Lernnotizen',saveNote:'Notiz speichern',shared:'Mit Lehrkraft teilen',noSpace:'Dein Learning Space erscheint, sobald eine Einschreibung aktiviert wurde.',progress:'Fortschritt'},
- fa:{home:'خانه',learn:'یادگیری',courses:'دوره‌ها',teachers:'مدرس‌ها',levels:'سطوح',path:'مسیر یادگیری من',mine:'آکادمی من',personal:'فضای شخصی',admin:'مدیریت آکادمی',about:'درباره',how:'روش کار',pricing:'قیمت‌ها',resources:'منابع',contact:'تماس',login:'ورود',logout:'خروج',app:'اپ Lingo3',hello:'سلام',studentTeacher:'زبان‌آموز ↔ مدرس',courseLine:'دوره · یادداشت · تمرین · پیشرفت',heroK:'آموزش با مدرس انسانی، متصل به Lingo3',heroT:'دوره را انتخاب کن، با مدرس واقعی یاد بگیر و پیشرفتت را یک‌جا نگه دار.',heroB:'کلاس خصوصی و گروه کوچک، مسیرهای مشخص آموزشی و فضای یادگیری شخصی برای هر زبان‌آموز.',browse:'مشاهده دوره‌ها',pathB:'زبان و سطح فعلی را انتخاب کن تا نزدیک‌ترین دوره موجود پیشنهاد شود.',language:'زبان',current:'سطح فعلی',recommended:'دوره پیشنهادی',available:'دوره‌های موجود',topics:'موضوعات دوره',formats:'نوع کلاس',individual:'کلاس آنلاین خصوصی',group:'گروه آنلاین تا ۳ نفر',offline:'جلسه معرفی حضوری',interest:'افزودن به دوره‌های من',added:'به آکادمی من اضافه شد',directory:'فهرست مدرس‌ها',noneTeachers:'هنوز مدرس تأییدشده‌ای منتشر نشده است. مدیر می‌تواند مدرس را در بخش مدیریت اضافه و فعال کند.',requestTrial:'درخواست جلسه آزمایشی',requested:'درخواست ثبت شد',email:'ایمیل',phone:'تلفن',teamsChat:'چت Teams',teamsCall:'تماس Teams',telegram:'تلگرام',levelGuide:'راهنمای سطح',foundation:'پایه',independent:'مستقل',advanced:'پیشرفته',howTitle:'آکادمی چطور کار می‌کند',choose:'انتخاب',book:'رزرو',learnV:'یادگیری',track:'پیگیری',chooseB:'زبان، سطح، دوره و مدرس را انتخاب کن.',bookB:'کلاس آزمایشی یا عادی درخواست کن.',learnB:'آنلاین یا در جلسه معرفی حضوری توافق‌شده شرکت کن.',trackB:'دوره‌ها، یادداشت‌ها و پیشرفت را در فضای شخصی نگه دار.',pricingTitle:'قیمت‌ها',pricingB:'قیمت برای هر دوره یا مدرس تعیین می‌شود. اگر قیمت منتشر نشده باشد «تماس بگیرید» نمایش داده می‌شود.',personalTitle:'فضای شخصی آکادمی',studentCourses:'دوره‌هایی که یاد می‌گیری',teacherCourses:'دوره‌هایی که تدریس می‌کنی',noneStudent:'هنوز دوره‌ای اضافه نکرده‌ای.',noneTeacher:'هنوز دوره‌ای به این پروفایل مدرس اختصاص داده نشده است.',learningSpace:'فضای یادگیری',learningB:'برای ثبت‌نام‌های فعال فضای خصوصی ساخته می‌شود و یادداشت جلسه، تکلیف، منابع، آزمون و پیشرفت بین زبان‌آموز و مدرس باقی می‌ماند.',settings:'تنظیمات آکادمی',adminTitle:'مدیریت آکادمی',adminB:'دوره و مدرس ایجاد یا ویرایش کن. پیش‌نویس خصوصی است و فقط موارد فعال عمومی نمایش داده می‌شوند.',courseEditor:'ویرایش دوره',teacherEditor:'ویرایش مدرس',saveCourse:'ذخیره دوره',saveTeacher:'ذخیره مدرس',newCourse:'دوره جدید',newTeacher:'مدرس جدید',edit:'ویرایش',status:'وضعیت',subject:'موضوع',level:'سطح',title:'عنوان',description:'توضیحات',topicLines:'موضوعات (هر مورد یک خط)',duration:'مدت (دقیقه)',price:'قیمت کرون',courseTelegram:'کانال تلگرام دوره',modes:'نوع برگزاری',teacherName:'نام مدرس',picture:'آدرس تصویر',introduction:'معرفی',teachLangs:'زبان‌های تدریس (با کاما)',spokenLangs:'زبان‌های قابل صحبت (با کاما)',teacherLevels:'سطوح (با کاما)',specialties:'تخصص‌ها (با کاما)',linkedUser:'شناسه کاربر Lingo3 برای اتصال حساب (اختیاری)',saved:'ذخیره شد.',failed:'ذخیره نشد.',publicContact:'اطلاعات تماس عمومی',top:'بالا',loading:'در حال بارگذاری آکادمی…',signin:'برای افزودن دوره و استفاده از فضای شخصی آکادمی وارد حساب شو.',contactTitle:'تماس و پشتیبانی',contactB:'برای سؤال‌های آکادمی، همکاری مدرس یا درخواست دوره:',resourcesTitle:'منابع آموزشی',resourcesB:'منابع دوره، تکلیف، یادداشت، آزمون و فایل‌های مشترک توسط مدرس در Learning Space قرار می‌گیرند.',pending:'درخواست‌های ثبت‌نام',activate:'فعال‌سازی',selectTeacher:'انتخاب مدرس',notes:'یادداشت‌های آموزشی من',saveNote:'ذخیره یادداشت',shared:'اشتراک با مدرس',noSpace:'پس از فعال شدن ثبت‌نام، فضای یادگیری شما نمایش داده می‌شود.',progress:'پیشرفت'}
-} satisfies Record<Locale, Record<string,string>>
 
-const blankCourse={id:'',subject_code:'sv',level_code:'A1',title_en:'',title_sv:'',title_fa:'',title_de:'',description_en:'',description_sv:'',description_fa:'',description_de:'',topics_en:'',topics_sv:'',topics_fa:'',topics_de:'',duration_minutes:'60',price_sek:'',telegram_url:'',status:'draft',individual:true,group:true,offline:true}
-const blankTeacher={id:'',user_id:'',display_name:'',name_en:'',name_fa:'',name_sv:'',name_de:'',photo_url:'',intro_en:'',intro_sv:'',intro_fa:'',intro_de:'',teaching_languages:'sv',spoken_languages:'en',levels:'A1,A2,B1',specialties:'',email:'',phone:'',teams_chat_url:'',teams_call_url:'',telegram_url:'',status:'draft'}
-
-export function Academy({userId,email,sessionLoading=false}:Props){
- const {locale:preferredLocale,theme,setLocale:saveLocale,setTheme,error:preferenceError}=useAcademyPreferences(userId)
- const queryLocale=new URLSearchParams(window.location.search).get('lang')
- const locale:Locale=queryLocale&&['en','fa','sv','de'].includes(queryLocale)?queryLocale as Locale:preferredLocale
- const setLocale=(next:Locale)=>{saveLocale(next);if(queryLocale){const url=new URL(window.location.href);url.searchParams.set('lang',next);navigateProduct(url.pathname+url.search,{replace:true})}}
- const [settingsOpen,setSettingsOpen]=useState(false)
- const [personalMode,setPersonalMode]=useState<'full'|'courses'|'profile'>('full')
- useEffect(()=>{if(window.location.pathname==='/academy/levels')navigateProduct('/academy/courses',{replace:true})},[])
- const [page,setPage]=useState<AcademyPage>(()=>academyPageFromPath(window.location.pathname))
- const [compact,setCompact]=useState(false),[mobileMenuOpen,setMobileMenuOpen]=useState(false),[courses,setCourses]=useState<Course[]>([]),[teachers,setTeachers]=useState<Teacher[]>([]),[teacherCourses,setTeacherCourses]=useState<TeacherCourse[]>([]),[academyLanguages,setAcademyLanguages]=useState<AcademyLanguage[]>([]),[enrollments,setEnrollments]=useState<Enrollment[]>([]),[adminEnrollments,setAdminEnrollments]=useState<AdminEnrollment[]>([])
- const [displayName,setDisplayName]=useState(''),[isAdmin,setIsAdmin]=useState(false),[loading,setLoading]=useState(true),[dialog,setDialog]=useState<AcademyDialog|null>(()=>window.history.state?.academyDialog??null),[subject,setSubject]=useState('sv'),[level,setLevel]=useState('A1'),[notice,setNotice]=useState('')
- const [courseForm,setCourseForm]=useState(blankCourse),[teacherForm,setTeacherForm]=useState(blankTeacher),[teacherAssigned,setTeacherAssigned]=useState<string[]>([]),[enrollmentTeacher,setEnrollmentTeacher]=useState<Record<string,string>>({})
- const [archiveTeacherConfirm,setArchiveTeacherConfirm]=useState(false),[enrollmentStatusFilter,setEnrollmentStatusFilter]=useState('all')
- const [teacherEditorOpen,setTeacherEditorOpen]=useState(false),[teacherTab,setTeacherTab]=useState<'name'|'intro'|'courses'|'contact'|'account'>('name')
- const [userLookup,setUserLookup]=useState(''),[userMatches,setUserMatches]=useState<{user_id:string;email:string|null;display_name:string|null;teacher_id:string|null}[]>([])
- const [spaceView,setSpaceView]=useState<'student'|'teacher'>('student')
- const [adminPanel,setAdminPanel]=useState<'home'|'users'|'enrollments'|'courses'|'teachers'|'seo'>('home')
- const openAdminPanel=(next:'home'|'users'|'enrollments'|'courses'|'teachers'|'seo')=>{window.history.pushState({...window.history.state,academyAdminPanel:next},'',window.location.href);setAdminPanel(next)}
- const refreshVersion=useRef(0)
- const [catalogSearch,setCatalogSearch]=useState(''),[teacherSearch,setTeacherSearch]=useState(''),[adminCourseSearch,setAdminCourseSearch]=useState(''),[adminTeacherSearch,setAdminTeacherSearch]=useState(''),[teacherCourseSearch,setTeacherCourseSearch]=useState('')
- const [adminFilter,setAdminFilter]=useState(''),[focusSpace,setFocusSpace]=useState(''),[savingTeacher,setSavingTeacher]=useState(false)
- const loginOpen=dialog?.type==='login'
- const bookingTeacher=dialog?.type==='booking'?teachers.find(x=>x.id===dialog.teacherId)??null:null
- const pendingBooking=useRef<Extract<AcademyDialog,{type:'booking'}>|null>(null)
- const clearPending=()=>{pendingBooking.current=null;try{sessionStorage.removeItem('academy-pending-booking')}catch{}}
- const openDialog=(requested:AcademyDialog)=>{let next=requested;if(requested.type==='booking'&&!userId){pendingBooking.current=requested;try{sessionStorage.setItem('academy-pending-booking',JSON.stringify(requested))}catch{}next={type:'login'}}closeMenus();setMobileMenuOpen(false);window.history.pushState({...window.history.state,academyDialog:next},'',window.location.href);setDialog(next)}
- const closeDialog=()=>{if(dialog?.type==='login')clearPending();if(window.history.state?.academyDialog)window.history.back();else setDialog(null)}
- useEffect(()=>{if(!userId)return;let pending=pendingBooking.current;try{const stored=sessionStorage.getItem('academy-pending-booking');if(!pending&&stored){const parsed=JSON.parse(stored);if(parsed?.type==='booking'&&typeof parsed.teacherId==='string'&&(!parsed.courseId||typeof parsed.courseId==='string'))pending=parsed}}catch{}if(pending){clearPending();window.history.replaceState({...window.history.state,academyDialog:pending},'',window.location.href);setDialog(pending)}else if(dialog?.type==='login'){const {academyDialog:_old,...state}=window.history.state??{};window.history.replaceState(state,'',window.location.href);setDialog(null)}},[userId,dialog])
- const navRef=useRef<HTMLElement|null>(null)
- useEffect(()=>{
-  function dismissOutside(event:PointerEvent){
-   if(event.target instanceof Element && !event.target.closest('.academy-top, .academy-bottom-nav')){
-    navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{menu.open=false})
+export function Academy({ userId, email, sessionLoading = false }: Props) {
+  const {
+    locale: preferredLocale,
+    theme,
+    setLocale: saveLocale,
+    setTheme,
+    error: preferenceError
+  } = useAcademyPreferences(userId)
+  const queryLocale = new URLSearchParams(window.location.search).get('lang')
+  const locale: Locale =
+    queryLocale && ['en', 'fa', 'sv', 'de'].includes(queryLocale) ? (queryLocale as Locale) : preferredLocale
+  const setLocale = (next: Locale) => {
+    saveLocale(next)
+    if (queryLocale) {
+      const url = new URL(window.location.href)
+      url.searchParams.set('lang', next)
+      navigateProduct(url.pathname + url.search, { replace: true })
+    }
+  }
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [personalMode, setPersonalMode] = useState<'full' | 'courses' | 'profile'>('full')
+  useEffect(() => {
+    if (window.location.pathname === '/academy/levels') navigateProduct('/academy/courses', { replace: true })
+  }, [])
+  const [page, setPage] = useState<AcademyPage>(() => academyPageFromPath(window.location.pathname))
+  const [compact, setCompact] = useState(false),
+    [mobileMenuOpen, setMobileMenuOpen] = useState(false),
+    [courses, setCourses] = useState<Course[]>([]),
+    [teachers, setTeachers] = useState<Teacher[]>([]),
+    [teacherCourses, setTeacherCourses] = useState<TeacherCourse[]>([]),
+    [academyLanguages, setAcademyLanguages] = useState<AcademyLanguage[]>([]),
+    [enrollments, setEnrollments] = useState<Enrollment[]>([]),
+    [adminEnrollments, setAdminEnrollments] = useState<AdminEnrollment[]>([])
+  const [displayName, setDisplayName] = useState(''),
+    [isAdmin, setIsAdmin] = useState(false),
+    [loading, setLoading] = useState(true),
+    [dialog, setDialog] = useState<AcademyDialog | null>(() => window.history.state?.academyDialog ?? null),
+    [subject, setSubject] = useState('sv'),
+    [level, setLevel] = useState('A1'),
+    [notice, setNotice] = useState('')
+  const [courseForm, setCourseForm] = useState(blankCourse),
+    [teacherForm, setTeacherForm] = useState(blankTeacher),
+    [teacherAssigned, setTeacherAssigned] = useState<string[]>([]),
+    [enrollmentTeacher, setEnrollmentTeacher] = useState<Record<string, string>>({})
+  const [archiveTeacherConfirm, setArchiveTeacherConfirm] = useState(false),
+    [enrollmentStatusFilter, setEnrollmentStatusFilter] = useState('all')
+  const [teacherEditorOpen, setTeacherEditorOpen] = useState(false),
+    [teacherTab, setTeacherTab] = useState<'name' | 'intro' | 'courses' | 'contact' | 'account'>('name')
+  const [userLookup, setUserLookup] = useState(''),
+    [userMatches, setUserMatches] = useState<
+      { user_id: string; email: string | null; display_name: string | null; teacher_id: string | null }[]
+    >([])
+  const [spaceView, setSpaceView] = useState<'student' | 'teacher'>('student')
+  const [adminPanel, setAdminPanel] = useState<
+    'home' | 'users' | 'enrollments' | 'courses' | 'teachers' | 'seo'
+  >('home')
+  const openAdminPanel = (next: 'home' | 'users' | 'enrollments' | 'courses' | 'teachers' | 'seo') => {
+    window.history.pushState({ ...window.history.state, academyAdminPanel: next }, '', window.location.href)
+    setAdminPanel(next)
+  }
+  const refreshVersion = useRef(0)
+  const [catalogSearch, setCatalogSearch] = useState(''),
+    [teacherSearch, setTeacherSearch] = useState(''),
+    [adminCourseSearch, setAdminCourseSearch] = useState(''),
+    [adminTeacherSearch, setAdminTeacherSearch] = useState(''),
+    [teacherCourseSearch, setTeacherCourseSearch] = useState('')
+  const [adminFilter, setAdminFilter] = useState(''),
+    [focusSpace, setFocusSpace] = useState(''),
+    [savingTeacher, setSavingTeacher] = useState(false)
+  const loginOpen = dialog?.type === 'login'
+  const bookingTeacher =
+    dialog?.type === 'booking' ? (teachers.find(x => x.id === dialog.teacherId) ?? null) : null
+  const pendingBooking = useRef<Extract<AcademyDialog, { type: 'booking' }> | null>(null)
+  const clearPending = () => {
+    pendingBooking.current = null
+    try {
+      sessionStorage.removeItem('academy-pending-booking')
+    } catch {}
+  }
+  const openDialog = (requested: AcademyDialog) => {
+    let next = requested
+    if (requested.type === 'booking' && !userId) {
+      pendingBooking.current = requested
+      try {
+        sessionStorage.setItem('academy-pending-booking', JSON.stringify(requested))
+      } catch {}
+      next = { type: 'login' }
+    }
+    closeMenus()
     setMobileMenuOpen(false)
-   }
+    window.history.pushState({ ...window.history.state, academyDialog: next }, '', window.location.href)
+    setDialog(next)
   }
-  function escape(event:KeyboardEvent){
-   if(event.key!=='Escape') return
-   if(window.history.state?.academySettings||window.history.state?.academyDialog){
-    window.history.back()
-    return
-   }
-   const menu=navRef.current?.querySelector<HTMLDetailsElement>('details[open]')
-   if(menu){
-    menu.open=false
-    menu.querySelector('summary')?.focus()
-   }else{
+  const closeDialog = () => {
+    if (dialog?.type === 'login') clearPending()
+    if (window.history.state?.academyDialog) window.history.back()
+    else setDialog(null)
+  }
+  useEffect(() => {
+    if (!userId) return
+    let pending = pendingBooking.current
+    try {
+      const stored = sessionStorage.getItem('academy-pending-booking')
+      if (!pending && stored) {
+        const parsed = JSON.parse(stored)
+        if (
+          parsed?.type === 'booking' &&
+          typeof parsed.teacherId === 'string' &&
+          (!parsed.courseId || typeof parsed.courseId === 'string')
+        )
+          pending = parsed
+      }
+    } catch {}
+    if (pending) {
+      clearPending()
+      window.history.replaceState(
+        { ...window.history.state, academyDialog: pending },
+        '',
+        window.location.href
+      )
+      setDialog(pending)
+    } else if (dialog?.type === 'login') {
+      const { academyDialog: _old, ...state } = window.history.state ?? {}
+      window.history.replaceState(state, '', window.location.href)
+      setDialog(null)
+    }
+  }, [userId, dialog])
+  const navRef = useRef<HTMLElement | null>(null)
+  useEffect(() => {
+    function dismissOutside(event: PointerEvent) {
+      if (event.target instanceof Element && !event.target.closest('.academy-top, .academy-bottom-nav')) {
+        navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu => {
+          menu.open = false
+        })
+        setMobileMenuOpen(false)
+      }
+    }
+    function escape(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return
+      if (window.history.state?.academySettings || window.history.state?.academyDialog) {
+        window.history.back()
+        return
+      }
+      const menu = navRef.current?.querySelector<HTMLDetailsElement>('details[open]')
+      if (menu) {
+        menu.open = false
+        menu.querySelector('summary')?.focus()
+      } else {
+        setMobileMenuOpen(false)
+      }
+    }
+    window.addEventListener('pointerdown', dismissOutside)
+    window.addEventListener('keydown', escape)
+    return () => {
+      window.removeEventListener('pointerdown', dismissOutside)
+      window.removeEventListener('keydown', escape)
+    }
+  }, [])
+  const t = C[locale],
+    dir = locale === 'fa' ? 'rtl' : 'ltr'
+  const actionPoint = useRef<{ x: number; y: number } | null>(null)
+  const successNotice =
+    !!notice &&
+    /^(saved\.?|sent\.?|gespeichert\.?|gesendet\.?|sparat\.?|skickat\.?|ذخیره شد\.?|ارسال شد\.?)$/i.test(
+      notice.trim()
+    )
+  useEffect(() => {
+    if (!successNotice) return
+    const timer = window.setTimeout(() => setNotice(''), 1300)
+    return () => window.clearTimeout(timer)
+  }, [notice, successNotice])
+  const teacherEditorRef = useRef<HTMLDetailsElement>(null),
+    courseEditorRef = useRef<HTMLDetailsElement>(null),
+    enrollmentsRef = useRef<HTMLDetailsElement>(null)
+  const [showRemoved, setShowRemoved] = useState(false)
+  function revealEditor(ref: React.RefObject<HTMLDetailsElement>) {
+    if (ref.current) {
+      ref.current.open = true
+      ref.current.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    }
+  }
+
+  useEffect(() => {
+    const onPop = () => {
+      if (!userId && pendingBooking.current && window.history.state?.academyDialog?.type !== 'login')
+        clearPending()
+      setSettingsOpen(Boolean(window.history.state?.academySettings))
+      setPersonalMode(
+        ['courses', 'profile'].includes(window.history.state?.academyPersonalMode)
+          ? window.history.state.academyPersonalMode
+          : 'full'
+      )
+      setDialog(window.history.state?.academyDialog ?? null)
+      setPage(academyPageFromPath(window.location.pathname))
+      const a = window.history.state?.academyAdminPanel
+      setAdminPanel(['home', 'users', 'enrollments', 'courses', 'teachers', 'seo'].includes(a) ? a : 'home')
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [userId])
+  useEffect(() => {
+    const fn = () => setCompact(scrollY > 80)
+    fn()
+    addEventListener('scroll', fn, { passive: true })
+    return () => removeEventListener('scroll', fn)
+  }, [])
+  async function refresh() {
+    const version = ++refreshVersion.current
+    setLoading(true)
+    const c: any = supabase()
+    const courseFields =
+      'id,subject_code,level_code,title_i18n,description_i18n,topics_i18n,delivery_modes,price_sek,duration_minutes,telegram_url,status,sort_order'
+    const teacherFields = userId
+      ? 'id,user_id,display_name,display_name_i18n,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
+      : 'id,display_name,display_name_i18n,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
+    const [cr, tr, tc, lr] = await Promise.all([
+      (c.from('academy_courses') as any).select(courseFields).order('sort_order'),
+      (c.from('academy_teachers') as any).select(teacherFields).order('display_name'),
+      (c.from('academy_teacher_courses') as any).select('teacher_id,course_id'),
+      (c.from('academy_languages') as any).select('code,name_i18n,status,sort_order').order('sort_order')
+    ])
+    if (version !== refreshVersion.current) return
+    const failed = [cr, tr, tc, lr].find(x => x.error)
+    if (failed) setNotice(failed.error.message)
+    if (cr.data) setCourses(cr.data as Course[])
+    if (tr.data)
+      setTeachers((tr.data as unknown[]).map((row: any) => ({ user_id: null, ...row })) as Teacher[])
+    if (tc.data) setTeacherCourses(tc.data as TeacherCourse[])
+    if (lr.data) setAcademyLanguages(lr.data as AcademyLanguage[])
+    if (userId) {
+      const settingsRes = await c
+        .from('user_settings')
+        .select('display_name,is_admin')
+        .eq('user_id', userId)
+        .maybeSingle()
+      const adminFlag = Boolean(settingsRes.data?.is_admin)
+      setDisplayName((settingsRes.data?.display_name as string | null) || email?.split('@')[0] || '')
+      setIsAdmin(adminFlag)
+      const [enrollmentRes, adminEnrollmentRes] = await Promise.all([
+        c
+          .from('academy_enrollments')
+          .select('*')
+          .eq('student_id', userId)
+          .order('created_at', { ascending: false }),
+        adminFlag ? c.rpc('academy_admin_enrollments') : Promise.resolve({ data: [] } as { data: unknown[] })
+      ])
+      if (version !== refreshVersion.current) return
+      if (adminEnrollmentRes.error) setNotice(adminEnrollmentRes.error.message)
+      if (enrollmentRes.data) setEnrollments(enrollmentRes.data as Enrollment[])
+      if (adminEnrollmentRes.data) setAdminEnrollments(adminEnrollmentRes.data as AdminEnrollment[])
+    } else {
+      setDisplayName('')
+      setIsAdmin(false)
+      setEnrollments([])
+      setAdminEnrollments([])
+    }
+    setLoading(false)
+  }
+  useEffect(() => {
+    void refresh().catch(e => {
+      setNotice(String(e))
+      setLoading(false)
+    })
+    return () => {
+      refreshVersion.current++
+    }
+  }, [userId])
+  const activeCourses = courses.filter(x => x.status === 'active' || isAdmin),
+    activeTeachers = teachers.filter(x => x.status === 'active' || isAdmin || x.user_id === userId)
+  const recommendation = useMemo(
+    () =>
+      activeCourses.find(x => x.subject_code === subject && x.level_code === level) ||
+      activeCourses.find(x => x.subject_code === subject) ||
+      null,
+    [activeCourses, subject, level]
+  )
+  const selfTeacher = activeTeachers.find(x => userId && x.user_id === userId && x.status === 'active'),
+    studentCourseIds = new Set(enrollments.filter(x => x.status !== 'cancelled').map(x => x.course_id))
+  const text = (v: I18nText | undefined) => v?.[locale] || v?.en || Object.values(v || {})[0] || '',
+    list = (v: I18nList | undefined) => v?.[locale] || v?.en || Object.values(v || {})[0] || []
+  const languageOptions = academyLanguages.filter(x => x.status === 'active' || isAdmin)
+  const languageLabel = (code: string) => {
+    const row = academyLanguages.find(x => x.code === code)
+    return row ? text(row.name_i18n) : subjects[code]?.[locale] || code
+  }
+  const mode = (m: string) =>
+    m === 'individual_online'
+      ? t.individual
+      : m === 'small_group_online'
+        ? t.group
+        : m === 'offline_intro'
+          ? t.offline
+          : m
+  const closeMenus = (except?: HTMLDetailsElement) => {
+    navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu => {
+      if (menu !== except) menu.open = false
+    })
+  }
+  const onMenuToggle = (event: React.SyntheticEvent<HTMLDetailsElement>) => {
+    const menu = event.currentTarget
+    if (menu.open) closeMenus(menu)
+  }
+  const go = (next: AcademyPage) => {
+    closeMenus()
     setMobileMenuOpen(false)
-   }
+    setPage(next)
+    setDialog(null)
+    navigateProduct(ACADEMY_PATHS[next], {
+      replace: Boolean(window.history.state?.academyDialog || window.history.state?.academySettings)
+    })
+    window.history.replaceState(
+      { ...window.history.state, academyPersonalMode: 'full' },
+      '',
+      window.location.href
+    )
+    setPersonalMode('full')
+    scrollTo({ top: 0, behavior: 'smooth' })
   }
-  window.addEventListener('pointerdown',dismissOutside)
-  window.addEventListener('keydown',escape)
-  return()=>{
-   window.removeEventListener('pointerdown',dismissOutside)
-   window.removeEventListener('keydown',escape)
+  async function addInterest(course: Course) {
+    if (!userId) {
+      openDialog({ type: 'login' })
+      return
+    }
+    if (studentCourseIds.has(course.id)) return
+    const { error } = await supabase()
+      .from('academy_enrollments')
+      .insert({ student_id: userId, course_id: course.id, teacher_id: null, status: 'interested' })
+    setNotice(error ? error.message : t.added)
+    if (!error) {
+      await refresh()
+      go('personal')
+    }
   }
- },[])
- const t=C[locale],dir=locale==='fa'?'rtl':'ltr'
- const actionPoint=useRef<{x:number;y:number}|null>(null)
- const successNotice=!!notice&&/^(saved\.?|sent\.?|gespeichert\.?|gesendet\.?|sparat\.?|skickat\.?|ذخیره شد\.?|ارسال شد\.?)$/i.test(notice.trim())
- useEffect(()=>{if(!successNotice)return;const timer=window.setTimeout(()=>setNotice(''),1300);return()=>window.clearTimeout(timer)},[notice,successNotice])
- const teacherEditorRef=useRef<HTMLDetailsElement>(null),courseEditorRef=useRef<HTMLDetailsElement>(null),enrollmentsRef=useRef<HTMLDetailsElement>(null)
- const [showRemoved,setShowRemoved]=useState(false)
- function revealEditor(ref:React.RefObject<HTMLDetailsElement>){if(ref.current){ref.current.open=true;ref.current.scrollIntoView({block:'start',behavior:'smooth'})}}
 
-
- useEffect(()=>{const onPop=()=>{if(!userId&&pendingBooking.current&&window.history.state?.academyDialog?.type!=='login')clearPending();setSettingsOpen(Boolean(window.history.state?.academySettings));setPersonalMode(['courses','profile'].includes(window.history.state?.academyPersonalMode)?window.history.state.academyPersonalMode:'full');setDialog(window.history.state?.academyDialog??null);setPage(academyPageFromPath(window.location.pathname));const a=window.history.state?.academyAdminPanel;setAdminPanel(['home','users','enrollments','courses','teachers','seo'].includes(a)?a:'home')};window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop)},[userId])
- useEffect(()=>{const fn=()=>setCompact(scrollY>80);fn();addEventListener('scroll',fn,{passive:true});return()=>removeEventListener('scroll',fn)},[])
- async function refresh(){
-  const version=++refreshVersion.current
-  setLoading(true)
-  const c:any=supabase()
-  const courseFields='id,subject_code,level_code,title_i18n,description_i18n,topics_i18n,delivery_modes,price_sek,duration_minutes,telegram_url,status,sort_order'
-  const teacherFields=userId
-   ? 'id,user_id,display_name,display_name_i18n,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
-   : 'id,display_name,display_name_i18n,photo_url,intro_i18n,teaching_languages,spoken_languages,levels,specialties,email,phone,teams_chat_url,teams_call_url,telegram_url,status'
-  const [cr,tr,tc,lr]=await Promise.all([
-   (c.from('academy_courses') as any).select(courseFields).order('sort_order'),
-   (c.from('academy_teachers') as any).select(teacherFields).order('display_name'),
-   (c.from('academy_teacher_courses') as any).select('teacher_id,course_id'),
-   (c.from('academy_languages') as any).select('code,name_i18n,status,sort_order').order('sort_order')
-  ])
-  if(version!==refreshVersion.current)return
-  const failed=[cr,tr,tc,lr].find(x=>x.error);if(failed)setNotice(failed.error.message)
-  if(cr.data)setCourses(cr.data as Course[])
-  if(tr.data)setTeachers((tr.data as unknown[]).map((row:any)=>({user_id:null,...row})) as Teacher[])
-  if(tc.data)setTeacherCourses(tc.data as TeacherCourse[])
-  if(lr.data)setAcademyLanguages(lr.data as AcademyLanguage[])
-  if(userId){
-   const settingsRes=await c.from('user_settings').select('display_name,is_admin').eq('user_id',userId).maybeSingle()
-   const adminFlag=Boolean(settingsRes.data?.is_admin)
-   setDisplayName((settingsRes.data?.display_name as string|null)||email?.split('@')[0]||'')
-   setIsAdmin(adminFlag)
-   const [enrollmentRes,adminEnrollmentRes]=await Promise.all([
-    c.from('academy_enrollments').select('*').eq('student_id',userId).order('created_at',{ascending:false}),
-    adminFlag?c.rpc('academy_admin_enrollments'):Promise.resolve({data:[]} as {data:unknown[]})
-   ])
-   if(version!==refreshVersion.current)return
-   if(adminEnrollmentRes.error)setNotice(adminEnrollmentRes.error.message)
-   if(enrollmentRes.data)setEnrollments(enrollmentRes.data as Enrollment[])
-   if(adminEnrollmentRes.data)setAdminEnrollments(adminEnrollmentRes.data as AdminEnrollment[])
-  }else{
-   setDisplayName('');setIsAdmin(false);setEnrollments([]);setAdminEnrollments([])
+  async function activateEnrollment(e: Enrollment) {
+    const teacherId = enrollmentTeacher[e.id] || e.teacher_id || ''
+    if (!teacherId) {
+      setNotice(t.selectTeacher)
+      return
+    }
+    const { error } = await supabase().rpc('academy_activate_enrollment', {
+      p_enrollment_id: e.id,
+      p_teacher_id: teacherId
+    })
+    setNotice(error ? error.message : t.saved)
+    if (!error) await refresh()
   }
-  setLoading(false)
- }
- useEffect(()=>{void refresh().catch(e=>{setNotice(String(e));setLoading(false)});return()=>{refreshVersion.current++}},[userId])
- const activeCourses=courses.filter(x=>x.status==='active'||isAdmin),activeTeachers=teachers.filter(x=>x.status==='active'||isAdmin||x.user_id===userId)
- const recommendation=useMemo(()=>activeCourses.find(x=>x.subject_code===subject&&x.level_code===level)||activeCourses.find(x=>x.subject_code===subject)||null,[activeCourses,subject,level])
- const selfTeacher=activeTeachers.find(x=>userId&&x.user_id===userId&&x.status==='active'),studentCourseIds=new Set(enrollments.filter(x=>x.status!=='cancelled').map(x=>x.course_id))
- const text=(v:I18nText|undefined)=>v?.[locale]||v?.en||Object.values(v||{})[0]||'', list=(v:I18nList|undefined)=>v?.[locale]||v?.en||Object.values(v||{})[0]||[]
- const languageOptions=academyLanguages.filter(x=>x.status==='active'||isAdmin)
- const languageLabel=(code:string)=>{const row=academyLanguages.find(x=>x.code===code);return row?text(row.name_i18n):(subjects[code]?.[locale]||code)}
- const mode=(m:string)=>m==='individual_online'?t.individual:m==='small_group_online'?t.group:m==='offline_intro'?t.offline:m
- const closeMenus=(except?:HTMLDetailsElement)=>{navRef.current?.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu=>{if(menu!==except)menu.open=false})}
- const onMenuToggle=(event:React.SyntheticEvent<HTMLDetailsElement>)=>{const menu=event.currentTarget;if(menu.open)closeMenus(menu)}
- const go=(next:AcademyPage)=>{closeMenus();setMobileMenuOpen(false);setPage(next);setDialog(null);navigateProduct(ACADEMY_PATHS[next],{replace:Boolean(window.history.state?.academyDialog||window.history.state?.academySettings)});window.history.replaceState({...window.history.state,academyPersonalMode:'full'},'',window.location.href);setPersonalMode('full');scrollTo({top:0,behavior:'smooth'})}
- async function addInterest(course:Course){if(!userId){openDialog({type:'login'});return}if(studentCourseIds.has(course.id))return;const {error}=await supabase().from('academy_enrollments').insert({student_id:userId,course_id:course.id,teacher_id:null,status:'interested'});setNotice(error?error.message:t.added);if(!error){await refresh();go('personal')}}
 
- async function activateEnrollment(e:Enrollment){
-  const teacherId=enrollmentTeacher[e.id]||e.teacher_id||''
-  if(!teacherId){setNotice(t.selectTeacher);return}
-  const {error}=await supabase().rpc('academy_activate_enrollment',{p_enrollment_id:e.id,p_teacher_id:teacherId})
-  setNotice(error?error.message:t.saved)
-  if(!error)await refresh()
- }
+  function editCourse(c?: Course) {
+    openAdminPanel('courses')
+    revealEditor(courseEditorRef)
+    if (!c) {
+      setCourseForm(blankCourse)
+      return
+    }
+    setCourseForm({
+      id: c.id,
+      subject_code: c.subject_code,
+      level_code: c.level_code,
+      title_en: c.title_i18n.en || '',
+      title_sv: c.title_i18n.sv || '',
+      title_fa: c.title_i18n.fa || '',
+      title_de: c.title_i18n.de || '',
+      description_en: c.description_i18n.en || '',
+      description_sv: c.description_i18n.sv || '',
+      description_fa: c.description_i18n.fa || '',
+      description_de: c.description_i18n.de || '',
+      topics_en: (c.topics_i18n.en || []).join('\n'),
+      topics_sv: (c.topics_i18n.sv || []).join('\n'),
+      topics_fa: (c.topics_i18n.fa || []).join('\n'),
+      topics_de: (c.topics_i18n.de || []).join('\n'),
+      duration_minutes: String(c.duration_minutes),
+      price_sek: c.price_sek == null ? '' : String(c.price_sek),
+      telegram_url: c.telegram_url || '',
+      status: c.status,
+      individual: c.delivery_modes.includes('individual_online'),
+      group: c.delivery_modes.includes('small_group_online'),
+      offline: c.delivery_modes.includes('offline_intro')
+    })
+    go('admin')
+  }
+  async function saveCourse(e: React.FormEvent) {
+    e.preventDefault()
+    const modes = [
+        courseForm.individual ? 'individual_online' : '',
+        courseForm.group ? 'small_group_online' : '',
+        courseForm.offline ? 'offline_intro' : ''
+      ].filter(Boolean),
+      payload = {
+        subject_code: courseForm.subject_code.trim(),
+        level_code: courseForm.level_code.trim().toUpperCase(),
+        title_i18n: {
+          en: courseForm.title_en,
+          sv: courseForm.title_sv,
+          fa: courseForm.title_fa,
+          de: courseForm.title_de
+        },
+        description_i18n: {
+          en: courseForm.description_en,
+          sv: courseForm.description_sv,
+          fa: courseForm.description_fa,
+          de: courseForm.description_de
+        },
+        topics_i18n: {
+          en: courseForm.topics_en
+            .split('\n')
+            .map(x => x.trim())
+            .filter(Boolean),
+          sv: courseForm.topics_sv
+            .split('\n')
+            .map(x => x.trim())
+            .filter(Boolean),
+          fa: courseForm.topics_fa
+            .split('\n')
+            .map(x => x.trim())
+            .filter(Boolean),
+          de: courseForm.topics_de
+            .split('\n')
+            .map(x => x.trim())
+            .filter(Boolean)
+        },
+        delivery_modes: modes.length ? modes : ['individual_online'],
+        duration_minutes: Number(courseForm.duration_minutes) || 60,
+        price_sek: courseForm.price_sek ? Number(courseForm.price_sek) : null,
+        telegram_url: courseForm.telegram_url.trim() || null,
+        status: courseForm.status,
+        updated_at: new Date().toISOString(),
+        ...(courseForm.id ? {} : { created_by: userId })
+      }
+    const q = courseForm.id
+      ? supabase().from('academy_courses').update(payload).eq('id', courseForm.id)
+      : supabase().from('academy_courses').insert(payload)
+    const { error } = await q
+    setNotice(error ? t.failed + ' ' + error.message : t.saved)
+    if (!error) {
+      setCourseForm(blankCourse)
+      await refresh()
+    }
+  }
+  function editTeacher(x?: Teacher) {
+    setArchiveTeacherConfirm(false)
+    setTeacherEditorOpen(true)
+    setTeacherTab('name')
+    openAdminPanel('teachers')
+    revealEditor(teacherEditorRef)
+    if (!x) {
+      setTeacherForm(blankTeacher)
+      setTeacherAssigned([])
+      return
+    }
+    setTeacherAssigned(teacherCourses.filter(tc => tc.teacher_id === x.id).map(tc => tc.course_id))
+    setTeacherForm({
+      id: x.id,
+      user_id: x.user_id || '',
+      display_name: x.display_name,
+      name_en: x.display_name_i18n?.en ?? '',
+      name_fa: x.display_name_i18n?.fa ?? '',
+      name_sv: x.display_name_i18n?.sv ?? '',
+      name_de: x.display_name_i18n?.de ?? '',
+      photo_url: x.photo_url || '',
+      intro_en: x.intro_i18n.en || '',
+      intro_sv: x.intro_i18n.sv || '',
+      intro_fa: x.intro_i18n.fa || '',
+      intro_de: x.intro_i18n.de || '',
+      teaching_languages: x.teaching_languages.join(','),
+      spoken_languages: x.spoken_languages.join(','),
+      levels: x.levels.join(','),
+      specialties: x.specialties.join(','),
+      email: x.email || '',
+      phone: x.phone || '',
+      teams_chat_url: x.teams_chat_url || '',
+      teams_call_url: x.teams_call_url || '',
+      telegram_url: x.telegram_url || '',
+      status: x.status
+    })
+    go('admin')
+  }
+  async function searchAcademyUsers() {
+    if (!isAdmin || userLookup.trim().length < 2) {
+      setUserMatches([])
+      return
+    }
+    const { data, error } = await supabase().rpc('academy_admin_search_users', {
+      p_query: userLookup.trim(),
+      p_limit: 12
+    })
+    if (error) {
+      setNotice(error.message)
+      setUserMatches([])
+      return
+    }
+    setUserMatches((data ?? []) as any[])
+  }
+  function chooseTeacherUser(u: {
+    user_id: string
+    email: string | null
+    display_name: string | null
+    teacher_id: string | null
+  }) {
+    setTeacherForm({
+      ...teacherForm,
+      user_id: u.user_id,
+      display_name: teacherForm.display_name || u.display_name || u.email?.split('@')[0] || '',
+      email: teacherForm.email || u.email || ''
+    })
+    setUserMatches([])
+    setUserLookup(u.email || u.display_name || u.user_id)
+  }
+  async function saveTeacher(e: React.FormEvent) {
+    e.preventDefault()
+    const csv = (v: string) =>
+        v
+          .split(',')
+          .map(x => x.trim())
+          .filter(Boolean),
+      payload = {
+        user_id: teacherForm.user_id.trim() || null,
+        display_name: teacherForm.display_name.trim(),
+        display_name_i18n: {
+          en: teacherForm.name_en.trim(),
+          fa: teacherForm.name_fa.trim(),
+          sv: teacherForm.name_sv.trim(),
+          de: teacherForm.name_de.trim()
+        },
+        photo_url: teacherForm.photo_url.trim() || null,
+        intro_i18n: {
+          en: teacherForm.intro_en,
+          sv: teacherForm.intro_sv,
+          fa: teacherForm.intro_fa,
+          de: teacherForm.intro_de
+        },
+        teaching_languages: csv(teacherForm.teaching_languages),
+        spoken_languages: csv(teacherForm.spoken_languages),
+        levels: csv(teacherForm.levels),
+        specialties: csv(teacherForm.specialties),
+        email: teacherForm.email.trim() || null,
+        phone: teacherForm.phone.trim() || null,
+        teams_chat_url: teacherForm.teams_chat_url.trim() || null,
+        teams_call_url: teacherForm.teams_call_url.trim() || null,
+        telegram_url: teacherForm.telegram_url.trim() || null,
+        status: teacherForm.status,
+        updated_at: new Date().toISOString(),
+        ...(teacherForm.id ? {} : { created_by: userId })
+      }
+    if (savingTeacher) return
+    setSavingTeacher(true)
+    try {
+      const { error } = await supabase().rpc('academy_admin_save_teacher', {
+        p_teacher: { ...payload, ...(teacherForm.id ? { id: teacherForm.id } : {}) },
+        p_course_ids: teacherAssigned
+      })
+      if (error) throw error
+      setNotice(t.saved)
+      setTeacherForm(blankTeacher)
+      setTeacherAssigned([])
+      await refresh()
+    } catch (error) {
+      setNotice(t.failed + ' ' + String(error instanceof Error ? error.message : error))
+    } finally {
+      setSavingTeacher(false)
+    }
+  }
 
- function editCourse(c?:Course){openAdminPanel('courses');revealEditor(courseEditorRef);if(!c){setCourseForm(blankCourse);return}setCourseForm({id:c.id,subject_code:c.subject_code,level_code:c.level_code,title_en:c.title_i18n.en||'',title_sv:c.title_i18n.sv||'',title_fa:c.title_i18n.fa||'',title_de:c.title_i18n.de||'',description_en:c.description_i18n.en||'',description_sv:c.description_i18n.sv||'',description_fa:c.description_i18n.fa||'',description_de:c.description_i18n.de||'',topics_en:(c.topics_i18n.en||[]).join('\n'),topics_sv:(c.topics_i18n.sv||[]).join('\n'),topics_fa:(c.topics_i18n.fa||[]).join('\n'),topics_de:(c.topics_i18n.de||[]).join('\n'),duration_minutes:String(c.duration_minutes),price_sek:c.price_sek==null?'':String(c.price_sek),telegram_url:c.telegram_url||'',status:c.status,individual:c.delivery_modes.includes('individual_online'),group:c.delivery_modes.includes('small_group_online'),offline:c.delivery_modes.includes('offline_intro')});go('admin')}
- async function saveCourse(e:React.FormEvent){e.preventDefault();const modes=[courseForm.individual?'individual_online':'',courseForm.group?'small_group_online':'',courseForm.offline?'offline_intro':''].filter(Boolean),payload={subject_code:courseForm.subject_code.trim(),level_code:courseForm.level_code.trim().toUpperCase(),title_i18n:{en:courseForm.title_en,sv:courseForm.title_sv,fa:courseForm.title_fa,de:courseForm.title_de},description_i18n:{en:courseForm.description_en,sv:courseForm.description_sv,fa:courseForm.description_fa,de:courseForm.description_de},topics_i18n:{en:courseForm.topics_en.split('\n').map(x=>x.trim()).filter(Boolean),sv:courseForm.topics_sv.split('\n').map(x=>x.trim()).filter(Boolean),fa:courseForm.topics_fa.split('\n').map(x=>x.trim()).filter(Boolean),de:courseForm.topics_de.split('\n').map(x=>x.trim()).filter(Boolean)},delivery_modes:modes.length?modes:['individual_online'],duration_minutes:Number(courseForm.duration_minutes)||60,price_sek:courseForm.price_sek?Number(courseForm.price_sek):null,telegram_url:courseForm.telegram_url.trim()||null,status:courseForm.status,updated_at:new Date().toISOString(),...(courseForm.id?{}:{created_by:userId})};const q=courseForm.id?supabase().from('academy_courses').update(payload).eq('id',courseForm.id):supabase().from('academy_courses').insert(payload);const {error}=await q;setNotice(error ? t.failed + ' ' + error.message : t.saved);if(!error){setCourseForm(blankCourse);await refresh()}}
- function editTeacher(x?:Teacher){setArchiveTeacherConfirm(false);setTeacherEditorOpen(true);setTeacherTab('name');openAdminPanel('teachers');revealEditor(teacherEditorRef);if(!x){setTeacherForm(blankTeacher);setTeacherAssigned([]);return}setTeacherAssigned(teacherCourses.filter(tc=>tc.teacher_id===x.id).map(tc=>tc.course_id));setTeacherForm({id:x.id,user_id:x.user_id||'',display_name:x.display_name,name_en:x.display_name_i18n?.en??'',name_fa:x.display_name_i18n?.fa??'',name_sv:x.display_name_i18n?.sv??'',name_de:x.display_name_i18n?.de??'',photo_url:x.photo_url||'',intro_en:x.intro_i18n.en||'',intro_sv:x.intro_i18n.sv||'',intro_fa:x.intro_i18n.fa||'',intro_de:x.intro_i18n.de||'',teaching_languages:x.teaching_languages.join(','),spoken_languages:x.spoken_languages.join(','),levels:x.levels.join(','),specialties:x.specialties.join(','),email:x.email||'',phone:x.phone||'',teams_chat_url:x.teams_chat_url||'',teams_call_url:x.teams_call_url||'',telegram_url:x.telegram_url||'',status:x.status});go('admin')}
- async function searchAcademyUsers(){if(!isAdmin||userLookup.trim().length<2){setUserMatches([]);return}const {data,error}=await supabase().rpc('academy_admin_search_users',{p_query:userLookup.trim(),p_limit:12});if(error){setNotice(error.message);setUserMatches([]);return}setUserMatches((data??[]) as any[])}
- function chooseTeacherUser(u:{user_id:string;email:string|null;display_name:string|null;teacher_id:string|null}){setTeacherForm({...teacherForm,user_id:u.user_id,display_name:teacherForm.display_name||u.display_name||u.email?.split('@')[0]||'',email:teacherForm.email||u.email||''});setUserMatches([]);setUserLookup(u.email||u.display_name||u.user_id)}
- async function saveTeacher(e:React.FormEvent){e.preventDefault();const csv=(v:string)=>v.split(',').map(x=>x.trim()).filter(Boolean),payload={user_id:teacherForm.user_id.trim()||null,display_name:teacherForm.display_name.trim(),display_name_i18n:{en:teacherForm.name_en.trim(),fa:teacherForm.name_fa.trim(),sv:teacherForm.name_sv.trim(),de:teacherForm.name_de.trim()},photo_url:teacherForm.photo_url.trim()||null,intro_i18n:{en:teacherForm.intro_en,sv:teacherForm.intro_sv,fa:teacherForm.intro_fa,de:teacherForm.intro_de},teaching_languages:csv(teacherForm.teaching_languages),spoken_languages:csv(teacherForm.spoken_languages),levels:csv(teacherForm.levels),specialties:csv(teacherForm.specialties),email:teacherForm.email.trim()||null,phone:teacherForm.phone.trim()||null,teams_chat_url:teacherForm.teams_chat_url.trim()||null,teams_call_url:teacherForm.teams_call_url.trim()||null,telegram_url:teacherForm.telegram_url.trim()||null,status:teacherForm.status,updated_at:new Date().toISOString(),...(teacherForm.id?{}:{created_by:userId})};if(savingTeacher)return;setSavingTeacher(true);try{const {error}=await supabase().rpc('academy_admin_save_teacher',{p_teacher:{...payload,...(teacherForm.id?{id:teacherForm.id}:{})},p_course_ids:teacherAssigned});if(error)throw error;setNotice(t.saved);setTeacherForm(blankTeacher);setTeacherAssigned([]);await refresh()}catch(error){setNotice(t.failed+' '+String(error instanceof Error?error.message:error))}finally{setSavingTeacher(false)}}
-
- async function permanentlyDeleteTeacher(){
-  if(!isAdmin||savingTeacher||!teacherForm.id||teacherForm.status!=='archived')return
-  const item=teachers.find(x=>x.id===teacherForm.id)
-  if(!item)return
-  const expected=item.display_name
-  const promptMessage=locale==='fa'?'حذف دائمی غیرقابل بازگشت است. نام استاد را برای تأیید بنویسید. سوابق کلاس و رزرو مانع حذف هستند.':'Permanent deletion cannot be undone. Type the exact teacher name. Dependent classes and bookings block deletion.'
-  setSavingTeacher(true)
-  try{
-   const {count,error:bookingError}=await supabase().from('academy_bookings').select('id',{count:'exact',head:true}).eq('teacher_id',item.id)
-   if(bookingError)throw bookingError
-   if((count||0)>0){setNotice(teacherBookingBlock(count||0,locale));return}
-   const answer=window.prompt(promptMessage+' ('+expected+')')
-   if(answer!==expected)return
-   const {data,error}=await supabase().from('academy_teachers').delete().eq('id',item.id).select('id').maybeSingle()
-   if(error)throw error
-   if(!data)throw new Error('Profile was not deleted. Check administrator permission.')
-   setTeacherEditorOpen(false);setTeacherForm(blankTeacher);setTeacherAssigned([])
-   await refresh()
-   setNotice(locale==='fa'?'پروفایل استاد برای همیشه حذف شد.':'Teacher profile permanently deleted.')
-  }catch(error){
-   setNotice(teacherDeletionError(error,locale))
-  }finally{setSavingTeacher(false)}
- }
- return <div className="academy" dir={dir} data-theme={theme} data-page={page} onClickCapture={e=>{const target=(e.target as HTMLElement).closest('button');if(target){const rect=target.getBoundingClientRect();actionPoint.current={x:Math.min(window.innerWidth-150,Math.max(8,rect.left)),y:Math.max(8,rect.top-44)}}}}>
-  <header className={'academy-top '+(compact?'is-compact':'')}><div className="academy-brand-group"><button className="academy-brand" type="button" onClick={()=>{closeMenus();setMobileMenuOpen(false);go('home')}}>Lingo3 <span>Academy</span></button>{userId?<button className="academy-user" onClick={()=>go('personal')}>{t.hello} {displayName||email}</button>:<button className="academy-login" onClick={()=>openDialog({type:'login'})}>{t.login}</button>}</div>
-   <button className="academy-mobile-toggle" type="button" aria-label="Menu" aria-controls="academy-navigation" aria-expanded={mobileMenuOpen} onClick={()=>{closeMenus();setMobileMenuOpen(v=>!v)}}><span></span><span></span><span></span></button>
-   <nav id="academy-navigation" className={'academy-nav '+(mobileMenuOpen?'is-open':'')} ref={navRef}>
-    <button onClick={()=>go('home')}>{t.home}</button>
-    <button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><details onToggle={onMenuToggle}><summary>{t.learn}</summary><div className="academy-menu"><button onClick={()=>go('path')}>{t.path}</button><button onClick={()=>go('posts')}>{locale==='fa'?'مطالب آموزشی':locale==='sv'?'Lärartiklar':locale==='de'?'Lernartikel':'Learning articles'}</button></div></details>
-    <details className="academy-my-menu" onToggle={onMenuToggle}><summary>{t.mine}</summary><div className="academy-menu"><button onClick={()=>go('personal')}>{t.personal}</button><button onClick={()=>{go('personal');setPersonalMode('courses');window.history.replaceState({...window.history.state,academyPersonalMode:'courses'},'',window.location.href)}}>{({fa:'دوره‌های من',en:'My courses',sv:'Mina kurser',de:'Meine Kurse'})[locale]}</button><button onClick={()=>{go('personal');setPersonalMode('profile');window.history.replaceState({...window.history.state,academyPersonalMode:'profile'},'',window.location.href)}}>{({fa:'پروفایل',en:'Profile',sv:'Profil',de:'Profil'})[locale]}</button>{isAdmin&&<button onClick={()=>go('admin')}>{t.admin}</button>}{userId&&<button onClick={()=>{closeMenus();void supabase().auth.signOut()}}>{t.logout}</button>}</div></details>
-    <button onClick={()=>{closeMenus();setMobileMenuOpen(false);navigateProduct('/',{directApp:true})}}>{t.app}</button>
-    <details onToggle={onMenuToggle}><summary>{t.about}</summary><div className="academy-menu"><button onClick={()=>go('about')}>{t.how}</button><button onClick={()=>go('pricing')}>{t.pricing}</button><button onClick={()=>go('resources')}>{t.resources}</button><button onClick={()=>go('contact')}>{t.contact}</button></div></details>
-    <button type="button" aria-expanded={settingsOpen} onClick={()=>{closeMenus();setMobileMenuOpen(false);if(settingsOpen){window.history.back()}else{window.history.pushState({...window.history.state,academySettings:true},'',window.location.href);setSettingsOpen(true)}}}>{locale==='fa'?'تنظیمات':locale==='sv'?'Inställningar':locale==='de'?'Einstellungen':'Settings'} ⚙</button>
-   </nav>
-  </header>
-  <nav className="academy-bottom-nav" aria-label={locale==='fa'?'ناوبری آکادمی':locale==='sv'?'Akademinavigering':locale==='de'?'Academy-Navigation':'Academy navigation'}>
-   <button type="button" aria-current={page==='home'?'page':undefined} onClick={()=>go('home')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>{t.home}</span></button>
-   <button type="button" aria-current={page==='personal'&&personalMode==='courses'?'page':undefined} onClick={()=>{go('personal');setPersonalMode('courses');window.history.replaceState({...window.history.state,academyPersonalMode:'courses'},'',window.location.href)}}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14"/></svg><span>{({fa:'دوره‌های من',en:'My courses',sv:'Mina kurser',de:'Meine Kurse'})[locale]}</span></button>
-   <button type="button" aria-current={page==='personal'&&personalMode==='full'?'page':undefined} onClick={()=>go('personal')}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7 12 3l8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4"/></svg><span>{t.mine}</span></button>
-   <button type="button" aria-current={page==='personal'&&personalMode==='profile'?'page':undefined} onClick={()=>{go('personal');setPersonalMode('profile');window.history.replaceState({...window.history.state,academyPersonalMode:'profile'},'',window.location.href)}}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-7 8-7s8 2 8 7"/></svg><span>{({fa:'پروفایل',en:'Profile',sv:'Profil',de:'Profil'})[locale]}</span></button><button type="button" aria-expanded={settingsOpen} onClick={()=>{closeMenus();setMobileMenuOpen(false);if(!settingsOpen){window.history.pushState({...window.history.state,academySettings:true},'',window.location.href);setSettingsOpen(true)}else window.history.back()}}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg><span>{({fa:'تنظیمات',en:'Settings',sv:'Inställningar',de:'Einstellungen'})[locale]}</span></button>
-  </nav>
-  {settingsOpen&&<section className="academy-settings-panel" aria-label="Academy settings"><div className="editor-head"><h2>{workspaceLabel(locale,"تنظیمات","Settings")}</h2><button aria-label="Close settings" onClick={()=>window.history.back()}>×</button></div><AcademyField locale={locale}><label>{t.language}<select className="academy-language" value={locale} onChange={e=>void setLocale(e.target.value as Locale)}><option value="en">English</option><option value="sv">Svenska</option><option value="de">Deutsch</option><option value="fa">فارسی</option></select></label></AcademyField><AcademyField locale={locale}><label>{workspaceLabel(locale,"ظاهر","Appearance")}<select value={theme} onChange={e=>void setTheme(e.target.value as AcademyTheme)}><option value="light">{themeLabels[locale].light}</option><option value="dark">{themeLabels[locale].dark}</option></select></label></AcademyField>{isAdmin&&<button type="button" onClick={()=>{setSettingsOpen(false);go('admin')}}>{t.admin}</button>}<p>{userId?(workspaceLabel(locale,"انتخاب شما در حساب ذخیره می‌شود.","Your choice is saved to your account.")):(workspaceLabel(locale,"برای همگام‌سازی بین دستگاه‌ها وارد حساب شوید.","Sign in to sync this choice across devices."))}</p>{preferenceError&&<p role="alert">{preferenceError}</p>}</section>}
-  <a className="academy-skip-link" href="#academy-main">{({fa:"رفتن به محتوای اصلی",en:"Skip to main content",sv:"Gå till huvudinnehåll",de:"Zum Hauptinhalt"})[locale]}</a>
-  <main id="academy-main">
-   {notice&&<div className={"academy-notice "+(successNotice?"academy-action-feedback":"")} style={successNotice&&actionPoint.current?{position:"fixed",left:actionPoint.current.x,top:actionPoint.current.y,zIndex:150}:undefined} role="status" aria-live="polite">{notice}{!successNotice&&<button type="button" onClick={()=>setNotice('')} aria-label="Dismiss">×</button>}</div>}
-   {page==='home'&&<><section className="academy-home-quick" aria-label={t.home}><button className="academy-primary" type="button" onClick={()=>navigateProduct('/',{directApp:true})}>{t.app}</button><div className="academy-home-quick-row"><button type="button" onClick={()=>go('courses')}>{t.courses}</button><button type="button" onClick={()=>go('teachers')}>{t.teachers}</button></div><label>{t.language}<select value={locale} onChange={e=>void setLocale(e.target.value as Locale)}><option value="en">English</option><option value="sv">Svenska</option><option value="de">Deutsch</option><option value="fa">فارسی</option></select></label></section>{userId&&<section className="academy-section"><AcademyPortal locale={locale} userId={userId} courses={courses} teachers={teachers} selfTeacher={undefined} teacherCourseIds={[]} isAdmin={false} onNotice={setNotice} presentation="summary" onBrowse={()=>go('courses')} onOpenSpace={id=>{setFocusSpace(id);setSpaceView('student');go('personal')}}/></section>}<section className="academy-hero" id="academy-home"><div><p className="academy-kicker">{t.heroK}</p><h1>{t.heroT}</h1><p>{t.heroB}</p><div className="academy-actions"><button className="academy-primary" onClick={()=>go('courses')}>{t.browse}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('path')}>{t.path}</button></div></div><div className="academy-hero-card"><span>A1</span><span>A2</span><span>B1</span><strong>{t.studentTeacher}</strong><small>{t.courseLine}</small></div></section><section className="academy-section academy-discover" aria-labelledby="academy-discover-title"><div className="academy-section-head academy-discover-head"><div><p>{t.learn}</p><h2 id="academy-discover-title">{t.available}</h2></div><button type="button" onClick={()=>go('courses')}>{t.browse}</button></div>{loading?<p>{t.loading}</p>:courses.filter(course=>course.status==='active').length===0?<div className="academy-empty">{({fa:'هنوز دوره‌ای منتشر نشده است.',en:'No courses are published yet.',sv:'Inga kurser är publicerade ännu.',de:'Noch sind keine Kurse veröffentlicht.'})[locale]}</div>:<div className="academy-grid">{courses.filter(course=>course.status==='active').slice(0,3).map(course=><article className="academy-card academy-discover-card" key={course.id}><div className="academy-card-top"><span className="academy-badge">{languageLabel(course.subject_code)}</span><span>{course.level_code}</span></div><h3><a href={'/academy/courses/'+course.id} onClick={e=>{e.preventDefault();navigateProduct('/academy/courses/'+course.id)}}>{text(course.title_i18n)}</a></h3><p>{text(course.description_i18n)}</p><small>{course.price_sek==null?t.contact:String(course.price_sek)+' SEK'} · {course.duration_minutes} min</small></article>)}</div>}</section><section className="academy-section academy-discover" aria-labelledby="academy-teachers-title"><div className="academy-section-head academy-discover-head"><div><p>{t.teachers}</p><h2 id="academy-teachers-title">{t.directory}</h2></div><button type="button" onClick={()=>go('teachers')}>{t.teachers}</button></div>{loading?<p>{t.loading}</p>:teachers.filter(teacher=>teacher.status==='active').length===0?<div className="academy-empty">{t.noneTeachers}</div>:<div className="academy-grid">{teachers.filter(teacher=>teacher.status==='active').slice(0,3).map(teacher=><article className="academy-card academy-discover-card" key={teacher.id}><div className="teacher-head">{teacher.photo_url?<img src={teacher.photo_url} loading="lazy" decoding="async" alt=""/>:<div className="teacher-placeholder" aria-hidden="true">{localizedName(teacher,locale).slice(0,1)}</div>}<div><h3><a href={'/academy/teachers/'+teacher.id} onClick={e=>{e.preventDefault();navigateProduct('/academy/teachers/'+teacher.id)}}>{localizedName(teacher,locale)}</a></h3><p>{text(teacher.intro_i18n)}</p></div></div></article>)}</div>}</section><section className="academy-section academy-feature-overview"><div className="academy-section-head"><h2>{locale==='fa'?'درس با استاد، تمرین با اپ':locale==='sv'?'Lektioner med lärare, övning i appen':locale==='de'?'Mit Lehrkraft lernen, in der App üben':'Lessons with a teacher. Practice with the App.'}</h2><span>{workspaceLabel(locale,"یک حساب؛ کلاس و تمرین در کنار هم.","One account connects your classroom and independent practice.")}</span></div><div className="academy-grid">{(locale==='fa'?[['کلاس و برنامه','دوره، استاد و زمان مناسب را انتخاب کن.'],['فضای یادگیری','هدف، پیشرفت، جلسه‌ها و جمع‌بندی استاد را کنار هم ببین.'],['تکلیف و بازخورد','تکلیف بگیر، پاسخ بده و بازخورد استاد را بخوان.'],['یادداشت و پیام','یادداشت خصوصی یا مشترک و پیام داخل کلاس داشته باش.'],['تمرین با اپ','لغت، گرامر و مرور را در اپ ادامه بده؛ فقط مطالب انتخابی‌ات را به اشتراک بگذار.'],['نتایج و تاریخچه','نتیجه‌های ثبت‌شدهٔ آزمون و سابقهٔ یادگیری را مرور کن.']]:locale==='sv'?[["Kurser och schema","Välj kurs, lärare och lektionstid."],["Din lärmiljö","Se mål, framsteg och sammanfattningar."],["Läxor och feedback","Lämna in uppgifter och få återkoppling."],["Anteckningar och meddelanden","Skriv privata eller delade anteckningar."],["Öva i appen","Träna ord, grammatik och repetition."],["Resultat och historik","Se provresultat och tidigare lektioner."]]:locale==='de'?[["Kurse und Termine","Wählen Sie Kurs, Lehrkraft und Termin."],["Ihr Lernraum","Ziele, Fortschritt und Zusammenfassungen im Blick."],["Aufgaben und Feedback","Reichen Sie Aufgaben ein und erhalten Sie Feedback."],["Notizen und Nachrichten","Verwalten Sie private und geteilte Notizen."],["In der App üben","Üben Sie Wortschatz und Grammatik."],["Ergebnisse und Verlauf","Sehen Sie Testergebnisse und frühere Stunden."]]:[['Courses & scheduling','Choose your course, teacher and lesson time.'],['Your Learning Space','Goals, progress, sessions and teacher summaries together.'],['Homework & feedback','Submit your work and receive personal teacher feedback.'],['Notes & messages','Keep private notes or share selected notes in your classroom.'],['Practice with the App','Build vocabulary, organize grammar and review; share only what you choose.'],['Results & history','Review teacher-recorded test results and your learning history.']]).map(([title,body])=><article className="academy-card" key={title}><h3>{title}</h3><p>{body}</p></article>)}</div><p className="academy-help">{workspaceLabel(locale,"جلسه‌ها با لینک استاد برگزار می‌شوند. پرداخت آنلاین و ساخت خودکار جلسه هنوز فعال نیست.","Lessons use the teacher’s meeting link. Online payments and automatic meeting creation are not available yet.")}</p></section></>}
-   {page==='path'&&<><section className="academy-section academy-path" id="learning-path"><div className="academy-section-head"><p>{t.path}</p><h2>{t.path}</h2><span>{t.pathB}</span></div><div className="academy-path-controls"><AcademyField locale={locale}><label>{t.language}<select value={subject} onChange={e=>setSubject(e.target.value)}>{(languageOptions.length?languageOptions.map(x=>x.code):['sv','en','de','fa']).map(x=><option key={x} value={x}>{languageLabel(x)}</option>)}</select></label></AcademyField><AcademyField locale={locale}><label>{t.current}<select value={level} onChange={e=>setLevel(e.target.value)}>{['A1','A2','B1','B2','C1','C2'].map(x=><option key={x}>{x}</option>)}</select></label></AcademyField></div>{recommendation&&<article className="academy-recommend"><div><span className="academy-badge">{t.recommended}</span><h3>{text(recommendation.title_i18n)}</h3><p>{text(recommendation.description_i18n)}</p></div><button className="academy-primary" onClick={()=>addInterest(recommendation)}>{studentCourseIds.has(recommendation.id)?t.added:t.interest}</button></article>}</section></>}
-   {(page==='posts'||page==='postDetail')&&<AcademyPosts key={window.location.pathname+locale} locale={locale} id={page==='postDetail'?window.location.pathname.split('/').filter(Boolean).pop():undefined}/>}
-   {(page==='courseDetail'||page==='teacherDetail')&&<AcademyPublicDetail key={window.location.pathname} locale={locale} kind={page} id={window.location.pathname.split('/').filter(Boolean).pop()??''} courses={activeCourses} teachers={activeTeachers.filter(x=>x.status==='active')} links={teacherCourses} loading={loading} onBook={(teacherId,courseId)=>openDialog({type:'booking',teacherId,courseId})}/> }
-   {page==='courses'&&<><section className="academy-section" id="courses"><div className="academy-section-head"><p>{t.learn}</p><h2>{t.available}</h2></div><AcademyField locale={locale}><label className="academy-search">{workspaceLabel(locale,'جستجوی دوره','Search courses')}<input type="search" value={catalogSearch} onChange={e=>setCatalogSearch(e.target.value)}/></label></AcademyField>{loading?<p>{t.loading}</p>:<div className="academy-grid academy-scroll-list">{activeCourses.filter(course=>[text(course.title_i18n),text(course.description_i18n),course.level_code,languageLabel(course.subject_code)].join(' ').toLocaleLowerCase().includes(catalogSearch.toLocaleLowerCase())).map(course=><article className="academy-card" key={course.id}><div className="academy-card-top"><span className="academy-badge">{languageLabel(course.subject_code)}</span><span>{course.level_code}</span></div><h3><a href={"/academy/courses/"+course.id} onClick={e=>{e.preventDefault();navigateProduct("/academy/courses/"+course.id)}}>{text(course.title_i18n)}</a></h3><AcademyShare locale={locale} title={text(course.title_i18n)} description={text(course.description_i18n)} path={"/academy/courses/"+course.id}/><p>{text(course.description_i18n)}</p><h4>{t.topics}</h4><ul>{list(course.topics_i18n).slice(0,6).map(topic=><li key={topic}>{topic}</li>)}</ul><h4>{t.formats}</h4><div className="academy-tags">{course.delivery_modes.map(m=><span key={m}>{mode(m)}</span>)}</div><div className="academy-price">{course.price_sek==null?t.contact:String(course.price_sek)+' SEK'} · {course.duration_minutes} min</div><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>addInterest(course)}>{studentCourseIds.has(course.id)?t.added:t.interest}</button>{course.telegram_url&&<a className="small-link" href={course.telegram_url} target="_blank" rel="noreferrer">{t.telegram}</a>}{isAdmin&&<button className="small-link" onClick={()=>editCourse(course)}>{t.edit}</button>}</div></article>)}</div>}</section></>}
-   {page==='teachers'&&<><section className="academy-section" id="teachers"><div className="academy-section-head"><p>{t.teachers}</p><h2>{t.directory}</h2></div><AcademyField locale={locale}><label className="academy-search">{workspaceLabel(locale,'جستجوی استاد','Search teachers')}<input type="search" value={teacherSearch} onChange={e=>setTeacherSearch(e.target.value)}/></label></AcademyField>{activeTeachers.filter(x=>x.status==='active'||isAdmin).length===0?<div className="academy-empty">{t.noneTeachers}</div>:<div className="academy-grid academy-scroll-list">{activeTeachers.filter(x=>(x.status==='active'||isAdmin)&&[localizedName(x,locale),text(x.intro_i18n),...x.teaching_languages,...x.levels].join(' ').toLocaleLowerCase().includes(teacherSearch.toLocaleLowerCase())).map(x=><article className="academy-card" key={x.id}><div className="teacher-head">{x.photo_url?<img src={x.photo_url} loading="lazy" decoding="async" alt={localizedName(x,locale)}/> :<div className="teacher-placeholder">{localizedName(x,locale).slice(0,1)}</div>}<div><h3><a href={"/academy/teachers/"+x.id} onClick={e=>{e.preventDefault();navigateProduct("/academy/teachers/"+x.id)}}>{localizedName(x,locale)}</a></h3><AcademyShare locale={locale} title={localizedName(x,locale)} description={text(x.intro_i18n)} path={"/academy/teachers/"+x.id}/><p>{text(x.intro_i18n)}</p>{!x.intro_i18n[locale]&&text(x.intro_i18n)&&<small>{({fa:"معرفی به زبان دیگری ارائه شده است.",en:"Introduction shown in another language.",sv:"Presentationen visas på ett annat språk.",de:"Die Vorstellung wird in einer anderen Sprache angezeigt."})[locale]}</small>}</div></div><div className="academy-tags">{x.teaching_languages.map(y=><span key={y}>{languageLabel(y)}</span>)}{x.levels.map(y=><span key={y}>{y}</span>)}</div><details className="teacher-courses"><summary>{workspaceLabel(locale,"دوره‌های این استاد","Courses taught")}</summary>{teacherCourses.filter(tc=>tc.teacher_id===x.id).map(tc=>{const c=courses.find(course=>course.id===tc.course_id);return c?<button type="button" key={tc.course_id} onClick={()=>{navigateProduct('/academy/courses/'+c.id+'?teacher='+x.id)}}>{text(c.title_i18n)}</button>:null})}</details><div className="teacher-contact">{x.email&&<a href={'mailto:'+x.email}>{t.email}</a>}{x.phone&&<a href={'tel:'+x.phone}>{t.phone}</a>}{x.teams_chat_url&&<a href={x.teams_chat_url} target="_blank" rel="noreferrer">{t.teamsChat}</a>}{x.teams_call_url&&<a href={x.teams_call_url} target="_blank" rel="noreferrer">{t.teamsCall}</a>}{x.telegram_url&&<a href={x.telegram_url} target="_blank" rel="noreferrer">{t.telegram}</a>}</div><div className="academy-card-actions">{x.status==='active'&&<button className="academy-primary small" onClick={()=>openDialog({type:'booking',teacherId:x.id})}>{t.requestTrial}</button>}{isAdmin&&<button className="small-link" onClick={()=>editTeacher(x)}>{t.edit}</button>}</div></article>)}</div>}</section></>}
-   {page==='about'&&<><section className="academy-section" id="how"><div className="academy-section-head"><p>{t.about}</p><h2>{t.howTitle}</h2><p>{t.heroB}</p><AcademyShare locale={locale} title="Lingo3 Academy" description={t.heroB} path="/academy/about"/><div className="academy-card-actions"><button onClick={()=>go('courses')}>{t.courses}</button><button onClick={()=>go('teachers')}>{t.teachers}</button><button onClick={()=>go('posts')}>{locale==='fa'?'مطالب آموزشی':locale==='sv'?'Lärartiklar':locale==='de'?'Lernartikel':'Learning articles'}</button></div></div><div className="academy-steps">{[[t.choose,t.chooseB],[t.book,t.bookB],[t.learnV,t.learnB],[t.track,t.trackB]].map(([a,b],i)=><article key={a}><span>{i+1}</span><h3>{a}</h3><p>{b}</p></article>)}</div></section></>}
-   {page==='pricing'&&<><section className="academy-section split" id="pricing"><div><p className="academy-kicker">{t.about}</p><h2>{t.pricingTitle}</h2><p>{t.pricingB}</p></div><div className="academy-mini-list">{activeCourses.slice(0,8).map(x=><div key={x.id}><button type="button" className="academy-text-link" onClick={()=>navigateProduct('/academy/courses/'+x.id)}>{text(x.title_i18n)}</button>{x.price_sek==null?<button type="button" className="academy-text-link" onClick={()=>go('contact')}>{t.contact}</button>:<b>{String(x.price_sek)+' SEK'}</b>}</div>)}</div></section></>}
-   {page==='personal'&&<><section className="academy-section" id="personal-space">
-    <div className="academy-section-head"><p>{t.mine}</p><h2>{t.personalTitle}</h2></div>
-    {userId&&personalMode==='profile'&&<section className="academy-card"><h3>{({fa:'پروفایل',en:'Profile',sv:'Profil',de:'Profil'})[locale]}</h3><p>{displayName||email}</p><p>{email}</p><button type="button" onClick={()=>setPersonalMode('full')}>{t.personal}</button><button type="button" onClick={()=>void supabase().auth.signOut()}>{t.logout}</button></section>}
-    {isAdmin&&personalMode==='full'&&<div className="academy-card-actions academy-space-switch" role="group" aria-label={t.mine}>
-      <button type="button" aria-pressed={spaceView==='student'} onClick={()=>{setFocusSpace('');setSpaceView('student')}}>{workspaceLabel(locale,"فضای دانشجو","Student Space")}</button>
-      <button type="button" aria-pressed={spaceView==='teacher'} onClick={()=>setSpaceView('teacher')}>{workspaceLabel(locale,"فضای استاد","Teacher Space")}</button>
-    </div>}
-    {!userId
-      ? <div className="academy-empty"><p>{t.signin}</p><button className="academy-primary" onClick={()=>openDialog({type:'login'})}>{t.login}</button></div>
-      : personalMode==='profile'?null:<AcademyPortal
-          key={userId+focusSpace+spaceView+String(isAdmin)+personalMode}
-          presentation={personalMode==='courses'?'courses':'full'}
-          onBrowse={()=>go('courses')}
-          onOpenSpace={id=>{setFocusSpace(id);setPersonalMode('full');setSpaceView('student');window.history.replaceState({...window.history.state,academyPersonalMode:'full'},'',window.location.href)}}
-          view={spaceView}
-          initialSpaceId={focusSpace}
+  async function permanentlyDeleteTeacher() {
+    if (!isAdmin || savingTeacher || !teacherForm.id || teacherForm.status !== 'archived') return
+    const item = teachers.find(x => x.id === teacherForm.id)
+    if (!item) return
+    const expected = item.display_name
+    const promptMessage =
+      locale === 'fa'
+        ? 'حذف دائمی غیرقابل بازگشت است. نام استاد را برای تأیید بنویسید. سوابق کلاس و رزرو مانع حذف هستند.'
+        : 'Permanent deletion cannot be undone. Type the exact teacher name. Dependent classes and bookings block deletion.'
+    setSavingTeacher(true)
+    try {
+      const { count, error: bookingError } = await supabase()
+        .from('academy_bookings')
+        .select('id', { count: 'exact', head: true })
+        .eq('teacher_id', item.id)
+      if (bookingError) throw bookingError
+      if ((count || 0) > 0) {
+        setNotice(teacherBookingBlock(count || 0, locale))
+        return
+      }
+      const answer = await askText(promptMessage, { expected })
+      if (answer !== expected) return
+      const { data, error } = await supabase()
+        .from('academy_teachers')
+        .delete()
+        .eq('id', item.id)
+        .select('id')
+        .maybeSingle()
+      if (error) throw error
+      if (!data) throw new Error('Profile was not deleted. Check administrator permission.')
+      setTeacherEditorOpen(false)
+      setTeacherForm(blankTeacher)
+      setTeacherAssigned([])
+      await refresh()
+      setNotice(locale === 'fa' ? 'پروفایل استاد برای همیشه حذف شد.' : 'Teacher profile permanently deleted.')
+    } catch (error) {
+      setNotice(teacherDeletionError(error, locale))
+    } finally {
+      setSavingTeacher(false)
+    }
+  }
+  return (
+    <div
+      className="academy"
+      dir={dir}
+      data-theme={theme}
+      data-page={page}
+      onClickCapture={e => {
+        const target = (e.target as HTMLElement).closest('button')
+        if (target) {
+          const rect = target.getBoundingClientRect()
+          actionPoint.current = {
+            x: Math.min(window.innerWidth - 150, Math.max(8, rect.left)),
+            y: Math.max(8, rect.top - 44)
+          }
+        }
+      }}
+    >
+      <AcademyDialogHost locale={locale} />
+      <header className={'academy-top ' + (compact ? 'is-compact' : '')}>
+        <div className="academy-brand-group">
+          <button
+            className="academy-brand"
+            type="button"
+            onClick={() => {
+              closeMenus()
+              setMobileMenuOpen(false)
+              go('home')
+            }}
+          >
+            Lingo3 <span>Academy</span>
+          </button>
+          {userId ? (
+            <button className="academy-user" onClick={() => go('personal')}>
+              {t.hello} {displayName || email}
+            </button>
+          ) : (
+            <button className="academy-login" onClick={() => openDialog({ type: 'login' })}>
+              {t.login}
+            </button>
+          )}
+        </div>
+        <button
+          className="academy-mobile-toggle"
+          type="button"
+          aria-label="Menu"
+          aria-controls="academy-navigation"
+          aria-expanded={mobileMenuOpen}
+          onClick={() => {
+            closeMenus()
+            setMobileMenuOpen(v => !v)
+          }}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav
+          id="academy-navigation"
+          className={'academy-nav ' + (mobileMenuOpen ? 'is-open' : '')}
+          ref={navRef}
+        >
+          <button onClick={() => go('home')}>{t.home}</button>
+          <button onClick={() => go('courses')}>{t.courses}</button>
+          <button onClick={() => go('teachers')}>{t.teachers}</button>
+          <details onToggle={onMenuToggle}>
+            <summary>{t.learn}</summary>
+            <div className="academy-menu">
+              <button onClick={() => go('path')}>{t.path}</button>
+              <button onClick={() => go('posts')}>
+                {locale === 'fa'
+                  ? 'مطالب آموزشی'
+                  : locale === 'sv'
+                    ? 'Lärartiklar'
+                    : locale === 'de'
+                      ? 'Lernartikel'
+                      : 'Learning articles'}
+              </button>
+            </div>
+          </details>
+          <details className="academy-my-menu" onToggle={onMenuToggle}>
+            <summary>{t.mine}</summary>
+            <div className="academy-menu">
+              <button onClick={() => go('personal')}>{t.personal}</button>
+              <button
+                onClick={() => {
+                  go('personal')
+                  setPersonalMode('courses')
+                  window.history.replaceState(
+                    { ...window.history.state, academyPersonalMode: 'courses' },
+                    '',
+                    window.location.href
+                  )
+                }}
+              >
+                {{ fa: 'دوره‌های من', en: 'My courses', sv: 'Mina kurser', de: 'Meine Kurse' }[locale]}
+              </button>
+              <button
+                onClick={() => {
+                  go('personal')
+                  setPersonalMode('profile')
+                  window.history.replaceState(
+                    { ...window.history.state, academyPersonalMode: 'profile' },
+                    '',
+                    window.location.href
+                  )
+                }}
+              >
+                {{ fa: 'پروفایل', en: 'Profile', sv: 'Profil', de: 'Profil' }[locale]}
+              </button>
+              {isAdmin && <button onClick={() => go('admin')}>{t.admin}</button>}
+              {userId && (
+                <button
+                  onClick={() => {
+                    closeMenus()
+                    void supabase().auth.signOut()
+                  }}
+                >
+                  {t.logout}
+                </button>
+              )}
+            </div>
+          </details>
+          <button
+            onClick={() => {
+              closeMenus()
+              setMobileMenuOpen(false)
+              navigateProduct('/', { directApp: true })
+            }}
+          >
+            {t.app}
+          </button>
+          <details onToggle={onMenuToggle}>
+            <summary>{t.about}</summary>
+            <div className="academy-menu">
+              <button onClick={() => go('about')}>{t.how}</button>
+              <button onClick={() => go('pricing')}>{t.pricing}</button>
+              <button onClick={() => go('resources')}>{t.resources}</button>
+              <button onClick={() => go('contact')}>{t.contact}</button>
+            </div>
+          </details>
+          <button
+            type="button"
+            aria-expanded={settingsOpen}
+            onClick={() => {
+              closeMenus()
+              setMobileMenuOpen(false)
+              if (settingsOpen) {
+                window.history.back()
+              } else {
+                window.history.pushState(
+                  { ...window.history.state, academySettings: true },
+                  '',
+                  window.location.href
+                )
+                setSettingsOpen(true)
+              }
+            }}
+          >
+            {locale === 'fa'
+              ? 'تنظیمات'
+              : locale === 'sv'
+                ? 'Inställningar'
+                : locale === 'de'
+                  ? 'Einstellungen'
+                  : 'Settings'}{' '}
+            ⚙
+          </button>
+        </nav>
+      </header>
+      <nav
+        className="academy-bottom-nav"
+        aria-label={
+          locale === 'fa'
+            ? 'ناوبری آکادمی'
+            : locale === 'sv'
+              ? 'Akademinavigering'
+              : locale === 'de'
+                ? 'Academy-Navigation'
+                : 'Academy navigation'
+        }
+      >
+        <button type="button" aria-current={page === 'home' ? 'page' : undefined} onClick={() => go('home')}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7" />
+          </svg>
+          <span>{t.home}</span>
+        </button>
+        <button
+          type="button"
+          aria-current={page === 'personal' && personalMode === 'courses' ? 'page' : undefined}
+          onClick={() => {
+            go('personal')
+            setPersonalMode('courses')
+            window.history.replaceState(
+              { ...window.history.state, academyPersonalMode: 'courses' },
+              '',
+              window.location.href
+            )
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14" />
+          </svg>
+          <span>{{ fa: 'دوره‌های من', en: 'My courses', sv: 'Mina kurser', de: 'Meine Kurse' }[locale]}</span>
+        </button>
+        <button
+          type="button"
+          aria-current={page === 'personal' && personalMode === 'full' ? 'page' : undefined}
+          onClick={() => go('personal')}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7 12 3l8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4" />
+          </svg>
+          <span>{t.mine}</span>
+        </button>
+        <button
+          type="button"
+          aria-current={page === 'personal' && personalMode === 'profile' ? 'page' : undefined}
+          onClick={() => {
+            go('personal')
+            setPersonalMode('profile')
+            window.history.replaceState(
+              { ...window.history.state, academyPersonalMode: 'profile' },
+              '',
+              window.location.href
+            )
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-5 3-7 8-7s8 2 8 7" />
+          </svg>
+          <span>{{ fa: 'پروفایل', en: 'Profile', sv: 'Profil', de: 'Profil' }[locale]}</span>
+        </button>
+        <button
+          type="button"
+          aria-expanded={settingsOpen}
+          onClick={() => {
+            closeMenus()
+            setMobileMenuOpen(false)
+            if (!settingsOpen) {
+              window.history.pushState(
+                { ...window.history.state, academySettings: true },
+                '',
+                window.location.href
+              )
+              setSettingsOpen(true)
+            } else window.history.back()
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" />
+          </svg>
+          <span>{{ fa: 'تنظیمات', en: 'Settings', sv: 'Inställningar', de: 'Einstellungen' }[locale]}</span>
+        </button>
+      </nav>
+      {settingsOpen && (
+        <section className="academy-settings-panel" aria-label="Academy settings">
+          <div className="editor-head">
+            <h2>{workspaceLabel(locale, 'تنظیمات', 'Settings')}</h2>
+            <button aria-label="Close settings" onClick={() => window.history.back()}>
+              ×
+            </button>
+          </div>
+          <AcademyField locale={locale}>
+            <label>
+              {t.language}
+              <select
+                className="academy-language"
+                value={locale}
+                onChange={e => void setLocale(e.target.value as Locale)}
+              >
+                <option value="en">English</option>
+                <option value="sv">Svenska</option>
+                <option value="de">Deutsch</option>
+                <option value="fa">فارسی</option>
+              </select>
+            </label>
+          </AcademyField>
+          <AcademyField locale={locale}>
+            <label>
+              {workspaceLabel(locale, 'ظاهر', 'Appearance')}
+              <select value={theme} onChange={e => void setTheme(e.target.value as AcademyTheme)}>
+                <option value="light">{themeLabels[locale].light}</option>
+                <option value="dark">{themeLabels[locale].dark}</option>
+              </select>
+            </label>
+          </AcademyField>
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => {
+                setSettingsOpen(false)
+                go('admin')
+              }}
+            >
+              {t.admin}
+            </button>
+          )}
+          <p>
+            {userId
+              ? workspaceLabel(
+                  locale,
+                  'انتخاب شما در حساب ذخیره می‌شود.',
+                  'Your choice is saved to your account.'
+                )
+              : workspaceLabel(
+                  locale,
+                  'برای همگام‌سازی بین دستگاه‌ها وارد حساب شوید.',
+                  'Sign in to sync this choice across devices.'
+                )}
+          </p>
+          {preferenceError && <p role="alert">{preferenceError}</p>}
+        </section>
+      )}
+      <a className="academy-skip-link" href="#academy-main">
+        {
+          {
+            fa: 'رفتن به محتوای اصلی',
+            en: 'Skip to main content',
+            sv: 'Gå till huvudinnehåll',
+            de: 'Zum Hauptinhalt'
+          }[locale]
+        }
+      </a>
+      <main id="academy-main">
+        {notice && (
+          <div
+            className={'academy-notice ' + (successNotice ? 'academy-action-feedback' : '')}
+            style={
+              successNotice && actionPoint.current
+                ? { position: 'fixed', left: actionPoint.current.x, top: actionPoint.current.y, zIndex: 150 }
+                : undefined
+            }
+            role="status"
+            aria-live="polite"
+          >
+            {notice}
+            {!successNotice && (
+              <button type="button" onClick={() => setNotice('')} aria-label="Dismiss">
+                ×
+              </button>
+            )}
+          </div>
+        )}
+        {page === 'home' && (
+          <>
+            <section className="academy-home-quick" aria-label={t.home}>
+              <button
+                className="academy-primary"
+                type="button"
+                onClick={() => navigateProduct('/', { directApp: true })}
+              >
+                {t.app}
+              </button>
+              <div className="academy-home-quick-row">
+                <button type="button" onClick={() => go('courses')}>
+                  {t.courses}
+                </button>
+                <button type="button" onClick={() => go('teachers')}>
+                  {t.teachers}
+                </button>
+              </div>
+              <label>
+                {t.language}
+                <select value={locale} onChange={e => void setLocale(e.target.value as Locale)}>
+                  <option value="en">English</option>
+                  <option value="sv">Svenska</option>
+                  <option value="de">Deutsch</option>
+                  <option value="fa">فارسی</option>
+                </select>
+              </label>
+            </section>
+            {userId && (
+              <section className="academy-section">
+                <AcademyPortal
+                  locale={locale}
+                  userId={userId}
+                  courses={courses}
+                  teachers={teachers}
+                  selfTeacher={undefined}
+                  teacherCourseIds={[]}
+                  isAdmin={false}
+                  onNotice={setNotice}
+                  presentation="summary"
+                  onBrowse={() => go('courses')}
+                  onOpenSpace={id => {
+                    setFocusSpace(id)
+                    setSpaceView('student')
+                    go('personal')
+                  }}
+                />
+              </section>
+            )}
+            <section className="academy-hero" id="academy-home">
+              <div>
+                <p className="academy-kicker">{t.heroK}</p>
+                <h1>{t.heroT}</h1>
+                <p>{t.heroB}</p>
+                <div className="academy-actions">
+                  <button className="academy-primary" onClick={() => go('courses')}>
+                    {t.browse}
+                  </button>
+                  <button onClick={() => go('teachers')}>{t.teachers}</button>
+                  <button onClick={() => go('path')}>{t.path}</button>
+                </div>
+              </div>
+              <div className="academy-hero-card">
+                <span>A1</span>
+                <span>A2</span>
+                <span>B1</span>
+                <strong>{t.studentTeacher}</strong>
+                <small>{t.courseLine}</small>
+              </div>
+            </section>
+            <section className="academy-section academy-discover" aria-labelledby="academy-discover-title">
+              <div className="academy-section-head academy-discover-head">
+                <div>
+                  <p>{t.learn}</p>
+                  <h2 id="academy-discover-title">{t.available}</h2>
+                </div>
+                <button type="button" onClick={() => go('courses')}>
+                  {t.browse}
+                </button>
+              </div>
+              {loading ? (
+                <p>{t.loading}</p>
+              ) : courses.filter(course => course.status === 'active').length === 0 ? (
+                <div className="academy-empty">
+                  {
+                    {
+                      fa: 'هنوز دوره‌ای منتشر نشده است.',
+                      en: 'No courses are published yet.',
+                      sv: 'Inga kurser är publicerade ännu.',
+                      de: 'Noch sind keine Kurse veröffentlicht.'
+                    }[locale]
+                  }
+                </div>
+              ) : (
+                <div className="academy-grid">
+                  {courses
+                    .filter(course => course.status === 'active')
+                    .slice(0, 3)
+                    .map(course => (
+                      <article className="academy-card academy-discover-card" key={course.id}>
+                        <div className="academy-card-top">
+                          <span className="academy-badge">{languageLabel(course.subject_code)}</span>
+                          <span>{course.level_code}</span>
+                        </div>
+                        <h3>
+                          <a
+                            href={'/academy/courses/' + course.id}
+                            onClick={e => {
+                              e.preventDefault()
+                              navigateProduct('/academy/courses/' + course.id)
+                            }}
+                          >
+                            {text(course.title_i18n)}
+                          </a>
+                        </h3>
+                        <p>{text(course.description_i18n)}</p>
+                        <small>
+                          {course.price_sek == null ? t.contact : String(course.price_sek) + ' SEK'} ·{' '}
+                          {course.duration_minutes} min
+                        </small>
+                      </article>
+                    ))}
+                </div>
+              )}
+            </section>
+            <section className="academy-section academy-discover" aria-labelledby="academy-teachers-title">
+              <div className="academy-section-head academy-discover-head">
+                <div>
+                  <p>{t.teachers}</p>
+                  <h2 id="academy-teachers-title">{t.directory}</h2>
+                </div>
+                <button type="button" onClick={() => go('teachers')}>
+                  {t.teachers}
+                </button>
+              </div>
+              {loading ? (
+                <p>{t.loading}</p>
+              ) : teachers.filter(teacher => teacher.status === 'active').length === 0 ? (
+                <div className="academy-empty">{t.noneTeachers}</div>
+              ) : (
+                <div className="academy-grid">
+                  {teachers
+                    .filter(teacher => teacher.status === 'active')
+                    .slice(0, 3)
+                    .map(teacher => (
+                      <article className="academy-card academy-discover-card" key={teacher.id}>
+                        <div className="teacher-head">
+                          {teacher.photo_url ? (
+                            <img src={teacher.photo_url} loading="lazy" decoding="async" alt="" />
+                          ) : (
+                            <div className="teacher-placeholder" aria-hidden="true">
+                              {localizedName(teacher, locale).slice(0, 1)}
+                            </div>
+                          )}
+                          <div>
+                            <h3>
+                              <a
+                                href={'/academy/teachers/' + teacher.id}
+                                onClick={e => {
+                                  e.preventDefault()
+                                  navigateProduct('/academy/teachers/' + teacher.id)
+                                }}
+                              >
+                                {localizedName(teacher, locale)}
+                              </a>
+                            </h3>
+                            <p>{text(teacher.intro_i18n)}</p>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              )}
+            </section>
+            <section className="academy-section academy-feature-overview">
+              <div className="academy-section-head">
+                <h2>
+                  {locale === 'fa'
+                    ? 'درس با استاد، تمرین با اپ'
+                    : locale === 'sv'
+                      ? 'Lektioner med lärare, övning i appen'
+                      : locale === 'de'
+                        ? 'Mit Lehrkraft lernen, in der App üben'
+                        : 'Lessons with a teacher. Practice with the App.'}
+                </h2>
+                <span>
+                  {workspaceLabel(
+                    locale,
+                    'یک حساب؛ کلاس و تمرین در کنار هم.',
+                    'One account connects your classroom and independent practice.'
+                  )}
+                </span>
+              </div>
+              <div className="academy-grid">
+                {(locale === 'fa'
+                  ? [
+                      ['کلاس و برنامه', 'دوره، استاد و زمان مناسب را انتخاب کن.'],
+                      ['فضای یادگیری', 'هدف، پیشرفت، جلسه‌ها و جمع‌بندی استاد را کنار هم ببین.'],
+                      ['تکلیف و بازخورد', 'تکلیف بگیر، پاسخ بده و بازخورد استاد را بخوان.'],
+                      ['یادداشت و پیام', 'یادداشت خصوصی یا مشترک و پیام داخل کلاس داشته باش.'],
+                      [
+                        'تمرین با اپ',
+                        'لغت، گرامر و مرور را در اپ ادامه بده؛ فقط مطالب انتخابی‌ات را به اشتراک بگذار.'
+                      ],
+                      ['نتایج و تاریخچه', 'نتیجه‌های ثبت‌شدهٔ آزمون و سابقهٔ یادگیری را مرور کن.']
+                    ]
+                  : locale === 'sv'
+                    ? [
+                        ['Kurser och schema', 'Välj kurs, lärare och lektionstid.'],
+                        ['Din lärmiljö', 'Se mål, framsteg och sammanfattningar.'],
+                        ['Läxor och feedback', 'Lämna in uppgifter och få återkoppling.'],
+                        ['Anteckningar och meddelanden', 'Skriv privata eller delade anteckningar.'],
+                        ['Öva i appen', 'Träna ord, grammatik och repetition.'],
+                        ['Resultat och historik', 'Se provresultat och tidigare lektioner.']
+                      ]
+                    : locale === 'de'
+                      ? [
+                          ['Kurse und Termine', 'Wählen Sie Kurs, Lehrkraft und Termin.'],
+                          ['Ihr Lernraum', 'Ziele, Fortschritt und Zusammenfassungen im Blick.'],
+                          ['Aufgaben und Feedback', 'Reichen Sie Aufgaben ein und erhalten Sie Feedback.'],
+                          ['Notizen und Nachrichten', 'Verwalten Sie private und geteilte Notizen.'],
+                          ['In der App üben', 'Üben Sie Wortschatz und Grammatik.'],
+                          ['Ergebnisse und Verlauf', 'Sehen Sie Testergebnisse und frühere Stunden.']
+                        ]
+                      : [
+                          ['Courses & scheduling', 'Choose your course, teacher and lesson time.'],
+                          [
+                            'Your Learning Space',
+                            'Goals, progress, sessions and teacher summaries together.'
+                          ],
+                          ['Homework & feedback', 'Submit your work and receive personal teacher feedback.'],
+                          [
+                            'Notes & messages',
+                            'Keep private notes or share selected notes in your classroom.'
+                          ],
+                          [
+                            'Practice with the App',
+                            'Build vocabulary, organize grammar and review; share only what you choose.'
+                          ],
+                          [
+                            'Results & history',
+                            'Review teacher-recorded test results and your learning history.'
+                          ]
+                        ]
+                ).map(([title, body]) => (
+                  <article className="academy-card" key={title}>
+                    <h3>{title}</h3>
+                    <p>{body}</p>
+                  </article>
+                ))}
+              </div>
+              <p className="academy-help">
+                {workspaceLabel(
+                  locale,
+                  'جلسه‌ها با لینک استاد برگزار می‌شوند. پرداخت آنلاین و ساخت خودکار جلسه هنوز فعال نیست.',
+                  'Lessons use the teacher’s meeting link. Online payments and automatic meeting creation are not available yet.'
+                )}
+              </p>
+            </section>
+          </>
+        )}
+        {page === 'path' && (
+          <>
+            <section className="academy-section academy-path" id="learning-path">
+              <div className="academy-section-head">
+                <p>{t.path}</p>
+                <h2>{t.path}</h2>
+                <span>{t.pathB}</span>
+              </div>
+              <div className="academy-path-controls">
+                <AcademyField locale={locale}>
+                  <label>
+                    {t.language}
+                    <select value={subject} onChange={e => setSubject(e.target.value)}>
+                      {(languageOptions.length
+                        ? languageOptions.map(x => x.code)
+                        : ['sv', 'en', 'de', 'fa']
+                      ).map(x => (
+                        <option key={x} value={x}>
+                          {languageLabel(x)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </AcademyField>
+                <AcademyField locale={locale}>
+                  <label>
+                    {t.current}
+                    <select value={level} onChange={e => setLevel(e.target.value)}>
+                      {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map(x => (
+                        <option key={x}>{x}</option>
+                      ))}
+                    </select>
+                  </label>
+                </AcademyField>
+              </div>
+              {recommendation && (
+                <article className="academy-recommend">
+                  <div>
+                    <span className="academy-badge">{t.recommended}</span>
+                    <h3>{text(recommendation.title_i18n)}</h3>
+                    <p>{text(recommendation.description_i18n)}</p>
+                  </div>
+                  <button className="academy-primary" onClick={() => addInterest(recommendation)}>
+                    {studentCourseIds.has(recommendation.id) ? t.added : t.interest}
+                  </button>
+                </article>
+              )}
+            </section>
+          </>
+        )}
+        {(page === 'posts' || page === 'postDetail') && (
+          <AcademyPosts
+            key={window.location.pathname + locale}
+            locale={locale}
+            id={page === 'postDetail' ? window.location.pathname.split('/').filter(Boolean).pop() : undefined}
+          />
+        )}
+        {(page === 'courseDetail' || page === 'teacherDetail') && (
+          <AcademyPublicDetail
+            key={window.location.pathname}
+            locale={locale}
+            kind={page}
+            id={window.location.pathname.split('/').filter(Boolean).pop() ?? ''}
+            courses={activeCourses}
+            teachers={activeTeachers.filter(x => x.status === 'active')}
+            links={teacherCourses}
+            loading={loading}
+            onBook={(teacherId, courseId) => openDialog({ type: 'booking', teacherId, courseId })}
+          />
+        )}
+        {page === 'courses' && (
+          <>
+            <section className="academy-section" id="courses">
+              <div className="academy-section-head">
+                <p>{t.learn}</p>
+                <h2>{t.available}</h2>
+              </div>
+              <AcademyField locale={locale}>
+                <label className="academy-search">
+                  {workspaceLabel(locale, 'جستجوی دوره', 'Search courses')}
+                  <input
+                    type="search"
+                    value={catalogSearch}
+                    onChange={e => setCatalogSearch(e.target.value)}
+                  />
+                </label>
+              </AcademyField>
+              {loading ? (
+                <p>{t.loading}</p>
+              ) : (
+                <div className="academy-grid academy-scroll-list">
+                  {activeCourses
+                    .filter(course =>
+                      [
+                        text(course.title_i18n),
+                        text(course.description_i18n),
+                        course.level_code,
+                        languageLabel(course.subject_code)
+                      ]
+                        .join(' ')
+                        .toLocaleLowerCase()
+                        .includes(catalogSearch.toLocaleLowerCase())
+                    )
+                    .map(course => (
+                      <article className="academy-card" key={course.id}>
+                        <div className="academy-card-top">
+                          <span className="academy-badge">{languageLabel(course.subject_code)}</span>
+                          <span>{course.level_code}</span>
+                        </div>
+                        <h3>
+                          <a
+                            href={'/academy/courses/' + course.id}
+                            onClick={e => {
+                              e.preventDefault()
+                              navigateProduct('/academy/courses/' + course.id)
+                            }}
+                          >
+                            {text(course.title_i18n)}
+                          </a>
+                        </h3>
+                        <AcademyShare
+                          locale={locale}
+                          title={text(course.title_i18n)}
+                          description={text(course.description_i18n)}
+                          path={'/academy/courses/' + course.id}
+                        />
+                        <p>{text(course.description_i18n)}</p>
+                        <h4>{t.topics}</h4>
+                        <ul>
+                          {list(course.topics_i18n)
+                            .slice(0, 6)
+                            .map(topic => (
+                              <li key={topic}>{topic}</li>
+                            ))}
+                        </ul>
+                        <h4>{t.formats}</h4>
+                        <div className="academy-tags">
+                          {course.delivery_modes.map(m => (
+                            <span key={m}>{mode(m)}</span>
+                          ))}
+                        </div>
+                        <div className="academy-price">
+                          {course.price_sek == null ? t.contact : String(course.price_sek) + ' SEK'} ·{' '}
+                          {course.duration_minutes} min
+                        </div>
+                        <div className="academy-card-actions">
+                          <button className="academy-primary small" onClick={() => addInterest(course)}>
+                            {studentCourseIds.has(course.id) ? t.added : t.interest}
+                          </button>
+                          {course.telegram_url && (
+                            <a
+                              className="small-link"
+                              href={course.telegram_url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {t.telegram}
+                            </a>
+                          )}
+                          {isAdmin && (
+                            <button className="small-link" onClick={() => editCourse(course)}>
+                              {t.edit}
+                            </button>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              )}
+            </section>
+          </>
+        )}
+        {page === 'teachers' && (
+          <>
+            <section className="academy-section" id="teachers">
+              <div className="academy-section-head">
+                <p>{t.teachers}</p>
+                <h2>{t.directory}</h2>
+              </div>
+              <AcademyField locale={locale}>
+                <label className="academy-search">
+                  {workspaceLabel(locale, 'جستجوی استاد', 'Search teachers')}
+                  <input
+                    type="search"
+                    value={teacherSearch}
+                    onChange={e => setTeacherSearch(e.target.value)}
+                  />
+                </label>
+              </AcademyField>
+              {activeTeachers.filter(x => x.status === 'active' || isAdmin).length === 0 ? (
+                <div className="academy-empty">{t.noneTeachers}</div>
+              ) : (
+                <div className="academy-grid academy-scroll-list">
+                  {activeTeachers
+                    .filter(
+                      x =>
+                        (x.status === 'active' || isAdmin) &&
+                        [localizedName(x, locale), text(x.intro_i18n), ...x.teaching_languages, ...x.levels]
+                          .join(' ')
+                          .toLocaleLowerCase()
+                          .includes(teacherSearch.toLocaleLowerCase())
+                    )
+                    .map(x => (
+                      <article className="academy-card" key={x.id}>
+                        <div className="teacher-head">
+                          {x.photo_url ? (
+                            <img
+                              src={x.photo_url}
+                              loading="lazy"
+                              decoding="async"
+                              alt={localizedName(x, locale)}
+                            />
+                          ) : (
+                            <div className="teacher-placeholder">{localizedName(x, locale).slice(0, 1)}</div>
+                          )}
+                          <div>
+                            <h3>
+                              <a
+                                href={'/academy/teachers/' + x.id}
+                                onClick={e => {
+                                  e.preventDefault()
+                                  navigateProduct('/academy/teachers/' + x.id)
+                                }}
+                              >
+                                {localizedName(x, locale)}
+                              </a>
+                            </h3>
+                            <AcademyShare
+                              locale={locale}
+                              title={localizedName(x, locale)}
+                              description={text(x.intro_i18n)}
+                              path={'/academy/teachers/' + x.id}
+                            />
+                            <p>{text(x.intro_i18n)}</p>
+                            {!x.intro_i18n[locale] && text(x.intro_i18n) && (
+                              <small>
+                                {
+                                  {
+                                    fa: 'معرفی به زبان دیگری ارائه شده است.',
+                                    en: 'Introduction shown in another language.',
+                                    sv: 'Presentationen visas på ett annat språk.',
+                                    de: 'Die Vorstellung wird in einer anderen Sprache angezeigt.'
+                                  }[locale]
+                                }
+                              </small>
+                            )}
+                          </div>
+                        </div>
+                        <div className="academy-tags">
+                          {x.teaching_languages.map(y => (
+                            <span key={y}>{languageLabel(y)}</span>
+                          ))}
+                          {x.levels.map(y => (
+                            <span key={y}>{y}</span>
+                          ))}
+                        </div>
+                        <details className="teacher-courses">
+                          <summary>{workspaceLabel(locale, 'دوره‌های این استاد', 'Courses taught')}</summary>
+                          {teacherCourses
+                            .filter(tc => tc.teacher_id === x.id)
+                            .map(tc => {
+                              const c = courses.find(course => course.id === tc.course_id)
+                              return c ? (
+                                <button
+                                  type="button"
+                                  key={tc.course_id}
+                                  onClick={() => {
+                                    navigateProduct('/academy/courses/' + c.id + '?teacher=' + x.id)
+                                  }}
+                                >
+                                  {text(c.title_i18n)}
+                                </button>
+                              ) : null
+                            })}
+                        </details>
+                        <div className="teacher-contact">
+                          {x.email && <a href={'mailto:' + x.email}>{t.email}</a>}
+                          {x.phone && <a href={'tel:' + x.phone}>{t.phone}</a>}
+                          {x.teams_chat_url && (
+                            <a href={x.teams_chat_url} target="_blank" rel="noreferrer">
+                              {t.teamsChat}
+                            </a>
+                          )}
+                          {x.teams_call_url && (
+                            <a href={x.teams_call_url} target="_blank" rel="noreferrer">
+                              {t.teamsCall}
+                            </a>
+                          )}
+                          {x.telegram_url && (
+                            <a href={x.telegram_url} target="_blank" rel="noreferrer">
+                              {t.telegram}
+                            </a>
+                          )}
+                        </div>
+                        <div className="academy-card-actions">
+                          {x.status === 'active' && (
+                            <button
+                              className="academy-primary small"
+                              onClick={() => openDialog({ type: 'booking', teacherId: x.id })}
+                            >
+                              {t.requestTrial}
+                            </button>
+                          )}
+                          {isAdmin && (
+                            <button className="small-link" onClick={() => editTeacher(x)}>
+                              {t.edit}
+                            </button>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              )}
+            </section>
+          </>
+        )}
+        {page === 'about' && (
+          <>
+            <section className="academy-section" id="how">
+              <div className="academy-section-head">
+                <p>{t.about}</p>
+                <h2>{t.howTitle}</h2>
+                <p>{t.heroB}</p>
+                <AcademyShare
+                  locale={locale}
+                  title="Lingo3 Academy"
+                  description={t.heroB}
+                  path="/academy/about"
+                />
+                <div className="academy-card-actions">
+                  <button onClick={() => go('courses')}>{t.courses}</button>
+                  <button onClick={() => go('teachers')}>{t.teachers}</button>
+                  <button onClick={() => go('posts')}>
+                    {locale === 'fa'
+                      ? 'مطالب آموزشی'
+                      : locale === 'sv'
+                        ? 'Lärartiklar'
+                        : locale === 'de'
+                          ? 'Lernartikel'
+                          : 'Learning articles'}
+                  </button>
+                </div>
+              </div>
+              <div className="academy-steps">
+                {[
+                  [t.choose, t.chooseB],
+                  [t.book, t.bookB],
+                  [t.learnV, t.learnB],
+                  [t.track, t.trackB]
+                ].map(([a, b], i) => (
+                  <article key={a}>
+                    <span>{i + 1}</span>
+                    <h3>{a}</h3>
+                    <p>{b}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+        {page === 'pricing' && (
+          <>
+            <section className="academy-section split" id="pricing">
+              <div>
+                <p className="academy-kicker">{t.about}</p>
+                <h2>{t.pricingTitle}</h2>
+                <p>{t.pricingB}</p>
+              </div>
+              <div className="academy-mini-list">
+                {activeCourses.slice(0, 8).map(x => (
+                  <div key={x.id}>
+                    <button
+                      type="button"
+                      className="academy-text-link"
+                      onClick={() => navigateProduct('/academy/courses/' + x.id)}
+                    >
+                      {text(x.title_i18n)}
+                    </button>
+                    {x.price_sek == null ? (
+                      <button type="button" className="academy-text-link" onClick={() => go('contact')}>
+                        {t.contact}
+                      </button>
+                    ) : (
+                      <b>{String(x.price_sek) + ' SEK'}</b>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+        {page === 'personal' && (
+          <>
+            <section className="academy-section" id="personal-space">
+              <div className="academy-section-head">
+                <p>{t.mine}</p>
+                <h2>{t.personalTitle}</h2>
+              </div>
+              {userId && personalMode === 'profile' && (
+                <section className="academy-card">
+                  <h3>{{ fa: 'پروفایل', en: 'Profile', sv: 'Profil', de: 'Profil' }[locale]}</h3>
+                  <p>{displayName || email}</p>
+                  <p>{email}</p>
+                  <button type="button" onClick={() => setPersonalMode('full')}>
+                    {t.personal}
+                  </button>
+                  <button type="button" onClick={() => void supabase().auth.signOut()}>
+                    {t.logout}
+                  </button>
+                </section>
+              )}
+              {isAdmin && personalMode === 'full' && (
+                <div className="academy-card-actions academy-space-switch" role="group" aria-label={t.mine}>
+                  <button
+                    type="button"
+                    aria-pressed={spaceView === 'student'}
+                    onClick={() => {
+                      setFocusSpace('')
+                      setSpaceView('student')
+                    }}
+                  >
+                    {workspaceLabel(locale, 'فضای دانشجو', 'Student Space')}
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={spaceView === 'teacher'}
+                    onClick={() => setSpaceView('teacher')}
+                  >
+                    {workspaceLabel(locale, 'فضای استاد', 'Teacher Space')}
+                  </button>
+                </div>
+              )}
+              {!userId ? (
+                <div className="academy-empty">
+                  <p>{t.signin}</p>
+                  <button className="academy-primary" onClick={() => openDialog({ type: 'login' })}>
+                    {t.login}
+                  </button>
+                </div>
+              ) : personalMode === 'profile' ? null : (
+                <AcademyPortal
+                  key={userId + focusSpace + spaceView + String(isAdmin) + personalMode}
+                  presentation={personalMode === 'courses' ? 'courses' : 'full'}
+                  onBrowse={() => go('courses')}
+                  onOpenSpace={id => {
+                    setFocusSpace(id)
+                    setPersonalMode('full')
+                    setSpaceView('student')
+                    window.history.replaceState(
+                      { ...window.history.state, academyPersonalMode: 'full' },
+                      '',
+                      window.location.href
+                    )
+                  }}
+                  view={spaceView}
+                  initialSpaceId={focusSpace}
+                  locale={locale}
+                  userId={userId}
+                  courses={courses}
+                  teachers={teachers}
+                  selfTeacher={selfTeacher}
+                  teacherCourseIds={
+                    selfTeacher
+                      ? teacherCourses.filter(tc => tc.teacher_id === selfTeacher.id).map(tc => tc.course_id)
+                      : []
+                  }
+                  isAdmin={isAdmin}
+                  onNotice={setNotice}
+                />
+              )}
+            </section>
+          </>
+        )}
+        {page === 'admin' && !isAdmin && (
+          <section className="academy-section">
+            <div className="academy-empty">
+              <p>{userId ? t.personalTitle : t.signin}</p>
+              <button
+                className="academy-primary"
+                onClick={() => (userId ? go('personal') : openDialog({ type: 'login' }))}
+              >
+                {userId ? t.personal : t.login}
+              </button>
+            </div>
+          </section>
+        )}
+        {page === 'admin' && isAdmin && (
+          <section className="academy-section academy-admin" id="admin-studio">
+            <div className="academy-section-head">
+              <p>{t.settings}</p>
+              <h2>{t.adminTitle}</h2>
+              <span>{t.adminB}</span>
+            </div>
+            <nav className="academy-portal-nav" aria-label={t.adminTitle}>
+              {(
+                [
+                  [
+                    'users',
+                    {
+                      fa: 'کاربران و دسترسی‌ها',
+                      en: 'Users & access',
+                      sv: 'Användare och behörighet',
+                      de: 'Benutzer und Rechte'
+                    }[locale]
+                  ],
+                  [
+                    'enrollments',
+                    { fa: 'ثبت‌نام‌ها', en: 'Enrollments', sv: 'Registreringar', de: 'Anmeldungen' }[locale]
+                  ],
+                  ['courses', t.courseEditor],
+                  ['teachers', t.teacherEditor],
+                  [
+                    'seo',
+                    { fa: 'سئو و گوگل', en: 'SEO & Google', sv: 'SEO & Google', de: 'SEO & Google' }[locale]
+                  ]
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  aria-pressed={adminPanel === id}
+                  onClick={() => {
+                    openAdminPanel(id)
+                    if (id === 'courses') revealEditor(courseEditorRef)
+                    if (id === 'teachers') revealEditor(teacherEditorRef)
+                    if (id === 'enrollments') revealEditor(enrollmentsRef)
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+            {adminPanel !== 'home' && (
+              <button
+                type="button"
+                className="academy-panel-back"
+                onClick={() => {
+                  if (window.history.state?.academyAdminPanel) window.history.back()
+                  else setAdminPanel('home')
+                }}
+              >
+                {{ fa: 'بازگشت', en: 'Back', sv: 'Tillbaka', de: 'Zurück' }[locale]}
+              </button>
+            )}
+            {adminPanel === 'seo' && (
+              <AcademySeoManager locale={locale} userId={userId!} courses={courses} teachers={teachers} />
+            )}
+            <div hidden={adminPanel !== 'users'}>
+              <details className="academy-card" open>
+                <summary>{workspaceLabel(locale, 'کاربران و دسترسی‌ها', 'Users and access')}</summary>
+                <AcademyAdminLifecycle
+                  locale={locale}
+                  courses={courses}
+                  teachers={teachers.filter(t => t.status === 'active')}
+                  enrollments={adminEnrollments}
+                  onChanged={() => void refresh()}
+                />
+                <AcademyUsers
+                  locale={locale}
+                  onCourses={id => {
+                    setAdminFilter(id)
+                    openAdminPanel('enrollments')
+                    revealEditor(enrollmentsRef)
+                  }}
+                  onTeacher={u => {
+                    openAdminPanel('teachers')
+                    revealEditor(teacherEditorRef)
+                    const teacher = teachers.find(t => t.id === u.teacher_id)
+                    if (teacher) editTeacher(teacher)
+                    else {
+                      setTeacherEditorOpen(true)
+                      setTeacherTab('name')
+                      setTeacherForm({
+                        ...blankTeacher,
+                        user_id: u.user_id,
+                        display_name: u.display_name || u.email,
+                        email: u.email
+                      })
+                      setTeacherAssigned([])
+                    }
+                  }}
+                  onAccessChanged={() => void refresh()}
+                />
+              </details>
+            </div>
+            <div hidden={adminPanel !== 'enrollments'}>
+              <details ref={enrollmentsRef} className="academy-pending">
+                <summary>{workspaceLabel(locale, 'دانشجوها و ثبت‌نام‌ها', 'Students & enrollments')}</summary>
+                <AcademyField locale={locale}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={showRemoved}
+                      onChange={e => setShowRemoved(e.target.checked)}
+                    />
+                    {workspaceLabel(locale, 'نمایش حذف‌شده‌ها', 'Show removed enrollments')}
+                  </label>
+                </AcademyField>
+                <AcademyField locale={locale}>
+                  <label>
+                    {workspaceLabel(locale, 'جستجوی ثبت‌نام‌ها', 'Search student, email, course or status')}
+                    <input
+                      placeholder={workspaceLabel(
+                        locale,
+                        'جستجو: دانشجو، ایمیل، دوره یا وضعیت',
+                        'Search student, email, course or status'
+                      )}
+                      value={adminFilter}
+                      onChange={e => setAdminFilter(e.target.value)}
+                    />
+                  </label>
+                </AcademyField>
+                <label>
+                  {
+                    { fa: 'فیلتر وضعیت', en: 'Filter status', sv: 'Filtrera status', de: 'Status filtern' }[
+                      locale
+                    ]
+                  }
+                  <select
+                    value={enrollmentStatusFilter}
+                    onChange={e => {
+                      setEnrollmentStatusFilter(e.target.value)
+                      if (e.target.value === 'removed') setShowRemoved(true)
+                    }}
+                  >
+                    <option value="all">{{ fa: 'همه', en: 'All', sv: 'Alla', de: 'Alle' }[locale]}</option>
+                    {['active', 'interested', 'paused', 'completed', 'cancelled', 'removed'].map(status => (
+                      <option key={status} value={status}>
+                        {academyStatus(status, locale)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {adminEnrollments.length === 0 ? (
+                  <p>—</p>
+                ) : (
+                  adminEnrollments
+                    .filter(
+                      e =>
+                        (showRemoved || !e.removed_at) &&
+                        (enrollmentStatusFilter === 'all' ||
+                          (enrollmentStatusFilter === 'removed'
+                            ? !!e.removed_at
+                            : !e.removed_at && e.status === enrollmentStatusFilter)) &&
+                        [
+                          e.student_id,
+                          e.student_name,
+                          e.student_email,
+                          e.status,
+                          text(courses.find(c => c.id === e.course_id)?.title_i18n)
+                        ]
+                          .join(' ')
+                          .toLowerCase()
+                          .includes(adminFilter.toLowerCase())
+                    )
+                    .map(e => {
+                      const c = courses.find(x => x.id === e.course_id)
+                      const eligible = teachers.filter(
+                        x =>
+                          x.status === 'active' &&
+                          teacherCourses.some(tc => tc.teacher_id === x.id && tc.course_id === e.course_id)
+                      )
+                      return (
+                        <div className="pending-row" key={e.id}>
+                          <span>
+                            <strong>{e.student_name || e.student_id}</strong>
+                            <small>
+                              {e.student_email} · {academyStatus(e.status, locale)}
+                            </small>
+                            <br />
+                            {c ? text(c.title_i18n) : e.course_id}
+                          </span>
+                          <AcademyField locale={locale}>
+                            <label>
+                              {t.selectTeacher}
+                              <select
+                                value={enrollmentTeacher[e.id] || e.teacher_id || ''}
+                                onChange={ev =>
+                                  setEnrollmentTeacher({ ...enrollmentTeacher, [e.id]: ev.target.value })
+                                }
+                              >
+                                <option value="">{t.selectTeacher}</option>
+                                {eligible.map(x => (
+                                  <option key={x.id} value={x.id}>
+                                    {x.display_name}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+                          </AcademyField>
+                          <div className="academy-card-actions">
+                            <button className="academy-primary small" onClick={() => activateEnrollment(e)}>
+                              {e.status === 'active'
+                                ? workspaceLabel(locale, 'تغییر استاد', 'Assign teacher')
+                                : t.activate}
+                            </button>
+                            {e.space_id && (
+                              <button
+                                onClick={() => {
+                                  setFocusSpace(e.space_id!)
+                                  setSpaceView('teacher')
+                                  go('personal')
+                                }}
+                              >
+                                {workspaceLabel(locale, 'باز کردن کلاس', 'Open classroom')}
+                              </button>
+                            )}
+                            {['paused', 'completed', 'cancelled', 'removed'].map(status => (
+                              <button
+                                key={status}
+                                disabled={e.status === status}
+                                onClick={async () => {
+                                  const { error } = await supabase().rpc('academy_admin_set_enrollment', {
+                                    p_id: e.id,
+                                    p_teacher_id: enrollmentTeacher[e.id] || e.teacher_id,
+                                    p_status: status
+                                  })
+                                  setNotice(error ? error.message : t.saved)
+                                  if (!error) void refresh()
+                                }}
+                              >
+                                {status === 'removed'
+                                  ? workspaceLabel(locale, 'حذف از دوره‌های کاربر', 'Remove enrollment')
+                                  : status === 'paused'
+                                    ? workspaceLabel(locale, 'توقف', 'Pause')
+                                    : status === 'completed'
+                                      ? workspaceLabel(locale, 'پایان دوره', 'Complete')
+                                      : workspaceLabel(locale, 'لغو ثبت‌نام', 'Cancel enrollment')}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    })
+                )}
+              </details>
+            </div>
+            <div className="academy-admin-grid">
+              <div hidden={adminPanel !== 'courses'}>
+                <details ref={courseEditorRef} className="academy-editor">
+                  <summary>{t.courseEditor}</summary>
+                  <form onSubmit={saveCourse}>
+                    <AcademyFormHelp locale={locale} />
+                    <div className="editor-head">
+                      <h3>{t.courseEditor}</h3>
+                      <button type="button" onClick={() => editCourse()}>
+                        {t.newCourse}
+                      </button>
+                    </div>
+                    <div className="editor-two">
+                      <div className="academy-field-help">
+                        <label>
+                          {t.subject}
+                          <input
+                            placeholder="e.g. sv"
+                            value={courseForm.subject_code}
+                            onChange={e => setCourseForm({ ...courseForm, subject_code: e.target.value })}
+                          />
+                        </label>
+                        <AcademyHelp
+                          locale={locale}
+                          text={{
+                            fa: 'کد زبان دوره را وارد کنید، برای مثال sv برای سوئدی.',
+                            en: 'Enter the language code, for example sv for Swedish.',
+                            sv: 'Ange språkkod, till exempel sv för svenska.',
+                            de: 'Geben Sie den Sprachcode ein, z. B. sv für Schwedisch.'
+                          }}
+                        />
+                      </div>
+                      <div className="academy-field-help">
+                        <label>
+                          {t.level}
+                          <input
+                            placeholder="e.g. A1"
+                            value={courseForm.level_code}
+                            onChange={e => setCourseForm({ ...courseForm, level_code: e.target.value })}
+                          />
+                        </label>
+                        <AcademyHelp
+                          locale={locale}
+                          text={{
+                            fa: 'سطح دوره مانند A1 یا B1 را وارد کنید.',
+                            en: 'Enter a course level such as A1 or B1.',
+                            sv: 'Ange kursnivå, till exempel A1 eller B1.',
+                            de: 'Geben Sie die Kursstufe ein, zum Beispiel A1 oder B1.'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {(['en', 'sv', 'de', 'fa'] as Locale[]).map(lang => (
+                      <fieldset key={lang}>
+                        <legend>{lang.toUpperCase()}</legend>
+                        <AcademyField locale={locale}>
+                          <label>
+                            {t.title}
+                            <input
+                              placeholder={
+                                lang === 'fa' ? 'مثال: سوئدی A1 — شروع' : 'e.g. Swedish A1 — Starter Course'
+                              }
+                              value={courseForm[('title_' + lang) as keyof typeof courseForm] as string}
+                              onChange={e =>
+                                setCourseForm({ ...courseForm, ['title_' + lang]: e.target.value })
+                              }
+                            />
+                          </label>
+                        </AcademyField>
+                        <AcademyField locale={locale}>
+                          <label>
+                            {t.description}
+                            <textarea
+                              placeholder={
+                                lang === 'fa'
+                                  ? 'مثال: دوره عملی برای شروع زبان سوئدی'
+                                  : 'e.g. Practical beginner course with live teacher support'
+                              }
+                              value={courseForm[('description_' + lang) as keyof typeof courseForm] as string}
+                              onChange={e =>
+                                setCourseForm({ ...courseForm, ['description_' + lang]: e.target.value })
+                              }
+                            />
+                          </label>
+                        </AcademyField>
+                        <AcademyField locale={locale}>
+                          <label>
+                            {t.topicLines}
+                            <textarea
+                              placeholder={
+                                lang === 'fa'
+                                  ? 'هر موضوع در یک خط، مثال: معرفی خود\nزمان حال\nزندگی روزمره'
+                                  : 'One topic per line, e.g. Greetings\nPresent tense\nDaily routines'
+                              }
+                              value={courseForm[('topics_' + lang) as keyof typeof courseForm] as string}
+                              onChange={e =>
+                                setCourseForm({ ...courseForm, ['topics_' + lang]: e.target.value })
+                              }
+                            />
+                          </label>
+                        </AcademyField>
+                      </fieldset>
+                    ))}
+                    <div className="editor-two">
+                      <div className="academy-field-help">
+                        <label>
+                          {t.duration}
+                          <input
+                            placeholder="60"
+                            type="number"
+                            value={courseForm.duration_minutes}
+                            onChange={e => setCourseForm({ ...courseForm, duration_minutes: e.target.value })}
+                          />
+                        </label>
+                        <AcademyHelp
+                          locale={locale}
+                          text={{
+                            fa: 'مدت هر جلسه را به دقیقه وارد کنید.',
+                            en: 'Enter the length of each session in minutes.',
+                            sv: 'Ange varje lektions längd i minuter.',
+                            de: 'Geben Sie die Dauer jeder Stunde in Minuten ein.'
+                          }}
+                        />
+                      </div>
+                      <div className="academy-field-help">
+                        <label>
+                          {t.price}
+                          <input
+                            placeholder="350"
+                            type="number"
+                            value={courseForm.price_sek}
+                            onChange={e => setCourseForm({ ...courseForm, price_sek: e.target.value })}
+                          />
+                        </label>
+                        <AcademyHelp
+                          locale={locale}
+                          text={{
+                            fa: 'قیمت را به کرون وارد کنید؛ خالی یعنی قیمت با تماس مشخص می\u200cشود.',
+                            en: 'Enter the price in SEK; leave empty for an enquiry.',
+                            sv: 'Ange pris i SEK; tomt innebär pris på förfrågan.',
+                            de: 'Geben Sie den Preis in SEK ein; leer bedeutet Preis auf Anfrage.'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <AcademyField locale={locale}>
+                      <label>
+                        {t.courseTelegram}
+                        <input
+                          placeholder="https://t.me/your-course"
+                          value={courseForm.telegram_url}
+                          onChange={e => setCourseForm({ ...courseForm, telegram_url: e.target.value })}
+                        />
+                      </label>
+                    </AcademyField>
+                    <div className="editor-checks">
+                      <span>{t.modes}</span>
+                      <AcademyField locale={locale}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={courseForm.individual}
+                            onChange={e => setCourseForm({ ...courseForm, individual: e.target.checked })}
+                          />
+                          {t.individual}
+                        </label>
+                      </AcademyField>
+                      <AcademyField locale={locale}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={courseForm.group}
+                            onChange={e => setCourseForm({ ...courseForm, group: e.target.checked })}
+                          />
+                          {t.group}
+                        </label>
+                      </AcademyField>
+                      <AcademyField locale={locale}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={courseForm.offline}
+                            onChange={e => setCourseForm({ ...courseForm, offline: e.target.checked })}
+                          />
+                          {t.offline}
+                        </label>
+                      </AcademyField>
+                    </div>
+                    <AcademyField locale={locale}>
+                      <label>
+                        {t.status}
+                        <select
+                          value={courseForm.status}
+                          onChange={e => setCourseForm({ ...courseForm, status: e.target.value })}
+                        >
+                          <option value="draft">{academyStatus('draft', locale)}</option>
+                          <option value="active">{academyStatus('active', locale)}</option>
+                          <option value="archived">{academyStatus('archived', locale)}</option>
+                        </select>
+                      </label>
+                    </AcademyField>
+                    <button className="academy-primary" type="submit">
+                      {t.saveCourse}
+                    </button>
+                  </form>
+                  <AcademyField locale={locale}>
+                    <label className="academy-search">
+                      {
+                        { fa: 'جستجوی دوره', en: 'Search courses', sv: 'Sök kurser', de: 'Kurse suchen' }[
+                          locale
+                        ]
+                      }
+                      <input
+                        type="search"
+                        value={adminCourseSearch}
+                        onChange={e => setAdminCourseSearch(e.target.value)}
+                      />
+                    </label>
+                  </AcademyField>
+                  <div className="academy-card-actions academy-admin-results">
+                    {courses
+                      .filter(c =>
+                        [text(c.title_i18n), c.level_code]
+                          .join(' ')
+                          .toLocaleLowerCase()
+                          .includes(adminCourseSearch.toLocaleLowerCase())
+                      )
+                      .map(c => (
+                        <button key={c.id} onClick={() => editCourse(c)}>
+                          {text(c.title_i18n)} · {academyStatus(c.status, locale)}
+                        </button>
+                      ))}
+                  </div>
+                </details>
+              </div>
+              <div hidden={adminPanel !== 'teachers'}>
+                <details ref={teacherEditorRef} className="academy-editor">
+                  <summary>{t.teacherEditor}</summary>
+                  <div className="academy-teacher-picker">
+                    <AcademyField locale={locale}>
+                      <label>
+                        {
+                          {
+                            fa: 'جستجوی استاد',
+                            en: 'Search teachers',
+                            sv: 'Sök lärare',
+                            de: 'Lehrkräfte suchen'
+                          }[locale]
+                        }
+                        <input
+                          type="search"
+                          value={adminTeacherSearch}
+                          onChange={e => setAdminTeacherSearch(e.target.value)}
+                        />
+                      </label>
+                    </AcademyField>
+                    <label>
+                      {t.teachers}
+                      <select
+                        value={teacherForm.id}
+                        onChange={e => {
+                          const teacher = teachers.find(x => x.id === e.target.value)
+                          if (teacher) editTeacher(teacher)
+                          else setTeacherEditorOpen(false)
+                        }}
+                      >
+                        <option value="">—</option>
+                        {teachers
+                          .filter(
+                            x =>
+                              x.id === teacherForm.id ||
+                              localizedName(x, locale)
+                                .toLocaleLowerCase()
+                                .includes(adminTeacherSearch.toLocaleLowerCase())
+                          )
+                          .map(x => (
+                            <option key={x.id} value={x.id}>
+                              {localizedName(x, locale)}
+                            </option>
+                          ))}
+                      </select>
+                    </label>
+                    <button type="button" className="academy-primary" onClick={() => editTeacher()}>
+                      {t.newTeacher}
+                    </button>
+                  </div>
+                  {teacherEditorOpen && (
+                    <form onSubmit={saveTeacher} onInvalidCapture={() => setTeacherTab('name')}>
+                      <AcademyFormHelp locale={locale} />
+                      <div className="academy-teacher-edit-layout">
+                        <nav className="academy-teacher-edit-menu">
+                          {(
+                            [
+                              [
+                                'name',
+                                {
+                                  fa: 'نام و تصویر',
+                                  en: 'Name & photo',
+                                  sv: 'Namn och bild',
+                                  de: 'Name und Bild'
+                                }
+                              ],
+                              [
+                                'intro',
+                                { fa: 'معرفی', en: 'Introduction', sv: 'Presentation', de: 'Vorstellung' }
+                              ],
+                              [
+                                'courses',
+                                {
+                                  fa: 'زبان‌ها و دوره‌ها',
+                                  en: 'Languages & courses',
+                                  sv: 'Språk och kurser',
+                                  de: 'Sprachen und Kurse'
+                                }
+                              ],
+                              [
+                                'contact',
+                                {
+                                  fa: 'اطلاعات تماس',
+                                  en: 'Contact details',
+                                  sv: 'Kontaktuppgifter',
+                                  de: 'Kontakt'
+                                }
+                              ],
+                              [
+                                'account',
+                                {
+                                  fa: 'حساب لینگو۳',
+                                  en: 'Linked Lingo3 account',
+                                  sv: 'Kopplat Lingo3-konto',
+                                  de: 'Lingo3-Konto'
+                                }
+                              ]
+                            ] as const
+                          ).map(([key, label]) => (
+                            <button
+                              type="button"
+                              key={key}
+                              aria-pressed={teacherTab === key}
+                              onClick={() => setTeacherTab(key)}
+                            >
+                              {label[locale]}
+                            </button>
+                          ))}
+                        </nav>
+                        <div className="academy-teacher-edit-fields">
+                          <div hidden={teacherTab !== 'name'}>
+                            <div className="academy-field-help">
+                              <label>
+                                {t.teacherName}
+                                <input
+                                  placeholder={workspaceLabel(
+                                    locale,
+                                    'مثال: Anna Andersson',
+                                    'e.g. Anna Andersson'
+                                  )}
+                                  required
+                                  value={teacherForm.display_name}
+                                  onChange={e =>
+                                    setTeacherForm({ ...teacherForm, display_name: e.target.value })
+                                  }
+                                />
+                              </label>
+                              <AcademyHelp
+                                locale={locale}
+                                text={{
+                                  fa: 'نام نمایشی استاد را وارد کنید.',
+                                  en: 'Enter the teacher’s display name.',
+                                  sv: 'Ange lärarens visningsnamn.',
+                                  de: 'Geben Sie den Anzeigenamen der Lehrkraft ein.'
+                                }}
+                              />
+                            </div>
+                            {(['en', 'fa', 'sv', 'de'] as Locale[]).map(code => (
+                              <AcademyField locale={locale} key={code}>
+                                <label key={code}>
+                                  {workspaceLabel(locale, 'نام تأییدشده', 'Verified name')}{' '}
+                                  {code.toUpperCase()}
+                                  <input
+                                    placeholder={
+                                      code === 'fa' ? 'نام فارسی استاد' : 'Teacher’s verified Latin name'
+                                    }
+                                    value={
+                                      teacherForm[('name_' + code) as keyof typeof teacherForm] as string
+                                    }
+                                    onChange={e =>
+                                      setTeacherForm({ ...teacherForm, ['name_' + code]: e.target.value })
+                                    }
+                                  />
+                                </label>
+                              </AcademyField>
+                            ))}
+                            <AcademyField locale={locale}>
+                              <label>
+                                {t.picture}
+                                <input
+                                  placeholder="https://example.com/teacher-photo.jpg"
+                                  value={teacherForm.photo_url}
+                                  onChange={e =>
+                                    setTeacherForm({ ...teacherForm, photo_url: e.target.value })
+                                  }
+                                />
+                              </label>
+                            </AcademyField>
+                          </div>
+                          <div hidden={teacherTab !== 'intro'}>
+                            {(['en', 'sv', 'de', 'fa'] as Locale[]).map(lang => (
+                              <AcademyField locale={locale} key={lang}>
+                                <label key={lang}>
+                                  {t.introduction} {lang.toUpperCase()}
+                                  <textarea
+                                    placeholder={
+                                      lang === 'fa'
+                                        ? 'مثال: مدرس سوئدی با تمرکز بر مکالمه و SFI'
+                                        : 'e.g. Swedish teacher focused on conversation and SFI'
+                                    }
+                                    value={
+                                      teacherForm[('intro_' + lang) as keyof typeof teacherForm] as string
+                                    }
+                                    onChange={e =>
+                                      setTeacherForm({ ...teacherForm, ['intro_' + lang]: e.target.value })
+                                    }
+                                  />
+                                </label>
+                              </AcademyField>
+                            ))}
+                          </div>
+                          <div hidden={teacherTab !== 'courses'}>
+                            <AcademyField locale={locale}>
+                              <label>
+                                {t.teachLangs}
+                                <input
+                                  placeholder="e.g. sv, en"
+                                  value={teacherForm.teaching_languages}
+                                  onChange={e =>
+                                    setTeacherForm({ ...teacherForm, teaching_languages: e.target.value })
+                                  }
+                                />
+                              </label>
+                            </AcademyField>
+                            <AcademyField locale={locale}>
+                              <label>
+                                {t.spokenLangs}
+                                <input
+                                  placeholder="e.g. sv, en, de"
+                                  value={teacherForm.spoken_languages}
+                                  onChange={e =>
+                                    setTeacherForm({ ...teacherForm, spoken_languages: e.target.value })
+                                  }
+                                />
+                              </label>
+                            </AcademyField>
+                            <AcademyField locale={locale}>
+                              <label>
+                                {t.teacherLevels}
+                                <input
+                                  placeholder="e.g. A1, A2, B1"
+                                  value={teacherForm.levels}
+                                  onChange={e => setTeacherForm({ ...teacherForm, levels: e.target.value })}
+                                />
+                              </label>
+                            </AcademyField>
+                            <AcademyField locale={locale}>
+                              <label>
+                                {t.specialties}
+                                <input
+                                  placeholder="e.g. Conversation, SFI, pronunciation"
+                                  value={teacherForm.specialties}
+                                  onChange={e =>
+                                    setTeacherForm({ ...teacherForm, specialties: e.target.value })
+                                  }
+                                />
+                              </label>
+                            </AcademyField>
+                            <fieldset>
+                              <legend>{t.teacherCourses}</legend>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {
+                                    {
+                                      fa: 'جستجوی دوره',
+                                      en: 'Search courses',
+                                      sv: 'Sök kurser',
+                                      de: 'Kurse suchen'
+                                    }[locale]
+                                  }
+                                  <input
+                                    type="search"
+                                    value={teacherCourseSearch}
+                                    onChange={e => setTeacherCourseSearch(e.target.value)}
+                                  />
+                                </label>
+                              </AcademyField>
+                              <div className="editor-course-checks">
+                                {courses
+                                  .filter(
+                                    c =>
+                                      c.status !== 'archived' &&
+                                      [text(c.title_i18n), c.level_code]
+                                        .join(' ')
+                                        .toLocaleLowerCase()
+                                        .includes(teacherCourseSearch.toLocaleLowerCase())
+                                  )
+                                  .map(c => (
+                                    <AcademyField locale={locale} key={c.id}>
+                                      <label key={c.id}>
+                                        <input
+                                          type="checkbox"
+                                          checked={teacherAssigned.includes(c.id)}
+                                          onChange={e =>
+                                            setTeacherAssigned(
+                                              e.target.checked
+                                                ? [...teacherAssigned, c.id]
+                                                : teacherAssigned.filter(id => id !== c.id)
+                                            )
+                                          }
+                                        />
+                                        {text(c.title_i18n)} · {c.level_code}
+                                      </label>
+                                    </AcademyField>
+                                  ))}
+                              </div>
+                            </fieldset>
+                          </div>
+                          <div hidden={teacherTab !== 'contact'}>
+                            <fieldset>
+                              <legend>{t.publicContact}</legend>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.email}
+                                  <input
+                                    placeholder="teacher@example.com"
+                                    type="email"
+                                    value={teacherForm.email}
+                                    onChange={e => setTeacherForm({ ...teacherForm, email: e.target.value })}
+                                  />
+                                </label>
+                              </AcademyField>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.phone}
+                                  <input
+                                    placeholder="e.g. +46 70 123 45 67"
+                                    value={teacherForm.phone}
+                                    onChange={e => setTeacherForm({ ...teacherForm, phone: e.target.value })}
+                                  />
+                                </label>
+                              </AcademyField>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.teamsChat}
+                                  <input
+                                    placeholder="https://teams.microsoft.com/..."
+                                    value={teacherForm.teams_chat_url}
+                                    onChange={e =>
+                                      setTeacherForm({ ...teacherForm, teams_chat_url: e.target.value })
+                                    }
+                                  />
+                                </label>
+                              </AcademyField>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.teamsCall}
+                                  <input
+                                    placeholder="https://teams.microsoft.com/..."
+                                    value={teacherForm.teams_call_url}
+                                    onChange={e =>
+                                      setTeacherForm({ ...teacherForm, teams_call_url: e.target.value })
+                                    }
+                                  />
+                                </label>
+                              </AcademyField>
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.telegram}
+                                  <input
+                                    placeholder="https://t.me/username"
+                                    value={teacherForm.telegram_url}
+                                    onChange={e =>
+                                      setTeacherForm({ ...teacherForm, telegram_url: e.target.value })
+                                    }
+                                  />
+                                </label>
+                              </AcademyField>
+                            </fieldset>
+                          </div>
+                          <div hidden={teacherTab !== 'account'}>
+                            <fieldset>
+                              <legend>{t.linkedUser}</legend>
+                              <div className="academy-user-lookup">
+                                <AcademyField locale={locale}>
+                                  <label>
+                                    {workspaceLabel(locale, 'جستجوی کاربر', 'Search')}
+                                    <input
+                                      placeholder="Search user by email or name"
+                                      value={userLookup}
+                                      onChange={e => setUserLookup(e.target.value)}
+                                    />
+                                  </label>
+                                </AcademyField>
+                                <button type="button" onClick={searchAcademyUsers}>
+                                  Search
+                                </button>
+                              </div>
+                              {userMatches.length > 0 && (
+                                <div className="academy-user-results">
+                                  {userMatches.map(u => (
+                                    <button
+                                      type="button"
+                                      key={u.user_id}
+                                      onClick={() => chooseTeacherUser(u)}
+                                    >
+                                      <strong>{u.display_name || u.email || u.user_id}</strong>
+                                      <small>
+                                        {u.email} {u.teacher_id ? '· Teacher' : ''}
+                                      </small>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              <AcademyField locale={locale}>
+                                <label>
+                                  {t.linkedUser}
+                                  <input
+                                    readOnly
+                                    value={teacherForm.user_id}
+                                    placeholder="Selected Lingo3 user ID"
+                                  />
+                                </label>
+                              </AcademyField>
+                              <button
+                                type="button"
+                                onClick={() => setTeacherForm({ ...teacherForm, user_id: '' })}
+                              >
+                                {workspaceLabel(locale, 'قطع اتصال حساب', 'Unlink account')}
+                              </button>
+                            </fieldset>
+                          </div>
+                          <AcademyField locale={locale}>
+                            <label>
+                              {t.status}
+                              <select
+                                value={teacherForm.status}
+                                onChange={e => setTeacherForm({ ...teacherForm, status: e.target.value })}
+                              >
+                                <option value="draft">{academyStatus('draft', locale)}</option>
+                                <option value="active">{academyStatus('active', locale)}</option>
+                                <option value="archived">
+                                  {workspaceLabel(
+                                    locale,
+                                    'غیرفعال — قطع دسترسی تدریس',
+                                    'Inactive — teaching access revoked'
+                                  )}
+                                </option>
+                              </select>
+                            </label>
+                          </AcademyField>
+                        </div>
+                      </div>
+                      <div className="academy-card-actions">
+                        <button disabled={savingTeacher} className="academy-primary" type="submit">
+                          {t.saveTeacher}
+                        </button>
+                        {teacherForm.id && teacherForm.status === 'archived' && (
+                          <button
+                            type="button"
+                            className="academy-danger"
+                            disabled={savingTeacher}
+                            onClick={() => void permanentlyDeleteTeacher()}
+                          >
+                            {
+                              {
+                                fa: 'حذف دائمی استاد',
+                                en: 'Delete teacher permanently',
+                                sv: 'Radera läraren permanent',
+                                de: 'Lehrkraft endgültig löschen'
+                              }[locale]
+                            }
+                          </button>
+                        )}
+                        {teacherForm.id && teacherForm.status !== 'archived' && (
+                          <button
+                            type="button"
+                            className="academy-danger"
+                            onClick={() => setArchiveTeacherConfirm(true)}
+                          >
+                            {
+                              {
+                                fa: 'حذف از استادان فعال',
+                                en: 'Remove active teacher',
+                                sv: 'Ta bort aktiv lärare',
+                                de: 'Aktive Lehrkraft entfernen'
+                              }[locale]
+                            }
+                          </button>
+                        )}
+                      </div>
+                      {archiveTeacherConfirm && (
+                        <div className="academy-danger-confirm" role="alert">
+                          <strong>
+                            {
+                              {
+                                fa: 'هشدار: دسترسی تدریس قطع و استاد از فهرست عمومی حذف می‌شود.',
+                                en: 'Warning: teaching access will be revoked and this teacher will leave the public directory.',
+                                sv: 'Varning: lärarbehörigheten tas bort och läraren visas inte längre offentligt.',
+                                de: 'Warnung: Der Lehrzugriff wird entzogen und das öffentliche Profil ausgeblendet.'
+                              }[locale]
+                            }
+                          </strong>
+                          <p>
+                            {
+                              {
+                                fa: 'سوابق کلاس و دانشجوها حفظ می‌شود و امکان فعال‌سازی مجدد وجود دارد.',
+                                en: 'Class and student history is retained and the teacher can be reactivated.',
+                                sv: 'Klass- och elevhistorik sparas och läraren kan återaktiveras.',
+                                de: 'Klassen- und Schülerhistorie bleiben erhalten; die Lehrkraft kann reaktiviert werden.'
+                              }[locale]
+                            }
+                          </p>
+                          <button
+                            type="button"
+                            className="academy-danger"
+                            disabled={savingTeacher}
+                            onClick={async () => {
+                              setSavingTeacher(true)
+                              try {
+                                const { data, error } = await supabase()
+                                  .from('academy_teachers')
+                                  .update({ status: 'archived' })
+                                  .eq('id', teacherForm.id)
+                                  .select('id')
+                                  .single()
+                                if (error || !data) throw error || new Error('Teacher was not updated')
+                                setArchiveTeacherConfirm(false)
+                                setTeacherForm(current => ({ ...current, status: 'archived' }))
+                                setNotice(t.saved)
+                                await refresh()
+                              } catch (error) {
+                                setNotice(
+                                  t.failed + ' ' + String(error instanceof Error ? error.message : error)
+                                )
+                              } finally {
+                                setSavingTeacher(false)
+                              }
+                            }}
+                          >
+                            {
+                              {
+                                fa: 'تأیید غیرفعال‌سازی',
+                                en: 'Confirm deactivation',
+                                sv: 'Bekräfta inaktivering',
+                                de: 'Deaktivierung bestätigen'
+                              }[locale]
+                            }
+                          </button>
+                          <button type="button" onClick={() => setArchiveTeacherConfirm(false)}>
+                            {{ fa: 'انصراف', en: 'Cancel', sv: 'Avbryt', de: 'Abbrechen' }[locale]}
+                          </button>
+                        </div>
+                      )}
+                    </form>
+                  )}
+                  <div hidden>
+                    <AcademyField locale={locale}>
+                      <label className="academy-search">
+                        {
+                          {
+                            fa: 'جستجوی استاد',
+                            en: 'Search teachers',
+                            sv: 'Sök lärare',
+                            de: 'Lehrkräfte suchen'
+                          }[locale]
+                        }
+                        <input
+                          type="search"
+                          value={adminTeacherSearch}
+                          onChange={e => setAdminTeacherSearch(e.target.value)}
+                        />
+                      </label>
+                    </AcademyField>
+                    <div className="academy-teacher-admin-list">
+                      {teachers
+                        .filter(teacher =>
+                          localizedName(teacher, locale)
+                            .toLocaleLowerCase()
+                            .includes(adminTeacherSearch.toLocaleLowerCase())
+                        )
+                        .map(teacher => (
+                          <details className="academy-card" key={teacher.id}>
+                            <summary>
+                              {localizedName(teacher, locale)} · {academyStatus(teacher.status, locale)}
+                            </summary>
+                            <button onClick={() => editTeacher(teacher)}>{t.edit}</button>
+                            {teacher.status !== 'archived' && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  editTeacher(teacher)
+                                  setTeacherForm(current => ({ ...current, status: 'archived' }))
+                                  revealEditor(teacherEditorRef)
+                                }}
+                              >
+                                {
+                                  {
+                                    fa: 'غیرفعال‌کردن استاد',
+                                    en: 'Deactivate teacher',
+                                    sv: 'Inaktivera lärare',
+                                    de: 'Lehrkraft deaktivieren'
+                                  }[locale]
+                                }
+                              </button>
+                            )}
+                            <h4>{t.teacherCourses}</h4>
+                            {teacherCourses
+                              .filter(tc => tc.teacher_id === teacher.id)
+                              .map(tc => (
+                                <p key={tc.course_id}>
+                                  {text(courses.find(c => c.id === tc.course_id)?.title_i18n)}
+                                </p>
+                              ))}
+                            <h4>{workspaceLabel(locale, 'دانشجوها', 'Students')}</h4>
+                            {adminEnrollments
+                              .filter(e => e.teacher_id === teacher.id && !e.removed_at)
+                              .map(e => (
+                                <p key={e.id}>
+                                  {e.student_name || e.student_email} ·{' '}
+                                  {text(courses.find(c => c.id === e.course_id)?.title_i18n)} ·{' '}
+                                  {academyStatus(e.status, locale)}
+                                </p>
+                              ))}
+                          </details>
+                        ))}
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </section>
+        )}
+        {page === 'resources' && (
+          <>
+            <section className="academy-section split" id="resources">
+              <div>
+                <p className="academy-kicker">{t.about}</p>
+                <h2>{t.resourcesTitle}</h2>
+                <p>{t.resourcesB}</p>
+              </div>
+              <div className="academy-card">
+                <h3>{t.learningSpace}</h3>
+                <p>{t.learningB}</p>
+                <div className="academy-card-actions">
+                  <button type="button" className="academy-primary" onClick={() => go('personal')}>
+                    {t.personal}
+                  </button>
+                  <button type="button" onClick={() => go('courses')}>
+                    {t.courses}
+                  </button>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+        {page === 'contact' && (
+          <>
+            <section className="academy-section split" id="contact">
+              <div>
+                <p className="academy-kicker">{t.about}</p>
+                <h2>{t.contactTitle}</h2>
+                <p>{t.contactB}</p>
+              </div>
+              <div className="academy-contact">
+                <a href="mailto:rayan.rahpou@gmail.com">rayan.rahpou@gmail.com</a>
+              </div>
+            </section>
+          </>
+        )}
+      </main>
+      <button
+        className="academy-top-button"
+        onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label={t.top}
+      >
+        ↑
+      </button>
+      {bookingTeacher && (
+        <AcademyBookingDialog
           locale={locale}
           userId={userId}
+          teacher={bookingTeacher}
           courses={courses}
-          teachers={teachers}
-          selfTeacher={selfTeacher}
-          teacherCourseIds={selfTeacher?teacherCourses.filter(tc=>tc.teacher_id===selfTeacher.id).map(tc=>tc.course_id):[]}
-          isAdmin={isAdmin}
-          onNotice={setNotice}
-        />}
-   </section></>}
-   {page==='admin'&&!isAdmin&&<section className="academy-section"><div className="academy-empty"><p>{userId?t.personalTitle:t.signin}</p><button className="academy-primary" onClick={()=>userId?go('personal'):openDialog({type:'login'})}>{userId?t.personal:t.login}</button></div></section>}
-   {page==='admin'&&isAdmin&&<section className="academy-section academy-admin" id="admin-studio"><div className="academy-section-head"><p>{t.settings}</p><h2>{t.adminTitle}</h2><span>{t.adminB}</span></div><nav className="academy-portal-nav" aria-label={t.adminTitle}>{([['users',({fa:'کاربران و دسترسی‌ها',en:'Users & access',sv:'Användare och behörighet',de:'Benutzer und Rechte'})[locale]],['enrollments',({fa:'ثبت‌نام‌ها',en:'Enrollments',sv:'Registreringar',de:'Anmeldungen'})[locale]],['courses',t.courseEditor],['teachers',t.teacherEditor],['seo',({fa:'سئو و گوگل',en:'SEO & Google',sv:'SEO & Google',de:'SEO & Google'})[locale]]] as const).map(([id,label])=><button key={id} type="button" aria-pressed={adminPanel===id} onClick={()=>{openAdminPanel(id);if(id==='courses')revealEditor(courseEditorRef);if(id==='teachers')revealEditor(teacherEditorRef);if(id==='enrollments')revealEditor(enrollmentsRef)}}>{label}</button>)}</nav>{adminPanel!=='home'&&<button type="button" className="academy-panel-back" onClick={()=>{if(window.history.state?.academyAdminPanel)window.history.back();else setAdminPanel('home')}}>{({fa:'بازگشت',en:'Back',sv:'Tillbaka',de:'Zurück'})[locale]}</button>}{adminPanel==='seo'&&<AcademySeoManager locale={locale} userId={userId!} courses={courses} teachers={teachers}/> }<div hidden={adminPanel!=='users'}><details className="academy-card" open><summary>{workspaceLabel(locale,"کاربران و دسترسی‌ها","Users and access")}</summary><AcademyAdminLifecycle locale={locale} courses={courses} teachers={teachers.filter(t=>t.status==='active')} enrollments={adminEnrollments} onChanged={()=>void refresh()}/><AcademyUsers locale={locale} onCourses={id=>{setAdminFilter(id);openAdminPanel('enrollments');revealEditor(enrollmentsRef)}} onTeacher={u=>{openAdminPanel('teachers');revealEditor(teacherEditorRef);const teacher=teachers.find(t=>t.id===u.teacher_id);if(teacher)editTeacher(teacher);else{setTeacherEditorOpen(true);setTeacherTab('name');setTeacherForm({...blankTeacher,user_id:u.user_id,display_name:u.display_name||u.email,email:u.email});setTeacherAssigned([])}}} onAccessChanged={()=>void refresh()}/></details></div><div hidden={adminPanel!=='enrollments'}><details ref={enrollmentsRef} className="academy-pending"><summary>{workspaceLabel(locale,"دانشجوها و ثبت‌نام‌ها","Students & enrollments")}</summary><AcademyField locale={locale}><label><input type="checkbox" checked={showRemoved} onChange={e=>setShowRemoved(e.target.checked)}/>{workspaceLabel(locale,"نمایش حذف‌شده‌ها","Show removed enrollments")}</label></AcademyField><AcademyField locale={locale}><label>{workspaceLabel(locale,'جستجوی ثبت‌نام‌ها','Search student, email, course or status')}<input placeholder={workspaceLabel(locale,"جستجو: دانشجو، ایمیل، دوره یا وضعیت","Search student, email, course or status")} value={adminFilter} onChange={e=>setAdminFilter(e.target.value)}/></label></AcademyField><label>{({fa:'فیلتر وضعیت',en:'Filter status',sv:'Filtrera status',de:'Status filtern'})[locale]}<select value={enrollmentStatusFilter} onChange={e=>{setEnrollmentStatusFilter(e.target.value);if(e.target.value==='removed')setShowRemoved(true)}}><option value="all">{({fa:'همه',en:'All',sv:'Alla',de:'Alle'})[locale]}</option>{['active','interested','paused','completed','cancelled','removed'].map(status=><option key={status} value={status}>{academyStatus(status,locale)}</option>)}</select></label>{adminEnrollments.length===0?<p>—</p>:adminEnrollments.filter(e=>(showRemoved||!e.removed_at)&&(enrollmentStatusFilter==='all'||(enrollmentStatusFilter==='removed'?!!e.removed_at:!e.removed_at&&e.status===enrollmentStatusFilter))&&[e.student_id,e.student_name,e.student_email,e.status,text(courses.find(c=>c.id===e.course_id)?.title_i18n)].join(' ').toLowerCase().includes(adminFilter.toLowerCase())).map(e=>{const c=courses.find(x=>x.id===e.course_id);const eligible=teachers.filter(x=>x.status==='active'&&teacherCourses.some(tc=>tc.teacher_id===x.id&&tc.course_id===e.course_id));return <div className="pending-row" key={e.id}><span><strong>{e.student_name||e.student_id}</strong><small>{e.student_email} · {academyStatus(e.status,locale)}</small><br/>{c?text(c.title_i18n):e.course_id}</span><AcademyField locale={locale}><label>{t.selectTeacher}<select value={enrollmentTeacher[e.id]||e.teacher_id||''} onChange={ev=>setEnrollmentTeacher({...enrollmentTeacher,[e.id]:ev.target.value})}><option value="">{t.selectTeacher}</option>{eligible.map(x=><option key={x.id} value={x.id}>{x.display_name}</option>)}</select></label></AcademyField><div className="academy-card-actions"><button className="academy-primary small" onClick={()=>activateEnrollment(e)}>{e.status==='active'?(workspaceLabel(locale,"تغییر استاد","Assign teacher")):t.activate}</button>{e.space_id&&<button onClick={()=>{setFocusSpace(e.space_id!);setSpaceView('teacher');go('personal')}}>{workspaceLabel(locale,"باز کردن کلاس","Open classroom")}</button>}{['paused','completed','cancelled','removed'].map(status=><button key={status} disabled={e.status===status} onClick={async()=>{const {error}=await supabase().rpc('academy_admin_set_enrollment',{p_id:e.id,p_teacher_id:enrollmentTeacher[e.id]||e.teacher_id,p_status:status});setNotice(error?error.message:t.saved);if(!error)void refresh()}}>{status==='removed'?(workspaceLabel(locale,"حذف از دوره‌های کاربر","Remove enrollment")):status==='paused'?(workspaceLabel(locale,"توقف","Pause")):status==='completed'?(workspaceLabel(locale,"پایان دوره","Complete")):(workspaceLabel(locale,"لغو ثبت‌نام","Cancel enrollment"))}</button>)}</div></div>})}</details></div><div className="academy-admin-grid">
-    <div hidden={adminPanel!=='courses'}><details ref={courseEditorRef} className="academy-editor"><summary>{t.courseEditor}</summary><form onSubmit={saveCourse}><AcademyFormHelp locale={locale}/><div className="editor-head"><h3>{t.courseEditor}</h3><button type="button" onClick={()=>editCourse()}>{t.newCourse}</button></div><div className="editor-two"><div className="academy-field-help"><label>{t.subject}<input placeholder="e.g. sv" value={courseForm.subject_code} onChange={e=>setCourseForm({...courseForm,subject_code:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'کد زبان دوره را وارد کنید، برای مثال sv برای سوئدی.',en:'Enter the language code, for example sv for Swedish.',sv:'Ange språkkod, till exempel sv för svenska.',de:'Geben Sie den Sprachcode ein, z. B. sv für Schwedisch.'}}/></div><div className="academy-field-help"><label>{t.level}<input placeholder="e.g. A1" value={courseForm.level_code} onChange={e=>setCourseForm({...courseForm,level_code:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'سطح دوره مانند A1 یا B1 را وارد کنید.',en:'Enter a course level such as A1 or B1.',sv:'Ange kursnivå, till exempel A1 eller B1.',de:'Geben Sie die Kursstufe ein, zum Beispiel A1 oder B1.'}}/></div></div>{(['en','sv','de','fa'] as Locale[]).map(lang=><fieldset key={lang}><legend>{lang.toUpperCase()}</legend><AcademyField locale={locale}><label>{t.title}<input placeholder={lang==='fa'?'مثال: سوئدی A1 — شروع':'e.g. Swedish A1 — Starter Course'} value={courseForm[('title_'+lang) as keyof typeof courseForm] as string} onChange={e=>setCourseForm({...courseForm,['title_'+lang]:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.description}<textarea placeholder={lang==='fa'?'مثال: دوره عملی برای شروع زبان سوئدی':'e.g. Practical beginner course with live teacher support'} value={courseForm[('description_'+lang) as keyof typeof courseForm] as string} onChange={e=>setCourseForm({...courseForm,['description_'+lang]:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.topicLines}<textarea placeholder={lang==='fa'?'هر موضوع در یک خط، مثال: معرفی خود\nزمان حال\nزندگی روزمره':'One topic per line, e.g. Greetings\nPresent tense\nDaily routines'} value={courseForm[('topics_'+lang) as keyof typeof courseForm] as string} onChange={e=>setCourseForm({...courseForm,['topics_'+lang]:e.target.value})}/></label></AcademyField></fieldset>)}<div className="editor-two"><div className="academy-field-help"><label>{t.duration}<input placeholder="60" type="number" value={courseForm.duration_minutes} onChange={e=>setCourseForm({...courseForm,duration_minutes:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'مدت هر جلسه را به دقیقه وارد کنید.',en:'Enter the length of each session in minutes.',sv:'Ange varje lektions längd i minuter.',de:'Geben Sie die Dauer jeder Stunde in Minuten ein.'}}/></div><div className="academy-field-help"><label>{t.price}<input placeholder="350" type="number" value={courseForm.price_sek} onChange={e=>setCourseForm({...courseForm,price_sek:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'قیمت را به کرون وارد کنید؛ خالی یعنی قیمت با تماس مشخص می\u200cشود.',en:'Enter the price in SEK; leave empty for an enquiry.',sv:'Ange pris i SEK; tomt innebär pris på förfrågan.',de:'Geben Sie den Preis in SEK ein; leer bedeutet Preis auf Anfrage.'}}/></div></div><AcademyField locale={locale}><label>{t.courseTelegram}<input placeholder="https://t.me/your-course" value={courseForm.telegram_url} onChange={e=>setCourseForm({...courseForm,telegram_url:e.target.value})}/></label></AcademyField><div className="editor-checks"><span>{t.modes}</span><AcademyField locale={locale}><label><input type="checkbox" checked={courseForm.individual} onChange={e=>setCourseForm({...courseForm,individual:e.target.checked})}/>{t.individual}</label></AcademyField><AcademyField locale={locale}><label><input type="checkbox" checked={courseForm.group} onChange={e=>setCourseForm({...courseForm,group:e.target.checked})}/>{t.group}</label></AcademyField><AcademyField locale={locale}><label><input type="checkbox" checked={courseForm.offline} onChange={e=>setCourseForm({...courseForm,offline:e.target.checked})}/>{t.offline}</label></AcademyField></div><AcademyField locale={locale}><label>{t.status}<select value={courseForm.status} onChange={e=>setCourseForm({...courseForm,status:e.target.value})}><option value="draft">{academyStatus("draft",locale)}</option><option value="active">{academyStatus("active",locale)}</option><option value="archived">{academyStatus("archived",locale)}</option></select></label></AcademyField><button className="academy-primary" type="submit">{t.saveCourse}</button></form><AcademyField locale={locale}><label className="academy-search">{({fa:"جستجوی دوره",en:"Search courses",sv:"Sök kurser",de:"Kurse suchen"})[locale]}<input type="search" value={adminCourseSearch} onChange={e=>setAdminCourseSearch(e.target.value)}/></label></AcademyField><div className="academy-card-actions academy-admin-results">{courses.filter(c=>[text(c.title_i18n),c.level_code].join(" ").toLocaleLowerCase().includes(adminCourseSearch.toLocaleLowerCase())).map(c=><button key={c.id} onClick={()=>editCourse(c)}>{text(c.title_i18n)} · {academyStatus(c.status,locale)}</button>)}</div></details></div>
-    <div hidden={adminPanel!=='teachers'}><details ref={teacherEditorRef} className="academy-editor"><summary>{t.teacherEditor}</summary><div className="academy-teacher-picker"><AcademyField locale={locale}><label>{({fa:'جستجوی استاد',en:'Search teachers',sv:'Sök lärare',de:'Lehrkräfte suchen'})[locale]}<input type="search" value={adminTeacherSearch} onChange={e=>setAdminTeacherSearch(e.target.value)}/></label></AcademyField><label>{t.teachers}<select value={teacherForm.id} onChange={e=>{const teacher=teachers.find(x=>x.id===e.target.value);if(teacher)editTeacher(teacher);else setTeacherEditorOpen(false)}}><option value="">—</option>{teachers.filter(x=>x.id===teacherForm.id||localizedName(x,locale).toLocaleLowerCase().includes(adminTeacherSearch.toLocaleLowerCase())).map(x=><option key={x.id} value={x.id}>{localizedName(x,locale)}</option>)}</select></label><button type="button" className="academy-primary" onClick={()=>editTeacher()}>{t.newTeacher}</button></div>{teacherEditorOpen&&<form onSubmit={saveTeacher} onInvalidCapture={()=>setTeacherTab('name')}><AcademyFormHelp locale={locale}/><div className="academy-teacher-edit-layout"><nav className="academy-teacher-edit-menu">{([['name',{fa:'نام و تصویر',en:'Name & photo',sv:'Namn och bild',de:'Name und Bild'}],['intro',{fa:'معرفی',en:'Introduction',sv:'Presentation',de:'Vorstellung'}],['courses',{fa:'زبان‌ها و دوره‌ها',en:'Languages & courses',sv:'Språk och kurser',de:'Sprachen und Kurse'}],['contact',{fa:'اطلاعات تماس',en:'Contact details',sv:'Kontaktuppgifter',de:'Kontakt'}],['account',{fa:'حساب لینگو۳',en:'Linked Lingo3 account',sv:'Kopplat Lingo3-konto',de:'Lingo3-Konto'}]] as const).map(([key,label])=><button type="button" key={key} aria-pressed={teacherTab===key} onClick={()=>setTeacherTab(key)}>{label[locale]}</button>)}</nav><div className="academy-teacher-edit-fields"><div hidden={teacherTab!=='name'}><div className="academy-field-help"><label>{t.teacherName}<input placeholder={workspaceLabel(locale,"مثال: Anna Andersson","e.g. Anna Andersson")} required value={teacherForm.display_name} onChange={e=>setTeacherForm({...teacherForm,display_name:e.target.value})}/></label><AcademyHelp locale={locale} text={{fa:'نام نمایشی استاد را وارد کنید.',en:'Enter the teacher’s display name.',sv:'Ange lärarens visningsnamn.',de:'Geben Sie den Anzeigenamen der Lehrkraft ein.'}}/></div>{(['en','fa','sv','de'] as Locale[]).map(code=><AcademyField locale={locale} key={code}><label key={code}>{workspaceLabel(locale,"نام تأییدشده","Verified name")} {code.toUpperCase()}<input placeholder={code==='fa'?'نام فارسی استاد':'Teacher’s verified Latin name'} value={teacherForm[('name_'+code) as keyof typeof teacherForm] as string} onChange={e=>setTeacherForm({...teacherForm,['name_'+code]:e.target.value})}/></label></AcademyField>)}<AcademyField locale={locale}><label>{t.picture}<input placeholder="https://example.com/teacher-photo.jpg" value={teacherForm.photo_url} onChange={e=>setTeacherForm({...teacherForm,photo_url:e.target.value})}/></label></AcademyField></div><div hidden={teacherTab!=='intro'}>{(['en','sv','de','fa'] as Locale[]).map(lang=><AcademyField locale={locale} key={lang}><label key={lang}>{t.introduction} {lang.toUpperCase()}<textarea placeholder={lang==='fa'?'مثال: مدرس سوئدی با تمرکز بر مکالمه و SFI':'e.g. Swedish teacher focused on conversation and SFI'} value={teacherForm[('intro_'+lang) as keyof typeof teacherForm] as string} onChange={e=>setTeacherForm({...teacherForm,['intro_'+lang]:e.target.value})}/></label></AcademyField>)}</div><div hidden={teacherTab!=='courses'}><AcademyField locale={locale}><label>{t.teachLangs}<input placeholder="e.g. sv, en" value={teacherForm.teaching_languages} onChange={e=>setTeacherForm({...teacherForm,teaching_languages:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.spokenLangs}<input placeholder="e.g. sv, en, de" value={teacherForm.spoken_languages} onChange={e=>setTeacherForm({...teacherForm,spoken_languages:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.teacherLevels}<input placeholder="e.g. A1, A2, B1" value={teacherForm.levels} onChange={e=>setTeacherForm({...teacherForm,levels:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.specialties}<input placeholder="e.g. Conversation, SFI, pronunciation" value={teacherForm.specialties} onChange={e=>setTeacherForm({...teacherForm,specialties:e.target.value})}/></label></AcademyField><fieldset><legend>{t.teacherCourses}</legend><AcademyField locale={locale}><label>{({fa:"جستجوی دوره",en:"Search courses",sv:"Sök kurser",de:"Kurse suchen"})[locale]}<input type="search" value={teacherCourseSearch} onChange={e=>setTeacherCourseSearch(e.target.value)}/></label></AcademyField><div className="editor-course-checks">{courses.filter(c=>c.status!=='archived'&&[text(c.title_i18n),c.level_code].join(" ").toLocaleLowerCase().includes(teacherCourseSearch.toLocaleLowerCase())).map(c=><AcademyField locale={locale} key={c.id}><label key={c.id}><input type="checkbox" checked={teacherAssigned.includes(c.id)} onChange={e=>setTeacherAssigned(e.target.checked?[...teacherAssigned,c.id]:teacherAssigned.filter(id=>id!==c.id))}/>{text(c.title_i18n)} · {c.level_code}</label></AcademyField>)}</div></fieldset></div><div hidden={teacherTab!=='contact'}><fieldset><legend>{t.publicContact}</legend><AcademyField locale={locale}><label>{t.email}<input placeholder="teacher@example.com" type="email" value={teacherForm.email} onChange={e=>setTeacherForm({...teacherForm,email:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.phone}<input placeholder="e.g. +46 70 123 45 67" value={teacherForm.phone} onChange={e=>setTeacherForm({...teacherForm,phone:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.teamsChat}<input placeholder="https://teams.microsoft.com/..." value={teacherForm.teams_chat_url} onChange={e=>setTeacherForm({...teacherForm,teams_chat_url:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.teamsCall}<input placeholder="https://teams.microsoft.com/..." value={teacherForm.teams_call_url} onChange={e=>setTeacherForm({...teacherForm,teams_call_url:e.target.value})}/></label></AcademyField><AcademyField locale={locale}><label>{t.telegram}<input placeholder="https://t.me/username" value={teacherForm.telegram_url} onChange={e=>setTeacherForm({...teacherForm,telegram_url:e.target.value})}/></label></AcademyField></fieldset></div><div hidden={teacherTab!=='account'}><fieldset><legend>{t.linkedUser}</legend><div className="academy-user-lookup"><AcademyField locale={locale}><label>{workspaceLabel(locale,'جستجوی کاربر','Search')}<input placeholder="Search user by email or name" value={userLookup} onChange={e=>setUserLookup(e.target.value)}/></label></AcademyField><button type="button" onClick={searchAcademyUsers}>Search</button></div>{userMatches.length>0&&<div className="academy-user-results">{userMatches.map(u=><button type="button" key={u.user_id} onClick={()=>chooseTeacherUser(u)}><strong>{u.display_name||u.email||u.user_id}</strong><small>{u.email} {u.teacher_id?'· Teacher':''}</small></button>)}</div>}<AcademyField locale={locale}><label>{t.linkedUser}<input readOnly value={teacherForm.user_id} placeholder="Selected Lingo3 user ID"/></label></AcademyField><button type="button" onClick={()=>setTeacherForm({...teacherForm,user_id:''})}>{workspaceLabel(locale,"قطع اتصال حساب","Unlink account")}</button></fieldset></div><AcademyField locale={locale}><label>{t.status}<select value={teacherForm.status} onChange={e=>setTeacherForm({...teacherForm,status:e.target.value})}><option value="draft">{academyStatus("draft",locale)}</option><option value="active">{academyStatus("active",locale)}</option><option value="archived">{workspaceLabel(locale,"غیرفعال — قطع دسترسی تدریس","Inactive — teaching access revoked")}</option></select></label></AcademyField></div></div><div className="academy-card-actions"><button disabled={savingTeacher} className="academy-primary" type="submit">{t.saveTeacher}</button>{teacherForm.id&&teacherForm.status==='archived'&&<button type="button" className="academy-danger" disabled={savingTeacher} onClick={()=>void permanentlyDeleteTeacher()}>{({fa:'حذف دائمی استاد',en:'Delete teacher permanently',sv:'Radera läraren permanent',de:'Lehrkraft endgültig löschen'})[locale]}</button>}{teacherForm.id&&teacherForm.status!=='archived'&&<button type="button" className="academy-danger" onClick={()=>setArchiveTeacherConfirm(true)}>{({fa:'حذف از استادان فعال',en:'Remove active teacher',sv:'Ta bort aktiv lärare',de:'Aktive Lehrkraft entfernen'})[locale]}</button>}</div>{archiveTeacherConfirm&&<div className="academy-danger-confirm" role="alert"><strong>{({fa:'هشدار: دسترسی تدریس قطع و استاد از فهرست عمومی حذف می‌شود.',en:'Warning: teaching access will be revoked and this teacher will leave the public directory.',sv:'Varning: lärarbehörigheten tas bort och läraren visas inte längre offentligt.',de:'Warnung: Der Lehrzugriff wird entzogen und das öffentliche Profil ausgeblendet.'})[locale]}</strong><p>{({fa:'سوابق کلاس و دانشجوها حفظ می‌شود و امکان فعال‌سازی مجدد وجود دارد.',en:'Class and student history is retained and the teacher can be reactivated.',sv:'Klass- och elevhistorik sparas och läraren kan återaktiveras.',de:'Klassen- und Schülerhistorie bleiben erhalten; die Lehrkraft kann reaktiviert werden.'})[locale]}</p><button type="button" className="academy-danger" disabled={savingTeacher} onClick={async()=>{setSavingTeacher(true);try{const {data,error}=await supabase().from('academy_teachers').update({status:'archived'}).eq('id',teacherForm.id).select('id').single();if(error||!data)throw error||new Error('Teacher was not updated');setArchiveTeacherConfirm(false);setTeacherForm(current=>({...current,status:'archived'}));setNotice(t.saved);await refresh()}catch(error){setNotice(t.failed+' '+String(error instanceof Error?error.message:error))}finally{setSavingTeacher(false)}}}>{({fa:'تأیید غیرفعال‌سازی',en:'Confirm deactivation',sv:'Bekräfta inaktivering',de:'Deaktivierung bestätigen'})[locale]}</button><button type="button" onClick={()=>setArchiveTeacherConfirm(false)}>{({fa:'انصراف',en:'Cancel',sv:'Avbryt',de:'Abbrechen'})[locale]}</button></div>}</form>}<div hidden><AcademyField locale={locale}><label className="academy-search">{({fa:"جستجوی استاد",en:"Search teachers",sv:"Sök lärare",de:"Lehrkräfte suchen"})[locale]}<input type="search" value={adminTeacherSearch} onChange={e=>setAdminTeacherSearch(e.target.value)}/></label></AcademyField><div className="academy-teacher-admin-list">{teachers.filter(teacher=>localizedName(teacher,locale).toLocaleLowerCase().includes(adminTeacherSearch.toLocaleLowerCase())).map(teacher=><details className="academy-card" key={teacher.id}><summary>{localizedName(teacher,locale)} · {academyStatus(teacher.status,locale)}</summary><button onClick={()=>editTeacher(teacher)}>{t.edit}</button>{teacher.status!=='archived'&&<button type="button" onClick={()=>{editTeacher(teacher);setTeacherForm(current=>({...current,status:'archived'}));revealEditor(teacherEditorRef)}}>{({fa:'غیرفعال‌کردن استاد',en:'Deactivate teacher',sv:'Inaktivera lärare',de:'Lehrkraft deaktivieren'})[locale]}</button>}<h4>{t.teacherCourses}</h4>{teacherCourses.filter(tc=>tc.teacher_id===teacher.id).map(tc=><p key={tc.course_id}>{text(courses.find(c=>c.id===tc.course_id)?.title_i18n)}</p>)}<h4>{workspaceLabel(locale,"دانشجوها","Students")}</h4>{adminEnrollments.filter(e=>e.teacher_id===teacher.id&&!e.removed_at).map(e=><p key={e.id}>{e.student_name||e.student_email} · {text(courses.find(c=>c.id===e.course_id)?.title_i18n)} · {academyStatus(e.status,locale)}</p>)}</details>)}</div></div></details></div>
-   </div></section>}
-   {page==='resources'&&<><section className="academy-section split" id="resources"><div><p className="academy-kicker">{t.about}</p><h2>{t.resourcesTitle}</h2><p>{t.resourcesB}</p></div><div className="academy-card"><h3>{t.learningSpace}</h3><p>{t.learningB}</p><div className="academy-card-actions"><button type="button" className="academy-primary" onClick={()=>go('personal')}>{t.personal}</button><button type="button" onClick={()=>go('courses')}>{t.courses}</button></div></div></section></>}
-   {page==='contact'&&<><section className="academy-section split" id="contact"><div><p className="academy-kicker">{t.about}</p><h2>{t.contactTitle}</h2><p>{t.contactB}</p></div><div className="academy-contact"><a href="mailto:rayan.rahpou@gmail.com">rayan.rahpou@gmail.com</a></div></section></>}
-  </main>
-  <button className="academy-top-button" onClick={()=>scrollTo({top:0,behavior:'smooth'})} aria-label={t.top}>↑</button>
-  {bookingTeacher&&<AcademyBookingDialog
-    locale={locale}
-    userId={userId}
-    teacher={bookingTeacher}
-    courses={courses}
-    teacherCourses={teacherCourses}
-    initialCourseId={dialog?.type==='booking'?dialog.courseId:undefined}
-    onClose={closeDialog}
-    onSuccess={(message)=>{setNotice(message);setDialog(null);void refresh();go('personal')}}
-  />}
-    {loginOpen&&!userId&&<div className="academy-modal" role="dialog" aria-modal="true" aria-label={t.login}><div className="academy-modal-inner"><button className="modal-close" aria-label={workspaceLabel(locale,"بستن ورود","Close login")} onClick={()=>closeDialog()}>×</button><SignIn context="academy" locale={locale} onBack={()=>closeDialog()}/></div></div>}
-  {sessionLoading&&<div className="academy-session-check">{t.loading}</div>}
- </div>
+          teacherCourses={teacherCourses}
+          initialCourseId={dialog?.type === 'booking' ? dialog.courseId : undefined}
+          onClose={closeDialog}
+          onSuccess={message => {
+            setNotice(message)
+            setDialog(null)
+            void refresh()
+            go('personal')
+          }}
+        />
+      )}
+      {loginOpen && !userId && (
+        <div className="academy-modal" role="dialog" aria-modal="true" aria-label={t.login}>
+          <div className="academy-modal-inner">
+            <button
+              className="modal-close"
+              aria-label={workspaceLabel(locale, 'بستن ورود', 'Close login')}
+              onClick={() => closeDialog()}
+            >
+              ×
+            </button>
+            <SignIn context="academy" locale={locale} onBack={() => closeDialog()} />
+          </div>
+        </div>
+      )}
+      {sessionLoading && <div className="academy-session-check">{t.loading}</div>}
+    </div>
+  )
 }
