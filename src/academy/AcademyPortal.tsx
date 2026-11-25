@@ -14,6 +14,8 @@ import { AcademyDemoStudent } from './AcademyDemoStudent'
 import { AcademyTeacherDesk } from './AcademyTeacherDesk'
 import { navigateProduct } from '../lib/productNavigation'
 import { askConfirm } from './AcademyDialogs'
+import { AcademyLessonForm } from './AcademyLessonForm'
+import { AcademyTodayCard } from './AcademyTodayCard'
 
 import type { Locale } from './types'
 type Course = { id: string; subject_code: string; level_code: string; title_i18n: Record<string, string> }
@@ -1544,6 +1546,19 @@ export function AcademyPortal({
       .slice(0, 5)
     return (
       <div className="academy-student-summary" aria-busy={busy}>
+        {presentation === 'summary' && userId && (
+          <AcademyTodayCard
+            userId={userId}
+            locale={locale}
+            nextClass={
+              upcoming[0]
+                ? courseTitle(upcoming[0].course_id) +
+                  ' · ' +
+                  dt(upcoming[0].confirmed_start ?? upcoming[0].preferred_start)
+                : ''
+            }
+          />
+        )}
         <section className="academy-card">
           <div className="academy-discover-head">
             <h2>{t.myCourses}</h2>
@@ -3365,6 +3380,33 @@ export function AcademyPortal({
                       <p>{t.students}</p>
                     ) : (
                       <>
+                        {selected && (
+                          <AcademyLessonForm
+                            locale={locale}
+                            spaceId={selected.id}
+                            defaultLang={courses.find(c => c.id === selected.course_id)?.subject_code ?? 'sv'}
+                            sessions={bookings
+                              .filter(
+                                b =>
+                                  b.student_id === selected.student_id &&
+                                  b.course_id === selected.course_id &&
+                                  b.teacher_id === selected.teacher_id &&
+                                  ['confirmed', 'completed'].includes(b.status)
+                              )
+                              .map(b => ({
+                                id: b.id,
+                                label:
+                                  dt(b.confirmed_start ?? b.preferred_start) +
+                                  ' · ' +
+                                  academyStatus(b.status, locale)
+                              }))}
+                            onPublished={message => {
+                              onNotice(message)
+                              setRefreshTick(n => n + 1)
+                            }}
+                            onError={onNotice}
+                          />
+                        )}
                         <AcademyField locale={locale}>
                           <label>
                             {workspaceLabel(locale, 'جلسهٔ مربوط', 'Related session')}

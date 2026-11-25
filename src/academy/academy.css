@@ -2805,3 +2805,30 @@
   text-align: center;
   opacity: 0.7;
 }
+
+.academy-lesson-form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.academy-lesson-form label {
+  display: grid;
+  gap: 4px;
+}
+.academy-lesson-words {
+  border: 1px solid var(--ac-border);
+  border-radius: var(--ac-radius);
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+.academy-lesson-word {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.6fr) 1fr 1.2fr 1.4fr auto;
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .academy-lesson-word {
+    grid-template-columns: 1fr 1fr;
+  }
+}

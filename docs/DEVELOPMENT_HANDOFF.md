@@ -1,3 +1,9 @@
+## 2026-11-25 — Phase 1 class → word bank (v0.7.21)
+
+**Implemented:** see CHANGELOG. **Database:** migration 20261125120000 applied to Lingo3 project; RLS on, student/teacher read only, writes only via `academy_publish_lesson`; verified anon cannot execute it. **Tested:** `npm test`, build; delivery logic with fake IndexedDB. **Not verified:** real teacher publishing and student receiving; email (needs Vercel env `RESEND_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`; sender `academy@lingo3.com`, domain verified in Resend). **Next:** Phase 2.
+
+**Routes:** `/api/academy-notify` added (POST, not a navigation entry); no page route change.
+
 ## 2026-11-25 — Academy foundation, Phase 0 (v0.7.20)
 
 **Implemented:** see CHANGELOG. **Tested:** full `npm test`, typecheck, production build. **Deployed:** pushed to `main` by owner's instruction (no test site). **Not verified:** real signed-in student/teacher/admin flows, lazy-chunk loading on a real device. **Next:** Phase 1 (lesson words into the App) then Phase 2 (navigation and enrolment); plan in `docs/ACADEMY_IMPROVEMENT_PLAN.md`.

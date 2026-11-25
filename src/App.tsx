@@ -12,7 +12,8 @@ import { ensureDefaultCollection } from './db/collections'
 import { queueCounts } from './fsrs/queue'
 import { processPending } from './ai/expand'
 import { LANG_NAMES, activeTargets, type Settings } from './db/types'
-import { authConfigured } from './auth/supabase'
+import { authConfigured, supabase } from './auth/supabase'
+import { installLessonWords, type LessonWordRow } from './seed/lessonWords'
 import { consumeOAuthReturnPath, useSession, type SessionState } from './auth/useSession'
 import { ResetPassword } from './auth/ResetPassword'
 import { SignIn } from './auth/SignIn'
@@ -253,6 +254,36 @@ function LingoApp({ sessionState }: { sessionState: SessionState }) {
       cancelled = true
     }
   }, [session, userId])
+
+  // Words a teacher published after a lesson arrive in the student's own vocabulary.
+  // Runs after sign-in and when the tab becomes visible again; offline or signed-out is a no-op.
+  useEffect(() => {
+    if (!dbReady || !userId || !authConfigured) return
+    let cancelled = false
+    const pull = async () => {
+      try {
+        const { data, error } = await supabase()
+          .from('academy_lesson_words')
+          .select('id,lang,word,meaning,example')
+          .eq('student_id', userId)
+          .order('created_at', { ascending: true })
+          .limit(500)
+        if (error || cancelled || !data?.length) return
+        await installLessonWords(data as LessonWordRow[])
+      } catch {
+        /* best effort: lesson words are retried at the next visit */
+      }
+    }
+    void pull()
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void pull()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      cancelled = true
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [dbReady, userId])
 
 
   if (path.replace(/\/+$/, '') === '/privacy') {

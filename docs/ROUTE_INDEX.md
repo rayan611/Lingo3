@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.21: `/api/academy-notify` (POST, teacher session token) sends lesson-published email; not a navigation entry. No page route change.
+
 2026-11-25 review v0.7.20: Phase 0 restructuring only; no route change.
 
 2026-11-22 production review v0.7.19, runtime commit `49c48096`: `/academy.html` redirects to `/academy`, and `/academy/my` provides My Courses/profile via UI state. Production HTTP check reached Persian Academy HTML; actual browser Back and user-device acceptance remain unverified. Documentation revision only.
