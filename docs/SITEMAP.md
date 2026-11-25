@@ -1,3 +1,5 @@
+2026-11-25 review v0.7.28: `/academy/path` now contains the level check; `/academy/teachers/:id` shows reviews when an admin has switched them on; no new URL.
+
 2026-11-25 review v0.7.27: audit, documentation and a null-safe fix only; no route or navigation change.
 
 2026-11-25 review v0.7.26: booking dialog becomes a 3-step sheet (same overlay history behaviour); course cards redesigned; no URL change.

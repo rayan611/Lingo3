@@ -3345,3 +3345,86 @@
   font-size: clamp(1.4rem, 5vw, 2rem);
   line-height: 1.2;
 }
+
+/* ---------- Level check ---------- */
+.academy .ac-placement {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+.academy .ac-question {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 4px 0;
+}
+.academy .ac-level-big {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--ac-primary);
+  margin: 0;
+  line-height: 1.1;
+}
+.academy .ac-placement progress {
+  width: 100%;
+  height: 8px;
+  accent-color: var(--ac-primary);
+}
+
+/* ---------- Progress numbers ---------- */
+.academy .ac-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+.academy .ac-stat {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--ac-surface-2);
+}
+.academy .ac-stat strong {
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: var(--ac-primary);
+}
+.academy .ac-stat span {
+  color: var(--ac-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Reviews ---------- */
+.academy .ac-reviews {
+  display: grid;
+  gap: 12px;
+}
+.academy .ac-review {
+  display: grid;
+  gap: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ac-border);
+}
+.academy .ac-review strong {
+  color: var(--ac-accent);
+}
+.academy .ac-review p {
+  margin: 0;
+}
+.academy .ac-review-reply {
+  color: var(--ac-muted);
+}
+.academy .ac-review-reply strong {
+  color: inherit;
+}
+.academy .ac-review-form {
+  display: grid;
+  gap: 8px;
+}
+.academy .academy-reviews-switch {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.academy p.ac-level-big {
+  color: var(--ac-primary);
+}

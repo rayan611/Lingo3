@@ -208,3 +208,8 @@ lessons count down correctly; an AI draft can never be published without the tea
 ## Status update 2026-11-25 (v0.7.27)
 
 Done: Phase 0 (except splitting the two giant components), Phase 1 (e-mail inactive until Vercel variables are set), Phase 2 (partial: guest bar, admin overview, home), and design v2 parts 1–2 (calm skin, teacher/course cards, three-step booking sheet, phone menu fix). Standards: `docs/UI_STANDARDS.md`, `docs/DECISIONS.md`, audit `docs/AUDIT_2026-11-25.md`. Next: design v2 part 3 (Today screens, admin tabs), CSS debt behind the ratchet, then Phase 3.
+
+
+## Status update 2026-11-25 (v0.7.28)
+
+Phase 3: level filter added (language filter existed), progress card, no-show and cancellation counts, reviews built (off by default). Phase 4: level check built (Swedish, English). **Not built:** AI draft, packages, payments, teacher-swap guarantee (owner's payment decision pending), richer teacher profile fields, 24-hour reminder e-mail, Phase 5. Decisions: `docs/DECISIONS.md` D-09, D-10.

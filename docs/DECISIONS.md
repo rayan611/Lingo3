@@ -5,6 +5,12 @@ entry without the owner's say-so; add a new entry that supersedes it instead. Cu
 `docs/DEVELOPMENT_HANDOFF.md`, chronology in `docs/DEVELOPMENT_HISTORY.md`, remaining work in `docs/ACADEMY_ROADMAP.md`
 and `docs/ACADEMY_IMPROVEMENT_PLAN.md`, UI rules in `docs/UI_STANDARDS.md`.
 
+## D-10 · 2026-11-25 · The level check is an estimate, two languages, no account
+Swedish and English only (12 questions each, three per step A1–B2); a step counts when two of three are right and every lower step passed; the result is stored on the device and shown as an estimate a teacher confirms. More languages need questions written by a teacher of that language, not generated. **Consequence:** add a language by adding to `placementQuestions.ts` and keeping `scripts/check-placement.ts` green.
+
+## D-09 · 2026-11-25 · Reviews exist but are off until an admin switches them on
+`academy_features.reviews_enabled` (default false) gates reading and writing. Writing goes only through `academy_review_action` (needs a completed lesson); reading is by policy; the API never exposes reviewer ids or booking ids (column grant). **Consequence:** do not grant more columns; changing the policy needs the same checks as any RLS change.
+
 ## D-08 · 2026-11-25 · UI changes are ratcheted, not rewritten
 The Academy stylesheet carries historical debt. `scripts/check-ui-standards.mjs` freezes the counts (hex colours,
 `!important`, odd breakpoints, repeated `.academy-nav.is-open`) as ceilings that may only fall. New work uses `--ac-*`

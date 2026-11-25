@@ -9,6 +9,7 @@ import { AcademyDialogHost, askText } from './AcademyDialogs'
 import { AcademyAdminOverview } from './AcademyAdminOverview'
 import { AcademyTeacherCard, AcademySkeletonCards } from './AcademyTeacherCard'
 import { AcademyCourseCard } from './AcademyCourseCard'
+import { AcademyPlacement } from './AcademyPlacement'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
@@ -223,6 +224,7 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
   const [catalogSearch, setCatalogSearch] = useState(''),
     [teacherSearch, setTeacherSearch] = useState(''),
     [teacherLang, setTeacherLang] = useState(''),
+    [teacherLevel, setTeacherLevel] = useState(''),
     [adminCourseSearch, setAdminCourseSearch] = useState(''),
     [adminTeacherSearch, setAdminTeacherSearch] = useState(''),
     [teacherCourseSearch, setTeacherCourseSearch] = useState('')
@@ -1499,6 +1501,18 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   </label>
                 </AcademyField>
               </div>
+              <AcademyPlacement
+                locale={locale}
+                onResult={(lang, found) => {
+                  setSubject(lang)
+                  setLevel(found)
+                }}
+                onCourses={() => go('courses')}
+                onTeachers={lang => {
+                  setTeacherLang(lang)
+                  go('teachers')
+                }}
+              />
               {recommendation && (
                 <article className="academy-recommend">
                   <div>
@@ -1531,6 +1545,7 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
             teachers={activeTeachers.filter(x => x.status === 'active')}
             links={teacherCourses}
             loading={loading}
+            userId={userId}
             onBook={(teacherId, courseId) => openDialog({ type: 'booking', teacherId, courseId })}
           />
         )}
@@ -1644,6 +1659,27 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   </button>
                 ))}
               </div>
+              <div className="ac-filter-chips" role="group" aria-label={t.current}>
+                <button
+                  type="button"
+                  className={'ac-chip-btn' + (teacherLevel ? '' : ' on')}
+                  onClick={() => setTeacherLevel('')}
+                >
+                  {t.current}: {{ en: 'any', sv: 'alla', fa: 'همه', de: 'alle' }[locale]}
+                </button>
+                {['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+                  .filter(code => activeTeachers.some(x => x.levels.includes(code)))
+                  .map(code => (
+                    <button
+                      key={code}
+                      type="button"
+                      className={'ac-chip-btn' + (teacherLevel === code ? ' on' : '')}
+                      onClick={() => setTeacherLevel(code)}
+                    >
+                      {code}
+                    </button>
+                  ))}
+              </div>
               {loading && <AcademySkeletonCards />}
               {activeTeachers.filter(x => x.status === 'active' || isAdmin).length === 0 ? (
                 <div className="academy-empty">
@@ -1665,6 +1701,7 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                       x =>
                         (x.status === 'active' || isAdmin) &&
                         (!teacherLang || x.teaching_languages.includes(teacherLang)) &&
+                        (!teacherLevel || x.levels.includes(teacherLevel)) &&
                         [localizedName(x, locale), text(x.intro_i18n), ...x.teaching_languages, ...x.levels]
                           .join(' ')
                           .toLocaleLowerCase()

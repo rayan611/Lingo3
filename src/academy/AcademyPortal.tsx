@@ -16,6 +16,7 @@ import { navigateProduct } from '../lib/productNavigation'
 import { askConfirm } from './AcademyDialogs'
 import { AcademyLessonForm } from './AcademyLessonForm'
 import { AcademyTodayCard } from './AcademyTodayCard'
+import { AcademyProgressCard } from './AcademyProgressCard'
 
 import type { Locale } from './types'
 type Course = { id: string; subject_code: string; level_code: string; title_i18n: Record<string, string> }
@@ -1561,6 +1562,7 @@ export function AcademyPortal({
             }
           />
         )}
+        {presentation === 'summary' && userId && <AcademyProgressCard userId={userId} locale={locale} />}
         <section className="academy-card">
           <div className="academy-discover-head">
             <h2>{t.myCourses}</h2>

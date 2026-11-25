@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Course, Teacher } from './Academy'
 import { AcademyShare } from './AcademyShare'
+import { AcademyReviews } from './AcademyReviews'
 import { localizedName } from './preferences'
 import { navigateProduct } from '../lib/productNavigation'
 import { supabase } from '../auth/supabase'
@@ -82,6 +83,7 @@ export function AcademyPublicDetail({
   teachers,
   links,
   loading,
+  userId,
   onBook
 }: {
   locale: keyof typeof copy
@@ -91,6 +93,7 @@ export function AcademyPublicDetail({
   teachers: Teacher[]
   links: { teacher_id: string; course_id: string }[]
   loading: boolean
+  userId?: string | null
   onBook: (teacherId: string, courseId?: string) => void
 }) {
   const t = copy[locale],
@@ -311,7 +314,14 @@ export function AcademyPublicDetail({
                 <ul className="academy-detail-list">
                   {calendar.map(s => (
                     <li key={s.id}>
-                      {new Date(s.starts_at).toLocaleString(locale, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} ·{' '}
+                      {new Date(s.starts_at).toLocaleString(locale, {
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}{' '}
+                      ·{' '}
                       {s.status === 'free'
                         ? { fa: 'آزاد', sv: 'Ledig', de: 'Frei', en: 'Free' }[locale]
                         : { fa: 'رزروشده', sv: 'Bokad', de: 'Gebucht', en: 'Booked' }[locale]}
@@ -319,6 +329,14 @@ export function AcademyPublicDetail({
                   ))}
                 </ul>
               </aside>
+              {teacher && (
+                <AcademyReviews
+                  teacherId={teacher.id}
+                  userId={userId ?? null}
+                  locale={locale}
+                  isTeacherOwner={Boolean(userId && teacher.user_id === userId)}
+                />
+              )}
               <section className="academy-card academy-profile-contact">
                 <h2>{{ fa: 'راه‌های ارتباطی', en: 'Contact', sv: 'Kontakt', de: 'Kontakt' }[locale]}</h2>
                 <div className="teacher-contact">

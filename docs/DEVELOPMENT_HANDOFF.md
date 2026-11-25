@@ -1,3 +1,9 @@
+## 2026-11-25 — Phases 3–4 subset (v0.7.28)
+
+See CHANGELOG. **Database:** migrations 20261125180000 (indexes) and 20261125190000 (reviews read side) applied; checked: anon cannot read reviewer ids, reviews_on = false. **Not verified:** a real review being written and shown (needs the switch on plus a completed lesson), progress numbers with real data. **Next:** owner decides payment market (blocks packages/payments/guarantee); AI draft endpoint; richer teacher profile; design v2 part 3.
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no new URL (level check lives inside `/academy/path`).
+
 ## 2026-11-25 — Audit and standards (v0.7.27)
 
 **Implemented:** see CHANGELOG. **Tested:** `npm test` (includes `check:ui`), typecheck, build, mock-data headless audit (`docs/AUDIT_2026-11-25.md` §Method). **Database:** migration 20261125180000 applied (indexes only). **Not verified:** anything with real accounts, real phones, e-mail delivery, the original refresh error. **Next action:** design v2 part 3 (Today screens, admin tabs) on `docs/UI_STANDARDS.md`; lower the CSS ceilings as debt is removed; owner: leaked-password protection and the two Vercel variables.
