@@ -201,3 +201,10 @@ lessons count down correctly; an AI draft can never be published without the tea
 2. **Placement test languages** to start with (suggested: Swedish and English).
 3. **Cancellation window:** 12 h or 24 h.
 4. **Trial lesson:** free or reduced price.
+
+
+---
+
+## Status update 2026-11-25 (v0.7.27)
+
+Done: Phase 0 (except splitting the two giant components), Phase 1 (e-mail inactive until Vercel variables are set), Phase 2 (partial: guest bar, admin overview, home), and design v2 parts 1–2 (calm skin, teacher/course cards, three-step booking sheet, phone menu fix). Standards: `docs/UI_STANDARDS.md`, `docs/DECISIONS.md`, audit `docs/AUDIT_2026-11-25.md`. Next: design v2 part 3 (Today screens, admin tabs), CSS debt behind the ratchet, then Phase 3.

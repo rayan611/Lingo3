@@ -204,3 +204,7 @@ Verification: full existing npm test passed; article UI transport test and SEO H
 Remaining: domain email/reminders/retry provider not configured (no sending API key in Vercel); no delivery claim. Automatic video/calendar/payment integrations remain outside this release. Historic teacher-authored assessment records retain their authorship; new teacher can read shared classroom history and write new assessments. No production data deleted. Source release and deployment pending until recorded below.
 
 SITEMAP/ROUTE_INDEX reviewed and updated with actual active/planned and role boundaries. Central governance URL was unavailable; owner-provided Lean v3 protocol used.
+
+## 2026-11-25 — Academy rebuild, design v2 and standards (v0.7.20–0.7.27)
+
+Foundation (readable code, lazy role chunks, in-app dialogs, tokens, time-zone helper), lesson words delivered into the App review, public home and guest bar, admin overview, calm card UI with teacher/course cards and a three-step booking sheet, phone-menu and refresh fixes, full audit, UI standards with an enforced ratchet and a decision log. Detail: `CHANGELOG.md`, `docs/DECISIONS.md`, `docs/AUDIT_2026-11-25.md`.

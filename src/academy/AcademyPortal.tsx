@@ -1883,7 +1883,7 @@ export function AcademyPortal({
             {selected && (
               <p>
                 {selected.student_display_name} · {selected.progress}% ·{' '}
-                {selected.next_session_topics.join(' · ')}
+                {(selected.next_session_topics ?? []).join(' · ')}
               </p>
             )}
           </section>

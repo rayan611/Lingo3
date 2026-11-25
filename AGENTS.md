@@ -18,3 +18,7 @@ Before ending every development session: update and commit docs/DEVELOPMENT_HAND
 
 ## Lean Development Protocol v3.0 (2026-11-02)
 Follow the [central Lean Development Protocol v3.0](https://github.com/rayan611/apps-ontrol-panel-/blob/main/docs/AI_DEVELOPMENT_PROTOCOL.md) for proportional inspection, implementation, testing and handoff. This is the current owner-approved execution workflow; preserve existing security, approval and product-specific constraints.
+
+## UI and decisions (added 2026-11-25)
+
+Before changing any Academy screen read `docs/UI_STANDARDS.md` (fonts, colours via `--ac-*` tokens, breakpoints, menus, shared components, forbidden patterns) and `docs/DECISIONS.md` (standing decisions, including that `main` does not deploy by itself). Run `npm test` (it includes `npm run check:ui`). Record any new standing decision in `docs/DECISIONS.md` and the release in `CHANGELOG.md` with the deployment id and rollback target.

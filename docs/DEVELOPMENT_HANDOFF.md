@@ -1,3 +1,9 @@
+## 2026-11-25 — Audit and standards (v0.7.27)
+
+**Implemented:** see CHANGELOG. **Tested:** `npm test` (includes `check:ui`), typecheck, build, mock-data headless audit (`docs/AUDIT_2026-11-25.md` §Method). **Database:** migration 20261125180000 applied (indexes only). **Not verified:** anything with real accounts, real phones, e-mail delivery, the original refresh error. **Next action:** design v2 part 3 (Today screens, admin tabs) on `docs/UI_STANDARDS.md`; lower the CSS ceilings as debt is removed; owner: leaked-password protection and the two Vercel variables.
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no route change.
+
 ## 2026-11-25 — Design v2 part 2 (v0.7.26)
 
 See CHANGELOG. Verified: tests, build, mock screenshots. **Not verified:** real signed-in booking end to end, step 3 screen, Persian/RTL layout of the sheet, desktop booking layout. **Next:** check those on a real device; then per-role Today layouts and the remaining pages.
