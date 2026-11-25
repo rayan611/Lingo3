@@ -41,8 +41,7 @@ export const C = {
     interest: 'Add to my courses',
     added: 'Added to My Academy',
     directory: 'Teacher directory',
-    noneTeachers:
-      'No verified teachers are published yet. Admin can add and publish teachers in Admin Studio.',
+    noneTeachers: 'Teachers will be listed here soon. Please check back shortly.',
     requestTrial: 'Request trial',
     requested: 'Trial requested',
     email: 'Email',
@@ -161,8 +160,7 @@ export const C = {
     interest: 'Lägg till i mina kurser',
     added: 'Tillagd i Min Academy',
     directory: 'Lärarkatalog',
-    noneTeachers:
-      'Inga verifierade lärare är publicerade ännu. Admin kan lägga till och publicera lärare i Adminstudio.',
+    noneTeachers: 'Lärare listas här inom kort. Titta in igen snart.',
     requestTrial: 'Begär provlektion',
     requested: 'Provlektion begärd',
     email: 'E-post',
@@ -280,8 +278,7 @@ export const C = {
     interest: 'Zu meinen Kursen hinzufügen',
     added: 'Zu Meine Academy hinzugefügt',
     directory: 'Lehrkräfte',
-    noneTeachers:
-      'Noch sind keine verifizierten Lehrkräfte veröffentlicht. Admins können Lehrkräfte im Admin Studio hinzufügen und freischalten.',
+    noneTeachers: 'Lehrkräfte werden hier bald angezeigt. Bitte schauen Sie bald wieder vorbei.',
     requestTrial: 'Probestunde anfragen',
     requested: 'Probestunde angefragt',
     email: 'E-Mail',
@@ -400,8 +397,7 @@ export const C = {
     interest: 'افزودن به دوره‌های من',
     added: 'به آکادمی من اضافه شد',
     directory: 'فهرست مدرس‌ها',
-    noneTeachers:
-      'هنوز مدرس تأییدشده‌ای منتشر نشده است. مدیر می‌تواند مدرس را در بخش مدیریت اضافه و فعال کند.',
+    noneTeachers: 'به‌زودی مدرس‌ها در اینجا نمایش داده می‌شوند. لطفاً کمی بعد دوباره سر بزنید.',
     requestTrial: 'درخواست جلسه آزمایشی',
     requested: 'درخواست ثبت شد',
     email: 'ایمیل',

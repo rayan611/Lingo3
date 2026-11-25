@@ -6,6 +6,7 @@ import { workspaceLabel } from './workspaceLabels'
 import { Suspense, useEffect, useMemo, useRef, useState, type ComponentProps } from 'react'
 import { lazyScreen } from '../ui/lazyScreen'
 import { AcademyDialogHost, askText } from './AcademyDialogs'
+import { AcademyAdminOverview } from './AcademyAdminOverview'
 import { supabase } from '../auth/supabase'
 import { SignIn } from '../auth/SignIn'
 import { AcademyBookingDialog } from './AcademyBookingDialog'
@@ -929,94 +930,142 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
           </button>
         </nav>
       </header>
-      <nav
-        className="academy-bottom-nav"
-        aria-label={
-          locale === 'fa'
-            ? 'ناوبری آکادمی'
-            : locale === 'sv'
-              ? 'Akademinavigering'
-              : locale === 'de'
-                ? 'Academy-Navigation'
-                : 'Academy navigation'
-        }
-      >
-        <button type="button" aria-current={page === 'home' ? 'page' : undefined} onClick={() => go('home')}>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7" />
-          </svg>
-          <span>{t.home}</span>
-        </button>
-        <button
-          type="button"
-          aria-current={page === 'personal' && personalMode === 'courses' ? 'page' : undefined}
-          onClick={() => {
-            go('personal')
-            setPersonalMode('courses')
-            window.history.replaceState(
-              { ...window.history.state, academyPersonalMode: 'courses' },
-              '',
-              window.location.href
-            )
-          }}
+      {!userId ? (
+        <nav className="academy-bottom-nav" aria-label={t.home}>
+          <button
+            type="button"
+            aria-current={page === 'home' ? 'page' : undefined}
+            onClick={() => go('home')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7" />
+            </svg>
+            <span>{t.home}</span>
+          </button>
+          <button
+            type="button"
+            aria-current={page === 'courses' ? 'page' : undefined}
+            onClick={() => go('courses')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14" />
+            </svg>
+            <span>{t.courses}</span>
+          </button>
+          <button
+            type="button"
+            aria-current={page === 'teachers' ? 'page' : undefined}
+            onClick={() => go('teachers')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21c0-5 3-7 8-7s8 2 8 7" />
+            </svg>
+            <span>{t.teachers}</span>
+          </button>
+          <button type="button" onClick={() => openDialog({ type: 'login' })}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 17l5-5-5-5M15 12H3M14 4h6v16h-6" />
+            </svg>
+            <span>{t.login}</span>
+          </button>
+        </nav>
+      ) : (
+        <nav
+          className="academy-bottom-nav"
+          aria-label={
+            locale === 'fa'
+              ? 'ناوبری آکادمی'
+              : locale === 'sv'
+                ? 'Akademinavigering'
+                : locale === 'de'
+                  ? 'Academy-Navigation'
+                  : 'Academy navigation'
+          }
         >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14" />
-          </svg>
-          <span>{{ fa: 'دوره‌های من', en: 'My courses', sv: 'Mina kurser', de: 'Meine Kurse' }[locale]}</span>
-        </button>
-        <button
-          type="button"
-          aria-current={page === 'personal' && personalMode === 'full' ? 'page' : undefined}
-          onClick={() => go('personal')}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 7 12 3l8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4" />
-          </svg>
-          <span>{t.mine}</span>
-        </button>
-        <button
-          type="button"
-          aria-current={page === 'personal' && personalMode === 'profile' ? 'page' : undefined}
-          onClick={() => {
-            go('personal')
-            setPersonalMode('profile')
-            window.history.replaceState(
-              { ...window.history.state, academyPersonalMode: 'profile' },
-              '',
-              window.location.href
-            )
-          }}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 21c0-5 3-7 8-7s8 2 8 7" />
-          </svg>
-          <span>{{ fa: 'پروفایل', en: 'Profile', sv: 'Profil', de: 'Profil' }[locale]}</span>
-        </button>
-        <button
-          type="button"
-          aria-expanded={settingsOpen}
-          onClick={() => {
-            closeMenus()
-            setMobileMenuOpen(false)
-            if (!settingsOpen) {
-              window.history.pushState(
-                { ...window.history.state, academySettings: true },
+          <button
+            type="button"
+            aria-current={page === 'home' ? 'page' : undefined}
+            onClick={() => go('home')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7" />
+            </svg>
+            <span>{t.home}</span>
+          </button>
+          <button
+            type="button"
+            aria-current={page === 'personal' && personalMode === 'courses' ? 'page' : undefined}
+            onClick={() => {
+              go('personal')
+              setPersonalMode('courses')
+              window.history.replaceState(
+                { ...window.history.state, academyPersonalMode: 'courses' },
                 '',
                 window.location.href
               )
-              setSettingsOpen(true)
-            } else window.history.back()
-          }}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" />
-          </svg>
-          <span>{{ fa: 'تنظیمات', en: 'Settings', sv: 'Inställningar', de: 'Einstellungen' }[locale]}</span>
-        </button>
-      </nav>
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14" />
+            </svg>
+            <span>
+              {{ fa: 'دوره‌های من', en: 'My courses', sv: 'Mina kurser', de: 'Meine Kurse' }[locale]}
+            </span>
+          </button>
+          <button
+            type="button"
+            aria-current={page === 'personal' && personalMode === 'full' ? 'page' : undefined}
+            onClick={() => go('personal')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7 12 3l8 4-8 4-8-4Zm0 5 8 4 8-4M4 17l8 4 8-4" />
+            </svg>
+            <span>{t.mine}</span>
+          </button>
+          <button
+            type="button"
+            aria-current={page === 'personal' && personalMode === 'profile' ? 'page' : undefined}
+            onClick={() => {
+              go('personal')
+              setPersonalMode('profile')
+              window.history.replaceState(
+                { ...window.history.state, academyPersonalMode: 'profile' },
+                '',
+                window.location.href
+              )
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21c0-5 3-7 8-7s8 2 8 7" />
+            </svg>
+            <span>{{ fa: 'پروفایل', en: 'Profile', sv: 'Profil', de: 'Profil' }[locale]}</span>
+          </button>
+          <button
+            type="button"
+            aria-expanded={settingsOpen}
+            onClick={() => {
+              closeMenus()
+              setMobileMenuOpen(false)
+              if (!settingsOpen) {
+                window.history.pushState(
+                  { ...window.history.state, academySettings: true },
+                  '',
+                  window.location.href
+                )
+                setSettingsOpen(true)
+              } else window.history.back()
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" />
+            </svg>
+            <span>{{ fa: 'تنظیمات', en: 'Settings', sv: 'Inställningar', de: 'Einstellungen' }[locale]}</span>
+          </button>
+        </nav>
+      )}
       {settingsOpen && (
         <section className="academy-settings-panel" aria-label="Academy settings">
           <div className="editor-head">
@@ -1108,31 +1157,20 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
         )}
         {page === 'home' && (
           <>
-            <section className="academy-home-quick" aria-label={t.home}>
-              <button
-                className="academy-primary"
-                type="button"
-                onClick={() => navigateProduct('/', { directApp: true })}
-              >
+            <section className="academy-home-strip" aria-label={t.home}>
+              <button type="button" onClick={() => navigateProduct('/', { directApp: true })}>
                 {t.app}
               </button>
-              <div className="academy-home-quick-row">
-                <button type="button" onClick={() => go('courses')}>
-                  {t.courses}
-                </button>
-                <button type="button" onClick={() => go('teachers')}>
-                  {t.teachers}
-                </button>
-              </div>
-              <label>
-                {t.language}
-                <select value={locale} onChange={e => void setLocale(e.target.value as Locale)}>
-                  <option value="en">English</option>
-                  <option value="sv">Svenska</option>
-                  <option value="de">Deutsch</option>
-                  <option value="fa">فارسی</option>
-                </select>
-              </label>
+              <select
+                aria-label={t.language}
+                value={locale}
+                onChange={e => void setLocale(e.target.value as Locale)}
+              >
+                <option value="en">English</option>
+                <option value="sv">Svenska</option>
+                <option value="de">Deutsch</option>
+                <option value="fa">فارسی</option>
+              </select>
             </section>
             {userId && (
               <section className="academy-section">
@@ -1168,13 +1206,38 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                   <button onClick={() => go('path')}>{t.path}</button>
                 </div>
               </div>
-              <div className="academy-hero-card">
-                <span>A1</span>
-                <span>A2</span>
-                <span>B1</span>
-                <strong>{t.studentTeacher}</strong>
-                <small>{t.courseLine}</small>
-              </div>
+              <ol className="academy-hero-card academy-steps" aria-label={t.howTitle}>
+                {(
+                  {
+                    en: [
+                      'Choose a course',
+                      'Pick a teacher',
+                      'Book a trial lesson',
+                      'Practise the lesson words in the App'
+                    ],
+                    sv: [
+                      'Välj en kurs',
+                      'Välj en lärare',
+                      'Boka en provlektion',
+                      'Öva lektionens ord i appen'
+                    ],
+                    de: [
+                      'Kurs wählen',
+                      'Lehrkraft wählen',
+                      'Probestunde buchen',
+                      'Stundenwörter in der App üben'
+                    ],
+                    fa: [
+                      'دوره را انتخاب کنید',
+                      'استاد را انتخاب کنید',
+                      'کلاس آزمایشی رزرو کنید',
+                      'کلمه‌های کلاس را در اپ مرور کنید'
+                    ]
+                  } as Record<Locale, string[]>
+                )[locale].map(step => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
             </section>
             <section className="academy-section academy-discover" aria-labelledby="academy-discover-title">
               <div className="academy-section-head academy-discover-head">
@@ -1244,7 +1307,18 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
               {loading ? (
                 <p>{t.loading}</p>
               ) : teachers.filter(teacher => teacher.status === 'active').length === 0 ? (
-                <div className="academy-empty">{t.noneTeachers}</div>
+                <div className="academy-empty">
+                  {t.noneTeachers}
+                  {isAdmin && (
+                    <p>
+                      {workspaceLabel(
+                        locale,
+                        'مدیر: مدرس را در استودیوی مدیریت اضافه و فعال کنید.',
+                        'Admin: add and publish teachers in Admin Studio.'
+                      )}
+                    </p>
+                  )}
+                </div>
               ) : (
                 <div className="academy-grid">
                   {teachers
@@ -1360,8 +1434,8 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
               <p className="academy-help">
                 {workspaceLabel(
                   locale,
-                  'جلسه‌ها با لینک استاد برگزار می‌شوند. پرداخت آنلاین و ساخت خودکار جلسه هنوز فعال نیست.',
-                  'Lessons use the teacher’s meeting link. Online payments and automatic meeting creation are not available yet.'
+                  'جلسه‌ها آنلاین و با لینک استاد برگزار می‌شوند.',
+                  'Lessons take place online through your teacher’s meeting link.'
                 )}
               </p>
             </section>
@@ -1557,7 +1631,18 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
                 </label>
               </AcademyField>
               {activeTeachers.filter(x => x.status === 'active' || isAdmin).length === 0 ? (
-                <div className="academy-empty">{t.noneTeachers}</div>
+                <div className="academy-empty">
+                  {t.noneTeachers}
+                  {isAdmin && (
+                    <p>
+                      {workspaceLabel(
+                        locale,
+                        'مدیر: مدرس را در استودیوی مدیریت اضافه و فعال کنید.',
+                        'Admin: add and publish teachers in Admin Studio.'
+                      )}
+                    </p>
+                  )}
+                </div>
               ) : (
                 <div className="academy-grid academy-scroll-list">
                   {activeTeachers
@@ -1910,6 +1995,17 @@ export function Academy({ userId, email, sessionLoading = false }: Props) {
               >
                 {{ fa: 'بازگشت', en: 'Back', sv: 'Tillbaka', de: 'Zurück' }[locale]}
               </button>
+            )}
+            {adminPanel === 'home' && (
+              <AcademyAdminOverview
+                locale={locale}
+                onOpen={id => {
+                  openAdminPanel(id)
+                  if (id === 'courses') revealEditor(courseEditorRef)
+                  if (id === 'teachers') revealEditor(teacherEditorRef)
+                  if (id === 'enrollments') revealEditor(enrollmentsRef)
+                }}
+              />
             )}
             {adminPanel === 'seo' && (
               <AcademySeoManager locale={locale} userId={userId!} courses={courses} teachers={teachers} />

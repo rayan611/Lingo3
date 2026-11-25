@@ -1,3 +1,9 @@
+## 2026-11-25 — Phase 2 navigation and overview (v0.7.22)
+
+**Implemented:** see CHANGELOG. **Tested:** `npm test`, build, mocked navigation check (updated for the guest bar), local phone screenshot. **Not verified:** signed-in role views and real devices. **Next:** guided enrolment flow, signed-in menus per role, then Phase 3 (profile, filters, progress, reviews).
+
+**Routes:** reviewed `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md`; no route change.
+
 ## 2026-11-25 — Phase 1 class → word bank (v0.7.21)
 
 **Implemented:** see CHANGELOG. **Database:** migration 20261125120000 applied to Lingo3 project; RLS on, student/teacher read only, writes only via `academy_publish_lesson`; verified anon cannot execute it. **Tested:** `npm test`, build; delivery logic with fake IndexedDB. **Not verified:** real teacher publishing and student receiving; email (needs Vercel env `RESEND_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`; sender `academy@lingo3.com`, domain verified in Resend). **Next:** Phase 2.

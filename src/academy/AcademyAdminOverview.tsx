@@ -1,0 +1,123 @@
+import { useEffect, useState } from 'react'
+import { supabase } from '../auth/supabase'
+import type { Locale } from './types'
+
+type Counts = {
+  requests: number | null
+  draftTeachers: number | null
+  teachers: number | null
+  courses: number | null
+  students: number | null
+  lessonsWeek: number | null
+}
+
+const T: Record<Locale, Record<keyof Counts | 'title' | 'open', string>> = {
+  en: {
+    title: 'Overview',
+    open: 'Open',
+    requests: 'Trial requests waiting',
+    draftTeachers: 'Teachers waiting for approval',
+    teachers: 'Active teachers',
+    courses: 'Published courses',
+    students: 'Active enrollments',
+    lessonsWeek: 'Lessons in the next 7 days'
+  },
+  sv: {
+    title: 'Översikt',
+    open: 'Öppna',
+    requests: 'Provlektioner som väntar',
+    draftTeachers: 'Lärare som väntar på godkännande',
+    teachers: 'Aktiva lärare',
+    courses: 'Publicerade kurser',
+    students: 'Aktiva anmälningar',
+    lessonsWeek: 'Lektioner närmaste 7 dagarna'
+  },
+  fa: {
+    title: 'نمای کلی',
+    open: 'باز کردن',
+    requests: 'درخواست‌های کلاس آزمایشی در انتظار',
+    draftTeachers: 'مدرس‌های در انتظار تأیید',
+    teachers: 'مدرس‌های فعال',
+    courses: 'دوره‌های منتشرشده',
+    students: 'ثبت‌نام‌های فعال',
+    lessonsWeek: 'کلاس‌های ۷ روز آینده'
+  },
+  de: {
+    title: 'Übersicht',
+    open: 'Öffnen',
+    requests: 'Wartende Probestunden-Anfragen',
+    draftTeachers: 'Lehrkräfte warten auf Freigabe',
+    teachers: 'Aktive Lehrkräfte',
+    courses: 'Veröffentlichte Kurse',
+    students: 'Aktive Anmeldungen',
+    lessonsWeek: 'Stunden in den nächsten 7 Tagen'
+  }
+}
+
+/** Admin landing numbers. Each tile opens the tool that handles it. */
+export function AcademyAdminOverview({
+  locale,
+  onOpen
+}: {
+  locale: Locale
+  onOpen: (panel: 'enrollments' | 'courses' | 'teachers') => void
+}) {
+  const t = T[locale]
+  const [c, setC] = useState<Counts | null>(null)
+  useEffect(() => {
+    let active = true
+    const head = (table: string, build: (q: any) => any) =>
+      build(supabase().from(table).select('id', { count: 'exact', head: true })).then(
+        (r: { count: number | null }) => r.count ?? null
+      )
+    ;(async () => {
+      const now = new Date().toISOString()
+      const week = new Date(Date.now() + 7 * 86400000).toISOString()
+      try {
+        const [requests, draftTeachers, teachers, courses, students, lessonsWeek] = await Promise.all([
+          head('academy_bookings', q => q.eq('status', 'requested')),
+          head('academy_teachers', q => q.eq('status', 'draft')),
+          head('academy_teachers', q => q.eq('status', 'active')),
+          head('academy_courses', q => q.eq('status', 'active')),
+          head('academy_enrollments', q => q.eq('status', 'active').is('removed_at', null)),
+          head('academy_bookings', q =>
+            q.eq('status', 'confirmed').gte('confirmed_start', now).lte('confirmed_start', week)
+          )
+        ])
+        if (active) setC({ requests, draftTeachers, teachers, courses, students, lessonsWeek })
+      } catch {
+        /* tiles stay empty */
+      }
+    })()
+    return () => {
+      active = false
+    }
+  }, [])
+  const tiles: { key: keyof Counts; to: 'enrollments' | 'courses' | 'teachers' }[] = [
+    { key: 'requests', to: 'enrollments' },
+    { key: 'draftTeachers', to: 'teachers' },
+    { key: 'teachers', to: 'teachers' },
+    { key: 'courses', to: 'courses' },
+    { key: 'students', to: 'enrollments' },
+    { key: 'lessonsWeek', to: 'enrollments' }
+  ]
+  return (
+    <section className="academy-admin-overview" aria-label={t.title}>
+      <h3>{t.title}</h3>
+      <div className="academy-admin-tiles">
+        {tiles.map(({ key, to }) => (
+          <button
+            key={key}
+            type="button"
+            className="ac-card academy-admin-tile"
+            onClick={() => onOpen(to)}
+            title={t.open}
+          >
+            <strong>{c ? (c[key] ?? '–') : '…'}</strong>
+            <span>{t[key]}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  )
+}

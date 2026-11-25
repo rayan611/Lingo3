@@ -1554,7 +1554,9 @@ export function AcademyPortal({
               upcoming[0]
                 ? courseTitle(upcoming[0].course_id) +
                   ' · ' +
-                  dt(upcoming[0].confirmed_start ?? upcoming[0].preferred_start)
+                  dt(upcoming[0].confirmed_start ?? upcoming[0].preferred_start) +
+                  ' · ' +
+                  academyStatus(upcoming[0].status, locale)
                 : ''
             }
           />

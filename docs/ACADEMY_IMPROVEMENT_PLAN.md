@@ -109,15 +109,15 @@ Priority labels: **Must** = the Academy is not really usable or trustworthy with
 ### Phase 0 — Foundation (Must · invisible to users)
 Goal: make the Academy safe and cheap to change. No behaviour change.
 
-- [ ] 0.1 Reformat all Academy files to normal line lengths (code and CSS).
-- [ ] 0.2 Split by role: `src/academy/public/`, `student/`, `teacher/`, `admin/`, `shared/`.
-- [ ] 0.3 Load teacher and admin code only for those roles (smaller download for visitors).
-- [ ] 0.4 One shared language list for the Academy, ready for all six languages.
-- [ ] 0.5 Design tokens: about 10 named colours, one button style per purpose, spacing and
+- [x] 0.1 Reformat all Academy files to normal line lengths (code and CSS).
+- [~] 0.2 Split by role (done: copy/constants/types split out; Portal and admin tools lazy-loaded. Open: splitting the two giant components themselves): `src/academy/public/`, `student/`, `teacher/`, `admin/`, `shared/`.
+- [x] 0.3 Load teacher and admin code only for those roles (smaller download for visitors).
+- [x] 0.4 One shared language list for the Academy, ready for all six languages.
+- [x] 0.5 Design tokens: about 10 named colours, one button style per purpose, spacing and
       type scale; Vazirmatn and RTL rules for Persian.
-- [ ] 0.6 Shared time-zone helper (store each user's time zone; show times in it).
-- [ ] 0.7 Replace `confirm()` / `prompt()` with in-app confirmation dialogs.
-- [ ] 0.8 Trim the docs: one short changelog block per release, archive old logs.
+- [x] 0.6 Shared time-zone helper (store each user's time zone; show times in it).
+- [x] 0.7 Replace `confirm()` / `prompt()` with in-app confirmation dialogs.
+- [x] 0.8 Trim the docs: one short changelog block per release, archive old logs.
 - [ ] 0.9 Owner checks the current live version on his own phone (Academy opens, login works).
 
 Acceptance: `npm test` passes; every current screen looks and behaves as before at 390 px and
@@ -126,14 +126,14 @@ Acceptance: `npm test` passes; every current screen looks and behaves as before 
 ### Phase 1 — The core value: class → word bank (Must)
 Goal: what the teacher teaches becomes the student's daily review.
 
-- [ ] 1.1 After-class form for the teacher: what we learned · new words · weak point ·
+- [x] 1.1 After-class form for the teacher: what we learned · new words · weak point ·
       homework · draft / publish. Words autocomplete from the shared word bank.
-- [ ] 1.2 Lesson words table on the server (with access rules and an undo migration); the
+- [x] 1.2 Lesson words table on the server (with access rules and an undo migration); the
       App imports published lesson words into the student's review on sync, without duplicates.
-- [ ] 1.3 Student can remove a lesson word or mark it "I know this".
-- [ ] 1.4 Email notifications (Resend): booking confirmed / cancelled, summary published,
+- [x] 1.3 Student can remove a lesson word or mark it "I know this".
+- [~] 1.4 Email notifications (in-app done; email code ready, needs Vercel env RESEND_API_KEY + SUPABASE_SERVICE_ROLE_KEY; 24 h reminder not built) (Resend): booking confirmed / cancelled, summary published,
       review reminder 24 h after class.
-- [ ] 1.5 Student "Today" card: next class, homework, new lesson words → "Practise now"
+- [x] 1.5 Student "Today" card: next class, homework, new lesson words → "Practise now"
       opens the App review filtered to lesson words.
 
 Acceptance: a test teacher fills the form in under 2 minutes; the words appear in the test
@@ -143,15 +143,15 @@ email; nothing reaches the student while the summary is a draft.
 ### Phase 2 — Easy to find, enrol and manage (Must)
 Goal: each role sees a few clear places; enrolment is one guided flow.
 
-- [ ] 2.1 New navigation per role (the tabs in "Target structure" above); phone bottom bar
+- [~] 2.1 New navigation (guest bar done) per role (the tabs in "Target structure" above); phone bottom bar
       for guests: Home · Courses · Teachers · Log in.
-- [ ] 2.2 Guided enrolment: course → teacher → time → sign in → request → status page
+- [~] 2.2 Guided enrolment (status on Today card; single-flow not built): course → teacher → time → sign in → request → status page
       ("Requested → Confirmed → Lesson link").
-- [ ] 2.3 Teacher "Today": requests to answer, today's lessons, homework to check.
-- [ ] 2.4 Teacher student page: lessons, after-class form, materials, homework in one place;
+- [~] 2.3 Teacher "Today": requests to answer, today's lessons, homework to check.
+- [~] 2.4 Teacher student page (after-class form added there): lessons, after-class form, materials, homework in one place;
       reusable materials library.
-- [ ] 2.5 Admin overview with numbers and tabs; teacher approval step.
-- [ ] 2.6 Public home rebuilt (about 6 blocks): tagline + "Find a teacher" / "Check your
+- [~] 2.5 Admin overview with numbers and tabs; teacher approval step.
+- [~] 2.6 Public home rebuilt (about 6 blocks): tagline + "Find a teacher" / "Check your
       level", steps, featured teachers, class → word → review picture, guarantee, join as
       teacher. Single header, language picker in the header, friendly empty states, no admin
       text for visitors, no "not available yet" line.
