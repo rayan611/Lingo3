@@ -1,3 +1,9 @@
+## 2026-11-26 — Reading Library (v0.8.0)
+
+See CHANGELOG. **Implemented, tested locally, not deployed.** `src/reading/library.ts` (pure logic), `src/ui/ReadingLibrary.tsx`, tab `library` at `/library`, data in `public/reading/`. **Next:** more stories per level (run `python3 scripts/reading-coverage.py --unused <LEVEL> 70` and write toward the words no story uses), German stories for A1/A2, then word search over `vocab.json`. **Risk:** ticks live in localStorage only; the JSON is not precached by the service worker.
+
+**Routes:** updated `docs/SITEMAP.md` and `docs/ROUTE_INDEX.md` (new `/library`).
+
 ## 2026-11-26 — Scheduling v2 (v0.7.29)
 
 See CHANGELOG. **Known limits:** when a student suggests several times, no availability slot is reserved, so two students can suggest the same slot; the teacher's confirmation is guarded by the existing overlap check on confirmed lessons. Fixed lessons ignore the teacher's published availability slots and time-off (they check only overlap with confirmed lessons); the weekly slot builder and fixed lessons are separate tools. **Next:** show teacher time-off in the week view; optional reminder e-mail; real-account test.

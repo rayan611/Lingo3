@@ -178,6 +178,7 @@ Review scope: highlighted information button opens full native/active-learning-l
 | /words | browse / Browse | Training Center + sibling navigation | Training Center link; browser history |
 | /grammar | grammar / GrammarManager | Training Center + siblings | Training Center link; browser history |
 | /read | read / StoryMode | Training Center + siblings | Training Center link; browser history |
+| /library | library / ReadingLibrary | Training Center + siblings (Reading Library) | Training Center link; browser history |
 | /review | training / Training | Training Center + siblings | Home/exit → /; browser history |
 | /recall | review / ReviewTab | Recall test primary tile | Exit resets review session and returns to / |
 | /translate | translate / Translate | Primary tile | Other primary tiles; browser history |

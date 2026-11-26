@@ -1,3 +1,7 @@
+## 2026-11-26 — Reading Library (v0.8.0)
+
+New `/library` tab: pre-written Swedish stories (A1–C1) built from the Swedish word bank, with tap-to-translate (English, German where the bank has it), read ticks and a New story button. Data lives in `public/reading/` and loads on demand. The source workbook has Swedish for 5000 words only and German for 2000, which shaped C1 and B1+ behaviour; see CHANGELOG.
+
 ## 2026-11-22 — Legacy Academy entry (v0.7.19, unreleased)
 
 Added server redirect for /academy.html to /academy after user screenshot matched legacy fallback page. The image does not identify URL; browser verification remains required.

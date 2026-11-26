@@ -1,0 +1,216 @@
+[
+{
+"id": "a1-001",
+"level": "A1",
+"genre": "story",
+"title": {
+"sv": "Katten på kontoret",
+"en": "The cat at the office"
+},
+"p": [
+{
+"sv": "Det är måndag morgon. Linnea går till jobbet med buss. Hon har en kopp kaffe i handen och en väska på axeln.",
+"en": "It is Monday morning. Linnea goes to work by bus. She has a cup of coffee in her hand and a bag on her shoulder."
+},
+{
+"sv": "På kontoret är det tyst. Alla kollegor är inte där än. Men plötsligt hör hon ett litet ljud. “Mjau!”",
+"en": "At the office it is quiet. Not all colleagues are there yet. But suddenly she hears a small sound. “Meow!”"
+},
+{
+"sv": "Linnea tittar under bordet. Där sitter en liten katt! Den är svart och vit och den har stora, gröna ögon. “Hej,” säger hon. “Vad gör du här?”",
+"en": "Linnea looks under the table. A little cat is sitting there! It is black and white and it has big, green eyes. “Hello,” she says. “What are you doing here?”"
+},
+{
+"sv": "Katten är hungrig. Linnea hämtar lite mjölk i köket. Katten dricker och är glad. Sedan ringer hon sin chef. “Vi har en katt på kontoret,” säger hon.",
+"en": "The cat is hungry. Linnea fetches some milk in the kitchen. The cat drinks and is happy. Then she calls her boss. “We have a cat at the office,” she says."
+},
+{
+"sv": "Chefen skrattar. “En katt? Det är inte möjligt!” Men när han kommer ser han katten. Den sover redan i Linneas stol.",
+"en": "The boss laughs. “A cat? That is not possible!” But when he arrives he sees the cat. It is already sleeping in Linnea's chair."
+},
+{
+"sv": "På kvällen kommer en man till dörren. “Min katt heter Pelle,” säger han. “Jag letar efter honom sedan i går!” Alla är glada. Men Linnea är lite ledsen. Hon gillar Pelle.",
+"en": "In the evening a man comes to the door. “My cat is called Pelle,” he says. “I have been looking for him since yesterday!” Everyone is happy. But Linnea is a little sad. She likes Pelle."
+},
+{
+"sv": "Nästa dag kommer Pelle tillbaka till kontoret. Han vill hälsa på Linnea! Han hoppar upp på hennes bord och lägger sig på tangentbordet. Alla kollegor skrattar. Chefen säger: “Okej, okej. Pelle får komma på fredagar.” Nu har kontoret en katt varje fredag, och alla är glada.",
+"en": "The next day Pelle comes back to the office. He wants to say hello to Linnea! He jumps up on her desk and lies down on the keyboard. All the colleagues laugh. The boss says: “Okay, okay. Pelle may come on Fridays.” Now the office has a cat every Friday, and everyone is happy."
+}
+]
+},
+{
+"id": "a1-002",
+"level": "A1",
+"genre": "fact",
+"title": {
+"sv": "Fakta om Sverige",
+"en": "Facts about Sweden"
+},
+"p": [
+{
+"sv": "Sverige är ett land i norra Europa. Det är ett stort land, men det bor inte så många människor där. Ungefär tio miljoner personer bor i Sverige.",
+"en": "Sweden is a country in northern Europe. It is a big country, but not so many people live there. About ten million people live in Sweden."
+},
+{
+"sv": "Huvudstaden heter Stockholm. Stockholm ligger vid vattnet och har många öar. Många turister åker dit på sommaren. Staden är vacker och ren.",
+"en": "The capital is called Stockholm. Stockholm lies by the water and has many islands. Many tourists go there in the summer. The city is beautiful and clean."
+},
+{
+"sv": "I Sverige är vintern lång och kall. Det är mörkt på eftermiddagen. På sommaren är det tvärtom: solen går ner sent, och ibland är det ljust nästan hela natten.",
+"en": "In Sweden the winter is long and cold. It is dark in the afternoon. In the summer it is the opposite: the sun goes down late, and sometimes it is light almost the whole night."
+},
+{
+"sv": "Svenskar äter ofta fisk, potatis och bröd. På fredagar dricker många en kopp kaffe och äter en kaka. Det kallas fika. Fika är mycket viktigt i Sverige!",
+"en": "Swedes often eat fish, potatoes and bread. On Fridays many people drink a cup of coffee and eat a cake. It is called fika. Fika is very important in Sweden!"
+},
+{
+"sv": "Svenskarna älskar också naturen. De går i skogen, badar i sjön och åker skidor. I Sverige får alla gå i skogen. Det är gratis och det är fritt.",
+"en": "Swedes also love nature. They walk in the forest, swim in the lake and ski. In Sweden everyone may walk in the forest. It is free and it is open to all."
+},
+{
+"sv": "Sverige har också många sjöar och mycket skog. I norr bor renar och i söder finns stora gårdar. Svenskarna pratar svenska, men många kan också engelska. Om du kommer till Sverige är det bra att säga “hej” och “tack”. Då blir alla glada, och du får nya vänner.",
+"en": "Sweden also has many lakes and a lot of forest. In the north reindeer live and in the south there are big farms. Swedes speak Swedish, but many can also speak English. If you come to Sweden it is good to say “hej” and “tack”. Then everyone will be happy, and you will make new friends."
+}
+]
+},
+{
+"id": "a1-003",
+"level": "A1",
+"genre": "life",
+"title": {
+"sv": "En vanlig dag",
+"en": "An ordinary day"
+},
+"p": [
+{
+"sv": "Jag heter Omid och jag bor i en liten lägenhet i Göteborg. Jag vaknar klockan sex. Först dricker jag vatten, sedan äter jag frukost. Jag äter bröd med ost och dricker te.",
+"en": "My name is Omid and I live in a small apartment in Gothenburg. I wake up at six o'clock. First I drink water, then I eat breakfast. I eat bread with cheese and drink tea."
+},
+{
+"sv": "Klockan sju tar jag spårvagnen till jobbet. Jag jobbar på ett lager. Jag bär lådor och skriver listor. Jobbet är tungt, men mina kollegor är snälla.",
+"en": "At seven o'clock I take the tram to work. I work in a warehouse. I carry boxes and write lists. The job is heavy, but my colleagues are kind."
+},
+{
+"sv": "Vid tolv äter jag lunch. Jag har med mig mat hemifrån: ris och kyckling. Min kollega Anna äter soppa. Vi pratar om vädret, om familjen och om helgen.",
+"en": "At twelve I eat lunch. I bring food from home: rice and chicken. My colleague Anna eats soup. We talk about the weather, about family and about the weekend."
+},
+{
+"sv": "Efter jobbet handlar jag mat i affären. Jag köper mjölk, tomater och bananer. Hemma lagar jag middag. På kvällen ringer jag min mamma och vi pratar en lång stund.",
+"en": "After work I shop for food in the store. I buy milk, tomatoes and bananas. At home I cook dinner. In the evening I call my mother and we talk for a long while."
+},
+{
+"sv": "Före elva går jag och lägger mig. Jag är trött, men jag är också nöjd. Jag har en bra dag bakom mig, och i morgon kommer en ny.",
+"en": "Before eleven I go to bed. I am tired, but I am also content. I have a good day behind me, and tomorrow a new one comes."
+},
+{
+"sv": "På helgen är jag ledig. Jag sover länge och träffar mina vänner. Vi går i parken, vi spelar fotboll och vi äter glass. Jag tycker om Göteborg. Staden är stor, men människorna är vänliga. Jag är glad att jag bor här.",
+"en": "At the weekend I am free. I sleep late and meet my friends. We go to the park, we play football and we eat ice cream. I like Gothenburg. The city is big, but the people are friendly. I am glad that I live here."
+}
+]
+},
+{
+"id": "a1-004",
+"level": "A1",
+"genre": "funny",
+"title": {
+"sv": "Fel nyckel",
+"en": "The wrong key"
+},
+"p": [
+{
+"sv": "Per kommer hem sent en kväll. Han är trött och han vill bara sova. Han tar fram nyckeln och sätter den i dörren. Men nyckeln passar inte.",
+"en": "Per comes home late one evening. He is tired and he just wants to sleep. He takes out the key and puts it in the door. But the key does not fit."
+},
+{
+"sv": "“Konstigt,” tänker Per. Han försöker igen. Och igen. Han vrider nyckeln åt höger, sedan åt vänster. Ingenting händer. Han blir arg och sparkar lite på dörren.",
+"en": "“Strange,” thinks Per. He tries again. And again. He turns the key to the right, then to the left. Nothing happens. He gets angry and kicks the door a little."
+},
+{
+"sv": "Då öppnas dörren. En gammal dam står där i morgonrock. “God kväll,” säger hon. “Vill du ha något?” Per tittar på henne. “Vem är du? Varför är du i min lägenhet?”",
+"en": "Then the door opens. An old lady stands there in a dressing gown. “Good evening,” she says. “Do you want something?” Per looks at her. “Who are you? Why are you in my apartment?”"
+},
+{
+"sv": "Damen skrattar. “Det här är inte din lägenhet. Det här är min lägenhet!” Per tittar på numret på dörren. Det är fyra. Hans lägenhet är nummer fem, en våning upp.",
+"en": "The lady laughs. “This is not your apartment. This is my apartment!” Per looks at the number on the door. It is four. His apartment is number five, one floor up."
+},
+{
+"sv": "“Förlåt, förlåt!” säger Per och blir röd i ansiktet. “Det är inget fel,” säger damen. “Vill du ha en kopp te?” Per tackar nej och går upp. Men han skrattar hela kvällen.",
+"en": "“Sorry, sorry!” says Per and turns red in the face. “No harm done,” says the lady. “Would you like a cup of tea?” Per says no thanks and goes up. But he laughs the whole evening."
+},
+{
+"sv": "Nästa morgon möter Per damen i trappan. “God morgon!” säger hon. “Har du hittat din dörr i dag?” Per skrattar. “Ja, tack. Jag tittar på numret först nu.” Damen ler. Hon heter Karin och hon bor där i femtio år. Sedan den dagen dricker de kaffe tillsammans varje söndag.",
+"en": "The next morning Per meets the lady on the stairs. “Good morning!” she says. “Have you found your door today?” Per laughs. “Yes, thanks. I look at the number first now.” The lady smiles. Her name is Karin and she has lived there for fifty years. Since that day they drink coffee together every Sunday."
+}
+]
+},
+{
+"id": "a1-005",
+"level": "A1",
+"genre": "info",
+"title": {
+"sv": "Vilken färg har ditt liv?",
+"en": "What colour is your life?"
+},
+"p": [
+{
+"sv": "Färger är överallt. Himlen är blå, gräset är grönt och solen är gul. Men vet du att färger också kan betyda något? I olika länder betyder färgerna olika saker.",
+"en": "Colours are everywhere. The sky is blue, the grass is green and the sun is yellow. But do you know that colours can also mean something? In different countries the colours mean different things."
+},
+{
+"sv": "I Sverige är rött en varm färg. Många hus är röda med vita fönster. Det är en gammal tradition. Röd färg är billig och den håller länge, särskilt i regnet och i snön.",
+"en": "In Sweden red is a warm colour. Many houses are red with white windows. It is an old tradition. Red paint is cheap and it lasts a long time, especially in the rain and in the snow."
+},
+{
+"sv": "Gul och blå är Sveriges färger. Flaggan är blå med ett gult kors. Många svenskar har en flagga i trädgården. De sätter upp den på födelsedagar och på nationaldagen den sjätte juni.",
+"en": "Yellow and blue are Sweden's colours. The flag is blue with a yellow cross. Many Swedes have a flag in the garden. They put it up on birthdays and on national day, the sixth of June."
+},
+{
+"sv": "Vitt är en ren och lugn färg. På vintern är allt vitt av snö. Svart är mörkt och starkt. Många människor köper svarta kläder, för svart passar till allt.",
+"en": "White is a clean and calm colour. In winter everything is white with snow. Black is dark and strong. Many people buy black clothes, because black goes with everything."
+},
+{
+"sv": "Vilken är din färg? Är du glad och gul, lugn och blå, eller stark och röd? Titta på dina kläder i dag. Då vet du kanske svaret!",
+"en": "Which is your colour? Are you happy and yellow, calm and blue, or strong and red? Look at your clothes today. Then you may know the answer!"
+},
+{
+"sv": "Barn gillar också färger. De ritar solen gul och gräset grönt. Men ibland ritar ett barn en rosa katt eller en lila hund. Det är inte fel! Färger är en lek, och alla får välja sin egen färg. Nästa gång du köper något nytt: välj en färg som du verkligen gillar.",
+"en": "Children like colours too. They draw the sun yellow and the grass green. But sometimes a child draws a pink cat or a purple dog. That is not wrong! Colours are play, and everyone may choose their own colour. The next time you buy something new: choose a colour you really like."
+}
+]
+},
+{
+"id": "a1-006",
+"level": "A1",
+"genre": "story",
+"title": {
+"sv": "Resan till havet",
+"en": "The trip to the sea"
+},
+"p": [
+{
+"sv": "Det är lördag och solen skiner. Familjen Berg vill åka till havet. Pappa packar bilen. Mamma gör smörgåsar och tar med frukt och vatten. Barnen, Elsa och Max, är mycket glada.",
+"en": "It is Saturday and the sun is shining. The Berg family wants to go to the sea. Dad packs the car. Mum makes sandwiches and brings fruit and water. The children, Elsa and Max, are very happy."
+},
+{
+"sv": "De åker i två timmar. Elsa tittar ut genom fönstret och ser kor, hästar och små röda hus. Max sover i baksätet. Pappa sjunger en gammal sång och mamma skrattar.",
+"en": "They drive for two hours. Elsa looks out of the window and sees cows, horses and small red houses. Max sleeps in the back seat. Dad sings an old song and Mum laughs."
+},
+{
+"sv": "Till slut ser de havet. Det är stort och blått! Barnen springer ner till stranden. Sanden är varm och vattnet är kallt. “Kom hit!” ropar Elsa. “Det är underbart!”",
+"en": "At last they see the sea. It is big and blue! The children run down to the beach. The sand is warm and the water is cold. “Come here!” Elsa calls. “It is wonderful!”"
+},
+{
+"sv": "De äter lunch på en stor sten. En fågel kommer och vill ha en bit bröd. Max ger fågeln lite, men sedan kommer fler fåglar. Pappa tar bort maten och alla skrattar.",
+"en": "They eat lunch on a big rock. A bird comes and wants a piece of bread. Max gives the bird a little, but then more birds come. Dad takes the food away and everyone laughs."
+},
+{
+"sv": "På kvällen åker de hem. Barnen är trötta och sover i bilen. Mamma tittar på pappa. “Det var en bra dag,” säger hon. “Ja,” säger han. “Vi gör det igen nästa vecka.”",
+"en": "In the evening they drive home. The children are tired and sleep in the car. Mum looks at Dad. “That was a good day,” she says. “Yes,” he says. “We will do it again next week.”"
+},
+{
+"sv": "Veckan efter åker familjen till havet igen. Den här gången tar de med en stor boll och en liten båt. Pappa vill fiska, men han fångar ingen fisk. Max fångar en liten krabba med händerna! Alla ropar och skrattar. Krabban får gå tillbaka i vattnet, och familjen åker hem nöjda.",
+"en": "The week after, the family goes to the sea again. This time they bring a big ball and a small boat. Dad wants to fish, but he does not catch any fish. Max catches a little crab with his hands! Everyone shouts and laughs. The crab gets to go back in the water, and the family goes home content."
+}
+]
+}
+]

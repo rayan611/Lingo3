@@ -62,6 +62,7 @@ const Browse = lazyScreen(() => import('./ui/Browse'), 'Browse')
 const Translate = lazyScreen(() => import('./ui/Translate'), 'Translate')
 const Training = lazyScreen(() => import('./ui/Training'), 'Training')
 const StoryMode = lazyScreen(() => import('./ui/StoryMode'), 'StoryMode')
+const ReadingLibrary = lazyScreen(() => import('./ui/ReadingLibrary'), 'ReadingLibrary')
 const SettingsPanel = lazyScreen(() => import('./ui/SettingsPanel'), 'SettingsPanel')
 const GrammarManager = lazyScreen(() => import('./ui/GrammarManager'), 'GrammarManager')
 
@@ -72,10 +73,10 @@ const screenFallback = <div className="boot">Loading…</div>
  * phone without a sideways scroll that hid whichever tab you wanted, and of
  * the seven, Profile was the one you open monthly rather than daily.
  */
-type Tab = 'add' | 'training' | 'read' | 'review' | 'browse' | 'translate' | 'settings' | 'grammar' | 'training-center'
+type Tab = 'add' | 'training' | 'read' | 'library' | 'review' | 'browse' | 'translate' | 'settings' | 'grammar' | 'training-center'
 
 function isTab(value: unknown): value is Tab {
-  return value === 'add' || value === 'training' || value === 'read' ||
+  return value === 'add' || value === 'training' || value === 'read' || value === 'library' ||
     value === 'review' || value === 'browse' || value === 'translate' ||
     value === 'settings' || value === 'grammar' || value === 'training-center'
 }
@@ -92,6 +93,7 @@ const TAB_PATHS: Record<Tab, string> = {
   training: '/review',
   browse: '/words',
   read: '/read',
+  library: '/library',
   translate: '/translate',
   settings: '/settings',
   grammar: '/grammar',
@@ -670,6 +672,7 @@ function Workspace({
               <Training settings={settings} onExit={() => goTab('add')} />
             )}
             {tab === 'read' && <StoryMode settings={settings} />}
+            {tab === 'library' && <ReadingLibrary settings={settings} />}
             {tab === 'browse' && <Browse settings={settings} initialLang={academyLang} />}
             {tab === 'translate' && <Translate settings={settings} />}
             {tab === 'grammar' && <GrammarManager learningLangs={activeTargets(settings)} nativeLang={settings.nativeLang} syncError={syncState?.error} userId={userId} syncing={syncing} onSync={runSync} lang={academyLang&&activeTargets(settings).includes(academyLang)?academyLang:activeTargets(settings)[0] ?? settings.nativeLang} />}
@@ -781,12 +784,13 @@ function HomeTiles({
 
 /** Existing child routes stay bookmarkable; the home navigation groups them here. */
 function isTrainingArea(tab: Tab): boolean {
-  return ['training-center', 'grammar', 'read', 'training', 'browse'].includes(tab)
+  return ['training-center', 'grammar', 'read', 'library', 'training', 'browse'].includes(tab)
 }
 
 const TRAINING_ACTIVITIES: { id: Tab; title: string; detail: string; icon: React.ReactNode }[] = [
   { id: 'browse', title: 'My Word List', detail: 'Manage your saved words and lists.', icon: <IconWords /> },
   { id: 'grammar', title: 'Grammar', detail: 'Organize your grammar notes and rules.', icon: <IconGrammar /> },
+  { id: 'library', title: 'Reading Library', detail: 'Swedish stories by level. Tap a word to see it in English and German.', icon: <IconReading /> },
   { id: 'read', title: 'Read a story', detail: 'Practice vocabulary through stories.', icon: <IconReading /> },
   { id: 'training', title: 'Word Practice', detail: 'Explore words without changing your review schedule.', icon: <IconTraining /> },
 ]

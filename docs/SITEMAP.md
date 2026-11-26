@@ -221,6 +221,7 @@ flowchart TB
 | My Word List | /words | Saved words/list management; reached from Training Center |
 | Grammar | /grammar | Personal grammar notes/rules for active learning languages |
 | Read a story | /read | Vocabulary/story practice |
+| Reading Library | /library | Pre-written Swedish stories by level; tap a word for English and German |
 | Word Practice | /review | Explore words without changing recall schedule |
 | Recall test | /recall | Scheduled recall; primary tile with due count |
 | Translate | /translate | Translation workspace |
@@ -239,6 +240,6 @@ Settings subsections observed in source: Account (Sync), Your progress, You, Lan
 
 ## Compatibility and planned work
 
-Existing child URLs /words, /grammar, /read and /review remain direct-linkable after grouping under Training Center. /review intentionally means Word Practice, while /recall means scheduled Recall test; these are not swapped links.
+Existing child URLs /words, /grammar, /read, /library and /review remain direct-linkable after grouping under Training Center. /review intentionally means Word Practice, while /recall means scheduled Recall test; these are not swapped links.
 
 Stored-form bank optimization is active in batch 010. RLS regression fixtures passed; physical signed-in browser acceptance and the optional shared-vocabulary administration UI remain pending. No new page, feature tile, deleted page or role permission was introduced. Technical route details and Back behavior are in ROUTE_INDEX.md.
