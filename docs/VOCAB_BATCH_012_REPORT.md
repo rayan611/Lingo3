@@ -20,3 +20,13 @@ How the 5,000 were narrowed (kept concepts: 1,035 after automatic filters, 283 i
 - All example sentences were written fresh for this batch (the source examples often lacked the Swedish headword).
 
 Still open: about 750 clean concepts remain (ids in the source DB, ranks above ~2760); native-speaker review of fa/es/it/fr/ru.
+
+## Update — second pass (same day)
+Owner asked that the source database be used as given and only missing example sentences be added. Parts 05 and 06
+(542 concepts) were built that way: every source word, article, translation and existing example was kept; only blanks
+(and examples that lacked the headword) were written. The ~115 pairs rejected in the first pass were put back.
+Total imported from the 5,000-word database: **825 concepts** (parts 01-06), 0 clashes in the last two parts.
+
+Not importable and still outside the bank: 300 nouns with no article in sv/de/es/it/fr, 208 rows with no part of speech
+(importer needs one), 1,645 already in the bank, 1,599 sharing a word with the bank, 170 repeated inside the file.
+Known weak spots left as in the source: modal pairs (`would`, `could`), `mile` ↔ sv `mil`, `lord`, `host`, `self`; `ultra` is typed adverb.
