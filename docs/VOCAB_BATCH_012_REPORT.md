@@ -30,3 +30,12 @@ Total imported from the 5,000-word database: **825 concepts** (parts 01-06), 0 c
 Not importable and still outside the bank: 300 nouns with no article in sv/de/es/it/fr, 208 rows with no part of speech
 (importer needs one), 1,645 already in the bank, 1,599 sharing a word with the bank, 170 repeated inside the file.
 Known weak spots left as in the source: modal pairs (`would`, `could`), `mile` ↔ sv `mil`, `lord`, `host`, `self`; `ultra` is typed adverb.
+
+## Update — third pass (parts 07-08)
+- Part 07: 248 concepts that were clean against the bank but had been held back by the stricter first filter (source data kept, sentences added).
+- Part 08: 63 concepts (66 built, 3 skipped by the importer) whose translation in fa/es/it/fr/ru collided with the bank and was replaced by a synonym
+  (the replaced headwords have no morphology). Synonym replacements are mine, not from the source; review them.
+- Total from the 5,000-word database: **1,136 concepts** (parts 01-08). App Swedish rows: 5,695. Of the 5,000 source Swedish words, 3,507 are now in the app, 1,493 are not:
+  866 nouns, 232 verbs, 158 adjectives, 87 adverbs, 22 prepositions, 128 without pos.
+- Not added on purpose: ~1,068 whose English/German/Swedish word already exists in the bank under another concept (adding them would create synonym concepts,
+  which the bank rules forbid), ~514 nouns without article, ~183 without pos, ~395 synonym-fixable concepts not yet processed.
