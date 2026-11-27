@@ -1,0 +1,4450 @@
+{
+ "format": "lingo3-vocab/1",
+ "date": "2026-11-27",
+ "langs": [
+  "fa",
+  "en",
+  "sv",
+  "de",
+  "es",
+  "it",
+  "fr",
+  "ru"
+ ],
+ "n": 69,
+ "concepts": [
+  {
+   "id": "core.a.basic.r1268.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "اساسی",
+     "x": "این یک مهارت اساسی است."
+    },
+    "en": {
+     "h": "basic",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more basic",
+      "superlative": "most basic"
+     },
+     "x": "This is a basic skill."
+    },
+    "sv": {
+     "h": "grundläggande",
+     "f": {
+      "kind": "adjective",
+      "common": "grundläggande",
+      "neuter": "grundläggande",
+      "plural": "grundläggande",
+      "definite": "grundläggande",
+      "comparative": "mer grundläggande",
+      "superlative": "mest grundläggande"
+     },
+     "x": "Det här är en grundläggande färdighet."
+    },
+    "de": {
+     "h": "grundlegend",
+     "f": {
+      "kind": "adjective",
+      "comparative": "grundlegender",
+      "superlative": "grundlegendsten"
+     },
+     "x": "Das ist eine grundlegende Fähigkeit."
+    },
+    "es": {
+     "h": "básico",
+     "x": "Es una habilidad básica."
+    },
+    "it": {
+     "h": "di base",
+     "x": "È una competenza di base."
+    },
+    "fr": {
+     "h": "de base",
+     "x": "C'est une compétence de base."
+    },
+    "ru": {
+     "h": "базовый",
+     "x": "Это базовый навык."
+    }
+   }
+  },
+  {
+   "id": "core.v.recognize.r1273.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "تشخیص دادن",
+     "x": "من او را از صدایش تشخیص دادم."
+    },
+    "en": {
+     "h": "to recognize",
+     "f": {
+      "kind": "verb",
+      "base": "recognize",
+      "thirdPerson": "recognizes",
+      "past": "recognized",
+      "pastParticiple": "recognized"
+     },
+     "x": "I recognized him by his voice."
+    },
+    "sv": {
+     "h": "känna igen",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "känna igen",
+      "presens": "känner igen",
+      "preteritum": "kände igen",
+      "supinum": "känt igen"
+     },
+     "x": "Jag kände igen honom på rösten."
+    },
+    "de": {
+     "h": "erkennen",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "erkennen",
+      "praesens": "erkennt",
+      "praeteritum": "erkannte",
+      "partizip2": "erkannt",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Ich habe ihn an der Stimme erkannt."
+    },
+    "es": {
+     "h": "reconocer",
+     "x": "Lo reconocí por la voz."
+    },
+    "it": {
+     "h": "riconoscere",
+     "x": "L'ho riconosciuto dalla voce."
+    },
+    "fr": {
+     "h": "reconnaître",
+     "x": "Je l'ai reconnu à sa voix."
+    },
+    "ru": {
+     "h": "узнавать",
+     "x": "Я узнал его по голосу."
+    }
+   }
+  },
+  {
+   "id": "core.v.commit.r1279.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مرتکب شدن",
+     "x": "او مرتکب یک اشتباه بزرگ شد."
+    },
+    "en": {
+     "h": "to commit",
+     "f": {
+      "kind": "verb",
+      "base": "commit",
+      "thirdPerson": "commits",
+      "past": "committed",
+      "pastParticiple": "committed"
+     },
+     "x": "He committed a big mistake."
+    },
+    "sv": {
+     "h": "begå",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "begå",
+      "presens": "begår",
+      "preteritum": "begick",
+      "supinum": "begått"
+     },
+     "x": "Han begick ett stort misstag."
+    },
+    "de": {
+     "h": "begehen",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "begehen",
+      "praesens": "begeht",
+      "praeteritum": "beging",
+      "partizip2": "begangen",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Er beging einen großen Fehler."
+    },
+    "es": {
+     "h": "cometer",
+     "x": "Cometió un gran error."
+    },
+    "it": {
+     "h": "commettere",
+     "x": "Ha commesso un grosso errore."
+    },
+    "fr": {
+     "h": "commettre",
+     "x": "Il a commis une grosse erreur."
+    },
+    "ru": {
+     "h": "совершать",
+     "x": "Он совершил большую ошибку."
+    }
+   }
+  },
+  {
+   "id": "core.n.conversation.r1288.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "گفتگو",
+     "x": "گفتگوی ما طولانی بود."
+    },
+    "en": {
+     "h": "conversation",
+     "f": {
+      "kind": "noun",
+      "plural": "conversations"
+     },
+     "x": "Our conversation was long."
+    },
+    "sv": {
+     "h": "ett samtal",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "samtalet",
+      "indefinitePlural": "samtal",
+      "definitePlural": "samtalen"
+     },
+     "x": "Vårt samtal var långt."
+    },
+    "de": {
+     "h": "das Gespräch",
+     "f": {
+      "kind": "noun",
+      "gender": "das",
+      "plural": "Gespräche"
+     },
+     "x": "Unser Gespräch war lang."
+    },
+    "es": {
+     "h": "la conversación",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Nuestra conversación fue larga."
+    },
+    "it": {
+     "h": "la conversazione",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La nostra conversazione è stata lunga."
+    },
+    "fr": {
+     "h": "la conversation",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Notre conversation a été longue."
+    },
+    "ru": {
+     "h": "разговор",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Наш разговор был долгим."
+    }
+   }
+  },
+  {
+   "id": "core.a.royal.r1290.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "سلطنتی",
+     "x": "خانواده سلطنتی در قصر زندگی می‌کند."
+    },
+    "en": {
+     "h": "royal",
+     "f": {
+      "kind": "adjective"
+     },
+     "x": "The royal family lives in the palace."
+    },
+    "sv": {
+     "h": "kunglig",
+     "f": {
+      "kind": "adjective",
+      "common": "kunglig",
+      "neuter": "kungligt",
+      "plural": "kungliga",
+      "definite": "kungliga"
+     },
+     "x": "Den kungliga familjen bor på slottet."
+    },
+    "de": {
+     "h": "königlich",
+     "x": "Die königliche Familie wohnt im Schloss."
+    },
+    "es": {
+     "h": "real",
+     "x": "La familia real vive en el palacio."
+    },
+    "it": {
+     "h": "reale",
+     "x": "La famiglia reale vive nel palazzo."
+    },
+    "fr": {
+     "h": "royal",
+     "x": "La famille royale habite au palais."
+    },
+    "ru": {
+     "h": "королевский",
+     "x": "Королевская семья живёт во дворце."
+    }
+   }
+  },
+  {
+   "id": "core.a.christian.r1292.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مسیحی",
+     "x": "او در یک خانواده مسیحی بزرگ شد."
+    },
+    "en": {
+     "h": "christian",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more christian",
+      "superlative": "most christian"
+     },
+     "x": "She grew up in a Christian family."
+    },
+    "sv": {
+     "h": "kristen",
+     "f": {
+      "kind": "adjective",
+      "common": "kristen",
+      "neuter": "kristet",
+      "plural": "kristna",
+      "definite": "kristna"
+     },
+     "x": "Hon växte upp i en kristen familj."
+    },
+    "de": {
+     "h": "christlich",
+     "x": "Sie wuchs in einer christlichen Familie auf."
+    },
+    "es": {
+     "h": "cristiano",
+     "x": "Creció en una familia cristiana."
+    },
+    "it": {
+     "h": "cristiano",
+     "x": "È cresciuta in una famiglia cristiana."
+    },
+    "fr": {
+     "h": "chrétien",
+     "x": "Elle a grandi dans une famille chrétienne."
+    },
+    "ru": {
+     "h": "христианский",
+     "x": "Она выросла в христианской семье."
+    }
+   }
+  },
+  {
+   "id": "core.v.promote.r1301.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "ترویج کردن",
+     "x": "ما می‌خواهیم محصول جدید را ترویج کنیم."
+    },
+    "en": {
+     "h": "to promote",
+     "f": {
+      "kind": "verb",
+      "base": "promote",
+      "thirdPerson": "promotes",
+      "past": "promoted",
+      "pastParticiple": "promoted"
+     },
+     "x": "We want to promote the new product."
+    },
+    "sv": {
+     "h": "främja",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "främja",
+      "presens": "främjar",
+      "preteritum": "främjade",
+      "supinum": "främjat"
+     },
+     "x": "Vi vill främja den nya produkten."
+    },
+    "de": {
+     "h": "fördern",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "fördern",
+      "praesens": "fördert",
+      "praeteritum": "förderte",
+      "partizip2": "gefördert",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Wir wollen das neue Produkt fördern."
+    },
+    "es": {
+     "h": "promover",
+     "x": "Queremos promover el nuevo producto."
+    },
+    "it": {
+     "h": "promuovere",
+     "x": "Vogliamo promuovere il nuovo prodotto."
+    },
+    "fr": {
+     "h": "promouvoir",
+     "x": "Nous voulons promouvoir le nouveau produit."
+    },
+    "ru": {
+     "h": "продвигать",
+     "x": "Мы хотим продвигать новый продукт."
+    }
+   }
+  },
+  {
+   "id": "core.v.correct.r1317.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "تصحیح کردن",
+     "x": "معلم اشتباهات را تصحیح می‌کند."
+    },
+    "en": {
+     "h": "to correct",
+     "f": {
+      "kind": "verb",
+      "base": "correct",
+      "thirdPerson": "corrects",
+      "past": "corrected",
+      "pastParticiple": "corrected"
+     },
+     "x": "The teacher corrects the mistakes."
+    },
+    "sv": {
+     "h": "rätta",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "rätta",
+      "presens": "rättar",
+      "preteritum": "rättade",
+      "supinum": "rättat"
+     },
+     "x": "Läraren rättar felen."
+    },
+    "de": {
+     "h": "korrigieren",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "korrigieren",
+      "praesens": "korrigiert",
+      "praeteritum": "korrigierte",
+      "partizip2": "korrigiert",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Der Lehrer korrigiert die Fehler."
+    },
+    "es": {
+     "h": "corregir",
+     "x": "El profesor corrige los errores."
+    },
+    "it": {
+     "h": "correggere",
+     "x": "L'insegnante corregge gli errori."
+    },
+    "fr": {
+     "h": "corriger",
+     "x": "Le professeur corrige les erreurs."
+    },
+    "ru": {
+     "h": "исправлять",
+     "x": "Учитель исправляет ошибки."
+    }
+   }
+  },
+  {
+   "id": "core.n.strategy.r1319.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "راهبرد",
+     "x": "ما یک راهبرد روشن داریم."
+    },
+    "en": {
+     "h": "strategy",
+     "f": {
+      "kind": "noun",
+      "plural": "strategies"
+     },
+     "x": "We have a clear strategy."
+    },
+    "sv": {
+     "h": "en strategi",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "strategin",
+      "indefinitePlural": "strategier",
+      "definitePlural": "strategierna"
+     },
+     "x": "Vi har en tydlig strategi."
+    },
+    "de": {
+     "h": "die Strategie",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Strategien"
+     },
+     "x": "Wir haben eine klare Strategie."
+    },
+    "es": {
+     "h": "la estrategia",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Tenemos una estrategia clara."
+    },
+    "it": {
+     "h": "la strategia",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Abbiamo una strategia chiara."
+    },
+    "fr": {
+     "h": "la stratégie",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Nous avons une stratégie claire."
+    },
+    "ru": {
+     "h": "стратегия",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "У нас есть чёткая стратегия."
+    }
+   }
+  },
+  {
+   "id": "core.n.reaction.r1367.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "واکنش",
+     "x": "واکنش او خیلی سریع بود."
+    },
+    "en": {
+     "h": "reaction",
+     "f": {
+      "kind": "noun",
+      "plural": "reactions"
+     },
+     "x": "His reaction was very fast."
+    },
+    "sv": {
+     "h": "en reaktion",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "reaktionen",
+      "indefinitePlural": "reaktioner",
+      "definitePlural": "reaktionerna"
+     },
+     "x": "Hans reaktion var mycket snabb."
+    },
+    "de": {
+     "h": "die Reaktion",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Reaktionen"
+     },
+     "x": "Seine Reaktion war sehr schnell."
+    },
+    "es": {
+     "h": "la reacción",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Su reacción fue muy rápida."
+    },
+    "it": {
+     "h": "la reazione",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La sua reazione è stata molto rapida."
+    },
+    "fr": {
+     "h": "la réaction",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Sa réaction a été très rapide."
+    },
+    "ru": {
+     "h": "реакция",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Его реакция была очень быстрой."
+    }
+   }
+  },
+  {
+   "id": "core.a.religious.r1376.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مذهبی",
+     "x": "او یک آدم مذهبی است."
+    },
+    "en": {
+     "h": "religious",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more religious",
+      "superlative": "most religious"
+     },
+     "x": "He is a religious person."
+    },
+    "sv": {
+     "h": "religiös",
+     "f": {
+      "kind": "adjective",
+      "common": "religiös",
+      "neuter": "religiöst",
+      "plural": "religiösa",
+      "definite": "religiösa"
+     },
+     "x": "Han är en religiös person."
+    },
+    "de": {
+     "h": "religiös",
+     "f": {
+      "kind": "adjective",
+      "comparative": "religiöser",
+      "superlative": "religiösesten"
+     },
+     "x": "Er ist ein religiöser Mensch."
+    },
+    "es": {
+     "h": "religioso",
+     "x": "Es una persona religiosa."
+    },
+    "it": {
+     "h": "religioso",
+     "x": "È una persona religiosa."
+    },
+    "fr": {
+     "h": "religieux",
+     "x": "C'est une personne religieuse."
+    },
+    "ru": {
+     "h": "религиозный",
+     "x": "Он религиозный человек."
+    }
+   }
+  },
+  {
+   "id": "core.n.actor.r1399.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "بازیگر",
+     "x": "بازیگر در فیلم خوب بود."
+    },
+    "en": {
+     "h": "actor",
+     "f": {
+      "kind": "noun",
+      "plural": "actors"
+     },
+     "x": "The actor was good in the film."
+    },
+    "sv": {
+     "h": "en skådespelare",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "skådespelaren",
+      "indefinitePlural": "skådespelare",
+      "definitePlural": "skådespelarna"
+     },
+     "x": "Skådespelaren var bra i filmen."
+    },
+    "de": {
+     "h": "der Schauspieler",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Schauspieler"
+     },
+     "x": "Der Schauspieler war gut im Film."
+    },
+    "es": {
+     "h": "el actor",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El actor estuvo bien en la película."
+    },
+    "it": {
+     "h": "l'attore",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "L'attore è stato bravo nel film."
+    },
+    "fr": {
+     "h": "l'acteur",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "L'acteur était bon dans le film."
+    },
+    "ru": {
+     "h": "актёр",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Актёр был хорош в фильме."
+    }
+   }
+  },
+  {
+   "id": "core.a.traditional.r1409.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "سنتی",
+     "x": "این یک غذای سنتی است."
+    },
+    "en": {
+     "h": "traditional",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more traditional",
+      "superlative": "most traditional"
+     },
+     "x": "This is a traditional dish."
+    },
+    "sv": {
+     "h": "traditionell",
+     "f": {
+      "kind": "adjective",
+      "common": "traditionell",
+      "neuter": "traditionellt",
+      "plural": "traditionella",
+      "definite": "traditionella",
+      "comparative": "traditionellare",
+      "superlative": "traditionellast"
+     },
+     "x": "Det här är en traditionell rätt."
+    },
+    "de": {
+     "h": "traditionell",
+     "f": {
+      "kind": "adjective",
+      "comparative": "traditioneller",
+      "superlative": "traditionellsten"
+     },
+     "x": "Das ist ein traditionelles Gericht."
+    },
+    "es": {
+     "h": "tradicional",
+     "x": "Este es un plato tradicional."
+    },
+    "it": {
+     "h": "tradizionale",
+     "x": "Questo è un piatto tradizionale."
+    },
+    "fr": {
+     "h": "traditionnel",
+     "x": "C'est un plat traditionnel."
+    },
+    "ru": {
+     "h": "традиционный",
+     "x": "Это традиционное блюдо."
+    }
+   }
+  },
+  {
+   "id": "core.a.wild.r1415.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "وحشی",
+     "x": "یک حیوان وحشی در جنگل زندگی می‌کند."
+    },
+    "en": {
+     "h": "wild",
+     "f": {
+      "kind": "adjective",
+      "comparative": "wilder",
+      "superlative": "wildest"
+     },
+     "x": "A wild animal lives in the forest."
+    },
+    "sv": {
+     "h": "vild",
+     "f": {
+      "kind": "adjective",
+      "common": "vild",
+      "neuter": "vilt",
+      "plural": "vilda",
+      "definite": "vilda",
+      "comparative": "vildare",
+      "superlative": "vildast"
+     },
+     "x": "Ett vilt djur bor i skogen."
+    },
+    "de": {
+     "h": "wild",
+     "f": {
+      "kind": "adjective",
+      "comparative": "wilder",
+      "superlative": "wildesten"
+     },
+     "x": "Ein wildes Tier lebt im Wald."
+    },
+    "es": {
+     "h": "salvaje",
+     "x": "Un animal salvaje vive en el bosque."
+    },
+    "it": {
+     "h": "selvaggio",
+     "x": "Un animale selvaggio vive nella foresta."
+    },
+    "fr": {
+     "h": "sauvage",
+     "x": "Un animal sauvage vit dans la forêt."
+    },
+    "ru": {
+     "h": "дикий",
+     "x": "В лесу живёт дикое животное."
+    }
+   }
+  },
+  {
+   "id": "core.n.route.r1421.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مسیر",
+     "x": "مسیر ما از کنار دریاچه می‌گذرد."
+    },
+    "en": {
+     "h": "route",
+     "f": {
+      "kind": "noun",
+      "plural": "routes"
+     },
+     "x": "Our route goes past the lake."
+    },
+    "sv": {
+     "h": "en rutt",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "rutten",
+      "indefinitePlural": "rutter",
+      "definitePlural": "rutterna"
+     },
+     "x": "Vår rutt går förbi sjön."
+    },
+    "de": {
+     "h": "die Route",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Routen"
+     },
+     "x": "Unsere Route führt am See vorbei."
+    },
+    "es": {
+     "h": "la ruta",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Nuestra ruta pasa junto al lago."
+    },
+    "it": {
+     "h": "il percorso",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il nostro percorso passa accanto al lago."
+    },
+    "fr": {
+     "h": "l'itinéraire",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Notre itinéraire passe près du lac."
+    },
+    "ru": {
+     "h": "маршрут",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Наш маршрут проходит мимо озера."
+    }
+   }
+  },
+  {
+   "id": "core.a.digital.r1427.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دیجیتال",
+     "x": "من یک ساعت دیجیتال دارم."
+    },
+    "en": {
+     "h": "digital",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more digital",
+      "superlative": "most digital"
+     },
+     "x": "I have a digital watch."
+    },
+    "sv": {
+     "h": "digital",
+     "f": {
+      "kind": "adjective",
+      "common": "digital",
+      "neuter": "digitalt",
+      "plural": "digitala",
+      "definite": "digitala"
+     },
+     "x": "Jag har en digital klocka."
+    },
+    "de": {
+     "h": "digital",
+     "x": "Ich habe eine digitale Uhr."
+    },
+    "es": {
+     "h": "digital",
+     "x": "Tengo un reloj digital."
+    },
+    "it": {
+     "h": "digitale",
+     "x": "Ho un orologio digitale."
+    },
+    "fr": {
+     "h": "numérique",
+     "x": "J'ai une montre numérique."
+    },
+    "ru": {
+     "h": "цифровой",
+     "x": "У меня цифровые часы."
+    }
+   }
+  },
+  {
+   "id": "core.a.mental.r1428.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "ذهنی",
+     "x": "سلامت روان مهم است."
+    },
+    "en": {
+     "h": "mental",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more mental",
+      "superlative": "most mental"
+     },
+     "x": "Mental health is important."
+    },
+    "sv": {
+     "h": "mental",
+     "f": {
+      "kind": "adjective",
+      "common": "mental",
+      "neuter": "mentalt",
+      "plural": "mentala",
+      "definite": "mentala"
+     },
+     "x": "Mental hälsa är viktig."
+    },
+    "de": {
+     "h": "geistig",
+     "f": {
+      "kind": "adjective",
+      "comparative": "geistiger",
+      "superlative": "geistigsten"
+     },
+     "x": "Geistige Gesundheit ist wichtig."
+    },
+    "es": {
+     "h": "mental",
+     "x": "La salud mental es importante."
+    },
+    "it": {
+     "h": "mentale",
+     "x": "La salute mentale è importante."
+    },
+    "fr": {
+     "h": "mental",
+     "x": "La santé mentale est importante."
+    },
+    "ru": {
+     "h": "психический",
+     "x": "Психическое здоровье важно."
+    }
+   }
+  },
+  {
+   "id": "core.n.signal.r1445.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "سیگنال",
+     "x": "سیگنال تلفن ضعیف است."
+    },
+    "en": {
+     "h": "signal",
+     "f": {
+      "kind": "noun",
+      "plural": "signals"
+     },
+     "x": "The phone signal is weak."
+    },
+    "sv": {
+     "h": "en signal",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "signalen",
+      "indefinitePlural": "signaler",
+      "definitePlural": "signalerna"
+     },
+     "x": "Telefonsignalen är svag."
+    },
+    "de": {
+     "h": "das Signal",
+     "f": {
+      "kind": "noun",
+      "gender": "das",
+      "plural": "Signale"
+     },
+     "x": "Das Handysignal ist schwach."
+    },
+    "es": {
+     "h": "la señal",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La señal del teléfono es débil."
+    },
+    "it": {
+     "h": "il segnale",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il segnale del telefono è debole."
+    },
+    "fr": {
+     "h": "le signal",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Le signal du téléphone est faible."
+    },
+    "ru": {
+     "h": "сигнал",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Сигнал телефона слабый."
+    }
+   }
+  },
+  {
+   "id": "core.n.desire.r1450.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "میل",
+     "x": "میل او به یادگیری زیاد است."
+    },
+    "en": {
+     "h": "desire",
+     "f": {
+      "kind": "noun",
+      "plural": "desires"
+     },
+     "x": "His desire to learn is strong."
+    },
+    "sv": {
+     "h": "en önskan",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "önskan",
+      "indefinitePlural": "önskningar",
+      "definitePlural": "önskningarna"
+     },
+     "x": "Hans önskan att lära sig är stark."
+    },
+    "de": {
+     "h": "der Wunsch",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Wünsche"
+     },
+     "x": "Sein Wunsch zu lernen ist groß."
+    },
+    "es": {
+     "h": "el deseo",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "Su deseo de aprender es fuerte."
+    },
+    "it": {
+     "h": "il desiderio",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il suo desiderio di imparare è forte."
+    },
+    "fr": {
+     "h": "le désir",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Son désir d'apprendre est fort."
+    },
+    "ru": {
+     "h": "желание",
+     "f": {
+      "kind": "noun",
+      "gender": "с"
+     },
+     "x": "Его желание учиться велико."
+    }
+   }
+  },
+  {
+   "id": "core.n.theme.r1452.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مضمون",
+     "x": "موضوع کتاب دوستی است."
+    },
+    "en": {
+     "h": "theme",
+     "f": {
+      "kind": "noun",
+      "plural": "themes"
+     },
+     "x": "The theme of the book is friendship."
+    },
+    "sv": {
+     "h": "ett tema",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "temat",
+      "indefinitePlural": "teman",
+      "definitePlural": "temana"
+     },
+     "x": "Bokens tema är vänskap."
+    },
+    "de": {
+     "h": "das Thema",
+     "f": {
+      "kind": "noun",
+      "gender": "das",
+      "plural": "Themen"
+     },
+     "x": "Das Thema des Buches ist Freundschaft."
+    },
+    "es": {
+     "h": "el tema",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El tema del libro es la amistad."
+    },
+    "it": {
+     "h": "il tema",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il tema del libro è l'amicizia."
+    },
+    "fr": {
+     "h": "le thème",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Le thème du livre est l'amitié."
+    },
+    "ru": {
+     "h": "тема",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Тема книги — дружба."
+    }
+   }
+  },
+  {
+   "id": "core.n.temperature.r1466.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دما",
+     "x": "دمای امروز بیست درجه است."
+    },
+    "en": {
+     "h": "temperature",
+     "f": {
+      "kind": "noun",
+      "plural": "temperatures"
+     },
+     "x": "Today's temperature is twenty degrees."
+    },
+    "sv": {
+     "h": "en temperatur",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "temperaturen",
+      "indefinitePlural": "temperaturer",
+      "definitePlural": "temperaturerna"
+     },
+     "x": "Dagens temperatur är tjugo grader."
+    },
+    "de": {
+     "h": "die Temperatur",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Temperaturen"
+     },
+     "x": "Die Temperatur beträgt heute zwanzig Grad."
+    },
+    "es": {
+     "h": "la temperatura",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La temperatura de hoy es de veinte grados."
+    },
+    "it": {
+     "h": "la temperatura",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La temperatura di oggi è di venti gradi."
+    },
+    "fr": {
+     "h": "la température",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La température d'aujourd'hui est de vingt degrés."
+    },
+    "ru": {
+     "h": "температура",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Сегодняшняя температура — двадцать градусов."
+    }
+   }
+  },
+  {
+   "id": "core.v.contribute.r1484.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مشارکت کردن",
+     "x": "هر کسی می‌تواند مشارکت کند."
+    },
+    "en": {
+     "h": "to contribute",
+     "f": {
+      "kind": "verb",
+      "base": "contribute",
+      "thirdPerson": "contributes",
+      "past": "contributed",
+      "pastParticiple": "contributed"
+     },
+     "x": "Everyone can contribute."
+    },
+    "sv": {
+     "h": "bidra",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "bidra",
+      "presens": "bidrar",
+      "preteritum": "bidrade",
+      "supinum": "bidrat"
+     },
+     "x": "Alla kan bidra."
+    },
+    "de": {
+     "h": "beitragen",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "beitragen",
+      "praesens": "trägt bei",
+      "praeteritum": "trug bei",
+      "partizip2": "beigetragen",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Jeder kann etwas beitragen."
+    },
+    "es": {
+     "h": "contribuir",
+     "x": "Todos pueden contribuir."
+    },
+    "it": {
+     "h": "contribuire",
+     "x": "Tutti possono contribuire."
+    },
+    "fr": {
+     "h": "contribuer",
+     "x": "Tout le monde peut contribuer."
+    },
+    "ru": {
+     "h": "способствовать",
+     "x": "Каждый может способствовать общему делу."
+    }
+   }
+  },
+  {
+   "id": "core.v.ignore.r1486.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "نادیده گرفتن",
+     "x": "نمی‌توانی این هشدار را نادیده بگیری."
+    },
+    "en": {
+     "h": "to ignore",
+     "f": {
+      "kind": "verb",
+      "base": "ignore",
+      "thirdPerson": "ignores",
+      "past": "ignored",
+      "pastParticiple": "ignored"
+     },
+     "x": "You cannot ignore this warning."
+    },
+    "sv": {
+     "h": "ignorera",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "ignorera",
+      "presens": "ignorerar",
+      "preteritum": "ignorerade",
+      "supinum": "ignorerat"
+     },
+     "x": "Du kan inte ignorera varningen."
+    },
+    "de": {
+     "h": "ignorieren",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "ignorieren",
+      "praesens": "ignoriert",
+      "praeteritum": "ignorierte",
+      "partizip2": "ignoriert",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Du kannst die Warnung nicht ignorieren."
+    },
+    "es": {
+     "h": "ignorar",
+     "x": "No puedes ignorar esta advertencia."
+    },
+    "it": {
+     "h": "ignorare",
+     "x": "Non puoi ignorare questo avviso."
+    },
+    "fr": {
+     "h": "ignorer",
+     "x": "Tu ne peux pas ignorer cet avertissement."
+    },
+    "ru": {
+     "h": "игнорировать",
+     "x": "Нельзя игнорировать это предупреждение."
+    }
+   }
+  },
+  {
+   "id": "core.n.shock.r1490.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "شوک",
+     "x": "خبر برای او یک شوک بود."
+    },
+    "en": {
+     "h": "shock",
+     "f": {
+      "kind": "noun",
+      "plural": "shocks"
+     },
+     "x": "The news was a shock to him."
+    },
+    "sv": {
+     "h": "en chock",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "chocken",
+      "indefinitePlural": "chocker",
+      "definitePlural": "chockerna"
+     },
+     "x": "Nyheten var en chock för honom."
+    },
+    "de": {
+     "h": "der Schock",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Schocke"
+     },
+     "x": "Die Nachricht war ein Schock für ihn."
+    },
+    "es": {
+     "h": "el choque",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "La noticia fue un choque para él."
+    },
+    "it": {
+     "h": "lo shock",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "La notizia è stata uno shock per lui."
+    },
+    "fr": {
+     "h": "le choc",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "La nouvelle a été un choc pour lui."
+    },
+    "ru": {
+     "h": "шок",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Новость стала для него шоком."
+    }
+   }
+  },
+  {
+   "id": "core.n.religion.r1493.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دین",
+     "x": "دین برای او مهم است."
+    },
+    "en": {
+     "h": "religion",
+     "f": {
+      "kind": "noun",
+      "plural": "religions"
+     },
+     "x": "Religion is important to her."
+    },
+    "sv": {
+     "h": "en religion",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "religionen",
+      "indefinitePlural": "religioner",
+      "definitePlural": "religionerna"
+     },
+     "x": "Religion är viktigt för henne."
+    },
+    "de": {
+     "h": "die Religion",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Religionen"
+     },
+     "x": "Religion ist ihr wichtig."
+    },
+    "es": {
+     "h": "la religión",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La religión es importante para ella."
+    },
+    "it": {
+     "h": "la religione",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La religione è importante per lei."
+    },
+    "fr": {
+     "h": "la religion",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La religion est importante pour elle."
+    },
+    "ru": {
+     "h": "религия",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Религия важна для неё."
+    }
+   }
+  },
+  {
+   "id": "core.d.obviously.r1496.20261127",
+   "p": "adverb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "آشکارا",
+     "x": "آشکارا او خسته است."
+    },
+    "en": {
+     "h": "obviously",
+     "x": "Obviously, he is tired."
+    },
+    "sv": {
+     "h": "uppenbarligen",
+     "x": "Uppenbarligen är han trött."
+    },
+    "de": {
+     "h": "offensichtlich",
+     "x": "Offensichtlich ist er müde."
+    },
+    "es": {
+     "h": "obviamente",
+     "x": "Obviamente, está cansado."
+    },
+    "it": {
+     "h": "ovviamente",
+     "x": "Ovviamente è stanco."
+    },
+    "fr": {
+     "h": "évidemment",
+     "x": "Évidemment, il est fatigué."
+    },
+    "ru": {
+     "h": "очевидно",
+     "x": "Очевидно, он устал."
+    }
+   }
+  },
+  {
+   "id": "core.v.surround.r1504.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "احاطه کردن",
+     "x": "کوه‌ها شهر را احاطه کرده‌اند."
+    },
+    "en": {
+     "h": "to surround",
+     "f": {
+      "kind": "verb",
+      "base": "surround",
+      "thirdPerson": "surrounds",
+      "past": "surrounded",
+      "pastParticiple": "surrounded"
+     },
+     "x": "Mountains surround the city."
+    },
+    "sv": {
+     "h": "omge",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "omge",
+      "presens": "omger",
+      "preteritum": "omgav",
+      "supinum": "omgett"
+     },
+     "x": "Berg omger staden."
+    },
+    "de": {
+     "h": "umgeben",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "umgeben",
+      "praesens": "umgibt",
+      "praeteritum": "umgab",
+      "partizip2": "umgeben",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Berge umgeben die Stadt."
+    },
+    "es": {
+     "h": "rodear",
+     "x": "Las montañas rodean la ciudad."
+    },
+    "it": {
+     "h": "circondare",
+     "x": "Le montagne circondano la città."
+    },
+    "fr": {
+     "h": "entourer",
+     "x": "Des montagnes entourent la ville."
+    },
+    "ru": {
+     "h": "окружать",
+     "x": "Горы окружают город."
+    }
+   }
+  },
+  {
+   "id": "core.n.technique.r1516.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "تکنیک",
+     "x": "این تکنیک خیلی ساده است."
+    },
+    "en": {
+     "h": "technique",
+     "f": {
+      "kind": "noun",
+      "plural": "techniques"
+     },
+     "x": "This technique is very simple."
+    },
+    "sv": {
+     "h": "en teknik",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "tekniken",
+      "indefinitePlural": "tekniker",
+      "definitePlural": "teknikerna"
+     },
+     "x": "Den här tekniken är väldigt enkel."
+    },
+    "de": {
+     "h": "die Technik",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Techniken"
+     },
+     "x": "Diese Technik ist sehr einfach."
+    },
+    "es": {
+     "h": "la técnica",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Esta técnica es muy sencilla."
+    },
+    "it": {
+     "h": "la tecnica",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Questa tecnica è molto semplice."
+    },
+    "fr": {
+     "h": "la technique",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Cette technique est très simple."
+    },
+    "ru": {
+     "h": "техника",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Эта техника очень простая."
+    }
+   }
+  },
+  {
+   "id": "core.n.victory.r1542.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "پیروزی",
+     "x": "پیروزی تیم ما بزرگ بود."
+    },
+    "en": {
+     "h": "victory",
+     "f": {
+      "kind": "noun",
+      "plural": "victories"
+     },
+     "x": "Our team's victory was great."
+    },
+    "sv": {
+     "h": "en seger",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "segern",
+      "indefinitePlural": "segrar",
+      "definitePlural": "segrarna"
+     },
+     "x": "Vårt lags seger var stor."
+    },
+    "de": {
+     "h": "der Sieg",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Siege"
+     },
+     "x": "Der Sieg unserer Mannschaft war groß."
+    },
+    "es": {
+     "h": "la victoria",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La victoria de nuestro equipo fue grande."
+    },
+    "it": {
+     "h": "la vittoria",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La vittoria della nostra squadra è stata grande."
+    },
+    "fr": {
+     "h": "la victoire",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La victoire de notre équipe a été grande."
+    },
+    "ru": {
+     "h": "победа",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Победа нашей команды была большой."
+    }
+   }
+  },
+  {
+   "id": "core.a.aware.r1547.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "آگاه",
+     "x": "من از خطر آگاه هستم."
+    },
+    "en": {
+     "h": "aware",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more aware",
+      "superlative": "most aware"
+     },
+     "x": "I am aware of the danger."
+    },
+    "sv": {
+     "h": "medveten",
+     "f": {
+      "kind": "adjective",
+      "common": "medveten",
+      "neuter": "medvetet",
+      "plural": "medvetna",
+      "definite": "medvetna",
+      "comparative": "medvetnare",
+      "superlative": "medvetnast"
+     },
+     "x": "Jag är medveten om faran."
+    },
+    "de": {
+     "h": "bewusst",
+     "f": {
+      "kind": "adjective",
+      "comparative": "bewusster",
+      "superlative": "bewusstesten"
+     },
+     "x": "Ich bin mir der Gefahr bewusst."
+    },
+    "es": {
+     "h": "consciente",
+     "x": "Soy consciente del peligro."
+    },
+    "it": {
+     "h": "consapevole",
+     "x": "Sono consapevole del pericolo."
+    },
+    "fr": {
+     "h": "conscient",
+     "x": "Je suis conscient du danger."
+    },
+    "ru": {
+     "h": "осведомлённый",
+     "x": "Я осведомлён об опасности."
+    }
+   }
+  },
+  {
+   "id": "core.v.reflect.r1568.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "بازتاب دادن",
+     "x": "آینه نور را بازتاب می‌دهد."
+    },
+    "en": {
+     "h": "to reflect",
+     "f": {
+      "kind": "verb",
+      "base": "reflect",
+      "thirdPerson": "reflects",
+      "past": "reflected",
+      "pastParticiple": "reflected"
+     },
+     "x": "The mirror reflects the light."
+    },
+    "sv": {
+     "h": "reflektera",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "reflektera",
+      "presens": "reflekterar",
+      "preteritum": "reflekterade",
+      "supinum": "reflekterat"
+     },
+     "x": "Spegeln reflekterar ljuset."
+    },
+    "de": {
+     "h": "reflektieren",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "reflektieren",
+      "praesens": "reflektiert",
+      "praeteritum": "reflektierte",
+      "partizip2": "reflektiert",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Der Spiegel reflektiert das Licht."
+    },
+    "es": {
+     "h": "reflejar",
+     "x": "El espejo refleja la luz."
+    },
+    "it": {
+     "h": "riflettere",
+     "x": "Lo specchio riflette la luce."
+    },
+    "fr": {
+     "h": "refléter",
+     "x": "Le miroir reflète la lumière."
+    },
+    "ru": {
+     "h": "отражать",
+     "x": "Зеркало отражает свет."
+    }
+   }
+  },
+  {
+   "id": "core.n.debt.r1579.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "بدهی",
+     "x": "او بدهی زیادی دارد."
+    },
+    "en": {
+     "h": "debt",
+     "f": {
+      "kind": "noun",
+      "plural": "debts"
+     },
+     "x": "He has a lot of debt."
+    },
+    "sv": {
+     "h": "en skuld",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "skulden",
+      "indefinitePlural": "skulder",
+      "definitePlural": "skulderna"
+     },
+     "x": "Han har mycket skulder."
+    },
+    "de": {
+     "h": "die Schuld",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Schulden"
+     },
+     "x": "Er hat viele Schulden."
+    },
+    "es": {
+     "h": "la deuda",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Tiene mucha deuda."
+    },
+    "it": {
+     "h": "il debito",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Ha molti debiti."
+    },
+    "fr": {
+     "h": "la dette",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Il a beaucoup de dettes."
+    },
+    "ru": {
+     "h": "долг",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "У него много долгов."
+    }
+   }
+  },
+  {
+   "id": "core.n.bomb.r1588.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "بمب",
+     "x": "پلیس یک بمب پیدا کرد."
+    },
+    "en": {
+     "h": "bomb",
+     "f": {
+      "kind": "noun",
+      "plural": "bombs"
+     },
+     "x": "The police found a bomb."
+    },
+    "sv": {
+     "h": "en bomb",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "bomben",
+      "indefinitePlural": "bomber",
+      "definitePlural": "bomberna"
+     },
+     "x": "Polisen hittade en bomb."
+    },
+    "de": {
+     "h": "die Bombe",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Bomben"
+     },
+     "x": "Die Polizei fand eine Bombe."
+    },
+    "es": {
+     "h": "la bomba",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La policía encontró una bomba."
+    },
+    "it": {
+     "h": "la bomba",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La polizia ha trovato una bomba."
+    },
+    "fr": {
+     "h": "la bombe",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La police a trouvé une bombe."
+    },
+    "ru": {
+     "h": "бомба",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Полиция нашла бомбу."
+    }
+   }
+  },
+  {
+   "id": "core.n.trend.r1604.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "روند",
+     "x": "این روند ادامه دارد."
+    },
+    "en": {
+     "h": "trend",
+     "f": {
+      "kind": "noun",
+      "plural": "trends"
+     },
+     "x": "This trend continues."
+    },
+    "sv": {
+     "h": "en trend",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "trenden",
+      "indefinitePlural": "trender",
+      "definitePlural": "trenderna"
+     },
+     "x": "Den här trenden fortsätter."
+    },
+    "de": {
+     "h": "der Trend",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Trends"
+     },
+     "x": "Dieser Trend setzt sich fort."
+    },
+    "es": {
+     "h": "la tendencia",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Esta tendencia continúa."
+    },
+    "it": {
+     "h": "la tendenza",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Questa tendenza continua."
+    },
+    "fr": {
+     "h": "la tendance",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Cette tendance continue."
+    },
+    "ru": {
+     "h": "тенденция",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Эта тенденция продолжается."
+    }
+   }
+  },
+  {
+   "id": "core.n.tank.r1623.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مخزن",
+     "x": "مخزن آب پر است."
+    },
+    "en": {
+     "h": "tank",
+     "f": {
+      "kind": "noun",
+      "plural": "tanks"
+     },
+     "x": "The water tank is full."
+    },
+    "sv": {
+     "h": "en tank",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "tanken",
+      "indefinitePlural": "tankar",
+      "definitePlural": "tankarna"
+     },
+     "x": "Vattentanken är full."
+    },
+    "de": {
+     "h": "der Tank",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Tanks"
+     },
+     "x": "Der Wassertank ist voll."
+    },
+    "es": {
+     "h": "el tanque",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El tanque de agua está lleno."
+    },
+    "it": {
+     "h": "il serbatoio",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il serbatoio dell'acqua è pieno."
+    },
+    "fr": {
+     "h": "le réservoir",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Le réservoir d'eau est plein."
+    },
+    "ru": {
+     "h": "бак",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Бак для воды полон."
+    }
+   }
+  },
+  {
+   "id": "core.a.cultural.r1626.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "فرهنگی",
+     "x": "این یک رویداد فرهنگی است."
+    },
+    "en": {
+     "h": "cultural",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more cultural",
+      "superlative": "most cultural"
+     },
+     "x": "This is a cultural event."
+    },
+    "sv": {
+     "h": "kulturell",
+     "f": {
+      "kind": "adjective",
+      "common": "kulturell",
+      "neuter": "kulturellt",
+      "plural": "kulturella",
+      "definite": "kulturella"
+     },
+     "x": "Det här är ett kulturellt evenemang."
+    },
+    "de": {
+     "h": "kulturell",
+     "x": "Das ist ein kulturelles Ereignis."
+    },
+    "es": {
+     "h": "cultural",
+     "x": "Este es un evento cultural."
+    },
+    "it": {
+     "h": "culturale",
+     "x": "Questo è un evento culturale."
+    },
+    "fr": {
+     "h": "culturel",
+     "x": "C'est un événement culturel."
+    },
+    "ru": {
+     "h": "культурный",
+     "x": "Это культурное событие."
+    }
+   }
+  },
+  {
+   "id": "core.a.technical.r1629.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "فنی",
+     "x": "ما یک مشکل فنی داریم."
+    },
+    "en": {
+     "h": "technical",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more technical",
+      "superlative": "most technical"
+     },
+     "x": "We have a technical problem."
+    },
+    "sv": {
+     "h": "teknisk",
+     "f": {
+      "kind": "adjective",
+      "common": "teknisk",
+      "neuter": "tekniskt",
+      "plural": "tekniska",
+      "definite": "tekniska",
+      "comparative": "mer teknisk",
+      "superlative": "mest teknisk"
+     },
+     "x": "Vi har ett tekniskt problem."
+    },
+    "de": {
+     "h": "technisch",
+     "f": {
+      "kind": "adjective",
+      "comparative": "technischer",
+      "superlative": "technischsten"
+     },
+     "x": "Wir haben ein technisches Problem."
+    },
+    "es": {
+     "h": "técnico",
+     "x": "Tenemos un problema técnico."
+    },
+    "it": {
+     "h": "tecnico",
+     "x": "Abbiamo un problema tecnico."
+    },
+    "fr": {
+     "h": "technique",
+     "x": "Nous avons un problème technique."
+    },
+    "ru": {
+     "h": "технический",
+     "x": "У нас техническая проблема."
+    }
+   }
+  },
+  {
+   "id": "core.v.suspect.r1634.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مشکوک بودن",
+     "x": "من به او مشکوک هستم."
+    },
+    "en": {
+     "h": "to suspect",
+     "f": {
+      "kind": "verb",
+      "base": "suspect",
+      "thirdPerson": "suspects",
+      "past": "suspected",
+      "pastParticiple": "suspected"
+     },
+     "x": "I suspect him."
+    },
+    "sv": {
+     "h": "misstänka",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "misstänka",
+      "presens": "misstänker",
+      "preteritum": "misstänkte",
+      "supinum": "misstänkt"
+     },
+     "x": "Jag misstänker honom."
+    },
+    "de": {
+     "h": "verdächtigen",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "verdächtigen",
+      "praesens": "verdächtigt",
+      "praeteritum": "verdächtigte",
+      "partizip2": "verdächtigt",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Ich verdächtige ihn."
+    },
+    "es": {
+     "h": "sospechar",
+     "x": "Sospecho de él."
+    },
+    "it": {
+     "h": "sospettare",
+     "x": "Sospetto di lui."
+    },
+    "fr": {
+     "h": "soupçonner",
+     "x": "Je le soupçonne."
+    },
+    "ru": {
+     "h": "подозревать",
+     "x": "Я подозреваю его."
+    }
+   }
+  },
+  {
+   "id": "core.n.novel.r1650.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "رمان",
+     "x": "من یک رمان جدید می‌خوانم."
+    },
+    "en": {
+     "h": "novel",
+     "f": {
+      "kind": "noun",
+      "plural": "novels"
+     },
+     "x": "I am reading a new novel."
+    },
+    "sv": {
+     "h": "en roman",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "romanen",
+      "indefinitePlural": "romaner",
+      "definitePlural": "romanerna"
+     },
+     "x": "Jag läser en ny roman."
+    },
+    "de": {
+     "h": "der Roman",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Romane"
+     },
+     "x": "Ich lese einen neuen Roman."
+    },
+    "es": {
+     "h": "la novela",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Estoy leyendo una novela nueva."
+    },
+    "it": {
+     "h": "il romanzo",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Sto leggendo un nuovo romanzo."
+    },
+    "fr": {
+     "h": "le roman",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Je lis un nouveau roman."
+    },
+    "ru": {
+     "h": "роман",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Я читаю новый роман."
+    }
+   }
+  },
+  {
+   "id": "core.a.democratic.r1668.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دموکراتیک",
+     "x": "سوئد یک کشور دموکراتیک است."
+    },
+    "en": {
+     "h": "democratic",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more democratic",
+      "superlative": "most democratic"
+     },
+     "x": "Sweden is a democratic country."
+    },
+    "sv": {
+     "h": "demokratisk",
+     "f": {
+      "kind": "adjective",
+      "common": "demokratisk",
+      "neuter": "demokratiskt",
+      "plural": "demokratiska",
+      "definite": "demokratiska",
+      "comparative": "mer demokratisk",
+      "superlative": "mest demokratisk"
+     },
+     "x": "Sverige är ett demokratiskt land."
+    },
+    "de": {
+     "h": "demokratisch",
+     "x": "Schweden ist ein demokratisches Land."
+    },
+    "es": {
+     "h": "democrático",
+     "x": "Suecia es un país democrático."
+    },
+    "it": {
+     "h": "democratico",
+     "x": "La Svezia è un paese democratico."
+    },
+    "fr": {
+     "h": "démocratique",
+     "x": "La Suède est un pays démocratique."
+    },
+    "ru": {
+     "h": "демократический",
+     "x": "Швеция — демократическая страна."
+    }
+   }
+  },
+  {
+   "id": "core.n.phase.r1678.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مرحله",
+     "x": "این مرحله دوم پروژه است."
+    },
+    "en": {
+     "h": "phase",
+     "f": {
+      "kind": "noun",
+      "plural": "phases"
+     },
+     "x": "This is the second phase of the project."
+    },
+    "sv": {
+     "h": "en fas",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "fasen",
+      "indefinitePlural": "fasar",
+      "definitePlural": "fasarna"
+     },
+     "x": "Det här är projektets andra fas."
+    },
+    "de": {
+     "h": "die Phase",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Phasen"
+     },
+     "x": "Das ist die zweite Phase des Projekts."
+    },
+    "es": {
+     "h": "la fase",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Esta es la segunda fase del proyecto."
+    },
+    "it": {
+     "h": "la fase",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Questa è la seconda fase del progetto."
+    },
+    "fr": {
+     "h": "la phase",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "C'est la deuxième phase du projet."
+    },
+    "ru": {
+     "h": "фаза",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Это вторая фаза проекта."
+    }
+   }
+  },
+  {
+   "id": "core.a.regional.r1686.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "منطقه‌ای",
+     "x": "این یک فرودگاه منطقه‌ای است."
+    },
+    "en": {
+     "h": "regional",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more regional",
+      "superlative": "most regional"
+     },
+     "x": "This is a regional airport."
+    },
+    "sv": {
+     "h": "regional",
+     "f": {
+      "kind": "adjective",
+      "common": "regional",
+      "neuter": "regionalt",
+      "plural": "regionala",
+      "definite": "regionala"
+     },
+     "x": "Det här är en regional flygplats."
+    },
+    "de": {
+     "h": "regional",
+     "x": "Das ist ein regionaler Flughafen."
+    },
+    "es": {
+     "h": "regional",
+     "x": "Este es un aeropuerto regional."
+    },
+    "it": {
+     "h": "regionale",
+     "x": "Questo è un aeroporto regionale."
+    },
+    "fr": {
+     "h": "régional",
+     "x": "C'est un aéroport régional."
+    },
+    "ru": {
+     "h": "региональный",
+     "x": "Это региональный аэропорт."
+    }
+   }
+  },
+  {
+   "id": "core.n.talent.r1689.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "استعداد",
+     "x": "او استعداد زیادی در موسیقی دارد."
+    },
+    "en": {
+     "h": "talent",
+     "f": {
+      "kind": "noun",
+      "plural": "talents"
+     },
+     "x": "She has a lot of talent for music."
+    },
+    "sv": {
+     "h": "en talang",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "talangen",
+      "indefinitePlural": "talanger",
+      "definitePlural": "talangerna"
+     },
+     "x": "Hon har mycket talang för musik."
+    },
+    "de": {
+     "h": "das Talent",
+     "f": {
+      "kind": "noun",
+      "gender": "das",
+      "plural": "Talente"
+     },
+     "x": "Sie hat viel Talent für Musik."
+    },
+    "es": {
+     "h": "el talento",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "Ella tiene mucho talento para la música."
+    },
+    "it": {
+     "h": "il talento",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Ha molto talento per la musica."
+    },
+    "fr": {
+     "h": "le talent",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Elle a beaucoup de talent pour la musique."
+    },
+    "ru": {
+     "h": "талант",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "У неё большой талант к музыке."
+    }
+   }
+  },
+  {
+   "id": "core.n.editor.r1694.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "ویراستار",
+     "x": "ویراستار متن را می‌خواند."
+    },
+    "en": {
+     "h": "editor",
+     "f": {
+      "kind": "noun",
+      "plural": "editors"
+     },
+     "x": "The editor reads the text."
+    },
+    "sv": {
+     "h": "en redaktör",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "redaktören",
+      "indefinitePlural": "redaktörer",
+      "definitePlural": "redaktörerna"
+     },
+     "x": "Redaktören läser texten."
+    },
+    "de": {
+     "h": "der Redakteur",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Redakteure"
+     },
+     "x": "Der Redakteur liest den Text."
+    },
+    "es": {
+     "h": "el editor",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El editor lee el texto."
+    },
+    "it": {
+     "h": "l'editore",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "L'editore legge il testo."
+    },
+    "fr": {
+     "h": "l'éditeur",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "L'éditeur lit le texte."
+    },
+    "ru": {
+     "h": "редактор",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Редактор читает текст."
+    }
+   }
+  },
+  {
+   "id": "core.a.electric.r1698.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "برقی",
+     "x": "من یک ماشین برقی دارم."
+    },
+    "en": {
+     "h": "electric",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more electric",
+      "superlative": "most electric"
+     },
+     "x": "I have an electric car."
+    },
+    "sv": {
+     "h": "elektrisk",
+     "f": {
+      "kind": "adjective",
+      "common": "elektrisk",
+      "neuter": "elektriskt",
+      "plural": "elektriska",
+      "definite": "elektriska",
+      "comparative": "mer elektrisk",
+      "superlative": "mest elektrisk"
+     },
+     "x": "Jag har en elbil."
+    },
+    "de": {
+     "h": "elektrisch",
+     "x": "Ich habe ein elektrisches Auto."
+    },
+    "es": {
+     "h": "eléctrico",
+     "x": "Tengo un coche eléctrico."
+    },
+    "it": {
+     "h": "elettrico",
+     "x": "Ho un'auto elettrica."
+    },
+    "fr": {
+     "h": "électrique",
+     "x": "J'ai une voiture électrique."
+    },
+    "ru": {
+     "h": "электрический",
+     "x": "У меня электрическая машина."
+    }
+   }
+  },
+  {
+   "id": "core.n.wound.r1719.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "زخم",
+     "x": "زخم هنوز درد می‌کند."
+    },
+    "en": {
+     "h": "wound",
+     "f": {
+      "kind": "noun",
+      "plural": "wounds"
+     },
+     "x": "The wound still hurts."
+    },
+    "sv": {
+     "h": "ett sår",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "såret",
+      "indefinitePlural": "sår",
+      "definitePlural": "såren"
+     },
+     "x": "Såret gör fortfarande ont."
+    },
+    "de": {
+     "h": "die Wunde",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Wunden"
+     },
+     "x": "Die Wunde tut noch weh."
+    },
+    "es": {
+     "h": "la herida",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La herida todavía duele."
+    },
+    "it": {
+     "h": "la ferita",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La ferita fa ancora male."
+    },
+    "fr": {
+     "h": "la blessure",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La blessure fait encore mal."
+    },
+    "ru": {
+     "h": "рана",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Рана всё ещё болит."
+    }
+   }
+  },
+  {
+   "id": "core.a.industrial.r1725.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "صنعتی",
+     "x": "او در یک منطقه صنعتی کار می‌کند."
+    },
+    "en": {
+     "h": "industrial",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more industrial",
+      "superlative": "most industrial"
+     },
+     "x": "He works in an industrial area."
+    },
+    "sv": {
+     "h": "industriell",
+     "f": {
+      "kind": "adjective",
+      "common": "industriell",
+      "neuter": "industriellt",
+      "plural": "industriella",
+      "definite": "industriella"
+     },
+     "x": "Han arbetar i ett industriellt område."
+    },
+    "de": {
+     "h": "industriell",
+     "x": "Er arbeitet in einem industriellen Gebiet."
+    },
+    "es": {
+     "h": "industrial",
+     "x": "Trabaja en una zona industrial."
+    },
+    "it": {
+     "h": "industriale",
+     "x": "Lavora in una zona industriale."
+    },
+    "fr": {
+     "h": "industriel",
+     "x": "Il travaille dans une zone industrielle."
+    },
+    "ru": {
+     "h": "промышленный",
+     "x": "Он работает в промышленном районе."
+    }
+   }
+  },
+  {
+   "id": "core.n.drama.r1747.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "درام",
+     "x": "فیلم یک درام قوی است."
+    },
+    "en": {
+     "h": "drama",
+     "f": {
+      "kind": "noun",
+      "plural": "dramas"
+     },
+     "x": "The film is a strong drama."
+    },
+    "sv": {
+     "h": "ett drama",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "dramat",
+      "indefinitePlural": "draman",
+      "definitePlural": "dramana"
+     },
+     "x": "Filmen är ett starkt drama."
+    },
+    "de": {
+     "h": "das Drama",
+     "f": {
+      "kind": "noun",
+      "gender": "das",
+      "plural": "Dramen"
+     },
+     "x": "Der Film ist ein starkes Drama."
+    },
+    "es": {
+     "h": "el drama",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "La película es un drama fuerte."
+    },
+    "it": {
+     "h": "il dramma",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Il film è un dramma forte."
+    },
+    "fr": {
+     "h": "le drame",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Le film est un drame fort."
+    },
+    "ru": {
+     "h": "драма",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Фильм — сильная драма."
+    }
+   }
+  },
+  {
+   "id": "core.n.row.r1754.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "ردیف",
+     "x": "او در ردیف اول نشسته است."
+    },
+    "en": {
+     "h": "row",
+     "f": {
+      "kind": "noun",
+      "plural": "rows"
+     },
+     "x": "He is sitting in the front row."
+    },
+    "sv": {
+     "h": "en rad",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "raden",
+      "indefinitePlural": "rader",
+      "definitePlural": "raderna"
+     },
+     "x": "Han sitter på främsta raden."
+    },
+    "de": {
+     "h": "die Reihe",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Reihen"
+     },
+     "x": "Er sitzt in der ersten Reihe."
+    },
+    "es": {
+     "h": "la fila",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Está sentado en la primera fila."
+    },
+    "it": {
+     "h": "la fila",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "È seduto nella prima fila."
+    },
+    "fr": {
+     "h": "la rangée",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Il est assis au premier rang."
+    },
+    "ru": {
+     "h": "ряд",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Он сидит в первом ряду."
+    }
+   }
+  },
+  {
+   "id": "core.a.historical.r1775.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "تاریخی",
+     "x": "این یک بنای تاریخی است."
+    },
+    "en": {
+     "h": "historical",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more historical",
+      "superlative": "most historical"
+     },
+     "x": "This is a historical building."
+    },
+    "sv": {
+     "h": "historisk",
+     "f": {
+      "kind": "adjective",
+      "common": "historisk",
+      "neuter": "historiskt",
+      "plural": "historiska",
+      "definite": "historiska",
+      "comparative": "mer historisk",
+      "superlative": "mest historisk"
+     },
+     "x": "Det här är en historisk byggnad."
+    },
+    "de": {
+     "h": "historisch",
+     "x": "Das ist ein historisches Gebäude."
+    },
+    "es": {
+     "h": "histórico",
+     "x": "Este es un edificio histórico."
+    },
+    "it": {
+     "h": "storico",
+     "x": "Questo è un edificio storico."
+    },
+    "fr": {
+     "h": "historique",
+     "x": "C'est un bâtiment historique."
+    },
+    "ru": {
+     "h": "исторический",
+     "x": "Это историческое здание."
+    }
+   }
+  },
+  {
+   "id": "core.d.honestly.r1776.20261127",
+   "p": "adverb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "راستش",
+     "x": "راستش من خسته‌ام."
+    },
+    "en": {
+     "h": "honestly",
+     "x": "Honestly, I am tired."
+    },
+    "sv": {
+     "h": "ärligt talat",
+     "x": "Ärligt talat är jag trött."
+    },
+    "de": {
+     "h": "ehrlich gesagt",
+     "x": "Ehrlich gesagt bin ich müde."
+    },
+    "es": {
+     "h": "sinceramente",
+     "x": "Sinceramente, estoy cansado."
+    },
+    "it": {
+     "h": "onestamente",
+     "x": "Onestamente, sono stanco."
+    },
+    "fr": {
+     "h": "honnêtement",
+     "x": "Honnêtement, je suis fatigué."
+    },
+    "ru": {
+     "h": "честно говоря",
+     "x": "Честно говоря, я устал."
+    }
+   }
+  },
+  {
+   "id": "core.n.vision.r1789.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دید",
+     "x": "او برای آینده یک دید روشن دارد."
+    },
+    "en": {
+     "h": "vision",
+     "f": {
+      "kind": "noun",
+      "plural": "visions"
+     },
+     "x": "She has a clear vision for the future."
+    },
+    "sv": {
+     "h": "en vision",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "visionen",
+      "indefinitePlural": "visioner",
+      "definitePlural": "visionerna"
+     },
+     "x": "Hon har en tydlig vision för framtiden."
+    },
+    "de": {
+     "h": "die Vision",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Visionen"
+     },
+     "x": "Sie hat eine klare Vision für die Zukunft."
+    },
+    "es": {
+     "h": "la visión",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Ella tiene una visión clara del futuro."
+    },
+    "it": {
+     "h": "la visione",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Ha una visione chiara del futuro."
+    },
+    "fr": {
+     "h": "la vision",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Elle a une vision claire de l'avenir."
+    },
+    "ru": {
+     "h": "видение",
+     "f": {
+      "kind": "noun",
+      "gender": "с"
+     },
+     "x": "У неё чёткое видение будущего."
+    }
+   }
+  },
+  {
+   "id": "core.n.era.r1790.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "دوران",
+     "x": "این دوران خیلی عوض شده است."
+    },
+    "en": {
+     "h": "era",
+     "f": {
+      "kind": "noun",
+      "plural": "eras"
+     },
+     "x": "This era has changed a lot."
+    },
+    "sv": {
+     "h": "en era",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "eran",
+      "indefinitePlural": "eror",
+      "definitePlural": "erorna"
+     },
+     "x": "Den här eran har förändrats mycket."
+    },
+    "de": {
+     "h": "die Ära",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Ären"
+     },
+     "x": "Diese Ära hat sich sehr verändert."
+    },
+    "es": {
+     "h": "la era",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Esta era ha cambiado mucho."
+    },
+    "it": {
+     "h": "l'era",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Quest'era è cambiata molto."
+    },
+    "fr": {
+     "h": "l'ère",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "Cette ère a beaucoup changé."
+    },
+    "ru": {
+     "h": "эра",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Эта эра сильно изменилась."
+    }
+   }
+  },
+  {
+   "id": "core.n.speaker.r1795.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "سخنران",
+     "x": "سخنران خیلی خوب صحبت کرد."
+    },
+    "en": {
+     "h": "speaker",
+     "f": {
+      "kind": "noun",
+      "plural": "speakers"
+     },
+     "x": "The speaker spoke very well."
+    },
+    "sv": {
+     "h": "en talare",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "talaren",
+      "indefinitePlural": "talare",
+      "definitePlural": "talarna"
+     },
+     "x": "Talaren talade mycket bra."
+    },
+    "de": {
+     "h": "der Redner",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Redner"
+     },
+     "x": "Der Redner sprach sehr gut."
+    },
+    "es": {
+     "h": "el orador",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El orador habló muy bien."
+    },
+    "it": {
+     "h": "l'oratore",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "L'oratore ha parlato molto bene."
+    },
+    "fr": {
+     "h": "l'orateur",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "L'orateur a très bien parlé."
+    },
+    "ru": {
+     "h": "оратор",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Оратор говорил очень хорошо."
+    }
+   }
+  },
+  {
+   "id": "core.n.trick.r1800.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "ترفند",
+     "x": "این یک ترفند ساده است."
+    },
+    "en": {
+     "h": "trick",
+     "f": {
+      "kind": "noun",
+      "plural": "tricks"
+     },
+     "x": "This is a simple trick."
+    },
+    "sv": {
+     "h": "ett trick",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "tricket",
+      "indefinitePlural": "trick",
+      "definitePlural": "tricken"
+     },
+     "x": "Det här är ett enkelt trick."
+    },
+    "de": {
+     "h": "der Trick",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Tricks"
+     },
+     "x": "Das ist ein einfacher Trick."
+    },
+    "es": {
+     "h": "el truco",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "Este es un truco sencillo."
+    },
+    "it": {
+     "h": "il trucco",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Questo è un trucco semplice."
+    },
+    "fr": {
+     "h": "l'astuce",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "C'est une astuce simple."
+    },
+    "ru": {
+     "h": "трюк",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Это простой трюк."
+    }
+   }
+  },
+  {
+   "id": "core.v.acquire.r1825.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "کسب کردن",
+     "x": "او می‌خواهد دانش جدید کسب کند."
+    },
+    "en": {
+     "h": "to acquire",
+     "f": {
+      "kind": "verb",
+      "base": "acquire",
+      "thirdPerson": "acquires",
+      "past": "acquired",
+      "pastParticiple": "acquired"
+     },
+     "x": "She wants to acquire new knowledge."
+    },
+    "sv": {
+     "h": "förvärva",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "förvärva",
+      "presens": "förvärvar",
+      "preteritum": "förvärvade",
+      "supinum": "förvärvat"
+     },
+     "x": "Hon vill förvärva ny kunskap."
+    },
+    "de": {
+     "h": "erwerben",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "erwerben",
+      "praesens": "erwirbt",
+      "praeteritum": "erwarb",
+      "partizip2": "erworben",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Sie will neues Wissen erwerben."
+    },
+    "es": {
+     "h": "adquirir",
+     "x": "Ella quiere adquirir nuevos conocimientos."
+    },
+    "it": {
+     "h": "acquisire",
+     "x": "Vuole acquisire nuove conoscenze."
+    },
+    "fr": {
+     "h": "acquérir",
+     "x": "Elle veut acquérir de nouvelles connaissances."
+    },
+    "ru": {
+     "h": "приобретать",
+     "x": "Она хочет приобрести новые знания."
+    }
+   }
+  },
+  {
+   "id": "core.a.golden.r1827.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "طلایی",
+     "x": "او یک حلقه طلایی دارد."
+    },
+    "en": {
+     "h": "golden",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more golden",
+      "superlative": "most golden"
+     },
+     "x": "She has a golden ring."
+    },
+    "sv": {
+     "h": "gyllene",
+     "f": {
+      "kind": "adjective",
+      "common": "gyllene",
+      "neuter": "gyllene",
+      "plural": "gyllene",
+      "definite": "gyllene"
+     },
+     "x": "Hon har en gyllene ring."
+    },
+    "de": {
+     "h": "golden",
+     "f": {
+      "kind": "adjective",
+      "comparative": "goldener",
+      "superlative": "goldensten"
+     },
+     "x": "Sie hat einen goldenen Ring."
+    },
+    "es": {
+     "h": "dorado",
+     "x": "Ella tiene un anillo dorado."
+    },
+    "it": {
+     "h": "dorato",
+     "x": "Ha un anello dorato."
+    },
+    "fr": {
+     "h": "doré",
+     "x": "Elle a une bague dorée."
+    },
+    "ru": {
+     "h": "золотой",
+     "x": "У неё золотое кольцо."
+    }
+   }
+  },
+  {
+   "id": "core.a.scientific.r1829.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "علمی",
+     "x": "این یک کشف علمی است."
+    },
+    "en": {
+     "h": "scientific",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more scientific",
+      "superlative": "most scientific"
+     },
+     "x": "This is a scientific discovery."
+    },
+    "sv": {
+     "h": "vetenskaplig",
+     "f": {
+      "kind": "adjective",
+      "common": "vetenskaplig",
+      "neuter": "vetenskapligt",
+      "plural": "vetenskapliga",
+      "definite": "vetenskapliga",
+      "comparative": "vetenskapligare",
+      "superlative": "vetenskapligast"
+     },
+     "x": "Det här är en vetenskaplig upptäckt."
+    },
+    "de": {
+     "h": "wissenschaftlich",
+     "x": "Das ist eine wissenschaftliche Entdeckung."
+    },
+    "es": {
+     "h": "científico",
+     "x": "Este es un descubrimiento científico."
+    },
+    "it": {
+     "h": "scientifico",
+     "x": "Questa è una scoperta scientifica."
+    },
+    "fr": {
+     "h": "scientifique",
+     "x": "C'est une découverte scientifique."
+    },
+    "ru": {
+     "h": "научный",
+     "x": "Это научное открытие."
+    }
+   }
+  },
+  {
+   "id": "core.n.lane.r1836.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "خط عبور",
+     "x": "ماشین در خط عبور سمت چپ است."
+    },
+    "en": {
+     "h": "lane",
+     "f": {
+      "kind": "noun",
+      "plural": "lanes"
+     },
+     "x": "The car is in the left lane."
+    },
+    "sv": {
+     "h": "ett körfält",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "körfältet",
+      "indefinitePlural": "körfält",
+      "definitePlural": "körfälten"
+     },
+     "x": "Bilen är i det vänstra körfältet."
+    },
+    "de": {
+     "h": "die Spur",
+     "f": {
+      "kind": "noun",
+      "gender": "die",
+      "plural": "Spuren"
+     },
+     "x": "Das Auto ist auf der linken Spur."
+    },
+    "es": {
+     "h": "el carril",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "El coche está en el carril izquierdo."
+    },
+    "it": {
+     "h": "la corsia",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "L'auto è nella corsia di sinistra."
+    },
+    "fr": {
+     "h": "la voie",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La voiture est sur la voie de gauche."
+    },
+    "ru": {
+     "h": "полоса",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Машина едет по левой полосе."
+    }
+   }
+  },
+  {
+   "id": "core.n.contest.r1850.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "مسابقه",
+     "x": "او در مسابقه برنده شد."
+    },
+    "en": {
+     "h": "contest",
+     "f": {
+      "kind": "noun",
+      "plural": "contests"
+     },
+     "x": "She won the contest."
+    },
+    "sv": {
+     "h": "en tävling",
+     "f": {
+      "kind": "noun",
+      "gender": "en",
+      "definiteSingular": "tävlingen",
+      "indefinitePlural": "tävlingar",
+      "definitePlural": "tävlingarna"
+     },
+     "x": "Hon vann tävlingen."
+    },
+    "de": {
+     "h": "der Wettbewerb",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Wettbewerbe"
+     },
+     "x": "Sie hat den Wettbewerb gewonnen."
+    },
+    "es": {
+     "h": "el concurso",
+     "f": {
+      "kind": "noun",
+      "gender": "el"
+     },
+     "x": "Ella ganó el concurso."
+    },
+    "it": {
+     "h": "il concorso",
+     "f": {
+      "kind": "noun",
+      "gender": "il"
+     },
+     "x": "Ha vinto il concorso."
+    },
+    "fr": {
+     "h": "le concours",
+     "f": {
+      "kind": "noun",
+      "gender": "le"
+     },
+     "x": "Elle a gagné le concours."
+    },
+    "ru": {
+     "h": "конкурс",
+     "f": {
+      "kind": "noun",
+      "gender": "м"
+     },
+     "x": "Она выиграла конкурс."
+    }
+   }
+  },
+  {
+   "id": "core.a.relative.r1853.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "نسبی",
+     "x": "همه‌چیز نسبی است."
+    },
+    "en": {
+     "h": "relative",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more relative",
+      "superlative": "most relative"
+     },
+     "x": "Everything is relative."
+    },
+    "sv": {
+     "h": "relativ",
+     "x": "Allt är relativt."
+    },
+    "de": {
+     "h": "relativ",
+     "x": "Alles ist relativ."
+    },
+    "es": {
+     "h": "relativo",
+     "x": "Todo es relativo."
+    },
+    "it": {
+     "h": "relativo",
+     "x": "Tutto è relativo."
+    },
+    "fr": {
+     "h": "relatif",
+     "x": "Tout est relatif."
+    },
+    "ru": {
+     "h": "относительный",
+     "x": "Всё относительно."
+    }
+   }
+  },
+  {
+   "id": "core.v.confuse.r1862.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "گیج کردن",
+     "x": "سؤال او مرا گیج کرد."
+    },
+    "en": {
+     "h": "to confuse",
+     "f": {
+      "kind": "verb",
+      "base": "confuse",
+      "thirdPerson": "confuses",
+      "past": "confused",
+      "pastParticiple": "confused"
+     },
+     "x": "His question confused me."
+    },
+    "sv": {
+     "h": "förvirra",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "förvirra",
+      "presens": "förvirrar",
+      "preteritum": "förvirrade",
+      "supinum": "förvirrat"
+     },
+     "x": "Hans fråga förvirrade mig."
+    },
+    "de": {
+     "h": "verwirren",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "verwirren",
+      "praesens": "verwirrt",
+      "praeteritum": "verwirrte",
+      "partizip2": "verwirrt",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Seine Frage hat mich verwirrt."
+    },
+    "es": {
+     "h": "confundir",
+     "x": "Su pregunta me confundió."
+    },
+    "it": {
+     "h": "confondere",
+     "x": "La sua domanda mi ha confuso."
+    },
+    "fr": {
+     "h": "confondre",
+     "x": "Sa question m'a confondu."
+    },
+    "ru": {
+     "h": "запутывать",
+     "x": "Его вопрос меня запутал."
+    }
+   }
+  },
+  {
+   "id": "core.a.emotional.r1865.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "احساسی",
+     "x": "او امروز خیلی احساسی است."
+    },
+    "en": {
+     "h": "emotional",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more emotional",
+      "superlative": "most emotional"
+     },
+     "x": "She is very emotional today."
+    },
+    "sv": {
+     "h": "känslomässig",
+     "f": {
+      "kind": "adjective",
+      "common": "känslomässig",
+      "neuter": "känslomässigt",
+      "plural": "känslomässiga",
+      "definite": "känslomässiga",
+      "comparative": "känslomässigare",
+      "superlative": "känslomässigast"
+     },
+     "x": "Hon är väldigt känslomässig i dag."
+    },
+    "de": {
+     "h": "emotional",
+     "f": {
+      "kind": "adjective",
+      "comparative": "emotionaler",
+      "superlative": "emotionalsten"
+     },
+     "x": "Sie ist heute sehr emotional."
+    },
+    "es": {
+     "h": "emocional",
+     "x": "Hoy está muy emocional."
+    },
+    "it": {
+     "h": "emotivo",
+     "x": "Oggi è molto emotiva."
+    },
+    "fr": {
+     "h": "émotionnel",
+     "x": "Elle est très émotionnelle aujourd'hui."
+    },
+    "ru": {
+     "h": "эмоциональный",
+     "x": "Сегодня она очень эмоциональна."
+    }
+   }
+  },
+  {
+   "id": "core.a.internal.r1867.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "داخلی",
+     "x": "این یک مشکل داخلی است."
+    },
+    "en": {
+     "h": "internal",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more internal",
+      "superlative": "most internal"
+     },
+     "x": "This is an internal problem."
+    },
+    "sv": {
+     "h": "intern",
+     "f": {
+      "kind": "adjective",
+      "common": "intern",
+      "neuter": "internt",
+      "plural": "interna",
+      "definite": "interna"
+     },
+     "x": "Det här är ett internt problem."
+    },
+    "de": {
+     "h": "intern",
+     "x": "Das ist ein internes Problem."
+    },
+    "es": {
+     "h": "interno",
+     "x": "Este es un problema interno."
+    },
+    "it": {
+     "h": "interno",
+     "x": "Questo è un problema interno."
+    },
+    "fr": {
+     "h": "interne",
+     "x": "C'est un problème interne."
+    },
+    "ru": {
+     "h": "внутренний",
+     "x": "Это внутренняя проблема."
+    }
+   }
+  },
+  {
+   "id": "core.a.numerous.r1891.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "متعدد",
+     "x": "او دوستان متعددی دارد."
+    },
+    "en": {
+     "h": "numerous",
+     "f": {
+      "kind": "adjective",
+      "comparative": "more numerous",
+      "superlative": "most numerous"
+     },
+     "x": "He has numerous friends."
+    },
+    "sv": {
+     "h": "många",
+     "f": {
+      "kind": "adjective",
+      "common": "många",
+      "plural": "många",
+      "definite": "många",
+      "comparative": "fler",
+      "superlative": "flest"
+     },
+     "x": "Han har många vänner."
+    },
+    "de": {
+     "h": "zahlreich",
+     "f": {
+      "kind": "adjective",
+      "comparative": "zahlreicher",
+      "superlative": "zahlreichsten"
+     },
+     "x": "Er hat zahlreiche Freunde."
+    },
+    "es": {
+     "h": "numeroso",
+     "x": "Tiene numerosos amigos."
+    },
+    "it": {
+     "h": "numeroso",
+     "x": "Ha numerosi amici."
+    },
+    "fr": {
+     "h": "nombreux",
+     "x": "Il a de nombreux amis."
+    },
+    "ru": {
+     "h": "многочисленный",
+     "x": "У него многочисленные друзья."
+    }
+   }
+  },
+  {
+   "id": "core.d.specifically.r1892.20261127",
+   "p": "adverb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "به طور خاص",
+     "x": "او به طور خاص این کتاب را خواست."
+    },
+    "en": {
+     "h": "specifically",
+     "x": "She specifically asked for this book."
+    },
+    "sv": {
+     "h": "specifikt",
+     "x": "Hon bad specifikt om den här boken."
+    },
+    "de": {
+     "h": "speziell",
+     "x": "Sie hat speziell nach diesem Buch gefragt."
+    },
+    "es": {
+     "h": "específicamente",
+     "x": "Pidió específicamente este libro."
+    },
+    "it": {
+     "h": "specificamente",
+     "x": "Ha chiesto specificamente questo libro."
+    },
+    "fr": {
+     "h": "spécifiquement",
+     "x": "Elle a demandé spécifiquement ce livre."
+    },
+    "ru": {
+     "h": "конкретно",
+     "x": "Она конкретно попросила эту книгу."
+    }
+   }
+  },
+  {
+   "id": "core.a.urban.r1893.20261127",
+   "p": "adjective",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "شهری",
+     "x": "او در یک شهر بزرگ زندگی می‌کند."
+    },
+    "en": {
+     "h": "urban",
+     "f": {
+      "kind": "adjective"
+     },
+     "x": "He lives in an urban area."
+    },
+    "sv": {
+     "h": "urban",
+     "f": {
+      "kind": "adjective",
+      "common": "urban",
+      "neuter": "urbant",
+      "plural": "urbana",
+      "definite": "urbana"
+     },
+     "x": "Han bor i ett urbant område."
+    },
+    "de": {
+     "h": "städtisch",
+     "x": "Er wohnt in einem städtischen Gebiet."
+    },
+    "es": {
+     "h": "urbano",
+     "x": "Vive en una zona urbana."
+    },
+    "it": {
+     "h": "urbano",
+     "x": "Vive in una zona urbana."
+    },
+    "fr": {
+     "h": "urbain",
+     "x": "Il vit dans une zone urbaine."
+    },
+    "ru": {
+     "h": "городской",
+     "x": "Он живёт в городском районе."
+    }
+   }
+  },
+  {
+   "id": "core.v.explore.r1903.20261127",
+   "p": "verb",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "کاوش کردن",
+     "x": "ما می‌خواهیم شهر را کاوش کنیم."
+    },
+    "en": {
+     "h": "to explore",
+     "f": {
+      "kind": "verb",
+      "base": "explore",
+      "thirdPerson": "explores",
+      "past": "explored",
+      "pastParticiple": "explored"
+     },
+     "x": "We want to explore the city."
+    },
+    "sv": {
+     "h": "utforska",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "utforska",
+      "presens": "utforskar",
+      "preteritum": "utforskade",
+      "supinum": "utforskat"
+     },
+     "x": "Vi vill utforska staden."
+    },
+    "de": {
+     "h": "erkunden",
+     "f": {
+      "kind": "verb",
+      "infinitiv": "erkunden",
+      "praesens": "erkundet",
+      "praeteritum": "erkundete",
+      "partizip2": "erkundet",
+      "auxiliary": "haben",
+      "separable": false
+     },
+     "x": "Wir wollen die Stadt erkunden."
+    },
+    "es": {
+     "h": "explorar",
+     "x": "Queremos explorar la ciudad."
+    },
+    "it": {
+     "h": "esplorare",
+     "x": "Vogliamo esplorare la città."
+    },
+    "fr": {
+     "h": "explorer",
+     "x": "Nous voulons explorer la ville."
+    },
+    "ru": {
+     "h": "исследовать",
+     "x": "Мы хотим исследовать город."
+    }
+   }
+  },
+  {
+   "id": "core.n.tower.r1908.20261127",
+   "p": "noun",
+   "t": [
+    "daily"
+   ],
+   "e": {
+    "fa": {
+     "h": "برج",
+     "x": "برج خیلی بلند است."
+    },
+    "en": {
+     "h": "tower",
+     "f": {
+      "kind": "noun",
+      "plural": "towers"
+     },
+     "x": "The tower is very tall."
+    },
+    "sv": {
+     "h": "ett torn",
+     "f": {
+      "kind": "noun",
+      "gender": "ett",
+      "definiteSingular": "tornet",
+      "indefinitePlural": "torn",
+      "definitePlural": "tornen"
+     },
+     "x": "Tornet är mycket högt."
+    },
+    "de": {
+     "h": "der Turm",
+     "f": {
+      "kind": "noun",
+      "gender": "der",
+      "plural": "Türme"
+     },
+     "x": "Der Turm ist sehr hoch."
+    },
+    "es": {
+     "h": "la torre",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La torre es muy alta."
+    },
+    "it": {
+     "h": "la torre",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La torre è molto alta."
+    },
+    "fr": {
+     "h": "la tour",
+     "f": {
+      "kind": "noun",
+      "gender": "la"
+     },
+     "x": "La tour est très haute."
+    },
+    "ru": {
+     "h": "башня",
+     "f": {
+      "kind": "noun",
+      "gender": "ж"
+     },
+     "x": "Башня очень высокая."
+    }
+   }
+  }
+ ]
+}
